@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase } from '@/lib/db';
+import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 
 export const runtime = 'nodejs';
@@ -8,11 +8,11 @@ export async function GET(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization');
     let token = authHeader?.replace('Bearer ', '') || request.cookies.get('token')?.value;
-    
+
     if (token) {
       token = token.trim().replace(/^["']|["']$/g, '');
     }
-    
+
     if (!token) {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
     }
@@ -22,41 +22,26 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
     }
 
-    const db = getDatabase();
-    
-    // Obter parâmetros de filtro e paginação da query string
     const { searchParams } = new URL(request.url);
     const filterRole = searchParams.get('role');
     const filterCompanyId = searchParams.get('company_id');
-    const filterTags = searchParams.get('tags'); // Tags separadas por vírgula
+    const filterTags = searchParams.get('tags');
     const filterAreasConhecimento = searchParams.get('areas_conhecimento');
     const filterAssuntos = searchParams.get('assuntos');
     const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
     const limit = Math.min(50, Math.max(1, parseInt(searchParams.get('limit') || '15', 10)));
     const isAdmin = user.role === 'admin';
 
-    let query = '';
-    let params: any[] = [];
+    let sql = '';
+    const params: any[] = [];
+    let paramIdx = 1;
 
     if (isAdmin) {
-      // Admin pode ver todas as notas com filtros opcionais
-      query = `
-        SELECT 
-          n.id, 
-          n.title, 
-          n.description, 
-          n.tags,
-          n.images,
-          n.areas_conhecimento,
-          n.assuntos,
-          n.created_at, 
-          n.updated_at,
-          n.user_id,
-          u.name as user_name,
-          u.email as user_email,
-          u.role as user_role,
-          u.company_id,
-          c.name as company_name
+      sql = `
+        SELECT n.id, n.title, n.description, n.tags, n.images, n.areas_conhecimento, n.assuntos,
+               n.created_at, n.updated_at, n.user_id,
+               u.name as user_name, u.email as user_email, u.role as user_role, u.company_id,
+               c.name as company_name
         FROM notes n
         LEFT JOIN users u ON n.user_id = u.id
         LEFT JOIN companies c ON u.company_id = c.id
@@ -64,47 +49,33 @@ export async function GET(request: NextRequest) {
       `;
 
       if (filterRole) {
-        query += ' AND u.role = ?';
+        sql += ` AND u.role = $${paramIdx++}`;
         params.push(filterRole);
       }
 
       if (filterCompanyId) {
-        query += ' AND u.company_id = ?';
+        sql += ` AND u.company_id = $${paramIdx++}`;
         params.push(parseInt(filterCompanyId));
       }
 
-      query += ' ORDER BY n.created_at DESC';
+      sql += ' ORDER BY n.created_at DESC';
     } else {
-      // Usuários regulares e managers veem apenas suas próprias notas
-      query = `
-        SELECT 
-          n.id, 
-          n.title, 
-          n.description, 
-          n.tags,
-          n.images,
-          n.areas_conhecimento,
-          n.assuntos,
-          n.created_at, 
-          n.updated_at,
-          n.user_id,
-          u.name as user_name,
-          u.email as user_email,
-          u.role as user_role,
-          u.company_id,
-          c.name as company_name
+      sql = `
+        SELECT n.id, n.title, n.description, n.tags, n.images, n.areas_conhecimento, n.assuntos,
+               n.created_at, n.updated_at, n.user_id,
+               u.name as user_name, u.email as user_email, u.role as user_role, u.company_id,
+               c.name as company_name
         FROM notes n
         LEFT JOIN users u ON n.user_id = u.id
         LEFT JOIN companies c ON u.company_id = c.id
-        WHERE n.user_id = ?
+        WHERE n.user_id = $${paramIdx++}
         ORDER BY n.created_at DESC
       `;
       params.push(user.id);
     }
 
-    const notes = db.prepare(query).all(...params);
+    const notes = (await query(sql, params)).rows;
 
-    // Converter tags, images, areas_conhecimento e assuntos JSON string para array
     let notesWithTags = notes.map((note: any) => ({
       id: note.id,
       title: note.title,
@@ -123,29 +94,27 @@ export async function GET(request: NextRequest) {
       company_name: note.company_name,
     }));
 
-    // Aplicar filtro de tags se fornecido
     if (filterTags) {
       const filterTagsArray = filterTags.split(',').map(tag => tag.trim()).filter(tag => tag);
       if (filterTagsArray.length > 0) {
-        notesWithTags = notesWithTags.filter((note: any) => {
-          return filterTagsArray.some(filterTag => 
-            note.tags.some((noteTag: string) => 
+        notesWithTags = notesWithTags.filter((note: any) =>
+          filterTagsArray.some(filterTag =>
+            note.tags.some((noteTag: string) =>
               noteTag.toLowerCase().includes(filterTag.toLowerCase()) ||
               filterTag.toLowerCase().includes(noteTag.toLowerCase())
             )
-          );
-        });
+          )
+        );
       }
     }
 
-    // Aplicar filtro de áreas do conhecimento se fornecido
     if (filterAreasConhecimento) {
       const filterArray = filterAreasConhecimento.split(',').map(tag => tag.trim()).filter(tag => tag);
       if (filterArray.length > 0) {
         notesWithTags = notesWithTags.filter((note: any) => {
           const areas = note.areas_conhecimento || [];
-          return filterArray.some(filterTag => 
-            areas.some((area: string) => 
+          return filterArray.some(filterTag =>
+            areas.some((area: string) =>
               area.toLowerCase().includes(filterTag.toLowerCase()) ||
               filterTag.toLowerCase().includes(area.toLowerCase())
             )
@@ -154,14 +123,13 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // Aplicar filtro de assuntos se fornecido
     if (filterAssuntos) {
       const filterArray = filterAssuntos.split(',').map(tag => tag.trim()).filter(tag => tag);
       if (filterArray.length > 0) {
         notesWithTags = notesWithTags.filter((note: any) => {
           const assuntos = note.assuntos || [];
-          return filterArray.some(filterTag => 
-            assuntos.some((assunto: string) => 
+          return filterArray.some(filterTag =>
+            assuntos.some((assunto: string) =>
               assunto.toLowerCase().includes(filterTag.toLowerCase()) ||
               filterTag.toLowerCase().includes(assunto.toLowerCase())
             )
@@ -185,11 +153,11 @@ export async function POST(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization');
     let token = authHeader?.replace('Bearer ', '') || request.cookies.get('token')?.value;
-    
+
     if (token) {
       token = token.trim().replace(/^["']|["']$/g, '');
     }
-    
+
     if (!token) {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
     }
@@ -206,43 +174,34 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Título e descrição são obrigatórios' }, { status: 400 });
     }
 
-    // Converter tags array para JSON string
     const tagsJson = tags && Array.isArray(tags) ? JSON.stringify(tags) : null;
-    // Converter images array para JSON string
     const imagesJson = images && Array.isArray(images) ? JSON.stringify(images) : null;
     const areasConhecimentoJson = areas_conhecimento && Array.isArray(areas_conhecimento) ? JSON.stringify(areas_conhecimento) : null;
     const assuntosJson = assuntos && Array.isArray(assuntos) ? JSON.stringify(assuntos) : null;
     const fontesArquivosJson = fontes_arquivos && Array.isArray(fontes_arquivos) ? JSON.stringify(fontes_arquivos) : null;
 
-    const db = getDatabase();
-    const result = db.prepare(`
-      INSERT INTO notes (user_id, title, description, tags, images, areas_conhecimento, assuntos, fontes_resumo_melhorado, fontes_resumo_original, fontes_arquivos)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).run(user.id, title, description, tagsJson, imagesJson, areasConhecimentoJson, assuntosJson, fontes_resumo_melhorado ?? null, fontes_resumo_original ?? null, fontesArquivosJson);
+    const result = await query(
+      `INSERT INTO notes (user_id, title, description, tags, images, areas_conhecimento, assuntos, fontes_resumo_melhorado, fontes_resumo_original, fontes_arquivos)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id`,
+      [user.id, title, description, tagsJson, imagesJson, areasConhecimentoJson, assuntosJson, fontes_resumo_melhorado ?? null, fontes_resumo_original ?? null, fontesArquivosJson]
+    );
 
-    const noteId = result.lastInsertRowid;
+    const noteId = result.rows[0].id;
 
-    // Associar questões à nota se fornecidas
     if (question_ids && Array.isArray(question_ids) && question_ids.length > 0) {
-      const insertStmt = db.prepare('INSERT INTO note_questions (note_id, question_id) VALUES (?, ?)');
-      const insertMany = db.transaction((questionIds: number[]) => {
-        for (const questionId of questionIds) {
-          // Verificar se a questão existe
-          const question = db.prepare('SELECT id FROM questions WHERE id = ?').get(questionId) as any;
-          if (question) {
-            try {
-              insertStmt.run(noteId, questionId);
-            } catch (error) {
-              // Ignorar erros de duplicação
-            }
+      for (const questionId of question_ids) {
+        const questionExists = (await query('SELECT id FROM questions WHERE id = $1', [questionId])).rows[0];
+        if (questionExists) {
+          try {
+            await query('INSERT INTO note_questions (note_id, question_id) VALUES ($1, $2)', [noteId, questionId]);
+          } catch {
+            // Ignorar erros de duplicação
           }
         }
-      });
-
-      insertMany(question_ids);
+      }
     }
 
-    const newNote = db.prepare('SELECT * FROM notes WHERE id = ?').get(noteId);
+    const newNote = (await query('SELECT * FROM notes WHERE id = $1', [noteId])).rows[0];
 
     return NextResponse.json(newNote, { status: 201 });
   } catch (error) {

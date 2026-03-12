@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase } from '@/lib/db';
+import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 
 export const runtime = 'nodejs';
@@ -11,11 +11,11 @@ export async function GET(
   try {
     const authHeader = request.headers.get('authorization');
     let token = authHeader?.replace('Bearer ', '') || request.cookies.get('token')?.value;
-    
+
     if (token) {
       token = token.trim().replace(/^["']|["']$/g, '');
     }
-    
+
     if (!token) {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
     }
@@ -25,47 +25,38 @@ export async function GET(
       return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
     }
 
-    const db = getDatabase();
-    
-    // Buscar a nota
-    let note;
+    let noteResult;
     if (user.role === 'admin') {
-      // Admin pode ver qualquer nota
-      note = db.prepare(`
-        SELECT n.*, u.name as user_name, u.email as user_email, u.role as user_role, 
-               c.name as company_name
+      noteResult = await query(`
+        SELECT n.*, u.name as user_name, u.email as user_email, u.role as user_role, c.name as company_name
         FROM notes n
         LEFT JOIN users u ON n.user_id = u.id
         LEFT JOIN companies c ON u.company_id = c.id
-        WHERE n.id = ?
-      `).get(params.id);
+        WHERE n.id = $1
+      `, [params.id]);
     } else {
-      // Usuários regulares só podem ver suas próprias notas
-      note = db.prepare(`
-        SELECT n.*, u.name as user_name, u.email as user_email, u.role as user_role, 
-               c.name as company_name
+      noteResult = await query(`
+        SELECT n.*, u.name as user_name, u.email as user_email, u.role as user_role, c.name as company_name
         FROM notes n
         LEFT JOIN users u ON n.user_id = u.id
         LEFT JOIN companies c ON u.company_id = c.id
-        WHERE n.id = ? AND n.user_id = ?
-      `).get(params.id, user.id);
+        WHERE n.id = $1 AND n.user_id = $2
+      `, [params.id, user.id]);
     }
 
+    const note = noteResult.rows[0];
     if (!note) {
       return NextResponse.json({ error: 'Nota não encontrada' }, { status: 404 });
     }
 
-    // Converter tags, images, areas_conhecimento, assuntos e fontes_arquivos JSON string para array
-    const noteWithTags = {
+    return NextResponse.json({
       ...note,
-      tags: (note as any).tags ? JSON.parse((note as any).tags) : [],
-      images: (note as any).images ? JSON.parse((note as any).images) : [],
-      areas_conhecimento: (note as any).areas_conhecimento ? JSON.parse((note as any).areas_conhecimento) : [],
-      assuntos: (note as any).assuntos ? JSON.parse((note as any).assuntos) : [],
-      fontes_arquivos: (note as any).fontes_arquivos ? JSON.parse((note as any).fontes_arquivos) : [],
-    };
-
-    return NextResponse.json(noteWithTags);
+      tags: note.tags ? JSON.parse(note.tags) : [],
+      images: note.images ? JSON.parse(note.images) : [],
+      areas_conhecimento: note.areas_conhecimento ? JSON.parse(note.areas_conhecimento) : [],
+      assuntos: note.assuntos ? JSON.parse(note.assuntos) : [],
+      fontes_arquivos: note.fontes_arquivos ? JSON.parse(note.fontes_arquivos) : [],
+    });
   } catch (error) {
     console.error('Erro ao buscar nota:', error);
     return NextResponse.json({ error: 'Erro ao buscar nota' }, { status: 500 });
@@ -79,11 +70,11 @@ export async function PUT(
   try {
     const authHeader = request.headers.get('authorization');
     let token = authHeader?.replace('Bearer ', '') || request.cookies.get('token')?.value;
-    
+
     if (token) {
       token = token.trim().replace(/^["']|["']$/g, '');
     }
-    
+
     if (!token) {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
     }
@@ -100,56 +91,48 @@ export async function PUT(
       return NextResponse.json({ error: 'Título e descrição são obrigatórios' }, { status: 400 });
     }
 
-    // Converter tags array para JSON string
     const tagsJson = tags && Array.isArray(tags) ? JSON.stringify(tags) : null;
-    // Converter images array para JSON string
     const imagesJson = images && Array.isArray(images) ? JSON.stringify(images) : null;
     const areasConhecimentoJson = areas_conhecimento && Array.isArray(areas_conhecimento) ? JSON.stringify(areas_conhecimento) : null;
     const assuntosJson = assuntos && Array.isArray(assuntos) ? JSON.stringify(assuntos) : null;
     const fontesArquivosJson = fontes_arquivos && Array.isArray(fontes_arquivos) ? JSON.stringify(fontes_arquivos) : null;
 
-    const db = getDatabase();
-    
-    // Verificar se a nota existe e pertence ao usuário (ou se é admin)
-    let note;
+    let noteCheck;
     if (user.role === 'admin') {
-      note = db.prepare('SELECT * FROM notes WHERE id = ?').get(params.id);
+      noteCheck = (await query('SELECT id FROM notes WHERE id = $1', [params.id])).rows[0];
     } else {
-      note = db.prepare('SELECT * FROM notes WHERE id = ? AND user_id = ?').get(params.id, user.id);
+      noteCheck = (await query('SELECT id FROM notes WHERE id = $1 AND user_id = $2', [params.id, user.id])).rows[0];
     }
-    
-    if (!note) {
+
+    if (!noteCheck) {
       return NextResponse.json({ error: 'Nota não encontrada' }, { status: 404 });
     }
 
-    // Atualizar a nota
     if (user.role === 'admin') {
-      db.prepare(`
+      await query(`
         UPDATE notes
-        SET title = ?, description = ?, tags = ?, images = ?, areas_conhecimento = ?, assuntos = ?,
-            fontes_resumo_melhorado = ?, fontes_resumo_original = ?, fontes_arquivos = ?, updated_at = CURRENT_TIMESTAMP
-        WHERE id = ?
-      `).run(title, description, tagsJson, imagesJson, areasConhecimentoJson, assuntosJson, fontes_resumo_melhorado ?? null, fontes_resumo_original ?? null, fontesArquivosJson, params.id);
+        SET title = $1, description = $2, tags = $3, images = $4, areas_conhecimento = $5, assuntos = $6,
+            fontes_resumo_melhorado = $7, fontes_resumo_original = $8, fontes_arquivos = $9, updated_at = NOW()
+        WHERE id = $10
+      `, [title, description, tagsJson, imagesJson, areasConhecimentoJson, assuntosJson, fontes_resumo_melhorado ?? null, fontes_resumo_original ?? null, fontesArquivosJson, params.id]);
     } else {
-      db.prepare(`
+      await query(`
         UPDATE notes
-        SET title = ?, description = ?, tags = ?, images = ?, areas_conhecimento = ?, assuntos = ?,
-            fontes_resumo_melhorado = ?, fontes_resumo_original = ?, fontes_arquivos = ?, updated_at = CURRENT_TIMESTAMP
-        WHERE id = ? AND user_id = ?
-      `).run(title, description, tagsJson, imagesJson, areasConhecimentoJson, assuntosJson, fontes_resumo_melhorado ?? null, fontes_resumo_original ?? null, fontesArquivosJson, params.id, user.id);
+        SET title = $1, description = $2, tags = $3, images = $4, areas_conhecimento = $5, assuntos = $6,
+            fontes_resumo_melhorado = $7, fontes_resumo_original = $8, fontes_arquivos = $9, updated_at = NOW()
+        WHERE id = $10 AND user_id = $11
+      `, [title, description, tagsJson, imagesJson, areasConhecimentoJson, assuntosJson, fontes_resumo_melhorado ?? null, fontes_resumo_original ?? null, fontesArquivosJson, params.id, user.id]);
     }
 
-    const updatedRow = db.prepare('SELECT * FROM notes WHERE id = ?').get(params.id) as any;
-    const updatedNote = {
+    const updatedRow = (await query('SELECT * FROM notes WHERE id = $1', [params.id])).rows[0];
+    return NextResponse.json({
       ...updatedRow,
       tags: updatedRow.tags ? JSON.parse(updatedRow.tags) : [],
       images: updatedRow.images ? JSON.parse(updatedRow.images) : [],
       areas_conhecimento: updatedRow.areas_conhecimento ? JSON.parse(updatedRow.areas_conhecimento) : [],
       assuntos: updatedRow.assuntos ? JSON.parse(updatedRow.assuntos) : [],
       fontes_arquivos: updatedRow.fontes_arquivos ? JSON.parse(updatedRow.fontes_arquivos) : [],
-    };
-
-    return NextResponse.json(updatedNote);
+    });
   } catch (error) {
     console.error('Erro ao atualizar nota:', error);
     return NextResponse.json({ error: 'Erro ao atualizar nota' }, { status: 500 });
@@ -163,11 +146,11 @@ export async function DELETE(
   try {
     const authHeader = request.headers.get('authorization');
     let token = authHeader?.replace('Bearer ', '') || request.cookies.get('token')?.value;
-    
+
     if (token) {
       token = token.trim().replace(/^["']|["']$/g, '');
     }
-    
+
     if (!token) {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
     }
@@ -177,16 +160,12 @@ export async function DELETE(
       return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
     }
 
-    const db = getDatabase();
-    
-    // Verificar se a nota existe e pertence ao usuário
-    const note = db.prepare('SELECT * FROM notes WHERE id = ? AND user_id = ?').get(params.id, user.id);
+    const note = (await query('SELECT id FROM notes WHERE id = $1 AND user_id = $2', [params.id, user.id])).rows[0];
     if (!note) {
       return NextResponse.json({ error: 'Nota não encontrada' }, { status: 404 });
     }
 
-    // Deletar a nota
-    db.prepare('DELETE FROM notes WHERE id = ? AND user_id = ?').run(params.id, user.id);
+    await query('DELETE FROM notes WHERE id = $1 AND user_id = $2', [params.id, user.id]);
 
     return NextResponse.json({ success: true });
   } catch (error) {

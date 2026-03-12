@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase } from '@/lib/db';
+import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 
 export const runtime = 'nodejs';
@@ -8,11 +8,11 @@ export async function GET(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization');
     let token = authHeader?.replace('Bearer ', '') || request.cookies.get('token')?.value;
-    
+
     if (token) {
       token = token.trim().replace(/^["']|["']$/g, '');
     }
-    
+
     if (!token) {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
     }
@@ -22,15 +22,13 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
     }
 
-    // Apenas admin pode ver empresas
     if (user.role !== 'admin') {
-      return NextResponse.json({ 
-        error: 'Acesso negado. Apenas administradores podem acessar esta funcionalidade.' 
+      return NextResponse.json({
+        error: 'Acesso negado. Apenas administradores podem acessar esta funcionalidade.'
       }, { status: 403 });
     }
 
-    const db = getDatabase();
-    const companies = db.prepare('SELECT id, name, created_at FROM companies ORDER BY name').all();
+    const companies = (await query('SELECT id, name, created_at FROM companies ORDER BY name')).rows;
 
     return NextResponse.json(companies);
   } catch (error) {

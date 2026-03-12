@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase } from '@/lib/db';
+import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 
 export const runtime = 'nodejs';
 
-// POST /api/notes/[id]/questions
-// Associar questões a uma nota
 export async function POST(
   request: NextRequest,
   { params }: { params: { id: string } }
@@ -13,11 +11,11 @@ export async function POST(
   try {
     const authHeader = request.headers.get('authorization');
     let token = authHeader?.replace('Bearer ', '') || request.cookies.get('token')?.value;
-    
+
     if (token) {
       token = token.trim().replace(/^["']|["']$/g, '');
     }
-    
+
     if (!token) {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
     }
@@ -39,43 +37,31 @@ export async function POST(
       return NextResponse.json({ error: 'question_ids deve ser um array' }, { status: 400 });
     }
 
-    const db = getDatabase();
-
-    // Verificar se a nota existe e se o usuário tem permissão
-    const note = db.prepare('SELECT * FROM notes WHERE id = ?').get(noteId) as any;
+    const note = (await query('SELECT * FROM notes WHERE id = $1', [noteId])).rows[0];
     if (!note) {
       return NextResponse.json({ error: 'Nota não encontrada' }, { status: 404 });
     }
 
-    // Verificar se o usuário é o dono da nota ou admin
     if (note.user_id !== user.id && user.role !== 'admin') {
       return NextResponse.json({ error: 'Acesso negado' }, { status: 403 });
     }
 
-    // Remover associações existentes
-    db.prepare('DELETE FROM note_questions WHERE note_id = ?').run(noteId);
+    await query('DELETE FROM note_questions WHERE note_id = $1', [noteId]);
 
-    // Adicionar novas associações
-    const insertStmt = db.prepare('INSERT INTO note_questions (note_id, question_id) VALUES (?, ?)');
-    const insertMany = db.transaction((questionIds: number[]) => {
-      for (const questionId of questionIds) {
-        // Verificar se a questão existe
-        const question = db.prepare('SELECT id FROM questions WHERE id = ?').get(questionId) as any;
-        if (question) {
-          try {
-            insertStmt.run(noteId, questionId);
-          } catch (error) {
-            // Ignorar erros de duplicação
-          }
+    for (const questionId of question_ids) {
+      const questionExists = (await query('SELECT id FROM questions WHERE id = $1', [questionId])).rows[0];
+      if (questionExists) {
+        try {
+          await query('INSERT INTO note_questions (note_id, question_id) VALUES ($1, $2)', [noteId, questionId]);
+        } catch {
+          // Ignorar erros de duplicação
         }
       }
-    });
+    }
 
-    insertMany(question_ids);
-
-    return NextResponse.json({ 
+    return NextResponse.json({
       message: 'Questões associadas com sucesso',
-      count: question_ids.length 
+      count: question_ids.length
     });
   } catch (error) {
     console.error('Erro ao associar questões à nota:', error);
@@ -83,8 +69,6 @@ export async function POST(
   }
 }
 
-// GET /api/notes/[id]/questions
-// Buscar questões associadas a uma nota
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
@@ -92,11 +76,11 @@ export async function GET(
   try {
     const authHeader = request.headers.get('authorization');
     let token = authHeader?.replace('Bearer ', '') || request.cookies.get('token')?.value;
-    
+
     if (token) {
       token = token.trim().replace(/^["']|["']$/g, '');
     }
-    
+
     if (!token) {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
     }
@@ -111,29 +95,23 @@ export async function GET(
       return NextResponse.json({ error: 'ID da nota inválido' }, { status: 400 });
     }
 
-    const db = getDatabase();
-
-    // Verificar se a nota existe e se o usuário tem permissão
-    const note = db.prepare('SELECT * FROM notes WHERE id = ?').get(noteId) as any;
+    const note = (await query('SELECT * FROM notes WHERE id = $1', [noteId])).rows[0];
     if (!note) {
       return NextResponse.json({ error: 'Nota não encontrada' }, { status: 404 });
     }
 
-    // Verificar se o usuário é o dono da nota ou admin
     if (note.user_id !== user.id && user.role !== 'admin') {
       return NextResponse.json({ error: 'Acesso negado' }, { status: 403 });
     }
 
-    // Buscar questões associadas
-    const questions = db.prepare(`
+    const questions = (await query(`
       SELECT q.*
       FROM questions q
       INNER JOIN note_questions nq ON q.id = nq.question_id
-      WHERE nq.note_id = ?
+      WHERE nq.note_id = $1
       ORDER BY nq.created_at DESC
-    `).all(noteId) as any[];
+    `, [noteId])).rows;
 
-    // Converter tags e images JSON string para array
     const questionsWithTags = questions.map((question: any) => ({
       id: question.id,
       statement: question.statement,

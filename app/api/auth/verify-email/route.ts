@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase } from '@/lib/db';
+import { query } from '@/lib/db';
 import { verifyAndUseToken } from '@/lib/email';
 
-// Forçar uso do Node.js runtime (não Edge Runtime)
 export const runtime = 'nodejs';
 
 export async function GET(request: NextRequest) {
@@ -14,18 +13,15 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Token não fornecido' }, { status: 400 });
     }
 
-    // Verificar e usar token
-    const userId = verifyAndUseToken(token, 'email_verification');
+    const userId = await verifyAndUseToken(token, 'email_verification');
 
     if (!userId) {
-      return NextResponse.json({ 
-        error: 'Token inválido ou expirado' 
+      return NextResponse.json({
+        error: 'Token inválido ou expirado'
       }, { status: 400 });
     }
 
-    // Marcar email como verificado
-    const db = getDatabase();
-    db.prepare('UPDATE users SET email_verified = 1 WHERE id = ?').run(userId);
+    await query('UPDATE users SET email_verified = 1 WHERE id = $1', [userId]);
 
     return NextResponse.json({
       success: true,
@@ -33,10 +29,9 @@ export async function GET(request: NextRequest) {
     });
   } catch (error: any) {
     console.error('Erro ao verificar email:', error);
-    return NextResponse.json({ 
+    return NextResponse.json({
       error: 'Erro ao verificar email',
-      details: error.message 
+      details: error.message
     }, { status: 500 });
   }
 }
-

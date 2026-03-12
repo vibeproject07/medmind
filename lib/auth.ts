@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import { getDatabase } from './db';
+import { query } from './db';
 import type { User } from './jwt';
 
 export async function hashPassword(password: string): Promise<string> {
@@ -10,52 +10,54 @@ export async function verifyPassword(password: string, hashedPassword: string): 
   return bcrypt.compare(password, hashedPassword);
 }
 
-// generateToken e verifyToken foram movidos para lib/jwt.ts para compatibilidade com Edge Runtime
-
-export function getUserByEmail(email: string): User | null {
-  const db = getDatabase();
-  const user = db.prepare('SELECT id, name, username, email, role, company_id, email_verified FROM users WHERE email = ?').get(email) as any;
-  return user || null;
+export async function getUserByEmail(email: string): Promise<User | null> {
+  const result = await query(
+    'SELECT id, name, username, email, role, company_id, email_verified FROM users WHERE email = $1',
+    [email]
+  );
+  return result.rows[0] || null;
 }
 
-export function getUserByUsername(username: string): User | null {
-  const db = getDatabase();
-  const user = db.prepare('SELECT id, name, username, email, role, company_id FROM users WHERE username = ?').get(username) as any;
-  return user || null;
+export async function getUserByUsername(username: string): Promise<User | null> {
+  const result = await query(
+    'SELECT id, name, username, email, role, company_id FROM users WHERE username = $1',
+    [username]
+  );
+  return result.rows[0] || null;
 }
 
-export function getUserByUsernameOrEmail(identifier: string): User | null {
-  const db = getDatabase();
-  // Tenta primeiro por username, depois por email
-  let user = db.prepare('SELECT id, name, username, email, role, company_id FROM users WHERE username = ?').get(identifier) as any;
-  if (!user) {
-    user = db.prepare('SELECT id, name, username, email, role, company_id FROM users WHERE email = ?').get(identifier) as any;
+export async function getUserByUsernameOrEmail(identifier: string): Promise<User | null> {
+  let result = await query(
+    'SELECT id, name, username, email, role, company_id FROM users WHERE username = $1',
+    [identifier]
+  );
+  if (result.rows.length === 0) {
+    result = await query(
+      'SELECT id, name, username, email, role, company_id FROM users WHERE email = $1',
+      [identifier]
+    );
   }
-  return user || null;
+  return result.rows[0] || null;
 }
 
-export function getUserById(id: number): User | null {
-  const db = getDatabase();
-  const user = db.prepare('SELECT id, name, username, email, role, company_id FROM users WHERE id = ?').get(id) as any;
-  return user || null;
+export async function getUserById(id: number): Promise<User | null> {
+  const result = await query(
+    'SELECT id, name, username, email, role, company_id FROM users WHERE id = $1',
+    [id]
+  );
+  return result.rows[0] || null;
 }
 
-export function getUserPassword(identifier: string, byUsername: boolean = false): string | null {
-  const db = getDatabase();
-  const query = byUsername 
-    ? 'SELECT password FROM users WHERE username = ?'
-    : 'SELECT password FROM users WHERE email = ?';
-  const result = db.prepare(query).get(identifier) as any;
-  return result?.password || null;
-}
-
-export function getUserPasswordByUsernameOrEmail(identifier: string): string | null {
-  const db = getDatabase();
-  // Tenta primeiro por username, depois por email
-  let result = db.prepare('SELECT password FROM users WHERE username = ?').get(identifier) as any;
-  if (!result) {
-    result = db.prepare('SELECT password FROM users WHERE email = ?').get(identifier) as any;
+export async function getUserPasswordByUsernameOrEmail(identifier: string): Promise<string | null> {
+  let result = await query(
+    'SELECT password FROM users WHERE username = $1',
+    [identifier]
+  );
+  if (result.rows.length === 0) {
+    result = await query(
+      'SELECT password FROM users WHERE email = $1',
+      [identifier]
+    );
   }
-  return result?.password || null;
+  return result.rows[0]?.password || null;
 }
-

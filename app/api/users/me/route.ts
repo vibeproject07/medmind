@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase } from '@/lib/db';
+import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 
 export const runtime = 'nodejs';
@@ -8,11 +8,11 @@ export async function GET(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization');
     let token = authHeader?.replace('Bearer ', '') || request.cookies.get('token')?.value;
-    
+
     if (token) {
       token = token.trim().replace(/^["']|["']$/g, '');
     }
-    
+
     if (!token) {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
     }
@@ -22,33 +22,21 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
     }
 
-    const db = getDatabase();
-    const userData = db.prepare(`
+    const result = await query(`
       SELECT 
-        u.id, 
-        u.name, 
-        u.username, 
-        u.email, 
-        u.role, 
-        u.company_id,
-        u.academic_status,
-        u.academic_period,
-        u.institution,
-        u.teaching_methodology,
-        u.residency_status,
-        u.residency_name,
-        u.residency_year,
-        u.wants_new_residency_exam,
-        u.next_residency_interests,
-        u.interests_tags,
-        u.created_at,
-        u.updated_at,
-        c.name as company_name
+        u.id, u.name, u.username, u.email, u.role, u.company_id,
+        u.academic_status, u.academic_period, u.institution, u.teaching_methodology,
+        u.residency_status, u.residency_name, u.residency_year, u.wants_new_residency_exam,
+        u.next_residency_interests, u.interests_tags, u.specialty_area,
+        u.wants_another_residency, u.intended_residency, u.wants_residency,
+        u.intended_residency_generalist, u.has_residency,
+        u.created_at, u.updated_at, c.name as company_name
       FROM users u
       LEFT JOIN companies c ON u.company_id = c.id
-      WHERE u.id = ?
-    `).get(user.id) as any;
+      WHERE u.id = $1
+    `, [user.id]);
 
+    const userData = result.rows[0];
     if (!userData) {
       return NextResponse.json({ error: 'Usuário não encontrado' }, { status: 404 });
     }
@@ -90,11 +78,11 @@ export async function PUT(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization');
     let token = authHeader?.replace('Bearer ', '') || request.cookies.get('token')?.value;
-    
+
     if (token) {
       token = token.trim().replace(/^["']|["']$/g, '');
     }
-    
+
     if (!token) {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
     }
@@ -105,50 +93,51 @@ export async function PUT(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { academic_status, academic_period, institution, teaching_methodology, residency_status, residency_name, residency_year, wants_new_residency_exam, specialty_area, wants_another_residency, intended_residency, wants_residency, intended_residency_generalist, has_residency, interests_tags } = body;
+    const {
+      academic_status, academic_period, institution, teaching_methodology,
+      residency_status, residency_name, residency_year, wants_new_residency_exam,
+      next_residency_interests, specialty_area, wants_another_residency,
+      intended_residency, wants_residency, intended_residency_generalist,
+      has_residency, interests_tags
+    } = body;
 
-    // Validar academic_period apenas se academic_status for 'student'
     if (academic_status === 'student' && academic_period !== null && academic_period !== undefined) {
       if (academic_period < 1 || academic_period > 12) {
-        return NextResponse.json({ 
-          error: 'Período acadêmico deve estar entre 1 e 12' 
+        return NextResponse.json({
+          error: 'Período acadêmico deve estar entre 1 e 12'
         }, { status: 400 });
       }
     }
 
-    const db = getDatabase();
-    
-    // Converter interests_tags array para JSON string
     const interestsTagsJson = interests_tags && Array.isArray(interests_tags) && interests_tags.length > 0
-      ? JSON.stringify(interests_tags.slice(0, 5)) // Limitar a 5 tags
+      ? JSON.stringify(interests_tags.slice(0, 5))
       : null;
 
-    // Converter next_residency_interests array para JSON string
     const nextResidencyInterestsJson = next_residency_interests && Array.isArray(next_residency_interests) && next_residency_interests.length > 0
       ? JSON.stringify(next_residency_interests)
       : null;
 
-    // Atualizar apenas os campos acadêmicos
-    db.prepare(`
+    await query(`
       UPDATE users
-      SET academic_status = ?,
-          academic_period = ?,
-          institution = ?,
-          teaching_methodology = ?,
-          residency_status = ?,
-          residency_name = ?,
-          residency_year = ?,
-          wants_new_residency_exam = ?,
-          next_residency_interests = ?,
-          specialty_area = ?,
-          wants_another_residency = ?,
-          intended_residency = ?,
-          wants_residency = ?,
-          intended_residency_generalist = ?,
-          interests_tags = ?,
-          updated_at = CURRENT_TIMESTAMP
-      WHERE id = ?
-    `).run(
+      SET academic_status = $1,
+          academic_period = $2,
+          institution = $3,
+          teaching_methodology = $4,
+          residency_status = $5,
+          residency_name = $6,
+          residency_year = $7,
+          wants_new_residency_exam = $8,
+          next_residency_interests = $9,
+          specialty_area = $10,
+          wants_another_residency = $11,
+          intended_residency = $12,
+          wants_residency = $13,
+          intended_residency_generalist = $14,
+          has_residency = $15,
+          interests_tags = $16,
+          updated_at = NOW()
+      WHERE id = $17
+    `, [
       academic_status || null,
       academic_status === 'student' ? (academic_period || null) : null,
       academic_status === 'student' ? (institution || null) : null,
@@ -166,40 +155,23 @@ export async function PUT(request: NextRequest) {
       academic_status === 'graduate' ? (has_residency || null) : null,
       interestsTagsJson,
       user.id
-    );
+    ]);
 
-    // Retornar dados atualizados
-    const updatedUser = db.prepare(`
+    const updatedResult = await query(`
       SELECT 
-        u.id, 
-        u.name, 
-        u.username, 
-        u.email, 
-        u.role, 
-        u.company_id,
-        u.academic_status,
-        u.academic_period,
-        u.institution,
-        u.teaching_methodology,
-        u.residency_status,
-        u.residency_name,
-        u.residency_year,
-        u.wants_new_residency_exam,
-        u.next_residency_interests,
-        u.specialty_area,
-        u.wants_another_residency,
-        u.intended_residency,
-        u.wants_residency,
-        u.intended_residency_generalist,
-        u.has_residency,
-        u.interests_tags,
-        u.created_at,
-        u.updated_at,
+        u.id, u.name, u.username, u.email, u.role, u.company_id,
+        u.academic_status, u.academic_period, u.institution, u.teaching_methodology,
+        u.residency_status, u.residency_name, u.residency_year, u.wants_new_residency_exam,
+        u.next_residency_interests, u.specialty_area, u.wants_another_residency,
+        u.intended_residency, u.wants_residency, u.intended_residency_generalist,
+        u.has_residency, u.interests_tags, u.created_at, u.updated_at,
         c.name as company_name
       FROM users u
       LEFT JOIN companies c ON u.company_id = c.id
-      WHERE u.id = ?
-    `).get(user.id) as any;
+      WHERE u.id = $1
+    `, [user.id]);
+
+    const updatedUser = updatedResult.rows[0];
 
     return NextResponse.json({
       id: updatedUser.id,

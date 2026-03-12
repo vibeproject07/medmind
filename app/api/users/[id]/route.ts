@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase } from '@/lib/db';
+import { query } from '@/lib/db';
 import { hashPassword } from '@/lib/auth';
 import { verifyToken } from '@/lib/jwt';
 
-// Forçar uso do Node.js runtime (não Edge Runtime)
 export const runtime = 'nodejs';
 
 export async function PUT(
@@ -11,15 +10,13 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    // Tentar pegar token do header Authorization ou do cookie
     const authHeader = request.headers.get('authorization');
     let token = authHeader?.replace('Bearer ', '') || request.cookies.get('token')?.value;
-    
-    // Limpar token: remover espaços e possíveis aspas
+
     if (token) {
       token = token.trim().replace(/^["']|["']$/g, '');
     }
-    
+
     if (!token) {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
     }
@@ -29,21 +26,17 @@ export async function PUT(
       return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
     }
 
-    // Verificar permissão: apenas admin e manager podem editar usuários
     if (user.role === 'regular') {
-      return NextResponse.json({ 
-        error: 'Acesso negado. Apenas administradores e gerentes podem editar usuários.' 
+      return NextResponse.json({
+        error: 'Acesso negado. Apenas administradores e gerentes podem editar usuários.'
       }, { status: 403 });
     }
 
     const { name, username, email, password, role, company_id } = await request.json();
-    const db = getDatabase();
 
-    // Validar role
     const validRoles = ['admin', 'manager', 'regular'];
     let userRole = role && validRoles.includes(role) ? role : 'regular';
 
-    // Apenas admin pode alterar para manager ou admin
     if (userRole === 'manager' || userRole === 'admin') {
       if (user.role !== 'admin') {
         return NextResponse.json(
@@ -53,8 +46,7 @@ export async function PUT(
       }
     }
 
-    // Verificar se está tentando alterar o próprio role de admin
-    const targetUser = db.prepare('SELECT role FROM users WHERE id = ?').get(params.id) as any;
+    const targetUser = (await query('SELECT role FROM users WHERE id = $1', [params.id])).rows[0];
     if (targetUser && targetUser.role === 'admin' && userRole !== 'admin' && user.id !== parseInt(params.id)) {
       return NextResponse.json(
         { error: 'Não é possível remover o perfil de admin de outro usuário' },
@@ -62,24 +54,25 @@ export async function PUT(
       );
     }
 
-    // Verificar se username já existe em outro usuário (se fornecido)
     if (username) {
-      const existingUsername = db.prepare('SELECT * FROM users WHERE username = ? AND id != ?').get(username, params.id);
+      const existingUsername = (await query('SELECT id FROM users WHERE username = $1 AND id != $2', [username, params.id])).rows[0];
       if (existingUsername) {
         return NextResponse.json({ error: 'Username já cadastrado' }, { status: 400 });
       }
     }
 
-    let updateQuery = 'UPDATE users SET name = ?, username = ?, email = ?, role = ?, company_id = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?';
-    const updateParams: any[] = [name, username || null, email, userRole, company_id || null, params.id];
-
     if (password) {
       const hashedPassword = await hashPassword(password);
-      updateQuery = 'UPDATE users SET name = ?, username = ?, email = ?, password = ?, role = ?, company_id = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?';
-      updateParams.splice(5, 0, hashedPassword);
+      await query(
+        'UPDATE users SET name = $1, username = $2, email = $3, password = $4, role = $5, company_id = $6, updated_at = NOW() WHERE id = $7',
+        [name, username || null, email, hashedPassword, userRole, company_id || null, params.id]
+      );
+    } else {
+      await query(
+        'UPDATE users SET name = $1, username = $2, email = $3, role = $4, company_id = $5, updated_at = NOW() WHERE id = $6',
+        [name, username || null, email, userRole, company_id || null, params.id]
+      );
     }
-
-    db.prepare(updateQuery).run(...updateParams);
 
     return NextResponse.json({ success: true });
   } catch (error) {
@@ -92,15 +85,13 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    // Tentar pegar token do header Authorization ou do cookie
     const authHeader = request.headers.get('authorization');
     let token = authHeader?.replace('Bearer ', '') || request.cookies.get('token')?.value;
-    
-    // Limpar token: remover espaços e possíveis aspas
+
     if (token) {
       token = token.trim().replace(/^["']|["']$/g, '');
     }
-    
+
     if (!token) {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
     }
@@ -110,19 +101,16 @@ export async function DELETE(
       return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
     }
 
-    // Verificar permissão: apenas admin e manager podem excluir usuários
     if (user.role === 'regular') {
-      return NextResponse.json({ 
-        error: 'Acesso negado. Apenas administradores e gerentes podem excluir usuários.' 
+      return NextResponse.json({
+        error: 'Acesso negado. Apenas administradores e gerentes podem excluir usuários.'
       }, { status: 403 });
     }
 
-    const db = getDatabase();
-    db.prepare('DELETE FROM users WHERE id = ?').run(params.id);
+    await query('DELETE FROM users WHERE id = $1', [params.id]);
 
     return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json({ error: 'Erro ao excluir usuário' }, { status: 500 });
   }
 }
-

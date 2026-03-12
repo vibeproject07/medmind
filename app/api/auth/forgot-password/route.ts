@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase } from '@/lib/db';
 import { getUserByEmail } from '@/lib/auth';
 import { generateToken, saveEmailToken, sendPasswordResetEmail } from '@/lib/email';
 
-// Forçar uso do Node.js runtime (não Edge Runtime)
 export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {
@@ -14,9 +12,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Email é obrigatório' }, { status: 400 });
     }
 
-    const user = getUserByEmail(email);
-    
-    // Sempre retornar sucesso para não expor se o email existe ou não
+    const user = await getUserByEmail(email);
+
     if (!user) {
       return NextResponse.json({
         success: true,
@@ -24,11 +21,9 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Gerar token de recuperação de senha
     const resetToken = generateToken();
-    saveEmailToken(user.id, resetToken, 'password_reset', 1); // Expira em 1 hora
+    await saveEmailToken(user.id, resetToken, 'password_reset', 1);
 
-    // Enviar email de recuperação
     try {
       await sendPasswordResetEmail(user.email, user.name, resetToken);
     } catch (emailError: any) {
@@ -44,10 +39,9 @@ export async function POST(request: NextRequest) {
     });
   } catch (error: any) {
     console.error('Erro ao processar recuperação de senha:', error);
-    return NextResponse.json({ 
+    return NextResponse.json({
       error: 'Erro ao processar solicitação',
-      details: error.message 
+      details: error.message
     }, { status: 500 });
   }
 }
-

@@ -1,29 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDatabase } from '@/lib/db';
+import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 
 export const runtime = 'nodejs';
 
 type Alternativa = { letra?: string; descricao?: string; texto?: string };
 
-/** Categorias extraídas do nome da prova (ordem: banca, regiao, ano, tipo). */
 const CATEGORIAS_NOME_PROVA = ['banca', 'regiao', 'ano', 'tipo'] as const;
 
-/**
- * Faz o split do nome da prova pelos travessões "-" e designa cada parte às categorias
- * (banca, regiao, ano, tipo) na ordem. Partes vazias após trim são ignoradas.
- * Ex: "ABC-SP-2021-R1" -> { banca: "ABC", regiao: "SP", ano: "2021", tipo: "R1" }
- */
 function parseNomeProva(nome: string): { banca: string | null; regiao: string | null; ano: string | null; tipo: string | null } {
-  const parts = nome
-    .split('-')
-    .map((s) => s.trim())
-    .filter((s) => s.length > 0);
+  const parts = nome.split('-').map((s) => s.trim()).filter((s) => s.length > 0);
   const result: { banca: string | null; regiao: string | null; ano: string | null; tipo: string | null } = {
-    banca: null,
-    regiao: null,
-    ano: null,
-    tipo: null,
+    banca: null, regiao: null, ano: null, tipo: null,
   };
   CATEGORIAS_NOME_PROVA.forEach((cat, idx) => {
     if (parts[idx]) (result as Record<string, string | null>)[cat] = parts[idx];
@@ -69,7 +57,6 @@ function mapQuestaoToOptions(questoes: {
   });
 }
 
-/** Formato antigo: lista de páginas com questao dentro (ex.: saída do crawler). */
 type PaginaAntiga = {
   questao?: {
     prova?: string;
@@ -82,11 +69,6 @@ type PaginaAntiga = {
   imagens?: { src?: string }[];
 };
 
-/**
- * Normaliza o payload de importação: aceita formato novo { provas } ou formato antigo { paginas }.
- * No formato antigo, agrupa por questao.prova e monta provas com nome (trim) e questoes.
- * O nome é sempre trimado; as categorias (banca, regiao, ano, tipo) serão preenchidas depois por parseNomeProva quando não vierem no objeto.
- */
 function normalizeImportPayload(body: Record<string, unknown>): { nome: string; questoes: unknown[] }[] {
   const provas = body.provas;
   if (Array.isArray(provas) && provas.length > 0) {
@@ -155,10 +137,6 @@ function normalizeImportPayload(body: Record<string, unknown>): { nome: string; 
   return [];
 }
 
-/**
- * GET /api/provas
- * Lista todas as provas com suas questões (para exibir na página Provas na Íntegra).
- */
 export async function GET(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization');
@@ -168,15 +146,14 @@ export async function GET(request: NextRequest) {
     const user = verifyToken(token);
     if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
 
-    const db = getDatabase();
-    const provasRows = db.prepare('SELECT id, nome, banca, regiao, ano, tipo, created_at FROM provas ORDER BY created_at DESC').all() as { id: number; nome: string; banca: string | null; regiao: string | null; ano: string | null; tipo: string | null; created_at: string }[];
-    const questionsRows = db.prepare(`
+    const provasRows = (await query('SELECT id, nome, banca, regiao, ano, tipo, created_at FROM provas ORDER BY created_at DESC')).rows;
+    const questionsRows = (await query(`
       SELECT id, statement, option_a, option_b, option_c, option_d, option_e, correct_answer, images, exam_board, exam_region, exam_year, exam_type, prova_id, numero_na_prova
       FROM questions WHERE prova_id IS NOT NULL ORDER BY prova_id, numero_na_prova
-    `).all() as any[];
+    `)).rows;
 
     const questionsByProvaId: Record<number, any[]> = {};
-    questionsRows.forEach((q) => {
+    questionsRows.forEach((q: any) => {
       const pid = q.prova_id;
       if (pid == null) return;
       if (!questionsByProvaId[pid]) questionsByProvaId[pid] = [];
@@ -198,7 +175,7 @@ export async function GET(request: NextRequest) {
       });
     });
 
-    const provas = provasRows.map((p) => ({
+    const provas = provasRows.map((p: any) => ({
       id: p.id,
       nome: p.nome,
       banca: p.banca,
@@ -216,11 +193,6 @@ export async function GET(request: NextRequest) {
   }
 }
 
-/**
- * POST /api/provas/import
- * Importa JSON de provas e questões; cria registros em provas e questions.
- * Body: { provas: [ { nome, banca?, regiao?, ano?, tipo?, questoes: [ { numero, titulo|enunciado, alternativas, alternativa_correta, imagens? } ] } ] }
- */
 export async function POST(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization');
@@ -238,13 +210,6 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
-    const db = getDatabase();
-    const insertProva = db.prepare('INSERT INTO provas (nome, banca, regiao, ano, tipo) VALUES (?, ?, ?, ?, ?)');
-    const insertQuestion = db.prepare(`
-      INSERT INTO questions (statement, option_a, option_b, option_c, option_d, option_e, correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region, exam_type, prova_id, numero_na_prova)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `);
-
     const result: { id: number; nome: string; banca: string | null; regiao: string | null; ano: string | null; tipo: string | null; questions: { id: number; numero_na_prova: number }[] }[] = [];
 
     for (const p of rawProvas) {
@@ -255,8 +220,12 @@ export async function POST(request: NextRequest) {
       const regiao = (pAny.regiao != null && pAny.regiao !== '') ? String(pAny.regiao).trim() : (parsed.regiao ?? null);
       const ano = (pAny.ano != null && pAny.ano !== '') ? String(pAny.ano).trim() : ((pAny.exam_year != null && pAny.exam_year !== '') ? String(pAny.exam_year).trim() : (parsed.ano ?? null));
       const tipo = (pAny.tipo != null && pAny.tipo !== '') ? String(pAny.tipo).trim() : (pAny.exam_type != null && pAny.exam_type !== '' ? String(pAny.exam_type).trim() : (parsed.tipo ?? null));
-      const provasRun = insertProva.run(nome, banca, regiao, ano, tipo);
-      const provaId = Number((provasRun as { lastInsertRowid: number }).lastInsertRowid);
+
+      const provaResult = await query(
+        'INSERT INTO provas (nome, banca, regiao, ano, tipo) VALUES ($1, $2, $3, $4, $5) RETURNING id',
+        [nome, banca, regiao, ano, tipo]
+      );
+      const provaId = provaResult.rows[0].id;
 
       const questoes = Array.isArray((p as { questoes?: unknown[] }).questoes) ? (p as { questoes: unknown[] }).questoes : (Array.isArray((p as { questions?: unknown[] }).questions) ? (p as { questions: unknown[] }).questions : []);
       const normalized = mapQuestaoToOptions(questoes);
@@ -266,26 +235,30 @@ export async function POST(request: NextRequest) {
         const optA = q.option_a || 'Alternativa A';
         const optB = q.option_b || 'Alternativa B';
         const imagesJson = q.images?.length ? JSON.stringify(q.images) : null;
-        const qRun = insertQuestion.run(
-          q.statement || '(Sem enunciado)',
-          optA,
-          optB,
-          q.option_c,
-          q.option_d,
-          q.option_e,
-          q.correct_answer,
-          null,
-          null,
-          imagesJson,
-          ano ? parseInt(ano, 10) : null,
-          banca,
-          null,
-          regiao,
-          tipo,
-          provaId,
-          q.numero
+        const qResult = await query(
+          `INSERT INTO questions (statement, option_a, option_b, option_c, option_d, option_e, correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region, exam_type, prova_id, numero_na_prova)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17) RETURNING id`,
+          [
+            q.statement || '(Sem enunciado)',
+            optA,
+            optB,
+            q.option_c,
+            q.option_d,
+            q.option_e,
+            q.correct_answer,
+            null,
+            null,
+            imagesJson,
+            ano ? parseInt(ano, 10) : null,
+            banca,
+            null,
+            regiao,
+            tipo,
+            provaId,
+            q.numero
+          ]
         );
-        const qId = Number((qRun as { lastInsertRowid: number }).lastInsertRowid);
+        const qId = qResult.rows[0].id;
         questionIds.push({ id: qId, numero_na_prova: q.numero });
       }
 
