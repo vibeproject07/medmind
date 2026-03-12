@@ -80,6 +80,13 @@ export async function GET(request: NextRequest) {
       }, { status: 401 });
     }
 
+    // Verificar permissão: apenas admin e manager podem ver usuários
+    if (user.role === 'regular') {
+      return NextResponse.json({ 
+        error: 'Acesso negado. Apenas administradores e gerentes podem acessar esta funcionalidade.' 
+      }, { status: 403 });
+    }
+
     const db = getDatabase();
     const users = db.prepare('SELECT id, name, username, email, role, company_id, created_at FROM users').all();
 
@@ -133,6 +140,13 @@ export async function POST(request: NextRequest) {
           tokenStart: token.substring(0, 20)
         }
       }, { status: 401 });
+    }
+
+    // Verificar permissão: apenas admin e manager podem criar usuários
+    if (user.role === 'regular') {
+      return NextResponse.json({ 
+        error: 'Acesso negado. Apenas administradores e gerentes podem criar usuários.' 
+      }, { status: 403 });
     }
 
     // Agora ler o body

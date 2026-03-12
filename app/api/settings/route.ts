@@ -25,6 +25,13 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
     }
 
+    // Verificar permissão: apenas admin e manager podem acessar configurações
+    if (user.role === 'regular') {
+      return NextResponse.json({ 
+        error: 'Acesso negado. Apenas administradores e gerentes podem acessar as configurações.' 
+      }, { status: 403 });
+    }
+
     const db = getDatabase();
     const settings = db.prepare('SELECT * FROM settings').all();
 

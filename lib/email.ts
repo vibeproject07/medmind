@@ -8,13 +8,19 @@ function getSmtpConfig() {
   const emailSetting = db.prepare('SELECT * FROM settings WHERE key = ?').get('email_smtp') as any;
   
   if (!emailSetting) {
-    throw new Error('Configuração SMTP não encontrada');
+    throw new Error('Configuração SMTP não encontrada. Acesse o Dashboard → Configurações para configurar.');
   }
 
   const smtpConfig = JSON.parse(emailSetting.value);
   
   if (!smtpConfig.host || !smtpConfig.port || !smtpConfig.user || !smtpConfig.password) {
-    throw new Error('Configuração SMTP incompleta');
+    throw new Error('Configuração SMTP incompleta. Preencha todos os campos (Host, Porta, Usuário e Senha) nas Configurações.');
+  }
+
+  // Validar se não são valores de teste vazios
+  if (smtpConfig.host.trim() === '' || smtpConfig.port.trim() === '' || 
+      smtpConfig.user.trim() === '' || smtpConfig.password.trim() === '') {
+    throw new Error('Configuração SMTP incompleta. Preencha todos os campos nas Configurações.');
   }
 
   return {
@@ -29,18 +35,22 @@ function getSmtpConfig() {
 function createTransporter() {
   const config = getSmtpConfig();
   
-  return nodemailer.createTransport({
-    host: config.host,
-    port: config.port,
-    secure: config.port === 465,
-    auth: {
-      user: config.user,
-      pass: config.password,
-    },
-    tls: {
-      rejectUnauthorized: false,
-    },
-  });
+  try {
+    return nodemailer.createTransport({
+      host: config.host,
+      port: config.port,
+      secure: config.port === 465,
+      auth: {
+        user: config.user,
+        pass: config.password,
+      },
+      tls: {
+        rejectUnauthorized: false,
+      },
+    });
+  } catch (error: any) {
+    throw new Error(`Erro ao criar transporter SMTP: ${error.message}. Verifique as configurações.`);
+  }
 }
 
 // Gerar token único
@@ -84,13 +94,21 @@ export function verifyAndUseToken(token: string, type: 'email_verification' | 'p
 
 // Enviar email de validação
 export async function sendVerificationEmail(email: string, name: string, token: string): Promise<void> {
-  const config = getSmtpConfig();
-  const transporter = createTransporter();
+  let config;
+  let transporter;
+  
+  try {
+    config = getSmtpConfig();
+    transporter = createTransporter();
+  } catch (error: any) {
+    throw new Error(`Erro na configuração SMTP: ${error.message}`);
+  }
   
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
   const verificationUrl = `${baseUrl}/verify-email?token=${token}`;
 
-  await transporter.sendMail({
+  try {
+    await transporter.sendMail({
     from: `"MedMind" <${config.user}>`,
     to: email,
     subject: 'Confirme seu email - MedMind',
@@ -119,18 +137,38 @@ export async function sendVerificationEmail(email: string, name: string, token: 
       
       Este link expira em 24 horas.
     `,
-  });
+    });
+  } catch (error: any) {
+    // Mensagens de erro mais específicas
+    if (error.code === 'EAUTH') {
+      throw new Error('Erro de autenticação SMTP. Verifique se o usuário e senha estão corretos. Para Gmail, use uma Senha de App.');
+    } else if (error.code === 'ECONNECTION' || error.code === 'ETIMEDOUT') {
+      throw new Error(`Não foi possível conectar ao servidor SMTP (${config.host}:${config.port}). Verifique o host e porta.`);
+    } else if (error.code === 'EENVELOPE') {
+      throw new Error('Erro no endereço de email. Verifique se o email de destino é válido.');
+    } else {
+      throw new Error(`Erro ao enviar email: ${error.message || 'Erro desconhecido'}`);
+    }
+  }
 }
 
 // Enviar email de recuperação de senha
 export async function sendPasswordResetEmail(email: string, name: string, token: string): Promise<void> {
-  const config = getSmtpConfig();
-  const transporter = createTransporter();
+  let config;
+  let transporter;
+  
+  try {
+    config = getSmtpConfig();
+    transporter = createTransporter();
+  } catch (error: any) {
+    throw new Error(`Erro na configuração SMTP: ${error.message}`);
+  }
   
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
   const resetUrl = `${baseUrl}/reset-password?token=${token}`;
 
-  await transporter.sendMail({
+  try {
+    await transporter.sendMail({
     from: `"MedMind" <${config.user}>`,
     to: email,
     subject: 'Recuperação de Senha - MedMind',
@@ -167,6 +205,18 @@ export async function sendPasswordResetEmail(email: string, name: string, token:
       
       Se você não solicitou esta recuperação de senha, ignore este email.
     `,
-  });
+    });
+  } catch (error: any) {
+    // Mensagens de erro mais específicas
+    if (error.code === 'EAUTH') {
+      throw new Error('Erro de autenticação SMTP. Verifique se o usuário e senha estão corretos. Para Gmail, use uma Senha de App.');
+    } else if (error.code === 'ECONNECTION' || error.code === 'ETIMEDOUT') {
+      throw new Error(`Não foi possível conectar ao servidor SMTP (${config.host}:${config.port}). Verifique o host e porta.`);
+    } else if (error.code === 'EENVELOPE') {
+      throw new Error('Erro no endereço de email. Verifique se o email de destino é válido.');
+    } else {
+      throw new Error(`Erro ao enviar email: ${error.message || 'Erro desconhecido'}`);
+    }
+  }
 }
 

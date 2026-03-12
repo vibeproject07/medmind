@@ -1,10 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
-import { GraduationCap } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { GraduationCap, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 
 export default function LoginPage() {
+  const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     name: '',
@@ -14,6 +15,7 @@ export default function LoginPage() {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
   const [forgotPasswordLoading, setForgotPasswordLoading] = useState(false);
@@ -28,7 +30,12 @@ export default function LoginPage() {
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
       const payload = isLogin 
         ? { email: formData.email, password: formData.password } // No login, o campo email pode conter username ou email
-        : formData;
+        : {
+            name: formData.name,
+            username: formData.username,
+            email: formData.email,
+            password: formData.password,
+          };
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -55,7 +62,12 @@ export default function LoginPage() {
         // Se for registro, não esperar token
         if (!isLogin) {
           // Registro bem-sucedido
-          alert(data.message || 'Conta criada com sucesso! Verifique seu email para confirmar sua conta antes de fazer login.');
+          if (data.emailSent) {
+            alert('✅ Conta criada com sucesso!\n\nVerifique seu email para confirmar sua conta antes de fazer login.\n\nSe não receber o email em alguns minutos, verifique a pasta de spam.');
+          } else {
+            const errorMsg = data.emailError || 'Configuração SMTP não configurada ou inválida';
+            alert(`⚠️ Conta criada com sucesso!\n\nPorém, não foi possível enviar o email de confirmação.\n\nErro: ${errorMsg}\n\nPara resolver:\n1. Acesse o Dashboard → Configurações\n2. Configure o Email SMTP\n3. Solicite reenvio do email de confirmação\n\nVocê pode fazer login normalmente, mas precisará verificar o email depois.`);
+          }
           setIsLogin(true);
           setFormData({ name: '', username: '', email: '', password: '' });
           setLoading(false);
@@ -158,16 +170,27 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
-        <div className="flex items-center justify-center gap-2 mb-8">
-          <GraduationCap className="w-10 h-10 text-primary-600" />
-          <span className="text-3xl font-bold text-gray-800">MedMind</span>
+    <div className="min-h-screen min-h-[100dvh] bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4 sm:p-6 safe-area-padding">
+      <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-5 sm:p-6 md:p-8 w-full max-w-md relative">
+        <button
+          onClick={() => router.push('/')}
+          className="absolute top-3 left-3 sm:top-4 sm:left-4 p-2.5 rounded-lg hover:bg-gray-100 transition-colors text-gray-600 hover:text-gray-800 min-h-[44px] min-w-[44px] flex items-center justify-center"
+          aria-label="Voltar para a página inicial"
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </button>
+        <div className="flex items-center justify-center gap-2 mb-6 sm:mb-8">
+          <GraduationCap className="w-8 h-8 sm:w-10 sm:h-10 text-primary-600" />
+          <span className="text-2xl sm:text-3xl font-bold text-gray-800">MedMind</span>
         </div>
 
-        <div className="flex gap-4 mb-6 border-b">
+        <div className="flex gap-2 sm:gap-4 mb-6 border-b">
           <button
-            onClick={() => setIsLogin(true)}
+            onClick={() => {
+              setIsLogin(true);
+              setFormData({ name: '', username: '', email: '', password: '' });
+              setError('');
+            }}
             className={`pb-3 px-4 font-semibold transition ${
               isLogin
                 ? 'text-primary-600 border-b-2 border-primary-600'
@@ -177,7 +200,11 @@ export default function LoginPage() {
             Entrar
           </button>
           <button
-            onClick={() => setIsLogin(false)}
+            onClick={() => {
+              setIsLogin(false);
+              setFormData({ name: '', username: '', email: '', password: '' });
+              setError('');
+            }}
             className={`pb-3 px-4 font-semibold transition ${
               !isLogin
                 ? 'text-primary-600 border-b-2 border-primary-600'
@@ -193,11 +220,11 @@ export default function LoginPage() {
             <>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Nome
+                  Nome <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
-                  required={!isLogin}
+                  required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
@@ -216,47 +243,94 @@ export default function LoginPage() {
                   placeholder="seu_username (opcional)"
                 />
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Email <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  placeholder="seu@email.com"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Senha <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    required
+                    value={formData.password}
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    placeholder="••••••••"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="w-5 h-5" />
+                    ) : (
+                      <Eye className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
+              </div>
             </>
           )}
 
+          {/* Campos de login (apenas quando isLogin é true) */}
+          {isLogin && (
+            <>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              {isLogin ? 'Username ou Email' : 'Email'}
+                  Username ou Email
             </label>
             <input
-              type={isLogin ? 'text' : 'email'}
+                  type="text"
               required
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              placeholder={isLogin ? 'admin ou seu@email.com' : 'seu@email.com'}
+                  placeholder="admin ou seu@email.com"
             />
           </div>
-
               <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
                     Senha
                   </label>
-                  {isLogin && (
-                    <button
-                      type="button"
-                      onClick={() => setShowForgotPassword(true)}
-                      className="text-sm text-primary-600 hover:text-primary-700"
-                    >
-                      Esqueci minha senha
-                    </button>
-                  )}
-                </div>
+                <div className="relative">
                 <input
-                  type="password"
+                    type={showPassword ? 'text' : 'password'}
                   required
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   placeholder="••••••••"
                 />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="w-5 h-5" />
+                    ) : (
+                      <Eye className="w-5 h-5" />
+                    )}
+                  </button>
+                </div>
               </div>
+            </>
+          )}
 
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
@@ -267,17 +341,44 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-primary-600 text-white py-3 rounded-lg font-semibold hover:bg-primary-700 transition disabled:opacity-50"
+            className="w-full bg-primary-600 text-white py-3 rounded-lg font-semibold hover:bg-primary-700 transition disabled:opacity-50 flex items-center justify-center gap-2"
           >
-            {loading ? 'Processando...' : isLogin ? 'Entrar' : 'Cadastrar'}
+            {loading ? (
+              'Processando...'
+            ) : isLogin ? (
+              'Entrar'
+            ) : (
+              'Cadastrar'
+            )}
           </button>
         </form>
 
-        <div className="mt-6 text-center">
-          <Link href="/" className="text-primary-600 hover:text-primary-700 text-sm">
-            Voltar para a página inicial
-          </Link>
+        {isLogin && (
+          <>
+            <div className="mt-4 text-center">
+              <button
+                type="button"
+                onClick={() => setShowForgotPassword(true)}
+                className="text-sm text-primary-600 hover:text-primary-700"
+              >
+                Esqueci minha senha
+              </button>
+            </div>
+            <div className="mt-3 text-center">
+              <span className="text-sm text-gray-600">Não possui conta? </span>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsLogin(false);
+                  setFormData({ name: '', username: '', email: '', password: '' });
+                }}
+                className="text-sm text-primary-600 hover:text-primary-700 font-semibold"
+              >
+                Cadastre-se agora!
+              </button>
         </div>
+          </>
+        )}
       </div>
 
       {/* Modal de Esqueci Minha Senha */}

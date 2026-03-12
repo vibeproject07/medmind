@@ -1,0 +1,53 @@
+================================================================================
+  MEDMIND CRAWLER - DOCKER (uso em outra máquina)
+================================================================================
+
+Requisito: Docker instalado (https://www.docker.com/products/docker-desktop/)
+
+--------------------------------------------------------------------------------
+1. BUILD DA IMAGEM
+--------------------------------------------------------------------------------
+
+  Abra o terminal nesta pasta e execute:
+
+    docker build -t medmind-crawler .
+
+--------------------------------------------------------------------------------
+2. RODAR O CRAWLER
+--------------------------------------------------------------------------------
+
+  Crie a pasta de saída e execute (o JSON sai em resultado/resultado_crawl.json):
+
+    mkdir resultado
+    docker run --rm -v "%cd%\resultado:/resultado" medmind-crawler
+
+  No PowerShell (caminhos):
+
+    mkdir resultado
+    docker run --rm -v "${PWD}/resultado:/resultado" medmind-crawler
+
+--------------------------------------------------------------------------------
+3. COOKIES (OPCIONAL)
+--------------------------------------------------------------------------------
+
+  Se o site exigir cookies de sessão:
+
+    docker run --rm -v "%cd%\resultado:/resultado" ^
+      -e CRAWLER_COOKIE_HEADER="sua=string; de=cookies" ^
+      medmind-crawler
+
+  PowerShell:
+
+    docker run --rm -v "${PWD}/resultado:/resultado" `
+      -e CRAWLER_COOKIE_HEADER="sua=string; de=cookies" `
+      medmind-crawler
+
+--------------------------------------------------------------------------------
+4. VARIÁVEIS DE AMBIENTE
+--------------------------------------------------------------------------------
+
+  CRAWLER_SAIDA     - Caminho do arquivo JSON de saída (padrão no container: /resultado/resultado_crawl.json)
+  CRAWLER_COOKIE_HEADER - Header Cookie (ex.: "nome=valor; outro=valor")
+  CRAWLER_REFERER   - Header Referer (opcional)
+
+================================================================================

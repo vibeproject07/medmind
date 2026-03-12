@@ -26,6 +26,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
     }
 
+    // Verificar permissão: apenas admin e manager podem testar SMTP
+    if (user.role === 'regular') {
+      return NextResponse.json({ 
+        error: 'Acesso negado. Apenas administradores e gerentes podem testar o SMTP.' 
+      }, { status: 403 });
+    }
+
     // Buscar configuração SMTP do banco de dados
     const db = getDatabase();
     const emailSetting = db.prepare('SELECT * FROM settings WHERE key = ?').get('email_smtp') as any;

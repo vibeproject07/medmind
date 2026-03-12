@@ -1,7 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Mail } from 'lucide-react';
+import Link from 'next/link';
+import { Mail, Plus, List } from 'lucide-react';
+import CriarAgenteModal from '@/components/Dashboard/CriarAgenteModal';
 
 interface Setting {
   id: number;
@@ -21,8 +23,33 @@ export default function SettingsPage() {
     password: '',
   });
   const [testingEmail, setTestingEmail] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [showCriarAgenteModal, setShowCriarAgenteModal] = useState(false);
 
   useEffect(() => {
+    // Verificar permissão antes de carregar
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const userRole = payload.role || 'regular';
+        setIsAdmin(userRole === 'admin');
+
+        // Verificar permissão: apenas admin e manager podem acessar
+        if (userRole === 'regular') {
+          window.location.href = '/dashboard';
+          return;
+        }
+      } catch (error) {
+        console.error('Erro ao decodificar token:', error);
+        window.location.href = '/dashboard';
+        return;
+      }
+    } else {
+      window.location.href = '/login';
+      return;
+    }
+
     fetchSettings();
   }, []);
 
@@ -219,6 +246,30 @@ export default function SettingsPage() {
           )}
         </div>
 
+        {/* Agentes de IA */}
+        <div className="bg-white rounded-lg shadow p-6">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Agentes de IA</h2>
+          <div className="flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={() => setShowCriarAgenteModal(true)}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition"
+            >
+              <Plus className="w-5 h-5" />
+              Criar
+            </button>
+            {isAdmin && (
+              <Link
+                href="/dashboard/settings/agentes-ia"
+                className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+              >
+                <List className="w-5 h-5" />
+                Ver Todos
+              </Link>
+            )}
+          </div>
+        </div>
+
         {/* Lista de outras configurações */}
         <div className="bg-white rounded-lg shadow overflow-hidden">
           <div className="p-6 border-b border-gray-200">
@@ -316,6 +367,15 @@ export default function SettingsPage() {
           </div>
         </div>
       )}
+
+      <CriarAgenteModal
+        isOpen={showCriarAgenteModal}
+        onClose={() => setShowCriarAgenteModal(false)}
+        onSubmit={(data) => {
+          // TODO: chamar API para criar agente
+          console.log('Criar agente:', data);
+        }}
+      />
     </div>
   );
 }

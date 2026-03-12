@@ -29,6 +29,13 @@ export async function PUT(
       return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
     }
 
+    // Verificar permissão: apenas admin e manager podem editar usuários
+    if (user.role === 'regular') {
+      return NextResponse.json({ 
+        error: 'Acesso negado. Apenas administradores e gerentes podem editar usuários.' 
+      }, { status: 403 });
+    }
+
     const { name, username, email, password, role, company_id } = await request.json();
     const db = getDatabase();
 
@@ -101,6 +108,13 @@ export async function DELETE(
     const user = verifyToken(token);
     if (!user) {
       return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
+    }
+
+    // Verificar permissão: apenas admin e manager podem excluir usuários
+    if (user.role === 'regular') {
+      return NextResponse.json({ 
+        error: 'Acesso negado. Apenas administradores e gerentes podem excluir usuários.' 
+      }, { status: 403 });
     }
 
     const db = getDatabase();

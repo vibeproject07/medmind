@@ -25,6 +25,13 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
     }
 
+    // Verificar permissão: apenas admin e manager podem configurar SMTP
+    if (user.role === 'regular') {
+      return NextResponse.json({ 
+        error: 'Acesso negado. Apenas administradores e gerentes podem configurar o SMTP.' 
+      }, { status: 403 });
+    }
+
     const { host, port, user: smtpUser, password } = await request.json();
 
     if (!host || !port || !smtpUser || !password) {

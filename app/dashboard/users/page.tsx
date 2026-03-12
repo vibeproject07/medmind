@@ -28,16 +28,29 @@ export default function UsersPage() {
       try {
         // Decodificar o token JWT (apenas para obter o role no frontend)
         const payload = JSON.parse(atob(token.split('.')[1]));
+        const userRole = payload.role || 'regular';
+        
+        // Verificar permissão: apenas admin e manager podem acessar
+        if (userRole === 'regular') {
+          window.location.href = '/dashboard';
+          return;
+        }
+        
         setCurrentUser({
           id: payload.id,
           name: '',
           email: payload.email,
-          role: payload.role,
+          role: userRole,
           company_id: payload.company_id || null,
         });
       } catch (error) {
         console.error('Erro ao decodificar token:', error);
+        window.location.href = '/dashboard';
+        return;
       }
+    } else {
+      window.location.href = '/login';
+      return;
     }
     fetchUsers();
   }, []);

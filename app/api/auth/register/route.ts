@@ -8,7 +8,7 @@ export const runtime = 'nodejs';
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, username, email, password } = await request.json();
+    const { name, username, email, password, academic_status, academic_period, institution, teaching_methodology } = await request.json();
 
     if (!name || !email || !password) {
       return NextResponse.json(
@@ -48,10 +48,23 @@ export async function POST(request: NextRequest) {
 
     const hashedPassword = await hashPassword(password);
 
+    // Validar período acadêmico se for estudante
+    let finalAcademicPeriod = null;
+    if (academic_status === 'student' && academic_period) {
+      const period = parseInt(academic_period);
+      if (period >= 1 && period <= 12) {
+        finalAcademicPeriod = period;
+      }
+    }
+
+    // Validar campos relacionados a estudantes
+    const finalInstitution = (academic_status === 'student' && institution) ? institution.trim() : null;
+    const finalTeachingMethodology = (academic_status === 'student' && teaching_methodology) ? teaching_methodology : null;
+
     const result = db.prepare(`
-      INSERT INTO users (name, username, email, password, role, email_verified)
-      VALUES (?, ?, ?, ?, ?, 0)
-    `).run(name, username || null, email, hashedPassword, 'regular');
+      INSERT INTO users (name, username, email, password, role, email_verified, academic_status, academic_period, institution, teaching_methodology)
+      VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?)
+    `).run(name, username || null, email, hashedPassword, 'regular', academic_status || null, finalAcademicPeriod, finalInstitution, finalTeachingMethodology);
 
     const userId = result.lastInsertRowid as number;
 
