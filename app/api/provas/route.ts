@@ -227,7 +227,7 @@ export async function POST(request: NextRequest) {
       );
       const provaId = provaResult.rows[0].id;
 
-      const questoes = Array.isArray((p as { questoes?: unknown[] }).questoes) ? (p as { questoes: unknown[] }).questoes : (Array.isArray((p as { questions?: unknown[] }).questions) ? (p as { questions: unknown[] }).questions : []);
+      const questoes = Array.isArray((p as { questoes?: unknown[] }).questoes) ? (p as { questoes: unknown[] }).questoes : (Array.isArray((p as any).questions) ? (p as any).questions : []);
       const normalized = mapQuestaoToOptions(questoes);
       const questionIds: { id: number; numero_na_prova: number }[] = [];
 

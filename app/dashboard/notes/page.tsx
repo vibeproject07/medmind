@@ -107,6 +107,7 @@ export default function NotesPage() {
   const [filterCompanyId, setFilterCompanyId] = useState<string>('');
   const [filterTags, setFilterTags] = useState<string[]>([]);
   const [filterAreasConhecimento, setFilterAreasConhecimento] = useState<string[]>([]);
+  const [areasConhecimentoOptions, setAreasConhecimentoOptions] = useState<string[]>(AREAS_OPTIONS_DISPLAY || []);
   const [filterAssuntos, setFilterAssuntos] = useState<string[]>([]);
   const [filtersAccordionOpen, setFiltersAccordionOpen] = useState(false);
   const PAGE_SIZE = 15;
@@ -735,7 +736,7 @@ export default function NotesPage() {
                   </p>
                 </div>
               )}
-              {(note.tags?.length > 0 || note.areas_conhecimento?.length > 0 || note.assuntos?.length > 0) && (
+              {((note.tags ?? []).length > 0 || (note.areas_conhecimento ?? []).length > 0 || (note.assuntos ?? []).length > 0) && (
                 <div className="flex flex-wrap gap-1 mb-2">
                   {(note.tags ?? []).map((tag) => (
                     <span

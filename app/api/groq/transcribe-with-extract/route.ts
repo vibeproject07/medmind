@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
 
       if (isVideoFile(filename, file.type)) {
         const extracted = await extractAudioFromVideo(buffer, filename);
-        bufferToTranscribe = extracted.audioBuffer;
+        bufferToTranscribe = extracted.audioBuffer as any;
         nameToTranscribe = extracted.audioFilename;
         originalSize = extracted.originalSize;
         extractedSize = extracted.extractedSize;
