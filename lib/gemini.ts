@@ -53,7 +53,7 @@ export async function geminiProcessDocument({
 
   const effectiveInstruction = instruction ?? getInstructionByMimeType(mimeType);
 
-  const blob = Buffer.isBuffer(file) ? new Blob([file], { type: mimeType }) : file;
+  const blob = Buffer.isBuffer(file) ? new Blob([file as any], { type: mimeType }) : file;
   // v1beta é necessário para a Files API (upload de documentos/imagens)
   const ai = new GoogleGenAI({ apiKey: key, apiVersion: 'v1beta' });
 

@@ -528,7 +528,7 @@ export default function DashboardPage() {
             // Carregar dados existentes ao abrir o wizard
                   if (userProfile) {
                     setWizardData({
-                      academic_status: userProfile.academic_status,
+                      academic_status: userProfile.academic_status as AcademicStatus,
                       academic_period: userProfile.academic_period,
                       institution: userProfile.institution || '',
                       teaching_methodology: userProfile.teaching_methodology,
@@ -544,6 +544,7 @@ export default function DashboardPage() {
                       has_residency: userProfile.has_residency || null,
                       has_specific_interest: userProfile.interests_tags && userProfile.interests_tags.length > 0 ? true : null,
                       interests_tags: userProfile.interests_tags || [],
+                      next_residency_interests: userProfile.next_residency_interests || [],
                     });
               // Se já tem situação profissional, ir para a etapa apropriada
               if (userProfile.academic_status === 'student') {
@@ -1205,7 +1206,7 @@ export default function DashboardPage() {
                           type="radio"
                           name="academic_status"
                           value="doctor"
-                          checked={wizardData.academic_status && ['generalist', 'resident', 'specialist', 'graduate'].includes(wizardData.academic_status)}
+                          checked={!!(wizardData.academic_status && ['generalist', 'resident', 'specialist', 'graduate'].includes(wizardData.academic_status))}
                           onChange={(e) => {
                             // Usar 'generalist' como valor temporário para identificar que é médico
                             setWizardData({ 

@@ -230,7 +230,7 @@ export default function QuestionsPage() {
     const id = Number(resumeId);
     if (Number.isNaN(id)) return;
     const raw = localStorage.getItem('simulateResults');
-    const list: unknown[] = raw ? JSON.parse(raw) : [];
+    const list: any[] = raw ? JSON.parse(raw) : [];
     const result = list.find((r: { id?: number; status?: string }) => r.id === id && r.status === 'in_progress') as {
       simulate_questions?: Question[];
       current_index?: number;
@@ -1031,7 +1031,7 @@ export default function QuestionsPage() {
                   )}
                 </div>
                 {/* Tags: Área do Conhecimento, Assunto e Especialidade - visíveis no topo do card */}
-                {(question.tags?.length > 0 || question.areas_conhecimento?.length > 0 || question.assuntos?.length > 0) && (
+                {((question.tags ?? []).length > 0 || (question.areas_conhecimento ?? []).length > 0 || (question.assuntos ?? []).length > 0) && (
                   <div className="flex flex-wrap gap-2 mt-2">
                     {(question.areas_conhecimento ?? []).map((area) => (
                       <span

@@ -6,9 +6,9 @@ export async function authenticatedFetch(url: string, options: RequestInit = {})
 
   const token = localStorage.getItem('token');
   
-  const headers: HeadersInit = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    ...(options.headers as HeadersInit || {}),
+    ...(options.headers as Record<string, string> || {}),
   };
 
   if (token) {

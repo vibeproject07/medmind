@@ -437,7 +437,7 @@ export default function QuestionDetailPage() {
       </div>
 
       {/* Tags: Área do Conhecimento, Assunto e Especialidade - sempre visíveis no topo */}
-      {(question.tags?.length > 0 || question.areas_conhecimento?.length > 0 || question.assuntos?.length > 0) && (
+      {((question.tags ?? []).length > 0 || (question.areas_conhecimento ?? []).length > 0 || (question.assuntos ?? []).length > 0) && (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
           <div className="flex flex-wrap gap-2 items-center">
             {(question.areas_conhecimento ?? []).map((area) => (
