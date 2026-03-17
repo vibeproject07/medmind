@@ -238,7 +238,14 @@ export async function POST(request: NextRequest) {
         const optA = q.option_a || 'Alternativa A';
         const optB = q.option_b || 'Alternativa B';
         const imagesJson = q.images?.length ? JSON.stringify(q.images) : null;
-        const examYear = ano ? parseInt(ano, 10) : null;
+        
+        // Validar examYear
+        let examYear: number | null = null;
+        if (ano) {
+          const parsed = parseInt(ano, 10);
+          examYear = isNaN(parsed) ? null : parsed;
+        }
+        
         const questionNumber = isNaN(q.numero) ? 0 : q.numero;
         const safeProvaId = isNaN(provaId) ? null : provaId;
         
