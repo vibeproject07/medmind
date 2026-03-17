@@ -44,7 +44,10 @@ function mapQuestaoToOptions(questoes: {
     if (!byLetter['A']) byLetter['A'] = 'Alternativa A';
     if (!byLetter['B']) byLetter['B'] = 'Alternativa B';
     return {
-      numero: typeof q.numero === 'number' ? q.numero : parseInt(String(q.numero), 10) || 0,
+      numero: (() => {
+      const num = typeof q.numero === 'number' ? q.numero : parseInt(String(q.numero ?? ''), 10);
+      return isNaN(num) ? 0 : num;
+    })(),
       statement: String(q.titulo ?? q.enunciado ?? '').trim() || '(Sem enunciado)',
       option_a: byLetter['A'] || '',
       option_b: byLetter['B'] || '',
@@ -235,6 +238,10 @@ export async function POST(request: NextRequest) {
         const optA = q.option_a || 'Alternativa A';
         const optB = q.option_b || 'Alternativa B';
         const imagesJson = q.images?.length ? JSON.stringify(q.images) : null;
+        const examYear = ano ? parseInt(ano, 10) : null;
+        const questionNumber = isNaN(q.numero) ? 0 : q.numero;
+        const safeProvaId = isNaN(provaId) ? null : provaId;
+        
         const qResult = await query(
           `INSERT INTO questions (statement, option_a, option_b, option_c, option_d, option_e, correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region, exam_type, prova_id, numero_na_prova)
            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17) RETURNING id`,
@@ -249,13 +256,13 @@ export async function POST(request: NextRequest) {
             null,
             null,
             imagesJson,
-            ano ? parseInt(ano, 10) : null,
+            examYear,
             banca,
             null,
             regiao,
             tipo,
-            provaId,
-            q.numero
+            safeProvaId,
+            questionNumber
           ]
         );
         const qId = qResult.rows[0].id;
