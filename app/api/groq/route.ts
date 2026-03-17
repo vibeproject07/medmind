@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     }
 
     const response = await groqChat(messages, {
-      model: model ?? 'llama-3.1-70b-versatile',
+      model: model ?? 'llama-3.2-90b-vision-preview',
       temperature,
       max_tokens,
     });
