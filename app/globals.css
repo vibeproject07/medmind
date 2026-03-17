@@ -93,3 +93,25 @@ body {
 .tag-autocomplete-dropdown::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
+/* Garantir que página de login/cadastro tenha texto escuro em qualquer modo */
+[class*="login"],
+[class*="auth"] {
+  color: rgb(0, 0, 0) !important;
+}
+
+[class*="login"] input,
+[class*="auth"] input,
+[class*="login"] label,
+[class*="auth"] label,
+[class*="login"] textarea,
+[class*="auth"] textarea {
+  color: rgb(0, 0, 0) !important;
+}
+
+[class*="login"] input::placeholder,
+[class*="auth"] input::placeholder,
+[class*="login"] textarea::placeholder,
+[class*="auth"] textarea::placeholder {
+  color: rgb(107, 114, 128) !important;
+}
