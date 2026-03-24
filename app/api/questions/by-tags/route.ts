@@ -48,6 +48,8 @@ export async function GET(request: NextRequest) {
     const allQuestions = (await query('SELECT * FROM questions ORDER BY created_at DESC')).rows;
 
     const filteredQuestions = allQuestions.filter((question: any) => {
+      // Questões anuladas não entram em simulados
+      if (question.anulada) return false;
       if (!question.tags) return false;
 
       try {

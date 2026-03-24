@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
     let questions = (await query(`
       SELECT id, statement, option_a, option_b, option_c, option_d, option_e,
              correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region,
-             areas_conhecimento, assuntos, created_at, updated_at
+             areas_conhecimento, assuntos, anulada, created_at, updated_at
       FROM questions
       ORDER BY created_at DESC
     `)).rows;

@@ -125,6 +125,46 @@ export async function PUT(
   }
 }
 
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const authHeader = request.headers.get('authorization');
+    let token = authHeader?.replace('Bearer ', '') || request.cookies.get('token')?.value;
+    if (token) token = token.trim().replace(/^["']|["']$/g, '');
+    if (!token) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
+
+    const user = verifyToken(token);
+    if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
+    if (user.role !== 'admin') {
+      return NextResponse.json({ error: 'Acesso negado. Apenas administradores podem anular questões.' }, { status: 403 });
+    }
+
+    const body = await request.json();
+    if (typeof body.anulada !== 'boolean') {
+      return NextResponse.json({ error: 'Campo "anulada" (boolean) é obrigatório.' }, { status: 400 });
+    }
+
+    const existing = (await query('SELECT id FROM questions WHERE id = $1', [params.id])).rows[0];
+    if (!existing) return NextResponse.json({ error: 'Questão não encontrada' }, { status: 404 });
+
+    await query('UPDATE questions SET anulada = $1, updated_at = NOW() WHERE id = $2', [body.anulada, params.id]);
+
+    const updated = (await query('SELECT * FROM questions WHERE id = $1', [params.id])).rows[0];
+    return NextResponse.json({
+      ...updated,
+      tags: updated.tags ? JSON.parse(updated.tags) : [],
+      images: updated.images ? JSON.parse(updated.images) : [],
+      areas_conhecimento: updated.areas_conhecimento ? JSON.parse(updated.areas_conhecimento) : [],
+      assuntos: updated.assuntos ? JSON.parse(updated.assuntos) : [],
+    });
+  } catch (error) {
+    console.error('Erro ao atualizar questão:', error);
+    return NextResponse.json({ error: 'Erro ao atualizar questão' }, { status: 500 });
+  }
+}
+
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }

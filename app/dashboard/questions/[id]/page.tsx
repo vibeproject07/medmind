@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { ArrowLeft, Edit, Image as ImageIcon, X } from 'lucide-react';
+import { ArrowLeft, Edit, Image as ImageIcon, X, AlertTriangle, Ban, RotateCcw } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import {
   ASSUNTOS_BY_AREA,
@@ -40,6 +40,7 @@ interface Question {
   exam_board?: string | null;
   exam_institution?: string | null;
   exam_region?: string | null;
+  anulada?: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -70,6 +71,7 @@ export default function QuestionDetailPage() {
   const [editExamInstitution, setEditExamInstitution] = useState('');
   const [editExamRegion, setEditExamRegion] = useState('');
   const [availableTags, setAvailableTags] = useState<string[]>(AVAILABLE_TAGS);
+  const [togglingAnulada, setTogglingAnulada] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const safeEditAreas = editAreasConhecimento ?? [];
@@ -359,6 +361,37 @@ export default function QuestionDetailPage() {
     }
   };
 
+  const handleToggleAnulada = async () => {
+    if (!question) return;
+    const novaAnulada = !question.anulada;
+    const confirmMsg = novaAnulada
+      ? 'Anular esta questão? Ela ficará inacessível para simulados, mas continuará visível nas suas provas.'
+      : 'Reativar esta questão? Ela voltará a estar disponível para simulados.';
+    if (!confirm(confirmMsg)) return;
+
+    setTogglingAnulada(true);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const res = await fetch(`/api/questions/${questionId}`, {
+        method: 'PATCH',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ anulada: novaAnulada }),
+      });
+      if (res.ok) {
+        const raw = await res.json();
+        setQuestion((prev) => prev ? { ...prev, anulada: raw.anulada } : prev);
+      } else {
+        const err = await res.json();
+        alert(err.error || 'Erro ao atualizar questão.');
+      }
+    } catch {
+      alert('Erro ao atualizar questão.');
+    } finally {
+      setTogglingAnulada(false);
+    }
+  };
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('pt-BR', {
@@ -420,21 +453,56 @@ export default function QuestionDetailPage() {
             <ArrowLeft className="w-5 h-5 text-gray-600" />
           </button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">Questão #{question.id}</h1>
+            <div className="flex items-center gap-3">
+              <h1 className="text-3xl font-bold text-gray-800">Questão #{question.id}</h1>
+              {question.anulada && (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-100 text-red-700 text-xs font-semibold border border-red-200">
+                  <Ban className="w-3.5 h-3.5" />
+                  ANULADA
+                </span>
+              )}
+            </div>
             <p className="text-gray-600 mt-1">Criada em {formatDate(question.created_at)}</p>
           </div>
         </div>
 
         {isAdmin && !isEditing && (
-          <button
-            onClick={handleEdit}
-            className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition"
-          >
-            <Edit className="w-4 h-4" />
-            Editar
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleToggleAnulada}
+              disabled={togglingAnulada}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition text-sm font-medium disabled:opacity-60 ${
+                question.anulada
+                  ? 'border-green-300 text-green-700 hover:bg-green-50'
+                  : 'border-red-300 text-red-700 hover:bg-red-50'
+              }`}
+            >
+              {question.anulada ? <RotateCcw className="w-4 h-4" /> : <Ban className="w-4 h-4" />}
+              {togglingAnulada ? 'Salvando...' : question.anulada ? 'Reativar questão' : 'Anular questão'}
+            </button>
+            <button
+              onClick={handleEdit}
+              className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition"
+            >
+              <Edit className="w-4 h-4" />
+              Editar
+            </button>
+          </div>
         )}
       </div>
+
+      {/* Banner de alerta — questão anulada */}
+      {question.anulada && (
+        <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
+          <div>
+            <p className="font-semibold text-red-800">Questão anulada</p>
+            <p className="text-sm text-red-700 mt-0.5">
+              Esta questão está anulada e não pode ser incluída em simulados. Ela permanece visível nas provas onde foi originalmente inserida.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Tags: Área do Conhecimento, Assunto e Especialidade - sempre visíveis no topo */}
       {((question.tags ?? []).length > 0 || (question.areas_conhecimento ?? []).length > 0 || (question.assuntos ?? []).length > 0) && (

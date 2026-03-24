@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Plus, Edit, Trash2, X, Image as ImageIcon, Filter, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, Check, ClipboardList, Eye } from 'lucide-react';
+import { Plus, Edit, Trash2, X, Image as ImageIcon, Filter, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, Check, ClipboardList, Eye, Ban, AlertTriangle } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
 import {
@@ -71,6 +71,7 @@ interface Question {
   exam_board?: string | null;
   exam_institution?: string | null;
   exam_region?: string | null;
+  anulada?: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -998,13 +999,29 @@ export default function QuestionsPage() {
             <div
               key={question.id}
               onClick={() => router.push(`/dashboard/questions/${question.id}`)}
-              className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
+              className={`bg-white rounded-lg shadow-sm border p-6 hover:shadow-md transition-shadow cursor-pointer ${
+                question.anulada ? 'border-red-200 bg-red-50/30' : 'border-gray-200'
+              }`}
             >
+              {question.anulada && (
+                <div className="flex items-center gap-2 mb-3 px-3 py-2 bg-red-50 border border-red-200 rounded-lg text-red-700 text-xs font-semibold">
+                  <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" />
+                  QUESTÃO ANULADA — Indisponível para simulados
+                </div>
+              )}
               <div className="mb-4">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-semibold text-lg text-gray-800">
-                    Questão #{question.id}
-                  </h3>
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-semibold text-lg text-gray-800">
+                      Questão #{question.id}
+                    </h3>
+                    {question.anulada && (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold border border-red-200">
+                        <Ban className="w-3 h-3" />
+                        ANULADA
+                      </span>
+                    )}
+                  </div>
                   {isAdmin && (
                     <div className="flex items-center gap-2">
                       <button

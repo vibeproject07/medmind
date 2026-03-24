@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { ChevronDown, ChevronUp, Filter, FolderOpen, Loader2, X, Play, ChevronLeft, ChevronRight, CheckCircle, XCircle } from 'lucide-react';
+import { ChevronDown, ChevronUp, Filter, FolderOpen, Loader2, X, Play, ChevronLeft, ChevronRight, CheckCircle, XCircle, Ban, AlertTriangle } from 'lucide-react';
 
 interface ProvaQuestion {
   id: number;
@@ -18,6 +18,7 @@ interface ProvaQuestion {
   exam_region?: string | null;
   exam_year?: number | null;
   exam_type?: string | null;
+  anulada?: boolean;
 }
 
 interface Prova {
@@ -419,12 +420,30 @@ export default function ProvasPage() {
                     .map((q) => (
                       <div
                         key={q.id}
-                        className="bg-gray-50 rounded-lg border border-gray-200 p-4 hover:shadow-sm transition"
+                        className={`rounded-lg border p-4 hover:shadow-sm transition ${
+                          q.anulada
+                            ? 'bg-red-50/40 border-red-200'
+                            : 'bg-gray-50 border-gray-200'
+                        }`}
                       >
+                        {q.anulada && (
+                          <div className="flex items-center gap-1.5 mb-2 text-xs font-semibold text-red-700">
+                            <AlertTriangle className="w-3.5 h-3.5" />
+                            QUESTÃO ANULADA — Indisponível para simulados
+                          </div>
+                        )}
                         <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm font-semibold text-gray-800">
-                            Questão {q.numero_na_prova ?? '—'} (ID #{q.id})
-                          </span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-semibold text-gray-800">
+                              Questão {q.numero_na_prova ?? '—'} (ID #{q.id})
+                            </span>
+                            {q.anulada && (
+                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold border border-red-200">
+                                <Ban className="w-2.5 h-2.5" />
+                                ANULADA
+                              </span>
+                            )}
+                          </div>
                           <div className="flex flex-wrap gap-1 text-xs text-gray-500">
                             {q.exam_board && <span>Banca: {q.exam_board}</span>}
                             {q.exam_region && <span>| {q.exam_region}</span>}
@@ -531,8 +550,22 @@ export default function ProvasPage() {
                 </div>
               ) : currentQuestion ? (
                 <>
+                  {currentQuestion.anulada && (
+                    <div className="flex items-start gap-2 mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm font-semibold">
+                      <AlertTriangle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                      Questão anulada — esta questão não está disponível para simulados.
+                    </div>
+                  )}
                   <div className="flex items-center justify-between mb-4 text-sm text-gray-500">
-                    <span>Questão {currentQuestion.numero_na_prova ?? examIndex + 1} (ID #{currentQuestion.id})</span>
+                    <span className="flex items-center gap-2">
+                      Questão {currentQuestion.numero_na_prova ?? examIndex + 1} (ID #{currentQuestion.id})
+                      {currentQuestion.anulada && (
+                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold border border-red-200">
+                          <Ban className="w-3 h-3" />
+                          ANULADA
+                        </span>
+                      )}
+                    </span>
                     <span>
                       Banca: {currentQuestion.exam_board || '—'} | Região: {currentQuestion.exam_region || '—'} | Ano: {currentQuestion.exam_year || '—'} | Tipo: {currentQuestion.exam_type || '—'}
                     </span>

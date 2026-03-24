@@ -151,7 +151,7 @@ export async function GET(request: NextRequest) {
 
     const provasRows = (await query('SELECT id, nome, banca, regiao, ano, tipo, created_at FROM provas ORDER BY created_at DESC')).rows;
     const questionsRows = (await query(`
-      SELECT id, statement, option_a, option_b, option_c, option_d, option_e, correct_answer, images, exam_board, exam_region, exam_year, exam_type, prova_id, numero_na_prova
+      SELECT id, statement, option_a, option_b, option_c, option_d, option_e, correct_answer, images, exam_board, exam_region, exam_year, exam_type, prova_id, numero_na_prova, anulada
       FROM questions WHERE prova_id IS NOT NULL ORDER BY prova_id, numero_na_prova
     `)).rows;
 
@@ -175,6 +175,7 @@ export async function GET(request: NextRequest) {
         exam_region: q.exam_region,
         exam_year: q.exam_year,
         exam_type: q.exam_type,
+        anulada: q.anulada ?? false,
       });
     });
 
