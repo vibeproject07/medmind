@@ -213,7 +213,9 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
-    const result: { id: number; nome: string; banca: string | null; regiao: string | null; ano: string | null; tipo: string | null; questions: { id: number; numero_na_prova: number }[] }[] = [];
+    const result: { id: number; nome: string; banca: string | null; regiao: string | null; ano: string | null; tipo: string | null; questions: { id: number; numero_na_prova: number }[]; skipped?: boolean }[] = [];
+    let totalQuestoesImportadas = 0;
+    let totalProvasIgnoradas = 0;
 
     for (const p of rawProvas) {
       const nome = String((p as { nome: string }).nome || 'Prova sem nome').trim();
@@ -223,6 +225,17 @@ export async function POST(request: NextRequest) {
       const regiao = (pAny.regiao != null && pAny.regiao !== '') ? String(pAny.regiao).trim() : (parsed.regiao ?? null);
       const ano = (pAny.ano != null && pAny.ano !== '') ? String(pAny.ano).trim() : ((pAny.exam_year != null && pAny.exam_year !== '') ? String(pAny.exam_year).trim() : (parsed.ano ?? null));
       const tipo = (pAny.tipo != null && pAny.tipo !== '') ? String(pAny.tipo).trim() : (pAny.exam_type != null && pAny.exam_type !== '' ? String(pAny.exam_type).trim() : (parsed.tipo ?? null));
+
+      // Verificar se prova com mesmo nome já existe (deduplicação)
+      const existingProva = await query(
+        'SELECT id FROM provas WHERE nome = $1 LIMIT 1',
+        [nome]
+      );
+      if (existingProva.rows.length > 0) {
+        totalProvasIgnoradas++;
+        result.push({ id: existingProva.rows[0].id, nome, banca, regiao, ano, tipo, questions: [], skipped: true });
+        continue;
+      }
 
       const provaResult = await query(
         'INSERT INTO provas (nome, banca, regiao, ano, tipo) VALUES ($1, $2, $3, $4, $5) RETURNING id',
@@ -238,17 +251,16 @@ export async function POST(request: NextRequest) {
         const optA = q.option_a || 'Alternativa A';
         const optB = q.option_b || 'Alternativa B';
         const imagesJson = q.images?.length ? JSON.stringify(q.images) : null;
-        
-        // Validar examYear
+
         let examYear: number | null = null;
         if (ano) {
-          const parsed = parseInt(ano, 10);
-          examYear = isNaN(parsed) ? null : parsed;
+          const parsedYear = parseInt(ano, 10);
+          examYear = isNaN(parsedYear) ? null : parsedYear;
         }
-        
+
         const questionNumber = isNaN(q.numero) ? 0 : q.numero;
         const safeProvaId = isNaN(provaId) ? null : provaId;
-        
+
         const qResult = await query(
           `INSERT INTO questions (statement, option_a, option_b, option_c, option_d, option_e, correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region, exam_type, prova_id, numero_na_prova)
            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17) RETURNING id`,
@@ -274,12 +286,22 @@ export async function POST(request: NextRequest) {
         );
         const qId = qResult.rows[0].id;
         questionIds.push({ id: qId, numero_na_prova: q.numero });
+        totalQuestoesImportadas++;
       }
 
       result.push({ id: provaId, nome, banca, regiao, ano, tipo, questions: questionIds });
     }
 
-    return NextResponse.json({ success: true, provas: result });
+    const provasNovas = result.filter((p) => !p.skipped).length;
+    return NextResponse.json({
+      success: true,
+      provas: result,
+      summary: {
+        provasImportadas: provasNovas,
+        provasIgnoradas: totalProvasIgnoradas,
+        questoesImportadas: totalQuestoesImportadas,
+      },
+    });
   } catch (error) {
     console.error('Erro ao importar provas:', error);
     return NextResponse.json({ error: 'Erro ao importar provas' }, { status: 500 });

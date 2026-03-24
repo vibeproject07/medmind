@@ -31,6 +31,16 @@ interface Prova {
   questions: ProvaQuestion[];
 }
 
+interface ImportSummary {
+  provasImportadas: number;
+  provasIgnoradas: number;
+  questoesImportadas: number;
+}
+
+const ANO_INICIO = 1990;
+const ANO_FIM = new Date().getFullYear();
+const ANOS = Array.from({ length: ANO_FIM - ANO_INICIO + 1 }, (_, i) => String(ANO_FIM - i));
+
 export default function ProvasPage() {
   const [filtrosAbertos, setFiltrosAbertos] = useState(false);
   const [banca, setBanca] = useState('');
@@ -40,6 +50,7 @@ export default function ProvasPage() {
   const [showFileModal, setShowFileModal] = useState(false);
   const [loadingJson, setLoadingJson] = useState(false);
   const [jsonError, setJsonError] = useState<string | null>(null);
+  const [importSummary, setImportSummary] = useState<ImportSummary | null>(null);
   const [provasList, setProvasList] = useState<Prova[]>([]);
   const [loadingProvas, setLoadingProvas] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -69,8 +80,18 @@ export default function ProvasPage() {
     fetchProvas();
   }, []);
 
+  // Extrair opções únicas de banca e tipo a partir dos dados carregados
+  const bancasDisponiveis = Array.from(
+    new Set(provasList.map((p) => p.banca).filter(Boolean) as string[])
+  ).sort();
+
+  const tiposDisponiveis = Array.from(
+    new Set(provasList.map((p) => p.tipo).filter(Boolean) as string[])
+  ).sort();
+
   const handleAbrirSelecao = () => {
     setJsonError(null);
+    setImportSummary(null);
     setShowFileModal(true);
   };
 
@@ -84,6 +105,7 @@ export default function ProvasPage() {
     if (!file) return;
     setLoadingJson(true);
     setJsonError(null);
+    setImportSummary(null);
     const reader = new FileReader();
     reader.onload = async () => {
       try {
@@ -115,6 +137,7 @@ export default function ProvasPage() {
           return;
         }
         setShowFileModal(false);
+        setImportSummary(body.summary ?? null);
         await fetchProvas();
       } catch {
         setJsonError('O arquivo não é um JSON válido ou está no formato incorreto.');
@@ -162,15 +185,19 @@ export default function ProvasPage() {
     if (examIndex > 0) setExamIndex((i) => i - 1);
   };
 
-  const correctCount = provaEmAndamento ? provaEmAndamento.questions.filter((q) => examAnswers[q.id] === q.correct_answer).length : 0;
+  const correctCount = provaEmAndamento
+    ? provaEmAndamento.questions.filter((q) => examAnswers[q.id] === q.correct_answer).length
+    : 0;
   const percent = totalExam ? Math.round((correctCount / totalExam) * 100) : 0;
 
-  const getOptionKey = (q: ProvaQuestion, idx: number) => {
-    const keys = ['A', 'B', 'C', 'D', 'E'];
-    return keys[idx];
-  };
   const getOptionValue = (q: ProvaQuestion, key: string) => {
-    const map: Record<string, string> = { A: q.option_a, B: q.option_b, C: q.option_c || '', D: q.option_d || '', E: q.option_e || '' };
+    const map: Record<string, string> = {
+      A: q.option_a,
+      B: q.option_b,
+      C: q.option_c || '',
+      D: q.option_d || '',
+      E: q.option_e || '',
+    };
     return map[key] || '';
   };
 
@@ -183,6 +210,35 @@ export default function ProvasPage() {
         </p>
       </header>
 
+      {/* Feedback de importação bem-sucedida */}
+      {importSummary && (
+        <div className="flex items-start gap-3 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800">
+          <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0 text-green-600" />
+          <div>
+            <p className="font-semibold">Importação concluída!</p>
+            <p className="text-sm mt-1">
+              {importSummary.provasImportadas > 0
+                ? <><strong>{importSummary.provasImportadas}</strong> prova(s) e <strong>{importSummary.questoesImportadas}</strong> questão(ões) importadas.</>
+                : 'Nenhuma prova nova importada.'}{' '}
+              {importSummary.provasIgnoradas > 0 && (
+                <span className="text-green-700">
+                  <strong>{importSummary.provasIgnoradas}</strong> prova(s) já existiam e foram ignoradas (sem duplicatas).
+                </span>
+              )}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setImportSummary(null)}
+            className="ml-auto p-1 text-green-600 hover:text-green-800 rounded"
+            aria-label="Fechar"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
+      {/* Filtros */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
         <button
           type="button"
@@ -199,18 +255,31 @@ export default function ProvasPage() {
         {filtrosAbertos && (
           <div className="border-t border-gray-200 p-4 bg-gray-50/50">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Banca — populada dinamicamente dos dados */}
               <div>
                 <label htmlFor="filtro-banca" className="block text-sm font-medium text-gray-700 mb-1">Banca</label>
-                <select id="filtro-banca" value={banca} onChange={(e) => setBanca(e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white">
+                <select
+                  id="filtro-banca"
+                  value={banca}
+                  onChange={(e) => setBanca(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white"
+                >
                   <option value="">Todas</option>
-                  <option value="abc">ABC</option>
-                  <option value="cfm">CFM</option>
-                  <option value="outras">Outras</option>
+                  {bancasDisponiveis.map((b) => (
+                    <option key={b} value={b}>{b}</option>
+                  ))}
                 </select>
               </div>
+
+              {/* Região */}
               <div>
                 <label htmlFor="filtro-regiao" className="block text-sm font-medium text-gray-700 mb-1">Região</label>
-                <select id="filtro-regiao" value={regiao} onChange={(e) => setRegiao(e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white">
+                <select
+                  id="filtro-regiao"
+                  value={regiao}
+                  onChange={(e) => setRegiao(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white"
+                >
                   <option value="">Todos os estados</option>
                   <option value="AC">Acre</option>
                   <option value="AL">Alagoas</option>
@@ -241,40 +310,64 @@ export default function ProvasPage() {
                   <option value="TO">Tocantins</option>
                 </select>
               </div>
+
+              {/* Ano — de 1990 ao ano atual */}
               <div>
                 <label htmlFor="filtro-ano" className="block text-sm font-medium text-gray-700 mb-1">Ano</label>
-                <select id="filtro-ano" value={ano} onChange={(e) => setAno(e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white">
+                <select
+                  id="filtro-ano"
+                  value={ano}
+                  onChange={(e) => setAno(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white"
+                >
                   <option value="">Todos</option>
-                  <option value="2024">2024</option>
-                  <option value="2023">2023</option>
-                  <option value="2022">2022</option>
-                  <option value="2021">2021</option>
-                  <option value="2020">2020</option>
+                  {ANOS.map((a) => (
+                    <option key={a} value={a}>{a}</option>
+                  ))}
                 </select>
               </div>
+
+              {/* Tipo — populado dinamicamente dos dados */}
               <div>
                 <label htmlFor="filtro-tipo" className="block text-sm font-medium text-gray-700 mb-1">Tipo</label>
-                <select id="filtro-tipo" value={tipo} onChange={(e) => setTipo(e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white">
+                <select
+                  id="filtro-tipo"
+                  value={tipo}
+                  onChange={(e) => setTipo(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white"
+                >
                   <option value="">Todos</option>
-                  <option value="r1">R1</option>
-                  <option value="r2">R2</option>
-                  <option value="r3">R3</option>
-                  <option value="r4">R4</option>
+                  {tiposDisponiveis.map((t) => (
+                    <option key={t} value={t}>{t}</option>
+                  ))}
                 </select>
               </div>
             </div>
+
+            {(banca || regiao || ano || tipo) && (
+              <button
+                type="button"
+                onClick={() => { setBanca(''); setRegiao(''); setAno(''); setTipo(''); }}
+                className="mt-3 text-sm text-primary-600 hover:text-primary-700 font-medium"
+              >
+                Limpar filtros
+              </button>
+            )}
           </div>
         )}
       </div>
 
+      {/* Botão importar */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-4">
-          <p className="text-gray-500">Selecione um arquivo JSON para importar provas e questões (formato: provas com nome, banca, regiao, ano, tipo e array de questões).</p>
+          <p className="text-gray-500">
+            Selecione um arquivo JSON para importar provas e questões. Provas com o mesmo nome serão ignoradas automaticamente.
+          </p>
           <button
             type="button"
             onClick={handleAbrirSelecao}
             disabled={loadingJson}
-            className="flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-60 disabled:cursor-not-allowed transition font-medium text-sm"
+            className="flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-60 disabled:cursor-not-allowed transition font-medium text-sm whitespace-nowrap"
           >
             {loadingJson ? <Loader2 className="w-5 h-5 animate-spin" /> : <FolderOpen className="w-5 h-5" />}
             {loadingJson ? 'Importando...' : 'Importar JSON de provas'}
@@ -285,6 +378,7 @@ export default function ProvasPage() {
         )}
       </div>
 
+      {/* Lista de provas */}
       {loadingProvas ? (
         <div className="text-center py-12">
           <Loader2 className="w-8 h-8 animate-spin text-primary-600 mx-auto" />
@@ -292,7 +386,9 @@ export default function ProvasPage() {
         </div>
       ) : filteredProvas.length === 0 ? (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center text-gray-500">
-          Nenhuma prova encontrada. Importe um JSON com provas para começar.
+          {provasList.length === 0
+            ? 'Nenhuma prova encontrada. Importe um JSON com provas para começar.'
+            : 'Nenhuma prova encontrada com os filtros selecionados.'}
         </div>
       ) : (
         <div className="space-y-6">
@@ -356,26 +452,51 @@ export default function ProvasPage() {
           <div className="bg-white rounded-xl shadow-xl w-full max-w-md">
             <div className="flex items-center justify-between p-4 border-b border-gray-200">
               <h2 className="text-lg font-semibold text-gray-800">Selecionar arquivo JSON</h2>
-              <button type="button" onClick={() => setShowFileModal(false)} className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition" aria-label="Fechar">
+              <button
+                type="button"
+                onClick={() => setShowFileModal(false)}
+                className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition"
+                aria-label="Fechar"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
             <div className="p-6 space-y-4">
               <p className="text-sm text-gray-600">
-                Aceito: <strong>provas</strong> (nome, banca, regiao, ano, tipo, questoes) ou <strong>paginas</strong> (formato antigo do crawler). O nome é trimado e as categorias podem ser preenchidas pelo split com travessões.
+                Aceito: <strong>provas</strong> (nome, banca, regiao, ano, tipo, questoes) ou <strong>paginas</strong> (formato antigo do crawler).
               </p>
-              <input ref={fileInputRef} type="file" accept=".json,application/json" onChange={handleFileChange} className="hidden" aria-hidden />
+              <p className="text-xs text-gray-500 bg-blue-50 border border-blue-100 rounded-lg p-3">
+                Provas com o mesmo nome que já existem no banco serão ignoradas automaticamente, evitando duplicatas.
+              </p>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".json,application/json"
+                onChange={handleFileChange}
+                className="hidden"
+                aria-hidden
+              />
               <button
                 type="button"
                 onClick={handleEscolherArquivo}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg text-gray-700 hover:border-primary-500 hover:bg-primary-50 transition font-medium text-sm"
+                disabled={loadingJson}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg text-gray-700 hover:border-primary-500 hover:bg-primary-50 transition font-medium text-sm disabled:opacity-60"
               >
-                <FolderOpen className="w-5 h-5" />
-                Explorar e escolher arquivo
+                {loadingJson
+                  ? <><Loader2 className="w-5 h-5 animate-spin" /> Importando...</>
+                  : <><FolderOpen className="w-5 h-5" /> Explorar e escolher arquivo</>
+                }
               </button>
+              {jsonError && (
+                <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">{jsonError}</div>
+              )}
             </div>
             <div className="flex justify-end gap-2 p-4 border-t border-gray-200 bg-gray-50 rounded-b-xl">
-              <button type="button" onClick={() => setShowFileModal(false)} className="px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-lg transition text-sm font-medium">
+              <button
+                type="button"
+                onClick={() => setShowFileModal(false)}
+                className="px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-lg transition text-sm font-medium"
+              >
                 Cancelar
               </button>
             </div>
@@ -412,7 +533,9 @@ export default function ProvasPage() {
                 <>
                   <div className="flex items-center justify-between mb-4 text-sm text-gray-500">
                     <span>Questão {currentQuestion.numero_na_prova ?? examIndex + 1} (ID #{currentQuestion.id})</span>
-                    <span>Banca: {currentQuestion.exam_board || '—'} | Região: {currentQuestion.exam_region || '—'} | Ano: {currentQuestion.exam_year || '—'} | Tipo: {currentQuestion.exam_type || '—'}</span>
+                    <span>
+                      Banca: {currentQuestion.exam_board || '—'} | Região: {currentQuestion.exam_region || '—'} | Ano: {currentQuestion.exam_year || '—'} | Tipo: {currentQuestion.exam_type || '—'}
+                    </span>
                   </div>
                   <p className="text-gray-800 mb-4 whitespace-pre-wrap">{currentQuestion.statement}</p>
                   <div className="space-y-2">
@@ -429,7 +552,8 @@ export default function ProvasPage() {
                             selected ? 'border-primary-500 bg-primary-50' : 'border-gray-200 bg-gray-50 hover:border-gray-300'
                           }`}
                         >
-                          <span className="font-semibold text-gray-700">{key})</span> <span className="text-gray-800">{val}</span>
+                          <span className="font-semibold text-gray-700">{key})</span>{' '}
+                          <span className="text-gray-800">{val}</span>
                         </button>
                       );
                     })}
