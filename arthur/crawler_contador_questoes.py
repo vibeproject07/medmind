@@ -8,32 +8,43 @@ cada prova possui. Ao final, exibe o total de provas e questões.
 NÃO coleta nenhum conteúdo de questão (enunciado, alternativas,
 gabarito, imagens, comentários). Apenas conta os links.
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  IMPORTANTE — EXECUTE NA SUA MÁQUINA LOCAL (não no servidor)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  O cookie cf_clearance é vinculado ao IP do seu navegador.
+  Se rodar de outro servidor (IP diferente), o Cloudflare bloqueia.
+
+  Passo a passo:
+    1. pip install requests beautifulsoup4 cloudscraper
+    2. Copie os cookies do navegador (F12 → Application → Cookies)
+    3. Cole no arquivo .env na mesma pasta:
+         CRAWLER_COOKIE_HEADER=csrftoken=...; sessionid=...; cf_clearance=...
+    4. python crawler_contador_questoes.py --perfil premium_paid --saida resultado.json
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 Fluxo:
   1. Descobre todas as provas na página de listagem
   2. Para cada prova, acessa o índice e conta links de questões
      (segue paginação caso existam múltiplas páginas por prova)
   3. Imprime tabela com nome, quantidade por prova e totais finais
-  4. Salva resultado em JSON (opcional, via --saida)
+  4. Salva resultado em JSON (via --saida ou CRAWLER_SAIDA)
 
 Uso:
-  python crawler_contador_questoes.py
-  python crawler_contador_questoes.py --url https://www.provaderesidencia.com.br/demo/provas
+  python crawler_contador_questoes.py --perfil premium_paid
+  python crawler_contador_questoes.py --perfil demo
   python crawler_contador_questoes.py --max-provas 10 --delay 2.0
   python crawler_contador_questoes.py --saida resultado_contagem.json
-  python crawler_contador_questoes.py --cookies "sessionid=abc; csrftoken=xyz"
-  python crawler_contador_questoes.py --perfil premium_paid
+  python crawler_contador_questoes.py --cookies "sessionid=abc; cf_clearance=xyz"
 
-Variáveis de ambiente (alternativa aos argumentos):
-  CRAWLER_URL_PROVAS    — URL da listagem de provas
+Variáveis de ambiente (em .env ou exportadas no terminal):
+  CRAWLER_COOKIE_HEADER — String completa de cookies do navegador (obrigatório para premium)
+  CRAWLER_URL_PROVAS    — URL da listagem (substitui o perfil)
   CRAWLER_MAX_PROVAS    — Limite de provas (0 = todas)
   CRAWLER_DELAY         — Delay em segundos entre requisições (padrão: 2.0)
-  CRAWLER_COOKIE_HEADER — Cookies de sessão para áreas autenticadas
-  CRAWLER_SAIDA         — Caminho do JSON de saída
+  CRAWLER_SAIDA         — Caminho do arquivo JSON de saída
 
 Dependências:
-  pip install requests beautifulsoup4
-  pip install cloudscraper   # recomendado para evitar 403
-  pip install curl_cffi      # alternativa ainda mais robusta
+  pip install requests beautifulsoup4 cloudscraper python-dotenv
 """
 
 import os
@@ -43,13 +54,19 @@ import time
 import random
 import logging
 import argparse
-from collections import OrderedDict
 from datetime import datetime
 from typing import Optional
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup
+
+# ── Carregar .env se existir ──────────────────────────────────────────────────
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 # ── Imports opcionais anti-403 ────────────────────────────────────────────────
 
@@ -144,36 +161,28 @@ _PERFIS_NAVEGADOR = [
 # SESSÃO HTTP
 # ══════════════════════════════════════════════════════════════════════════════
 
-def _injetar_cookies(sessao, cookie_string: str) -> None:
-    """Injeta cookies de uma string 'nome=valor; nome2=valor2' na sessão."""
-    if not cookie_string:
-        return
-    for par in cookie_string.split(";"):
-        par = par.strip()
-        if "=" in par:
-            nome, _, valor = par.partition("=")
-            sessao.cookies.set(nome.strip(), valor.strip(), domain="www.provaderesidencia.com.br")
-
-
 def criar_sessao(perfil_nav: dict, cookies: str = "") -> tuple:
     """
     Cria sessão HTTP priorizando curl_cffi → cloudscraper → requests puro.
+    Os cookies são armazenados como string bruta e enviados como header Cookie
+    em cada requisição — igual ao que o browser faz.
     Retorna (sessao, is_curl_cffi).
     """
+    cookie_str = cookies.strip()
+
     if _CURL_CFFI:
         sessao = _curl_requests.Session()
         sessao._curl_cffi = True
+        sessao._cookie_header = cookie_str
         sessao.headers.update({
-            "accept":           "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "accept-encoding":  "gzip, deflate, br",
-            "accept-language":  "pt-BR,pt;q=0.9,en;q=0.8",
-            "user-agent":       perfil_nav["User-Agent"],
-            "sec-ch-ua":        perfil_nav["sec-ch-ua"],
-            "sec-ch-ua-mobile": perfil_nav["sec-ch-ua-mobile"],
+            "accept":             "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "accept-encoding":    "gzip, deflate, br",
+            "accept-language":    "pt-BR,pt;q=0.9,en;q=0.8",
+            "user-agent":         perfil_nav["User-Agent"],
+            "sec-ch-ua":          perfil_nav["sec-ch-ua"],
+            "sec-ch-ua-mobile":   perfil_nav["sec-ch-ua-mobile"],
             "sec-ch-ua-platform": perfil_nav["sec-ch-ua-platform"],
         })
-        if cookies:
-            _injetar_cookies(sessao, cookies)
         logger.info("[SESSÃO] Motor: curl_cffi (TLS fingerprint Firefox)")
         return sessao, True
 
@@ -182,25 +191,23 @@ def criar_sessao(perfil_nav: dict, cookies: str = "") -> tuple:
             browser={"browser": "chrome", "platform": "windows", "mobile": False},
             delay=5,
         )
+        sessao._cookie_header = cookie_str
         sessao.headers.update({
             "User-Agent":      perfil_nav["User-Agent"],
             "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8",
             "Accept-Encoding": "gzip, deflate, br",
         })
-        if cookies:
-            _injetar_cookies(sessao, cookies)
         logger.info("[SESSÃO] Motor: cloudscraper (anti-Cloudflare)")
         return sessao, False
 
     sessao = requests.Session()
+    sessao._cookie_header = cookie_str
     sessao.headers.update({
         "User-Agent":      perfil_nav["User-Agent"],
         "Accept":          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Encoding": "gzip, deflate",
         "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8",
     })
-    if cookies:
-        _injetar_cookies(sessao, cookies)
     logger.warning("[SESSÃO] Motor: requests puro (risco de 403 — instale cloudscraper ou curl_cffi)")
     return sessao, False
 
@@ -216,11 +223,15 @@ def _get(sessao, url: str, referer: str = "", max_tentativas: int = 4, delay_bas
     """
     is_curl = getattr(sessao, "_curl_cffi", False)
     headers = {}
+    # Envia o Cookie como header bruto (igual ao browser) — necessário para cf_clearance
+    cookie_header = getattr(sessao, "_cookie_header", "")
+    if cookie_header:
+        headers["Cookie"] = cookie_header
     if referer:
-        headers["referer"] = referer
-    headers["sec-fetch-dest"] = "document"
-    headers["sec-fetch-mode"] = "navigate"
-    headers["sec-fetch-site"]  = "same-origin" if referer else "none"
+        headers["Referer"] = referer
+    headers["Sec-Fetch-Dest"] = "document"
+    headers["Sec-Fetch-Mode"] = "navigate"
+    headers["Sec-Fetch-Site"]  = "same-origin" if referer else "none"
 
     for tentativa in range(max_tentativas):
         try:
@@ -285,7 +296,10 @@ def _extrair_links_provas(html: str, base_url: str, path_prova: str) -> list:
 
         # Tenta extrair o nome da prova a partir do texto do link ou atributo title
         nome = (tag.get("title") or tag.get_text(separator=" ")).strip()
-        nome = re.sub(r"\s+", " ", nome)[:120] or url_norm.split("/")[-1]
+        nome = re.sub(r"\s+", " ", nome)
+        # Remove sufixos adicionados pelo site (ex: "Gratuito", "Iniciada")
+        nome = re.sub(r"\s*(gratuito|iniciada|premium)\s*$", "", nome, flags=re.IGNORECASE).strip()
+        nome = nome[:120] or url_norm.split("/")[-1]
 
         provas.append({"nome": nome, "url": url_completa})
 
@@ -554,10 +568,15 @@ def main(
     # Criar sessão
     sessao, _ = criar_sessao(perfil_nav, cookies)
 
-    # Warm-up: visitar home do site antes do crawl
-    logger.info("[WARM-UP] Visitando home do site...")
-    _get(sessao, BASE_URL, referer=BASE_URL + "/", delay_base=delay)
-    time.sleep(delay + random.uniform(0.5, 1.0))
+    # Warm-up: visitar home SÓ quando não há cookies de sessão.
+    # Com cf_clearance fornecido pelo usuário, o warm-up aciona um novo desafio
+    # Cloudflare que invalida o token — por isso pulamos quando cookies existem.
+    if not cookies.strip():
+        logger.info("[WARM-UP] Visitando home do site (sem cookies, aquecendo sessão)...")
+        _get(sessao, BASE_URL, referer=BASE_URL + "/", delay_base=delay)
+        time.sleep(delay + random.uniform(0.5, 1.0))
+    else:
+        logger.info("[WARM-UP] Pulando warm-up — cookies de sessão fornecidos (cf_clearance preservado).")
 
     # Fase 1: Descobrir todas as provas
     provas = descobrir_provas(
