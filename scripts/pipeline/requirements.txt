@@ -1,5 +1,25 @@
+# ── Dependências do Pipeline de Análise de Provas — MedMind ─────────────────
+#
+# Variante Tavily  (pipeline_analise_provas_tavily.py):
+#   pip install anthropic tavily-python google-generativeai python-dotenv tqdm
+#
+# Variante Gemini  (pipeline_analise_provas_gemini.py):
+#   pip install anthropic google-generativeai python-dotenv tqdm
+#   (tavily-python NÃO é necessário nesta variante)
+#
+# Para instalar tudo de uma vez:
+#   pip install -r requirements.txt
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Síntese via Claude Batches API (ambas as variantes)
 anthropic>=0.40.0
+
+# Busca web — apenas para a variante Tavily
 tavily-python>=0.3.0
+
+# Filtro Gemini + Google Search Grounding (ambas as variantes)
 google-generativeai>=0.8.0
+
+# Utilitários
 python-dotenv>=1.0.0
 tqdm>=4.66.0
