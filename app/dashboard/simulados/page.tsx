@@ -130,14 +130,11 @@ export default function SimuladosPage() {
   };
 
   const handleRefazer = (result: SimulateResult) => {
-    const tagsParam = result.tags?.length
-      ? `?tags=${encodeURIComponent(JSON.stringify(result.tags))}`
-      : '';
-    router.push(`/dashboard/questions${tagsParam}`);
+    router.push('/dashboard/simulados/novo');
   };
 
   const handleContinuar = (result: SimulateResult) => {
-    router.push(`/dashboard/questions?resume=${result.id}`);
+    router.push(`/dashboard/simulados/novo?resume=${result.id}`);
   };
 
 

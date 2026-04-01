@@ -807,11 +807,7 @@ export default function QuestionsPage() {
         <div className="flex items-center gap-3">
           {totalQuestions > 0 && (
             <button
-              onClick={() => {
-                setSimulateWizardStep(1);
-                setWizardFilters({ tags: [], areas_conhecimento: [], assuntos: [] });
-                setSimulateWizardOpen(true);
-              }}
+              onClick={() => router.push('/dashboard/simulados/novo')}
               className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
             >
               <ClipboardList className="w-5 h-5" />

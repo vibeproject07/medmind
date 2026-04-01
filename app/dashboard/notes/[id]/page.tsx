@@ -1102,7 +1102,16 @@ export default function NoteDetailPage() {
                   {relatedQuestions.length > 0 && (
                     <button
                       type="button"
-                      onClick={() => setShowSimulateCountModal(true)}
+                      onClick={() => {
+                        localStorage.setItem(
+                          'pendingSimulateQuestions',
+                          JSON.stringify({
+                            questions: relatedQuestions,
+                            tags: note?.tags ?? [],
+                          })
+                        );
+                        router.push('/dashboard/simulados/novo');
+                      }}
                       className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition text-sm font-medium"
                     >
                       Fazer Simulado
