@@ -255,24 +255,24 @@ export default function SimulatePage() {
 
       {/* Questão */}
       <div className="bg-white rounded-lg border border-gray-200 p-6 space-y-6">
+        {/* Enunciado */}
+        <div>
+          <p className="text-lg font-medium text-gray-800">{currentQuestion.statement}</p>
+        </div>
+
         {/* Imagens */}
         {currentQuestion.images && currentQuestion.images.length > 0 && (
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             {currentQuestion.images.map((image, idx) => (
               <ImageLightbox
                 key={idx}
                 src={image}
                 alt={`Imagem ${idx + 1}`}
-                className="w-full h-48"
+                className="h-48 w-auto max-w-xs"
               />
             ))}
           </div>
         )}
-
-        {/* Enunciado */}
-        <div>
-          <p className="text-lg font-medium text-gray-800">{currentQuestion.statement}</p>
-        </div>
 
         {/* Alternativas */}
         <div className="space-y-3">

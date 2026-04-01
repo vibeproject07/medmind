@@ -517,28 +517,25 @@ export default function SelectQuestionsPage() {
                   {/* Conteúdo expandido */}
                   {expandedQuestionId === question.id && (
                     <div className="mt-4 pt-4 border-t border-gray-200 space-y-3">
-                      {/* 1. Imagens */}
-                      {question.images && question.images.length > 0 && (
-                        <div className="space-y-2">
-                          <p className="text-sm font-semibold text-gray-700">Imagens:</p>
-                          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                            {question.images.map((image, idx) => (
-                              <ImageLightbox
-                                key={idx}
-                                src={image}
-                                alt={`Imagem ${idx + 1}`}
-                                className="w-full h-32"
-                              />
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* 2. Enunciado */}
+                      {/* 1. Enunciado */}
                       <div className="space-y-2">
                         <p className="text-sm font-semibold text-gray-700">Enunciado:</p>
                         <p className="text-gray-800 text-base leading-relaxed">{question.statement}</p>
                       </div>
+
+                      {/* 2. Imagens */}
+                      {question.images && question.images.length > 0 && (
+                        <div className="flex flex-wrap justify-center gap-4">
+                          {question.images.map((image, idx) => (
+                            <ImageLightbox
+                              key={idx}
+                              src={image}
+                              alt={`Imagem ${idx + 1}`}
+                              className="h-32 w-auto max-w-xs"
+                            />
+                          ))}
+                        </div>
+                      )}
 
                       {/* 3. Alternativas */}
                       <div className="space-y-2">
@@ -844,26 +841,26 @@ export default function SelectQuestionsPage() {
 
                     return (
                       <div className="space-y-6">
-                        {/* Imagens */}
-                        {currentQuestion.images && currentQuestion.images.length > 0 && (
-                          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                            {currentQuestion.images.map((image, idx) => (
-                              <ImageLightbox
-                                key={idx}
-                                src={image}
-                                alt={`Imagem ${idx + 1}`}
-                                className="w-full h-48"
-                              />
-                            ))}
-                          </div>
-                        )}
-
                         {/* Enunciado */}
                         <div>
                           <p className="text-lg font-medium text-gray-800">
                             {currentQuestion.statement}
                           </p>
                         </div>
+
+                        {/* Imagens */}
+                        {currentQuestion.images && currentQuestion.images.length > 0 && (
+                          <div className="flex flex-wrap justify-center gap-4">
+                            {currentQuestion.images.map((image, idx) => (
+                              <ImageLightbox
+                                key={idx}
+                                src={image}
+                                alt={`Imagem ${idx + 1}`}
+                                className="h-48 w-auto max-w-xs"
+                              />
+                            ))}
+                          </div>
+                        )}
 
                         {/* Alternativas */}
                         <div className="space-y-3">

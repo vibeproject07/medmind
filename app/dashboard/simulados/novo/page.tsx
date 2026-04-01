@@ -818,17 +818,17 @@ function SimuladoNovoInner() {
       <div className="flex-1 overflow-y-auto p-6">
         {currentQuestion && (
           <div className="max-w-3xl mx-auto space-y-6">
-            {currentQuestion.images && currentQuestion.images.length > 0 && (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {currentQuestion.images.map((image: string, idx: number) => (
-                  <ImageLightbox key={idx} src={image} alt={`Imagem ${idx + 1}`} className="w-full h-48" />
-                ))}
-              </div>
-            )}
-
             <div>
               <p className="text-lg font-medium text-gray-800">{currentQuestion.statement}</p>
             </div>
+
+            {currentQuestion.images && currentQuestion.images.length > 0 && (
+              <div className="flex flex-wrap justify-center gap-4">
+                {currentQuestion.images.map((image: string, idx: number) => (
+                  <ImageLightbox key={idx} src={image} alt={`Imagem ${idx + 1}`} className="h-48 w-auto max-w-xs" />
+                ))}
+              </div>
+            )}
 
             <div className="space-y-3">
               {availableOptions.map((option) => {

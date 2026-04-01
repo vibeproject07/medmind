@@ -1890,26 +1890,26 @@ export default function QuestionsPage() {
 
                     return (
                       <div className="space-y-6">
-                        {/* Imagens */}
-                        {currentQuestion.images && currentQuestion.images.length > 0 && (
-                          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                            {currentQuestion.images.map((image: string, idx: number) => (
-                              <ImageLightbox
-                                key={idx}
-                                src={image}
-                                alt={`Imagem ${idx + 1}`}
-                                className="w-full h-48"
-                              />
-                            ))}
-                          </div>
-                        )}
-
                         {/* Enunciado */}
                         <div>
                           <p className="text-lg font-medium text-gray-800">
                             {currentQuestion.statement}
                           </p>
                         </div>
+
+                        {/* Imagens */}
+                        {currentQuestion.images && currentQuestion.images.length > 0 && (
+                          <div className="flex flex-wrap justify-center gap-4">
+                            {currentQuestion.images.map((image: string, idx: number) => (
+                              <ImageLightbox
+                                key={idx}
+                                src={image}
+                                alt={`Imagem ${idx + 1}`}
+                                className="h-48 w-auto max-w-xs"
+                              />
+                            ))}
+                          </div>
+                        )}
 
                         {/* Alternativas */}
                         <div className="space-y-3">
