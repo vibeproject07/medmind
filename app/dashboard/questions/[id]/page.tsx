@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { ArrowLeft, Edit, Image as ImageIcon, X, AlertTriangle, Ban, RotateCcw } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
+import ImageLightbox from '@/components/Common/ImageLightbox';
 import {
   ASSUNTOS_BY_AREA,
   toDisplayArea,
@@ -536,80 +537,6 @@ export default function QuestionDetailPage() {
         </div>
       )}
 
-      {/* Imagens */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Imagens
-        </label>
-        {isEditing ? (
-          <>
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-primary-400 transition-colors">
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handleImageUpload}
-                className="hidden"
-                id="question-detail-image-upload"
-              />
-              <label
-                htmlFor="question-detail-image-upload"
-                className="flex flex-col items-center justify-center cursor-pointer py-4"
-              >
-                <ImageIcon className="w-10 h-10 text-gray-400 mb-2" />
-                <span className="text-sm text-gray-600 font-medium">
-                  Clique para adicionar imagens
-                </span>
-                <span className="text-xs text-gray-500 mt-1">
-                  PNG, JPG, GIF até 10MB
-                </span>
-              </label>
-            </div>
-            
-            {/* Preview das imagens */}
-            {(editImages ?? []).length > 0 && (
-              <div className="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {(editImages ?? []).map((image, index) => (
-                  <div key={index} className="relative group">
-                    <img
-                      src={image}
-                      alt={`Preview ${index + 1}`}
-                      className="w-full h-32 object-cover rounded-lg border border-gray-200"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => removeImage(index)}
-                      className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                      aria-label="Remover imagem"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </>
-        ) : (
-          <>
-            {(question.images ?? []).length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {(Array.isArray(question.images) ? question.images : []).map((image, index) => (
-                  <img
-                    key={index}
-                    src={image}
-                    alt={`Imagem ${index + 1}`}
-                    className="w-full h-48 object-cover rounded-lg border border-gray-200"
-                  />
-                ))}
-              </div>
-            ) : (
-              <p className="text-gray-400 italic text-sm">Nenhuma imagem adicionada</p>
-            )}
-          </>
-        )}
-      </div>
-
       {/* Enunciado */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -625,9 +552,77 @@ export default function QuestionDetailPage() {
             required
           />
         ) : (
-          <p className="text-gray-700 text-lg leading-relaxed">{question.statement}</p>
+          <>
+            <p className="text-gray-700 text-lg leading-relaxed">{question.statement}</p>
+            {(question.images ?? []).length > 0 && (
+              <div className="mt-6 flex flex-wrap justify-center gap-4">
+                {(Array.isArray(question.images) ? question.images : []).map((image, index) => (
+                  <ImageLightbox
+                    key={index}
+                    src={image}
+                    alt={`Imagem ${index + 1}`}
+                    className="h-48 w-auto max-w-xs"
+                  />
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
+
+      {/* Imagens (upload — somente ao editar) */}
+      {isEditing && (
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Imagens
+          </label>
+          <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-primary-400 transition-colors">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleImageUpload}
+              className="hidden"
+              id="question-detail-image-upload"
+            />
+            <label
+              htmlFor="question-detail-image-upload"
+              className="flex flex-col items-center justify-center cursor-pointer py-4"
+            >
+              <ImageIcon className="w-10 h-10 text-gray-400 mb-2" />
+              <span className="text-sm text-gray-600 font-medium">
+                Clique para adicionar imagens
+              </span>
+              <span className="text-xs text-gray-500 mt-1">
+                PNG, JPG, GIF até 10MB
+              </span>
+            </label>
+          </div>
+
+          {(editImages ?? []).length > 0 && (
+            <div className="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {(editImages ?? []).map((image, index) => (
+                <div key={index} className="relative group">
+                  <img
+                    src={image}
+                    alt={`Preview ${index + 1}`}
+                    className="w-full h-32 object-cover rounded-lg border border-gray-200"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeImage(index)}
+                    className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    aria-label="Remover imagem"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Alternativas */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
