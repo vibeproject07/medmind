@@ -112,52 +112,141 @@ def carregar_api_key() -> str:
     return ""
 
 
-def montar_prompt(questao: dict) -> str:
+def montar_prompt(questao: dict, contexto_prova: dict | None = None) -> str:
     letras = ["A", "B", "C", "D", "E"]
     gabarito = (questao.get("correct_answer") or "A").upper().strip()[0]
+    numero_questao = questao.get("id", "?")
 
-    alternativas_texto = []
-    alternativas_erradas = []
+    alternativas_linhas = []
     for letra in letras:
         valor = questao.get(f"option_{letra.lower()}", "")
         if not valor:
             continue
-        marcador = " [CORRETA]" if letra == gabarito else ""
-        alternativas_texto.append(f"  {letra}) {valor}{marcador}")
-        if letra != gabarito:
-            alternativas_erradas.append(letra)
+        marcador = " ← GABARITO" if letra == gabarito else ""
+        alternativas_linhas.append(f"  {letra}) {valor}{marcador}")
 
-    bloco_alternativas = "\n".join(alternativas_texto)
-    erradas_str = ", ".join(alternativas_erradas) if alternativas_erradas else "nenhuma"
+    bloco_alternativas = "\n".join(alternativas_linhas)
 
-    return f"""Você é um professor especialista em concursos de residência médica no Brasil. Analise a questão abaixo e elabore um comentário técnico e didático.
+    ctx = contexto_prova or {}
+    banca = ctx.get("banca") or ctx.get("nome") or "não informada"
+    ano   = ctx.get("ano") or "não informado"
+    tipo  = ctx.get("tipo") or ""
 
-═══════════════════════════════════════
-QUESTÃO
-═══════════════════════════════════════
+    tem_imagem = questao.get("tem_imagem", False) or bool(questao.get("images"))
+    aviso_imagem = "\n⚠️ QUESTÃO COM IMAGEM — considere isso na análise." if tem_imagem else ""
+
+    return f"""════════════════════════════════════════════════════════════════
+IDENTIDADE E MISSÃO
+════════════════════════════════════════════════════════════════
+Você é um especialista em medicina clínica e em provas de residência médica brasileira.
+Sua missão é analisar questões de concursos de residência médica e produzir comentários
+didáticos, tecnicamente precisos e atualizados, semelhantes aos dos melhores cursinhos
+(Medcurso, Medcel, MedSoft, SIC).
+
+════════════════════════════════════════════════════════════════
+FLUXO DE TRABALHO — execute internamente nesta ordem antes de escrever o comentário
+════════════════════════════════════════════════════════════════
+
+ETAPA 1 — TRIAGEM DA QUESTÃO
+Identifique internamente:
+- Tema principal e subtema
+- Banca: {banca} | Ano: {ano} | Tipo: {tipo}
+- Especialidade médica a que pertence
+- Se há referência a imagem, ECG, lâmina, dermatoscopia etc.{aviso_imagem}
+
+ETAPA 2 — MAPEAMENTO DE REFERÊNCIAS
+Com base na banca e no tema, identifique qual(is) diretriz(es) essa banca costuma adotar.
+Use a tabela abaixo como guia primário. Se o tema não estiver coberto, use a diretriz
+brasileira mais recente da sociedade médica da especialidade correspondente.
+Priorize: (1) sociedade médica brasileira, (2) consensos nacionais, (3) diretrizes
+internacionais quando não houver equivalente nacional.
+
+TABELA DE REFERÊNCIAS POR TEMA:
+• HAS → 8ª Diretriz Brasileira de HAS (SBC, 2025) — alto risco de desatualização
+• Diabetes mellitus → Diretriz SBD (edição mais recente) + ADA Standards of Care
+• Sepse → Surviving Sepsis Campaign 2021 + Hour-1 Bundle (abandonou EGDT/ScvO2)
+• IC com FE reduzida → Diretriz SBC (mais recente); incluir SGLT2 e sacubitril/valsartana
+• FA / Anticoagulação → Diretriz SBC + ESC; priorizar NOACs sobre warfarina
+• DPOC → GOLD (edição mais recente)
+• Rastreio oncológico → MS/INCA como padrão; atenção a bancas acadêmicas (FMUSP,
+  UNICAMP) que podem adotar ACG ou USPSTF (ex: CA cólon: MS=50 anos; USPSTF=45 anos)
+• HIV/TARV → PCDT do Ministério da Saúde (edição vigente)
+• Calendário vacinal → PNI / SBIm (ano mais recente)
+• Outros temas → diretriz da sociedade da especialidade correspondente
+
+ETAPA 3 — VERIFICAÇÃO DE ATUALIDADE
+Compare o conteúdo da questão com a diretriz identificada. Classifique como:
+  ✅ ATUALIZADA — gabarito alinhado com diretrizes vigentes
+  ⚠️ ATENÇÃO — algum aspecto pode ter sido revisado recentemente
+  ❌ DESATUALIZADA — gabarito ou conduta contradiz diretriz atual
+
+Temas com checagem obrigatória de atualidade:
+Metas de PA, terapias-alvo em sepse, rastreios oncológicos, calendário vacinal,
+TARV para HIV, anticoagulação em FA, IC com FE reduzida, classificação da DPOC.
+
+ETAPA 4 — ELABORAÇÃO DO COMENTÁRIO
+Produza o comentário no formato abaixo. Não exiba o raciocínio das etapas 1-3 —
+apenas o comentário final formatado.
+
+════════════════════════════════════════════════════════════════
+DADOS DA QUESTÃO
+════════════════════════════════════════════════════════════════
+Número: {numero_questao}
+Banca: {banca} | Ano: {ano}
+
+ENUNCIADO:
 {questao.get("statement", "(sem enunciado)")}
 
 ALTERNATIVAS:
 {bloco_alternativas}
+════════════════════════════════════════════════════════════════
 
-GABARITO: Alternativa {gabarito}
-═══════════════════════════════════════
+REGRAS DE COMPORTAMENTO:
+- Nunca invente referências. Se não tiver certeza de uma diretriz, sinalize no comentário.
+- Comente TODAS as alternativas, inclusive as claramente erradas.
+- Diferencie "errado na prova" de "errado na prática clínica atual".
+- Nível de linguagem: acessível ao interno de medicina, sem ser superficial.
+- Extensão: questões simples → comentários objetivos; questões complexas/controversas → mais extensos.
+- Quando o tema for controverso entre bancas, explicite as duas posições.
+- A seção 💡 DICA DE PROVA só deve aparecer se existir mnemônico ou macete real e conhecido
+  no meio médico (ex: SNOOP para cefaleia). Não invente dicas.
+- A seção 🔄 ATUALIZAÇÃO IMPORTANTE só aparece se o status for ⚠️ ou ❌.
 
-Elabore um comentário estruturado seguindo EXATAMENTE este formato:
+FORMATO OBRIGATÓRIO DO COMENTÁRIO:
 
-**Por que a alternativa {gabarito} está CORRETA**
-[Explique o conceito, mecanismo ou fato clínico que fundamenta a resposta correta. Seja técnico e preciso.]
+📋 QUESTÃO {numero_questao} — [TEMA PRINCIPAL]
 
-**Por que as alternativas {erradas_str} estão ERRADAS**
-[Para cada alternativa incorreta, em parágrafo separado iniciado com a letra (ex: "Alternativa B —"), explique:
-  1. Qual o erro conceitual ou clínico que torna a alternativa incorreta neste contexto.
-  2. Em que situação clínica ou contexto diferente essa afirmativa SERIA considerada correta.]
+🏥 Banca: {banca} | Ano: {ano} | Especialidade: [especialidade]
+[⚠️ QUESTÃO COM IMAGEM — apenas se aplicável]
 
-Responda apenas com o comentário estruturado acima. Não repita o enunciado nem as alternativas. Use linguagem clínica apropriada para médicos residentes."""
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 GABARITO: Alternativa {gabarito}
+[✅ ATUALIZADA | ⚠️ ATENÇÃO — POSSÍVEL DESATUALIZAÇÃO | ❌ DESATUALIZADA]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 COMENTÁRIO GERAL
+[Contextualização do tema. Raciocínio clínico central. Mecanismo fisiopatológico ou conceito cobrado. Dados epidemiológicos relevantes quando úteis.]
+
+🔍 ANÁLISE DAS ALTERNATIVAS
+
+✅ Alternativa {gabarito} — CORRETA
+[Por que está correta. Conecte com a diretriz de referência.]
+
+❌ Alternativa [letra] — INCORRETA
+[Erro conceitual ou clínico. Em que contexto diferente seria correta.]
+
+[Repita para TODAS as alternativas incorretas]
+
+💡 DICA DE PROVA  ← OMITIR se não houver macete/mnemônico real
+[Conceito-chave. Mnemônicos ou associações úteis apenas se já existem no meio médico.]
+
+🔄 ATUALIZAÇÃO IMPORTANTE  ← OMITIR se status = ✅ ATUALIZADA
+[O que mudou nas diretrizes e qual seria a conduta/gabarito pelo padrão atual.]"""
 
 
-def chamar_api(questao: dict, api_key: str, modelo: str, delay: float) -> str:
-    prompt = montar_prompt(questao)
+def chamar_api(questao: dict, api_key: str, modelo: str, delay: float,
+               contexto_prova: dict | None = None) -> str:
+    prompt = montar_prompt(questao, contexto_prova)
 
     # -----------------------------------------------------------------------
     # Groq (comentado — substituído por Claude)
@@ -183,7 +272,7 @@ def chamar_api(questao: dict, api_key: str, modelo: str, delay: float) -> str:
     }
     payload = {
         "model": modelo,
-        "max_tokens": 1200,
+        "max_tokens": 2000,
         "temperature": 0.2,
         "messages": [{"role": "user", "content": prompt}],
     }
@@ -407,6 +496,13 @@ def main():
         prova_nome = prova.get("nome", f"Prova {prova_id}")
         questoes = prova.get("questions", [])
 
+        contexto_prova = {
+            "banca": prova.get("banca") or prova_nome,
+            "ano":   prova.get("ano") or "",
+            "tipo":  prova.get("tipo") or "",
+            "nome":  prova_nome,
+        }
+
         if not questoes:
             print(f"[{idx_prova}/{total_provas}] {prova_nome} — sem questões, pulando.\n")
             continue
@@ -427,7 +523,7 @@ def main():
             print(f"  [{progresso}] ID {questao_id} ...", end=" ", flush=True)
 
             try:
-                comentario = chamar_api(questao, api_key, args.modelo, args.delay)
+                comentario = chamar_api(questao, api_key, args.modelo, args.delay, contexto_prova)
                 print("✓")
             except RuntimeError as e:
                 comentario = f"[ERRO AO GERAR COMENTÁRIO: {e}]"
