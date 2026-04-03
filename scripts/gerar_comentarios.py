@@ -246,6 +246,57 @@ def salvar_saida(resultados_json: list, resultados_csv: list, caminho_json: str,
         writer.writerows(resultados_csv)
 
 
+def normalizar_formato(dados: dict, limite_questoes: int | None = None) -> list:
+    """
+    Aceita dois formatos de entrada e retorna sempre uma lista de provas
+    no formato interno do script.
+
+    Formato 1 — padrão do script / API /api/provas:
+        { "provas": [ { "id", "nome", "questions": [...] } ] }
+
+    Formato 2 — saída do pipeline de extração de PDF:
+        { "titulo_prova": { "banca", "ano", "tipo" }, "questoes": [ { "numero",
+          "enunciado", "alternativas": [{"letra","texto"}], "letra_correta" } ] }
+    """
+    if "provas" in dados and isinstance(dados["provas"], list):
+        return dados["provas"]
+
+    if "questoes" in dados and isinstance(dados["questoes"], list):
+        titulo = dados.get("titulo_prova", {})
+        banca = titulo.get("banca", "")
+        ano = titulo.get("ano", "")
+        tipo = titulo.get("tipo", "")
+        nome = f"{banca} {ano}".strip() or "Prova sem nome"
+
+        questoes_raw = dados["questoes"]
+        if limite_questoes:
+            questoes_raw = questoes_raw[:limite_questoes]
+
+        questions = []
+        for q in questoes_raw:
+            alts: dict[str, str] = {}
+            for alt in q.get("alternativas", []):
+                letra = str(alt.get("letra", "")).upper().strip()
+                texto = str(alt.get("texto", "")).strip()
+                if letra in ("A", "B", "C", "D", "E"):
+                    alts[letra] = texto
+
+            questions.append({
+                "id": q.get("numero"),
+                "statement": str(q.get("enunciado", "")).strip(),
+                "option_a": alts.get("A", ""),
+                "option_b": alts.get("B", ""),
+                "option_c": alts.get("C") or None,
+                "option_d": alts.get("D") or None,
+                "option_e": alts.get("E") or None,
+                "correct_answer": str(q.get("letra_correta", "A")).upper().strip(),
+            })
+
+        return [{"id": 1, "nome": nome, "banca": banca, "ano": ano, "tipo": tipo, "questions": questions}]
+
+    return []
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Gera comentários explicativos para questões de provas usando IA.",
@@ -279,6 +330,13 @@ def main():
         metavar="ID",
         help="Processar apenas a prova com este ID (útil para testes)",
     )
+    parser.add_argument(
+        "--limite-questoes",
+        type=int,
+        default=None,
+        metavar="N",
+        help="Limitar a N questões por prova (útil para testes rápidos)",
+    )
     args = parser.parse_args()
 
     api_key = carregar_api_key()
@@ -301,9 +359,13 @@ def main():
             print(f"\nERRO: O arquivo não é um JSON válido: {e}\n")
             sys.exit(1)
 
-    provas = dados.get("provas", [])
+    provas = normalizar_formato(dados, limite_questoes=args.limite_questoes)
     if not provas:
-        print("\nERRO: O JSON deve conter um array 'provas' com ao menos uma entrada.\n")
+        print(
+            "\nERRO: Formato não reconhecido. O JSON deve conter:\n"
+            "  - Um array 'provas' (formato padrão), ou\n"
+            "  - Um array 'questoes' com 'titulo_prova' (formato de extração de PDF).\n"
+        )
         sys.exit(1)
 
     if args.apenas_prova is not None:
@@ -311,6 +373,10 @@ def main():
         if not provas:
             print(f"\nERRO: Nenhuma prova encontrada com id={args.apenas_prova}.\n")
             sys.exit(1)
+
+    if args.limite_questoes and "provas" in dados:
+        for p in provas:
+            p["questions"] = p.get("questions", [])[:args.limite_questoes]
 
     os.makedirs(args.output_dir, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
