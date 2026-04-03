@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Mail, Plus, List } from 'lucide-react';
+import { Mail, Plus, List, MessageSquare, Upload, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import CriarAgenteModal from '@/components/Dashboard/CriarAgenteModal';
 
 interface Setting {
@@ -25,6 +25,10 @@ export default function SettingsPage() {
   const [testingEmail, setTestingEmail] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [showCriarAgenteModal, setShowCriarAgenteModal] = useState(false);
+
+  const comentariosFileRef = useRef<HTMLInputElement>(null);
+  const [importingComentarios, setImportingComentarios] = useState(false);
+  const [comentariosStatus, setComentariosStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
   useEffect(() => {
     // Verificar permissão antes de carregar
@@ -205,6 +209,52 @@ export default function SettingsPage() {
     }
   };
 
+  const handleComentariosFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file) return;
+
+    setImportingComentarios(true);
+    setComentariosStatus(null);
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const text = reader.result as string;
+        JSON.parse(text);
+
+        const token = localStorage.getItem('token')?.trim().replace(/^["']|["']$/g, '');
+        if (!token) {
+          setComentariosStatus({ type: 'error', message: 'Sessão expirada. Faça login novamente.' });
+          setImportingComentarios(false);
+          return;
+        }
+
+        const res = await fetch('/api/comentarios/import', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: text,
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          setComentariosStatus({ type: 'success', message: data.message || `Importação concluída com sucesso.` });
+        } else {
+          setComentariosStatus({ type: 'error', message: data.error || 'Erro ao importar comentários.' });
+        }
+      } catch {
+        setComentariosStatus({ type: 'error', message: 'O arquivo não é um JSON válido.' });
+      } finally {
+        setImportingComentarios(false);
+      }
+    };
+    reader.onerror = () => {
+      setComentariosStatus({ type: 'error', message: 'Erro ao ler o arquivo.' });
+      setImportingComentarios(false);
+    };
+    reader.readAsText(file, 'UTF-8');
+  };
+
   if (loading) return <div>Carregando...</div>;
 
   return (
@@ -269,6 +319,61 @@ export default function SettingsPage() {
             )}
           </div>
         </div>
+
+        {/* Importar Comentários — apenas admin */}
+        {isAdmin && (
+          <div className="bg-white rounded-lg shadow p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <MessageSquare className="w-6 h-6 text-primary-600" />
+              <h2 className="text-xl font-semibold text-gray-900">Importar comentários</h2>
+            </div>
+
+            <p className="text-sm text-gray-500 mb-5">
+              Selecione um arquivo JSON contendo os comentários a serem importados para o sistema.
+            </p>
+
+            <input
+              ref={comentariosFileRef}
+              type="file"
+              accept=".json,application/json"
+              className="hidden"
+              onChange={handleComentariosFileChange}
+            />
+
+            <button
+              type="button"
+              disabled={importingComentarios}
+              onClick={() => { setComentariosStatus(null); comentariosFileRef.current?.click(); }}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
+            >
+              {importingComentarios ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Importando...
+                </>
+              ) : (
+                <>
+                  <Upload className="w-4 h-4" />
+                  Escolher arquivo
+                </>
+              )}
+            </button>
+
+            {comentariosStatus && (
+              <div className={`mt-4 flex items-start gap-2 text-sm rounded-lg px-4 py-3 ${
+                comentariosStatus.type === 'success'
+                  ? 'bg-green-50 text-green-700 border border-green-200'
+                  : 'bg-red-50 text-red-700 border border-red-200'
+              }`}>
+                {comentariosStatus.type === 'success'
+                  ? <CheckCircle className="w-4 h-4 mt-0.5 shrink-0" />
+                  : <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
+                }
+                <span>{comentariosStatus.message}</span>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Lista de outras configurações */}
         <div className="bg-white rounded-lg shadow overflow-hidden">
