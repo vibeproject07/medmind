@@ -540,10 +540,12 @@ def main():
                 "comentario": comentario,
             })
 
-        resultados_json.append(entrada_prova)
+            # Salva após CADA questão — garante progresso mesmo em interrupções
+            provas_ate_agora = resultados_json + [entrada_prova]
+            salvar_saida(provas_ate_agora, resultados_csv, caminho_json, caminho_csv)
 
-        salvar_saida(resultados_json, resultados_csv, caminho_json, caminho_csv)
-        print(f"  → Progresso salvo após {prova_nome}\n")
+        resultados_json.append(entrada_prova)
+        print(f"  → Prova concluída: {prova_nome}\n")
 
     duracao = time.time() - inicio
     minutos, segundos = divmod(int(duracao), 60)
