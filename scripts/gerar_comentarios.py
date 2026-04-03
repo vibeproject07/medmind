@@ -8,7 +8,7 @@ Uso:
 Exemplos:
     python3 scripts/gerar_comentarios.py provas.json
     python3 scripts/gerar_comentarios.py provas.json --output-dir ./saida
-    python3 scripts/gerar_comentarios.py provas.json --delay 1.0 --modelo llama-3.1-8b-instant
+    python3 scripts/gerar_comentarios.py provas.json --delay 1.0 --modelo claude-3-5-haiku-20241022
 
 O arquivo de entrada deve ter o formato retornado pela API /api/provas:
     {
@@ -39,8 +39,8 @@ Gera dois arquivos de saída:
     - comentarios_<timestamp>.json  →  { "comentarios": [ { "prova_id", "nome", "questoes": [...] } ] }
     - comentarios_<timestamp>.csv   →  colunas: prova_id, questao_id, comentario
 
-A chave GROQ_API_KEY é lida de:
-    1. Variável de ambiente GROQ_API_KEY
+A chave ANTHROPIC_API_KEY é lida de:
+    1. Variável de ambiente ANTHROPIC_API_KEY
     2. Arquivo .env.local na raiz do projeto
 """
 
@@ -62,13 +62,39 @@ except ImportError:
     import requests
 
 
-GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
-MODELO_PADRAO = "llama-3.3-70b-versatile"
+# ---------------------------------------------------------------------------
+# Groq (comentado — substituído por Claude)
+# ---------------------------------------------------------------------------
+# GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
+# MODELO_PADRAO = "llama-3.3-70b-versatile"
+# ---------------------------------------------------------------------------
+
+CLAUDE_API_URL = "https://api.anthropic.com/v1/messages"
+ANTHROPIC_VERSION = "2023-06-01"
+MODELO_PADRAO = "claude-opus-4-5"
 MAX_TENTATIVAS = 3
 
 
 def carregar_api_key() -> str:
-    key = os.environ.get("GROQ_API_KEY", "").strip()
+    # ---------------------------------------------------------------------------
+    # Groq (comentado — substituído por Claude)
+    # key = os.environ.get("GROQ_API_KEY", "").strip()
+    # if key:
+    #     return key
+    # raiz = os.path.join(os.path.dirname(__file__), "..")
+    # for nome_env in [".env.local", ".env"]:
+    #     caminho = os.path.normpath(os.path.join(raiz, nome_env))
+    #     if os.path.exists(caminho):
+    #         with open(caminho, encoding="utf-8") as f:
+    #             for linha in f:
+    #                 linha = linha.strip()
+    #                 if linha.startswith("GROQ_API_KEY="):
+    #                     key = linha.split("=", 1)[1].strip().strip('"').strip("'")
+    #                     if key:
+    #                         return key
+    # ---------------------------------------------------------------------------
+
+    key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
     if key:
         return key
 
@@ -79,7 +105,7 @@ def carregar_api_key() -> str:
             with open(caminho, encoding="utf-8") as f:
                 for linha in f:
                     linha = linha.strip()
-                    if linha.startswith("GROQ_API_KEY="):
+                    if linha.startswith("ANTHROPIC_API_KEY="):
                         key = linha.split("=", 1)[1].strip().strip('"').strip("'")
                         if key:
                             return key
@@ -132,30 +158,57 @@ Responda apenas com o comentário estruturado acima. Não repita o enunciado nem
 
 def chamar_api(questao: dict, api_key: str, modelo: str, delay: float) -> str:
     prompt = montar_prompt(questao)
+
+    # -----------------------------------------------------------------------
+    # Groq (comentado — substituído por Claude)
+    # -----------------------------------------------------------------------
+    # headers_groq = {
+    #     "Authorization": f"Bearer {api_key}",
+    #     "Content-Type": "application/json",
+    # }
+    # payload_groq = {
+    #     "model": modelo,
+    #     "messages": [{"role": "user", "content": prompt}],
+    #     "temperature": 0.2,
+    #     "max_tokens": 1200,
+    # }
+    # resp = requests.post(GROQ_API_URL, headers=headers_groq, json=payload_groq, timeout=90)
+    # conteudo = resp.json()["choices"][0]["message"]["content"].strip()
+    # -----------------------------------------------------------------------
+
     headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json",
+        "x-api-key": api_key,
+        "anthropic-version": ANTHROPIC_VERSION,
+        "content-type": "application/json",
     }
     payload = {
         "model": modelo,
-        "messages": [{"role": "user", "content": prompt}],
-        "temperature": 0.2,
         "max_tokens": 1200,
+        "temperature": 0.2,
+        "messages": [{"role": "user", "content": prompt}],
     }
 
     for tentativa in range(1, MAX_TENTATIVAS + 1):
         try:
-            resp = requests.post(GROQ_API_URL, headers=headers, json=payload, timeout=90)
+            resp = requests.post(CLAUDE_API_URL, headers=headers, json=payload, timeout=120)
 
             if resp.status_code == 429:
-                retry_after = int(resp.headers.get("retry-after", 15))
-                espera = max(retry_after, 15)
+                retry_after = int(resp.headers.get("retry-after", 30))
+                espera = max(retry_after, 30)
                 print(f"\n    ⏳ Rate limit. Aguardando {espera}s...", end="", flush=True)
                 time.sleep(espera)
                 continue
 
+            if resp.status_code == 529:
+                espera = 60
+                print(f"\n    ⏳ API sobrecarregada. Aguardando {espera}s...", end="", flush=True)
+                time.sleep(espera)
+                continue
+
             resp.raise_for_status()
-            conteudo = resp.json()["choices"][0]["message"]["content"].strip()
+
+            data = resp.json()
+            conteudo = data["content"][0]["text"].strip()
             time.sleep(delay)
             return conteudo
 
@@ -217,7 +270,7 @@ def main():
         "--modelo",
         default=MODELO_PADRAO,
         metavar="MODELO",
-        help=f"Modelo Groq a usar (padrão: {MODELO_PADRAO})",
+        help=f"Modelo Claude a usar (padrão: {MODELO_PADRAO}). Ex: claude-3-5-haiku-20241022",
     )
     parser.add_argument(
         "--apenas-prova",
@@ -231,9 +284,9 @@ def main():
     api_key = carregar_api_key()
     if not api_key:
         print(
-            "\nERRO: GROQ_API_KEY não encontrada.\n"
+            "\nERRO: ANTHROPIC_API_KEY não encontrada.\n"
             "Defina a variável de ambiente ou adicione ao arquivo .env.local:\n"
-            "  GROQ_API_KEY=gsk_...\n"
+            "  ANTHROPIC_API_KEY=sk-ant-...\n"
         )
         sys.exit(1)
 
