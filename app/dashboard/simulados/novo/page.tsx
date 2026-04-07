@@ -11,6 +11,8 @@ import {
   X,
   Eye,
   ClipboardList,
+  MessageSquare,
+  Loader2,
 } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
@@ -116,7 +118,32 @@ function SimuladoNovoInner() {
   const [resumedTags, setResumedTags] = useState<string[]>([]);
   const [presetQuestionsPool, setPresetQuestionsPool] = useState<Question[] | null>(null);
 
+  const [aiCommentOpen, setAiCommentOpen] = useState(false);
+  const [aiCommentCache, setAiCommentCache] = useState<Record<number, string | null>>({});
+  const [aiCommentLoading, setAiCommentLoading] = useState(false);
+
   const getToken = () => (typeof window !== 'undefined' ? localStorage.getItem('token') : null);
+
+  const fetchAiComment = async (questionId: number) => {
+    if (aiCommentCache[questionId] !== undefined) {
+      setAiCommentOpen(true);
+      return;
+    }
+    setAiCommentLoading(true);
+    setAiCommentOpen(true);
+    try {
+      const token = getToken();
+      const res = await fetch(`/api/comentarios/${questionId}`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      const data = await res.json();
+      setAiCommentCache((prev) => ({ ...prev, [questionId]: data.comentario ?? null }));
+    } catch {
+      setAiCommentCache((prev) => ({ ...prev, [questionId]: null }));
+    } finally {
+      setAiCommentLoading(false);
+    }
+  };
 
   const fetchQuestionsPool = async (
     filtersOverride: { tags?: string[]; areas_conhecimento?: string[]; assuntos?: string[] },
@@ -314,6 +341,10 @@ function SimuladoNovoInner() {
     });
     return { correct, total: simulateQuestions.length };
   };
+
+  useEffect(() => {
+    setAiCommentOpen(false);
+  }, [currentSimulateIndex]);
 
   const handleSimulateAnswerSelect = (answer: string) => {
     const currentQuestion = simulateQuestions[currentSimulateIndex];
@@ -815,7 +846,8 @@ function SimuladoNovoInner() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-6">
+      <div className="flex-1 flex overflow-hidden">
+        <div className={`overflow-y-auto p-6 ${aiCommentOpen ? 'w-1/2 border-r border-gray-200' : 'w-full'}`}>
         {currentQuestion && (
           <div className="max-w-3xl mx-auto space-y-6">
             <div>
@@ -903,6 +935,43 @@ function SimuladoNovoInner() {
             })()}
           </div>
         )}
+        </div>
+
+        {aiCommentOpen && (
+          <div className="w-1/2 overflow-y-auto bg-gray-50 border-l border-gray-200 flex flex-col">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-white flex-shrink-0">
+              <h3 className="text-base font-semibold text-gray-800 flex items-center gap-2">
+                <MessageSquare className="w-4 h-4 text-primary-600" />
+                Comentário da IA
+              </h3>
+              <button
+                type="button"
+                onClick={() => setAiCommentOpen(false)}
+                className="p-1.5 rounded-lg hover:bg-gray-100 transition text-gray-500"
+                aria-label="Fechar comentário"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="flex-1 p-6 overflow-y-auto">
+              {aiCommentLoading ? (
+                <div className="flex items-center justify-center h-32 gap-3 text-gray-500">
+                  <Loader2 className="w-6 h-6 animate-spin text-primary-600" />
+                  <span className="text-sm">Carregando comentário...</span>
+                </div>
+              ) : currentQuestion && aiCommentCache[currentQuestion.id] != null ? (
+                <div className="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed">
+                  {aiCommentCache[currentQuestion.id]}
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center h-32 gap-2 text-center">
+                  <MessageSquare className="w-8 h-8 text-gray-300" />
+                  <p className="text-sm text-gray-500">Comentário não disponível para esta questão.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="bg-white border-t border-gray-200 px-6 py-4 flex justify-between items-center flex-shrink-0">
@@ -941,6 +1010,27 @@ function SimuladoNovoInner() {
           >
             <Eye className="w-5 h-5 flex-shrink-0" />
             <span className="ml-1.5 text-sm">Ver Resposta</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              if (!currentQuestion) return;
+              if (aiCommentOpen) {
+                setAiCommentOpen(false);
+              } else {
+                fetchAiComment(currentQuestion.id);
+              }
+            }}
+            className={`p-2.5 border rounded-lg transition flex items-center ${
+              aiCommentOpen
+                ? 'border-purple-600 bg-purple-50 text-purple-700'
+                : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+            }`}
+            title={aiCommentOpen ? 'Fechar comentário' : 'Ver comentário da IA'}
+          >
+            <MessageSquare className="w-5 h-5 flex-shrink-0" />
+            <span className="ml-1.5 text-sm">Comentário da IA</span>
           </button>
         </div>
 
