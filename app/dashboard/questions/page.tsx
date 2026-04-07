@@ -73,6 +73,7 @@ interface Question {
   exam_institution?: string | null;
   exam_region?: string | null;
   anulada?: boolean;
+  decs_terms?: string[];
   created_at: string;
   updated_at: string;
 }
@@ -527,7 +528,7 @@ export default function QuestionsPage() {
       images: question.images || [],
       areas_conhecimento: question.areas_conhecimento || [],
       assuntos: question.assuntos || [],
-      decs_terms: (question as any).decs_terms || [],
+      decs_terms: question.decs_terms || [],
       exam_year: question.exam_year || null,
       exam_board: question.exam_board || '',
       exam_institution: question.exam_institution || '',

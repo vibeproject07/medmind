@@ -74,13 +74,8 @@ scripts/
 - `GROQ_API_KEY` — Groq API key
 - `GEMINI_API_KEY` — Gemini API key
 - `ANTHROPIC_API_KEY` — Anthropic/Claude API key
-- `DECS_API_KEY` — BVS DeCS API key (`ab1381938f084a93b1bee42e4422f527`)
+- `DECS_API_KEY` — BVS DeCS API key (stored securely in .env.local)
 - `TAVILY_API_KEY` — Tavily web search API key
-
-## Admin Credentials
-
-- Email: `admin@medmind.com`
-- Password: `AdminMedMind123`
 
 ## DeCS API
 
@@ -89,8 +84,8 @@ scripts/
 - Endpoints: `/search-by-words`, `/get-tree`
 - Response: JSON with `objects[0].decsws_response.record_list.record[]`
 - Term field: `descriptor_list[].descriptor` (filter by `attr.lang === 'pt'` or `'pt-br'`)
-- Hierarchical code: `tree_id_list[].tree_id`
-- Routes are public (no JWT required, exempted from middleware)
+- Hierarchical codes: `tree_id_list[].tree_id` (array)
+- Routes require user JWT authentication
 
 ## Notes
 

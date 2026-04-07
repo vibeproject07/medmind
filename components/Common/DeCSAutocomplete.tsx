@@ -6,7 +6,8 @@ import { X, Search, Loader2, BookOpen } from 'lucide-react';
 interface DeCSRecord {
   term: string;
   code: string;
-  hierarchicalCode?: string;
+  tree_ids: string[];
+  hierarchy_path: string;
   synonyms?: string[];
 }
 
@@ -25,6 +26,15 @@ function useDebounce<T>(value: T, delay: number): T {
     return () => clearTimeout(timer);
   }, [value, delay]);
   return debouncedValue;
+}
+
+function getAuthToken(): string | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    return localStorage.getItem('token');
+  } catch {
+    return null;
+  }
 }
 
 export default function DeCSAutocomplete({
@@ -56,15 +66,19 @@ export default function DeCSAutocomplete({
     setLoading(true);
     setError(null);
 
-    fetch(`/api/decs/search?q=${encodeURIComponent(debouncedQuery)}&lang=${lang}`)
+    const token = getAuthToken();
+    const headers: HeadersInit = { 'Content-Type': 'application/json' };
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    fetch(`/api/decs/search?q=${encodeURIComponent(debouncedQuery)}&lang=${lang}`, { headers })
       .then((res) => res.json())
-      .then((data) => {
+      .then((data: { records?: DeCSRecord[]; error?: string }) => {
         if (cancelled) return;
         if (data.error) {
           setError(data.error);
           setResults([]);
         } else {
-          const filtered = (data.records as DeCSRecord[]).filter(
+          const filtered = (data.records ?? []).filter(
             (r) => !selectedTerms.includes(r.term)
           );
           setResults(filtered);
@@ -187,12 +201,15 @@ export default function DeCSAutocomplete({
             >
               <div className="flex items-start justify-between gap-2">
                 <span className="text-sm font-medium text-gray-800">{record.term}</span>
-                {record.hierarchicalCode && (
+                {record.tree_ids.length > 0 && (
                   <span className="text-xs text-gray-400 font-mono flex-shrink-0 mt-0.5">
-                    {record.hierarchicalCode}
+                    {record.tree_ids[0]}
                   </span>
                 )}
               </div>
+              {record.hierarchy_path && (
+                <p className="text-xs text-teal-600 mt-0.5">{record.hierarchy_path}</p>
+              )}
               {record.synonyms && record.synonyms.length > 0 && (
                 <p className="text-xs text-gray-500 mt-0.5 truncate">
                   {record.synonyms.slice(0, 3).join(', ')}
@@ -205,7 +222,7 @@ export default function DeCSAutocomplete({
 
       {showDropdown && !loading && debouncedQuery.length >= 2 && results.length === 0 && !error && (
         <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg px-4 py-3 text-sm text-gray-500 text-center">
-          Nenhum termo encontrado para "{debouncedQuery}"
+          Nenhum termo encontrado para &ldquo;{debouncedQuery}&rdquo;
         </div>
       )}
     </div>

@@ -1,12 +1,44 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { verifyToken } from '@/lib/jwt';
+
+export const runtime = 'nodejs';
 
 const DECS_BASE = 'https://api.bvsalud.org/decs/v2';
 
 export interface DeCSRecord {
   term: string;
   code: string;
-  hierarchicalCode?: string;
+  tree_ids: string[];
+  hierarchy_path: string;
   synonyms?: string[];
+}
+
+const DECS_CATEGORY_LABELS: Record<string, string> = {
+  A: 'Anatomia',
+  B: 'Organismos',
+  C: 'Doenças',
+  D: 'Compostos Químicos e Drogas',
+  E: 'Técnicas e Equipamentos Analíticos',
+  F: 'Psiquiatria e Psicologia',
+  G: 'Fenômenos Biológicos',
+  H: 'Disciplinas e Ocupações',
+  I: 'Antropologia, Educação, Sociologia',
+  J: 'Tecnologia, Indústria, Agricultura',
+  K: 'Humanidades',
+  L: 'Ciência da Informação',
+  M: 'Grupos Identificados',
+  N: 'Saúde',
+  SP: 'Saúde Pública',
+  VS: 'Vigilância Sanitária',
+};
+
+function buildHierarchyPath(treeId: string): string {
+  if (!treeId) return '';
+  const topCode = treeId.split('.')[0].replace(/[0-9]/g, '');
+  const label = DECS_CATEGORY_LABELS[topCode] ?? topCode;
+  const depth = treeId.split('.').length;
+  if (depth <= 1) return label;
+  return `${label} › ${treeId}`;
 }
 
 function toArray<T>(v: T | T[]): T[] {
@@ -54,7 +86,11 @@ function extractRecords(data: unknown, lang: string): DeCSRecord[] {
       const treeList = toArray(rec.tree_id_list as unknown).flatMap((t) =>
         toArray(t as unknown)
       ) as Record<string, unknown>[];
-      const hierarchicalCode = (treeList[0]?.tree_id as string | undefined)?.trim();
+      const tree_ids: string[] = treeList
+        .map((t) => (t?.tree_id as string | undefined)?.trim() ?? '')
+        .filter(Boolean);
+
+      const hierarchy_path = buildHierarchyPath(tree_ids[0] ?? '');
 
       const synonymList = toArray(rec.synonym_list as unknown).flatMap((s) =>
         toArray(s as unknown)
@@ -68,7 +104,8 @@ function extractRecords(data: unknown, lang: string): DeCSRecord[] {
       results.push({
         term,
         code,
-        hierarchicalCode: hierarchicalCode || undefined,
+        tree_ids,
+        hierarchy_path,
         synonyms: synonyms.length > 0 ? synonyms : undefined,
       });
     }
@@ -80,6 +117,13 @@ function extractRecords(data: unknown, lang: string): DeCSRecord[] {
 }
 
 export async function GET(req: NextRequest) {
+  const authHeader = req.headers.get('authorization');
+  let token = authHeader?.replace('Bearer ', '') || req.cookies.get('token')?.value;
+  if (token) token = token.trim().replace(/^["']|["']$/g, '');
+  if (!token) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
+  const user = verifyToken(token);
+  if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
+
   const q = req.nextUrl.searchParams.get('q')?.trim();
   const lang = req.nextUrl.searchParams.get('lang') ?? 'pt';
 
