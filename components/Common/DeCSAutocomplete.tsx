@@ -14,6 +14,7 @@ interface DeCSRecord {
 interface DeCSAutocompleteProps {
   selectedTerms: string[];
   onChange: (terms: string[]) => void;
+  onTagAdd?: (term: string) => void;
   lang?: 'pt' | 'en' | 'es';
   placeholder?: string;
   label?: string;
@@ -40,6 +41,7 @@ function getAuthToken(): string | null {
 export default function DeCSAutocomplete({
   selectedTerms,
   onChange,
+  onTagAdd,
   lang = 'pt',
   placeholder = 'Buscar termos DeCS/MeSH...',
   label,
@@ -112,11 +114,14 @@ export default function DeCSAutocomplete({
       if (!selectedTerms.includes(record.term)) {
         onChange([...selectedTerms, record.term]);
       }
+      if (onTagAdd) {
+        onTagAdd(record.term);
+      }
       setInputValue('');
       setShowDropdown(false);
       setTimeout(() => inputRef.current?.focus(), 100);
     },
-    [selectedTerms, onChange]
+    [selectedTerms, onChange, onTagAdd]
   );
 
   const handleRemove = useCallback(

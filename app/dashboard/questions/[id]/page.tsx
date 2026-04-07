@@ -1021,6 +1021,11 @@ export default function QuestionDetailPage() {
           <DeCSAutocomplete
             selectedTerms={editDecsTerms}
             onChange={setEditDecsTerms}
+            onTagAdd={(term) => {
+              if (!editTags.includes(term)) {
+                setEditTags([...editTags, term]);
+              }
+            }}
             label="Buscar e adicionar termos"
             placeholder="Ex: Hipertensão, Diabetes Mellitus..."
           />

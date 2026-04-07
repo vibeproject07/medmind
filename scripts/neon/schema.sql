@@ -132,6 +132,8 @@ CREATE TABLE questions (
   numero_na_prova INTEGER,
   areas_conhecimento TEXT,
   assuntos TEXT,
+  anulada BOOLEAN DEFAULT FALSE,
+  decs_terms TEXT,
   created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );

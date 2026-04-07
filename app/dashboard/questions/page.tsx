@@ -1433,6 +1433,11 @@ export default function QuestionsPage() {
                 <DeCSAutocomplete
                   selectedTerms={formData.decs_terms}
                   onChange={(terms) => setFormData({ ...formData, decs_terms: terms })}
+                  onTagAdd={(term) => {
+                    if (!formData.tags.includes(term)) {
+                      setFormData((prev) => ({ ...prev, tags: [...prev.tags, term] }));
+                    }
+                  }}
                   label="Termos DeCS/MeSH (vocabulário controlado BVS)"
                   placeholder="Ex: Hipertensão, Diabetes Mellitus..."
                 />
