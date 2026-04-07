@@ -214,6 +214,14 @@ export default function SettingsPage() {
     e.target.value = '';
     if (!file) return;
 
+    const isCsv = file.name.toLowerCase().endsWith('.csv') || file.type === 'text/csv';
+    const isJson = file.name.toLowerCase().endsWith('.json') || file.type === 'application/json';
+
+    if (!isCsv && !isJson) {
+      setComentariosStatus({ type: 'error', message: 'Formato não suportado. Envie um arquivo .json ou .csv.' });
+      return;
+    }
+
     setImportingComentarios(true);
     setComentariosStatus(null);
 
@@ -221,7 +229,6 @@ export default function SettingsPage() {
     reader.onload = async () => {
       try {
         const text = reader.result as string;
-        JSON.parse(text);
 
         const token = localStorage.getItem('token')?.trim().replace(/^["']|["']$/g, '');
         if (!token) {
@@ -230,20 +237,34 @@ export default function SettingsPage() {
           return;
         }
 
+        const contentType = isCsv ? 'text/csv' : 'application/json';
+
+        if (isJson) {
+          try { JSON.parse(text); } catch {
+            setComentariosStatus({ type: 'error', message: 'O arquivo não é um JSON válido.' });
+            setImportingComentarios(false);
+            return;
+          }
+        }
+
         const res = await fetch('/api/comentarios/import', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          headers: { 'Content-Type': contentType, Authorization: `Bearer ${token}` },
           body: text,
         });
 
         const data = await res.json();
         if (res.ok) {
-          setComentariosStatus({ type: 'success', message: data.message || `Importação concluída com sucesso.` });
+          const msg = data.message || 'Importação concluída com sucesso.';
+          const extras = data.erros?.length
+            ? ` ${data.erros.length} erro(s) ignorado(s).`
+            : '';
+          setComentariosStatus({ type: 'success', message: msg + extras });
         } else {
           setComentariosStatus({ type: 'error', message: data.error || 'Erro ao importar comentários.' });
         }
       } catch {
-        setComentariosStatus({ type: 'error', message: 'O arquivo não é um JSON válido.' });
+        setComentariosStatus({ type: 'error', message: 'Erro inesperado ao processar o arquivo.' });
       } finally {
         setImportingComentarios(false);
       }
@@ -329,13 +350,16 @@ export default function SettingsPage() {
             </div>
 
             <p className="text-sm text-gray-500 mb-5">
-              Selecione um arquivo JSON contendo os comentários a serem importados para o sistema.
+              Selecione um arquivo <strong>.json</strong> ou <strong>.csv</strong> gerado pelo script de comentários.
+              O JSON pode estar no formato simples <code className="text-xs bg-gray-100 px-1 rounded">{'{"questoes":[...]}'}</code> ou
+              no formato de saída do script <code className="text-xs bg-gray-100 px-1 rounded">{'{"comentarios":[...]}'}</code>.
+              O CSV deve conter as colunas <code className="text-xs bg-gray-100 px-1 rounded">questao_id</code> e <code className="text-xs bg-gray-100 px-1 rounded">comentario</code>.
             </p>
 
             <input
               ref={comentariosFileRef}
               type="file"
-              accept=".json,application/json"
+              accept=".json,.csv,application/json,text/csv"
               className="hidden"
               onChange={handleComentariosFileChange}
             />

@@ -13,31 +13,117 @@ function getTokenPayload(req: NextRequest) {
   }
 }
 
-export async function POST(req: NextRequest) {
-  const payload = getTokenPayload(req);
-  if (!payload || payload.role !== 'admin') {
-    return NextResponse.json({ error: 'Não autorizado' }, { status: 403 });
+type QuestaoInput = { questao_id: number | string; comentario: string };
+
+function parseJsonBody(raw: unknown): QuestaoInput[] {
+  if (!raw || typeof raw !== 'object') return [];
+  const obj = raw as Record<string, unknown>;
+
+  // Formato simples: { "questoes": [...] }
+  if (Array.isArray(obj.questoes)) {
+    return obj.questoes as QuestaoInput[];
   }
 
-  let body: { questoes?: { questao_id: number | string; comentario: string }[] };
-  try {
-    body = await req.json();
-  } catch {
-    return NextResponse.json({ error: 'JSON inválido' }, { status: 400 });
+  // Formato saída do script: { "comentarios": [{ "questoes": [...] }] }
+  if (Array.isArray(obj.comentarios)) {
+    const result: QuestaoInput[] = [];
+    for (const prova of obj.comentarios as Record<string, unknown>[]) {
+      if (Array.isArray(prova.questoes)) {
+        for (const q of prova.questoes as QuestaoInput[]) {
+          result.push(q);
+        }
+      }
+    }
+    return result;
   }
 
-  const questoes = body?.questoes;
-  if (!Array.isArray(questoes) || questoes.length === 0) {
-    return NextResponse.json({ error: 'Campo "questoes" ausente ou vazio' }, { status: 400 });
-  }
+  return [];
+}
 
+function parseCsvBody(text: string): QuestaoInput[] {
+  const lines = text.split(/\r?\n/);
+  if (lines.length < 2) return [];
+
+  const headers = lines[0].split(',').map((h) => h.trim().replace(/^"|"$/g, '').toLowerCase());
+  const idxId = headers.indexOf('questao_id');
+  const idxComentario = headers.indexOf('comentario');
+
+  if (idxId === -1 || idxComentario === -1) return [];
+
+  const result: QuestaoInput[] = [];
+  let i = 1;
+  while (i < lines.length) {
+    const row = parseCsvRow(lines, i);
+    i = row.nextLine;
+    const cells = row.cells;
+    if (cells.length <= Math.max(idxId, idxComentario)) continue;
+    const qid = cells[idxId].trim();
+    const comentario = cells[idxComentario].trim();
+    if (qid && comentario) {
+      result.push({ questao_id: qid, comentario });
+    }
+  }
+  return result;
+}
+
+function parseCsvRow(lines: string[], startLine: number): { cells: string[]; nextLine: number } {
+  const cells: string[] = [];
+  let line = startLine;
+  let remaining = lines[line] ?? '';
+  let pos = 0;
+
+  while (pos <= remaining.length) {
+    if (remaining[pos] === '"') {
+      let field = '';
+      pos++;
+      while (true) {
+        if (pos >= remaining.length) {
+          if (line + 1 < lines.length) {
+            field += '\n';
+            line++;
+            remaining = lines[line];
+            pos = 0;
+          } else {
+            break;
+          }
+        }
+        if (remaining[pos] === '"') {
+          if (remaining[pos + 1] === '"') {
+            field += '"';
+            pos += 2;
+          } else {
+            pos++;
+            break;
+          }
+        } else {
+          field += remaining[pos];
+          pos++;
+        }
+      }
+      cells.push(field);
+      if (remaining[pos] === ',') pos++;
+    } else {
+      const end = remaining.indexOf(',', pos);
+      if (end === -1) {
+        cells.push(remaining.slice(pos));
+        pos = remaining.length + 1;
+      } else {
+        cells.push(remaining.slice(pos, end));
+        pos = end + 1;
+      }
+    }
+  }
+  return { cells, nextLine: line + 1 };
+}
+
+async function upsertQuestoes(questoes: QuestaoInput[]) {
   let inseridos = 0;
   let atualizados = 0;
   const erros: string[] = [];
 
   for (const q of questoes) {
     const qid = Number(q.questao_id);
-    if (Number.isNaN(qid) || !q.comentario) {
+    if (Number.isNaN(qid) || !q.comentario?.trim()) {
       erros.push(`questao_id=${q.questao_id}: dados inválidos`);
       continue;
     }
@@ -54,6 +140,45 @@ export async function POST(req: NextRequest) {
       erros.push(`questao_id=${qid}: ${e.message}`);
     }
   }
+  return { inseridos, atualizados, erros };
+}
 
-  return NextResponse.json({ inseridos, atualizados, erros });
+export async function POST(req: NextRequest) {
+  const payload = getTokenPayload(req);
+  if (!payload || payload.role !== 'admin') {
+    return NextResponse.json({ error: 'Não autorizado' }, { status: 403 });
+  }
+
+  const contentType = req.headers.get('content-type') ?? '';
+
+  let questoes: QuestaoInput[] = [];
+
+  if (contentType.includes('text/csv') || contentType.includes('text/plain')) {
+    const text = await req.text();
+    questoes = parseCsvBody(text);
+  } else {
+    let body: unknown;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json({ error: 'Body inválido — envie JSON ou CSV' }, { status: 400 });
+    }
+    questoes = parseJsonBody(body);
+  }
+
+  if (questoes.length === 0) {
+    return NextResponse.json(
+      { error: 'Nenhuma questão encontrada. Verifique o formato do arquivo.' },
+      { status: 400 }
+    );
+  }
+
+  const { inseridos, atualizados, erros } = await upsertQuestoes(questoes);
+
+  return NextResponse.json({
+    inseridos,
+    atualizados,
+    erros,
+    message: `${inseridos} inserido(s), ${atualizados} atualizado(s)${erros.length ? `, ${erros.length} erro(s)` : ''}.`,
+  });
 }
