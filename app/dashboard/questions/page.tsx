@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Plus, Edit, Trash2, X, Image as ImageIcon, Filter, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, Check, ClipboardList, Eye, Ban, AlertTriangle } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
+import DeCSAutocomplete from '@/components/Common/DeCSAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
 import {
   ASSUNTOS_BY_AREA,
@@ -101,6 +102,7 @@ export default function QuestionsPage() {
     images: [] as string[],
     areas_conhecimento: [] as string[],
     assuntos: [] as string[],
+    decs_terms: [] as string[],
     exam_year: null as number | null,
     exam_board: '',
     exam_institution: '',
@@ -457,6 +459,7 @@ export default function QuestionsPage() {
           images: [],
           areas_conhecimento: [],
           assuntos: [],
+          decs_terms: [],
           exam_year: null,
           exam_board: '',
           exam_institution: '',
@@ -524,6 +527,7 @@ export default function QuestionsPage() {
       images: question.images || [],
       areas_conhecimento: question.areas_conhecimento || [],
       assuntos: question.assuntos || [],
+      decs_terms: (question as any).decs_terms || [],
       exam_year: question.exam_year || null,
       exam_board: question.exam_board || '',
       exam_institution: question.exam_institution || '',
@@ -579,6 +583,7 @@ export default function QuestionsPage() {
       images: [],
       areas_conhecimento: [],
       assuntos: [],
+      decs_terms: [],
       exam_year: null,
       exam_board: '',
       exam_institution: '',
@@ -1420,6 +1425,15 @@ export default function QuestionsPage() {
                   }}
                   label="Tags ou Especialidade"
                   placeholder="Digite para buscar tags..."
+                />
+              </div>
+
+              <div>
+                <DeCSAutocomplete
+                  selectedTerms={formData.decs_terms}
+                  onChange={(terms) => setFormData({ ...formData, decs_terms: terms })}
+                  label="Termos DeCS/MeSH (vocabulário controlado BVS)"
+                  placeholder="Ex: Hipertensão, Diabetes Mellitus..."
                 />
               </div>
 

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { ArrowLeft, Edit, Image as ImageIcon, X, AlertTriangle, Ban, RotateCcw } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
+import DeCSAutocomplete from '@/components/Common/DeCSAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
 import {
   ASSUNTOS_BY_AREA,
@@ -42,6 +43,7 @@ interface Question {
   exam_institution?: string | null;
   exam_region?: string | null;
   anulada?: boolean;
+  decs_terms?: string[];
   created_at: string;
   updated_at: string;
 }
@@ -72,6 +74,7 @@ export default function QuestionDetailPage() {
   const [editExamInstitution, setEditExamInstitution] = useState('');
   const [editExamRegion, setEditExamRegion] = useState('');
   const [availableTags, setAvailableTags] = useState<string[]>(AVAILABLE_TAGS);
+  const [editDecsTerms, setEditDecsTerms] = useState<string[]>([]);
   const [togglingAnulada, setTogglingAnulada] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -161,6 +164,7 @@ export default function QuestionDetailPage() {
           images: Array.isArray(data.images) ? data.images : [],
           areas_conhecimento: Array.isArray(data.areas_conhecimento) ? data.areas_conhecimento : [],
           assuntos: Array.isArray(data.assuntos) ? data.assuntos : [],
+          decs_terms: Array.isArray(data.decs_terms) ? data.decs_terms : [],
         };
         setQuestion(normalized);
         // Inicializar campos de edição
@@ -176,6 +180,7 @@ export default function QuestionDetailPage() {
         setEditAreasConhecimento(normalized.areas_conhecimento);
         setEditAssuntos(normalized.assuntos);
         setEditImages(normalized.images);
+        setEditDecsTerms(normalized.decs_terms);
         setEditExamYear(data.exam_year || null);
         setEditExamBoard(data.exam_board || '');
         setEditExamInstitution(data.exam_institution || '');
@@ -235,6 +240,7 @@ export default function QuestionDetailPage() {
       setEditAreasConhecimento(question.areas_conhecimento || []);
       setEditAssuntos(question.assuntos || []);
       setEditImages(question.images || []);
+      setEditDecsTerms(question.decs_terms || []);
       setEditExamYear(question.exam_year || null);
       setEditExamBoard(question.exam_board || '');
       setEditExamInstitution(question.exam_institution || '');
@@ -257,6 +263,7 @@ export default function QuestionDetailPage() {
       setEditAreasConhecimento(question.areas_conhecimento || []);
       setEditAssuntos(question.assuntos || []);
       setEditImages(question.images || []);
+      setEditDecsTerms(question.decs_terms || []);
       setEditExamYear(question.exam_year || null);
       setEditExamBoard(question.exam_board || '');
       setEditExamInstitution(question.exam_institution || '');
@@ -300,6 +307,7 @@ export default function QuestionDetailPage() {
       if (editExplanation.trim()) payload.explanation = editExplanation.trim();
       payload.areas_conhecimento = editAreasConhecimento;
       payload.assuntos = editAssuntos;
+      payload.decs_terms = editDecsTerms;
       payload.exam_year = editExamYear || null;
       payload.exam_board = editExamBoard || null;
       payload.exam_institution = editExamInstitution || null;
@@ -322,6 +330,7 @@ export default function QuestionDetailPage() {
           images: Array.isArray(raw.images) ? raw.images : [],
           areas_conhecimento: Array.isArray(raw.areas_conhecimento) ? raw.areas_conhecimento : [],
           assuntos: Array.isArray(raw.assuntos) ? raw.assuntos : [],
+          decs_terms: Array.isArray(raw.decs_terms) ? raw.decs_terms : [],
         };
         setQuestion(updatedQuestion);
         setIsEditing(false);
@@ -998,6 +1007,37 @@ export default function QuestionDetailPage() {
             </div>
           ) : (
             <p className="text-gray-400 italic text-sm">Nenhuma tag adicionada</p>
+          )
+        )}
+      </div>
+
+      {/* Termos DeCS/MeSH */}
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <div className="flex items-center gap-2 mb-3">
+          <h3 className="text-lg font-semibold text-gray-800">Termos DeCS/MeSH</h3>
+          <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">vocabulário controlado BVS</span>
+        </div>
+        {isEditing ? (
+          <DeCSAutocomplete
+            selectedTerms={editDecsTerms}
+            onChange={setEditDecsTerms}
+            label="Buscar e adicionar termos"
+            placeholder="Ex: Hipertensão, Diabetes Mellitus..."
+          />
+        ) : (
+          (question.decs_terms ?? []).length > 0 ? (
+            <div className="flex flex-wrap gap-2">
+              {(question.decs_terms ?? []).map((term) => (
+                <span
+                  key={term}
+                  className="inline-block px-3 py-1 text-sm font-medium bg-teal-100 text-teal-700 rounded-full"
+                >
+                  {term}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-400 italic text-sm">Nenhum termo DeCS adicionado</p>
           )
         )}
       </div>

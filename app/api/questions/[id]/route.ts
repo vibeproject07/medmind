@@ -37,6 +37,7 @@ export async function GET(
       images: question.images ? JSON.parse(question.images) : [],
       areas_conhecimento: question.areas_conhecimento ? JSON.parse(question.areas_conhecimento) : [],
       assuntos: question.assuntos ? JSON.parse(question.assuntos) : [],
+      decs_terms: question.decs_terms ? JSON.parse(question.decs_terms) : [],
     });
   } catch (error) {
     console.error('Erro ao buscar questão:', error);
@@ -72,7 +73,7 @@ export async function PUT(
     }
 
     const body = await request.json();
-    const { statement, option_a, option_b, option_c, option_d, option_e, correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region, areas_conhecimento, assuntos } = body;
+    const { statement, option_a, option_b, option_c, option_d, option_e, correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region, areas_conhecimento, assuntos, decs_terms } = body;
 
     if (!statement || !option_a || !option_b || !correct_answer) {
       return NextResponse.json({
@@ -95,6 +96,7 @@ export async function PUT(
     const imagesJson = images && Array.isArray(images) ? JSON.stringify(images) : null;
     const areasConhecimentoJson = areas_conhecimento && Array.isArray(areas_conhecimento) ? JSON.stringify(areas_conhecimento) : null;
     const assuntosJson = assuntos && Array.isArray(assuntos) ? JSON.stringify(assuntos) : null;
+    const decsTermsJson = decs_terms && Array.isArray(decs_terms) ? JSON.stringify(decs_terms) : null;
 
     const existingQuestion = (await query('SELECT id FROM questions WHERE id = $1', [params.id])).rows[0];
     if (!existingQuestion) {
@@ -106,9 +108,9 @@ export async function PUT(
       SET statement = $1, option_a = $2, option_b = $3, option_c = $4, option_d = $5,
           option_e = $6, correct_answer = $7, explanation = $8, tags = $9, images = $10,
           exam_year = $11, exam_board = $12, exam_institution = $13, exam_region = $14,
-          areas_conhecimento = $15, assuntos = $16, updated_at = NOW()
-      WHERE id = $17
-    `, [statement, option_a, option_b, option_c, option_d, option_e || null, correct_answer, explanation || null, tagsJson, imagesJson, exam_year || null, exam_board || null, exam_institution || null, exam_region || null, areasConhecimentoJson, assuntosJson, params.id]);
+          areas_conhecimento = $15, assuntos = $16, decs_terms = $17, updated_at = NOW()
+      WHERE id = $18
+    `, [statement, option_a, option_b, option_c, option_d, option_e || null, correct_answer, explanation || null, tagsJson, imagesJson, exam_year || null, exam_board || null, exam_institution || null, exam_region || null, areasConhecimentoJson, assuntosJson, decsTermsJson, params.id]);
 
     const updatedQuestion = (await query('SELECT * FROM questions WHERE id = $1', [params.id])).rows[0];
 
@@ -118,6 +120,7 @@ export async function PUT(
       images: updatedQuestion.images ? JSON.parse(updatedQuestion.images) : [],
       areas_conhecimento: updatedQuestion.areas_conhecimento ? JSON.parse(updatedQuestion.areas_conhecimento) : [],
       assuntos: updatedQuestion.assuntos ? JSON.parse(updatedQuestion.assuntos) : [],
+      decs_terms: updatedQuestion.decs_terms ? JSON.parse(updatedQuestion.decs_terms) : [],
     });
   } catch (error) {
     console.error('Erro ao atualizar questão:', error);

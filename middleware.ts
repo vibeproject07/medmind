@@ -7,7 +7,8 @@ export function middleware(request: NextRequest) {
   // Rotas públicas - permitir acesso direto
   if (request.nextUrl.pathname === '/' || 
       request.nextUrl.pathname.startsWith('/login') ||
-      request.nextUrl.pathname.startsWith('/api/auth')) {
+      request.nextUrl.pathname.startsWith('/api/auth') ||
+      request.nextUrl.pathname.startsWith('/api/decs')) {
     return NextResponse.next();
   }
 

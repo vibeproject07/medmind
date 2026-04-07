@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
     let questions = (await query(`
       SELECT id, statement, option_a, option_b, option_c, option_d, option_e,
              correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region,
-             areas_conhecimento, assuntos, anulada, created_at, updated_at
+             areas_conhecimento, assuntos, decs_terms, anulada, created_at, updated_at
       FROM questions
       ORDER BY created_at DESC
     `)).rows;
@@ -70,6 +70,7 @@ export async function GET(request: NextRequest) {
       images: question.images ? JSON.parse(question.images) : [],
       areas_conhecimento: question.areas_conhecimento ? JSON.parse(question.areas_conhecimento) : [],
       assuntos: question.assuntos ? JSON.parse(question.assuntos) : [],
+      decs_terms: question.decs_terms ? JSON.parse(question.decs_terms) : [],
     }));
 
     if (filterTags) {
@@ -162,7 +163,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { statement, option_a, option_b, option_c, option_d, option_e, correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region, areas_conhecimento, assuntos } = body;
+    const { statement, option_a, option_b, option_c, option_d, option_e, correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region, areas_conhecimento, assuntos, decs_terms } = body;
 
     if (!statement || !option_a || !option_b || !correct_answer) {
       return NextResponse.json({
@@ -185,16 +186,24 @@ export async function POST(request: NextRequest) {
     const imagesJson = images && Array.isArray(images) ? JSON.stringify(images) : null;
     const areasConhecimentoJson = areas_conhecimento && Array.isArray(areas_conhecimento) ? JSON.stringify(areas_conhecimento) : null;
     const assuntosJson = assuntos && Array.isArray(assuntos) ? JSON.stringify(assuntos) : null;
+    const decsTermsJson = decs_terms && Array.isArray(decs_terms) ? JSON.stringify(decs_terms) : null;
 
     const result = await query(
-      `INSERT INTO questions (statement, option_a, option_b, option_c, option_d, option_e, correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region, areas_conhecimento, assuntos)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16) RETURNING id`,
-      [statement, option_a, option_b, option_c, option_d, option_e || null, correct_answer, explanation || null, tagsJson, imagesJson, exam_year || null, exam_board || null, exam_institution || null, exam_region || null, areasConhecimentoJson, assuntosJson]
+      `INSERT INTO questions (statement, option_a, option_b, option_c, option_d, option_e, correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region, areas_conhecimento, assuntos, decs_terms)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17) RETURNING id`,
+      [statement, option_a, option_b, option_c, option_d, option_e || null, correct_answer, explanation || null, tagsJson, imagesJson, exam_year || null, exam_board || null, exam_institution || null, exam_region || null, areasConhecimentoJson, assuntosJson, decsTermsJson]
     );
 
     const newQuestion = (await query('SELECT * FROM questions WHERE id = $1', [result.rows[0].id])).rows[0];
 
-    return NextResponse.json(newQuestion, { status: 201 });
+    return NextResponse.json({
+      ...newQuestion,
+      tags: newQuestion.tags ? JSON.parse(newQuestion.tags) : [],
+      images: newQuestion.images ? JSON.parse(newQuestion.images) : [],
+      areas_conhecimento: newQuestion.areas_conhecimento ? JSON.parse(newQuestion.areas_conhecimento) : [],
+      assuntos: newQuestion.assuntos ? JSON.parse(newQuestion.assuntos) : [],
+      decs_terms: newQuestion.decs_terms ? JSON.parse(newQuestion.decs_terms) : [],
+    }, { status: 201 });
   } catch (error) {
     console.error('Erro ao criar questão:', error);
     return NextResponse.json({ error: 'Erro ao criar questão' }, { status: 500 });
