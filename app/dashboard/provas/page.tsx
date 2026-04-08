@@ -129,10 +129,18 @@ export default function ProvasPage() {
           return;
         }
 
+        // Verifica sessão antes de qualquer validação de formato
+        const token = localStorage.getItem('token');
+        if (!token) {
+          setSessionExpired(true);
+          setLoadingJson(false);
+          return;
+        }
+
         // Suporta array plano de questões: [ { enunciado, alternativas, letra_correta, ... } ]
         let data: Record<string, unknown>;
         if (Array.isArray(parsed)) {
-          data = { provas: [{ nome: 'Importação', questoes: parsed }] };
+          data = { provas: [{ nome: file.name.replace(/\.json$/i, ''), questoes: parsed }] };
         } else if (parsed && typeof parsed === 'object') {
           data = parsed as Record<string, unknown>;
         } else {
@@ -141,16 +149,19 @@ export default function ProvasPage() {
           return;
         }
 
+        // Normaliza formatos com chave "questoes" ou "questions" no topo
+        if (!Array.isArray(data.provas) && !Array.isArray(data.paginas)) {
+          const questoesKey = Array.isArray(data.questoes) ? 'questoes' : (Array.isArray(data.questions) ? 'questions' : null);
+          if (questoesKey) {
+            data = { provas: [{ nome: file.name.replace(/\.json$/i, ''), questoes: data[questoesKey] }] };
+          }
+        }
+
         const hasProvas = Array.isArray(data.provas) && (data.provas as unknown[]).length > 0;
         const hasPaginas = Array.isArray(data.paginas) && (data.paginas as unknown[]).length > 0;
         if (!hasProvas && !hasPaginas) {
-          setJsonError('O JSON deve conter um array "provas", "paginas" (formato antigo), ou ser diretamente um array de questões.');
-          setLoadingJson(false);
-          return;
-        }
-        const token = localStorage.getItem('token');
-        if (!token) {
-          setSessionExpired(true);
+          const foundKeys = Object.keys(data).slice(0, 5).join('", "');
+          setJsonError(`Formato não reconhecido. Chaves encontradas: "${foundKeys}". O arquivo deve conter uma chave "provas", "paginas", "questoes" ou ser um array de questões.`);
           setLoadingJson(false);
           return;
         }
@@ -586,7 +597,7 @@ export default function ProvasPage() {
             </div>
             <div className="p-6 space-y-4">
               <p className="text-sm text-gray-600">
-                Formatos aceitos: <strong>array de questões</strong>, objeto com <strong>provas</strong> ou <strong>paginas</strong> (crawler antigo).
+                Formatos aceitos: <strong>array de questões</strong>, objeto com chave <strong>provas</strong>, <strong>questoes</strong> ou <strong>paginas</strong> (crawler antigo).
               </p>
               <p className="text-xs text-gray-500 bg-blue-50 border border-blue-100 rounded-lg p-3">
                 Provas com o mesmo nome serão ignoradas (sem duplicatas). Arquivos grandes são importados automaticamente em lotes.
