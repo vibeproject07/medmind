@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { ChevronDown, ChevronUp, Filter, FolderOpen, Loader2, X, Play, ChevronLeft, ChevronRight, CheckCircle, XCircle, Ban, AlertTriangle } from 'lucide-react';
+import Link from 'next/link';
+import { ChevronDown, ChevronUp, Filter, FolderOpen, Loader2, X, Play, ChevronLeft, ChevronRight, CheckCircle, XCircle, Ban, AlertTriangle, LogIn } from 'lucide-react';
 
 interface ProvaQuestion {
   id: number;
@@ -55,6 +56,7 @@ export default function ProvasPage() {
   const [importProgress, setImportProgress] = useState<{ current: number; total: number } | null>(null);
   const [provasList, setProvasList] = useState<Prova[]>([]);
   const [loadingProvas, setLoadingProvas] = useState(true);
+  const [sessionExpired, setSessionExpired] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [provaEmAndamento, setProvaEmAndamento] = useState<Prova | null>(null);
@@ -64,12 +66,17 @@ export default function ProvasPage() {
 
   const fetchProvas = async () => {
     const token = localStorage.getItem('token');
-    if (!token) return;
+    if (!token) {
+      setLoadingProvas(false);
+      return;
+    }
     try {
       const res = await fetch('/api/provas', { headers: { Authorization: `Bearer ${token}` } });
       if (res.ok) {
         const data = await res.json();
         setProvasList(Array.isArray(data) ? data : []);
+      } else if (res.status === 401 || res.status === 403) {
+        setSessionExpired(true);
       }
     } catch (err) {
       console.error(err);
@@ -94,6 +101,7 @@ export default function ProvasPage() {
   const handleAbrirSelecao = () => {
     setJsonError(null);
     setImportSummary(null);
+    setSessionExpired(false);
     setShowFileModal(true);
   };
 
@@ -142,7 +150,7 @@ export default function ProvasPage() {
         }
         const token = localStorage.getItem('token');
         if (!token) {
-          setJsonError('Faça login para importar.');
+          setSessionExpired(true);
           setLoadingJson(false);
           return;
         }
@@ -168,7 +176,11 @@ export default function ProvasPage() {
             });
             const body = await res.json();
             if (!res.ok) {
-              setJsonError(body.error || 'Erro ao importar lote.');
+              if (res.status === 401 || res.status === 403) {
+                setSessionExpired(true);
+              } else {
+                setJsonError(body.error || 'Erro ao importar lote.');
+              }
               setLoadingJson(false);
               setImportProgress(null);
               return;
@@ -193,7 +205,11 @@ export default function ProvasPage() {
             });
             const body = await res.json();
             if (!res.ok) {
-              setJsonError(body.error || 'Erro ao importar lote.');
+              if (res.status === 401 || res.status === 403) {
+                setSessionExpired(true);
+              } else {
+                setJsonError(body.error || 'Erro ao importar lote.');
+              }
               setLoadingJson(false);
               setImportProgress(null);
               return;
@@ -280,6 +296,24 @@ export default function ProvasPage() {
           Acesse provas completas para estudo e prática. Faça upload de um JSON para criar provas e questões.
         </p>
       </header>
+
+      {/* Banner de sessão expirada */}
+      {sessionExpired && (
+        <div className="flex items-center gap-3 p-4 bg-amber-50 border border-amber-200 rounded-lg text-amber-800">
+          <LogIn className="w-5 h-5 flex-shrink-0 text-amber-600" />
+          <div className="flex-1">
+            <p className="font-semibold">Sessão expirada</p>
+            <p className="text-sm mt-0.5">Sua sessão expirou. Faça login novamente para continuar.</p>
+          </div>
+          <Link
+            href="/login"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-600 text-white rounded-lg hover:bg-amber-700 text-sm font-medium transition"
+          >
+            <LogIn className="w-4 h-4" />
+            Ir para login
+          </Link>
+        </div>
+      )}
 
       {/* Feedback de importação bem-sucedida */}
       {importSummary && (
@@ -591,6 +625,15 @@ export default function ProvasPage() {
               )}
               {jsonError && (
                 <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">{jsonError}</div>
+              )}
+              {sessionExpired && (
+                <div className="flex items-center gap-3 p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-sm">
+                  <LogIn className="w-4 h-4 flex-shrink-0 text-amber-600" />
+                  <span>Sessão expirada.</span>
+                  <Link href="/login" className="ml-auto font-semibold underline hover:text-amber-900">
+                    Fazer login
+                  </Link>
+                </div>
               )}
             </div>
             <div className="flex justify-end gap-2 p-4 border-t border-gray-200 bg-gray-50 rounded-b-xl">

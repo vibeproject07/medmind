@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Mail, Plus, List, MessageSquare, Upload, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Mail, Plus, List, MessageSquare, Upload, CheckCircle, AlertCircle, Loader2, LogIn } from 'lucide-react';
 import CriarAgenteModal from '@/components/Dashboard/CriarAgenteModal';
 
 interface Setting {
@@ -29,6 +29,7 @@ export default function SettingsPage() {
   const comentariosFileRef = useRef<HTMLInputElement>(null);
   const [importingComentarios, setImportingComentarios] = useState(false);
   const [comentariosStatus, setComentariosStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [comentariosSessionExpired, setComentariosSessionExpired] = useState(false);
 
   useEffect(() => {
     // Verificar permissão antes de carregar
@@ -260,6 +261,10 @@ export default function SettingsPage() {
             ? ` ${data.erros.length} erro(s) ignorado(s).`
             : '';
           setComentariosStatus({ type: 'success', message: msg + extras });
+          setComentariosSessionExpired(false);
+        } else if (res.status === 401 || res.status === 403) {
+          setComentariosSessionExpired(true);
+          setComentariosStatus(null);
         } else {
           setComentariosStatus({ type: 'error', message: data.error || 'Erro ao importar comentários.' });
         }
@@ -367,7 +372,7 @@ export default function SettingsPage() {
             <button
               type="button"
               disabled={importingComentarios}
-              onClick={() => { setComentariosStatus(null); comentariosFileRef.current?.click(); }}
+              onClick={() => { setComentariosStatus(null); setComentariosSessionExpired(false); comentariosFileRef.current?.click(); }}
               className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
             >
               {importingComentarios ? (
@@ -383,6 +388,18 @@ export default function SettingsPage() {
               )}
             </button>
 
+            {comentariosSessionExpired && (
+              <div className="mt-4 flex items-center gap-3 p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-sm">
+                <LogIn className="w-4 h-4 flex-shrink-0 text-amber-600" />
+                <span className="flex-1">Sessão expirada. Faça login novamente para importar.</span>
+                <Link
+                  href="/login"
+                  className="flex items-center gap-1 font-semibold underline hover:text-amber-900"
+                >
+                  Ir para login
+                </Link>
+              </div>
+            )}
             {comentariosStatus && (
               <div className={`mt-4 flex items-start gap-2 text-sm rounded-lg px-4 py-3 ${
                 comentariosStatus.type === 'success'
