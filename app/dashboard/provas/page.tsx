@@ -112,18 +112,31 @@ export default function ProvasPage() {
     reader.onload = async () => {
       try {
         const text = reader.result as string;
-        let data: Record<string, unknown>;
+        let parsed: unknown;
         try {
-          data = JSON.parse(text);
+          parsed = JSON.parse(text);
         } catch {
           setJsonError('O arquivo não é um JSON válido.');
           setLoadingJson(false);
           return;
         }
+
+        // Suporta array plano de questões: [ { enunciado, alternativas, letra_correta, ... } ]
+        let data: Record<string, unknown>;
+        if (Array.isArray(parsed)) {
+          data = { provas: [{ nome: 'Importação', questoes: parsed }] };
+        } else if (parsed && typeof parsed === 'object') {
+          data = parsed as Record<string, unknown>;
+        } else {
+          setJsonError('Formato não reconhecido. O arquivo deve ser um JSON com provas ou um array de questões.');
+          setLoadingJson(false);
+          return;
+        }
+
         const hasProvas = Array.isArray(data.provas) && (data.provas as unknown[]).length > 0;
         const hasPaginas = Array.isArray(data.paginas) && (data.paginas as unknown[]).length > 0;
         if (!hasProvas && !hasPaginas) {
-          setJsonError('O JSON deve conter um array "provas" ou "paginas" (formato antigo) com ao menos um item.');
+          setJsonError('O JSON deve conter um array "provas", "paginas" (formato antigo), ou ser diretamente um array de questões.');
           setLoadingJson(false);
           return;
         }
@@ -539,10 +552,10 @@ export default function ProvasPage() {
             </div>
             <div className="p-6 space-y-4">
               <p className="text-sm text-gray-600">
-                Aceito: <strong>provas</strong> (nome, banca, regiao, ano, tipo, questoes) ou <strong>paginas</strong> (formato antigo do crawler).
+                Formatos aceitos: <strong>array de questões</strong>, objeto com <strong>provas</strong> ou <strong>paginas</strong> (crawler antigo).
               </p>
               <p className="text-xs text-gray-500 bg-blue-50 border border-blue-100 rounded-lg p-3">
-                Provas com o mesmo nome que já existem no banco serão ignoradas automaticamente, evitando duplicatas. Arquivos grandes são importados em lotes automaticamente.
+                Provas com o mesmo nome serão ignoradas (sem duplicatas). Arquivos grandes são importados automaticamente em lotes.
               </p>
               <input
                 ref={fileInputRef}

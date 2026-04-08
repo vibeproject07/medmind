@@ -26,6 +26,7 @@ function mapQuestaoToOptions(questoes: {
   imagens?: string[];
   alternativas?: Alternativa[];
   alternativa_correta?: string | { letra?: string };
+  letra_correta?: string;
 }[]) {
   return questoes.map((q) => {
     const alternativas = q.alternativas || [];
@@ -35,7 +36,7 @@ function mapQuestaoToOptions(questoes: {
       const texto = String(alt.descricao ?? alt.texto ?? '').trim();
       if (letra && letra >= 'A' && letra <= 'E') byLetter[letra] = texto;
     });
-    const rawCorrect = q.alternativa_correta;
+    const rawCorrect = q.alternativa_correta ?? q.letra_correta;
     const correctStr = typeof rawCorrect === 'object' && rawCorrect !== null && 'letra' in rawCorrect
       ? String((rawCorrect as { letra?: string }).letra || 'A')
       : String(rawCorrect || 'A');
