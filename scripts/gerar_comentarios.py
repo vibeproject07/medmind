@@ -335,9 +335,35 @@ def salvar_saida(resultados_json: list, resultados_csv: list, caminho_json: str,
         writer.writerows(resultados_csv)
 
 
-def normalizar_formato(dados: dict, limite_questoes: int | None = None) -> list:
+def _questoes_raw_para_questions(questoes_raw: list, limite: int | None) -> list:
+    """Converte lista de questões no formato de extração para o formato interno."""
+    if limite:
+        questoes_raw = questoes_raw[:limite]
+    questions = []
+    for q in questoes_raw:
+        alts: dict[str, str] = {}
+        for alt in q.get("alternativas", []):
+            letra = str(alt.get("letra", "")).upper().strip()
+            texto = str(alt.get("texto", "")).strip()
+            if letra in ("A", "B", "C", "D", "E"):
+                alts[letra] = texto
+
+        questions.append({
+            "id": q.get("numero"),
+            "statement": str(q.get("enunciado", "")).strip(),
+            "option_a": alts.get("A", ""),
+            "option_b": alts.get("B", ""),
+            "option_c": alts.get("C") or None,
+            "option_d": alts.get("D") or None,
+            "option_e": alts.get("E") or None,
+            "correct_answer": str(q.get("letra_correta", "A")).upper().strip(),
+        })
+    return questions
+
+
+def normalizar_formato(dados: dict | list, limite_questoes: int | None = None) -> list:
     """
-    Aceita dois formatos de entrada e retorna sempre uma lista de provas
+    Aceita três formatos de entrada e retorna sempre uma lista de provas
     no formato interno do script.
 
     Formato 1 — padrão do script / API /api/provas:
@@ -346,41 +372,30 @@ def normalizar_formato(dados: dict, limite_questoes: int | None = None) -> list:
     Formato 2 — saída do pipeline de extração de PDF:
         { "titulo_prova": { "banca", "ano", "tipo" }, "questoes": [ { "numero",
           "enunciado", "alternativas": [{"letra","texto"}], "letra_correta" } ] }
+
+    Formato 3 — array simples de questões (sem wrapper):
+        [ { "numero", "enunciado", "alternativas": [...], "letra_correta" }, ... ]
     """
+    # Formato 3: array direto
+    if isinstance(dados, list):
+        questions = _questoes_raw_para_questions(dados, limite_questoes)
+        return [{"id": 1, "nome": "Prova sem nome", "banca": "", "ano": "", "tipo": "", "questions": questions}]
+
+    # Formato 1: { "provas": [...] }
     if "provas" in dados and isinstance(dados["provas"], list):
+        if limite_questoes:
+            for p in dados["provas"]:
+                p["questions"] = p.get("questions", [])[:limite_questoes]
         return dados["provas"]
 
+    # Formato 2: { "questoes": [...], "titulo_prova": {...} }
     if "questoes" in dados and isinstance(dados["questoes"], list):
         titulo = dados.get("titulo_prova", {})
         banca = titulo.get("banca", "")
         ano = titulo.get("ano", "")
         tipo = titulo.get("tipo", "")
         nome = f"{banca} {ano}".strip() or "Prova sem nome"
-
-        questoes_raw = dados["questoes"]
-        if limite_questoes:
-            questoes_raw = questoes_raw[:limite_questoes]
-
-        questions = []
-        for q in questoes_raw:
-            alts: dict[str, str] = {}
-            for alt in q.get("alternativas", []):
-                letra = str(alt.get("letra", "")).upper().strip()
-                texto = str(alt.get("texto", "")).strip()
-                if letra in ("A", "B", "C", "D", "E"):
-                    alts[letra] = texto
-
-            questions.append({
-                "id": q.get("numero"),
-                "statement": str(q.get("enunciado", "")).strip(),
-                "option_a": alts.get("A", ""),
-                "option_b": alts.get("B", ""),
-                "option_c": alts.get("C") or None,
-                "option_d": alts.get("D") or None,
-                "option_e": alts.get("E") or None,
-                "correct_answer": str(q.get("letra_correta", "A")).upper().strip(),
-            })
-
+        questions = _questoes_raw_para_questions(dados["questoes"], limite_questoes)
         return [{"id": 1, "nome": nome, "banca": banca, "ano": ano, "tipo": tipo, "questions": questions}]
 
     return []
@@ -426,6 +441,24 @@ def main():
         metavar="N",
         help="Limitar a N questões por prova (útil para testes rápidos)",
     )
+    parser.add_argument(
+        "--lote",
+        type=int,
+        default=None,
+        metavar="N",
+        help="Processar no máximo N questões nesta execução (útil com --retomar para lotes)",
+    )
+    parser.add_argument(
+        "--arquivo-saida",
+        default=None,
+        metavar="ARQUIVO",
+        help="Caminho fixo para o JSON de saída (sem timestamp). Permite retomar com --retomar.",
+    )
+    parser.add_argument(
+        "--retomar",
+        action="store_true",
+        help="Retomar progresso: pula questões já comentadas no --arquivo-saida existente.",
+    )
     args = parser.parse_args()
 
     api_key = carregar_api_key()
@@ -463,14 +496,46 @@ def main():
             print(f"\nERRO: Nenhuma prova encontrada com id={args.apenas_prova}.\n")
             sys.exit(1)
 
-    if args.limite_questoes and "provas" in dados:
-        for p in provas:
-            p["questions"] = p.get("questions", [])[:args.limite_questoes]
-
     os.makedirs(args.output_dir, exist_ok=True)
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    caminho_json = os.path.join(args.output_dir, f"comentarios_{timestamp}.json")
-    caminho_csv = os.path.join(args.output_dir, f"comentarios_{timestamp}.csv")
+
+    # Determina caminhos de saída — fixo (arquivo-saida) ou com timestamp
+    if args.arquivo_saida:
+        caminho_json = args.arquivo_saida
+        caminho_csv = re.sub(r"\.json$", ".csv", args.arquivo_saida, flags=re.IGNORECASE)
+        if caminho_csv == caminho_json:
+            caminho_csv = caminho_json + ".csv"
+    else:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        caminho_json = os.path.join(args.output_dir, f"comentarios_{timestamp}.json")
+        caminho_csv = os.path.join(args.output_dir, f"comentarios_{timestamp}.csv")
+
+    # Modo retomar: carrega questões já processadas e monta conjunto de IDs a pular
+    ja_processados: set[str] = set()
+    resultados_json: list = []
+    resultados_csv: list = []
+
+    if args.retomar and args.arquivo_saida and os.path.exists(caminho_json):
+        try:
+            with open(caminho_json, encoding="utf-8") as f:
+                dados_existentes = json.load(f)
+            for prova_existente in dados_existentes.get("comentarios", []):
+                entrada_existente = {
+                    "prova_id": prova_existente.get("prova_id"),
+                    "nome": prova_existente.get("nome"),
+                    "questoes": prova_existente.get("questoes", []),
+                }
+                resultados_json.append(entrada_existente)
+                for q in prova_existente.get("questoes", []):
+                    qid = str(q.get("questao_id", ""))
+                    ja_processados.add(qid)
+                    resultados_csv.append({
+                        "prova_id": prova_existente.get("prova_id"),
+                        "questao_id": q.get("questao_id"),
+                        "comentario": q.get("comentario", ""),
+                    })
+            print(f"  ↻ Retomando: {len(ja_processados)} questão/ões já processada/s, pulando.\n")
+        except Exception as e:
+            print(f"  ⚠ Não foi possível carregar progresso anterior ({e}). Iniciando do zero.\n")
 
     total_questoes = sum(len(p.get("questions", [])) for p in provas)
     total_provas = len(provas)
@@ -480,14 +545,17 @@ def main():
     print(f"{'═'*60}")
     print(f"  Provas:    {total_provas}")
     print(f"  Questões:  {total_questoes}")
+    if ja_processados:
+        print(f"  Já feitas: {len(ja_processados)}")
+    if args.lote:
+        print(f"  Lote:      até {args.lote} questões nesta execução")
     print(f"  Modelo:    {args.modelo}")
-    print(f"  Saída:     {args.output_dir}")
+    print(f"  Saída:     {caminho_json}")
     print(f"{'═'*60}\n")
 
-    resultados_json: list = []
-    resultados_csv: list = []
     processadas = 0
     falhas = 0
+    processadas_nesta_execucao = 0
 
     inicio = time.time()
 
@@ -509,17 +577,30 @@ def main():
 
         print(f"[{idx_prova}/{total_provas}] {prova_nome} ({len(questoes)} questão/ões)")
 
-        entrada_prova = {
-            "prova_id": prova_id,
-            "nome": prova_nome,
-            "questoes": [],
-        }
+        # Encontra ou cria a entrada desta prova nos resultados acumulados
+        entrada_prova = next(
+            (p for p in resultados_json if p.get("prova_id") == prova_id),
+            None,
+        )
+        if entrada_prova is None:
+            entrada_prova = {"prova_id": prova_id, "nome": prova_nome, "questoes": []}
+            resultados_json.append(entrada_prova)
 
         for questao in questoes:
             questao_id = questao.get("id")
             processadas += 1
-            progresso = f"{processadas}/{total_questoes}"
 
+            # Pular se já foi processada em execução anterior
+            if str(questao_id) in ja_processados:
+                print(f"  [skip] ID {questao_id} — já comentada")
+                continue
+
+            # Respeitar o limite de lote desta execução
+            if args.lote and processadas_nesta_execucao >= args.lote:
+                print(f"\n  ⏸ Lote de {args.lote} questão/ões concluído. Use --retomar para continuar.")
+                break
+
+            progresso = f"{len(ja_processados) + processadas_nesta_execucao + 1}/{total_questoes}"
             print(f"  [{progresso}] ID {questao_id} ...", end=" ", flush=True)
 
             try:
@@ -539,20 +620,34 @@ def main():
                 "questao_id": questao_id,
                 "comentario": comentario,
             })
+            ja_processados.add(str(questao_id))
+            processadas_nesta_execucao += 1
 
             # Salva após CADA questão — garante progresso mesmo em interrupções
-            provas_ate_agora = resultados_json + [entrada_prova]
-            salvar_saida(provas_ate_agora, resultados_csv, caminho_json, caminho_csv)
+            salvar_saida(resultados_json, resultados_csv, caminho_json, caminho_csv)
 
-        resultados_json.append(entrada_prova)
-        print(f"  → Prova concluída: {prova_nome}\n")
+        else:
+            # Loop completou sem break (sem limite de lote atingido)
+            todos_ids = {str(q.get("id")) for q in questoes}
+            if todos_ids.issubset(ja_processados):
+                print(f"  → Prova concluída: {prova_nome}\n")
+            continue
+
+        # Chegou aqui por break (lote atingido) — para todo o processamento
+        break
 
     duracao = time.time() - inicio
     minutos, segundos = divmod(int(duracao), 60)
 
+    total_feitas = len(ja_processados)
+    restantes = total_questoes - total_feitas
+
     print(f"{'═'*60}")
     print(f"  Concluído em {minutos}m {segundos}s")
-    print(f"  Questões processadas: {processadas - falhas}/{total_questoes}")
+    print(f"  Feitas nesta execução: {processadas_nesta_execucao - falhas}")
+    print(f"  Total acumulado: {total_feitas}/{total_questoes}")
+    if restantes > 0:
+        print(f"  Restantes: {restantes} — use --retomar para continuar")
     if falhas:
         print(f"  Falhas: {falhas}")
     print(f"  JSON → {caminho_json}")
