@@ -1,19 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
-import jwt from 'jsonwebtoken';
+import { verifyToken } from '@/lib/jwt';
 
-function getTokenPayload(req: NextRequest) {
-  const auth = req.headers.get('authorization') || '';
-  const token = auth.replace('Bearer ', '');
-  if (!token) return null;
-  try {
-    return jwt.verify(token, process.env.JWT_SECRET || 'secret') as { role?: string };
-  } catch {
-    return null;
-  }
-}
-
-type QuestaoInput = { questao_id: number | string; comentario: string };
+type QuestaoInput = {
+  questao_id: number | string | null;
+  comentario: string;
+  prova_nome?: string;
+};
 
 function parseJsonBody(raw: unknown): QuestaoInput[] {
   if (!raw || typeof raw !== 'object') return [];
@@ -21,16 +14,17 @@ function parseJsonBody(raw: unknown): QuestaoInput[] {
 
   // Formato simples: { "questoes": [...] }
   if (Array.isArray(obj.questoes)) {
-    return obj.questoes as QuestaoInput[];
+    return (obj.questoes as QuestaoInput[]).map((q) => ({ ...q }));
   }
 
-  // Formato saída do script: { "comentarios": [{ "questoes": [...] }] }
+  // Formato saída do script: { "comentarios": [{ "prova_id", "nome", "questoes": [...] }] }
   if (Array.isArray(obj.comentarios)) {
     const result: QuestaoInput[] = [];
     for (const prova of obj.comentarios as Record<string, unknown>[]) {
+      const prova_nome = prova.nome as string | undefined;
       if (Array.isArray(prova.questoes)) {
         for (const q of prova.questoes as QuestaoInput[]) {
-          result.push(q);
+          result.push({ ...q, prova_nome });
         }
       }
     }
@@ -116,35 +110,89 @@ function parseCsvRow(lines: string[], startLine: number): { cells: string[]; nex
   return { cells, nextLine: line + 1 };
 }
 
+/**
+ * Resolve questao_id to the real DB question ID.
+ * Strategy:
+ *   1. Try direct lookup: questions.id = questao_id
+ *   2. Fallback: questions.numero_na_prova = questao_id (optionally filtered by prova nome)
+ * Returns null if no match found.
+ */
+async function resolveQuestaoDbId(
+  questaoId: number,
+  provaNome?: string
+): Promise<number | null> {
+  // 1) Direct ID match
+  const direct = await query('SELECT id FROM questions WHERE id = $1 LIMIT 1', [questaoId]);
+  if (direct.rows.length > 0) return direct.rows[0].id as number;
+
+  // 2) Match by numero_na_prova, optionally scoped to prova by nome
+  if (provaNome) {
+    const byNome = await query(
+      `SELECT q.id FROM questions q
+       JOIN provas p ON p.id = q.prova_id
+       WHERE q.numero_na_prova = $1 AND p.nome = $2
+       LIMIT 1`,
+      [questaoId, provaNome]
+    );
+    if (byNome.rows.length > 0) return byNome.rows[0].id as number;
+  }
+
+  // 3) Match by numero_na_prova globally (last resort — may be ambiguous)
+  const byNumero = await query(
+    'SELECT id FROM questions WHERE numero_na_prova = $1 LIMIT 1',
+    [questaoId]
+  );
+  if (byNumero.rows.length > 0) return byNumero.rows[0].id as number;
+
+  return null;
+}
+
 async function upsertQuestoes(questoes: QuestaoInput[]) {
   let inseridos = 0;
   let atualizados = 0;
   const erros: string[] = [];
 
   for (const q of questoes) {
-    const qid = Number(q.questao_id);
-    if (Number.isNaN(qid) || !q.comentario?.trim()) {
+    const qidRaw = Number(q.questao_id);
+    if (Number.isNaN(qidRaw) || !q.comentario?.trim()) {
       erros.push(`questao_id=${q.questao_id}: dados inválidos`);
       continue;
     }
+
+    const dbId = await resolveQuestaoDbId(qidRaw, q.prova_nome);
+
+    if (dbId === null) {
+      erros.push(`questao_id=${qidRaw}: questão não encontrada no banco`);
+      continue;
+    }
+
     try {
-      const existing = await query('SELECT id FROM comentarios WHERE questao_id = $1', [qid]);
+      const existing = await query('SELECT id FROM comentarios WHERE questao_id = $1', [dbId]);
       if (existing.rows.length > 0) {
-        await query('UPDATE comentarios SET comentario = $1 WHERE questao_id = $2', [q.comentario, qid]);
+        await query('UPDATE comentarios SET comentario = $1 WHERE questao_id = $2', [
+          q.comentario,
+          dbId,
+        ]);
         atualizados++;
       } else {
-        await query('INSERT INTO comentarios (questao_id, comentario) VALUES ($1, $2)', [qid, q.comentario]);
+        await query('INSERT INTO comentarios (questao_id, comentario) VALUES ($1, $2)', [
+          dbId,
+          q.comentario,
+        ]);
         inseridos++;
       }
     } catch (e: any) {
-      erros.push(`questao_id=${qid}: ${e.message}`);
+      erros.push(`questao_id=${dbId}: ${e.message}`);
     }
   }
   return { inseridos, atualizados, erros };
 }
 
 export async function POST(req: NextRequest) {
-  const payload = getTokenPayload(req);
+  const auth = req.headers.get('authorization') || '';
+  const token = auth.replace('Bearer ', '').trim();
+  const payload = verifyToken(token);
+
   if (!payload || payload.role !== 'admin') {
     return NextResponse.json({ error: 'Não autorizado' }, { status: 403 });
   }
