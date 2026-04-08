@@ -52,6 +52,7 @@ export default function ProvasPage() {
   const [loadingJson, setLoadingJson] = useState(false);
   const [jsonError, setJsonError] = useState<string | null>(null);
   const [importSummary, setImportSummary] = useState<ImportSummary | null>(null);
+  const [importProgress, setImportProgress] = useState<{ current: number; total: number } | null>(null);
   const [provasList, setProvasList] = useState<Prova[]>([]);
   const [loadingProvas, setLoadingProvas] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -111,9 +112,16 @@ export default function ProvasPage() {
     reader.onload = async () => {
       try {
         const text = reader.result as string;
-        const data = JSON.parse(text);
-        const hasProvas = Array.isArray(data.provas) && data.provas.length > 0;
-        const hasPaginas = Array.isArray(data.paginas) && data.paginas.length > 0;
+        let data: Record<string, unknown>;
+        try {
+          data = JSON.parse(text);
+        } catch {
+          setJsonError('O arquivo não é um JSON válido.');
+          setLoadingJson(false);
+          return;
+        }
+        const hasProvas = Array.isArray(data.provas) && (data.provas as unknown[]).length > 0;
+        const hasPaginas = Array.isArray(data.paginas) && (data.paginas as unknown[]).length > 0;
         if (!hasProvas && !hasPaginas) {
           setJsonError('O JSON deve conter um array "provas" ou "paginas" (formato antigo) com ao menos um item.');
           setLoadingJson(false);
@@ -125,25 +133,74 @@ export default function ProvasPage() {
           setLoadingJson(false);
           return;
         }
-        const payload = hasProvas ? { provas: data.provas } : { paginas: data.paginas };
-        const res = await fetch('/api/provas', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-          body: JSON.stringify(payload),
-        });
-        const body = await res.json();
-        if (!res.ok) {
-          setJsonError(body.error || 'Erro ao importar.');
-          setLoadingJson(false);
-          return;
+
+        const BATCH_SIZE = 10;
+        let totalImportadas = 0;
+        let totalIgnoradas = 0;
+        let totalQuestoes = 0;
+
+        if (hasProvas) {
+          const allProvas = data.provas as unknown[];
+          const batches: unknown[][] = [];
+          for (let i = 0; i < allProvas.length; i += BATCH_SIZE) {
+            batches.push(allProvas.slice(i, i + BATCH_SIZE));
+          }
+          setImportProgress({ current: 0, total: batches.length });
+          for (let i = 0; i < batches.length; i++) {
+            setImportProgress({ current: i + 1, total: batches.length });
+            const res = await fetch('/api/provas', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+              body: JSON.stringify({ provas: batches[i] }),
+            });
+            const body = await res.json();
+            if (!res.ok) {
+              setJsonError(body.error || 'Erro ao importar lote.');
+              setLoadingJson(false);
+              setImportProgress(null);
+              return;
+            }
+            totalImportadas += body.summary?.provasImportadas ?? 0;
+            totalIgnoradas += body.summary?.provasIgnoradas ?? 0;
+            totalQuestoes += body.summary?.questoesImportadas ?? 0;
+          }
+        } else {
+          const allPaginas = data.paginas as unknown[];
+          const batches: unknown[][] = [];
+          for (let i = 0; i < allPaginas.length; i += BATCH_SIZE * 4) {
+            batches.push(allPaginas.slice(i, i + BATCH_SIZE * 4));
+          }
+          setImportProgress({ current: 0, total: batches.length });
+          for (let i = 0; i < batches.length; i++) {
+            setImportProgress({ current: i + 1, total: batches.length });
+            const res = await fetch('/api/provas', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+              body: JSON.stringify({ paginas: batches[i] }),
+            });
+            const body = await res.json();
+            if (!res.ok) {
+              setJsonError(body.error || 'Erro ao importar lote.');
+              setLoadingJson(false);
+              setImportProgress(null);
+              return;
+            }
+            totalImportadas += body.summary?.provasImportadas ?? 0;
+            totalIgnoradas += body.summary?.provasIgnoradas ?? 0;
+            totalQuestoes += body.summary?.questoesImportadas ?? 0;
+          }
         }
+
+        setImportProgress(null);
         setShowFileModal(false);
-        setImportSummary(body.summary ?? null);
+        setImportSummary({ provasImportadas: totalImportadas, provasIgnoradas: totalIgnoradas, questoesImportadas: totalQuestoes });
         await fetchProvas();
-      } catch {
-        setJsonError('O arquivo não é um JSON válido ou está no formato incorreto.');
+      } catch (err) {
+        console.error('Erro na importação:', err);
+        setJsonError('Ocorreu um erro ao processar o arquivo. Verifique se é um JSON válido.');
       } finally {
         setLoadingJson(false);
+        setImportProgress(null);
       }
     };
     reader.onerror = () => {
@@ -485,7 +542,7 @@ export default function ProvasPage() {
                 Aceito: <strong>provas</strong> (nome, banca, regiao, ano, tipo, questoes) ou <strong>paginas</strong> (formato antigo do crawler).
               </p>
               <p className="text-xs text-gray-500 bg-blue-50 border border-blue-100 rounded-lg p-3">
-                Provas com o mesmo nome que já existem no banco serão ignoradas automaticamente, evitando duplicatas.
+                Provas com o mesmo nome que já existem no banco serão ignoradas automaticamente, evitando duplicatas. Arquivos grandes são importados em lotes automaticamente.
               </p>
               <input
                 ref={fileInputRef}
@@ -502,10 +559,23 @@ export default function ProvasPage() {
                 className="w-full flex items-center justify-center gap-2 px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg text-gray-700 hover:border-primary-500 hover:bg-primary-50 transition font-medium text-sm disabled:opacity-60"
               >
                 {loadingJson
-                  ? <><Loader2 className="w-5 h-5 animate-spin" /> Importando...</>
+                  ? <><Loader2 className="w-5 h-5 animate-spin" /> {importProgress ? `Importando lote ${importProgress.current}/${importProgress.total}...` : 'Processando...'}</>
                   : <><FolderOpen className="w-5 h-5" /> Explorar e escolher arquivo</>
                 }
               </button>
+              {loadingJson && importProgress && (
+                <div className="space-y-1">
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div
+                      className="bg-primary-600 h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${Math.round((importProgress.current / importProgress.total) * 100)}%` }}
+                    />
+                  </div>
+                  <p className="text-xs text-gray-500 text-center">
+                    Lote {importProgress.current} de {importProgress.total} — arquivos grandes são importados em partes
+                  </p>
+                </div>
+              )}
               {jsonError && (
                 <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">{jsonError}</div>
               )}
