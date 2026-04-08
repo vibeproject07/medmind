@@ -803,7 +803,8 @@ function SimuladoNovoInner() {
           </button>
         </div>
 
-        <div className="flex items-center w-full mt-4 overflow-x-auto">
+        <div className="flex justify-center w-full mt-5 overflow-x-auto">
+          <div className="inline-flex items-center gap-0 py-1">
           {simulateQuestions.map((q, i) => {
             const revealed = simulateRevealedAnswers.has(q.id);
             const answered = !!selectedSimulateAnswers[q.id];
@@ -828,7 +829,7 @@ function SimuladoNovoInner() {
                 <button
                   type="button"
                   onClick={() => setCurrentSimulateIndex(i)}
-                  className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition text-sm font-medium cursor-pointer hover:opacity-90 hover:ring-2 hover:ring-primary-500 hover:ring-offset-1 ${ballStyle} ${
+                  className={`w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 transition text-sm font-medium cursor-pointer hover:opacity-90 hover:ring-2 hover:ring-primary-500 hover:ring-offset-1 ${ballStyle} ${
                     isCurrentQuestion ? 'ring-2 ring-primary-600 ring-offset-2' : ''
                   }`}
                   title={`${ballTitle} — Clique para ir à questão`}
@@ -836,13 +837,14 @@ function SimuladoNovoInner() {
                   {revealed ? correct ? <Check className="w-4 h-4" /> : <X className="w-4 h-4" /> : i + 1}
                 </button>
                 {i < simulateQuestions.length - 1 && (
-                  <div className="flex-1 min-w-0 flex items-center px-0.5" aria-hidden>
+                  <div className="w-4 flex-shrink-0 flex items-center px-0.5" aria-hidden>
                     <div className="h-px w-full bg-gray-300" />
                   </div>
                 )}
               </span>
             );
           })}
+          </div>
         </div>
       </div>
 
