@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { ChevronDown, ChevronUp, Filter, FolderOpen, Loader2, X, Play, ChevronLeft, ChevronRight, CheckCircle, XCircle, Ban, AlertTriangle, LogIn } from 'lucide-react';
+import { jsonrepair } from 'jsonrepair';
 
 interface ProvaQuestion {
   id: number;
@@ -119,14 +120,38 @@ export default function ProvasPage() {
     const reader = new FileReader();
     reader.onload = async () => {
       try {
-        const text = reader.result as string;
+        // Tenta decodificar com UTF-8 primeiro, depois Latin-1/cp1252 (arquivos do crawler no Windows)
+        const buffer = reader.result as ArrayBuffer;
+        let text: string;
+        try {
+          text = new TextDecoder('utf-8', { fatal: true }).decode(buffer);
+        } catch {
+          try {
+            text = new TextDecoder('windows-1252').decode(buffer);
+          } catch {
+            setJsonError('Não foi possível decodificar o arquivo. Tente salvá-lo como UTF-8.');
+            setLoadingJson(false);
+            return;
+          }
+        }
+        // Remove caracteres de controle ilegais na spec JSON (ex: \x03, \x13 do crawler)
+        // Mantém \t (0x09), \n (0x0A), \r (0x0D) que são válidos
+        text = text.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, ' ');
         let parsed: unknown;
         try {
           parsed = JSON.parse(text);
         } catch {
-          setJsonError('O arquivo não é um JSON válido.');
-          setLoadingJson(false);
-          return;
+          // Fallback: tenta reparar JSON malformado (ex: aspas não-escapadas do crawler)
+          try {
+            parsed = JSON.parse(jsonrepair(text));
+          } catch {
+            setJsonError(
+              'O arquivo não pôde ser lido. Arquivos do crawler web com encoding incorreto precisam de pré-processamento. ' +
+              'Execute: python3 scripts/fix_crawler_json.py <arquivo.json> e importe o arquivo "_clean.json" gerado.'
+            );
+            setLoadingJson(false);
+            return;
+          }
         }
 
         // Verifica sessão antes de qualquer validação de formato
@@ -286,7 +311,7 @@ export default function ProvasPage() {
       setJsonError('Erro ao ler o arquivo.');
       setLoadingJson(false);
     };
-    reader.readAsText(file, 'UTF-8');
+    reader.readAsArrayBuffer(file);
   };
 
   const filteredProvas = provasList.filter((p) => {
