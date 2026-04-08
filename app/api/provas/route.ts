@@ -27,6 +27,10 @@ function mapQuestaoToOptions(questoes: {
   alternativas?: Alternativa[];
   alternativa_correta?: string | { letra?: string };
   letra_correta?: string;
+  // Campo do crawler web: estado=true significa anulada
+  estado?: boolean;
+  // Campo do PDF parser: anulada direto
+  anulada?: boolean;
 }[]) {
   return questoes.map((q) => {
     const alternativas = q.alternativas || [];
@@ -57,6 +61,8 @@ function mapQuestaoToOptions(questoes: {
       option_e: byLetter['E'] || null,
       correct_answer: finalCorrect,
       images: Array.isArray(q.imagens) ? q.imagens : [],
+      // crawler usa "estado": true para anulada; PDF pode ter "anulada": true
+      anulada: Boolean(q.estado ?? q.anulada ?? false),
     };
   });
 }
@@ -264,8 +270,8 @@ export async function POST(request: NextRequest) {
         const safeProvaId = isNaN(provaId) ? null : provaId;
 
         const qResult = await query(
-          `INSERT INTO questions (statement, option_a, option_b, option_c, option_d, option_e, correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region, exam_type, prova_id, numero_na_prova)
-           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17) RETURNING id`,
+          `INSERT INTO questions (statement, option_a, option_b, option_c, option_d, option_e, correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region, exam_type, prova_id, numero_na_prova, anulada)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18) RETURNING id`,
           [
             q.statement || '(Sem enunciado)',
             optA,
@@ -283,7 +289,8 @@ export async function POST(request: NextRequest) {
             regiao,
             tipo,
             safeProvaId,
-            questionNumber
+            questionNumber,
+            q.anulada ?? false,
           ]
         );
         const qId = qResult.rows[0].id;

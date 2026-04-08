@@ -149,11 +149,50 @@ export default function ProvasPage() {
           return;
         }
 
-        // Normaliza formatos com chave "questoes" ou "questions" no topo
+        // Normaliza formato do PDF parser e outros formatos com questoes no topo
         if (!Array.isArray(data.provas) && !Array.isArray(data.paginas)) {
           const questoesKey = Array.isArray(data.questoes) ? 'questoes' : (Array.isArray(data.questions) ? 'questions' : null);
           if (questoesKey) {
-            data = { provas: [{ nome: file.name.replace(/\.json$/i, ''), questoes: data[questoesKey] }] };
+            const todasQuestoes = data[questoesKey] as { numero?: number; [key: string]: unknown }[];
+
+            // Formato PDF multi-arquivo: { titulo_prova, questoes, arquivos }
+            // As questões de cada PDF ficam em sequência, numeração reinicia em 1 a cada prova
+            if (data.titulo_prova && Array.isArray(data.arquivos) && (data.arquivos as unknown[]).length > 0) {
+              const arquivos = data.arquivos as string[];
+              const grupos: { numero?: number; [key: string]: unknown }[][] = [];
+              let grupo: typeof todasQuestoes = [];
+              for (const q of todasQuestoes) {
+                const num = typeof q.numero === 'number' ? q.numero : parseInt(String(q.numero ?? '0'), 10);
+                if (num === 1 && grupo.length > 0) {
+                  grupos.push(grupo);
+                  grupo = [];
+                }
+                grupo.push(q);
+              }
+              if (grupo.length > 0) grupos.push(grupo);
+
+              const provas = grupos.map((questoes, i) => {
+                const nomeArquivo = arquivos[i] ? String(arquivos[i]).replace(/\.pdf$/i, '').trim() : `Prova ${i + 1}`;
+                return { nome: nomeArquivo, questoes };
+              });
+              data = { provas };
+
+            } else {
+              // Formato simples: { titulo_prova?, questoes } — uma prova única
+              let nomeParte = file.name.replace(/\.json$/i, '');
+              let metadados: Record<string, unknown> = {};
+              if (data.titulo_prova && typeof data.titulo_prova === 'object') {
+                const tp = data.titulo_prova as Record<string, unknown>;
+                const banca = String(tp.banca ?? '').trim();
+                const regiao = String(tp.regiao ?? '').trim();
+                const ano = String(tp.ano ?? '').trim();
+                const tipo = String(tp.tipo ?? '').trim();
+                const partes = [banca, regiao, ano, tipo].filter(s => s.length > 0);
+                if (partes.length > 0) nomeParte = partes.join(' - ');
+                metadados = { banca: banca || null, regiao: regiao || null, ano: ano || null, tipo: tipo || null };
+              }
+              data = { provas: [{ nome: nomeParte, questoes: todasQuestoes, ...metadados }] };
+            }
           }
         }
 
