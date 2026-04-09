@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { ChevronDown, ChevronUp, Filter, FolderOpen, Loader2, X, Play, ChevronLeft, ChevronRight, CheckCircle, XCircle, Ban, AlertTriangle, LogIn } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { ChevronDown, ChevronUp, Filter, FolderOpen, Loader2, X, Play, CheckCircle, Ban, AlertTriangle, LogIn } from 'lucide-react';
 import { jsonrepair } from 'jsonrepair';
 
 interface ProvaQuestion {
@@ -45,6 +46,7 @@ const ANO_FIM = new Date().getFullYear();
 const ANOS = Array.from({ length: ANO_FIM - ANO_INICIO + 1 }, (_, i) => String(ANO_FIM - i));
 
 export default function ProvasPage() {
+  const router = useRouter();
   const [filtrosAbertos, setFiltrosAbertos] = useState(false);
   const [banca, setBanca] = useState('');
   const [regiao, setRegiao] = useState('');
@@ -60,10 +62,6 @@ export default function ProvasPage() {
   const [sessionExpired, setSessionExpired] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [provaEmAndamento, setProvaEmAndamento] = useState<Prova | null>(null);
-  const [examIndex, setExamIndex] = useState(0);
-  const [examAnswers, setExamAnswers] = useState<Record<number, string>>({});
-  const [showExamResults, setShowExamResults] = useState(false);
 
   const fetchProvas = async () => {
     const token = localStorage.getItem('token');
@@ -323,44 +321,8 @@ export default function ProvasPage() {
   });
 
   const handleRealizarProva = (prova: Prova) => {
-    setProvaEmAndamento(prova);
-    setExamIndex(0);
-    setExamAnswers({});
-    setShowExamResults(false);
-  };
-
-  const examQuestions = provaEmAndamento?.questions ?? [];
-  const currentQuestion = examQuestions[examIndex];
-  const totalExam = examQuestions.length;
-
-  const handleExamAnswer = (letter: string) => {
-    if (!currentQuestion) return;
-    setExamAnswers((prev) => ({ ...prev, [currentQuestion.id]: letter }));
-  };
-
-  const handleExamNext = () => {
-    if (examIndex < totalExam - 1) setExamIndex((i) => i + 1);
-    else setShowExamResults(true);
-  };
-
-  const handleExamPrev = () => {
-    if (examIndex > 0) setExamIndex((i) => i - 1);
-  };
-
-  const correctCount = provaEmAndamento
-    ? provaEmAndamento.questions.filter((q) => examAnswers[q.id] === q.correct_answer).length
-    : 0;
-  const percent = totalExam ? Math.round((correctCount / totalExam) * 100) : 0;
-
-  const getOptionValue = (q: ProvaQuestion, key: string) => {
-    const map: Record<string, string> = {
-      A: q.option_a,
-      B: q.option_b,
-      C: q.option_c || '',
-      D: q.option_d || '',
-      E: q.option_e || '',
-    };
-    return map[key] || '';
+    localStorage.setItem(`examProva_${prova.id}`, JSON.stringify(prova));
+    router.push(`/dashboard/provas/${prova.id}`);
   };
 
   return (
@@ -720,112 +682,6 @@ export default function ProvasPage() {
                 Cancelar
               </button>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* Modal Realizar prova */}
-      {provaEmAndamento && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col">
-            <div className="flex items-center justify-between p-4 border-b border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-800">{provaEmAndamento.nome}</h2>
-              <button
-                type="button"
-                onClick={() => { setProvaEmAndamento(null); setShowExamResults(false); }}
-                className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition"
-                aria-label="Fechar"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="flex-1 overflow-y-auto p-6">
-              {showExamResults ? (
-                <div className="text-center py-6">
-                  <p className="text-2xl font-bold text-primary-600">{percent}%</p>
-                  <p className="text-gray-600 mt-1">{correctCount} de {totalExam} questões corretas</p>
-                  <div className="flex justify-center gap-4 mt-4 text-sm">
-                    <span className="flex items-center gap-1 text-green-600"><CheckCircle className="w-4 h-4" /> {correctCount} corretas</span>
-                    <span className="flex items-center gap-1 text-red-600"><XCircle className="w-4 h-4" /> {totalExam - correctCount} incorretas</span>
-                  </div>
-                </div>
-              ) : currentQuestion ? (
-                <>
-                  {currentQuestion.anulada && (
-                    <div className="flex items-start gap-2 mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm font-semibold">
-                      <AlertTriangle className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                      Questão anulada — esta questão não está disponível para simulados.
-                    </div>
-                  )}
-                  <div className="flex items-center justify-between mb-4 text-sm text-gray-500">
-                    <span className="flex items-center gap-2">
-                      Questão {currentQuestion.numero_na_prova ?? examIndex + 1} (ID #{currentQuestion.id})
-                      {currentQuestion.anulada && (
-                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold border border-red-200">
-                          <Ban className="w-3 h-3" />
-                          ANULADA
-                        </span>
-                      )}
-                    </span>
-                    <span>
-                      Banca: {currentQuestion.exam_board || '—'} | Região: {currentQuestion.exam_region || '—'} | Ano: {currentQuestion.exam_year || '—'} | Tipo: {currentQuestion.exam_type || '—'}
-                    </span>
-                  </div>
-                  <p className="text-gray-800 mb-4 whitespace-pre-wrap">{currentQuestion.statement}</p>
-                  <div className="space-y-2">
-                    {['A', 'B', 'C', 'D', 'E'].map((key) => {
-                      const val = getOptionValue(currentQuestion, key);
-                      if (!val) return null;
-                      const selected = examAnswers[currentQuestion.id] === key;
-                      return (
-                        <button
-                          key={key}
-                          type="button"
-                          onClick={() => handleExamAnswer(key)}
-                          className={`w-full text-left p-3 rounded-lg border-2 transition ${
-                            selected ? 'border-primary-500 bg-primary-50' : 'border-gray-200 bg-gray-50 hover:border-gray-300'
-                          }`}
-                        >
-                          <span className="font-semibold text-gray-700">{key})</span>{' '}
-                          <span className="text-gray-800">{val}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </>
-              ) : null}
-            </div>
-            {!showExamResults && totalExam > 0 && (
-              <div className="flex items-center justify-between p-4 border-t border-gray-200 bg-gray-50 rounded-b-xl">
-                <button
-                  type="button"
-                  onClick={handleExamPrev}
-                  disabled={examIndex === 0}
-                  className="flex items-center gap-1 px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <ChevronLeft className="w-4 h-4" /> Anterior
-                </button>
-                <span className="text-sm text-gray-600">{examIndex + 1} de {totalExam}</span>
-                <button
-                  type="button"
-                  onClick={handleExamNext}
-                  className="flex items-center gap-1 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition"
-                >
-                  {examIndex >= totalExam - 1 ? 'Finalizar' : 'Próxima'} <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-            )}
-            {showExamResults && (
-              <div className="p-4 border-t border-gray-200 bg-gray-50 rounded-b-xl flex justify-end">
-                <button
-                  type="button"
-                  onClick={() => { setProvaEmAndamento(null); setShowExamResults(false); }}
-                  className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition"
-                >
-                  Fechar
-                </button>
-              </div>
-            )}
           </div>
         </div>
       )}
