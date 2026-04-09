@@ -12,7 +12,6 @@ import {
   toDisplayAssunto,
   fromDisplay,
   AREAS_OPTIONS_DISPLAY,
-  AREAS_COLORIDO_BG,
 } from '@/lib/areas-assuntos';
 
 const AVAILABLE_TAGS = [
@@ -943,8 +942,7 @@ export default function QuestionDetailPage() {
                   {question.areas_conhecimento.map((area) => (
                     <span
                       key={area}
-                      className="inline-block px-3 py-1 text-sm font-medium rounded-full"
-                      style={{ backgroundColor: AREAS_COLORIDO_BG[area] ?? '#e5e7eb', color: '#1f2937' }}
+                      className="inline-block px-3 py-1 text-sm font-medium rounded-full bg-primary-100 text-primary-700"
                     >
                       {area}
                     </span>
