@@ -741,7 +741,7 @@ export default function NotesPage() {
                   {(note.tags ?? []).map((tag) => (
                     <span
                       key={`tag-${tag}`}
-                      className="inline-block px-2 py-1 text-xs font-medium bg-primary-100 text-primary-700 rounded-[15px]"
+                      className="inline-block px-2 py-1 text-xs font-medium bg-primary-100 text-primary-700 rounded-full"
                     >
                       {tag}
                     </span>
@@ -749,7 +749,7 @@ export default function NotesPage() {
                   {(note.areas_conhecimento ?? []).map((area) => (
                     <span
                       key={`area-${area}`}
-                      className="inline-block px-2 py-1 text-xs font-medium bg-primary-100 text-primary-700 rounded-[15px]"
+                      className="inline-block px-2 py-1 text-xs font-medium bg-primary-100 text-primary-700 rounded-full"
                     >
                       {toDisplayArea(area)}
                     </span>
@@ -757,7 +757,7 @@ export default function NotesPage() {
                   {(note.assuntos ?? []).map((assunto) => (
                     <span
                       key={`assunto-${assunto}`}
-                      className="inline-block px-2 py-1 text-xs font-medium bg-primary-100 text-primary-700 rounded-[15px]"
+                      className="inline-block px-2 py-1 text-xs font-medium bg-primary-100 text-primary-700 rounded-full"
                     >
                       {toDisplayAssunto(assunto)}
                     </span>

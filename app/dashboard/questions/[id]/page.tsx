@@ -521,7 +521,7 @@ export default function QuestionDetailPage() {
             {(question.areas_conhecimento ?? []).map((area) => (
               <span
                 key={`area-${area}`}
-                className="inline-block px-2 py-1 text-xs font-medium bg-primary-100 text-primary-700 rounded-[15px]"
+                className="inline-block px-2 py-1 text-xs font-medium bg-primary-100 text-primary-700 rounded-full"
               >
                 {toDisplayArea(area)}
               </span>
@@ -529,7 +529,7 @@ export default function QuestionDetailPage() {
             {(question.assuntos ?? []).map((assunto) => (
               <span
                 key={`assunto-${assunto}`}
-                className="inline-block px-2 py-1 text-xs font-medium bg-primary-100 text-primary-700 rounded-[15px]"
+                className="inline-block px-2 py-1 text-xs font-medium bg-primary-100 text-primary-700 rounded-full"
               >
                 {toDisplayAssunto(assunto)}
               </span>
@@ -537,7 +537,7 @@ export default function QuestionDetailPage() {
             {(question.tags ?? []).map((tag) => (
               <span
                 key={`tag-${tag}`}
-                className="inline-block px-2 py-1 text-xs font-medium bg-primary-100 text-primary-700 rounded-[15px]"
+                className="inline-block px-2 py-1 text-xs font-medium bg-primary-100 text-primary-700 rounded-full"
               >
                 {tag}
               </span>
@@ -1035,7 +1035,7 @@ export default function QuestionDetailPage() {
               {(question.decs_terms ?? []).map((term) => (
                 <span
                   key={term}
-                  className="inline-block px-3 py-1 text-sm font-medium bg-teal-100 text-teal-700 rounded-full"
+                  className="inline-block px-3 py-1 text-sm font-medium bg-primary-100 text-primary-700 rounded-full"
                 >
                   {term}
                 </span>

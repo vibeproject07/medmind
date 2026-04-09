@@ -871,7 +871,7 @@ export default function NoteDetailPage() {
                         note?.areas_conhecimento && note.areas_conhecimento.length > 0 ? (
                           <div className="flex flex-wrap gap-2">
                             {note.areas_conhecimento.map((area) => (
-                              <span key={area} className="inline-block px-3 py-1 text-sm font-medium bg-gray-100 text-gray-800 rounded-full border border-gray-200">{toDisplayArea(area)}</span>
+                              <span key={area} className="inline-block px-3 py-1 text-sm font-medium bg-primary-100 text-primary-700 rounded-full">{toDisplayArea(area)}</span>
                             ))}
                           </div>
                         ) : (
@@ -887,7 +887,7 @@ export default function NoteDetailPage() {
                         note?.assuntos && note.assuntos.length > 0 ? (
                           <div className="flex flex-wrap gap-2">
                             {note.assuntos.map((assunto) => (
-                              <span key={assunto} className="inline-block px-3 py-1 text-sm font-medium bg-gray-100 text-gray-800 rounded-full border border-gray-200">{toDisplayAssunto(assunto)}</span>
+                              <span key={assunto} className="inline-block px-3 py-1 text-sm font-medium bg-primary-100 text-primary-700 rounded-full">{toDisplayAssunto(assunto)}</span>
                             ))}
                           </div>
                         ) : (

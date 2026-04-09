@@ -198,8 +198,7 @@ export default function TagAutocomplete({
           {safeSelectedTags.map((tag) => (
             <span
               key={tag}
-              className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium ${!optionBackgroundMap?.[tag] ? 'bg-primary-100 text-primary-700' : ''}`}
-              style={optionBackgroundMap?.[tag] ? { backgroundColor: optionBackgroundMap[tag], color: '#1f2937' } : undefined}
+              className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-700"
             >
               {tag}
               <button

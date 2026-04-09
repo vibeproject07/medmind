@@ -156,7 +156,7 @@ export default function DeCSAutocomplete({
         {selectedTerms.map((term) => (
           <span
             key={term}
-            className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-teal-100 text-teal-700"
+            className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-700"
           >
             {term}
             <button
@@ -165,7 +165,7 @@ export default function DeCSAutocomplete({
                 e.stopPropagation();
                 handleRemove(term);
               }}
-              className="hover:bg-teal-200 rounded-full p-0.5 transition"
+              className="hover:bg-primary-200 rounded-full p-0.5 transition"
               aria-label={`Remover ${term}`}
             >
               <X className="w-3 h-3" />
