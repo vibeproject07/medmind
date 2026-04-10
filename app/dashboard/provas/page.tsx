@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChevronDown, ChevronUp, Filter, FolderOpen, Loader2, X, Play, CheckCircle, Ban, AlertTriangle, LogIn } from 'lucide-react';
+import { ChevronDown, ChevronUp, Filter, FolderOpen, Loader2, X, Play, CheckCircle, LogIn } from 'lucide-react';
 import { jsonrepair } from 'jsonrepair';
 
 interface ProvaQuestion {
@@ -533,73 +533,46 @@ export default function ProvasPage() {
             : 'Nenhuma prova encontrada com os filtros selecionados.'}
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {filteredProvas.map((prova) => (
-            <div key={prova.id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-              <div className="p-4 border-b border-gray-200 bg-gray-50 flex flex-wrap items-center justify-between gap-3">
-                <h2 className="text-xl font-semibold text-gray-800">{prova.nome}</h2>
-                <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600">
-                  {prova.banca && <span className="px-2 py-1 bg-white rounded border border-gray-200">Banca: {prova.banca}</span>}
-                  {prova.regiao && <span className="px-2 py-1 bg-white rounded border border-gray-200">Região: {prova.regiao}</span>}
-                  {prova.ano && <span className="px-2 py-1 bg-white rounded border border-gray-200">Ano: {prova.ano}</span>}
-                  {prova.tipo && <span className="px-2 py-1 bg-white rounded border border-gray-200">Tipo: {prova.tipo}</span>}
+            <div key={prova.id} className="bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col">
+              <div className="p-5 flex-1 flex flex-col gap-3">
+                <h2 className="text-base font-semibold text-gray-800 leading-snug">{prova.nome}</h2>
+                <div className="flex flex-wrap gap-1.5">
+                  {prova.banca && (
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-primary-100 text-primary-700 text-xs font-medium">
+                      {prova.banca}
+                    </span>
+                  )}
+                  {prova.regiao && (
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 text-xs font-medium">
+                      {prova.regiao}
+                    </span>
+                  )}
+                  {prova.ano && (
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 text-xs font-medium">
+                      {prova.ano}
+                    </span>
+                  )}
+                  {prova.tipo && (
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 text-xs font-medium">
+                      {prova.tipo}
+                    </span>
+                  )}
                 </div>
+                <p className="text-sm text-gray-500 mt-auto">
+                  {prova.questions.length} {prova.questions.length === 1 ? 'questão' : 'questões'}
+                </p>
+              </div>
+              <div className="px-5 pb-5">
                 <button
                   type="button"
                   onClick={() => handleRealizarProva(prova)}
-                  className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition font-medium text-sm"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition font-medium text-sm"
                 >
                   <Play className="w-4 h-4" />
                   Realizar prova
                 </button>
-              </div>
-              <div className="p-4 space-y-4">
-                <p className="text-sm font-medium text-gray-700">Questões da prova ({prova.questions.length})</p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {prova.questions
-                    .sort((a, b) => (a.numero_na_prova ?? 0) - (b.numero_na_prova ?? 0))
-                    .map((q) => (
-                      <div
-                        key={q.id}
-                        className={`rounded-lg border p-4 hover:shadow-sm transition ${
-                          q.anulada
-                            ? 'bg-red-50/40 border-red-200'
-                            : 'bg-gray-50 border-gray-200'
-                        }`}
-                      >
-                        {q.anulada && (
-                          <div className="flex items-center gap-1.5 mb-2 text-xs font-semibold text-red-700">
-                            <AlertTriangle className="w-3.5 h-3.5" />
-                            QUESTÃO ANULADA — Indisponível para simulados
-                          </div>
-                        )}
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm font-semibold text-gray-800">
-                              Questão {q.numero_na_prova ?? '—'} (ID #{q.id})
-                            </span>
-                            {q.anulada && (
-                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold border border-red-200">
-                                <Ban className="w-2.5 h-2.5" />
-                                ANULADA
-                              </span>
-                            )}
-                          </div>
-                          <div className="flex flex-wrap gap-1 text-xs text-gray-500">
-                            {q.exam_board && <span>Banca: {q.exam_board}</span>}
-                            {q.exam_region && <span>| {q.exam_region}</span>}
-                            {q.exam_year && <span>| {q.exam_year}</span>}
-                            {q.exam_type && <span>| {q.exam_type}</span>}
-                          </div>
-                        </div>
-                        <p className="text-gray-700 text-sm line-clamp-3">{q.statement}</p>
-                        <div className="mt-2 flex flex-wrap gap-1">
-                          {q.option_a && <span className="text-xs text-gray-500">A) {q.option_a.slice(0, 40)}…</span>}
-                          {q.option_b && <span className="text-xs text-gray-500">B) {q.option_b.slice(0, 40)}…</span>}
-                        </div>
-                      </div>
-                    ))}
-                </div>
               </div>
             </div>
           ))}
