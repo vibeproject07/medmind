@@ -1,0 +1,14 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "IhfoqXIQnYl77N0PutrDw"
+uri = "file://attached_assets/100questoes_modificado.json"
+type = "unspecified"
+title = "100questoes_modificado.json"
+
+[[outputs]]
+id = "xzgxjTzRj_8ta_tSjpP-t"
+uri = "file://attached_assets/100questoes_modificado.csv"
+type = "table"
+title = "100questoes_modificado.csv"
