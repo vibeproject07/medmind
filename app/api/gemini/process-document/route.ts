@@ -1,24 +1,41 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/jwt';
-import { geminiProcessDocument, EXTRACT_TEXT_INSTRUCTION } from '@/lib/gemini';
+import { geminiProcessDocument, geminiTransformTranscription, EXTRACT_TEXT_INSTRUCTION } from '@/lib/gemini';
+import { extractTextFromDocx, extractTextFromPptx } from '@/lib/document-extract';
 
 export const runtime = 'nodejs';
 
-const ALLOWED_MIME_TYPES = [
+const GEMINI_NATIVE_TYPES = [
   'application/pdf',
-  'application/msword',
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  'application/vnd.ms-powerpoint',
-  'application/vnd.openxmlformats-officedocument.presentationml.presentation',
   'image/jpeg',
   'image/png',
   'image/gif',
   'image/webp',
 ];
 
+const EXTRACT_TYPES: Record<string, 'docx' | 'pptx'> = {
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
+  'application/msword': 'docx',
+  'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'pptx',
+  'application/vnd.ms-powerpoint': 'pptx',
+};
+
+const ALLOWED_MIME_TYPES = [
+  ...GEMINI_NATIVE_TYPES,
+  ...Object.keys(EXTRACT_TYPES),
+];
+
 function isAllowedMimeType(type: string): boolean {
   return ALLOWED_MIME_TYPES.includes(type) || type.startsWith('image/');
 }
+
+const DOCUMENT_SUMMARIZE_INSTRUCTION = `Leia o texto a seguir extraído de um documento Word e produza um resumo claro e organizado para estudo.
+Preserve termos técnicos e pontos principais. Organize em tópicos e destaque o que for mais relevante.
+Responda em português (pt-BR) e formate a saída em Markdown.`;
+
+const SLIDES_SUMMARIZE_INSTRUCTION = `Leia o texto a seguir extraído de uma apresentação PowerPoint (os slides estão separados por "--- Slide N ---") e produza um material de estudo.
+Para cada slide, resuma o conteúdo e preserve termos técnicos.
+Organize em tópicos por slide ou por tema. Responda em português (pt-BR) e formate a saída em Markdown.`;
 
 export async function POST(request: NextRequest) {
   try {
@@ -60,7 +77,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error:
-            'Formato não suportado. Use PDF, Word (.doc, .docx), PowerPoint (.ppt, .pptx) ou imagem.',
+            'Formato não suportado. Use PDF, Word (.docx), PowerPoint (.pptx) ou imagem.',
         },
         { status: 400 }
       );
@@ -69,18 +86,41 @@ export async function POST(request: NextRequest) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    const result = await geminiProcessDocument({
-      file: buffer,
-      mimeType,
-    });
+    const extractType = EXTRACT_TYPES[mimeType];
 
-    const isTextDocument =
+    if (extractType) {
+      let extractedText: string;
+      try {
+        if (extractType === 'docx') {
+          extractedText = await extractTextFromDocx(buffer);
+        } else {
+          extractedText = await extractTextFromPptx(buffer);
+        }
+      } catch (extractErr) {
+        const msg = extractErr instanceof Error ? extractErr.message : 'Erro ao extrair texto do arquivo.';
+        return NextResponse.json({ error: msg }, { status: 422 });
+      }
+
+      const summarizeInstruction =
+        extractType === 'pptx' ? SLIDES_SUMMARIZE_INSTRUCTION : DOCUMENT_SUMMARIZE_INSTRUCTION;
+
+      const summary = await geminiTransformTranscription({
+        transcription: extractedText,
+        instruction: summarizeInstruction,
+      });
+
+      return NextResponse.json({ text: summary, originalText: extractedText });
+    }
+
+    const result = await geminiProcessDocument({ file: buffer, mimeType });
+
+    const isPdfOrWord =
       mimeType === 'application/pdf' ||
       mimeType === 'application/msword' ||
       mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
 
     let originalText: string | undefined;
-    if (isTextDocument) {
+    if (isPdfOrWord) {
       try {
         originalText = await geminiProcessDocument({
           file: buffer,
@@ -98,7 +138,6 @@ export async function POST(request: NextRequest) {
     if (error instanceof Error) {
       message = error.message;
     }
-    // Tratar resposta de API (ex.: Gemini retorna { error: { code, status, message } })
     const err = error as { error?: { code?: number; status?: string; message?: string }; message?: string };
     if (err?.error?.code === 404 || err?.error?.status === 'Not Found') {
       message = 'Serviço de processamento de documentos temporariamente indisponível. Verifique a chave GEMINI_API_KEY e tente novamente.';
