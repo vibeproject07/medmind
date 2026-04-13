@@ -110,7 +110,7 @@ export default function NotesPage() {
   const [areasConhecimentoOptions, setAreasConhecimentoOptions] = useState<string[]>(AREAS_OPTIONS_DISPLAY || []);
   const [filterAssuntos, setFilterAssuntos] = useState<string[]>([]);
   const [filtersAccordionOpen, setFiltersAccordionOpen] = useState(false);
-  const PAGE_SIZE = 15;
+  const PAGE_SIZE = 20;
   const [currentPage, setCurrentPage] = useState(1);
   const [totalNotes, setTotalNotes] = useState(0);
   const assuntosOptions = useMemo(() => {

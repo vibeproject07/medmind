@@ -60,7 +60,10 @@ export default function ProvasPage() {
   const [provasList, setProvasList] = useState<Prova[]>([]);
   const [loadingProvas, setLoadingProvas] = useState(true);
   const [sessionExpired, setSessionExpired] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const PAGE_SIZE = 20;
 
 
   const fetchProvas = async () => {
@@ -320,6 +323,16 @@ export default function ProvasPage() {
     return true;
   });
 
+  const totalPages = Math.ceil(filteredProvas.length / PAGE_SIZE);
+  const paginatedProvas = filteredProvas.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
+  );
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [banca, regiao, ano, tipo]);
+
   const handleRealizarProva = (prova: Prova) => {
     localStorage.setItem(`examProva_${prova.id}`, JSON.stringify(prova));
     router.push(`/dashboard/provas/${prova.id}`);
@@ -534,7 +547,7 @@ export default function ProvasPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-          {filteredProvas.map((prova) => (
+          {paginatedProvas.map((prova) => (
             <div key={prova.id} className="bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col">
               <div className="p-5 flex-1 flex flex-col gap-3">
                 <h2 className="text-base font-semibold text-gray-800 leading-snug">{prova.nome}</h2>
@@ -576,6 +589,30 @@ export default function ProvasPage() {
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-2 flex-wrap mt-2">
+          <button
+            type="button"
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage <= 1}
+            className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+          >
+            Anterior
+          </button>
+          <span className="px-4 py-2 text-sm text-gray-600">
+            Página {currentPage} de {totalPages}
+          </span>
+          <button
+            type="button"
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage >= totalPages}
+            className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+          >
+            Próxima
+          </button>
         </div>
       )}
 

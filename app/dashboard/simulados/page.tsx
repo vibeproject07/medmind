@@ -24,12 +24,15 @@ interface SimulateResult {
   simulate_questions?: { id: number; correct_answer: string }[];
 }
 
+const PAGE_SIZE = 20;
+
 export default function SimuladosPage() {
   const router = useRouter();
   const { searchQuery } = useDashboardSearch();
   const [results, setResults] = useState<SimulateResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [userRole, setUserRole] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const filteredResults = useMemo(() => {
     if (!searchQuery.trim()) return results;
@@ -39,6 +42,16 @@ export default function SimuladosPage() {
       return name.includes(q);
     });
   }, [results, searchQuery]);
+
+  const totalPages = Math.ceil(filteredResults.length / PAGE_SIZE);
+  const paginatedResults = filteredResults.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
+  );
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery]);
 
   useEffect(() => {
     // Obter role do usuário do token JWT
@@ -170,7 +183,7 @@ export default function SimuladosPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {filteredResults.map((result) => (
+          {paginatedResults.map((result) => (
             <div
               key={result.id}
               className="bg-white rounded-xl shadow-md border border-gray-200 p-6 flex flex-col gap-4"
@@ -309,6 +322,30 @@ export default function SimuladosPage() {
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-2 flex-wrap mt-6">
+          <button
+            type="button"
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage <= 1}
+            className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+          >
+            Anterior
+          </button>
+          <span className="px-4 py-2 text-sm text-gray-600">
+            Página {currentPage} de {totalPages}
+          </span>
+          <button
+            type="button"
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage >= totalPages}
+            className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+          >
+            Próxima
+          </button>
         </div>
       )}
     </div>
