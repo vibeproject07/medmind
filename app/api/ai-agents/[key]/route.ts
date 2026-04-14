@@ -39,6 +39,13 @@ export async function PUT(req: NextRequest, { params }: { params: { key: string 
 
   const { name, description, system_prompt, model, temperature, max_output_tokens } = body as Record<string, unknown>;
 
+  if (typeof temperature === 'number' && (temperature < 0 || temperature > 1)) {
+    return NextResponse.json({ error: 'Temperatura deve estar entre 0 e 1.' }, { status: 400 });
+  }
+  if (typeof max_output_tokens === 'number' && (max_output_tokens < 256 || max_output_tokens > 16384)) {
+    return NextResponse.json({ error: 'Máximo de tokens deve estar entre 256 e 16384.' }, { status: 400 });
+  }
+
   const agent = await upsertAgent(params.key, {
     name: typeof name === 'string' ? name : undefined,
     description: typeof description === 'string' ? description : undefined,
@@ -65,10 +72,10 @@ export async function DELETE(req: NextRequest, { params }: { params: { key: stri
   if (isBuiltin) {
     const agent = await resetAgent(params.key);
     if (!agent) return NextResponse.json({ error: 'Agente não encontrado' }, { status: 404 });
-    return NextResponse.json({ ...agent, action: 'reset' });
+    return NextResponse.json({ agent, action: 'reset' });
   } else {
     const deleted = await deleteAgent(params.key);
     if (!deleted) return NextResponse.json({ error: 'Agente não encontrado' }, { status: 404 });
-    return NextResponse.json({ key: params.key, action: 'deleted' });
+    return NextResponse.json({ agent: { key: params.key }, action: 'deleted' });
   }
 }

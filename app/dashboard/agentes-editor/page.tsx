@@ -158,7 +158,7 @@ export default function AgentesEditorPage() {
         const err = await res.json().catch(() => ({}));
         throw new Error((err as { error?: string }).error || 'Erro ao resetar');
       }
-      const updated: AiAgent = await res.json();
+      const { agent: updated }: { agent: AiAgent } = await res.json();
       setAgents((prev) => prev.map((a) => (a.key === updated.key ? updated : a)));
       setEditing(updated);
       setUnsaved(false);
