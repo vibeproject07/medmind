@@ -12,3 +12,9 @@ id = "xzgxjTzRj_8ta_tSjpP-t"
 uri = "file://attached_assets/100questoes_modificado.csv"
 type = "table"
 title = "100questoes_modificado.csv"
+
+[[outputs]]
+id = "8GG-AOj9pxFMXzRx5qi-W"
+uri = "file://decs_classification_results.json"
+type = "unspecified"
+title = "Descritores DeCS IA — 100 questões"
