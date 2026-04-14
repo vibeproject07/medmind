@@ -652,8 +652,11 @@ function AgentListItem({
         }`} />
       </div>
       <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <span className="font-medium text-gray-900 text-sm truncate">{agent.name}</span>
+          {!agent.is_builtin && (
+            <span className="flex-shrink-0 px-1.5 py-0.5 bg-purple-100 text-purple-700 text-xs rounded-full font-medium">personalizado</span>
+          )}
           {agent.is_customized && agent.is_builtin && (
             <span className="flex-shrink-0 px-1.5 py-0.5 bg-primary-100 text-primary-700 text-xs rounded-full font-medium">editado</span>
           )}

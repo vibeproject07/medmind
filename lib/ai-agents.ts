@@ -140,11 +140,17 @@ export async function createAgent(data: {
   const def = getDefault(data.key);
   if (def) return { agent: null, conflict: true };
 
-  await query(
-    `INSERT INTO ai_agents (key, name, description, system_prompt, model, temperature, max_output_tokens, updated_at)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())`,
-    [data.key, data.name, data.description, data.system_prompt, data.model, data.temperature, data.max_output_tokens]
-  );
+  try {
+    await query(
+      `INSERT INTO ai_agents (key, name, description, system_prompt, model, temperature, max_output_tokens, updated_at)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())`,
+      [data.key, data.name, data.description, data.system_prompt, data.model, data.temperature, data.max_output_tokens]
+    );
+  } catch (err: unknown) {
+    const pgErr = err as { code?: string };
+    if (pgErr?.code === '23505') return { agent: null, conflict: true };
+    throw err;
+  }
 
   const agent = await getAgent(data.key);
   return { agent, conflict: false };
