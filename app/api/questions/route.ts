@@ -22,6 +22,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
     }
 
+    await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_decs_descriptors TEXT`);
+
     const { searchParams } = new URL(request.url);
     const examYear = searchParams.get('exam_year');
     const examBoard = searchParams.get('exam_board');
@@ -37,7 +39,7 @@ export async function GET(request: NextRequest) {
     let questions = (await query(`
       SELECT id, statement, option_a, option_b, option_c, option_d, option_e,
              correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region,
-             areas_conhecimento, assuntos, decs_terms, anulada, created_at, updated_at
+             areas_conhecimento, assuntos, decs_terms, ai_decs_descriptors, anulada, created_at, updated_at
       FROM questions
       ORDER BY created_at DESC
     `)).rows;
@@ -71,6 +73,7 @@ export async function GET(request: NextRequest) {
       areas_conhecimento: question.areas_conhecimento ? JSON.parse(question.areas_conhecimento) : [],
       assuntos: question.assuntos ? JSON.parse(question.assuntos) : [],
       decs_terms: question.decs_terms ? JSON.parse(question.decs_terms) : [],
+      ai_decs_descriptors: question.ai_decs_descriptors ? JSON.parse(question.ai_decs_descriptors) : [],
     }));
 
     if (filterTags) {

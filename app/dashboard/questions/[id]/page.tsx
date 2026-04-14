@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { ArrowLeft, Edit, Image as ImageIcon, X, AlertTriangle, Ban, RotateCcw } from 'lucide-react';
+import { ArrowLeft, Edit, Image as ImageIcon, X, AlertTriangle, Ban, RotateCcw, Sparkles } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import DeCSAutocomplete from '@/components/Common/DeCSAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
@@ -43,8 +43,16 @@ interface Question {
   exam_region?: string | null;
   anulada?: boolean;
   decs_terms?: string[];
+  ai_decs_descriptors?: DeCSRecord[];
   created_at: string;
   updated_at: string;
+}
+
+interface DeCSRecord {
+  term: string;
+  code: string;
+  tree_ids: string[];
+  hierarchy_path: string;
 }
 
 export default function QuestionDetailPage() {
@@ -75,6 +83,8 @@ export default function QuestionDetailPage() {
   const [availableTags, setAvailableTags] = useState<string[]>(AVAILABLE_TAGS);
   const [editDecsTerms, setEditDecsTerms] = useState<string[]>([]);
   const [togglingAnulada, setTogglingAnulada] = useState(false);
+  const [aiDecsLoading, setAiDecsLoading] = useState(false);
+  const [aiDecsError, setAiDecsError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const safeEditAreas = editAreasConhecimento ?? [];
@@ -367,6 +377,32 @@ export default function QuestionDetailPage() {
     } catch (error) {
       console.error('Erro ao excluir questão:', error);
       alert('Erro ao excluir a questão');
+    }
+  };
+
+  const handleGenerateAiDecs = async () => {
+    if (!question) return;
+    setAiDecsLoading(true);
+    setAiDecsError(null);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const res = await fetch(`/api/questions/${questionId}/decs-ai`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setAiDecsError(data.error || 'Erro ao gerar descritores IA.');
+        return;
+      }
+      setQuestion((prev) =>
+        prev ? { ...prev, ai_decs_descriptors: data.descriptors } : prev
+      );
+    } catch {
+      setAiDecsError('Erro ao conectar com o servidor.');
+    } finally {
+      setAiDecsLoading(false);
     }
   };
 
@@ -1044,6 +1080,52 @@ export default function QuestionDetailPage() {
           )
         )}
       </div>
+
+      {/* Descritores DeCS gerados por IA */}
+      {isAdmin && (
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-indigo-500" />
+              <h3 className="text-lg font-semibold text-gray-800">Descritores DeCS — IA</h3>
+              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">gerado automaticamente</span>
+            </div>
+            {!isEditing && (
+              <button
+                onClick={handleGenerateAiDecs}
+                disabled={aiDecsLoading}
+                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition"
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+                {aiDecsLoading ? 'Gerando…' : 'Gerar com IA'}
+              </button>
+            )}
+          </div>
+          {aiDecsError && (
+            <p className="text-red-500 text-sm mb-2">{aiDecsError}</p>
+          )}
+          {(question.ai_decs_descriptors ?? []).length > 0 ? (
+            <div className="flex flex-wrap gap-2">
+              {(question.ai_decs_descriptors ?? []).map((d) => (
+                <span
+                  key={d.code || d.term}
+                  title={d.hierarchy_path || d.tree_ids?.join(', ')}
+                  className="inline-flex flex-col px-3 py-1.5 text-sm font-medium bg-indigo-50 text-indigo-700 rounded-full border border-indigo-200 cursor-default"
+                >
+                  <span>{d.term}</span>
+                  {d.code && (
+                    <span className="text-xs text-indigo-400 leading-tight">{d.code}</span>
+                  )}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-400 italic text-sm">
+              {aiDecsLoading ? 'Aguardando resposta da IA…' : 'Nenhum descritor IA gerado. Clique em "Gerar com IA" para classificar esta questão.'}
+            </p>
+          )}
+        </div>
+      )}
 
       {/* Botões de ação quando editando */}
       {isEditing && (

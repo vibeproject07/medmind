@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Plus, Edit, Trash2, X, Image as ImageIcon, Filter, ChevronDown, ChevronUp, ClipboardList, Ban, AlertTriangle } from 'lucide-react';
+import { Plus, Edit, Trash2, X, Image as ImageIcon, Filter, ChevronDown, ChevronUp, ClipboardList, Ban, AlertTriangle, Sparkles } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import DeCSAutocomplete from '@/components/Common/DeCSAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
@@ -71,8 +71,16 @@ interface Question {
   exam_region?: string | null;
   anulada?: boolean;
   decs_terms?: string[];
+  ai_decs_descriptors?: AiDeCSRecord[];
   created_at: string;
   updated_at: string;
+}
+
+interface AiDeCSRecord {
+  term: string;
+  code: string;
+  tree_ids: string[];
+  hierarchy_path: string;
 }
 
 export default function QuestionsPage() {
@@ -118,6 +126,8 @@ export default function QuestionsPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [formLoading, setFormLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [aiDecsLoadingIds, setAiDecsLoadingIds] = useState<Set<number>>(new Set());
+  const [aiDecsErrors, setAiDecsErrors] = useState<Record<number, string>>({});
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({
     exam_year: '',
@@ -435,6 +445,33 @@ export default function QuestionsPage() {
       }
     } catch (error) {
       setMessage({ type: 'error', text: 'Erro ao excluir a questão. Tente novamente.' });
+    }
+  };
+
+  const handleGenerateAiDecs = async (questionId: number) => {
+    setAiDecsLoadingIds((prev) => new Set(prev).add(questionId));
+    setAiDecsErrors((prev) => { const next = { ...prev }; delete next[questionId]; return next; });
+    try {
+      const token = getToken();
+      if (!token) return;
+      const res = await fetch(`/api/questions/${questionId}/decs-ai`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setAiDecsErrors((prev) => ({ ...prev, [questionId]: data.error || 'Erro ao gerar descritores.' }));
+        return;
+      }
+      setQuestions((prev) =>
+        prev.map((q) =>
+          q.id === questionId ? { ...q, ai_decs_descriptors: data.descriptors } : q
+        )
+      );
+    } catch {
+      setAiDecsErrors((prev) => ({ ...prev, [questionId]: 'Erro ao conectar com o servidor.' }));
+    } finally {
+      setAiDecsLoadingIds((prev) => { const next = new Set(prev); next.delete(questionId); return next; });
     }
   };
 
@@ -840,6 +877,44 @@ export default function QuestionsPage() {
                 <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
                   <p className="text-sm font-semibold text-blue-800 mb-1">Explicação:</p>
                   <p className="text-sm text-blue-700">{question.explanation}</p>
+                </div>
+              )}
+
+              {/* Descritores DeCS IA — apenas admin */}
+              {isAdmin && (
+                <div className="mt-4 pt-4 border-t border-gray-100">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles className="h-3.5 w-3.5 text-indigo-400" />
+                    <span className="text-xs font-medium text-gray-500">Descritores DeCS — IA</span>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); handleGenerateAiDecs(question.id); }}
+                      disabled={aiDecsLoadingIds.has(question.id)}
+                      className="ml-auto flex items-center gap-1 px-2 py-1 text-xs font-medium bg-indigo-50 text-indigo-600 border border-indigo-200 rounded-lg hover:bg-indigo-100 disabled:opacity-50 transition"
+                    >
+                      <Sparkles className="h-3 w-3" />
+                      {aiDecsLoadingIds.has(question.id) ? 'Gerando…' : 'Gerar com IA'}
+                    </button>
+                  </div>
+                  {aiDecsErrors[question.id] && (
+                    <p className="text-xs text-red-500 mb-1">{aiDecsErrors[question.id]}</p>
+                  )}
+                  {(question.ai_decs_descriptors ?? []).length > 0 ? (
+                    <div className="flex flex-wrap gap-1">
+                      {(question.ai_decs_descriptors ?? []).map((d) => (
+                        <span
+                          key={d.code || d.term}
+                          title={d.hierarchy_path}
+                          className="inline-block px-2 py-0.5 text-xs font-medium bg-indigo-50 text-indigo-700 rounded-full border border-indigo-200"
+                        >
+                          {d.term}
+                        </span>
+                      ))}
+                    </div>
+                  ) : (
+                    !aiDecsLoadingIds.has(question.id) && (
+                      <p className="text-xs text-gray-400 italic">Nenhum descritor IA gerado.</p>
+                    )
+                  )}
                 </div>
               )}
 

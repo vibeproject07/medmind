@@ -25,6 +25,8 @@ export async function GET(
       return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
     }
 
+    await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_decs_descriptors TEXT`);
+
     const question = (await query('SELECT * FROM questions WHERE id = $1', [params.id])).rows[0];
 
     if (!question) {
@@ -38,6 +40,7 @@ export async function GET(
       areas_conhecimento: question.areas_conhecimento ? JSON.parse(question.areas_conhecimento) : [],
       assuntos: question.assuntos ? JSON.parse(question.assuntos) : [],
       decs_terms: question.decs_terms ? JSON.parse(question.decs_terms) : [],
+      ai_decs_descriptors: question.ai_decs_descriptors ? JSON.parse(question.ai_decs_descriptors) : [],
     });
   } catch (error) {
     console.error('Erro ao buscar questão:', error);
@@ -121,6 +124,7 @@ export async function PUT(
       areas_conhecimento: updatedQuestion.areas_conhecimento ? JSON.parse(updatedQuestion.areas_conhecimento) : [],
       assuntos: updatedQuestion.assuntos ? JSON.parse(updatedQuestion.assuntos) : [],
       decs_terms: updatedQuestion.decs_terms ? JSON.parse(updatedQuestion.decs_terms) : [],
+      ai_decs_descriptors: updatedQuestion.ai_decs_descriptors ? JSON.parse(updatedQuestion.ai_decs_descriptors) : [],
     });
   } catch (error) {
     console.error('Erro ao atualizar questão:', error);

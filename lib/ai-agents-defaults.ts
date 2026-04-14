@@ -95,6 +95,27 @@ Organize em tópicos por slide ou por tema. Responda em português (pt-BR) e for
     max_output_tokens: 4096,
   },
   {
+    key: 'decs_classifier',
+    name: 'Classificador DeCS',
+    description: 'Lê o enunciado de uma questão e identifica os conceitos médicos chave para busca na API DeCS/MeSH.',
+    system_prompt: `Você é um especialista em classificação de conteúdo médico e no vocabulário controlado DeCS (Descritores em Ciências da Saúde) / MeSH.
+
+Dado o enunciado e as alternativas de uma questão médica, identifique de 3 a 5 conceitos médicos chave que representam os temas principais da questão.
+
+Regras:
+- Use os nomes técnicos padronizados em português (pt-BR), como aparecem no vocabulário DeCS/MeSH.
+- Prefira termos mais específicos e menos genéricos (ex: "Insuficiência Cardíaca" ao invés de "Coração").
+- Inclua condições clínicas, medicamentos relevantes, exames diagnósticos e procedimentos quando aplicável.
+- Não inclua termos relacionados ao formato da questão (ex: "múltipla escolha", "Residência Médica").
+- Retorne SOMENTE um array JSON de strings, sem mais nenhum texto, markdown ou explicação.
+
+Exemplo de resposta válida:
+["Diabetes Mellitus Tipo 2","Insulina","Hemoglobina Glicada","Nefropatia Diabética"]`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.1,
+    max_output_tokens: 512,
+  },
+  {
     key: 'transform_base',
     name: 'Agente Base de Transformação',
     description: 'Prompt de sistema base usado para todas as transformações de transcrição. Envolve o texto de qualquer agente de transformação.',
