@@ -2,6 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/jwt';
 import { listAgents, createAgent } from '@/lib/ai-agents';
 
+const VALID_MODELS = new Set([
+  'gemini-2.5-flash',
+  'gemini-2.0-flash',
+  'gemini-1.5-flash',
+  'gemini-1.5-pro',
+]);
+
 function getToken(req: NextRequest): string | null {
   const authHeader = req.headers.get('authorization');
   if (authHeader?.startsWith('Bearer ')) return authHeader.slice(7);
@@ -68,13 +75,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'A chave gerada é inválida. Use apenas letras, números e underscores.' }, { status: 400 });
   }
 
+  const modelValue = typeof model === 'string' && VALID_MODELS.has(model) ? model : 'gemini-2.5-flash';
+
   try {
     const { agent, conflict } = await createAgent({
       key: keySlug,
       name: (name as string).trim(),
       description: typeof description === 'string' ? description.trim() : '',
       system_prompt: (system_prompt as string).trim(),
-      model: typeof model === 'string' ? model : 'gemini-2.5-flash',
+      model: modelValue,
       temperature: tempValue,
       max_output_tokens: tokensValue,
     });
