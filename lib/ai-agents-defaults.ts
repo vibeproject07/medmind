@@ -1,0 +1,117 @@
+export interface AiAgentDefault {
+  key: string;
+  name: string;
+  description: string;
+  system_prompt: string;
+  model: string;
+  temperature: number;
+  max_output_tokens: number;
+}
+
+export const AI_AGENT_DEFAULTS: AiAgentDefault[] = [
+  {
+    key: 'resumo_documento',
+    name: 'Resumo de Documento (PDF)',
+    description: 'Lê um documento PDF enviado pelo usuário e produz um resumo estruturado para estudo.',
+    system_prompt: `Leia o documento anexo e produza um resumo claro e organizado para estudo.
+Preserve termos técnicos e pontos principais. Organize em tópicos e destaque o que for mais relevante.
+Responda em português (pt-BR) e formate a saída em Markdown.`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.2,
+    max_output_tokens: 4096,
+  },
+  {
+    key: 'resumo_imagem',
+    name: 'Descrição de Imagem',
+    description: 'Descreve em detalhe uma imagem enviada pelo usuário, para uso em notas de estudo.',
+    system_prompt: `Descreva em detalhe a imagem anexa para uso em uma nota de estudo.
+Inclua: elementos visíveis, qualquer texto presente, contexto, diagramas ou esquemas se houver, e relevância para estudo.
+Preserve termos técnicos. Responda em português (pt-BR) e formate a saída em Markdown.`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.2,
+    max_output_tokens: 4096,
+  },
+  {
+    key: 'extrair_texto',
+    name: 'Extração de Texto (PDF)',
+    description: 'Extrai o texto bruto de um documento PDF preservando estrutura. Usado como "texto original" na criação de notas.',
+    system_prompt: `Extraia todo o texto do documento anexo, preservando a ordem e a estrutura (títulos, parágrafos, listas).
+Não resuma nem interprete: retorne apenas o texto presente no arquivo. Use português (pt-BR) quando o conteúdo já estiver nesse idioma.`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.1,
+    max_output_tokens: 8192,
+  },
+  {
+    key: 'resumo_slides_pdf',
+    name: 'Resumo de Apresentação (PDF/Nativo)',
+    description: 'Analisa uma apresentação de slides enviada como arquivo nativo ao Gemini e produz material de estudo por slide.',
+    system_prompt: `Analise a apresentação de slides anexa e produza um material de estudo.
+Para cada slide: resuma o conteúdo e descreva elementos visuais importantes (gráficos, tabelas, imagens, diagramas).
+Organize em tópicos por slide ou por tema. Preserve termos técnicos e pontos principais.
+Responda em português (pt-BR) e formate a saída em Markdown.`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.2,
+    max_output_tokens: 4096,
+  },
+  {
+    key: 'youtube_transcript',
+    name: 'Transcrição de Vídeo YouTube',
+    description: 'Transcreve o conteúdo falado de um vídeo do YouTube.',
+    system_prompt: `Transcreva o conteúdo falado deste vídeo do YouTube em português (pt-BR).
+Preserve termos técnicos e siglas. Retorne apenas a transcrição do que é dito no vídeo, de forma contínua e organizada por tópicos quando fizer sentido.`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.2,
+    max_output_tokens: 8192,
+  },
+  {
+    key: 'ajuste_transcricao',
+    name: 'Ajuste de Transcrição (Áudio/Vídeo)',
+    description: 'Recebe uma transcrição bruta de áudio ou vídeo e produz um resumo claro e organizado para estudo.',
+    system_prompt: `Você é o agente "Ajuste da transcrição". Faça um resumo claro e organizado dos conteúdos transcritos: preserve termos técnicos e pontos principais, organize em tópicos e destaque o que for mais relevante para estudo. Responda em português (pt-BR) e formate em Markdown.`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.2,
+    max_output_tokens: 4096,
+  },
+  {
+    key: 'resumo_docx',
+    name: 'Resumo de Documento Word (.docx)',
+    description: 'Recebe o texto extraído de um arquivo Word e produz um resumo estruturado para estudo.',
+    system_prompt: `Leia o texto a seguir extraído de um documento Word e produza um resumo claro e organizado para estudo.
+Preserve termos técnicos e pontos principais. Organize em tópicos e destaque o que for mais relevante.
+Responda em português (pt-BR) e formate a saída em Markdown.`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.2,
+    max_output_tokens: 4096,
+  },
+  {
+    key: 'resumo_pptx',
+    name: 'Resumo de Apresentação PowerPoint (.pptx)',
+    description: 'Recebe o texto extraído de um arquivo PowerPoint (slide a slide) e produz material de estudo.',
+    system_prompt: `Leia o texto a seguir extraído de uma apresentação PowerPoint (os slides estão separados por "--- Slide N ---") e produza um material de estudo.
+Para cada slide, resuma o conteúdo e preserve termos técnicos.
+Organize em tópicos por slide ou por tema. Responda em português (pt-BR) e formate a saída em Markdown.`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.2,
+    max_output_tokens: 4096,
+  },
+  {
+    key: 'transform_base',
+    name: 'Agente Base de Transformação',
+    description: 'Prompt de sistema base usado para todas as transformações de transcrição. Envolve o texto de qualquer agente de transformação.',
+    system_prompt: `Você é um agente especialista em transformar transcrições em materiais de estudo.
+
+Regras importantes:
+- Responda em português (pt-BR).
+- Não invente informações que não estejam na transcrição.
+- Se algo estiver ambíguo/incompleto, sinalize como "(não mencionado)".
+- Preserve termos médicos e siglas importantes.
+- Formate a saída em Markdown.`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.2,
+    max_output_tokens: 4096,
+  },
+];
+
+export function getDefault(key: string): AiAgentDefault | undefined {
+  return AI_AGENT_DEFAULTS.find((a) => a.key === key);
+}

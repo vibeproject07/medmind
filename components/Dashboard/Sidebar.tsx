@@ -13,7 +13,8 @@ import {
   HelpCircle,
   ClipboardList,
   BookOpen,
-  X
+  X,
+  FlaskConical,
 } from 'lucide-react';
 import { useSidebar } from '@/contexts/SidebarContext';
 
@@ -57,10 +58,8 @@ export default function Sidebar() {
   const adminMenuItems = [
     { href: '/dashboard/users', icon: Users, label: 'Usuários', roles: ['admin', 'manager'] as UserRole[] },
     { href: '/dashboard/settings', icon: Settings, label: 'Configurações', roles: ['admin', 'manager'] as UserRole[] },
+    { href: '/dashboard/agentes-editor', icon: FlaskConical, label: 'Editor de Agentes', roles: ['admin'] as UserRole[] },
   ];
-
-  // Menu apenas para admin (gerenciamento de questões)
-  const adminOnlyMenuItems: any[] = [];
 
   // Filtrar menu items baseado no role do usuário
   const getMenuItems = () => {
