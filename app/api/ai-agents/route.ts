@@ -54,14 +54,18 @@ export async function POST(req: NextRequest) {
 
   const keySlug = (key as string).trim().toLowerCase().replace(/[^a-z0-9_]/g, '_');
 
-  const tempValue = typeof temperature === 'number' ? temperature : 0.2;
-  const tokensValue = typeof max_output_tokens === 'number' ? max_output_tokens : 4096;
+  const tempValue = Number.isFinite(temperature) ? (temperature as number) : 0.2;
+  const tokensValue = Number.isFinite(max_output_tokens) ? Math.round(max_output_tokens as number) : 4096;
 
   if (tempValue < 0 || tempValue > 1) {
     return NextResponse.json({ error: 'Temperatura deve estar entre 0 e 1.' }, { status: 400 });
   }
   if (tokensValue < 256 || tokensValue > 16384) {
     return NextResponse.json({ error: 'Máximo de tokens deve estar entre 256 e 16384.' }, { status: 400 });
+  }
+
+  if (!keySlug) {
+    return NextResponse.json({ error: 'A chave gerada é inválida. Use apenas letras, números e underscores.' }, { status: 400 });
   }
 
   try {

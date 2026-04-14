@@ -39,10 +39,10 @@ export async function PUT(req: NextRequest, { params }: { params: { key: string 
 
   const { name, description, system_prompt, model, temperature, max_output_tokens } = body as Record<string, unknown>;
 
-  if (typeof temperature === 'number' && (temperature < 0 || temperature > 1)) {
+  if (Number.isFinite(temperature) && ((temperature as number) < 0 || (temperature as number) > 1)) {
     return NextResponse.json({ error: 'Temperatura deve estar entre 0 e 1.' }, { status: 400 });
   }
-  if (typeof max_output_tokens === 'number' && (max_output_tokens < 256 || max_output_tokens > 16384)) {
+  if (Number.isFinite(max_output_tokens) && ((max_output_tokens as number) < 256 || (max_output_tokens as number) > 16384)) {
     return NextResponse.json({ error: 'Máximo de tokens deve estar entre 256 e 16384.' }, { status: 400 });
   }
 
