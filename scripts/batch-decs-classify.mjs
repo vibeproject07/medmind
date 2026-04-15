@@ -1,5 +1,10 @@
 /**
- * Batch DeCS Classifier — processes 100 questions using Gemini + DeCS API
+ * Batch DeCS Classifier — 3-layer quality pipeline
+ *
+ *   Layer 1: Multi-candidate DeCS search + word-Jaccard similarity ranking
+ *   Layer 2: Category filter (reject B-tree descriptors without biomed context)
+ *   Layer 3: Gemini validation (one extra pass to drop false positives)
+ *
  * Run: node scripts/batch-decs-classify.mjs
  */
 
@@ -31,25 +36,42 @@ if (!DECS_KEY)   throw new Error('DECS_API_KEY not set');
 if (!DB_URL)     throw new Error('DATABASE_URL not set');
 
 // ── Config ───────────────────────────────────────────────────────────────────
-const CONCURRENCY  = 5;   // parallel questions at a time
-const LIMIT        = 100; // total questions to process
-const OUTPUT_FILE  = 'decs_classification_results.json';
-const GEMINI_MODEL = 'gemini-2.5-flash';
-const DECS_BASE    = 'https://api.bvsalud.org/decs/v2';
+const CONCURRENCY    = 5;
+const LIMIT          = 100;
+const OUTPUT_FILE    = 'decs_classification_results.json';
+const GEMINI_MODEL   = 'gemini-2.5-flash';
+const DECS_BASE      = 'https://api.bvsalud.org/decs/v2';
+const MAX_CANDIDATES = 5;   // DeCS records fetched per search term
+const MIN_SIMILARITY = 0.15; // minimum word-Jaccard to accept a DeCS result
 
-const SYSTEM_PROMPT = `Você é um especialista em classificação de conteúdo médico e no vocabulário controlado DeCS (Descritores em Ciências da Saúde) / MeSH.
+// ── Prompts ──────────────────────────────────────────────────────────────────
+const EXTRACTION_PROMPT = `Você é um especialista em classificação de conteúdo médico e no vocabulário controlado DeCS (Descritores em Ciências da Saúde) / MeSH.
 
-Dado o enunciado e as alternativas de uma questão médica, identifique de 3 a 5 conceitos médicos chave que representam os temas principais da questão.
+Dado o enunciado e as alternativas de uma questão médica, identifique de 3 a 6 conceitos médicos chave que representam os temas principais da questão.
 
-Regras:
-- Use os nomes técnicos padronizados em português (pt-BR), como aparecem no vocabulário DeCS/MeSH.
-- Prefira termos mais específicos e menos genéricos (ex: "Insuficiência Cardíaca" ao invés de "Coração").
-- Inclua condições clínicas, medicamentos relevantes, exames diagnósticos e procedimentos quando aplicável.
-- Não inclua termos relacionados ao formato da questão (ex: "múltipla escolha", "Residência Médica").
-- Retorne SOMENTE um array JSON de strings, sem mais nenhum texto, markdown ou explicação.
+Regras IMPORTANTES:
+- Use EXCLUSIVAMENTE termos que existam como descritores no vocabulário DeCS/MeSH em português (pt-BR).
+- Prefira termos específicos: "Insuficiência Cardíaca Congestiva" em vez de "Coração".
+- Inclua: condições clínicas, fármacos, exames diagnósticos, procedimentos cirúrgicos, achados anatomopatológicos.
+- NÃO inclua: adjetivos genéricos ("crônico", "agudo"), termos epidemiológicos não-DeCS, o formato da questão.
+- NÃO combine termos em frases compostas que não existam no DeCS (ex: "síndrome inflamatória reprodutiva" não é um descritor real).
+- Retorne SOMENTE um array JSON de strings. Sem markdown, sem explicação.
 
-Exemplo de resposta válida:
-["Diabetes Mellitus Tipo 2","Insulina","Hemoglobina Glicada","Nefropatia Diabética"]`;
+Exemplo correto:
+["Diabetes Mellitus Tipo 2","Insulina","Hemoglobina A Glicada","Nefropatias Diabéticas"]`;
+
+const VALIDATION_PROMPT = `Você é um especialista em vocabulário controlado DeCS/MeSH.
+
+Dado o enunciado de uma questão médica e uma lista de descritores DeCS candidatos, filtre e mantenha APENAS os descritores CLINICAMENTE RELEVANTES para o tema central da questão.
+
+Critérios:
+- Deve representar um conceito clínico central (condição, fármaco, exame, procedimento).
+- Organismos (vírus, bactérias, animais) só são relevantes se a questão tratar de infectologia/microbiologia explicitamente.
+- Descritores de categoria não relacionada ao tema devem ser removidos.
+
+Retorne SOMENTE um array JSON com os CÓDIGOS dos descritores aprovados.
+Ex: ["292","4794"]
+Sem explicação, sem markdown.`;
 
 // ── DB ───────────────────────────────────────────────────────────────────────
 const pool = new pg.Pool({ connectionString: DB_URL });
@@ -57,49 +79,19 @@ const pool = new pg.Pool({ connectionString: DB_URL });
 async function fetchQuestions() {
   const res = await pool.query(
     `SELECT id, statement, option_a, option_b, option_c, option_d, option_e
-     FROM questions
-     ORDER BY id ASC
-     LIMIT $1`,
+     FROM questions ORDER BY id ASC LIMIT $1`,
     [LIMIT]
   );
   return res.rows;
 }
 
-// ── Gemini ───────────────────────────────────────────────────────────────────
-async function callGemini(questionText) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`;
-  const body = {
-    system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-    contents: [{ role: 'user', parts: [{ text: questionText }] }],
-    generationConfig: { temperature: 0.1, maxOutputTokens: 512 },
-  };
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Gemini error ${res.status}: ${err}`);
-  }
-  const data = await res.json();
-  const text = data?.candidates?.[0]?.content?.parts?.map(p => p.text).join('') ?? '';
-  return text.trim();
-}
-
-function parseSearchTerms(raw) {
-  try {
-    const cleaned = raw.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
-    const parsed = JSON.parse(cleaned);
-    if (Array.isArray(parsed)) return parsed.filter(t => typeof t === 'string' && t.trim()).slice(0, 5);
-  } catch {}
-  // fallback: extract quoted strings
-  const matches = raw.match(/"([^"]+)"/g);
-  if (matches) return matches.map(m => m.replace(/"/g, '').trim()).filter(Boolean).slice(0, 5);
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function toArray(v) {
+  if (Array.isArray(v)) return v;
+  if (v != null) return [v];
   return [];
 }
 
-// ── DeCS API ─────────────────────────────────────────────────────────────────
 const CATEGORY_LABELS = {
   A: 'Anatomia', B: 'Organismos', C: 'Doenças',
   D: 'Compostos Químicos e Drogas', E: 'Técnicas e Equipamentos Analíticos',
@@ -107,49 +99,125 @@ const CATEGORY_LABELS = {
   SP: 'Saúde Pública', VS: 'Vigilância Sanitária',
 };
 
-function toArray(v) {
-  if (Array.isArray(v)) return v;
-  if (v != null) return [v];
-  return [];
+function treeCategory(treeId) {
+  return treeId.split('.')[0].replace(/[0-9]/g, '');
 }
 
 function buildHierarchyPath(treeId) {
   if (!treeId) return '';
-  const topCode = treeId.split('.')[0].replace(/[0-9]/g, '');
-  const label = CATEGORY_LABELS[topCode] ?? topCode;
+  const cat = treeCategory(treeId);
+  const label = CATEGORY_LABELS[cat] ?? cat;
   return treeId.split('.').length <= 1 ? label : `${label} › ${treeId}`;
 }
 
-async function searchDeCS(term) {
+// ── Layer 1: Word-Jaccard similarity ─────────────────────────────────────────
+function wordJaccard(a, b) {
+  const tokenise = s => new Set(
+    s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(/\W+/).filter(w => w.length > 3)
+  );
+  const A = tokenise(a); const B = tokenise(b);
+  let inter = 0;
+  A.forEach(w => { if (B.has(w)) inter++; });
+  const union = new Set([...A, ...B]).size;
+  return union === 0 ? 0 : inter / union;
+}
+
+// ── Layer 2: Category filter ─────────────────────────────────────────────────
+const BIO_RE = /\b(vírus|virus|bactéria|bacteria|bacilo|fungo|fung|parasita|parasit|microbiol|infectol|viral|antibiótic|antibiotic|vaccin|vacin|patógen|patogen|prion|rickettsia|protozoár|helmint|coccídio|tripanossom|leishman|plasmodium|schistosoma)\b/i;
+
+function isCategoryAcceptable(record, questionText) {
+  if (!record.tree_ids || record.tree_ids.length === 0) return true;
+  const cats = record.tree_ids.map(treeCategory);
+  const allOrganism = cats.every(c => c === 'B');
+  if (!allOrganism) return true;
+  return BIO_RE.test(questionText);
+}
+
+// ── DeCS search (multi-candidate) ────────────────────────────────────────────
+function parseDeCSRecord(rec) {
+  const code = rec?.attr?.mfn ?? '';
+  const descriptors = toArray(rec.descriptor_list).flatMap(d => toArray(d));
+  let term = '';
+  for (const pl of ['pt-br', 'pt']) {
+    const found = descriptors.find(d => d?.attr?.lang === pl);
+    if (found && typeof found.descriptor === 'string' && found.descriptor.trim()) {
+      term = found.descriptor.trim(); break;
+    }
+  }
+  if (!term) return null;
+  const treeList = toArray(rec.tree_id_list).flatMap(t => toArray(t));
+  const tree_ids = treeList.map(t => t?.tree_id?.trim()).filter(Boolean);
+  return { term, code, tree_ids, hierarchy_path: buildHierarchyPath(tree_ids[0] ?? '') };
+}
+
+async function searchDeCSCandidates(searchTerm) {
   try {
-    const url = `${DECS_BASE}/search-by-words?words=${encodeURIComponent(term)}&lang=pt&format=json`;
+    const url = `${DECS_BASE}/search-by-words?words=${encodeURIComponent(searchTerm)}&lang=pt&format=json`;
     const res = await fetch(url, { headers: { apikey: DECS_KEY } });
-    if (!res.ok) return null;
+    if (!res.ok) return [];
     const data = await res.json();
     const objects = data?.objects;
-    if (!Array.isArray(objects) || objects.length === 0) return null;
+    if (!Array.isArray(objects) || objects.length === 0) return [];
     const resp = objects[0]?.decsws_response?.record_list;
-    if (!resp) return null;
-    const rawRecords = toArray(resp.record);
-    if (rawRecords.length === 0) return null;
-    const rec = rawRecords[0];
-    const code = rec?.attr?.mfn ?? '';
-    const descriptors = toArray(rec.descriptor_list).flatMap(d => toArray(d));
-    let term_ = '';
-    for (const pl of ['pt-br', 'pt']) {
-      const found = descriptors.find(d => d?.attr?.lang === pl);
-      if (found && typeof found.descriptor === 'string' && found.descriptor.trim()) {
-        term_ = found.descriptor.trim();
-        break;
-      }
-    }
-    if (!term_) return null;
-    const treeList = toArray(rec.tree_id_list).flatMap(t => toArray(t));
-    const tree_ids = treeList.map(t => t?.tree_id?.trim()).filter(Boolean);
-    return { term: term_, code, tree_ids, hierarchy_path: buildHierarchyPath(tree_ids[0] ?? '') };
-  } catch {
-    return null;
-  }
+    if (!resp) return [];
+    return toArray(resp.record).slice(0, MAX_CANDIDATES).map(parseDeCSRecord).filter(Boolean);
+  } catch { return []; }
+}
+
+async function findBestDeCSMatch(searchTerm, questionText) {
+  const candidates = await searchDeCSCandidates(searchTerm);
+  const scored = candidates
+    .map(c => ({ ...c, similarity: wordJaccard(searchTerm, c.term) }))
+    .filter(c => c.similarity >= MIN_SIMILARITY)
+    .filter(c => isCategoryAcceptable(c, questionText))
+    .sort((a, b) => b.similarity - a.similarity);
+  return scored.length > 0 ? scored[0] : null;
+}
+
+// ── Gemini helpers ────────────────────────────────────────────────────────────
+async function callGemini(systemPrompt, userMessage, maxTokens = 512) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`;
+  const body = {
+    system_instruction: { parts: [{ text: systemPrompt }] },
+    contents: [{ role: 'user', parts: [{ text: userMessage }] }],
+    generationConfig: { temperature: 0.1, maxOutputTokens: maxTokens },
+  };
+  const res = await fetch(url, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
+  });
+  if (!res.ok) { const err = await res.text(); throw new Error(`Gemini ${res.status}: ${err}`); }
+  const data = await res.json();
+  return (data?.candidates?.[0]?.content?.parts?.map(p => p.text).join('') ?? '').trim();
+}
+
+function parseSearchTerms(raw) {
+  try {
+    const cleaned = raw.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
+    const parsed = JSON.parse(cleaned);
+    if (Array.isArray(parsed)) return parsed.filter(t => typeof t === 'string' && t.trim()).slice(0, 6);
+  } catch {}
+  const matches = raw.match(/"([^"]+)"/g);
+  if (matches) return matches.map(m => m.replace(/"/g, '').trim()).filter(Boolean).slice(0, 6);
+  return [];
+}
+
+// ── Layer 3: Gemini validation ────────────────────────────────────────────────
+async function validateDescriptors(descriptors, questionText) {
+  if (descriptors.length === 0) return [];
+  const candidateList = descriptors.map(d => ({
+    code: d.code, term: d.term,
+    categoria: (buildHierarchyPath(d.tree_ids[0] ?? '')).split(' › ')[0],
+  }));
+  const userMessage = ['Questão:', questionText, '', 'Candidatos:', JSON.stringify(candidateList, null, 2)].join('\n');
+  try {
+    const raw = await callGemini(VALIDATION_PROMPT, userMessage, 256);
+    const cleaned = raw.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
+    const approved = JSON.parse(cleaned);
+    if (!Array.isArray(approved)) return descriptors;
+    const approvedSet = new Set(approved.map(String));
+    const filtered = descriptors.filter(d => approvedSet.has(d.code));
+    return filtered.length > 0 ? filtered : descriptors; // fail-open
+  } catch { return descriptors; }
 }
 
 // ── Process one question ──────────────────────────────────────────────────────
@@ -164,48 +232,58 @@ async function processQuestion(q, idx, total) {
   ].filter(Boolean).join('\n');
 
   let descriptors = [];
+  let stats = {};
   let error = null;
 
   try {
-    const rawText = await callGemini(questionText);
+    // Step 1: extract search terms
+    const rawText = await callGemini(EXTRACTION_PROMPT, questionText);
     const searchTerms = parseSearchTerms(rawText);
 
     if (searchTerms.length === 0) {
       error = 'No search terms extracted';
     } else {
-      const results = await Promise.allSettled(searchTerms.map(t => searchDeCS(t)));
+      // Step 2: multi-candidate search + category filter
       const seen = new Set();
-      for (const r of results) {
-        if (r.status === 'fulfilled' && r.value && !seen.has(r.value.code)) {
-          seen.add(r.value.code);
-          descriptors.push(r.value);
-        }
-      }
-    }
-  } catch (e) {
-    error = e.message;
-  }
+      const afterSearch = [];
+      await Promise.allSettled(searchTerms.map(async term => {
+        const match = await findBestDeCSMatch(term, questionText);
+        if (match && !seen.has(match.code)) { seen.add(match.code); afterSearch.push(match); }
+      }));
 
-  const status = error ? '✗' : `✓ (${descriptors.length} descritores)`;
-  console.log(`[${idx + 1}/${total}] Q${q.id} ${status}${error ? ' — ' + error : ''}`);
+      // Step 3: Gemini validation
+      const afterValidation = await validateDescriptors(afterSearch, questionText);
+      descriptors = afterValidation.map(({ similarity: _s, ...rest }) => rest);
+
+      stats = {
+        terms_sent: searchTerms.length,
+        after_search: afterSearch.length,
+        after_validation: descriptors.length,
+        dropped_filter: searchTerms.length - afterSearch.length,
+        dropped_gemini: afterSearch.length - descriptors.length,
+      };
+    }
+  } catch (e) { error = e.message; }
+
+  const status = error
+    ? `✗ — ${error}`
+    : `✓ ${descriptors.length} desc (−${stats.dropped_filter ?? 0} filtro, −${stats.dropped_gemini ?? 0} gemini)`;
+  console.log(`[${String(idx + 1).padStart(3)}/${total}] Q${q.id} ${status}`);
 
   return { id_question: q.id, ai_decs_descriptors: descriptors, error };
 }
 
 // ── Main ─────────────────────────────────────────────────────────────────────
 async function main() {
-  console.log(`\n🔬 MedMind — Batch DeCS Classifier`);
-  console.log(`Processando ${LIMIT} questões com concorrência ${CONCURRENCY}\n`);
+  console.log(`\n🔬 MedMind — Batch DeCS Classifier v2 (3-layer pipeline)`);
+  console.log(`Processando ${LIMIT} questões · concorrência ${CONCURRENCY}\n`);
 
-  // Ensure column exists
   await pool.query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_decs_descriptors TEXT`);
-
   const questions = await fetchQuestions();
   console.log(`Questões carregadas: ${questions.length}\n`);
 
   const results = [];
 
-  // Process in batches of CONCURRENCY
   for (let i = 0; i < questions.length; i += CONCURRENCY) {
     const batch = questions.slice(i, i + CONCURRENCY);
     const batchResults = await Promise.all(
@@ -213,36 +291,30 @@ async function main() {
     );
     results.push(...batchResults);
 
-    // Save to DB for each question in the batch
     for (const r of batchResults) {
-      if (r.ai_decs_descriptors.length > 0) {
-        await pool.query(
-          `UPDATE questions SET ai_decs_descriptors = $1, updated_at = NOW() WHERE id = $2`,
-          [JSON.stringify(r.ai_decs_descriptors), r.id_question]
-        );
-      }
+      await pool.query(
+        `UPDATE questions SET ai_decs_descriptors = $1, updated_at = NOW() WHERE id = $2`,
+        [JSON.stringify(r.ai_decs_descriptors), r.id_question]
+      );
     }
 
-    // Small pause between batches to avoid rate limits
     if (i + CONCURRENCY < questions.length) {
-      await new Promise(res => setTimeout(res, 300));
+      await new Promise(res => setTimeout(res, 400));
     }
   }
 
-  // Build output JSON (clean format without error field)
-  const output = results.map(r => ({
-    id_question: r.id_question,
-    ai_decs_descriptors: r.ai_decs_descriptors,
-  }));
-
+  const output = results.map(r => ({ id_question: r.id_question, ai_decs_descriptors: r.ai_decs_descriptors }));
   writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2), 'utf8');
 
-  const succeeded = results.filter(r => r.ai_decs_descriptors.length > 0).length;
-  const failed = results.filter(r => r.error).length;
+  const withDesc  = results.filter(r => r.ai_decs_descriptors.length > 0).length;
+  const failed    = results.filter(r => r.error).length;
+  const totalDesc = results.flatMap(r => r.ai_decs_descriptors).length;
 
   console.log(`\n✅ Concluído!`);
-  console.log(`   Sucesso: ${succeeded} / ${results.length}`);
-  console.log(`   Falhas:  ${failed}`);
+  console.log(`   Com descritores: ${withDesc} / ${results.length}`);
+  console.log(`   Falhas API:      ${failed}`);
+  console.log(`   Total descritores salvos: ${totalDesc}`);
+  console.log(`   Média por questão: ${(totalDesc / (withDesc || 1)).toFixed(2)}`);
   console.log(`   Arquivo: ${OUTPUT_FILE}\n`);
 
   await pool.end();

@@ -100,17 +100,19 @@ Organize em tópicos por slide ou por tema. Responda em português (pt-BR) e for
     description: 'Lê o enunciado de uma questão e identifica os conceitos médicos chave para busca na API DeCS/MeSH.',
     system_prompt: `Você é um especialista em classificação de conteúdo médico e no vocabulário controlado DeCS (Descritores em Ciências da Saúde) / MeSH.
 
-Dado o enunciado e as alternativas de uma questão médica, identifique de 3 a 5 conceitos médicos chave que representam os temas principais da questão.
+Dado o enunciado e as alternativas de uma questão médica, identifique de 3 a 6 conceitos médicos chave que representam os temas principais da questão.
 
-Regras:
-- Use os nomes técnicos padronizados em português (pt-BR), como aparecem no vocabulário DeCS/MeSH.
-- Prefira termos mais específicos e menos genéricos (ex: "Insuficiência Cardíaca" ao invés de "Coração").
-- Inclua condições clínicas, medicamentos relevantes, exames diagnósticos e procedimentos quando aplicável.
-- Não inclua termos relacionados ao formato da questão (ex: "múltipla escolha", "Residência Médica").
-- Retorne SOMENTE um array JSON de strings, sem mais nenhum texto, markdown ou explicação.
+Regras IMPORTANTES:
+- Use EXCLUSIVAMENTE termos que existam como descritores no vocabulário DeCS/MeSH em português (pt-BR).
+- Prefira termos específicos: "Insuficiência Cardíaca Congestiva" em vez de "Coração".
+- Inclua: condições clínicas, fármacos, exames diagnósticos, procedimentos cirúrgicos, achados anatomopatológicos.
+- NÃO inclua: adjetivos genéricos ("crônico", "agudo"), termos epidemiológicos não-DeCS, o formato da questão.
+- NÃO combine termos em frases compostas que não existam no DeCS (ex: "síndrome inflamatória reprodutiva" não é um descritor real).
+- Retorne SOMENTE um array JSON de strings. Sem markdown, sem explicação.
 
-Exemplo de resposta válida:
-["Diabetes Mellitus Tipo 2","Insulina","Hemoglobina Glicada","Nefropatia Diabética"]`,
+Exemplos corretos:
+["Diabetes Mellitus Tipo 2","Insulina","Hemoglobina A Glicada","Nefropatias Diabéticas"]
+["Doença Inflamatória Pélvica","Gravidez Ectópica","Obstrução das Tubas Uterinas","Infertilidade Feminina"]`,
     model: 'gemini-2.5-flash',
     temperature: 0.1,
     max_output_tokens: 512,
