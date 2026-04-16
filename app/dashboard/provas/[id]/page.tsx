@@ -730,7 +730,7 @@ export default function ProvaExamPage() {
 
       {/* ── Scrollable body ───────────────────────────────────────────────── */}
       <div className="flex-1 flex overflow-hidden">
-        <div className={`overflow-y-auto p-4 sm:p-6 ${aiCommentOpen ? 'w-1/2 border-r border-gray-200' : 'w-full'}`}>
+        <div className={`flex-1 overflow-y-auto p-4 sm:p-6 transition-all duration-300 ease-out ${aiCommentOpen ? 'sm:border-r sm:border-gray-200' : ''}`}>
           {currentQuestion && (
             <div className="max-w-3xl mx-auto space-y-5">
               {currentQuestion.anulada && (
@@ -846,9 +846,14 @@ export default function ProvaExamPage() {
           )}
         </div>
 
-        {/* AI comment panel — desktop (sm+) */}
-        {aiCommentOpen && (
-          <div className="hidden sm:flex w-1/2 overflow-y-auto bg-gray-50 border-l border-gray-200 flex-col">
+        {/* AI comment panel — desktop (sm+), slides in from the right */}
+        <div
+          className={`hidden sm:flex flex-col overflow-hidden bg-gray-50 flex-shrink-0
+            transition-[width] duration-300 ease-out
+            ${aiCommentOpen ? 'w-1/2 border-l border-gray-200' : 'w-0 border-l-0'}`}
+        >
+          {/* Inner wrapper keeps the content at full panel width during animation */}
+          <div className="flex flex-col h-full w-[50vw]">
             <div className="flex items-center px-6 py-4 border-b border-gray-200 bg-white flex-shrink-0">
               <CommentPanelHeader onClose={() => setAiCommentOpen(false)} />
             </div>
@@ -856,7 +861,7 @@ export default function ProvaExamPage() {
               <CommentContent />
             </div>
           </div>
-        )}
+        </div>
       </div>
 
       {/* AI comment bottom sheet — mobile (< sm) */}
