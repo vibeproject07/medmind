@@ -189,19 +189,13 @@ function QuestionCarousel({
 
 // ── Feedback buttons (shared between desktop panel and mobile sheet) ───────────
 function CommentFeedback({
-  questionId,
-  feedbackPositivo,
   feedbackState,
   onThumbUp,
   onThumbDown,
-  onSelectMotivo,
 }: {
-  questionId: number;
-  feedbackPositivo: number;
   feedbackState: FeedbackState;
   onThumbUp: () => void;
   onThumbDown: () => void;
-  onSelectMotivo: (motivo: Motivo) => void;
 }) {
   const voted = feedbackState.status !== 'idle';
 
@@ -220,7 +214,6 @@ function CommentFeedback({
         }`}
       >
         <ThumbsUp className="w-3.5 h-3.5" />
-        {feedbackPositivo > 0 && <span>{feedbackPositivo}</span>}
       </button>
 
       {/* Thumb down */}
@@ -240,30 +233,48 @@ function CommentFeedback({
         <ThumbsDown className="w-3.5 h-3.5" />
       </button>
 
-      {/* Motivo selector (inline) */}
-      {feedbackState.status === 'selecting_motivo' && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg z-20 p-2 space-y-1">
-          <p className="text-xs font-semibold text-gray-600 px-2 pb-1">Por que não gostou?</p>
+    </div>
+  );
+}
+
+// ── Motivo modal — rendered at page level so it can have a full backdrop ──────
+function MotivoModal({
+  onSelectMotivo,
+  onCancel,
+}: {
+  onSelectMotivo: (motivo: Motivo) => void;
+  onCancel: () => void;
+}) {
+  return (
+    <div className="fixed inset-0 bg-black/50 z-[70] flex items-center justify-center p-6">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden">
+        <div className="px-6 pt-5 pb-3 border-b border-gray-100">
+          <h3 className="text-base font-bold text-gray-800">Por que não gostou?</h3>
+          <p className="text-xs text-gray-500 mt-0.5">Ajude-nos a melhorar os comentários da IA</p>
+        </div>
+        <div className="p-3 space-y-1">
           {MOTIVOS.map((m) => (
             <button
               key={m.value}
               type="button"
               onClick={() => onSelectMotivo(m.value)}
-              className="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition group"
+              className="w-full text-left px-4 py-3 rounded-xl hover:bg-red-50 active:bg-red-100 transition group"
             >
-              <p className="text-xs font-semibold text-gray-800 group-hover:text-red-700">{m.label}</p>
-              <p className="text-xs text-gray-500 group-hover:text-red-600 mt-0.5">{m.desc}</p>
+              <p className="text-sm font-semibold text-gray-800 group-hover:text-red-700">{m.label}</p>
+              <p className="text-xs text-gray-500 group-hover:text-red-500 mt-0.5 leading-relaxed">{m.desc}</p>
             </button>
           ))}
+        </div>
+        <div className="px-6 pb-5">
           <button
             type="button"
-            onClick={onThumbDown}
-            className="w-full text-center text-xs text-gray-400 hover:text-gray-600 py-1"
+            onClick={onCancel}
+            className="w-full py-2.5 rounded-xl border border-gray-200 text-sm text-gray-500 hover:bg-gray-50 transition font-medium"
           >
             Cancelar
           </button>
         </div>
-      )}
+      </div>
     </div>
   );
 }
@@ -539,7 +550,6 @@ export default function ProvaExamPage() {
   const selectedAnswer = currentQuestion ? examAnswers[currentQuestion.id] : undefined;
   const currentFeedbackState = currentQuestion ? getFeedbackState(currentQuestion.id) : { status: 'idle' as const };
   const currentCommentData = currentQuestion ? aiCommentCache[currentQuestion.id] : null;
-  const feedbackPositivo = currentCommentData?.feedback_positivo ?? 0;
   const hasComment = !aiCommentLoading && currentCommentData?.comentario != null;
 
   // ── Exit confirmation modal ───────────────────────────────────────────────
@@ -580,12 +590,9 @@ export default function ProvaExamPage() {
       <div className="flex items-center gap-1.5 relative">
         {hasComment && currentQuestion && (
           <CommentFeedback
-            questionId={currentQuestion.id}
-            feedbackPositivo={feedbackPositivo}
             feedbackState={currentFeedbackState}
             onThumbUp={() => handleThumbUp(currentQuestion.id)}
             onThumbDown={() => handleThumbDown(currentQuestion.id)}
-            onSelectMotivo={(m) => handleSelectMotivo(currentQuestion.id, m)}
           />
         )}
         <button
@@ -633,6 +640,12 @@ export default function ProvaExamPage() {
   return (
     <div className="-m-3 sm:-m-4 md:-m-3 h-full flex flex-col overflow-hidden">
       {ExitConfirmModal}
+      {currentFeedbackState.status === 'selecting_motivo' && currentQuestion && (
+        <MotivoModal
+          onSelectMotivo={(m) => handleSelectMotivo(currentQuestion.id, m)}
+          onCancel={() => handleThumbDown(currentQuestion.id)}
+        />
+      )}
 
       {/* ── Fixed topbar ─────────────────────────────────────────────────── */}
       <div className="bg-white border-b border-gray-200 px-4 sm:px-6 pt-3 pb-2 flex-shrink-0 z-10">
