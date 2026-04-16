@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import {
   ChevronLeft,
@@ -45,6 +45,132 @@ interface Prova {
   tipo: string | null;
   created_at: string;
   questions: ProvaQuestion[];
+}
+
+const GROUP_SIZE = 10;
+
+function QuestionCarousel({
+  questions,
+  examIndex,
+  setExamIndex,
+  examAnswers,
+  revealedAnswers,
+}: {
+  questions: ProvaQuestion[];
+  examIndex: number;
+  setExamIndex: (i: number) => void;
+  examAnswers: Record<number, string>;
+  revealedAnswers: Set<number>;
+}) {
+  const total = questions.length;
+  const totalGroups = Math.ceil(total / GROUP_SIZE);
+  const [groupIndex, setGroupIndex] = useState(() => Math.floor(examIndex / GROUP_SIZE));
+
+  useEffect(() => {
+    const targetGroup = Math.floor(examIndex / GROUP_SIZE);
+    if (targetGroup !== groupIndex) setGroupIndex(targetGroup);
+  }, [examIndex, groupIndex]);
+
+  const groupStart = groupIndex * GROUP_SIZE;
+  const groupEnd = Math.min(groupStart + GROUP_SIZE, total);
+  const groupQuestions = questions.slice(groupStart, groupEnd);
+
+  const prevGroup = useCallback(() => setGroupIndex((g) => Math.max(0, g - 1)), []);
+  const nextGroup = useCallback(() => setGroupIndex((g) => Math.min(totalGroups - 1, g + 1)), [totalGroups]);
+
+  return (
+    <div className="flex flex-col items-center gap-2 mt-4 select-none">
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={prevGroup}
+          disabled={groupIndex === 0}
+          className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition"
+          title="Grupo anterior"
+        >
+          <ChevronLeft className="w-4 h-4" />
+        </button>
+
+        <div className="flex items-center gap-1">
+          {groupQuestions.map((q, localIdx) => {
+            const i = groupStart + localIdx;
+            const revealed = revealedAnswers.has(q.id);
+            const answered = !!examAnswers[q.id];
+            const correct = examAnswers[q.id] === q.correct_answer;
+            const isCurrent = i === examIndex;
+
+            let ballClass = '';
+            if (revealed) {
+              ballClass = correct
+                ? 'bg-emerald-500 text-white border-emerald-500'
+                : 'bg-red-500 text-white border-red-500';
+            } else if (answered) {
+              ballClass = 'bg-blue-100 text-blue-700 border-blue-300';
+            } else {
+              ballClass = 'bg-white text-gray-600 border-gray-300 hover:border-primary-400';
+            }
+
+            return (
+              <button
+                key={q.id}
+                type="button"
+                onClick={() => setExamIndex(i)}
+                title={`Questão ${i + 1}${revealed ? (correct ? ' ✓' : ' ✗') : answered ? ' (respondida)' : ''}`}
+                className={`relative w-9 h-9 rounded-full border-2 flex items-center justify-center text-xs font-semibold transition-all duration-150 cursor-pointer
+                  ${ballClass}
+                  ${isCurrent ? 'ring-2 ring-primary-500 ring-offset-2 scale-110 shadow-md z-10' : 'hover:scale-105'}
+                `}
+              >
+                {revealed ? (
+                  correct ? <Check className="w-3.5 h-3.5" /> : <X className="w-3.5 h-3.5" />
+                ) : (
+                  i + 1
+                )}
+                {isCurrent && (
+                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-primary-500 rounded-full" />
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        <button
+          type="button"
+          onClick={nextGroup}
+          disabled={groupIndex >= totalGroups - 1}
+          className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition"
+          title="Próximo grupo"
+        >
+          <ChevronRight className="w-4 h-4" />
+        </button>
+      </div>
+
+      {totalGroups > 1 && (
+        <div className="flex items-center gap-1.5">
+          {Array.from({ length: totalGroups }).map((_, g) => (
+            <button
+              key={g}
+              type="button"
+              onClick={() => setGroupIndex(g)}
+              className={`rounded-full transition-all duration-200 ${
+                g === groupIndex
+                  ? 'w-5 h-1.5 bg-primary-500'
+                  : 'w-1.5 h-1.5 bg-gray-300 hover:bg-gray-400'
+              }`}
+              title={`Grupo ${g + 1} (questões ${g * GROUP_SIZE + 1}–${Math.min((g + 1) * GROUP_SIZE, total)})`}
+            />
+          ))}
+        </div>
+      )}
+
+      <p className="text-xs text-gray-400 font-medium">
+        Questão <span className="text-gray-600 font-semibold">{examIndex + 1}</span> de {total}
+        {totalGroups > 1 && (
+          <> · Grupo <span className="text-gray-600 font-semibold">{groupIndex + 1}</span> de {totalGroups}</>
+        )}
+      </p>
+    </div>
+  );
 }
 
 export default function ProvaExamPage() {
@@ -139,6 +265,7 @@ export default function ProvaExamPage() {
   const currentQuestion = questions[examIndex];
   const correctCount = questions.filter((q) => examAnswers[q.id] === q.correct_answer).length;
   const percent = total ? Math.round((correctCount / total) * 100) : 0;
+  const answeredCount = Object.keys(examAnswers).length;
 
   if (showResults) {
     return (
@@ -156,26 +283,32 @@ export default function ProvaExamPage() {
         </div>
         <div className="flex-1 overflow-y-auto p-6">
           <div className="max-w-3xl mx-auto space-y-6">
-            <div className="text-center bg-white rounded-lg border border-gray-200 p-8">
+            <div className="text-center bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
               <div className="text-6xl font-bold text-primary-600 mb-2">{percent}%</div>
               <p className="text-xl text-gray-700">{correctCount} de {total} questões corretas</p>
               <div className="flex justify-center gap-6 mt-4 text-sm">
-                <span className="flex items-center gap-1 text-green-600">
+                <span className="flex items-center gap-1 text-emerald-600">
                   <CheckCircle className="w-4 h-4" /> {correctCount} corretas
                 </span>
                 <span className="flex items-center gap-1 text-red-600">
                   <XCircle className="w-4 h-4" /> {total - correctCount} incorretas
                 </span>
               </div>
+              <div className="mt-6 w-full bg-gray-100 rounded-full h-2">
+                <div
+                  className="bg-emerald-500 h-2 rounded-full transition-all"
+                  style={{ width: `${percent}%` }}
+                />
+              </div>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {questions.map((q, idx) => {
                 const userAnswer = examAnswers[q.id];
                 const isCorrect = userAnswer === q.correct_answer;
                 return (
                   <div
                     key={q.id}
-                    className={`p-4 rounded-lg border-2 ${isCorrect ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'}`}
+                    className={`p-4 rounded-xl border-2 ${isCorrect ? 'border-emerald-400 bg-emerald-50' : 'border-red-400 bg-red-50'}`}
                   >
                     <div className="flex items-start justify-between mb-2">
                       <p className="font-semibold text-gray-800">
@@ -187,23 +320,23 @@ export default function ProvaExamPage() {
                         )}
                       </p>
                       {isCorrect ? (
-                        <Check className="w-5 h-5 text-green-600 flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0" />
                       ) : (
-                        <X className="w-5 h-5 text-red-600 flex-shrink-0" />
+                        <XCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
                       )}
                     </div>
                     <p className="text-gray-700 mb-2 text-sm line-clamp-2">{q.statement}</p>
                     <div className="text-sm space-y-1">
                       <p>
                         <span className="font-medium">Sua resposta:</span>{' '}
-                        <span className={isCorrect ? 'text-green-700' : 'text-red-700'}>
+                        <span className={isCorrect ? 'text-emerald-700 font-semibold' : 'text-red-700 font-semibold'}>
                           {userAnswer || 'Não respondida'}
                         </span>
                       </p>
                       {!isCorrect && (
                         <p>
                           <span className="font-medium">Resposta correta:</span>{' '}
-                          <span className="text-green-700">{q.correct_answer}</span>
+                          <span className="text-emerald-700 font-semibold">{q.correct_answer}</span>
                         </p>
                       )}
                     </div>
@@ -231,74 +364,40 @@ export default function ProvaExamPage() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-4rem)]">
-      <div className="bg-white border-b border-gray-200 px-6 py-4 flex-shrink-0">
+      <div className="bg-white border-b border-gray-200 px-6 pt-4 pb-3 flex-shrink-0">
         <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-4 flex-1 min-w-0">
-            <div className="min-w-0">
-              <h2 className="text-xl font-bold text-gray-800 truncate">{prova.nome}</h2>
-              {(prova.banca || prova.regiao || prova.ano) && (
-                <p className="text-xs text-gray-500 truncate">
-                  {[prova.banca, prova.regiao, prova.ano].filter(Boolean).join(' · ')}
-                </p>
-              )}
-            </div>
-            <p className="text-gray-600 text-sm flex-shrink-0">
-              Questão {examIndex + 1} de {total}
-            </p>
+          <div className="min-w-0 flex-1">
+            <h2 className="text-xl font-bold text-gray-800 truncate">{prova.nome}</h2>
+            {(prova.banca || prova.regiao || prova.ano) && (
+              <p className="text-xs text-gray-400 truncate mt-0.5">
+                {[prova.banca, prova.regiao, prova.ano].filter(Boolean).join(' · ')}
+              </p>
+            )}
           </div>
-          <button
-            type="button"
-            onClick={() => router.push('/dashboard/provas')}
-            className="p-2 rounded-lg hover:bg-gray-100 transition flex-shrink-0"
-            aria-label="Fechar"
-          >
-            <X className="w-5 h-5 text-gray-600" />
-          </button>
+
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-lg border border-gray-200 text-xs text-gray-500">
+              <span className="font-semibold text-gray-700">{answeredCount}</span>
+              <span>/ {total} respondidas</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => router.push('/dashboard/provas')}
+              className="p-2 rounded-lg hover:bg-gray-100 transition"
+              aria-label="Fechar"
+            >
+              <X className="w-5 h-5 text-gray-500" />
+            </button>
+          </div>
         </div>
 
-        <div className="flex justify-center w-full mt-5 overflow-x-auto">
-          <div className="inline-flex items-center gap-0 py-1">
-            {questions.map((q, i) => {
-              const revealed = revealedAnswers.has(q.id);
-              const answered = !!examAnswers[q.id];
-              const correct = examAnswers[q.id] === q.correct_answer;
-              const ballStyle = revealed
-                ? correct
-                  ? 'bg-green-500 text-white'
-                  : 'bg-red-500 text-white'
-                : answered
-                ? 'bg-gray-300 text-gray-800'
-                : 'bg-white border-2 border-black text-gray-800';
-              const ballTitle = revealed
-                ? correct
-                  ? `Questão ${i + 1} (correta)`
-                  : `Questão ${i + 1} (incorreta)`
-                : answered
-                ? `Questão ${i + 1} (respondida)`
-                : `Questão ${i + 1} (não respondida)`;
-              const isCurrentQuestion = i === examIndex;
-              return (
-                <span key={q.id} className="contents">
-                  <button
-                    type="button"
-                    onClick={() => setExamIndex(i)}
-                    className={`w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 transition text-sm font-medium cursor-pointer hover:opacity-90 hover:ring-2 hover:ring-primary-500 hover:ring-offset-1 ${ballStyle} ${
-                      isCurrentQuestion ? 'ring-2 ring-primary-600 ring-offset-2' : ''
-                    }`}
-                    title={`${ballTitle} — Clique para ir à questão`}
-                  >
-                    {revealed ? correct ? <Check className="w-4 h-4" /> : <X className="w-4 h-4" /> : i + 1}
-                  </button>
-                  {i < questions.length - 1 && (
-                    <div className="w-4 flex-shrink-0 flex items-center px-0.5" aria-hidden>
-                      <div className="h-px w-full bg-gray-300" />
-                    </div>
-                  )}
-                </span>
-              );
-            })}
-          </div>
-        </div>
+        <QuestionCarousel
+          questions={questions}
+          examIndex={examIndex}
+          setExamIndex={setExamIndex}
+          examAnswers={examAnswers}
+          revealedAnswers={revealedAnswers}
+        />
       </div>
 
       <div className="flex-1 flex overflow-hidden">
@@ -306,28 +405,33 @@ export default function ProvaExamPage() {
           {currentQuestion && (
             <div className="max-w-3xl mx-auto space-y-6">
               {currentQuestion.anulada && (
-                <div className="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm font-semibold">
+                <div className="flex items-start gap-2 p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm font-semibold">
                   <AlertTriangle className="w-4 h-4 mt-0.5 flex-shrink-0" />
                   Questão anulada — não disponível para simulados.
                 </div>
               )}
 
               <div>
-                <div className="flex items-center gap-2 mb-2 text-xs text-gray-400">
-                  <span>Nº {currentQuestion.numero_na_prova ?? examIndex + 1}</span>
+                <div className="flex items-center gap-2 mb-3 flex-wrap">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-primary-50 border border-primary-200 text-primary-700 text-xs font-semibold">
+                    Nº {currentQuestion.numero_na_prova ?? examIndex + 1}
+                  </span>
                   {[currentQuestion.exam_board, currentQuestion.exam_region, currentQuestion.exam_year, currentQuestion.exam_type]
-                    .filter(Boolean).join(' · ') && (
-                    <span>
-                      {' '}· {[currentQuestion.exam_board, currentQuestion.exam_region, currentQuestion.exam_year, currentQuestion.exam_type].filter(Boolean).join(' · ')}
-                    </span>
-                  )}
+                    .filter(Boolean)
+                    .map((tag, ti) => (
+                      <span key={ti} className="inline-flex items-center px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 text-xs">
+                        {tag}
+                      </span>
+                    ))}
                   {currentQuestion.anulada && (
-                    <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold border border-red-200">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold border border-red-200">
                       <Ban className="w-3 h-3" /> ANULADA
                     </span>
                   )}
                 </div>
-                <p className="text-lg font-medium text-gray-800 whitespace-pre-wrap">{currentQuestion.statement}</p>
+                <p className="text-base font-medium text-gray-800 whitespace-pre-wrap leading-relaxed">
+                  {currentQuestion.statement}
+                </p>
               </div>
 
               {currentQuestion.images && currentQuestion.images.length > 0 && (
@@ -338,42 +442,65 @@ export default function ProvaExamPage() {
                 </div>
               )}
 
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 {availableOptions.map((option) => {
                   const isSelected = selectedAnswer === option.key;
                   const isConfirmedTaxed = confirmedTaxed.get(currentQuestion.id)?.has(option.key) || false;
+                  const isRevealed = revealedAnswers.has(currentQuestion.id);
+                  const isCorrectOption = option.key === currentQuestion.correct_answer;
+
+                  let rowClass = '';
+                  if (isConfirmedTaxed) {
+                    rowClass = 'border-gray-200 bg-gray-50 opacity-50 line-through';
+                  } else if (isRevealed && isCorrectOption) {
+                    rowClass = 'border-emerald-400 bg-emerald-50';
+                  } else if (isRevealed && isSelected && !isCorrectOption) {
+                    rowClass = 'border-red-400 bg-red-50';
+                  } else if (isSelected) {
+                    rowClass = 'border-primary-500 bg-primary-50';
+                  } else {
+                    rowClass = 'border-gray-200 bg-white hover:border-primary-300 hover:bg-gray-50';
+                  }
+
                   return (
                     <div
                       key={option.key}
-                      className={`w-full p-4 rounded-lg border-2 flex items-center gap-3 transition ${
-                        isConfirmedTaxed
-                          ? 'border-gray-200 bg-gray-100 line-through opacity-60'
-                          : isSelected
-                          ? 'border-primary-600 bg-primary-50'
-                          : 'border-gray-300 hover:border-primary-400 hover:bg-gray-50'
-                      }`}
+                      className={`rounded-xl border-2 flex items-center gap-3 transition-all duration-150 ${rowClass}`}
                     >
                       <button
                         type="button"
-                        onClick={() => !isConfirmedTaxed && !currentQuestion.anulada && setExamAnswers((prev) => ({ ...prev, [currentQuestion.id]: option.key }))}
+                        onClick={() =>
+                          !isConfirmedTaxed &&
+                          !currentQuestion.anulada &&
+                          setExamAnswers((prev) => ({ ...prev, [currentQuestion.id]: option.key }))
+                        }
                         disabled={isConfirmedTaxed || !!currentQuestion.anulada}
-                        className={`flex flex-1 items-center gap-3 text-left min-w-0 ${isConfirmedTaxed || currentQuestion.anulada ? 'cursor-not-allowed' : ''}`}
+                        className={`flex flex-1 items-center gap-3 text-left p-4 min-w-0 ${
+                          isConfirmedTaxed || currentQuestion.anulada ? 'cursor-not-allowed' : 'cursor-pointer'
+                        }`}
                       >
                         <div
-                          className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
+                          className={`w-7 h-7 rounded-full border-2 flex items-center justify-center flex-shrink-0 text-xs font-bold transition-all ${
                             isConfirmedTaxed
-                              ? 'border-gray-300 bg-gray-200'
+                              ? 'border-gray-300 bg-gray-100 text-gray-400'
+                              : isRevealed && isCorrectOption
+                              ? 'border-emerald-500 bg-emerald-500 text-white'
+                              : isRevealed && isSelected && !isCorrectOption
+                              ? 'border-red-500 bg-red-500 text-white'
                               : isSelected
-                              ? 'border-primary-600 bg-primary-600'
-                              : 'border-gray-400'
+                              ? 'border-primary-600 bg-primary-600 text-white'
+                              : 'border-gray-300 text-gray-500'
                           }`}
                         >
-                          {isSelected && !isConfirmedTaxed && <Check className="w-4 h-4 text-white" />}
+                          {isRevealed && isCorrectOption ? (
+                            <Check className="w-3.5 h-3.5" />
+                          ) : isRevealed && isSelected && !isCorrectOption ? (
+                            <X className="w-3.5 h-3.5" />
+                          ) : (
+                            option.key
+                          )}
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <span className="font-semibold text-gray-700 text-sm">{option.key})</span>{' '}
-                          <span className="text-gray-700 text-sm">{option.value}</span>
-                        </div>
+                        <span className="text-gray-700 text-sm leading-relaxed">{option.value}</span>
                       </button>
                       <button
                         type="button"
@@ -382,14 +509,14 @@ export default function ProvaExamPage() {
                           taxAlternative(currentQuestion.id, option.key);
                         }}
                         disabled={!!currentQuestion.anulada}
-                        className={`p-2 rounded-lg transition flex-shrink-0 flex items-center justify-center ${
+                        className={`mr-3 p-2 rounded-lg transition flex-shrink-0 flex items-center justify-center text-xs font-semibold gap-1 ${
                           isConfirmedTaxed
                             ? 'bg-orange-500 text-white hover:bg-orange-600'
-                            : 'bg-white border-2 border-orange-500 text-orange-600 hover:bg-orange-50'
-                        } disabled:opacity-40 disabled:cursor-not-allowed`}
+                            : 'border border-orange-300 text-orange-500 hover:bg-orange-50'
+                        } disabled:opacity-30 disabled:cursor-not-allowed`}
                         title={isConfirmedTaxed ? 'Desfazer taxar' : 'Taxar alternativa'}
                       >
-                        <X className="w-4 h-4" />
+                        <X className="w-3.5 h-3.5" />
                       </button>
                     </div>
                   );
@@ -399,11 +526,14 @@ export default function ProvaExamPage() {
               {revealedAnswers.has(currentQuestion.id) && (() => {
                 const correctOption = availableOptions.find((o) => o.key === currentQuestion.correct_answer);
                 return correctOption ? (
-                  <div className="mt-4 p-4 rounded-lg bg-green-50 border border-green-200">
-                    <p className="text-sm font-semibold text-green-800 mb-1">Resposta correta:</p>
-                    <p className="text-gray-800 text-sm">
-                      <span className="font-semibold">{correctOption.key})</span> {correctOption.value}
-                    </p>
+                  <div className="mt-2 p-4 rounded-xl bg-emerald-50 border border-emerald-200 flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="text-sm font-semibold text-emerald-800 mb-0.5">Resposta correta</p>
+                      <p className="text-gray-700 text-sm">
+                        <span className="font-semibold">{correctOption.key})</span> {correctOption.value}
+                      </p>
+                    </div>
                   </div>
                 ) : null;
               })()}
@@ -415,7 +545,7 @@ export default function ProvaExamPage() {
           <div className="w-1/2 overflow-y-auto bg-gray-50 border-l border-gray-200 flex flex-col">
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-white flex-shrink-0">
               <h3 className="text-base font-semibold text-gray-800 flex items-center gap-2">
-                <MessageSquare className="w-4 h-4 text-primary-600" />
+                <MessageSquare className="w-4 h-4 text-purple-600" />
                 Comentário da IA
               </h3>
               <button
@@ -430,7 +560,7 @@ export default function ProvaExamPage() {
             <div className="flex-1 p-6 overflow-y-auto">
               {aiCommentLoading ? (
                 <div className="flex items-center justify-center h-32 gap-3 text-gray-500">
-                  <Loader2 className="w-6 h-6 animate-spin text-primary-600" />
+                  <Loader2 className="w-6 h-6 animate-spin text-purple-600" />
                   <span className="text-sm">Carregando comentário...</span>
                 </div>
               ) : currentQuestion && aiCommentCache[currentQuestion.id] != null ? (
@@ -448,15 +578,15 @@ export default function ProvaExamPage() {
         )}
       </div>
 
-      <div className="bg-white border-t border-gray-200 px-6 py-4 flex justify-between items-center flex-shrink-0">
+      <div className="bg-white border-t border-gray-200 px-6 py-3 flex justify-between items-center flex-shrink-0">
         <button
           type="button"
           onClick={() => { if (examIndex > 0) setExamIndex((i) => i - 1); }}
           disabled={examIndex === 0}
-          className="p-2.5 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition disabled:opacity-50 disabled:cursor-not-allowed"
-          title="Anterior"
+          className="flex items-center gap-1.5 px-4 py-2 border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 transition disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
         >
-          <ChevronLeft className="w-5 h-5" />
+          <ChevronLeft className="w-4 h-4" />
+          Anterior
         </button>
 
         <div className="flex gap-2 items-center">
@@ -471,15 +601,15 @@ export default function ProvaExamPage() {
                 return next;
               });
             }}
-            className={`p-2.5 border rounded-lg transition flex items-center ${
+            className={`flex items-center gap-1.5 px-3 py-2 border rounded-lg transition text-sm font-medium ${
               currentQuestion && revealedAnswers.has(currentQuestion.id)
-                ? 'border-primary-600 bg-primary-50 text-primary-700'
-                : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                ? 'border-primary-500 bg-primary-50 text-primary-700'
+                : 'border-gray-200 text-gray-600 hover:bg-gray-50'
             }`}
-            title={currentQuestion && revealedAnswers.has(currentQuestion.id) ? 'Ocultar resposta' : 'Mostrar resposta'}
+            title={currentQuestion && revealedAnswers.has(currentQuestion.id) ? 'Ocultar resposta' : 'Ver resposta'}
           >
-            <Eye className="w-5 h-5 flex-shrink-0" />
-            <span className="ml-1.5 text-sm">Ver Resposta</span>
+            <Eye className="w-4 h-4" />
+            <span className="hidden sm:inline">Ver Resposta</span>
           </button>
 
           <button
@@ -492,15 +622,15 @@ export default function ProvaExamPage() {
                 fetchAiComment(currentQuestion.id);
               }
             }}
-            className={`p-2.5 border rounded-lg transition flex items-center ${
+            className={`flex items-center gap-1.5 px-3 py-2 border rounded-lg transition text-sm font-medium ${
               aiCommentOpen
-                ? 'border-purple-600 bg-purple-50 text-purple-700'
-                : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                ? 'border-purple-500 bg-purple-50 text-purple-700'
+                : 'border-gray-200 text-gray-600 hover:bg-gray-50'
             }`}
-            title={aiCommentOpen ? 'Fechar comentário' : 'Ver comentário da IA'}
+            title={aiCommentOpen ? 'Fechar comentário' : 'Comentário da IA'}
           >
-            <MessageSquare className="w-5 h-5 flex-shrink-0" />
-            <span className="ml-1.5 text-sm">Comentário da IA</span>
+            <MessageSquare className="w-4 h-4" />
+            <span className="hidden sm:inline">Comentário IA</span>
           </button>
         </div>
 
@@ -510,10 +640,10 @@ export default function ProvaExamPage() {
             if (examIndex < total - 1) setExamIndex((i) => i + 1);
             else setShowResults(true);
           }}
-          className="p-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition"
-          title={examIndex >= total - 1 ? 'Finalizar' : 'Próxima'}
+          className="flex items-center gap-1.5 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition text-sm font-semibold"
         >
-          <ChevronRight className="w-5 h-5" />
+          {examIndex >= total - 1 ? 'Finalizar' : 'Próxima'}
+          {examIndex < total - 1 && <ChevronRight className="w-4 h-4" />}
         </button>
       </div>
     </div>
