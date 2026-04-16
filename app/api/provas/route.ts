@@ -27,9 +27,7 @@ function mapQuestaoToOptions(questoes: {
   alternativas?: Alternativa[];
   alternativa_correta?: string | { letra?: string };
   letra_correta?: string;
-  // Campo do crawler web: estado=true significa anulada
   estado?: boolean;
-  // Campo do PDF parser: anulada direto
   anulada?: boolean;
 }[]) {
   return questoes.map((q) => {
@@ -50,9 +48,9 @@ function mapQuestaoToOptions(questoes: {
     if (!byLetter['B']) byLetter['B'] = 'Alternativa B';
     return {
       numero: (() => {
-      const num = typeof q.numero === 'number' ? q.numero : parseInt(String(q.numero ?? ''), 10);
-      return isNaN(num) ? 0 : num;
-    })(),
+        const num = typeof q.numero === 'number' ? q.numero : parseInt(String(q.numero ?? ''), 10);
+        return isNaN(num) ? 0 : num;
+      })(),
       statement: String(q.titulo ?? q.enunciado ?? '').trim() || '(Sem enunciado)',
       option_a: byLetter['A'] || '',
       option_b: byLetter['B'] || '',
@@ -61,7 +59,6 @@ function mapQuestaoToOptions(questoes: {
       option_e: byLetter['E'] || null,
       correct_answer: finalCorrect,
       images: Array.isArray(q.imagens) ? q.imagens : [],
-      // crawler usa "estado": true para anulada; PDF pode ter "anulada": true
       anulada: Boolean(q.estado ?? q.anulada ?? false),
     };
   });
@@ -147,6 +144,7 @@ function normalizeImportPayload(body: Record<string, unknown>): { nome: string; 
   return [];
 }
 
+// ── GET /api/provas — paginated listing (no question content) ───────────────
 export async function GET(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization');
@@ -156,54 +154,77 @@ export async function GET(request: NextRequest) {
     const user = verifyToken(token);
     if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
 
-    const provasRows = (await query('SELECT id, nome, banca, regiao, ano, tipo, created_at FROM provas ORDER BY created_at DESC')).rows;
-    const questionsRows = (await query(`
-      SELECT id, statement, option_a, option_b, option_c, option_d, option_e, correct_answer, images, exam_board, exam_region, exam_year, exam_type, prova_id, numero_na_prova, anulada
-      FROM questions WHERE prova_id IS NOT NULL ORDER BY prova_id, numero_na_prova
-    `)).rows;
+    const url = request.nextUrl;
+    const page  = Math.max(1, parseInt(url.searchParams.get('page')  ?? '1',  10));
+    const limit = Math.min(100, Math.max(1, parseInt(url.searchParams.get('limit') ?? '20', 10)));
+    const offset = (page - 1) * limit;
 
-    const questionsByProvaId: Record<number, any[]> = {};
-    questionsRows.forEach((q: any) => {
-      const pid = q.prova_id;
-      if (pid == null) return;
-      if (!questionsByProvaId[pid]) questionsByProvaId[pid] = [];
-      questionsByProvaId[pid].push({
-        id: q.id,
-        numero_na_prova: q.numero_na_prova,
-        statement: q.statement,
-        option_a: q.option_a,
-        option_b: q.option_b,
-        option_c: q.option_c,
-        option_d: q.option_d,
-        option_e: q.option_e,
-        correct_answer: q.correct_answer,
-        images: q.images ? (typeof q.images === 'string' ? JSON.parse(q.images) : q.images) : [],
-        exam_board: q.exam_board,
-        exam_region: q.exam_region,
-        exam_year: q.exam_year,
-        exam_type: q.exam_type,
-        anulada: q.anulada ?? false,
-      });
+    const filterBanca  = url.searchParams.get('banca')  ?? '';
+    const filterRegiao = url.searchParams.get('regiao') ?? '';
+    const filterAno    = url.searchParams.get('ano')    ?? '';
+    const filterTipo   = url.searchParams.get('tipo')   ?? '';
+
+    // Build WHERE clause
+    const conditions: string[] = [];
+    const params: unknown[] = [];
+    if (filterBanca)  { params.push(filterBanca);  conditions.push(`LOWER(banca)  = LOWER($${params.length})`); }
+    if (filterRegiao) { params.push(filterRegiao); conditions.push(`regiao = $${params.length}`); }
+    if (filterAno)    { params.push(filterAno);    conditions.push(`ano = $${params.length}`); }
+    if (filterTipo)   { params.push(filterTipo);   conditions.push(`LOWER(tipo) = LOWER($${params.length})`); }
+
+    const where = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
+
+    // Count
+    const countRes = await query(
+      `SELECT COUNT(*) AS total FROM provas ${where}`,
+      params
+    );
+    const total = parseInt(countRes.rows[0].total, 10);
+
+    // Paginated provas with question count (no question content)
+    const listParams = [...params, limit, offset];
+    const listRes = await query(
+      `SELECT p.id, p.nome, p.banca, p.regiao, p.ano, p.tipo, p.created_at,
+              COUNT(q.id)::int AS question_count
+       FROM provas p
+       LEFT JOIN questions q ON q.prova_id = p.id
+       ${where}
+       GROUP BY p.id
+       ORDER BY p.created_at DESC
+       LIMIT $${listParams.length - 1} OFFSET $${listParams.length}`,
+      listParams
+    );
+
+    // Available filter options (distinct values, unfiltered)
+    const [bancasRes, tiposRes] = await Promise.all([
+      query(`SELECT DISTINCT banca FROM provas WHERE banca IS NOT NULL AND banca <> '' ORDER BY banca`),
+      query(`SELECT DISTINCT tipo  FROM provas WHERE tipo  IS NOT NULL AND tipo  <> '' ORDER BY tipo`),
+    ]);
+
+    return NextResponse.json({
+      provas: listRes.rows.map((p: Record<string, unknown>) => ({
+        id:             p.id,
+        nome:           p.nome,
+        banca:          p.banca,
+        regiao:         p.regiao,
+        ano:            p.ano,
+        tipo:           p.tipo,
+        created_at:     p.created_at,
+        question_count: p.question_count ?? 0,
+      })),
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+      bancas: bancasRes.rows.map((r: Record<string, unknown>) => r.banca as string),
+      tipos:  tiposRes.rows.map((r: Record<string, unknown>) => r.tipo  as string),
     });
-
-    const provas = provasRows.map((p: any) => ({
-      id: p.id,
-      nome: p.nome,
-      banca: p.banca,
-      regiao: p.regiao,
-      ano: p.ano,
-      tipo: p.tipo,
-      created_at: p.created_at,
-      questions: questionsByProvaId[p.id] || [],
-    }));
-
-    return NextResponse.json(provas);
   } catch (error) {
     console.error('Erro ao listar provas:', error);
     return NextResponse.json({ error: 'Erro ao listar provas' }, { status: 500 });
   }
 }
 
+// ── POST /api/provas — import ───────────────────────────────────────────────
 export async function POST(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization');
@@ -234,11 +255,7 @@ export async function POST(request: NextRequest) {
       const ano = (pAny.ano != null && pAny.ano !== '') ? String(pAny.ano).trim() : ((pAny.exam_year != null && pAny.exam_year !== '') ? String(pAny.exam_year).trim() : (parsed.ano ?? null));
       const tipo = (pAny.tipo != null && pAny.tipo !== '') ? String(pAny.tipo).trim() : (pAny.exam_type != null && pAny.exam_type !== '' ? String(pAny.exam_type).trim() : (parsed.tipo ?? null));
 
-      // Verificar se prova com mesmo nome já existe (deduplicação)
-      const existingProva = await query(
-        'SELECT id FROM provas WHERE nome = $1 LIMIT 1',
-        [nome]
-      );
+      const existingProva = await query('SELECT id FROM provas WHERE nome = $1 LIMIT 1', [nome]);
       if (existingProva.rows.length > 0) {
         totalProvasIgnoradas++;
         result.push({ id: existingProva.rows[0].id, nome, banca, regiao, ano, tipo, questions: [], skipped: true });
@@ -251,7 +268,7 @@ export async function POST(request: NextRequest) {
       );
       const provaId = provaResult.rows[0].id;
 
-      const questoes = Array.isArray((p as { questoes?: unknown[] }).questoes) ? (p as { questoes: unknown[] }).questoes : (Array.isArray((p as any).questions) ? (p as any).questions : []);
+      const questoes = Array.isArray((p as { questoes?: unknown[] }).questoes) ? (p as { questoes: unknown[] }).questoes : (Array.isArray((p as Record<string, unknown>).questions) ? (p as Record<string, unknown>).questions as unknown[] : []);
       const normalized = mapQuestaoToOptions(questoes);
       const questionIds: { id: number; numero_na_prova: number }[] = [];
 
@@ -274,27 +291,12 @@ export async function POST(request: NextRequest) {
            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18) RETURNING id`,
           [
             q.statement || '(Sem enunciado)',
-            optA,
-            optB,
-            q.option_c,
-            q.option_d,
-            q.option_e,
-            q.correct_answer,
-            null,
-            null,
-            imagesJson,
-            examYear,
-            banca,
-            null,
-            regiao,
-            tipo,
-            safeProvaId,
-            questionNumber,
-            q.anulada ?? false,
+            optA, optB, q.option_c, q.option_d, q.option_e,
+            q.correct_answer, null, null, imagesJson, examYear,
+            banca, null, regiao, tipo, safeProvaId, questionNumber, q.anulada ?? false,
           ]
         );
-        const qId = qResult.rows[0].id;
-        questionIds.push({ id: qId, numero_na_prova: q.numero });
+        questionIds.push({ id: qResult.rows[0].id, numero_na_prova: q.numero });
         totalQuestoesImportadas++;
       }
 

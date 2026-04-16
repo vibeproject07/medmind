@@ -1,30 +1,12 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ChevronDown, ChevronUp, Filter, FolderOpen, Loader2, X, Play, CheckCircle, LogIn } from 'lucide-react';
 import { jsonrepair } from 'jsonrepair';
 
-interface ProvaQuestion {
-  id: number;
-  numero_na_prova: number | null;
-  statement: string;
-  option_a: string;
-  option_b: string;
-  option_c?: string | null;
-  option_d?: string | null;
-  option_e?: string | null;
-  correct_answer: string;
-  images?: string[];
-  exam_board?: string | null;
-  exam_region?: string | null;
-  exam_year?: number | null;
-  exam_type?: string | null;
-  anulada?: boolean;
-}
-
-interface Prova {
+interface ProvaListing {
   id: number;
   nome: string;
   banca: string | null;
@@ -32,7 +14,16 @@ interface Prova {
   ano: string | null;
   tipo: string | null;
   created_at: string;
-  questions: ProvaQuestion[];
+  question_count: number;
+}
+
+interface ListingResponse {
+  provas: ProvaListing[];
+  total: number;
+  page: number;
+  totalPages: number;
+  bancas: string[];
+  tipos: string[];
 }
 
 interface ImportSummary {
@@ -44,39 +35,64 @@ interface ImportSummary {
 const ANO_INICIO = 1990;
 const ANO_FIM = new Date().getFullYear();
 const ANOS = Array.from({ length: ANO_FIM - ANO_INICIO + 1 }, (_, i) => String(ANO_FIM - i));
+const PAGE_SIZE = 20;
 
 export default function ProvasPage() {
   const router = useRouter();
+
+  // ── Filters & pagination ────────────────────────────────────────────────
   const [filtrosAbertos, setFiltrosAbertos] = useState(false);
   const [banca, setBanca] = useState('');
   const [regiao, setRegiao] = useState('');
   const [ano, setAno] = useState('');
   const [tipo, setTipo] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // ── Data ────────────────────────────────────────────────────────────────
+  const [provasList, setProvasList] = useState<ProvaListing[]>([]);
+  const [total, setTotal] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [bancasDisponiveis, setBancasDisponiveis] = useState<string[]>([]);
+  const [tiposDisponiveis, setTiposDisponiveis] = useState<string[]>([]);
+  const [loadingProvas, setLoadingProvas] = useState(true);
+
+  // ── UI states ───────────────────────────────────────────────────────────
+  const [sessionExpired, setSessionExpired] = useState(false);
   const [showFileModal, setShowFileModal] = useState(false);
   const [loadingJson, setLoadingJson] = useState(false);
   const [jsonError, setJsonError] = useState<string | null>(null);
   const [importSummary, setImportSummary] = useState<ImportSummary | null>(null);
   const [importProgress, setImportProgress] = useState<{ current: number; total: number } | null>(null);
-  const [provasList, setProvasList] = useState<Prova[]>([]);
-  const [loadingProvas, setLoadingProvas] = useState(true);
-  const [sessionExpired, setSessionExpired] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  // Per-card loading state when fetching questions before navigating
+  const [realizandoProvaId, setRealizandoProvaId] = useState<number | null>(null);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const PAGE_SIZE = 20;
-
-
-  const fetchProvas = async () => {
+  // ── Fetch listing ────────────────────────────────────────────────────────
+  const fetchProvas = useCallback(async (page: number) => {
     const token = localStorage.getItem('token');
-    if (!token) {
-      setLoadingProvas(false);
-      return;
-    }
+    if (!token) { setLoadingProvas(false); return; }
+    setLoadingProvas(true);
     try {
-      const res = await fetch('/api/provas', { headers: { Authorization: `Bearer ${token}` } });
+      const params = new URLSearchParams({
+        page: String(page),
+        limit: String(PAGE_SIZE),
+        ...(banca  ? { banca }  : {}),
+        ...(regiao ? { regiao } : {}),
+        ...(ano    ? { ano }    : {}),
+        ...(tipo   ? { tipo }   : {}),
+      });
+      const res = await fetch(`/api/provas?${params}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       if (res.ok) {
-        const data = await res.json();
-        setProvasList(Array.isArray(data) ? data : []);
+        const data: ListingResponse = await res.json();
+        setProvasList(data.provas ?? []);
+        setTotal(data.total ?? 0);
+        setTotalPages(data.totalPages ?? 0);
+        // Only update filter options on first load (page 1, no active filter)
+        if (data.bancas) setBancasDisponiveis(data.bancas);
+        if (data.tipos)  setTiposDisponiveis(data.tipos);
       } else if (res.status === 401 || res.status === 403) {
         setSessionExpired(true);
       }
@@ -85,21 +101,18 @@ export default function ProvasPage() {
     } finally {
       setLoadingProvas(false);
     }
-  };
+  }, [banca, regiao, ano, tipo]);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [banca, regiao, ano, tipo]);
 
   useEffect(() => {
-    fetchProvas();
-  }, []);
+    fetchProvas(currentPage);
+  }, [fetchProvas, currentPage]);
 
-  // Extrair opções únicas de banca e tipo a partir dos dados carregados
-  const bancasDisponiveis = Array.from(
-    new Set(provasList.map((p) => p.banca).filter(Boolean) as string[])
-  ).sort();
-
-  const tiposDisponiveis = Array.from(
-    new Set(provasList.map((p) => p.tipo).filter(Boolean) as string[])
-  ).sort();
-
+  // ── Import handlers ──────────────────────────────────────────────────────
   const handleAbrirSelecao = () => {
     setJsonError(null);
     setImportSummary(null);
@@ -121,7 +134,6 @@ export default function ProvasPage() {
     const reader = new FileReader();
     reader.onload = async () => {
       try {
-        // Tenta decodificar com UTF-8 primeiro, depois Latin-1/cp1252 (arquivos do crawler no Windows)
         const buffer = reader.result as ArrayBuffer;
         let text: string;
         try {
@@ -135,14 +147,11 @@ export default function ProvasPage() {
             return;
           }
         }
-        // Remove caracteres de controle ilegais na spec JSON (ex: \x03, \x13 do crawler)
-        // Mantém \t (0x09), \n (0x0A), \r (0x0D) que são válidos
         text = text.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, ' ');
         let parsed: unknown;
         try {
           parsed = JSON.parse(text);
         } catch {
-          // Fallback: tenta reparar JSON malformado (ex: aspas não-escapadas do crawler)
           try {
             parsed = JSON.parse(jsonrepair(text));
           } catch {
@@ -155,15 +164,9 @@ export default function ProvasPage() {
           }
         }
 
-        // Verifica sessão antes de qualquer validação de formato
         const token = localStorage.getItem('token');
-        if (!token) {
-          setSessionExpired(true);
-          setLoadingJson(false);
-          return;
-        }
+        if (!token) { setSessionExpired(true); setLoadingJson(false); return; }
 
-        // Suporta array plano de questões: [ { enunciado, alternativas, letra_correta, ... } ]
         let data: Record<string, unknown>;
         if (Array.isArray(parsed)) {
           data = { provas: [{ nome: file.name.replace(/\.json$/i, ''), questoes: parsed }] };
@@ -175,54 +178,44 @@ export default function ProvasPage() {
           return;
         }
 
-        // Normaliza formato do PDF parser e outros formatos com questoes no topo
         if (!Array.isArray(data.provas) && !Array.isArray(data.paginas)) {
           const questoesKey = Array.isArray(data.questoes) ? 'questoes' : (Array.isArray(data.questions) ? 'questions' : null);
           if (questoesKey) {
             const todasQuestoes = data[questoesKey] as { numero?: number; [key: string]: unknown }[];
-
-            // Formato PDF multi-arquivo: { titulo_prova, questoes, arquivos }
-            // As questões de cada PDF ficam em sequência, numeração reinicia em 1 a cada prova
             if (data.titulo_prova && Array.isArray(data.arquivos) && (data.arquivos as unknown[]).length > 0) {
               const arquivos = data.arquivos as string[];
               const grupos: { numero?: number; [key: string]: unknown }[][] = [];
               let grupo: typeof todasQuestoes = [];
               for (const q of todasQuestoes) {
                 const num = typeof q.numero === 'number' ? q.numero : parseInt(String(q.numero ?? '0'), 10);
-                if (num === 1 && grupo.length > 0) {
-                  grupos.push(grupo);
-                  grupo = [];
-                }
+                if (num === 1 && grupo.length > 0) { grupos.push(grupo); grupo = []; }
                 grupo.push(q);
               }
               if (grupo.length > 0) grupos.push(grupo);
-
               const provas = grupos.map((questoes, i) => {
                 const nomeArquivo = arquivos[i] ? String(arquivos[i]).replace(/\.pdf$/i, '').trim() : `Prova ${i + 1}`;
                 return { nome: nomeArquivo, questoes };
               });
               data = { provas };
-
             } else {
-              // Formato simples: { titulo_prova?, questoes } — uma prova única
               let nomeParte = file.name.replace(/\.json$/i, '');
               let metadados: Record<string, unknown> = {};
               if (data.titulo_prova && typeof data.titulo_prova === 'object') {
                 const tp = data.titulo_prova as Record<string, unknown>;
-                const banca = String(tp.banca ?? '').trim();
-                const regiao = String(tp.regiao ?? '').trim();
-                const ano = String(tp.ano ?? '').trim();
-                const tipo = String(tp.tipo ?? '').trim();
-                const partes = [banca, regiao, ano, tipo].filter(s => s.length > 0);
+                const b = String(tp.banca ?? '').trim();
+                const r = String(tp.regiao ?? '').trim();
+                const a = String(tp.ano ?? '').trim();
+                const t = String(tp.tipo ?? '').trim();
+                const partes = [b, r, a, t].filter(s => s.length > 0);
                 if (partes.length > 0) nomeParte = partes.join(' - ');
-                metadados = { banca: banca || null, regiao: regiao || null, ano: ano || null, tipo: tipo || null };
+                metadados = { banca: b || null, regiao: r || null, ano: a || null, tipo: t || null };
               }
               data = { provas: [{ nome: nomeParte, questoes: todasQuestoes, ...metadados }] };
             }
           }
         }
 
-        const hasProvas = Array.isArray(data.provas) && (data.provas as unknown[]).length > 0;
+        const hasProvas  = Array.isArray(data.provas)  && (data.provas  as unknown[]).length > 0;
         const hasPaginas = Array.isArray(data.paginas) && (data.paginas as unknown[]).length > 0;
         if (!hasProvas && !hasPaginas) {
           const foundKeys = Object.keys(data).slice(0, 5).join('", "');
@@ -236,70 +229,43 @@ export default function ProvasPage() {
         let totalIgnoradas = 0;
         let totalQuestoes = 0;
 
-        if (hasProvas) {
-          const allProvas = data.provas as unknown[];
+        const runBatches = async (items: unknown[], batchSize: number, key: string) => {
           const batches: unknown[][] = [];
-          for (let i = 0; i < allProvas.length; i += BATCH_SIZE) {
-            batches.push(allProvas.slice(i, i + BATCH_SIZE));
-          }
+          for (let i = 0; i < items.length; i += batchSize) batches.push(items.slice(i, i + batchSize));
           setImportProgress({ current: 0, total: batches.length });
           for (let i = 0; i < batches.length; i++) {
             setImportProgress({ current: i + 1, total: batches.length });
             const res = await fetch('/api/provas', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-              body: JSON.stringify({ provas: batches[i] }),
+              body: JSON.stringify({ [key]: batches[i] }),
             });
             const body = await res.json();
             if (!res.ok) {
-              if (res.status === 401 || res.status === 403) {
-                setSessionExpired(true);
-              } else {
-                setJsonError(body.error || 'Erro ao importar lote.');
-              }
+              if (res.status === 401 || res.status === 403) setSessionExpired(true);
+              else setJsonError(body.error || 'Erro ao importar lote.');
               setLoadingJson(false);
               setImportProgress(null);
-              return;
+              return false;
             }
             totalImportadas += body.summary?.provasImportadas ?? 0;
-            totalIgnoradas += body.summary?.provasIgnoradas ?? 0;
-            totalQuestoes += body.summary?.questoesImportadas ?? 0;
+            totalIgnoradas  += body.summary?.provasIgnoradas  ?? 0;
+            totalQuestoes   += body.summary?.questoesImportadas ?? 0;
           }
-        } else {
-          const allPaginas = data.paginas as unknown[];
-          const batches: unknown[][] = [];
-          for (let i = 0; i < allPaginas.length; i += BATCH_SIZE * 4) {
-            batches.push(allPaginas.slice(i, i + BATCH_SIZE * 4));
-          }
-          setImportProgress({ current: 0, total: batches.length });
-          for (let i = 0; i < batches.length; i++) {
-            setImportProgress({ current: i + 1, total: batches.length });
-            const res = await fetch('/api/provas', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-              body: JSON.stringify({ paginas: batches[i] }),
-            });
-            const body = await res.json();
-            if (!res.ok) {
-              if (res.status === 401 || res.status === 403) {
-                setSessionExpired(true);
-              } else {
-                setJsonError(body.error || 'Erro ao importar lote.');
-              }
-              setLoadingJson(false);
-              setImportProgress(null);
-              return;
-            }
-            totalImportadas += body.summary?.provasImportadas ?? 0;
-            totalIgnoradas += body.summary?.provasIgnoradas ?? 0;
-            totalQuestoes += body.summary?.questoesImportadas ?? 0;
-          }
-        }
+          return true;
+        };
+
+        const ok = hasProvas
+          ? await runBatches(data.provas as unknown[], BATCH_SIZE, 'provas')
+          : await runBatches(data.paginas as unknown[], BATCH_SIZE * 4, 'paginas');
+
+        if (!ok) return;
 
         setImportProgress(null);
         setShowFileModal(false);
         setImportSummary({ provasImportadas: totalImportadas, provasIgnoradas: totalIgnoradas, questoesImportadas: totalQuestoes });
-        await fetchProvas();
+        await fetchProvas(1);
+        setCurrentPage(1);
       } catch (err) {
         console.error('Erro na importação:', err);
         setJsonError('Ocorreu um erro ao processar o arquivo. Verifique se é um JSON válido.');
@@ -308,34 +274,31 @@ export default function ProvasPage() {
         setImportProgress(null);
       }
     };
-    reader.onerror = () => {
-      setJsonError('Erro ao ler o arquivo.');
-      setLoadingJson(false);
-    };
+    reader.onerror = () => { setJsonError('Erro ao ler o arquivo.'); setLoadingJson(false); };
     reader.readAsArrayBuffer(file);
   };
 
-  const filteredProvas = provasList.filter((p) => {
-    if (banca && (p.banca || '').toLowerCase() !== banca.toLowerCase()) return false;
-    if (regiao && (p.regiao || '') !== regiao) return false;
-    if (ano && (p.ano || '') !== ano) return false;
-    if (tipo && (p.tipo || '').toLowerCase() !== tipo.toLowerCase()) return false;
-    return true;
-  });
-
-  const totalPages = Math.ceil(filteredProvas.length / PAGE_SIZE);
-  const paginatedProvas = filteredProvas.slice(
-    (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE
-  );
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [banca, regiao, ano, tipo]);
-
-  const handleRealizarProva = (prova: Prova) => {
-    localStorage.setItem(`examProva_${prova.id}`, JSON.stringify(prova));
-    router.push(`/dashboard/provas/${prova.id}`);
+  // ── Realizar prova — fetch full questions on demand ──────────────────────
+  const handleRealizarProva = async (provaId: number) => {
+    const token = localStorage.getItem('token');
+    if (!token) { setSessionExpired(true); return; }
+    setRealizandoProvaId(provaId);
+    try {
+      const res = await fetch(`/api/provas/${provaId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        const prova = await res.json();
+        localStorage.setItem(`examProva_${provaId}`, JSON.stringify(prova));
+        router.push(`/dashboard/provas/${provaId}`);
+      } else if (res.status === 401 || res.status === 403) {
+        setSessionExpired(true);
+      }
+    } catch (err) {
+      console.error('Erro ao carregar prova:', err);
+    } finally {
+      setRealizandoProvaId(null);
+    }
   };
 
   return (
@@ -410,7 +373,6 @@ export default function ProvasPage() {
         {filtrosAbertos && (
           <div className="border-t border-gray-200 p-4 bg-gray-50/50">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {/* Banca — populada dinamicamente dos dados */}
               <div>
                 <label htmlFor="filtro-banca" className="block text-sm font-medium text-gray-700 mb-1">Banca</label>
                 <select
@@ -426,7 +388,6 @@ export default function ProvasPage() {
                 </select>
               </div>
 
-              {/* Região */}
               <div>
                 <label htmlFor="filtro-regiao" className="block text-sm font-medium text-gray-700 mb-1">Região</label>
                 <select
@@ -466,7 +427,6 @@ export default function ProvasPage() {
                 </select>
               </div>
 
-              {/* Ano — de 1990 ao ano atual */}
               <div>
                 <label htmlFor="filtro-ano" className="block text-sm font-medium text-gray-700 mb-1">Ano</label>
                 <select
@@ -482,7 +442,6 @@ export default function ProvasPage() {
                 </select>
               </div>
 
-              {/* Tipo — populado dinamicamente dos dados */}
               <div>
                 <label htmlFor="filtro-tipo" className="block text-sm font-medium text-gray-700 mb-1">Tipo</label>
                 <select
@@ -514,7 +473,7 @@ export default function ProvasPage() {
 
       {/* Botão importar */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-gray-500">
             Selecione um arquivo JSON para importar provas e questões. Provas com o mesmo nome serão ignoradas automaticamente.
           </p>
@@ -529,7 +488,7 @@ export default function ProvasPage() {
           </button>
         </div>
         {jsonError && (
-          <div className="mt-2 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">{jsonError}</div>
+          <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">{jsonError}</div>
         )}
       </div>
 
@@ -539,81 +498,88 @@ export default function ProvasPage() {
           <Loader2 className="w-8 h-8 animate-spin text-primary-600 mx-auto" />
           <p className="text-gray-600 mt-2">Carregando provas...</p>
         </div>
-      ) : filteredProvas.length === 0 ? (
+      ) : provasList.length === 0 ? (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center text-gray-500">
-          {provasList.length === 0
+          {total === 0 && !banca && !regiao && !ano && !tipo
             ? 'Nenhuma prova encontrada. Importe um JSON com provas para começar.'
             : 'Nenhuma prova encontrada com os filtros selecionados.'}
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-          {paginatedProvas.map((prova) => (
-            <div key={prova.id} className="bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col">
-              <div className="p-5 flex-1 flex flex-col gap-3">
-                <h2 className="text-base font-semibold text-gray-800 leading-snug">{prova.nome}</h2>
-                <div className="flex flex-wrap gap-1.5">
-                  {prova.banca && (
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-primary-100 text-primary-700 text-xs font-medium">
-                      {prova.banca}
-                    </span>
-                  )}
-                  {prova.regiao && (
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 text-xs font-medium">
-                      {prova.regiao}
-                    </span>
-                  )}
-                  {prova.ano && (
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 text-xs font-medium">
-                      {prova.ano}
-                    </span>
-                  )}
-                  {prova.tipo && (
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 text-xs font-medium">
-                      {prova.tipo}
-                    </span>
-                  )}
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+            {provasList.map((prova) => (
+              <div key={prova.id} className="bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col">
+                <div className="p-5 flex-1 flex flex-col gap-3">
+                  <h2 className="text-base font-semibold text-gray-800 leading-snug">{prova.nome}</h2>
+                  <div className="flex flex-wrap gap-1.5">
+                    {prova.banca && (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-primary-100 text-primary-700 text-xs font-medium">
+                        {prova.banca}
+                      </span>
+                    )}
+                    {prova.regiao && (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 text-xs font-medium">
+                        {prova.regiao}
+                      </span>
+                    )}
+                    {prova.ano && (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 text-xs font-medium">
+                        {prova.ano}
+                      </span>
+                    )}
+                    {prova.tipo && (
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 text-xs font-medium">
+                        {prova.tipo}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-sm text-gray-500 mt-auto">
+                    {prova.question_count} {prova.question_count === 1 ? 'questão' : 'questões'}
+                  </p>
                 </div>
-                <p className="text-sm text-gray-500 mt-auto">
-                  {prova.questions.length} {prova.questions.length === 1 ? 'questão' : 'questões'}
-                </p>
+                <div className="px-5 pb-5">
+                  <button
+                    type="button"
+                    onClick={() => handleRealizarProva(prova.id)}
+                    disabled={realizandoProvaId === prova.id}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-70 disabled:cursor-not-allowed transition font-medium text-sm"
+                  >
+                    {realizandoProvaId === prova.id
+                      ? <><Loader2 className="w-4 h-4 animate-spin" /> Carregando...</>
+                      : <><Play className="w-4 h-4" /> Realizar prova</>
+                    }
+                  </button>
+                </div>
               </div>
-              <div className="px-5 pb-5">
-                <button
-                  type="button"
-                  onClick={() => handleRealizarProva(prova)}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition font-medium text-sm"
-                >
-                  <Play className="w-4 h-4" />
-                  Realizar prova
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
 
-      {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-2 flex-wrap mt-2">
-          <button
-            type="button"
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-            disabled={currentPage <= 1}
-            className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
-          >
-            Anterior
-          </button>
-          <span className="px-4 py-2 text-sm text-gray-600">
-            Página {currentPage} de {totalPages}
-          </span>
-          <button
-            type="button"
-            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-            disabled={currentPage >= totalPages}
-            className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
-          >
-            Próxima
-          </button>
-        </div>
+          {/* Paginação */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 flex-wrap mt-2">
+              <button
+                type="button"
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                disabled={currentPage <= 1 || loadingProvas}
+                className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+              >
+                Anterior
+              </button>
+              <span className="px-4 py-2 text-sm text-gray-600">
+                Página {currentPage} de {totalPages}
+                {total > 0 && <span className="text-gray-400 ml-1">({total} provas)</span>}
+              </span>
+              <button
+                type="button"
+                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                disabled={currentPage >= totalPages || loadingProvas}
+                className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+              >
+                Próxima
+              </button>
+            </div>
+          )}
+        </>
       )}
 
       {/* Modal seleção de arquivo */}
@@ -670,27 +636,6 @@ export default function ProvasPage() {
                   </p>
                 </div>
               )}
-              {jsonError && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">{jsonError}</div>
-              )}
-              {sessionExpired && (
-                <div className="flex items-center gap-3 p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-sm">
-                  <LogIn className="w-4 h-4 flex-shrink-0 text-amber-600" />
-                  <span>Sessão expirada.</span>
-                  <Link href="/login" className="ml-auto font-semibold underline hover:text-amber-900">
-                    Fazer login
-                  </Link>
-                </div>
-              )}
-            </div>
-            <div className="flex justify-end gap-2 p-4 border-t border-gray-200 bg-gray-50 rounded-b-xl">
-              <button
-                type="button"
-                onClick={() => setShowFileModal(false)}
-                className="px-4 py-2 text-gray-700 hover:bg-gray-200 rounded-lg transition text-sm font-medium"
-              >
-                Cancelar
-              </button>
             </div>
           </div>
         </div>
