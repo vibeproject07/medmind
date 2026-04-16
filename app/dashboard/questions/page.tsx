@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Plus, Edit, Trash2, X, Image as ImageIcon, Filter, ChevronDown, ChevronUp, ClipboardList, Ban, AlertTriangle, Sparkles } from 'lucide-react';
+import { Plus, Edit, Trash2, X, Image as ImageIcon, Filter, ChevronDown, ChevronUp, ClipboardList, Ban, AlertTriangle, Sparkles, Brain, Search, Loader2 } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import DeCSAutocomplete from '@/components/Common/DeCSAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
@@ -129,6 +129,51 @@ export default function QuestionsPage() {
   const [aiDecsLoadingIds, setAiDecsLoadingIds] = useState<Set<number>>(new Set());
   const [aiDecsErrors, setAiDecsErrors] = useState<Record<number, string>>({});
   const [showFilters, setShowFilters] = useState(false);
+
+  // ── Semantic search ────────────────────────────────────────────────────────
+  const [semanticQuery, setSemanticQuery] = useState('');
+  const [semanticMode, setSemanticMode] = useState(false);
+  const [semanticResults, setSemanticResults] = useState<Question[]>([]);
+  const [semanticTotal, setSemanticTotal] = useState(0);
+  const [semanticLoading, setSemanticLoading] = useState(false);
+  const [semanticError, setSemanticError] = useState<string | null>(null);
+  const [semanticPage, setSemanticPage] = useState(1);
+  const semanticInputRef = useRef<HTMLInputElement>(null);
+
+  const runSemanticSearch = useCallback(async (q: string, page = 1) => {
+    if (!q.trim() || q.trim().length < 3) return;
+    setSemanticLoading(true);
+    setSemanticError(null);
+    try {
+      const offset = (page - 1) * PAGE_SIZE;
+      const res = await fetch(
+        `/api/questions/semantic-search?q=${encodeURIComponent(q.trim())}&limit=${PAGE_SIZE}&offset=${offset}`
+      );
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error ?? 'Erro na busca semântica');
+      }
+      const data = await res.json();
+      setSemanticResults(data.questions ?? []);
+      setSemanticTotal(data.total ?? 0);
+      setSemanticPage(page);
+    } catch (err) {
+      setSemanticError(err instanceof Error ? err.message : 'Erro desconhecido');
+    } finally {
+      setSemanticLoading(false);
+    }
+  }, []);
+
+  const exitSemanticMode = () => {
+    setSemanticMode(false);
+    setSemanticQuery('');
+    setSemanticResults([]);
+    setSemanticTotal(0);
+    setSemanticError(null);
+    setSemanticPage(1);
+  };
+  // ─────────────────────────────────────────────────────────────────────────
+
   const [filters, setFilters] = useState({
     exam_year: '',
     exam_board: '',
@@ -572,7 +617,140 @@ export default function QuestionsPage() {
         </div>
       </header>
 
-      {/* Área de Filtros */}
+      {/* Busca Semântica (pgvector) */}
+      <div className="bg-gradient-to-r from-violet-50 to-purple-50 border border-violet-200 rounded-lg p-4">
+        <div className="flex items-center gap-2 mb-2">
+          <Brain className="w-4 h-4 text-violet-600" />
+          <span className="text-sm font-medium text-violet-800">Busca Semântica por IA</span>
+          <span className="text-xs text-violet-500 bg-violet-100 px-2 py-0.5 rounded-full">pgvector</span>
+          {semanticMode && (
+            <button
+              onClick={exitSemanticMode}
+              className="ml-auto text-xs text-violet-600 hover:text-violet-800 underline"
+            >
+              Voltar aos filtros
+            </button>
+          )}
+        </div>
+        <div className="flex gap-2">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input
+              ref={semanticInputRef}
+              type="text"
+              value={semanticQuery}
+              onChange={(e) => setSemanticQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && semanticQuery.trim().length >= 3) {
+                  setSemanticMode(true);
+                  runSemanticSearch(semanticQuery.trim());
+                }
+              }}
+              placeholder="Descreva o tema que quer estudar… ex: complicações do diabetes tipo 2"
+              className="w-full pl-9 pr-4 py-2 text-sm border border-violet-300 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent bg-white"
+            />
+          </div>
+          <button
+            onClick={() => {
+              if (semanticQuery.trim().length >= 3) {
+                setSemanticMode(true);
+                runSemanticSearch(semanticQuery.trim());
+              }
+            }}
+            disabled={semanticLoading || semanticQuery.trim().length < 3}
+            className="flex items-center gap-2 px-4 py-2 bg-violet-600 text-white text-sm rounded-lg hover:bg-violet-700 disabled:opacity-50 transition"
+          >
+            {semanticLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Brain className="w-4 h-4" />}
+            Buscar
+          </button>
+        </div>
+        {semanticError && (
+          <p className="text-xs text-red-600 mt-2">{semanticError}</p>
+        )}
+        {!semanticMode && (
+          <p className="text-xs text-violet-500 mt-1.5">Pressione Enter ou clique em Buscar para pesquisar por significado, não por palavras-chave.</p>
+        )}
+      </div>
+
+      {/* Área de Filtros (hidden in semantic mode) */}
+      {semanticMode ? (
+        /* Semantic search results */
+        <div>
+          <div className="text-sm text-gray-600 mb-3 flex items-center gap-2">
+            <Brain className="w-4 h-4 text-violet-500" />
+            <span>
+              {semanticLoading
+                ? 'Buscando…'
+                : `${semanticTotal} questões encontradas para "${semanticQuery}"`}
+            </span>
+          </div>
+
+          {semanticLoading ? (
+            <div className="flex flex-col items-center justify-center py-16 gap-3">
+              <Loader2 className="w-8 h-8 text-violet-500 animate-spin" />
+              <p className="text-gray-500 text-sm">Gerando embedding e buscando questões similares…</p>
+            </div>
+          ) : semanticResults.length === 0 ? (
+            <div className="text-center py-12 text-gray-400">
+              <Brain className="w-10 h-10 mx-auto mb-3 opacity-30" />
+              <p>Nenhuma questão encontrada com similaridade suficiente.</p>
+              <p className="text-sm mt-1">Tente uma descrição mais detalhada ou verifique se os embeddings foram gerados.</p>
+            </div>
+          ) : (
+            <>
+              <div className="grid gap-3">
+                {semanticResults.map((q) => (
+                  <div
+                    key={q.id}
+                    onClick={() => router.push(`/dashboard/questions/${q.id}`)}
+                    className="bg-white rounded-lg border border-gray-200 p-4 cursor-pointer hover:border-violet-300 hover:shadow-sm transition"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <p className="text-sm text-gray-800 line-clamp-3 flex-1">{q.statement}</p>
+                      {(q as {similarity?: number}).similarity !== undefined && (
+                        <span className="flex-shrink-0 text-xs font-semibold text-violet-600 bg-violet-50 border border-violet-200 px-2 py-0.5 rounded-full">
+                          {Math.round(((q as {similarity?: number}).similarity ?? 0) * 100)}%
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {q.exam_year && <span className="text-xs text-gray-500">{q.exam_year}</span>}
+                      {q.exam_board && <span className="text-xs text-gray-500">· {q.exam_board}</span>}
+                      {q.exam_institution && <span className="text-xs text-gray-500">· {q.exam_institution}</span>}
+                      {(q.tags ?? []).slice(0, 3).map((t) => (
+                        <span key={t} className="text-xs px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full">{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Semantic pagination */}
+              {semanticTotal > PAGE_SIZE && (
+                <div className="flex items-center justify-center gap-2 mt-6">
+                  <button
+                    onClick={() => runSemanticSearch(semanticQuery, semanticPage - 1)}
+                    disabled={semanticPage <= 1 || semanticLoading}
+                    className="px-4 py-2 border border-gray-300 rounded-lg text-sm disabled:opacity-40 hover:bg-gray-50"
+                  >
+                    Anterior
+                  </button>
+                  <span className="text-sm text-gray-600">
+                    Página {semanticPage} de {Math.ceil(semanticTotal / PAGE_SIZE)}
+                  </span>
+                  <button
+                    onClick={() => runSemanticSearch(semanticQuery, semanticPage + 1)}
+                    disabled={semanticPage >= Math.ceil(semanticTotal / PAGE_SIZE) || semanticLoading}
+                    className="px-4 py-2 border border-gray-300 rounded-lg text-sm disabled:opacity-40 hover:bg-gray-50"
+                  >
+                    Próxima
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      ) : (
       <div className="bg-white rounded-lg border border-gray-200 p-4">
         <button
           type="button"
@@ -708,6 +886,7 @@ export default function QuestionsPage() {
           </div>
         )}
       </div>
+      )}
 
       {message && (
         <div
@@ -721,7 +900,7 @@ export default function QuestionsPage() {
         </div>
       )}
 
-      {loading ? (
+      {semanticMode ? null : loading ? (
         <div className="text-center py-12">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
           <p className="text-gray-600 mt-2">Carregando questões...</p>
@@ -927,7 +1106,7 @@ export default function QuestionsPage() {
       )}
 
       {/* Paginação */}
-      {!loading && totalQuestions > PAGE_SIZE && (
+      {!semanticMode && !loading && totalQuestions > PAGE_SIZE && (
         <div className="flex items-center justify-center gap-2 flex-wrap mt-6">
           <button
             type="button"

@@ -1,6 +1,6 @@
 # MedMind
 
-Medical study platform built with Next.js 14, TypeScript, Tailwind CSS, and JWT authentication. Uses PostgreSQL for data storage.
+Medical study platform built with Next.js 14, TypeScript, Tailwind CSS, and JWT authentication. Uses PostgreSQL + pgvector for data storage and semantic search.
 
 ## Stack
 
@@ -8,9 +8,10 @@ Medical study platform built with Next.js 14, TypeScript, Tailwind CSS, and JWT 
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **Auth**: JWT (jsonwebtoken)
-- **Database**: PostgreSQL (via `pg` pool)
+- **Database**: PostgreSQL 16.10 + pgvector 0.8.0 (via `pg` pool)
 - **Port**: 5000 (dev server)
 - **AI**: Anthropic Claude (via `gerar_comentarios.py`), Groq, Gemini
+- **Embeddings**: Google `gemini-embedding-001` (3072 dims) via REST API
 
 ## Project Structure
 
@@ -87,8 +88,24 @@ scripts/
 - Hierarchical codes: `tree_id_list[].tree_id` (array)
 - Routes require user JWT authentication
 
+## pgvector / Semantic Search
+
+- Extension: `pgvector 0.8.0` enabled on PostgreSQL 16.10
+- Column: `questions.embedding vector(3072)` (cosine similarity)
+- Index: HNSW index `questions_embedding_hnsw_idx` created automatically after batch embedding
+- Model: `gemini-embedding-001` (3072 dims) called via REST `v1beta` endpoint
+- Lib: `lib/embeddings.ts` — core utilities (`generateEmbedding`, `buildQuestionText`, `findSimilarQuestions`, `semanticSearchQuestions`)
+- API Routes:
+  - `GET  /api/questions/[id]/embedding` — check if question has embedding
+  - `POST /api/questions/[id]/embedding` — generate + save embedding (admin only)
+  - `GET  /api/questions/[id]/similar` — top-N similar questions by cosine distance
+  - `GET  /api/questions/semantic-search?q=...` — semantic search across all embedded questions
+- Batch script: `scripts/batch-embed-questions.mjs` — generates embeddings for all questions (defaults: concurrency=3, delay=350ms)
+- UI: Semantic search bar on questions list page; "Questões Similares" section on question detail page
+
 ## Notes
 
 - `lucide-react`: `MessageSquareText` does NOT exist — use `MessageSquare`
 - Pre-existing TS error in `simulados/novo/page.tsx` line ~257 (duplicate `if` check)
 - All JSON fields (tags, images, areas_conhecimento, assuntos, decs_terms) stored as TEXT in PostgreSQL, parsed on read
+- Semantic search only works on questions that have an embedding — run the batch script to populate all

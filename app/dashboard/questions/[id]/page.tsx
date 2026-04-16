@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { ArrowLeft, Edit, Image as ImageIcon, X, AlertTriangle, Ban, RotateCcw, Sparkles } from 'lucide-react';
+import { ArrowLeft, Edit, Image as ImageIcon, X, AlertTriangle, Ban, RotateCcw, Sparkles, Brain, ExternalLink, Loader2, Cpu } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import DeCSAutocomplete from '@/components/Common/DeCSAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
@@ -55,6 +55,17 @@ interface DeCSRecord {
   hierarchy_path: string;
 }
 
+interface SimilarQuestion {
+  id: number;
+  statement: string;
+  tags: string[];
+  areas_conhecimento: string[];
+  exam_year: number | null;
+  exam_board: string | null;
+  exam_institution: string | null;
+  similarity: number;
+}
+
 export default function QuestionDetailPage() {
   const router = useRouter();
   const params = useParams();
@@ -86,6 +97,11 @@ export default function QuestionDetailPage() {
   const [aiDecsLoading, setAiDecsLoading] = useState(false);
   const [aiDecsError, setAiDecsError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [similarQuestions, setSimilarQuestions] = useState<SimilarQuestion[]>([]);
+  const [similarLoading, setSimilarLoading] = useState(false);
+  const [hasEmbedding, setHasEmbedding] = useState(false);
+  const [generatingEmbedding, setGeneratingEmbedding] = useState(false);
 
   const safeEditAreas = editAreasConhecimento ?? [];
   const safeEditAssuntos = editAssuntos ?? [];
@@ -134,6 +150,60 @@ export default function QuestionDetailPage() {
       fetchQuestion();
     }
   }, [questionId]);
+
+  // Fetch embedding status and similar questions
+  useEffect(() => {
+    if (!questionId) return;
+    const idNum = parseInt(questionId);
+    if (isNaN(idNum)) return;
+
+    (async () => {
+      try {
+        const embRes = await fetch(`/api/questions/${questionId}/embedding`);
+        if (embRes.ok) {
+          const { hasEmbedding: has } = await embRes.json();
+          setHasEmbedding(has);
+          if (has) {
+            setSimilarLoading(true);
+            const simRes = await fetch(`/api/questions/${questionId}/similar?limit=5`);
+            if (simRes.ok) {
+              const { questions: sq } = await simRes.json();
+              setSimilarQuestions(sq ?? []);
+            }
+            setSimilarLoading(false);
+          }
+        }
+      } catch {
+        // non-critical — silently ignore
+      }
+    })();
+  }, [questionId]);
+
+  const handleGenerateEmbedding = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    setGeneratingEmbedding(true);
+    try {
+      const res = await fetch(`/api/questions/${questionId}/embedding`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        setHasEmbedding(true);
+        setSimilarLoading(true);
+        const simRes = await fetch(`/api/questions/${questionId}/similar?limit=5`);
+        if (simRes.ok) {
+          const { questions: sq } = await simRes.json();
+          setSimilarQuestions(sq ?? []);
+        }
+        setSimilarLoading(false);
+      }
+    } catch (err) {
+      console.error('Erro ao gerar embedding', err);
+    } finally {
+      setGeneratingEmbedding(false);
+    }
+  };
 
   // Ajustar resposta correta quando alternativas opcionais são removidas durante edição
   useEffect(() => {
@@ -1123,6 +1193,90 @@ export default function QuestionDetailPage() {
             <p className="text-gray-400 italic text-sm">
               {aiDecsLoading ? 'Aguardando resposta da IA…' : 'Nenhum descritor IA gerado. Clique em "Gerar com IA" para classificar esta questão.'}
             </p>
+          )}
+        </div>
+      )}
+
+      {/* Questões Similares (via pgvector) */}
+      {!isEditing && (
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Brain className="h-4 w-4 text-violet-500" />
+              <h3 className="text-lg font-semibold text-gray-800">Questões Similares</h3>
+              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">busca semântica</span>
+            </div>
+            {isAdmin && !hasEmbedding && (
+              <button
+                onClick={handleGenerateEmbedding}
+                disabled={generatingEmbedding}
+                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-violet-600 text-white rounded-lg hover:bg-violet-700 disabled:opacity-50 transition"
+              >
+                {generatingEmbedding ? (
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <Cpu className="h-3.5 w-3.5" />
+                )}
+                {generatingEmbedding ? 'Gerando embedding…' : 'Gerar Embedding'}
+              </button>
+            )}
+          </div>
+
+          {similarLoading || generatingEmbedding ? (
+            <div className="flex items-center gap-2 text-gray-500 text-sm py-4">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span>{generatingEmbedding ? 'Gerando embedding vetorial…' : 'Buscando questões similares…'}</span>
+            </div>
+          ) : !hasEmbedding ? (
+            <div className="text-center py-6">
+              <Brain className="h-8 w-8 text-gray-300 mx-auto mb-2" />
+              <p className="text-gray-400 text-sm">
+                {isAdmin
+                  ? 'Esta questão ainda não tem embedding vetorial. Clique em "Gerar Embedding" para ativar a busca semântica.'
+                  : 'Embedding vetorial não gerado para esta questão.'}
+              </p>
+            </div>
+          ) : similarQuestions.length === 0 ? (
+            <p className="text-gray-400 italic text-sm">Nenhuma questão similar encontrada com similaridade suficiente.</p>
+          ) : (
+            <div className="space-y-3">
+              {similarQuestions.map((sq) => (
+                <div
+                  key={sq.id}
+                  className="flex items-start gap-3 p-3 rounded-lg border border-gray-100 hover:border-violet-200 hover:bg-violet-50/30 transition group"
+                >
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-gray-700 line-clamp-2">{sq.statement}</p>
+                    <div className="flex flex-wrap items-center gap-2 mt-1.5">
+                      {sq.exam_year && (
+                        <span className="text-xs text-gray-500">{sq.exam_year}</span>
+                      )}
+                      {sq.exam_board && (
+                        <span className="text-xs text-gray-500">· {sq.exam_board}</span>
+                      )}
+                      {sq.exam_institution && (
+                        <span className="text-xs text-gray-500">· {sq.exam_institution}</span>
+                      )}
+                      {sq.areas_conhecimento?.slice(0, 2).map((area) => (
+                        <span key={area} className="text-xs px-1.5 py-0.5 bg-violet-50 text-violet-600 rounded-full">
+                          {area}
+                        </span>
+                      ))}
+                      <span className="ml-auto text-xs font-medium text-violet-600">
+                        {Math.round(sq.similarity * 100)}% similar
+                      </span>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => router.push(`/dashboard/questions/${sq.id}`)}
+                    className="flex-shrink-0 p-1.5 text-gray-400 hover:text-violet-600 transition opacity-0 group-hover:opacity-100"
+                    title="Ver questão"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
           )}
         </div>
       )}
