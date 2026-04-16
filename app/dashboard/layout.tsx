@@ -13,9 +13,11 @@ export default function DashboardLayout({
     <SidebarProvider>
       <DashboardSearchProvider>
         <Sidebar />
-        <div className="flex flex-col min-h-screen bg-gray-50 overflow-x-hidden w-full">
+        <div className="flex flex-col h-screen overflow-hidden bg-gray-50 overflow-x-hidden w-full">
           <Topbar />
-          <main className="flex-1 p-3 sm:p-4 md:p-3 overflow-x-hidden">{children}</main>
+          <main className="flex-1 min-h-0 p-3 sm:p-4 md:p-3 overflow-y-auto overflow-x-hidden">
+            {children}
+          </main>
         </div>
         <FloatingButton />
       </DashboardSearchProvider>

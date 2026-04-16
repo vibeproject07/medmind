@@ -316,7 +316,7 @@ export default function ProvaExamPage() {
   // ── Results screen ────────────────────────────────────────────────────────
   if (showResults) {
     return (
-      <div className="flex flex-col h-[calc(100vh-4rem)]">
+      <div className="-m-3 sm:-m-4 md:-m-3 h-full flex flex-col overflow-hidden">
         <div className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between flex-shrink-0">
           <h2 className="text-2xl font-bold text-gray-800">Resultado — {prova.nome}</h2>
           <button
@@ -411,7 +411,7 @@ export default function ProvaExamPage() {
 
   // ── Exam screen ───────────────────────────────────────────────────────────
   return (
-    <div className="flex flex-col h-[calc(100vh-4rem)] overflow-hidden">
+    <div className="-m-3 sm:-m-4 md:-m-3 h-full flex flex-col overflow-hidden">
 
       {/* ── Fixed topbar ─────────────────────────────────────────────────── */}
       <div className="bg-white border-b border-gray-200 px-4 sm:px-6 pt-3 pb-2 flex-shrink-0 z-10">
