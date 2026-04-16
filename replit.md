@@ -125,6 +125,11 @@ scripts/
 - Semantic search bar (violet gradient) on questions list page
 - "Questões Similares" section on question detail page
 
+## Development Preferences
+
+- **Mudanças visuais / layout frontend não devem reiniciar o servidor.** Next.js já faz hot-reload automático — o servidor (`npm run dev`) só deve ser reiniciado quando houver mudança em configuração, variáveis de ambiente, dependências (`package.json`) ou arquivos que rodam exclusivamente no servidor (middleware, route handlers que usam módulos Node).
+- **A sessão do usuário não deve ser perdida após mudanças simples de layout.** O token JWT fica em `localStorage` — mudanças de componentes React puram não o afetam. Evitar qualquer ação que limpe o `localStorage` ou force um logout durante ajustes de UI.
+
 ## Notes
 
 - `lucide-react`: `MessageSquareText` does NOT exist — use `MessageSquare`
