@@ -98,7 +98,7 @@ async function pineconeUpsertBatch(vectors) {
   if (!pineconeIdx || vectors.length === 0) return;
   for (let i = 0; i < vectors.length; i += PINECONE_BATCH) {
     const chunk = vectors.slice(i, i + PINECONE_BATCH);
-    await pineconeIdx.upsert(chunk);
+    await pineconeIdx.upsert({ records: chunk });
   }
 }
 
@@ -208,7 +208,7 @@ async function main() {
         // Flush Pinecone in chunks of PINECONE_BATCH
         if (pendingPinecone.length >= PINECONE_BATCH) {
           const batch = pendingPinecone.splice(0, PINECONE_BATCH);
-          await pineconeIdx.upsert(batch);
+          await pineconeIdx.upsert({ records: batch });
         }
       }
 

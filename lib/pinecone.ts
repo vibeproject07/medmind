@@ -126,20 +126,22 @@ export async function upsertQuestionEmbedding(
     areas_conhecimento: JSON.stringify(parseTags(meta.areas_conhecimento)),
   };
 
-  await index.upsert([
-    {
-      id: toVectorId(questionId),
-      values: embedding,
-      metadata,
-    },
-  ]);
+  await index.upsert({
+    records: [
+      {
+        id: toVectorId(questionId),
+        values: embedding,
+        metadata,
+      },
+    ],
+  });
 }
 
 // ── Delete ────────────────────────────────────────────────────────────────────
 
 export async function deleteQuestionEmbedding(questionId: number): Promise<void> {
   const index = await getPineconeIndex();
-  await index.deleteOne(toVectorId(questionId));
+  await index.deleteOne({ id: toVectorId(questionId) });
 }
 
 // ── Similarity search ─────────────────────────────────────────────────────────

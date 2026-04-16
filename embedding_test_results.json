@@ -1,0 +1,1181 @@
+{
+  "metadata": {
+    "timestamp": "2026-04-16T00:55:50.714Z",
+    "embedding_model": "gemini-embedding-001",
+    "embedding_dimensions": 3072,
+    "test_sample_size": 10,
+    "similar_top_k": 5,
+    "backends_tested": [
+      "pgvector",
+      "pinecone"
+    ]
+  },
+  "questions": [
+    {
+      "id": 1695,
+      "statement_preview": "Uma paciente, 28 anos, com histórico de múltiplos episódios de dor pélvica e febre, é diagnosticada com doença inflamatória pélvica (DIP). Ela manifesta preocupação com sua fertilidade futura. Qual é …",
+      "exam_year": 2025,
+      "exam_board": "ABC",
+      "exam_institution": null,
+      "pgvector": {
+        "latency_ms": 22,
+        "results": [
+          {
+            "id": 1696,
+            "similarity": 0.691672,
+            "statement_preview": "Uma paciente com diagnóstico de endometriose apresenta sintomas de dor crônica e alterações intestinais cíclicas, sugeri…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1701,
+            "similarity": 0.60298,
+            "statement_preview": "Um paciente submetido à colecistectomia laparoscópica desenvolve drenagem persistente de bile pelo dreno no pós-operatór…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1704,
+            "similarity": 0.59555,
+            "statement_preview": "Um homem, 40 anos, com doença de Crohn, apresenta fístula anorretal complexa com trajetos múltiplos. Qual das opções ter…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1702,
+            "similarity": 0.586735,
+            "statement_preview": "Um paciente com histórico de cirurgia abdominal complexa apresenta uma fístula entérica de alto débito com drenagem cutâ…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1697,
+            "similarity": 0.581608,
+            "statement_preview": "Um paciente com cirrose hepática é avaliado para classificação de gravidade da doença e possível inclusão em lista de tr…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          }
+        ]
+      },
+      "pinecone": {
+        "latency_ms": 170,
+        "results": [
+          {
+            "id": 1696,
+            "similarity": 0.690842,
+            "statement_preview": "Uma paciente com diagnóstico de endometriose apresenta sintomas de dor crônica e alterações intestinais cíclicas, sugeri…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1701,
+            "similarity": 0.603485,
+            "statement_preview": "Um paciente submetido à colecistectomia laparoscópica desenvolve drenagem persistente de bile pelo dreno no pós-operatór…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1704,
+            "similarity": 0.595612,
+            "statement_preview": "Um homem, 40 anos, com doença de Crohn, apresenta fístula anorretal complexa com trajetos múltiplos. Qual das opções ter…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1702,
+            "similarity": 0.586578,
+            "statement_preview": "Um paciente com histórico de cirurgia abdominal complexa apresenta uma fístula entérica de alto débito com drenagem cutâ…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1697,
+            "similarity": 0.582214,
+            "statement_preview": "Um paciente com cirrose hepática é avaliado para classificação de gravidade da doença e possível inclusão em lista de tr…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          }
+        ]
+      },
+      "local_cosine_validation": [
+        {
+          "id": 1696,
+          "similarity": 0.691672
+        },
+        {
+          "id": 1701,
+          "similarity": 0.60298
+        },
+        {
+          "id": 1704,
+          "similarity": 0.59555
+        },
+        {
+          "id": 1702,
+          "similarity": 0.586735
+        },
+        {
+          "id": 1697,
+          "similarity": 0.581608
+        }
+      ],
+      "backend_agreement": {
+        "shared_results": 5,
+        "total_results": 5,
+        "agreement_pct": 100
+      }
+    },
+    {
+      "id": 1696,
+      "statement_preview": "Uma paciente com diagnóstico de endometriose apresenta sintomas de dor crônica e alterações intestinais cíclicas, sugerindo comprometimento abdominal. Quais são os principais sítios abdominais onde a …",
+      "exam_year": 2025,
+      "exam_board": "ABC",
+      "exam_institution": null,
+      "pgvector": {
+        "latency_ms": 19,
+        "results": [
+          {
+            "id": 1695,
+            "similarity": 0.691672,
+            "statement_preview": "Uma paciente, 28 anos, com histórico de múltiplos episódios de dor pélvica e febre, é diagnosticada com doença inflamató…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1703,
+            "similarity": 0.604028,
+            "statement_preview": "Um paciente com colostomia terminal, para descompressão após ressecção de câncer de cólon, apresenta irritação cutânea p…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1704,
+            "similarity": 0.595719,
+            "statement_preview": "Um homem, 40 anos, com doença de Crohn, apresenta fístula anorretal complexa com trajetos múltiplos. Qual das opções ter…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1700,
+            "similarity": 0.593309,
+            "statement_preview": "Um paciente com diagnóstico de esôfago de Barrett, confirmado por biópsia, com displasia de baixo grau, apresenta sintom…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1702,
+            "similarity": 0.583412,
+            "statement_preview": "Um paciente com histórico de cirurgia abdominal complexa apresenta uma fístula entérica de alto débito com drenagem cutâ…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          }
+        ]
+      },
+      "pinecone": {
+        "latency_ms": 142,
+        "results": [
+          {
+            "id": 1695,
+            "similarity": 0.690849,
+            "statement_preview": "Uma paciente, 28 anos, com histórico de múltiplos episódios de dor pélvica e febre, é diagnosticada com doença inflamató…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1703,
+            "similarity": 0.60276,
+            "statement_preview": "Um paciente com colostomia terminal, para descompressão após ressecção de câncer de cólon, apresenta irritação cutânea p…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1704,
+            "similarity": 0.595139,
+            "statement_preview": "Um homem, 40 anos, com doença de Crohn, apresenta fístula anorretal complexa com trajetos múltiplos. Qual das opções ter…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1700,
+            "similarity": 0.593445,
+            "statement_preview": "Um paciente com diagnóstico de esôfago de Barrett, confirmado por biópsia, com displasia de baixo grau, apresenta sintom…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1702,
+            "similarity": 0.582657,
+            "statement_preview": "Um paciente com histórico de cirurgia abdominal complexa apresenta uma fístula entérica de alto débito com drenagem cutâ…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          }
+        ]
+      },
+      "local_cosine_validation": [
+        {
+          "id": 1695,
+          "similarity": 0.691672
+        },
+        {
+          "id": 1703,
+          "similarity": 0.604028
+        },
+        {
+          "id": 1704,
+          "similarity": 0.595719
+        },
+        {
+          "id": 1700,
+          "similarity": 0.593309
+        },
+        {
+          "id": 1702,
+          "similarity": 0.583412
+        }
+      ],
+      "backend_agreement": {
+        "shared_results": 5,
+        "total_results": 5,
+        "agreement_pct": 100
+      }
+    },
+    {
+      "id": 1697,
+      "statement_preview": "Um paciente com cirrose hepática é avaliado para classificação de gravidade da doença e possível inclusão em lista de transplante. O escore de Child-Pugh é utilizado nesse contexto. Quais critérios sã…",
+      "exam_year": 2025,
+      "exam_board": "ABC",
+      "exam_institution": null,
+      "pgvector": {
+        "latency_ms": 18,
+        "results": [
+          {
+            "id": 1698,
+            "similarity": 0.72432,
+            "statement_preview": "Um paciente com cirrose e hepatocarcinoma é avaliado para transplante hepático. Segundo os critérios de Barcelona, quais…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1700,
+            "similarity": 0.6257,
+            "statement_preview": "Um paciente com diagnóstico de esôfago de Barrett, confirmado por biópsia, com displasia de baixo grau, apresenta sintom…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1701,
+            "similarity": 0.621324,
+            "statement_preview": "Um paciente submetido à colecistectomia laparoscópica desenvolve drenagem persistente de bile pelo dreno no pós-operatór…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1702,
+            "similarity": 0.605236,
+            "statement_preview": "Um paciente com histórico de cirurgia abdominal complexa apresenta uma fístula entérica de alto débito com drenagem cutâ…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1704,
+            "similarity": 0.60374,
+            "statement_preview": "Um homem, 40 anos, com doença de Crohn, apresenta fístula anorretal complexa com trajetos múltiplos. Qual das opções ter…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          }
+        ]
+      },
+      "pinecone": {
+        "latency_ms": 70,
+        "results": [
+          {
+            "id": 1698,
+            "similarity": 0.724411,
+            "statement_preview": "Um paciente com cirrose e hepatocarcinoma é avaliado para transplante hepático. Segundo os critérios de Barcelona, quais…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1700,
+            "similarity": 0.626251,
+            "statement_preview": "Um paciente com diagnóstico de esôfago de Barrett, confirmado por biópsia, com displasia de baixo grau, apresenta sintom…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1701,
+            "similarity": 0.621971,
+            "statement_preview": "Um paciente submetido à colecistectomia laparoscópica desenvolve drenagem persistente de bile pelo dreno no pós-operatór…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1702,
+            "similarity": 0.60511,
+            "statement_preview": "Um paciente com histórico de cirurgia abdominal complexa apresenta uma fístula entérica de alto débito com drenagem cutâ…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1704,
+            "similarity": 0.604141,
+            "statement_preview": "Um homem, 40 anos, com doença de Crohn, apresenta fístula anorretal complexa com trajetos múltiplos. Qual das opções ter…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          }
+        ]
+      },
+      "local_cosine_validation": [
+        {
+          "id": 1698,
+          "similarity": 0.72432
+        },
+        {
+          "id": 1700,
+          "similarity": 0.6257
+        },
+        {
+          "id": 1701,
+          "similarity": 0.621324
+        },
+        {
+          "id": 1702,
+          "similarity": 0.605236
+        },
+        {
+          "id": 1704,
+          "similarity": 0.60374
+        }
+      ],
+      "backend_agreement": {
+        "shared_results": 5,
+        "total_results": 5,
+        "agreement_pct": 100
+      }
+    },
+    {
+      "id": 1698,
+      "statement_preview": "Um paciente com cirrose e hepatocarcinoma é avaliado para transplante hepático. Segundo os critérios de Barcelona, quais características do tumor permitem que o paciente seja considerado um candidato …",
+      "exam_year": 2025,
+      "exam_board": "ABC",
+      "exam_institution": null,
+      "pgvector": {
+        "latency_ms": 18,
+        "results": [
+          {
+            "id": 1697,
+            "similarity": 0.72432,
+            "statement_preview": "Um paciente com cirrose hepática é avaliado para classificação de gravidade da doença e possível inclusão em lista de tr…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1700,
+            "similarity": 0.660232,
+            "statement_preview": "Um paciente com diagnóstico de esôfago de Barrett, confirmado por biópsia, com displasia de baixo grau, apresenta sintom…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1704,
+            "similarity": 0.616272,
+            "statement_preview": "Um homem, 40 anos, com doença de Crohn, apresenta fístula anorretal complexa com trajetos múltiplos. Qual das opções ter…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1701,
+            "similarity": 0.602838,
+            "statement_preview": "Um paciente submetido à colecistectomia laparoscópica desenvolve drenagem persistente de bile pelo dreno no pós-operatór…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1703,
+            "similarity": 0.578509,
+            "statement_preview": "Um paciente com colostomia terminal, para descompressão após ressecção de câncer de cólon, apresenta irritação cutânea p…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          }
+        ]
+      },
+      "pinecone": {
+        "latency_ms": 70,
+        "results": [
+          {
+            "id": 1697,
+            "similarity": 0.724426,
+            "statement_preview": "Um paciente com cirrose hepática é avaliado para classificação de gravidade da doença e possível inclusão em lista de tr…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1700,
+            "similarity": 0.660789,
+            "statement_preview": "Um paciente com diagnóstico de esôfago de Barrett, confirmado por biópsia, com displasia de baixo grau, apresenta sintom…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1704,
+            "similarity": 0.616005,
+            "statement_preview": "Um homem, 40 anos, com doença de Crohn, apresenta fístula anorretal complexa com trajetos múltiplos. Qual das opções ter…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1701,
+            "similarity": 0.60302,
+            "statement_preview": "Um paciente submetido à colecistectomia laparoscópica desenvolve drenagem persistente de bile pelo dreno no pós-operatór…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1702,
+            "similarity": 0.577774,
+            "statement_preview": "Um paciente com histórico de cirurgia abdominal complexa apresenta uma fístula entérica de alto débito com drenagem cutâ…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          }
+        ]
+      },
+      "local_cosine_validation": [
+        {
+          "id": 1697,
+          "similarity": 0.72432
+        },
+        {
+          "id": 1700,
+          "similarity": 0.660232
+        },
+        {
+          "id": 1704,
+          "similarity": 0.616272
+        },
+        {
+          "id": 1701,
+          "similarity": 0.602838
+        },
+        {
+          "id": 1703,
+          "similarity": 0.578509
+        }
+      ],
+      "backend_agreement": {
+        "shared_results": 4,
+        "total_results": 5,
+        "agreement_pct": 80
+      }
+    },
+    {
+      "id": 1699,
+      "statement_preview": "Durante a realização de uma colectomia laparoscópica, um grampeador linear cortante é utilizado para a criação de anastomose. Qual das alternativas descreve corretamente uma vantagem do uso de suturas…",
+      "exam_year": 2025,
+      "exam_board": "ABC",
+      "exam_institution": null,
+      "pgvector": {
+        "latency_ms": 19,
+        "results": [
+          {
+            "id": 1701,
+            "similarity": 0.652498,
+            "statement_preview": "Um paciente submetido à colecistectomia laparoscópica desenvolve drenagem persistente de bile pelo dreno no pós-operatór…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1703,
+            "similarity": 0.640638,
+            "statement_preview": "Um paciente com colostomia terminal, para descompressão após ressecção de câncer de cólon, apresenta irritação cutânea p…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1704,
+            "similarity": 0.633743,
+            "statement_preview": "Um homem, 40 anos, com doença de Crohn, apresenta fístula anorretal complexa com trajetos múltiplos. Qual das opções ter…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1702,
+            "similarity": 0.626577,
+            "statement_preview": "Um paciente com histórico de cirurgia abdominal complexa apresenta uma fístula entérica de alto débito com drenagem cutâ…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1700,
+            "similarity": 0.607122,
+            "statement_preview": "Um paciente com diagnóstico de esôfago de Barrett, confirmado por biópsia, com displasia de baixo grau, apresenta sintom…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          }
+        ]
+      },
+      "pinecone": {
+        "latency_ms": 121,
+        "results": [
+          {
+            "id": 1701,
+            "similarity": 0.652756,
+            "statement_preview": "Um paciente submetido à colecistectomia laparoscópica desenvolve drenagem persistente de bile pelo dreno no pós-operatór…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1703,
+            "similarity": 0.639114,
+            "statement_preview": "Um paciente com colostomia terminal, para descompressão após ressecção de câncer de cólon, apresenta irritação cutânea p…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1704,
+            "similarity": 0.633781,
+            "statement_preview": "Um homem, 40 anos, com doença de Crohn, apresenta fístula anorretal complexa com trajetos múltiplos. Qual das opções ter…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1702,
+            "similarity": 0.626343,
+            "statement_preview": "Um paciente com histórico de cirurgia abdominal complexa apresenta uma fístula entérica de alto débito com drenagem cutâ…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1700,
+            "similarity": 0.606575,
+            "statement_preview": "Um paciente com diagnóstico de esôfago de Barrett, confirmado por biópsia, com displasia de baixo grau, apresenta sintom…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          }
+        ]
+      },
+      "local_cosine_validation": [
+        {
+          "id": 1701,
+          "similarity": 0.652498
+        },
+        {
+          "id": 1703,
+          "similarity": 0.640638
+        },
+        {
+          "id": 1704,
+          "similarity": 0.633743
+        },
+        {
+          "id": 1702,
+          "similarity": 0.626577
+        },
+        {
+          "id": 1700,
+          "similarity": 0.607122
+        }
+      ],
+      "backend_agreement": {
+        "shared_results": 5,
+        "total_results": 5,
+        "agreement_pct": 100
+      }
+    },
+    {
+      "id": 1700,
+      "statement_preview": "Um paciente com diagnóstico de esôfago de Barrett, confirmado por biópsia, com displasia de baixo grau, apresenta sintomas refratários de refluxo gastroesofágico apesar do uso de inibidores de bomba d…",
+      "exam_year": 2025,
+      "exam_board": "ABC",
+      "exam_institution": null,
+      "pgvector": {
+        "latency_ms": 18,
+        "results": [
+          {
+            "id": 1701,
+            "similarity": 0.666293,
+            "statement_preview": "Um paciente submetido à colecistectomia laparoscópica desenvolve drenagem persistente de bile pelo dreno no pós-operatór…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1698,
+            "similarity": 0.660232,
+            "statement_preview": "Um paciente com cirrose e hepatocarcinoma é avaliado para transplante hepático. Segundo os critérios de Barcelona, quais…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1704,
+            "similarity": 0.652111,
+            "statement_preview": "Um homem, 40 anos, com doença de Crohn, apresenta fístula anorretal complexa com trajetos múltiplos. Qual das opções ter…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1702,
+            "similarity": 0.647643,
+            "statement_preview": "Um paciente com histórico de cirurgia abdominal complexa apresenta uma fístula entérica de alto débito com drenagem cutâ…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1697,
+            "similarity": 0.6257,
+            "statement_preview": "Um paciente com cirrose hepática é avaliado para classificação de gravidade da doença e possível inclusão em lista de tr…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          }
+        ]
+      },
+      "pinecone": {
+        "latency_ms": 103,
+        "results": [
+          {
+            "id": 1701,
+            "similarity": 0.666222,
+            "statement_preview": "Um paciente submetido à colecistectomia laparoscópica desenvolve drenagem persistente de bile pelo dreno no pós-operatór…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1698,
+            "similarity": 0.660789,
+            "statement_preview": "Um paciente com cirrose e hepatocarcinoma é avaliado para transplante hepático. Segundo os critérios de Barcelona, quais…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1704,
+            "similarity": 0.651703,
+            "statement_preview": "Um homem, 40 anos, com doença de Crohn, apresenta fístula anorretal complexa com trajetos múltiplos. Qual das opções ter…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1702,
+            "similarity": 0.647736,
+            "statement_preview": "Um paciente com histórico de cirurgia abdominal complexa apresenta uma fístula entérica de alto débito com drenagem cutâ…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1697,
+            "similarity": 0.626259,
+            "statement_preview": "Um paciente com cirrose hepática é avaliado para classificação de gravidade da doença e possível inclusão em lista de tr…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          }
+        ]
+      },
+      "local_cosine_validation": [
+        {
+          "id": 1701,
+          "similarity": 0.666293
+        },
+        {
+          "id": 1698,
+          "similarity": 0.660232
+        },
+        {
+          "id": 1704,
+          "similarity": 0.652111
+        },
+        {
+          "id": 1702,
+          "similarity": 0.647643
+        },
+        {
+          "id": 1697,
+          "similarity": 0.6257
+        }
+      ],
+      "backend_agreement": {
+        "shared_results": 5,
+        "total_results": 5,
+        "agreement_pct": 100
+      }
+    },
+    {
+      "id": 1701,
+      "statement_preview": "Um paciente submetido à colecistectomia laparoscópica desenvolve drenagem persistente de bile pelo dreno no pós-operatório. A colangiografia confirma uma fístula biliar de baixo débito sem coleções in…",
+      "exam_year": 2025,
+      "exam_board": "ABC",
+      "exam_institution": null,
+      "pgvector": {
+        "latency_ms": 19,
+        "results": [
+          {
+            "id": 1702,
+            "similarity": 0.800016,
+            "statement_preview": "Um paciente com histórico de cirurgia abdominal complexa apresenta uma fístula entérica de alto débito com drenagem cutâ…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1704,
+            "similarity": 0.708258,
+            "statement_preview": "Um homem, 40 anos, com doença de Crohn, apresenta fístula anorretal complexa com trajetos múltiplos. Qual das opções ter…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1700,
+            "similarity": 0.666293,
+            "statement_preview": "Um paciente com diagnóstico de esôfago de Barrett, confirmado por biópsia, com displasia de baixo grau, apresenta sintom…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1699,
+            "similarity": 0.652498,
+            "statement_preview": "Durante a realização de uma colectomia laparoscópica, um grampeador linear cortante é utilizado para a criação de anasto…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1703,
+            "similarity": 0.643478,
+            "statement_preview": "Um paciente com colostomia terminal, para descompressão após ressecção de câncer de cólon, apresenta irritação cutânea p…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          }
+        ]
+      },
+      "pinecone": {
+        "latency_ms": 71,
+        "results": [
+          {
+            "id": 1702,
+            "similarity": 0.800202,
+            "statement_preview": "Um paciente com histórico de cirurgia abdominal complexa apresenta uma fístula entérica de alto débito com drenagem cutâ…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1704,
+            "similarity": 0.707794,
+            "statement_preview": "Um homem, 40 anos, com doença de Crohn, apresenta fístula anorretal complexa com trajetos múltiplos. Qual das opções ter…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1700,
+            "similarity": 0.666214,
+            "statement_preview": "Um paciente com diagnóstico de esôfago de Barrett, confirmado por biópsia, com displasia de baixo grau, apresenta sintom…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1699,
+            "similarity": 0.652756,
+            "statement_preview": "Durante a realização de uma colectomia laparoscópica, um grampeador linear cortante é utilizado para a criação de anasto…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1703,
+            "similarity": 0.642563,
+            "statement_preview": "Um paciente com colostomia terminal, para descompressão após ressecção de câncer de cólon, apresenta irritação cutânea p…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          }
+        ]
+      },
+      "local_cosine_validation": [
+        {
+          "id": 1702,
+          "similarity": 0.800016
+        },
+        {
+          "id": 1704,
+          "similarity": 0.708258
+        },
+        {
+          "id": 1700,
+          "similarity": 0.666293
+        },
+        {
+          "id": 1699,
+          "similarity": 0.652498
+        },
+        {
+          "id": 1703,
+          "similarity": 0.643478
+        }
+      ],
+      "backend_agreement": {
+        "shared_results": 5,
+        "total_results": 5,
+        "agreement_pct": 100
+      }
+    },
+    {
+      "id": 1702,
+      "statement_preview": "Um paciente com histórico de cirurgia abdominal complexa apresenta uma fístula entérica de alto débito com drenagem cutânea significativa e sinais de desnutrição. Qual(is) é(são) o(s) manejo(s) inicia…",
+      "exam_year": 2025,
+      "exam_board": "ABC",
+      "exam_institution": null,
+      "pgvector": {
+        "latency_ms": 19,
+        "results": [
+          {
+            "id": 1701,
+            "similarity": 0.800016,
+            "statement_preview": "Um paciente submetido à colecistectomia laparoscópica desenvolve drenagem persistente de bile pelo dreno no pós-operatór…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1704,
+            "similarity": 0.752395,
+            "statement_preview": "Um homem, 40 anos, com doença de Crohn, apresenta fístula anorretal complexa com trajetos múltiplos. Qual das opções ter…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1703,
+            "similarity": 0.664839,
+            "statement_preview": "Um paciente com colostomia terminal, para descompressão após ressecção de câncer de cólon, apresenta irritação cutânea p…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1700,
+            "similarity": 0.647643,
+            "statement_preview": "Um paciente com diagnóstico de esôfago de Barrett, confirmado por biópsia, com displasia de baixo grau, apresenta sintom…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1699,
+            "similarity": 0.626577,
+            "statement_preview": "Durante a realização de uma colectomia laparoscópica, um grampeador linear cortante é utilizado para a criação de anasto…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          }
+        ]
+      },
+      "pinecone": {
+        "latency_ms": 69,
+        "results": [
+          {
+            "id": 1701,
+            "similarity": 0.800202,
+            "statement_preview": "Um paciente submetido à colecistectomia laparoscópica desenvolve drenagem persistente de bile pelo dreno no pós-operatór…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1704,
+            "similarity": 0.752647,
+            "statement_preview": "Um homem, 40 anos, com doença de Crohn, apresenta fístula anorretal complexa com trajetos múltiplos. Qual das opções ter…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1703,
+            "similarity": 0.664261,
+            "statement_preview": "Um paciente com colostomia terminal, para descompressão após ressecção de câncer de cólon, apresenta irritação cutânea p…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1700,
+            "similarity": 0.647728,
+            "statement_preview": "Um paciente com diagnóstico de esôfago de Barrett, confirmado por biópsia, com displasia de baixo grau, apresenta sintom…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1699,
+            "similarity": 0.626343,
+            "statement_preview": "Durante a realização de uma colectomia laparoscópica, um grampeador linear cortante é utilizado para a criação de anasto…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          }
+        ]
+      },
+      "local_cosine_validation": [
+        {
+          "id": 1701,
+          "similarity": 0.800016
+        },
+        {
+          "id": 1704,
+          "similarity": 0.752395
+        },
+        {
+          "id": 1703,
+          "similarity": 0.664839
+        },
+        {
+          "id": 1700,
+          "similarity": 0.647643
+        },
+        {
+          "id": 1699,
+          "similarity": 0.626577
+        }
+      ],
+      "backend_agreement": {
+        "shared_results": 5,
+        "total_results": 5,
+        "agreement_pct": 100
+      }
+    },
+    {
+      "id": 1703,
+      "statement_preview": "Um paciente com colostomia terminal, para descompressão após ressecção de câncer de cólon, apresenta irritação cutânea periostomal e queixa de desconforto constante. Assinale a alternativa que apresen…",
+      "exam_year": 2025,
+      "exam_board": "ABC",
+      "exam_institution": null,
+      "pgvector": {
+        "latency_ms": 18,
+        "results": [
+          {
+            "id": 1702,
+            "similarity": 0.664839,
+            "statement_preview": "Um paciente com histórico de cirurgia abdominal complexa apresenta uma fístula entérica de alto débito com drenagem cutâ…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1701,
+            "similarity": 0.643478,
+            "statement_preview": "Um paciente submetido à colecistectomia laparoscópica desenvolve drenagem persistente de bile pelo dreno no pós-operatór…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1704,
+            "similarity": 0.642884,
+            "statement_preview": "Um homem, 40 anos, com doença de Crohn, apresenta fístula anorretal complexa com trajetos múltiplos. Qual das opções ter…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1699,
+            "similarity": 0.640638,
+            "statement_preview": "Durante a realização de uma colectomia laparoscópica, um grampeador linear cortante é utilizado para a criação de anasto…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1700,
+            "similarity": 0.617987,
+            "statement_preview": "Um paciente com diagnóstico de esôfago de Barrett, confirmado por biópsia, com displasia de baixo grau, apresenta sintom…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          }
+        ]
+      },
+      "pinecone": {
+        "latency_ms": 80,
+        "results": [
+          {
+            "id": 1702,
+            "similarity": 0.664261,
+            "statement_preview": "Um paciente com histórico de cirurgia abdominal complexa apresenta uma fístula entérica de alto débito com drenagem cutâ…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1701,
+            "similarity": 0.642563,
+            "statement_preview": "Um paciente submetido à colecistectomia laparoscópica desenvolve drenagem persistente de bile pelo dreno no pós-operatór…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1704,
+            "similarity": 0.641479,
+            "statement_preview": "Um homem, 40 anos, com doença de Crohn, apresenta fístula anorretal complexa com trajetos múltiplos. Qual das opções ter…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1699,
+            "similarity": 0.639122,
+            "statement_preview": "Durante a realização de uma colectomia laparoscópica, um grampeador linear cortante é utilizado para a criação de anasto…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1700,
+            "similarity": 0.617889,
+            "statement_preview": "Um paciente com diagnóstico de esôfago de Barrett, confirmado por biópsia, com displasia de baixo grau, apresenta sintom…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          }
+        ]
+      },
+      "local_cosine_validation": [
+        {
+          "id": 1702,
+          "similarity": 0.664839
+        },
+        {
+          "id": 1701,
+          "similarity": 0.643478
+        },
+        {
+          "id": 1704,
+          "similarity": 0.642884
+        },
+        {
+          "id": 1699,
+          "similarity": 0.640638
+        },
+        {
+          "id": 1700,
+          "similarity": 0.617987
+        }
+      ],
+      "backend_agreement": {
+        "shared_results": 5,
+        "total_results": 5,
+        "agreement_pct": 100
+      }
+    },
+    {
+      "id": 1704,
+      "statement_preview": "Um homem, 40 anos, com doença de Crohn, apresenta fístula anorretal complexa com trajetos múltiplos. Qual das opções terapêuticas é mais indicada para tratar fístulas anorretais complexas em pacientes…",
+      "exam_year": 2025,
+      "exam_board": "ABC",
+      "exam_institution": null,
+      "pgvector": {
+        "latency_ms": 19,
+        "results": [
+          {
+            "id": 1702,
+            "similarity": 0.752395,
+            "statement_preview": "Um paciente com histórico de cirurgia abdominal complexa apresenta uma fístula entérica de alto débito com drenagem cutâ…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1701,
+            "similarity": 0.708258,
+            "statement_preview": "Um paciente submetido à colecistectomia laparoscópica desenvolve drenagem persistente de bile pelo dreno no pós-operatór…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1700,
+            "similarity": 0.652111,
+            "statement_preview": "Um paciente com diagnóstico de esôfago de Barrett, confirmado por biópsia, com displasia de baixo grau, apresenta sintom…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1703,
+            "similarity": 0.642884,
+            "statement_preview": "Um paciente com colostomia terminal, para descompressão após ressecção de câncer de cólon, apresenta irritação cutânea p…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1699,
+            "similarity": 0.633743,
+            "statement_preview": "Durante a realização de uma colectomia laparoscópica, um grampeador linear cortante é utilizado para a criação de anasto…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          }
+        ]
+      },
+      "pinecone": {
+        "latency_ms": 69,
+        "results": [
+          {
+            "id": 1702,
+            "similarity": 0.752647,
+            "statement_preview": "Um paciente com histórico de cirurgia abdominal complexa apresenta uma fístula entérica de alto débito com drenagem cutâ…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1701,
+            "similarity": 0.707802,
+            "statement_preview": "Um paciente submetido à colecistectomia laparoscópica desenvolve drenagem persistente de bile pelo dreno no pós-operatór…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1700,
+            "similarity": 0.651703,
+            "statement_preview": "Um paciente com diagnóstico de esôfago de Barrett, confirmado por biópsia, com displasia de baixo grau, apresenta sintom…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1703,
+            "similarity": 0.641472,
+            "statement_preview": "Um paciente com colostomia terminal, para descompressão após ressecção de câncer de cólon, apresenta irritação cutânea p…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          },
+          {
+            "id": 1699,
+            "similarity": 0.633774,
+            "statement_preview": "Durante a realização de uma colectomia laparoscópica, um grampeador linear cortante é utilizado para a criação de anasto…",
+            "exam_year": 2025,
+            "exam_board": "ABC"
+          }
+        ]
+      },
+      "local_cosine_validation": [
+        {
+          "id": 1702,
+          "similarity": 0.752395
+        },
+        {
+          "id": 1701,
+          "similarity": 0.708258
+        },
+        {
+          "id": 1700,
+          "similarity": 0.652111
+        },
+        {
+          "id": 1703,
+          "similarity": 0.642884
+        },
+        {
+          "id": 1699,
+          "similarity": 0.633743
+        }
+      ],
+      "backend_agreement": {
+        "shared_results": 5,
+        "total_results": 5,
+        "agreement_pct": 100
+      }
+    }
+  ],
+  "summary": {
+    "pgvector": {
+      "avg_latency_ms": 18.9,
+      "min_latency_ms": 18,
+      "max_latency_ms": 22,
+      "total_vectors_in_db": "10"
+    },
+    "pinecone": {
+      "avg_latency_ms": 96.5,
+      "min_latency_ms": 69,
+      "max_latency_ms": 170,
+      "total_vectors_in_index": 10,
+      "index_fullness": 0
+    }
+  },
+  "backend_comparison": {
+    "avg_pgvector_latency_ms": 18.9,
+    "avg_pinecone_latency_ms": 96.5,
+    "faster_backend": "pgvector",
+    "avg_result_agreement_pct": 98,
+    "notes": [
+      "pgvector roda localmente (sem latência de rede)",
+      "Pinecone é serverless gerenciado — inclui latência de rede",
+      "Alta concordância (>80%) confirma que ambos retornam resultados equivalentes"
+    ]
+  }
+}
