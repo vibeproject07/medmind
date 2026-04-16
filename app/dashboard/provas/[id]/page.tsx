@@ -47,7 +47,8 @@ interface Prova {
   questions: ProvaQuestion[];
 }
 
-const GROUP_SIZE = 10;
+const DESKTOP_GROUP = 10;
+const MOBILE_GROUP = 5;
 
 function QuestionCarousel({
   questions,
@@ -63,35 +64,56 @@ function QuestionCarousel({
   revealedAnswers: Set<number>;
 }) {
   const total = questions.length;
-  const totalGroups = Math.ceil(total / GROUP_SIZE);
-  const [groupIndex, setGroupIndex] = useState(() => Math.floor(examIndex / GROUP_SIZE));
+
+  // Responsive group size — computed once on mount to avoid SSR mismatch
+  const [groupSize, setGroupSize] = useState(DESKTOP_GROUP);
+  useEffect(() => {
+    const update = () => setGroupSize(window.innerWidth < 640 ? MOBILE_GROUP : DESKTOP_GROUP);
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
+  const totalGroups = Math.ceil(total / groupSize);
+
+  // Separate state for which group is visible.
+  // Only sync to examIndex when examIndex changes — NOT when groupIndex changes
+  // (which would cause a circular reset every time the user manually navigates groups).
+  const [groupIndex, setGroupIndex] = useState(() => Math.floor(examIndex / groupSize));
 
   useEffect(() => {
-    const targetGroup = Math.floor(examIndex / GROUP_SIZE);
-    if (targetGroup !== groupIndex) setGroupIndex(targetGroup);
-  }, [examIndex, groupIndex]);
+    setGroupIndex(Math.floor(examIndex / groupSize));
+  }, [examIndex, groupSize]);
 
-  const groupStart = groupIndex * GROUP_SIZE;
-  const groupEnd = Math.min(groupStart + GROUP_SIZE, total);
+  const groupStart = groupIndex * groupSize;
+  const groupEnd = Math.min(groupStart + groupSize, total);
   const groupQuestions = questions.slice(groupStart, groupEnd);
 
-  const prevGroup = useCallback(() => setGroupIndex((g) => Math.max(0, g - 1)), []);
-  const nextGroup = useCallback(() => setGroupIndex((g) => Math.min(totalGroups - 1, g + 1)), [totalGroups]);
+  const prevGroup = useCallback(
+    () => setGroupIndex((g) => Math.max(0, g - 1)),
+    [],
+  );
+  const nextGroup = useCallback(
+    () => setGroupIndex((g) => Math.min(totalGroups - 1, g + 1)),
+    [totalGroups],
+  );
 
   return (
-    <div className="flex flex-col items-center gap-2 mt-4 select-none">
-      <div className="flex items-center gap-2">
+    <div className="flex flex-col items-center gap-2 mt-3 select-none">
+      <div className="flex items-center gap-3">
+        {/* ← Prev group */}
         <button
           type="button"
           onClick={prevGroup}
           disabled={groupIndex === 0}
-          className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition"
+          className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition flex-shrink-0"
           title="Grupo anterior"
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
 
-        <div className="flex items-center gap-1">
+        {/* Balls */}
+        <div className="flex items-center gap-2">
           {groupQuestions.map((q, localIdx) => {
             const i = groupStart + localIdx;
             const revealed = revealedAnswers.has(q.id);
@@ -116,9 +138,11 @@ function QuestionCarousel({
                 type="button"
                 onClick={() => setExamIndex(i)}
                 title={`Questão ${i + 1}${revealed ? (correct ? ' ✓' : ' ✗') : answered ? ' (respondida)' : ''}`}
-                className={`relative w-9 h-9 rounded-full border-2 flex items-center justify-center text-xs font-semibold transition-all duration-150 cursor-pointer
+                className={`relative w-9 h-9 rounded-full border-2 flex items-center justify-center text-xs font-semibold transition-all duration-150 cursor-pointer flex-shrink-0
                   ${ballClass}
-                  ${isCurrent ? 'ring-2 ring-primary-500 ring-offset-2 scale-110 shadow-md z-10' : 'hover:scale-105'}
+                  ${isCurrent
+                    ? 'ring-2 ring-offset-2 ring-primary-500 border-primary-500 shadow-sm'
+                    : 'hover:opacity-80'}
                 `}
               >
                 {revealed ? (
@@ -126,25 +150,24 @@ function QuestionCarousel({
                 ) : (
                   i + 1
                 )}
-                {isCurrent && (
-                  <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-primary-500 rounded-full" />
-                )}
               </button>
             );
           })}
         </div>
 
+        {/* → Next group */}
         <button
           type="button"
           onClick={nextGroup}
           disabled={groupIndex >= totalGroups - 1}
-          className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition"
+          className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition flex-shrink-0"
           title="Próximo grupo"
         >
           <ChevronRight className="w-4 h-4" />
         </button>
       </div>
 
+      {/* Group dots */}
       {totalGroups > 1 && (
         <div className="flex items-center gap-1.5">
           {Array.from({ length: totalGroups }).map((_, g) => (
@@ -157,16 +180,20 @@ function QuestionCarousel({
                   ? 'w-5 h-1.5 bg-primary-500'
                   : 'w-1.5 h-1.5 bg-gray-300 hover:bg-gray-400'
               }`}
-              title={`Grupo ${g + 1} (questões ${g * GROUP_SIZE + 1}–${Math.min((g + 1) * GROUP_SIZE, total)})`}
+              title={`Grupo ${g + 1} (questões ${g * groupSize + 1}–${Math.min((g + 1) * groupSize, total)})`}
             />
           ))}
         </div>
       )}
 
+      {/* Counter */}
       <p className="text-xs text-gray-400 font-medium">
         Questão <span className="text-gray-600 font-semibold">{examIndex + 1}</span> de {total}
         {totalGroups > 1 && (
-          <> · Grupo <span className="text-gray-600 font-semibold">{groupIndex + 1}</span> de {totalGroups}</>
+          <>
+            {' '}· Grupo{' '}
+            <span className="text-gray-600 font-semibold">{groupIndex + 1}</span> de {totalGroups}
+          </>
         )}
       </p>
     </div>
@@ -312,7 +339,7 @@ export default function ProvaExamPage() {
                   >
                     <div className="flex items-start justify-between mb-2">
                       <p className="font-semibold text-gray-800">
-                        Questão {q.numero_na_prova ?? idx + 1}
+                        Questão {idx + 1}
                         {q.anulada && (
                           <span className="ml-2 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold border border-red-200">
                             <Ban className="w-3 h-3" /> ANULADA
@@ -364,33 +391,31 @@ export default function ProvaExamPage() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-4rem)]">
-      <div className="bg-white border-b border-gray-200 px-6 pt-4 pb-3 flex-shrink-0">
-        <div className="flex items-center justify-between gap-4">
-          <div className="min-w-0 flex-1">
-            <h2 className="text-xl font-bold text-gray-800 truncate">{prova.nome}</h2>
-            {(prova.banca || prova.regiao || prova.ano) && (
-              <p className="text-xs text-gray-400 truncate mt-0.5">
-                {[prova.banca, prova.regiao, prova.ano].filter(Boolean).join(' · ')}
-              </p>
-            )}
-          </div>
+      {/* ── Header ─────────────────────────────────────────────────────── */}
+      <div className="bg-white border-b border-gray-200 px-4 sm:px-6 pt-3 pb-2 flex-shrink-0">
+        {/* Title row — X alinhado ao centro da linha */}
+        <div className="flex items-center gap-3">
+          <h2 className="text-lg sm:text-xl font-bold text-gray-800 truncate flex-1 min-w-0">
+            {prova.nome}
+          </h2>
 
-          <div className="flex items-center gap-3 flex-shrink-0">
-            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-lg border border-gray-200 text-xs text-gray-500">
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 bg-gray-50 rounded-lg border border-gray-200 text-xs text-gray-500">
               <span className="font-semibold text-gray-700">{answeredCount}</span>
-              <span>/ {total} respondidas</span>
+              <span>/ {total}</span>
             </div>
             <button
               type="button"
               onClick={() => router.push('/dashboard/provas')}
-              className="p-2 rounded-lg hover:bg-gray-100 transition"
+              className="p-1.5 rounded-lg hover:bg-gray-100 transition text-gray-500"
               aria-label="Fechar"
             >
-              <X className="w-5 h-5 text-gray-500" />
+              <X className="w-5 h-5" />
             </button>
           </div>
         </div>
 
+        {/* Carousel */}
         <QuestionCarousel
           questions={questions}
           examIndex={examIndex}
@@ -400,10 +425,11 @@ export default function ProvaExamPage() {
         />
       </div>
 
+      {/* ── Body ───────────────────────────────────────────────────────── */}
       <div className="flex-1 flex overflow-hidden">
-        <div className={`overflow-y-auto p-6 ${aiCommentOpen ? 'w-1/2 border-r border-gray-200' : 'w-full'}`}>
+        <div className={`overflow-y-auto p-4 sm:p-6 ${aiCommentOpen ? 'w-1/2 border-r border-gray-200' : 'w-full'}`}>
           {currentQuestion && (
-            <div className="max-w-3xl mx-auto space-y-6">
+            <div className="max-w-3xl mx-auto space-y-5">
               {currentQuestion.anulada && (
                 <div className="flex items-start gap-2 p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm font-semibold">
                   <AlertTriangle className="w-4 h-4 mt-0.5 flex-shrink-0" />
@@ -413,8 +439,9 @@ export default function ProvaExamPage() {
 
               <div>
                 <div className="flex items-center gap-2 mb-3 flex-wrap">
+                  {/* Número sempre baseado na posição no array (examIndex + 1) */}
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-primary-50 border border-primary-200 text-primary-700 text-xs font-semibold">
-                    Nº {currentQuestion.numero_na_prova ?? examIndex + 1}
+                    Nº {examIndex + 1}
                   </span>
                   {[currentQuestion.exam_board, currentQuestion.exam_region, currentQuestion.exam_year, currentQuestion.exam_type]
                     .filter(Boolean)
@@ -509,7 +536,7 @@ export default function ProvaExamPage() {
                           taxAlternative(currentQuestion.id, option.key);
                         }}
                         disabled={!!currentQuestion.anulada}
-                        className={`mr-3 p-2 rounded-lg transition flex-shrink-0 flex items-center justify-center text-xs font-semibold gap-1 ${
+                        className={`mr-3 p-2 rounded-lg transition flex-shrink-0 flex items-center justify-center ${
                           isConfirmedTaxed
                             ? 'bg-orange-500 text-white hover:bg-orange-600'
                             : 'border border-orange-300 text-orange-500 hover:bg-orange-50'
@@ -578,15 +605,16 @@ export default function ProvaExamPage() {
         )}
       </div>
 
-      <div className="bg-white border-t border-gray-200 px-6 py-3 flex justify-between items-center flex-shrink-0">
+      {/* ── Footer ─────────────────────────────────────────────────────── */}
+      <div className="bg-white border-t border-gray-200 px-4 sm:px-6 py-3 flex justify-between items-center flex-shrink-0">
         <button
           type="button"
           onClick={() => { if (examIndex > 0) setExamIndex((i) => i - 1); }}
           disabled={examIndex === 0}
-          className="flex items-center gap-1.5 px-4 py-2 border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 transition disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
+          className="flex items-center gap-1.5 px-3 sm:px-4 py-2 border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 transition disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
         >
           <ChevronLeft className="w-4 h-4" />
-          Anterior
+          <span className="hidden sm:inline">Anterior</span>
         </button>
 
         <div className="flex gap-2 items-center">
@@ -601,12 +629,11 @@ export default function ProvaExamPage() {
                 return next;
               });
             }}
-            className={`flex items-center gap-1.5 px-3 py-2 border rounded-lg transition text-sm font-medium ${
+            className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-2 border rounded-lg transition text-sm font-medium ${
               currentQuestion && revealedAnswers.has(currentQuestion.id)
                 ? 'border-primary-500 bg-primary-50 text-primary-700'
                 : 'border-gray-200 text-gray-600 hover:bg-gray-50'
             }`}
-            title={currentQuestion && revealedAnswers.has(currentQuestion.id) ? 'Ocultar resposta' : 'Ver resposta'}
           >
             <Eye className="w-4 h-4" />
             <span className="hidden sm:inline">Ver Resposta</span>
@@ -622,12 +649,11 @@ export default function ProvaExamPage() {
                 fetchAiComment(currentQuestion.id);
               }
             }}
-            className={`flex items-center gap-1.5 px-3 py-2 border rounded-lg transition text-sm font-medium ${
+            className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-2 border rounded-lg transition text-sm font-medium ${
               aiCommentOpen
                 ? 'border-purple-500 bg-purple-50 text-purple-700'
                 : 'border-gray-200 text-gray-600 hover:bg-gray-50'
             }`}
-            title={aiCommentOpen ? 'Fechar comentário' : 'Comentário da IA'}
           >
             <MessageSquare className="w-4 h-4" />
             <span className="hidden sm:inline">Comentário IA</span>
@@ -640,10 +666,14 @@ export default function ProvaExamPage() {
             if (examIndex < total - 1) setExamIndex((i) => i + 1);
             else setShowResults(true);
           }}
-          className="flex items-center gap-1.5 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition text-sm font-semibold"
+          className="flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition text-sm font-semibold"
         >
-          {examIndex >= total - 1 ? 'Finalizar' : 'Próxima'}
-          {examIndex < total - 1 && <ChevronRight className="w-4 h-4" />}
+          {examIndex >= total - 1 ? 'Finalizar' : (
+            <>
+              <span className="hidden sm:inline">Próxima</span>
+              <ChevronRight className="w-4 h-4" />
+            </>
+          )}
         </button>
       </div>
     </div>
