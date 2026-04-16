@@ -14,6 +14,8 @@ import {
   AlertTriangle,
   CheckCircle,
   XCircle,
+  ThumbsUp,
+  ThumbsDown,
 } from 'lucide-react';
 import ImageLightbox from '@/components/Common/ImageLightbox';
 
@@ -47,9 +49,24 @@ interface Prova {
   questions: ProvaQuestion[];
 }
 
+type FeedbackState =
+  | { status: 'idle' }
+  | { status: 'voted_positive' }
+  | { status: 'selecting_motivo' }
+  | { status: 'voted_negative'; motivo: string };
+
 const DESKTOP_GROUP = 10;
 const MOBILE_GROUP = 5;
 
+const MOTIVOS = [
+  { value: 'incorreto',    label: 'Incorreto',    desc: 'O comentário não explica corretamente a resolução da questão' },
+  { value: 'incompleto',   label: 'Incompleto',   desc: 'O comentário explica apenas parcialmente a resolução da questão' },
+  { value: 'desatualizado',label: 'Desatualizado',desc: 'O comentário apresenta uma explicação defasada para a resolução da questão' },
+] as const;
+
+type Motivo = typeof MOTIVOS[number]['value'];
+
+// ── Carousel ──────────────────────────────────────────────────────────────────
 function QuestionCarousel({
   questions,
   examIndex,
@@ -71,15 +88,11 @@ function QuestionCarousel({
 }) {
   const total = questions.length;
   const totalGroups = Math.ceil(total / groupSize);
-
   const groupStart = groupIndex * groupSize;
   const groupEnd = Math.min(groupStart + groupSize, total);
   const groupQuestions = questions.slice(groupStart, groupEnd);
 
-  const prevGroup = useCallback(
-    () => setGroupIndex((g) => Math.max(0, g - 1)),
-    [setGroupIndex],
-  );
+  const prevGroup = useCallback(() => setGroupIndex((g) => Math.max(0, g - 1)), [setGroupIndex]);
   const nextGroup = useCallback(
     () => setGroupIndex((g) => Math.min(totalGroups - 1, g + 1)),
     [setGroupIndex, totalGroups],
@@ -88,7 +101,6 @@ function QuestionCarousel({
   return (
     <div className="flex flex-col items-center gap-2 mt-3 select-none">
       <div className="flex items-center gap-3">
-        {/* ← Prev group */}
         <button
           type="button"
           onClick={prevGroup}
@@ -99,7 +111,6 @@ function QuestionCarousel({
           <ChevronLeft className="w-4 h-4" />
         </button>
 
-        {/* Balls */}
         <div className="flex items-center gap-2">
           {groupQuestions.map((q, localIdx) => {
             const i = groupStart + localIdx;
@@ -127,10 +138,7 @@ function QuestionCarousel({
                 title={`Questão ${i + 1}${revealed ? (correct ? ' ✓' : ' ✗') : answered ? ' (respondida)' : ''}`}
                 className={`relative w-9 h-9 rounded-full border-2 flex items-center justify-center text-xs font-semibold transition-all duration-150 cursor-pointer flex-shrink-0
                   ${ballClass}
-                  ${isCurrent
-                    ? 'ring-2 ring-offset-2 ring-primary-500 border-primary-500 shadow-sm'
-                    : 'hover:opacity-80'}
-                `}
+                  ${isCurrent ? 'ring-2 ring-offset-2 ring-primary-500 border-primary-500 shadow-sm' : 'hover:opacity-80'}`}
               >
                 {revealed ? (
                   correct ? <Check className="w-3.5 h-3.5" /> : <X className="w-3.5 h-3.5" />
@@ -142,7 +150,6 @@ function QuestionCarousel({
           })}
         </div>
 
-        {/* → Next group */}
         <button
           type="button"
           onClick={nextGroup}
@@ -154,7 +161,6 @@ function QuestionCarousel({
         </button>
       </div>
 
-      {/* Group dots */}
       {totalGroups > 1 && (
         <div className="flex items-center gap-1.5">
           {Array.from({ length: totalGroups }).map((_, g) => (
@@ -163,9 +169,7 @@ function QuestionCarousel({
               type="button"
               onClick={() => setGroupIndex(g)}
               className={`rounded-full transition-all duration-200 ${
-                g === groupIndex
-                  ? 'w-5 h-1.5 bg-primary-500'
-                  : 'w-1.5 h-1.5 bg-gray-300 hover:bg-gray-400'
+                g === groupIndex ? 'w-5 h-1.5 bg-primary-500' : 'w-1.5 h-1.5 bg-gray-300 hover:bg-gray-400'
               }`}
               title={`Grupo ${g + 1} (questões ${g * groupSize + 1}–${Math.min((g + 1) * groupSize, total)})`}
             />
@@ -173,20 +177,98 @@ function QuestionCarousel({
         </div>
       )}
 
-      {/* Counter */}
       <p className="text-xs text-gray-400 font-medium">
         Questão <span className="text-gray-600 font-semibold">{examIndex + 1}</span> de {total}
         {totalGroups > 1 && (
-          <>
-            {' '}· Grupo{' '}
-            <span className="text-gray-600 font-semibold">{groupIndex + 1}</span> de {totalGroups}
-          </>
+          <> · Grupo <span className="text-gray-600 font-semibold">{groupIndex + 1}</span> de {totalGroups}</>
         )}
       </p>
     </div>
   );
 }
 
+// ── Feedback buttons (shared between desktop panel and mobile sheet) ───────────
+function CommentFeedback({
+  questionId,
+  feedbackPositivo,
+  feedbackState,
+  onThumbUp,
+  onThumbDown,
+  onSelectMotivo,
+}: {
+  questionId: number;
+  feedbackPositivo: number;
+  feedbackState: FeedbackState;
+  onThumbUp: () => void;
+  onThumbDown: () => void;
+  onSelectMotivo: (motivo: Motivo) => void;
+}) {
+  const voted = feedbackState.status !== 'idle';
+
+  return (
+    <div className="flex items-center gap-1.5">
+      {/* Thumb up */}
+      <button
+        type="button"
+        onClick={onThumbUp}
+        disabled={voted}
+        title="Útil"
+        className={`flex items-center gap-1 px-2 py-1.5 rounded-lg border text-xs font-medium transition disabled:cursor-not-allowed ${
+          feedbackState.status === 'voted_positive'
+            ? 'bg-emerald-50 border-emerald-400 text-emerald-700'
+            : 'border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-50'
+        }`}
+      >
+        <ThumbsUp className="w-3.5 h-3.5" />
+        {feedbackPositivo > 0 && <span>{feedbackPositivo}</span>}
+      </button>
+
+      {/* Thumb down */}
+      <button
+        type="button"
+        onClick={onThumbDown}
+        disabled={voted && feedbackState.status !== 'selecting_motivo'}
+        title="Não útil"
+        className={`flex items-center gap-1 px-2 py-1.5 rounded-lg border text-xs font-medium transition disabled:cursor-not-allowed ${
+          feedbackState.status === 'voted_negative'
+            ? 'bg-red-50 border-red-400 text-red-700'
+            : feedbackState.status === 'selecting_motivo'
+            ? 'bg-orange-50 border-orange-400 text-orange-700'
+            : 'border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-50'
+        }`}
+      >
+        <ThumbsDown className="w-3.5 h-3.5" />
+      </button>
+
+      {/* Motivo selector (inline) */}
+      {feedbackState.status === 'selecting_motivo' && (
+        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg z-20 p-2 space-y-1">
+          <p className="text-xs font-semibold text-gray-600 px-2 pb-1">Por que não gostou?</p>
+          {MOTIVOS.map((m) => (
+            <button
+              key={m.value}
+              type="button"
+              onClick={() => onSelectMotivo(m.value)}
+              className="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 transition group"
+            >
+              <p className="text-xs font-semibold text-gray-800 group-hover:text-red-700">{m.label}</p>
+              <p className="text-xs text-gray-500 group-hover:text-red-600 mt-0.5">{m.desc}</p>
+            </button>
+          ))}
+          <button
+            type="button"
+            onClick={onThumbDown}
+            className="w-full text-center text-xs text-gray-400 hover:text-gray-600 py-1"
+          >
+            Cancelar
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Main page ─────────────────────────────────────────────────────────────────
 export default function ProvaExamPage() {
   const router = useRouter();
   const params = useParams();
@@ -196,19 +278,22 @@ export default function ProvaExamPage() {
   const [examIndex, setExamIndex] = useState(0);
   const [examAnswers, setExamAnswers] = useState<Record<number, string>>({});
   const [showResults, setShowResults] = useState(false);
+  const [showExitConfirm, setShowExitConfirm] = useState(false);
 
   const [confirmedTaxed, setConfirmedTaxed] = useState<Map<number, Set<string>>>(new Map());
   const [revealedAnswers, setRevealedAnswers] = useState<Set<number>>(new Set());
 
   const [aiCommentOpen, setAiCommentOpen] = useState(false);
-  const [aiCommentCache, setAiCommentCache] = useState<Record<number, string | null>>({});
+  // Cache stores { comentario, feedback_positivo }
+  const [aiCommentCache, setAiCommentCache] = useState<Record<number, { comentario: string | null; feedback_positivo: number } | null>>({});
   const [aiCommentLoading, setAiCommentLoading] = useState(false);
+  // Per-question feedback state
+  const [feedbackStates, setFeedbackStates] = useState<Record<number, FeedbackState>>({});
+  const [feedbackSubmitting, setFeedbackSubmitting] = useState(false);
 
-  // Carousel group state lifted here so the parent can advance on answer
   const [groupSize, setGroupSize] = useState(DESKTOP_GROUP);
   const [groupIndex, setGroupIndex] = useState(0);
 
-  // Responsive group size
   useEffect(() => {
     const update = () => setGroupSize(window.innerWidth < 640 ? MOBILE_GROUP : DESKTOP_GROUP);
     update();
@@ -216,22 +301,15 @@ export default function ProvaExamPage() {
     return () => window.removeEventListener('resize', update);
   }, []);
 
-  // Sync group to follow examIndex (only when examIndex changes)
   useEffect(() => {
     setGroupIndex(Math.floor(examIndex / groupSize));
   }, [examIndex, groupSize]);
 
   useEffect(() => {
     const raw = localStorage.getItem(`examProva_${provaId}`);
-    if (!raw) {
-      router.replace('/dashboard/provas');
-      return;
-    }
-    try {
-      setProva(JSON.parse(raw));
-    } catch {
-      router.replace('/dashboard/provas');
-    }
+    if (!raw) { router.replace('/dashboard/provas'); return; }
+    try { setProva(JSON.parse(raw)); }
+    catch { router.replace('/dashboard/provas'); }
   }, [provaId, router]);
 
   useEffect(() => {
@@ -251,11 +329,73 @@ export default function ProvaExamPage() {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
       const data = await res.json();
-      setAiCommentCache((prev) => ({ ...prev, [questionId]: data.comentario ?? null }));
+      setAiCommentCache((prev) => ({
+        ...prev,
+        [questionId]: {
+          comentario:        data.comentario ?? null,
+          feedback_positivo: data.feedback_positivo ?? 0,
+        },
+      }));
     } catch {
-      setAiCommentCache((prev) => ({ ...prev, [questionId]: null }));
+      setAiCommentCache((prev) => ({ ...prev, [questionId]: { comentario: null, feedback_positivo: 0 } }));
     } finally {
       setAiCommentLoading(false);
+    }
+  };
+
+  const getFeedbackState = (questionId: number): FeedbackState =>
+    feedbackStates[questionId] ?? { status: 'idle' };
+
+  const setFeedbackState = (questionId: number, state: FeedbackState) =>
+    setFeedbackStates((prev) => ({ ...prev, [questionId]: state }));
+
+  const handleThumbUp = async (questionId: number) => {
+    const current = getFeedbackState(questionId);
+    if (current.status !== 'idle') return;
+    setFeedbackState(questionId, { status: 'voted_positive' });
+    // Optimistically update counter
+    setAiCommentCache((prev) => {
+      const entry = prev[questionId];
+      if (!entry) return prev;
+      return { ...prev, [questionId]: { ...entry, feedback_positivo: entry.feedback_positivo + 1 } };
+    });
+    try {
+      const token = localStorage.getItem('token');
+      await fetch(`/api/comentarios/${questionId}/feedback`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+        body: JSON.stringify({ tipo: 'positivo' }),
+      });
+    } catch {
+      // silent — optimistic update already shown
+    }
+  };
+
+  const handleThumbDown = (questionId: number) => {
+    const current = getFeedbackState(questionId);
+    if (current.status === 'selecting_motivo') {
+      // cancel
+      setFeedbackState(questionId, { status: 'idle' });
+    } else if (current.status === 'idle') {
+      setFeedbackState(questionId, { status: 'selecting_motivo' });
+    }
+  };
+
+  const handleSelectMotivo = async (questionId: number, motivo: Motivo) => {
+    if (feedbackSubmitting) return;
+    setFeedbackState(questionId, { status: 'voted_negative', motivo });
+    setFeedbackSubmitting(true);
+    try {
+      const token = localStorage.getItem('token');
+      await fetch(`/api/comentarios/${questionId}/feedback`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+        body: JSON.stringify({ tipo: 'negativo', motivo }),
+      });
+    } catch {
+      // silent
+    } finally {
+      setFeedbackSubmitting(false);
     }
   };
 
@@ -283,17 +423,13 @@ export default function ProvaExamPage() {
     return options;
   };
 
-  // Answer a question and auto-advance the carousel group if this was the last
-  // question of the current visible group (but not the last question overall).
   const answerQuestion = useCallback(
     (questionId: number, optionKey: string, currentIdx: number, total: number) => {
       setExamAnswers((prev) => ({ ...prev, [questionId]: optionKey }));
-      const groupEnd = (groupIndex + 1) * groupSize; // exclusive
+      const groupEnd = (groupIndex + 1) * groupSize;
       const isLastInGroup = currentIdx === groupEnd - 1;
       const hasNextGroup = groupEnd < total;
-      if (isLastInGroup && hasNextGroup) {
-        setGroupIndex((g) => g + 1);
-      }
+      if (isLastInGroup && hasNextGroup) setGroupIndex((g) => g + 1);
     },
     [groupIndex, groupSize],
   );
@@ -342,10 +478,7 @@ export default function ProvaExamPage() {
                 </span>
               </div>
               <div className="mt-6 w-full bg-gray-100 rounded-full h-2">
-                <div
-                  className="bg-emerald-500 h-2 rounded-full transition-all"
-                  style={{ width: `${percent}%` }}
-                />
+                <div className="bg-emerald-500 h-2 rounded-full transition-all" style={{ width: `${percent}%` }} />
               </div>
             </div>
             <div className="space-y-3">
@@ -366,11 +499,7 @@ export default function ProvaExamPage() {
                           </span>
                         )}
                       </p>
-                      {isCorrect ? (
-                        <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0" />
-                      ) : (
-                        <XCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
-                      )}
+                      {isCorrect ? <CheckCircle className="w-5 h-5 text-emerald-600 flex-shrink-0" /> : <XCircle className="w-5 h-5 text-red-500 flex-shrink-0" />}
                     </div>
                     <p className="text-gray-700 mb-2 text-sm line-clamp-2">{q.statement}</p>
                     <div className="text-sm space-y-1">
@@ -408,10 +537,102 @@ export default function ProvaExamPage() {
 
   const availableOptions = currentQuestion ? getAvailableOptions(currentQuestion) : [];
   const selectedAnswer = currentQuestion ? examAnswers[currentQuestion.id] : undefined;
+  const currentFeedbackState = currentQuestion ? getFeedbackState(currentQuestion.id) : { status: 'idle' as const };
+  const currentCommentData = currentQuestion ? aiCommentCache[currentQuestion.id] : null;
+  const feedbackPositivo = currentCommentData?.feedback_positivo ?? 0;
+  const hasComment = !aiCommentLoading && currentCommentData?.comentario != null;
+
+  // ── Exit confirmation modal ───────────────────────────────────────────────
+  const ExitConfirmModal = showExitConfirm ? (
+    <div className="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 flex flex-col gap-4">
+        <h3 className="text-lg font-bold text-gray-800">Sair da prova?</h3>
+        <p className="text-sm text-gray-600">
+          Seu progresso nesta prova não será salvo. Tem certeza que deseja sair?
+        </p>
+        <div className="flex gap-3 mt-2">
+          <button
+            type="button"
+            onClick={() => setShowExitConfirm(false)}
+            className="flex-1 px-4 py-2.5 border border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition text-sm"
+          >
+            Continuar prova
+          </button>
+          <button
+            type="button"
+            onClick={() => router.push('/dashboard/provas')}
+            className="flex-1 px-4 py-2.5 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition text-sm"
+          >
+            Sair mesmo assim
+          </button>
+        </div>
+      </div>
+    </div>
+  ) : null;
+
+  // ── Shared comment panel header actions ──────────────────────────────────
+  const CommentPanelHeader = ({ onClose }: { onClose: () => void }) => (
+    <div className="relative flex items-center justify-between w-full">
+      <h3 className="text-base font-semibold text-gray-800 flex items-center gap-2">
+        <MessageSquare className="w-4 h-4 text-purple-600" />
+        Comentário da IA
+      </h3>
+      <div className="flex items-center gap-1.5 relative">
+        {hasComment && currentQuestion && (
+          <CommentFeedback
+            questionId={currentQuestion.id}
+            feedbackPositivo={feedbackPositivo}
+            feedbackState={currentFeedbackState}
+            onThumbUp={() => handleThumbUp(currentQuestion.id)}
+            onThumbDown={() => handleThumbDown(currentQuestion.id)}
+            onSelectMotivo={(m) => handleSelectMotivo(currentQuestion.id, m)}
+          />
+        )}
+        <button
+          type="button"
+          onClick={onClose}
+          className="p-1.5 rounded-lg hover:bg-gray-100 transition text-gray-500"
+          aria-label="Fechar comentário"
+        >
+          <X className="w-4 h-4" />
+        </button>
+      </div>
+    </div>
+  );
+
+  // ── Comment content ────────────────────────────────────────────────────────
+  const CommentContent = () => (
+    <>
+      {aiCommentLoading ? (
+        <div className="flex items-center justify-center h-32 gap-3 text-gray-500">
+          <Loader2 className="w-6 h-6 animate-spin text-purple-600" />
+          <span className="text-sm">Carregando comentário...</span>
+        </div>
+      ) : currentCommentData?.comentario != null ? (
+        <div className="space-y-3">
+          <div className="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed">
+            {currentCommentData.comentario}
+          </div>
+          {/* Voted negative — show confirmation */}
+          {currentFeedbackState.status === 'voted_negative' && (
+            <div className="p-3 bg-orange-50 border border-orange-200 rounded-lg text-xs text-orange-700">
+              Obrigado pelo feedback! Vamos usar isso para melhorar nossos comentários.
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center h-32 gap-2 text-center">
+          <MessageSquare className="w-8 h-8 text-gray-300" />
+          <p className="text-sm text-gray-500">Comentário não disponível para esta questão.</p>
+        </div>
+      )}
+    </>
+  );
 
   // ── Exam screen ───────────────────────────────────────────────────────────
   return (
     <div className="-m-3 sm:-m-4 md:-m-3 h-full flex flex-col overflow-hidden">
+      {ExitConfirmModal}
 
       {/* ── Fixed topbar ─────────────────────────────────────────────────── */}
       <div className="bg-white border-b border-gray-200 px-4 sm:px-6 pt-3 pb-2 flex-shrink-0 z-10">
@@ -426,7 +647,7 @@ export default function ProvaExamPage() {
             </div>
             <button
               type="button"
-              onClick={() => router.push('/dashboard/provas')}
+              onClick={() => setShowExitConfirm(true)}
               className="p-1.5 rounded-lg hover:bg-gray-100 transition text-gray-500"
               aria-label="Fechar"
             >
@@ -452,7 +673,6 @@ export default function ProvaExamPage() {
         <div className={`overflow-y-auto p-4 sm:p-6 ${aiCommentOpen ? 'w-1/2 border-r border-gray-200' : 'w-full'}`}>
           {currentQuestion && (
             <div className="max-w-3xl mx-auto space-y-5">
-              {/* Anulada banner */}
               {currentQuestion.anulada && (
                 <div className="flex items-start gap-2 p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm font-semibold">
                   <AlertTriangle className="w-4 h-4 mt-0.5 flex-shrink-0" />
@@ -460,7 +680,6 @@ export default function ProvaExamPage() {
                 </div>
               )}
 
-              {/* Statement — without number badge or prova name */}
               <div>
                 {currentQuestion.anulada && (
                   <span className="inline-flex items-center gap-1 mb-3 px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold border border-red-200">
@@ -472,7 +691,6 @@ export default function ProvaExamPage() {
                 </p>
               </div>
 
-              {/* Images */}
               {currentQuestion.images && currentQuestion.images.length > 0 && (
                 <div className="flex flex-wrap justify-center gap-4">
                   {currentQuestion.images.map((image: string, idx: number) => (
@@ -481,7 +699,6 @@ export default function ProvaExamPage() {
                 </div>
               )}
 
-              {/* Options */}
               <div className="space-y-2.5">
                 {availableOptions.map((option) => {
                   const isSelected = selectedAnswer === option.key;
@@ -490,23 +707,14 @@ export default function ProvaExamPage() {
                   const isCorrectOption = option.key === currentQuestion.correct_answer;
 
                   let rowClass = '';
-                  if (isConfirmedTaxed) {
-                    rowClass = 'border-gray-200 bg-gray-50 opacity-50 line-through';
-                  } else if (isRevealed && isCorrectOption) {
-                    rowClass = 'border-emerald-400 bg-emerald-50';
-                  } else if (isRevealed && isSelected && !isCorrectOption) {
-                    rowClass = 'border-red-400 bg-red-50';
-                  } else if (isSelected) {
-                    rowClass = 'border-primary-500 bg-primary-50';
-                  } else {
-                    rowClass = 'border-gray-200 bg-white hover:border-primary-300 hover:bg-gray-50';
-                  }
+                  if (isConfirmedTaxed) rowClass = 'border-gray-200 bg-gray-50 opacity-50 line-through';
+                  else if (isRevealed && isCorrectOption) rowClass = 'border-emerald-400 bg-emerald-50';
+                  else if (isRevealed && isSelected && !isCorrectOption) rowClass = 'border-red-400 bg-red-50';
+                  else if (isSelected) rowClass = 'border-primary-500 bg-primary-50';
+                  else rowClass = 'border-gray-200 bg-white hover:border-primary-300 hover:bg-gray-50';
 
                   return (
-                    <div
-                      key={option.key}
-                      className={`rounded-xl border-2 flex items-center gap-3 transition-all duration-150 ${rowClass}`}
-                    >
+                    <div key={option.key} className={`rounded-xl border-2 flex items-center gap-3 transition-all duration-150 ${rowClass}`}>
                       <button
                         type="button"
                         onClick={() =>
@@ -544,10 +752,7 @@ export default function ProvaExamPage() {
                       </button>
                       <button
                         type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          taxAlternative(currentQuestion.id, option.key);
-                        }}
+                        onClick={(e) => { e.stopPropagation(); taxAlternative(currentQuestion.id, option.key); }}
                         disabled={!!currentQuestion.anulada}
                         className={`mr-3 p-2 rounded-lg transition flex-shrink-0 flex items-center justify-center ${
                           isConfirmedTaxed
@@ -563,7 +768,6 @@ export default function ProvaExamPage() {
                 })}
               </div>
 
-              {/* Revealed answer */}
               {revealedAnswers.has(currentQuestion.id) && (() => {
                 const correctOption = availableOptions.find((o) => o.key === currentQuestion.correct_answer);
                 return correctOption ? (
@@ -582,102 +786,46 @@ export default function ProvaExamPage() {
           )}
         </div>
 
-        {/* AI comment panel — desktop only (sm+) */}
+        {/* AI comment panel — desktop (sm+) */}
         {aiCommentOpen && (
           <div className="hidden sm:flex w-1/2 overflow-y-auto bg-gray-50 border-l border-gray-200 flex-col">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-white flex-shrink-0">
-              <h3 className="text-base font-semibold text-gray-800 flex items-center gap-2">
-                <MessageSquare className="w-4 h-4 text-purple-600" />
-                Comentário da IA
-              </h3>
-              <button
-                type="button"
-                onClick={() => setAiCommentOpen(false)}
-                className="p-1.5 rounded-lg hover:bg-gray-100 transition text-gray-500"
-                aria-label="Fechar comentário"
-              >
-                <X className="w-4 h-4" />
-              </button>
+            <div className="flex items-center px-6 py-4 border-b border-gray-200 bg-white flex-shrink-0">
+              <CommentPanelHeader onClose={() => setAiCommentOpen(false)} />
             </div>
             <div className="flex-1 p-6 overflow-y-auto">
-              {aiCommentLoading ? (
-                <div className="flex items-center justify-center h-32 gap-3 text-gray-500">
-                  <Loader2 className="w-6 h-6 animate-spin text-purple-600" />
-                  <span className="text-sm">Carregando comentário...</span>
-                </div>
-              ) : currentQuestion && aiCommentCache[currentQuestion.id] != null ? (
-                <div className="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed">
-                  {aiCommentCache[currentQuestion.id]}
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center h-32 gap-2 text-center">
-                  <MessageSquare className="w-8 h-8 text-gray-300" />
-                  <p className="text-sm text-gray-500">Comentário não disponível para esta questão.</p>
-                </div>
-              )}
+              <CommentContent />
             </div>
           </div>
         )}
       </div>
 
-      {/* ── AI comment bottom sheet — mobile only (< sm) ─────────────────── */}
-      {/* Backdrop */}
+      {/* AI comment bottom sheet — mobile (< sm) */}
       <div
         className={`sm:hidden fixed inset-0 bg-black/40 z-40 transition-opacity duration-300 ${
           aiCommentOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setAiCommentOpen(false)}
       />
-      {/* Sheet */}
       <div
         className={`sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-2xl shadow-2xl flex flex-col
           transition-transform duration-300 ease-out
-          ${aiCommentOpen ? 'translate-y-0' : 'translate-y-full'}
-        `}
+          ${aiCommentOpen ? 'translate-y-0' : 'translate-y-full'}`}
         style={{ height: '80vh' }}
       >
-        {/* Handle + header */}
         <div className="flex flex-col items-center pt-3 pb-2 border-b border-gray-100 flex-shrink-0">
           <div className="w-10 h-1 rounded-full bg-gray-300 mb-3" />
-          <div className="flex items-center justify-between w-full px-5">
-            <h3 className="text-base font-semibold text-gray-800 flex items-center gap-2">
-              <MessageSquare className="w-4 h-4 text-purple-600" />
-              Comentário da IA
-            </h3>
-            <button
-              type="button"
-              onClick={() => setAiCommentOpen(false)}
-              className="p-1.5 rounded-lg hover:bg-gray-100 transition text-gray-500"
-              aria-label="Fechar"
-            >
-              <X className="w-4 h-4" />
-            </button>
+          <div className="px-5 w-full">
+            <CommentPanelHeader onClose={() => setAiCommentOpen(false)} />
           </div>
         </div>
-        {/* Content */}
         <div className="flex-1 overflow-y-auto p-5">
-          {aiCommentLoading ? (
-            <div className="flex items-center justify-center h-32 gap-3 text-gray-500">
-              <Loader2 className="w-6 h-6 animate-spin text-purple-600" />
-              <span className="text-sm">Carregando comentário...</span>
-            </div>
-          ) : currentQuestion && aiCommentCache[currentQuestion.id] != null ? (
-            <div className="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed">
-              {aiCommentCache[currentQuestion.id]}
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center h-32 gap-2 text-center">
-              <MessageSquare className="w-8 h-8 text-gray-300" />
-              <p className="text-sm text-gray-500">Comentário não disponível para esta questão.</p>
-            </div>
-          )}
+          <CommentContent />
         </div>
       </div>
 
       {/* ── Fixed footer ─────────────────────────────────────────────────── */}
       <div className="bg-white border-t border-gray-200 flex-shrink-0 z-10">
         <div className="px-4 sm:px-6 py-3 flex justify-between items-center gap-2">
-          {/* ← Anterior */}
           <button
             type="button"
             onClick={() => { if (examIndex > 0) setExamIndex((i) => i - 1); }}
@@ -688,7 +836,6 @@ export default function ProvaExamPage() {
             Anterior
           </button>
 
-          {/* Mid actions */}
           <div className="flex gap-2 items-center">
             <button
               type="button"
@@ -715,11 +862,8 @@ export default function ProvaExamPage() {
               type="button"
               onClick={() => {
                 if (!currentQuestion) return;
-                if (aiCommentOpen) {
-                  setAiCommentOpen(false);
-                } else {
-                  fetchAiComment(currentQuestion.id);
-                }
+                if (aiCommentOpen) setAiCommentOpen(false);
+                else fetchAiComment(currentQuestion.id);
               }}
               className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-2 border rounded-lg transition text-sm font-medium ${
                 aiCommentOpen
@@ -732,7 +876,6 @@ export default function ProvaExamPage() {
             </button>
           </div>
 
-          {/* Próximo → */}
           <button
             type="button"
             onClick={() => {
@@ -744,10 +887,7 @@ export default function ProvaExamPage() {
             {examIndex >= total - 1 ? (
               'Finalizar'
             ) : (
-              <>
-                Próximo
-                <ChevronRight className="w-4 h-4" />
-              </>
+              <>Próximo <ChevronRight className="w-4 h-4" /></>
             )}
           </button>
         </div>

@@ -11,13 +11,16 @@ export async function GET(
   }
 
   const result = await query(
-    'SELECT comentario FROM comentarios WHERE questao_id = $1',
+    'SELECT comentario, feedback_positivo FROM comentarios WHERE questao_id = $1',
     [id]
   );
 
   if (result.rows.length === 0) {
-    return NextResponse.json({ comentario: null }, { status: 200 });
+    return NextResponse.json({ comentario: null, feedback_positivo: 0 }, { status: 200 });
   }
 
-  return NextResponse.json({ comentario: result.rows[0].comentario });
+  return NextResponse.json({
+    comentario:        result.rows[0].comentario,
+    feedback_positivo: result.rows[0].feedback_positivo ?? 0,
+  });
 }
