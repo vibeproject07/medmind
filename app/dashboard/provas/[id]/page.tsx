@@ -5,6 +5,8 @@ import { useRouter, useParams } from 'next/navigation';
 import {
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
+  ChevronDown,
   Check,
   X,
   Eye,
@@ -56,34 +58,21 @@ function QuestionCarousel({
   setExamIndex,
   examAnswers,
   revealedAnswers,
+  groupIndex,
+  setGroupIndex,
+  groupSize,
 }: {
   questions: ProvaQuestion[];
   examIndex: number;
   setExamIndex: (i: number) => void;
   examAnswers: Record<number, string>;
   revealedAnswers: Set<number>;
+  groupIndex: number;
+  setGroupIndex: (g: number | ((prev: number) => number)) => void;
+  groupSize: number;
 }) {
   const total = questions.length;
-
-  // Responsive group size — computed once on mount to avoid SSR mismatch
-  const [groupSize, setGroupSize] = useState(DESKTOP_GROUP);
-  useEffect(() => {
-    const update = () => setGroupSize(window.innerWidth < 640 ? MOBILE_GROUP : DESKTOP_GROUP);
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
-  }, []);
-
   const totalGroups = Math.ceil(total / groupSize);
-
-  // Separate state for which group is visible.
-  // Only sync to examIndex when examIndex changes — NOT when groupIndex changes
-  // (which would cause a circular reset every time the user manually navigates groups).
-  const [groupIndex, setGroupIndex] = useState(() => Math.floor(examIndex / groupSize));
-
-  useEffect(() => {
-    setGroupIndex(Math.floor(examIndex / groupSize));
-  }, [examIndex, groupSize]);
 
   const groupStart = groupIndex * groupSize;
   const groupEnd = Math.min(groupStart + groupSize, total);
@@ -91,11 +80,11 @@ function QuestionCarousel({
 
   const prevGroup = useCallback(
     () => setGroupIndex((g) => Math.max(0, g - 1)),
-    [],
+    [setGroupIndex],
   );
   const nextGroup = useCallback(
     () => setGroupIndex((g) => Math.min(totalGroups - 1, g + 1)),
-    [totalGroups],
+    [setGroupIndex, totalGroups],
   );
 
   return (
@@ -217,6 +206,26 @@ export default function ProvaExamPage() {
   const [aiCommentCache, setAiCommentCache] = useState<Record<number, string | null>>({});
   const [aiCommentLoading, setAiCommentLoading] = useState(false);
 
+  // Footer collapsed state
+  const [footerOpen, setFooterOpen] = useState(true);
+
+  // Carousel group state lifted here so the parent can advance on answer
+  const [groupSize, setGroupSize] = useState(DESKTOP_GROUP);
+  const [groupIndex, setGroupIndex] = useState(0);
+
+  // Responsive group size
+  useEffect(() => {
+    const update = () => setGroupSize(window.innerWidth < 640 ? MOBILE_GROUP : DESKTOP_GROUP);
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
+  // Sync group to follow examIndex (only when examIndex changes)
+  useEffect(() => {
+    setGroupIndex(Math.floor(examIndex / groupSize));
+  }, [examIndex, groupSize]);
+
   useEffect(() => {
     const raw = localStorage.getItem(`examProva_${provaId}`);
     if (!raw) {
@@ -279,6 +288,21 @@ export default function ProvaExamPage() {
     return options;
   };
 
+  // Answer a question and auto-advance the carousel group if this was the last
+  // question of the current visible group (but not the last question overall).
+  const answerQuestion = useCallback(
+    (questionId: number, optionKey: string, currentIdx: number, total: number) => {
+      setExamAnswers((prev) => ({ ...prev, [questionId]: optionKey }));
+      const groupEnd = (groupIndex + 1) * groupSize; // exclusive
+      const isLastInGroup = currentIdx === groupEnd - 1;
+      const hasNextGroup = groupEnd < total;
+      if (isLastInGroup && hasNextGroup) {
+        setGroupIndex((g) => g + 1);
+      }
+    },
+    [groupIndex, groupSize],
+  );
+
   if (!prova) {
     return (
       <div className="flex items-center justify-center min-h-64">
@@ -294,6 +318,7 @@ export default function ProvaExamPage() {
   const percent = total ? Math.round((correctCount / total) * 100) : 0;
   const answeredCount = Object.keys(examAnswers).length;
 
+  // ── Results screen ────────────────────────────────────────────────────────
   if (showResults) {
     return (
       <div className="flex flex-col h-[calc(100vh-4rem)]">
@@ -389,18 +414,18 @@ export default function ProvaExamPage() {
   const availableOptions = currentQuestion ? getAvailableOptions(currentQuestion) : [];
   const selectedAnswer = currentQuestion ? examAnswers[currentQuestion.id] : undefined;
 
+  // ── Exam screen ───────────────────────────────────────────────────────────
   return (
-    <div className="flex flex-col h-[calc(100vh-4rem)]">
-      {/* ── Header ─────────────────────────────────────────────────────── */}
-      <div className="bg-white border-b border-gray-200 px-4 sm:px-6 pt-3 pb-2 flex-shrink-0">
-        {/* Title row — X alinhado ao centro da linha */}
+    <div className="flex flex-col h-[calc(100vh-4rem)] overflow-hidden">
+
+      {/* ── Fixed topbar ─────────────────────────────────────────────────── */}
+      <div className="bg-white border-b border-gray-200 px-4 sm:px-6 pt-3 pb-2 flex-shrink-0 z-10">
         <div className="flex items-center gap-3">
           <h2 className="text-lg sm:text-xl font-bold text-gray-800 truncate flex-1 min-w-0">
             {prova.nome}
           </h2>
-
           <div className="flex items-center gap-2 flex-shrink-0">
-            <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 bg-gray-50 rounded-lg border border-gray-200 text-xs text-gray-500">
+            <div className="hidden sm:flex items-center gap-1 px-2.5 py-1 bg-gray-50 rounded-lg border border-gray-200 text-xs text-gray-500">
               <span className="font-semibold text-gray-700">{answeredCount}</span>
               <span>/ {total}</span>
             </div>
@@ -415,21 +440,24 @@ export default function ProvaExamPage() {
           </div>
         </div>
 
-        {/* Carousel */}
         <QuestionCarousel
           questions={questions}
           examIndex={examIndex}
           setExamIndex={setExamIndex}
           examAnswers={examAnswers}
           revealedAnswers={revealedAnswers}
+          groupIndex={groupIndex}
+          setGroupIndex={setGroupIndex}
+          groupSize={groupSize}
         />
       </div>
 
-      {/* ── Body ───────────────────────────────────────────────────────── */}
+      {/* ── Scrollable body ───────────────────────────────────────────────── */}
       <div className="flex-1 flex overflow-hidden">
         <div className={`overflow-y-auto p-4 sm:p-6 ${aiCommentOpen ? 'w-1/2 border-r border-gray-200' : 'w-full'}`}>
           {currentQuestion && (
             <div className="max-w-3xl mx-auto space-y-5">
+              {/* Anulada banner */}
               {currentQuestion.anulada && (
                 <div className="flex items-start gap-2 p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm font-semibold">
                   <AlertTriangle className="w-4 h-4 mt-0.5 flex-shrink-0" />
@@ -437,30 +465,19 @@ export default function ProvaExamPage() {
                 </div>
               )}
 
+              {/* Statement — without number badge or prova name */}
               <div>
-                <div className="flex items-center gap-2 mb-3 flex-wrap">
-                  {/* Número sempre baseado na posição no array (examIndex + 1) */}
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-primary-50 border border-primary-200 text-primary-700 text-xs font-semibold">
-                    Nº {examIndex + 1}
+                {currentQuestion.anulada && (
+                  <span className="inline-flex items-center gap-1 mb-3 px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold border border-red-200">
+                    <Ban className="w-3 h-3" /> ANULADA
                   </span>
-                  {[currentQuestion.exam_board, currentQuestion.exam_region, currentQuestion.exam_year, currentQuestion.exam_type]
-                    .filter(Boolean)
-                    .map((tag, ti) => (
-                      <span key={ti} className="inline-flex items-center px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 text-xs">
-                        {tag}
-                      </span>
-                    ))}
-                  {currentQuestion.anulada && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold border border-red-200">
-                      <Ban className="w-3 h-3" /> ANULADA
-                    </span>
-                  )}
-                </div>
+                )}
                 <p className="text-base font-medium text-gray-800 whitespace-pre-wrap leading-relaxed">
                   {currentQuestion.statement}
                 </p>
               </div>
 
+              {/* Images */}
               {currentQuestion.images && currentQuestion.images.length > 0 && (
                 <div className="flex flex-wrap justify-center gap-4">
                   {currentQuestion.images.map((image: string, idx: number) => (
@@ -469,6 +486,7 @@ export default function ProvaExamPage() {
                 </div>
               )}
 
+              {/* Options */}
               <div className="space-y-2.5">
                 {availableOptions.map((option) => {
                   const isSelected = selectedAnswer === option.key;
@@ -499,7 +517,7 @@ export default function ProvaExamPage() {
                         onClick={() =>
                           !isConfirmedTaxed &&
                           !currentQuestion.anulada &&
-                          setExamAnswers((prev) => ({ ...prev, [currentQuestion.id]: option.key }))
+                          answerQuestion(currentQuestion.id, option.key, examIndex, total)
                         }
                         disabled={isConfirmedTaxed || !!currentQuestion.anulada}
                         className={`flex flex-1 items-center gap-3 text-left p-4 min-w-0 ${
@@ -550,6 +568,7 @@ export default function ProvaExamPage() {
                 })}
               </div>
 
+              {/* Revealed answer */}
               {revealedAnswers.has(currentQuestion.id) && (() => {
                 const correctOption = availableOptions.find((o) => o.key === currentQuestion.correct_answer);
                 return correctOption ? (
@@ -568,6 +587,7 @@ export default function ProvaExamPage() {
           )}
         </div>
 
+        {/* AI comment panel */}
         {aiCommentOpen && (
           <div className="w-1/2 overflow-y-auto bg-gray-50 border-l border-gray-200 flex flex-col">
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-white flex-shrink-0">
@@ -605,76 +625,99 @@ export default function ProvaExamPage() {
         )}
       </div>
 
-      {/* ── Footer ─────────────────────────────────────────────────────── */}
-      <div className="bg-white border-t border-gray-200 px-4 sm:px-6 py-3 flex justify-between items-center flex-shrink-0">
-        <button
-          type="button"
-          onClick={() => { if (examIndex > 0) setExamIndex((i) => i - 1); }}
-          disabled={examIndex === 0}
-          className="flex items-center gap-1.5 px-3 sm:px-4 py-2 border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 transition disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
-        >
-          <ChevronLeft className="w-4 h-4" />
-          <span className="hidden sm:inline">Anterior</span>
-        </button>
-
-        <div className="flex gap-2 items-center">
+      {/* ── Fixed footer (collapsible) ────────────────────────────────────── */}
+      <div className="bg-white border-t border-gray-200 flex-shrink-0 z-10">
+        {/* Toggle bar */}
+        <div className="flex justify-center">
           <button
             type="button"
-            onClick={() => {
-              if (!currentQuestion) return;
-              setRevealedAnswers((prev) => {
-                const next = new Set(prev);
-                if (next.has(currentQuestion.id)) next.delete(currentQuestion.id);
-                else next.add(currentQuestion.id);
-                return next;
-              });
-            }}
-            className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-2 border rounded-lg transition text-sm font-medium ${
-              currentQuestion && revealedAnswers.has(currentQuestion.id)
-                ? 'border-primary-500 bg-primary-50 text-primary-700'
-                : 'border-gray-200 text-gray-600 hover:bg-gray-50'
-            }`}
+            onClick={() => setFooterOpen((v) => !v)}
+            className="flex items-center gap-1 px-4 py-0.5 text-xs text-gray-400 hover:text-gray-600 transition"
+            title={footerOpen ? 'Ocultar ações' : 'Mostrar ações'}
           >
-            <Eye className="w-4 h-4" />
-            <span className="hidden sm:inline">Ver Resposta</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              if (!currentQuestion) return;
-              if (aiCommentOpen) {
-                setAiCommentOpen(false);
-              } else {
-                fetchAiComment(currentQuestion.id);
-              }
-            }}
-            className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-2 border rounded-lg transition text-sm font-medium ${
-              aiCommentOpen
-                ? 'border-purple-500 bg-purple-50 text-purple-700'
-                : 'border-gray-200 text-gray-600 hover:bg-gray-50'
-            }`}
-          >
-            <MessageSquare className="w-4 h-4" />
-            <span className="hidden sm:inline">Comentário IA</span>
+            {footerOpen ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronUp className="w-3.5 h-3.5" />}
+            {footerOpen ? 'Ocultar ações' : 'Mostrar ações'}
           </button>
         </div>
 
-        <button
-          type="button"
-          onClick={() => {
-            if (examIndex < total - 1) setExamIndex((i) => i + 1);
-            else setShowResults(true);
-          }}
-          className="flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition text-sm font-semibold"
-        >
-          {examIndex >= total - 1 ? 'Finalizar' : (
-            <>
-              <span className="hidden sm:inline">Próxima</span>
-              <ChevronRight className="w-4 h-4" />
-            </>
-          )}
-        </button>
+        {/* Action row */}
+        {footerOpen && (
+          <div className="px-4 sm:px-6 pb-3 flex justify-between items-center gap-2">
+            {/* ← Anterior */}
+            <button
+              type="button"
+              onClick={() => { if (examIndex > 0) setExamIndex((i) => i - 1); }}
+              disabled={examIndex === 0}
+              className="flex items-center gap-1.5 px-3 sm:px-4 py-2 border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 transition disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              Anterior
+            </button>
+
+            {/* Mid actions */}
+            <div className="flex gap-2 items-center">
+              <button
+                type="button"
+                onClick={() => {
+                  if (!currentQuestion) return;
+                  setRevealedAnswers((prev) => {
+                    const next = new Set(prev);
+                    if (next.has(currentQuestion.id)) next.delete(currentQuestion.id);
+                    else next.add(currentQuestion.id);
+                    return next;
+                  });
+                }}
+                className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-2 border rounded-lg transition text-sm font-medium ${
+                  currentQuestion && revealedAnswers.has(currentQuestion.id)
+                    ? 'border-primary-500 bg-primary-50 text-primary-700'
+                    : 'border-gray-200 text-gray-600 hover:bg-gray-50'
+                }`}
+              >
+                <Eye className="w-4 h-4" />
+                <span className="hidden sm:inline">Ver Resposta</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  if (!currentQuestion) return;
+                  if (aiCommentOpen) {
+                    setAiCommentOpen(false);
+                  } else {
+                    fetchAiComment(currentQuestion.id);
+                  }
+                }}
+                className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-2 border rounded-lg transition text-sm font-medium ${
+                  aiCommentOpen
+                    ? 'border-purple-500 bg-purple-50 text-purple-700'
+                    : 'border-gray-200 text-gray-600 hover:bg-gray-50'
+                }`}
+              >
+                <MessageSquare className="w-4 h-4" />
+                <span className="hidden sm:inline">Comentário IA</span>
+              </button>
+            </div>
+
+            {/* Próximo → */}
+            <button
+              type="button"
+              onClick={() => {
+                if (examIndex < total - 1) setExamIndex((i) => i + 1);
+                else setShowResults(true);
+              }}
+              className="flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition text-sm font-semibold"
+            >
+              {examIndex >= total - 1 ? (
+                'Finalizar'
+              ) : (
+                <>
+                  Próximo
+                  <ChevronRight className="w-4 h-4" />
+                </>
+              )}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
