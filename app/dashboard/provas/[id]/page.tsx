@@ -5,8 +5,6 @@ import { useRouter, useParams } from 'next/navigation';
 import {
   ChevronLeft,
   ChevronRight,
-  ChevronUp,
-  ChevronDown,
   Check,
   X,
   Eye,
@@ -205,9 +203,6 @@ export default function ProvaExamPage() {
   const [aiCommentOpen, setAiCommentOpen] = useState(false);
   const [aiCommentCache, setAiCommentCache] = useState<Record<number, string | null>>({});
   const [aiCommentLoading, setAiCommentLoading] = useState(false);
-
-  // Footer collapsed state
-  const [footerOpen, setFooterOpen] = useState(true);
 
   // Carousel group state lifted here so the parent can advance on answer
   const [groupSize, setGroupSize] = useState(DESKTOP_GROUP);
@@ -587,9 +582,9 @@ export default function ProvaExamPage() {
           )}
         </div>
 
-        {/* AI comment panel */}
+        {/* AI comment panel — desktop only (sm+) */}
         {aiCommentOpen && (
-          <div className="w-1/2 overflow-y-auto bg-gray-50 border-l border-gray-200 flex flex-col">
+          <div className="hidden sm:flex w-1/2 overflow-y-auto bg-gray-50 border-l border-gray-200 flex-col">
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-white flex-shrink-0">
               <h3 className="text-base font-semibold text-gray-800 flex items-center gap-2">
                 <MessageSquare className="w-4 h-4 text-purple-600" />
@@ -625,99 +620,137 @@ export default function ProvaExamPage() {
         )}
       </div>
 
-      {/* ── Fixed footer (collapsible) ────────────────────────────────────── */}
-      <div className="bg-white border-t border-gray-200 flex-shrink-0 z-10">
-        {/* Toggle bar */}
-        <div className="flex justify-center">
-          <button
-            type="button"
-            onClick={() => setFooterOpen((v) => !v)}
-            className="flex items-center gap-1 px-4 py-0.5 text-xs text-gray-400 hover:text-gray-600 transition"
-            title={footerOpen ? 'Ocultar ações' : 'Mostrar ações'}
-          >
-            {footerOpen ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronUp className="w-3.5 h-3.5" />}
-            {footerOpen ? 'Ocultar ações' : 'Mostrar ações'}
-          </button>
-        </div>
-
-        {/* Action row */}
-        {footerOpen && (
-          <div className="px-4 sm:px-6 pb-3 flex justify-between items-center gap-2">
-            {/* ← Anterior */}
+      {/* ── AI comment bottom sheet — mobile only (< sm) ─────────────────── */}
+      {/* Backdrop */}
+      <div
+        className={`sm:hidden fixed inset-0 bg-black/40 z-40 transition-opacity duration-300 ${
+          aiCommentOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setAiCommentOpen(false)}
+      />
+      {/* Sheet */}
+      <div
+        className={`sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-2xl shadow-2xl flex flex-col
+          transition-transform duration-300 ease-out
+          ${aiCommentOpen ? 'translate-y-0' : 'translate-y-full'}
+        `}
+        style={{ height: '80vh' }}
+      >
+        {/* Handle + header */}
+        <div className="flex flex-col items-center pt-3 pb-2 border-b border-gray-100 flex-shrink-0">
+          <div className="w-10 h-1 rounded-full bg-gray-300 mb-3" />
+          <div className="flex items-center justify-between w-full px-5">
+            <h3 className="text-base font-semibold text-gray-800 flex items-center gap-2">
+              <MessageSquare className="w-4 h-4 text-purple-600" />
+              Comentário da IA
+            </h3>
             <button
               type="button"
-              onClick={() => { if (examIndex > 0) setExamIndex((i) => i - 1); }}
-              disabled={examIndex === 0}
-              className="flex items-center gap-1.5 px-3 sm:px-4 py-2 border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 transition disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
+              onClick={() => setAiCommentOpen(false)}
+              className="p-1.5 rounded-lg hover:bg-gray-100 transition text-gray-500"
+              aria-label="Fechar"
             >
-              <ChevronLeft className="w-4 h-4" />
-              Anterior
+              <X className="w-4 h-4" />
             </button>
-
-            {/* Mid actions */}
-            <div className="flex gap-2 items-center">
-              <button
-                type="button"
-                onClick={() => {
-                  if (!currentQuestion) return;
-                  setRevealedAnswers((prev) => {
-                    const next = new Set(prev);
-                    if (next.has(currentQuestion.id)) next.delete(currentQuestion.id);
-                    else next.add(currentQuestion.id);
-                    return next;
-                  });
-                }}
-                className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-2 border rounded-lg transition text-sm font-medium ${
-                  currentQuestion && revealedAnswers.has(currentQuestion.id)
-                    ? 'border-primary-500 bg-primary-50 text-primary-700'
-                    : 'border-gray-200 text-gray-600 hover:bg-gray-50'
-                }`}
-              >
-                <Eye className="w-4 h-4" />
-                <span className="hidden sm:inline">Ver Resposta</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  if (!currentQuestion) return;
-                  if (aiCommentOpen) {
-                    setAiCommentOpen(false);
-                  } else {
-                    fetchAiComment(currentQuestion.id);
-                  }
-                }}
-                className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-2 border rounded-lg transition text-sm font-medium ${
-                  aiCommentOpen
-                    ? 'border-purple-500 bg-purple-50 text-purple-700'
-                    : 'border-gray-200 text-gray-600 hover:bg-gray-50'
-                }`}
-              >
-                <MessageSquare className="w-4 h-4" />
-                <span className="hidden sm:inline">Comentário IA</span>
-              </button>
+          </div>
+        </div>
+        {/* Content */}
+        <div className="flex-1 overflow-y-auto p-5">
+          {aiCommentLoading ? (
+            <div className="flex items-center justify-center h-32 gap-3 text-gray-500">
+              <Loader2 className="w-6 h-6 animate-spin text-purple-600" />
+              <span className="text-sm">Carregando comentário...</span>
             </div>
+          ) : currentQuestion && aiCommentCache[currentQuestion.id] != null ? (
+            <div className="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed">
+              {aiCommentCache[currentQuestion.id]}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center h-32 gap-2 text-center">
+              <MessageSquare className="w-8 h-8 text-gray-300" />
+              <p className="text-sm text-gray-500">Comentário não disponível para esta questão.</p>
+            </div>
+          )}
+        </div>
+      </div>
 
-            {/* Próximo → */}
+      {/* ── Fixed footer ─────────────────────────────────────────────────── */}
+      <div className="bg-white border-t border-gray-200 flex-shrink-0 z-10">
+        <div className="px-4 sm:px-6 py-3 flex justify-between items-center gap-2">
+          {/* ← Anterior */}
+          <button
+            type="button"
+            onClick={() => { if (examIndex > 0) setExamIndex((i) => i - 1); }}
+            disabled={examIndex === 0}
+            className="flex items-center gap-1.5 px-3 sm:px-4 py-2 border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 transition disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
+          >
+            <ChevronLeft className="w-4 h-4" />
+            Anterior
+          </button>
+
+          {/* Mid actions */}
+          <div className="flex gap-2 items-center">
             <button
               type="button"
               onClick={() => {
-                if (examIndex < total - 1) setExamIndex((i) => i + 1);
-                else setShowResults(true);
+                if (!currentQuestion) return;
+                setRevealedAnswers((prev) => {
+                  const next = new Set(prev);
+                  if (next.has(currentQuestion.id)) next.delete(currentQuestion.id);
+                  else next.add(currentQuestion.id);
+                  return next;
+                });
               }}
-              className="flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition text-sm font-semibold"
+              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-2 border rounded-lg transition text-sm font-medium ${
+                currentQuestion && revealedAnswers.has(currentQuestion.id)
+                  ? 'border-primary-500 bg-primary-50 text-primary-700'
+                  : 'border-gray-200 text-gray-600 hover:bg-gray-50'
+              }`}
             >
-              {examIndex >= total - 1 ? (
-                'Finalizar'
-              ) : (
-                <>
-                  Próximo
-                  <ChevronRight className="w-4 h-4" />
-                </>
-              )}
+              <Eye className="w-4 h-4" />
+              <span className="hidden sm:inline">Ver Resposta</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                if (!currentQuestion) return;
+                if (aiCommentOpen) {
+                  setAiCommentOpen(false);
+                } else {
+                  fetchAiComment(currentQuestion.id);
+                }
+              }}
+              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-2 border rounded-lg transition text-sm font-medium ${
+                aiCommentOpen
+                  ? 'border-purple-500 bg-purple-50 text-purple-700'
+                  : 'border-gray-200 text-gray-600 hover:bg-gray-50'
+              }`}
+            >
+              <MessageSquare className="w-4 h-4" />
+              <span className="hidden sm:inline">Comentário IA</span>
             </button>
           </div>
-        )}
+
+          {/* Próximo → */}
+          <button
+            type="button"
+            onClick={() => {
+              if (examIndex < total - 1) setExamIndex((i) => i + 1);
+              else setShowResults(true);
+            }}
+            className="flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition text-sm font-semibold"
+          >
+            {examIndex >= total - 1 ? (
+              'Finalizar'
+            ) : (
+              <>
+                Próximo
+                <ChevronRight className="w-4 h-4" />
+              </>
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );

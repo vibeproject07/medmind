@@ -9,7 +9,11 @@ export default function FloatingButton() {
   const pathname = usePathname();
   const [showCriarNotaModal, setShowCriarNotaModal] = useState(false);
 
-  if (pathname === '/dashboard/notes/new' || pathname.startsWith('/dashboard/simulados/novo')) {
+  if (
+    pathname === '/dashboard/notes/new' ||
+    pathname.startsWith('/dashboard/simulados/novo') ||
+    pathname.startsWith('/dashboard/provas/')
+  ) {
     return null;
   }
 
