@@ -88,20 +88,42 @@ scripts/
 - Hierarchical codes: `tree_id_list[].tree_id` (array)
 - Routes require user JWT authentication
 
-## pgvector / Semantic Search
+## Vector Search Architecture
 
-- Extension: `pgvector 0.8.0` enabled on PostgreSQL 16.10
+### pgvector (local / fallback)
+- Extension: `pgvector 0.8.0` on PostgreSQL 16.10
 - Column: `questions.embedding vector(3072)` (cosine similarity)
-- Index: HNSW index `questions_embedding_hnsw_idx` created automatically after batch embedding
-- Model: `gemini-embedding-001` (3072 dims) called via REST `v1beta` endpoint
-- Lib: `lib/embeddings.ts` — core utilities (`generateEmbedding`, `buildQuestionText`, `findSimilarQuestions`, `semanticSearchQuestions`)
-- API Routes:
-  - `GET  /api/questions/[id]/embedding` — check if question has embedding
-  - `POST /api/questions/[id]/embedding` — generate + save embedding (admin only)
-  - `GET  /api/questions/[id]/similar` — top-N similar questions by cosine distance
-  - `GET  /api/questions/semantic-search?q=...` — semantic search across all embedded questions
-- Batch script: `scripts/batch-embed-questions.mjs` — generates embeddings for all questions (defaults: concurrency=3, delay=350ms)
-- UI: Semantic search bar on questions list page; "Questões Similares" section on question detail page
+- Index: HNSW `questions_embedding_hnsw_idx` (auto-created after batch)
+- Lib: `lib/embeddings.ts` — `generateEmbedding`, `buildQuestionText`, `findSimilarQuestions`, `semanticSearchQuestions`
+
+### Pinecone (managed / primary when key set)
+- SDK: `@pinecone-database/pinecone` v7.2.0
+- Lib: `lib/pinecone.ts` — `upsertQuestionEmbedding`, `queryPineconeSimilar`, `getPineconeIndexStats`
+- Index: `medmind-questions` (auto-created on first use) — 3072 dims, cosine, serverless AWS us-east-1
+- Config: `PINECONE_API_KEY` + `PINECONE_INDEX_NAME` in `.env.local`
+- Vector ID format: `q-{questionId}`
+
+### Routing logic
+- When `PINECONE_API_KEY` is set → Pinecone is primary; pgvector serves as local cache
+- When not set → pgvector only fallback
+
+### Embedding model
+- `gemini-embedding-001` (3072 dims) via Google REST API `v1beta`
+
+### API Routes
+- `GET  /api/questions/[id]/embedding` — check embedding status
+- `POST /api/questions/[id]/embedding` — generate + save to pgvector + Pinecone (admin)
+- `GET  /api/questions/[id]/similar` — similar questions (Pinecone → pgvector fallback)
+- `GET  /api/questions/semantic-search?q=...` — semantic search (Pinecone → pgvector fallback)
+- `GET  /api/pinecone/status` — index stats (admin only)
+
+### Batch script
+- `scripts/batch-embed-questions.mjs` — embeds all questions, upserts to pgvector + Pinecone
+- Options: `--limit N --concurrency 3 --delay 350 --no-resume --pinecone-batch 100`
+
+### UI
+- Semantic search bar (violet gradient) on questions list page
+- "Questões Similares" section on question detail page
 
 ## Notes
 
