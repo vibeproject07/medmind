@@ -16,6 +16,9 @@ import {
   XCircle,
   ThumbsUp,
   ThumbsDown,
+  XOctagon,
+  SplitSquareHorizontal,
+  History,
 } from 'lucide-react';
 import ImageLightbox from '@/components/Common/ImageLightbox';
 
@@ -59,9 +62,45 @@ const DESKTOP_GROUP = 10;
 const MOBILE_GROUP = 5;
 
 const MOTIVOS = [
-  { value: 'incorreto',    label: 'Incorreto',    desc: 'O comentário não explica corretamente a resolução da questão' },
-  { value: 'incompleto',   label: 'Incompleto',   desc: 'O comentário explica apenas parcialmente a resolução da questão' },
-  { value: 'desatualizado',label: 'Desatualizado',desc: 'O comentário apresenta uma explicação defasada para a resolução da questão' },
+  {
+    value: 'incorreto',
+    label: 'Incorreto',
+    desc: 'O comentário não explica corretamente a resolução da questão',
+    icon: XOctagon,
+    color: 'text-red-500',
+    bg: 'bg-red-50',
+    border: 'border-red-200',
+    hoverBg: 'hover:bg-red-50',
+    hoverBorder: 'hover:border-red-400',
+    hoverText: 'group-hover:text-red-700',
+    hoverDesc: 'group-hover:text-red-500',
+  },
+  {
+    value: 'incompleto',
+    label: 'Incompleto',
+    desc: 'O comentário explica apenas parcialmente a resolução da questão',
+    icon: SplitSquareHorizontal,
+    color: 'text-amber-500',
+    bg: 'bg-amber-50',
+    border: 'border-amber-200',
+    hoverBg: 'hover:bg-amber-50',
+    hoverBorder: 'hover:border-amber-400',
+    hoverText: 'group-hover:text-amber-700',
+    hoverDesc: 'group-hover:text-amber-600',
+  },
+  {
+    value: 'desatualizado',
+    label: 'Desatualizado',
+    desc: 'O comentário apresenta uma explicação defasada para a resolução da questão',
+    icon: History,
+    color: 'text-blue-500',
+    bg: 'bg-blue-50',
+    border: 'border-blue-200',
+    hoverBg: 'hover:bg-blue-50',
+    hoverBorder: 'hover:border-blue-400',
+    hoverText: 'group-hover:text-blue-700',
+    hoverDesc: 'group-hover:text-blue-600',
+  },
 ] as const;
 
 type Motivo = typeof MOTIVOS[number]['value'];
@@ -246,26 +285,34 @@ function MotivoModal({
   onCancel: () => void;
 }) {
   return (
-    <div className="fixed inset-0 bg-black/50 z-[70] flex items-center justify-center p-6">
+    <div className="fixed inset-0 bg-black/60 z-[70] flex items-center justify-center p-6">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden">
-        <div className="px-6 pt-5 pb-3 border-b border-gray-100">
+        <div className="px-6 pt-5 pb-4 border-b border-gray-100">
           <h3 className="text-base font-bold text-gray-800">Por que não gostou?</h3>
           <p className="text-xs text-gray-500 mt-0.5">Ajude-nos a melhorar os comentários da IA</p>
         </div>
-        <div className="p-3 space-y-1">
-          {MOTIVOS.map((m) => (
-            <button
-              key={m.value}
-              type="button"
-              onClick={() => onSelectMotivo(m.value)}
-              className="w-full text-left px-4 py-3 rounded-xl hover:bg-red-50 active:bg-red-100 transition group"
-            >
-              <p className="text-sm font-semibold text-gray-800 group-hover:text-red-700">{m.label}</p>
-              <p className="text-xs text-gray-500 group-hover:text-red-500 mt-0.5 leading-relaxed">{m.desc}</p>
-            </button>
-          ))}
+        <div className="p-4 space-y-2.5">
+          {MOTIVOS.map((m) => {
+            const Icon = m.icon;
+            return (
+              <button
+                key={m.value}
+                type="button"
+                onClick={() => onSelectMotivo(m.value)}
+                className={`group w-full text-left flex items-start gap-3 p-4 rounded-xl border-2 border-gray-100 bg-white transition-all duration-150 ${m.hoverBg} ${m.hoverBorder} active:scale-[0.98]`}
+              >
+                <div className={`mt-0.5 p-2 rounded-lg ${m.bg} flex-shrink-0`}>
+                  <Icon className={`w-4 h-4 ${m.color}`} />
+                </div>
+                <div className="min-w-0">
+                  <p className={`text-sm font-semibold text-gray-800 ${m.hoverText}`}>{m.label}</p>
+                  <p className={`text-xs text-gray-500 ${m.hoverDesc} mt-0.5 leading-relaxed`}>{m.desc}</p>
+                </div>
+              </button>
+            );
+          })}
         </div>
-        <div className="px-6 pb-5">
+        <div className="px-4 pb-5">
           <button
             type="button"
             onClick={onCancel}
