@@ -116,14 +116,19 @@ scripts/
 - `GET  /api/questions/[id]/similar` — similar questions (Pinecone → pgvector fallback)
 - `GET  /api/questions/semantic-search?q=...` — semantic search (Pinecone → pgvector fallback)
 - `GET  /api/pinecone/status` — index stats (admin only)
+- `GET  /api/admin/embed-batch` — live progress (pgvector count + Pinecone vector count)
+- `POST /api/admin/embed-batch` — start batch script as detached background process (admin)
 
 ### Batch script
 - `scripts/batch-embed-questions.mjs` — embeds all questions, upserts to pgvector + Pinecone
 - Options: `--limit N --concurrency 3 --delay 350 --no-resume --pinecone-batch 100`
+- Run from API: `POST /api/admin/embed-batch` (uses `--env-file=.env.local` internally)
+- Run from terminal: `node --env-file=.env.local scripts/batch-embed-questions.mjs --concurrency 5 --delay 300`
 
 ### UI
 - Semantic search bar (violet gradient) on questions list page
 - "Questões Similares" section on question detail page
+- Admin vectorization dashboard: `/dashboard/admin/vectorization` — live progress for both backends, function references, batch controls
 
 ## Development Preferences
 
