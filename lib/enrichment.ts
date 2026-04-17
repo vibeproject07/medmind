@@ -101,13 +101,12 @@ async function enrichQuestion(questionId: number): Promise<void> {
   if (decsReady) {
     const matches = await findTopDeCSLocal(embedding, 5);
     const relevant = matches.filter((m) => m.score >= 0.75);
-    if (relevant.length > 0) {
-      const terms = relevant.map((m) => m.name_pt);
-      await query(
-        `UPDATE questions SET decs_terms = $1 WHERE id = $2`,
-        [JSON.stringify(terms), questionId]
-      );
-    }
+    // Always write result (even []) to clear any stale prior terms
+    const terms = relevant.map((m) => m.name_pt);
+    await query(
+      `UPDATE questions SET decs_terms = $1 WHERE id = $2`,
+      [JSON.stringify(terms), questionId]
+    );
   }
 
   console.log(`[enrichment] question ${questionId} enriched (embedding + DeCS)`);
@@ -142,13 +141,13 @@ async function enrichNote(noteId: number): Promise<void> {
   if (decsReady) {
     const matches = await findTopDeCSLocal(embedding, 5);
     const relevant = matches.filter((m) => m.score >= 0.75);
-    if (relevant.length > 0) {
-      const terms = relevant.map((m) => ({ ui: m.ui, name_pt: m.name_pt, score: m.score }));
-      await query(
-        `UPDATE notes SET decs_terms = $1 WHERE id = $2`,
-        [JSON.stringify(terms), noteId]
-      );
-    }
+    // Canonical shape: {ui, name_pt, name_en} — no score, matches batch script output
+    // Always write (even []) to clear any stale prior terms
+    const terms = relevant.map((m) => ({ ui: m.ui, name_pt: m.name_pt, name_en: m.name_en }));
+    await query(
+      `UPDATE notes SET decs_terms = $1 WHERE id = $2`,
+      [JSON.stringify(terms), noteId]
+    );
   }
 
   console.log(`[enrichment] note ${noteId} enriched (embedding + DeCS)`);

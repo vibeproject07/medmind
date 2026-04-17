@@ -674,7 +674,8 @@ LIMIT 5`}</pre>
           </div>
           <p className="text-[11px] text-gray-400">
             Executa <code className="bg-gray-100 px-1 rounded">scripts/embed-notes.mjs</code> em background.
-            Concorrência: 3 req paralelas · Delay: 350ms
+            Concorrência: 3 · Delay: 350ms · Por padrão re-processa apenas notas sem embedding (use{' '}
+            <code className="bg-gray-100 px-1 rounded">--no-resume</code> para forçar todas).
           </p>
         </div>
       </div>
