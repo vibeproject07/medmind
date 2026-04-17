@@ -92,6 +92,11 @@ async function enrichQuestion(questionId: number): Promise<void> {
     [vectorToString(embedding), questionId]
   );
 
+  // Recompute content links
+  await recomputeContentLinks('question', questionId, embedding).catch((e) =>
+    console.error(`[enrichment] content_links failed for question ${questionId}:`, e)
+  );
+
   // Check if local DeCS is available
   const decsCheck = await query(
     `SELECT COUNT(*) FROM decs_descriptors WHERE embedding IS NOT NULL`
@@ -132,6 +137,11 @@ async function enrichNote(noteId: number): Promise<void> {
     [vectorToString(embedding), noteId]
   );
 
+  // Recompute content links
+  await recomputeContentLinks('note', noteId, embedding).catch((e) =>
+    console.error(`[enrichment] content_links failed for note ${noteId}:`, e)
+  );
+
   // Check if local DeCS is available
   const decsCheck = await query(
     `SELECT COUNT(*) FROM decs_descriptors WHERE embedding IS NOT NULL`
@@ -151,6 +161,78 @@ async function enrichNote(noteId: number): Promise<void> {
   }
 
   console.log(`[enrichment] note ${noteId} enriched (embedding + DeCS)`);
+}
+
+// ── Content links (precomputed similarity) ────────────────────────────────────
+
+const SIMILARITY_THRESHOLD = 0.70;
+const SIMILARITY_TOP_K = 10;
+
+async function recomputeContentLinks(
+  type: 'question' | 'note',
+  id: number,
+  embedding: number[]
+): Promise<void> {
+  const vectorStr = vectorToString(embedding);
+  const excludeQId = type === 'question' ? id : -1;
+  const excludeNId = type === 'note' ? id : -1;
+
+  const [simQs, simNs] = await Promise.all([
+    query(
+      `SELECT q.id, 1 - (q.embedding <=> $1::vector) AS similarity
+       FROM questions q
+       WHERE q.id != $2
+         AND q.embedding IS NOT NULL
+         AND (1 - (q.embedding <=> $1::vector)) >= $3
+       ORDER BY q.embedding <=> $1::vector
+       LIMIT $4`,
+      [vectorStr, excludeQId, SIMILARITY_THRESHOLD, SIMILARITY_TOP_K]
+    ),
+    query(
+      `SELECT n.id, 1 - (n.embedding <=> $1::vector) AS similarity
+       FROM notes n
+       WHERE n.id != $2
+         AND n.embedding IS NOT NULL
+         AND (1 - (n.embedding <=> $1::vector)) >= $3
+       ORDER BY n.embedding <=> $1::vector
+       LIMIT $4`,
+      [vectorStr, excludeNId, SIMILARITY_THRESHOLD, SIMILARITY_TOP_K]
+    ),
+  ]);
+
+  await query('BEGIN');
+  try {
+    await query(
+      `DELETE FROM content_links WHERE source_type = $1 AND source_id = $2`,
+      [type, id]
+    );
+    for (const row of simQs.rows) {
+      await query(
+        `INSERT INTO content_links (source_type, source_id, target_type, target_id, similarity, computed_at)
+         VALUES ($1, $2, 'question', $3, $4, NOW())
+         ON CONFLICT (source_type, source_id, target_type, target_id)
+         DO UPDATE SET similarity = EXCLUDED.similarity, computed_at = NOW()`,
+        [type, id, row.id, parseFloat(row.similarity)]
+      );
+    }
+    for (const row of simNs.rows) {
+      await query(
+        `INSERT INTO content_links (source_type, source_id, target_type, target_id, similarity, computed_at)
+         VALUES ($1, $2, 'note', $3, $4, NOW())
+         ON CONFLICT (source_type, source_id, target_type, target_id)
+         DO UPDATE SET similarity = EXCLUDED.similarity, computed_at = NOW()`,
+        [type, id, row.id, parseFloat(row.similarity)]
+      );
+    }
+    await query('COMMIT');
+    console.log(
+      `[enrichment] content_links for ${type} ${id}: ` +
+      `${simQs.rows.length} q-links, ${simNs.rows.length} n-links`
+    );
+  } catch (err) {
+    await query('ROLLBACK');
+    throw err;
+  }
 }
 
 // ── Public API ────────────────────────────────────────────────────────────────

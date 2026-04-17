@@ -3,6 +3,8 @@ import { findSimilarQuestions, getQuestionEmbedding } from '@/lib/embeddings';
 import { isPineconeEnabled, queryPineconeSimilar } from '@/lib/pinecone';
 import { query } from '@/lib/db';
 
+export const runtime = 'nodejs';
+
 // GET /api/questions/[id]/similar?limit=5
 export async function GET(
   req: NextRequest,
@@ -12,6 +14,42 @@ export async function GET(
     const { id } = await params;
     const questionId = parseInt(id);
     const limit = Math.min(parseInt(req.nextUrl.searchParams.get('limit') ?? '5'), 20);
+
+    // ── Try precomputed content_links first ────────────────────────────────
+    const precomputed = await query(
+      `SELECT
+         cl.target_id AS id,
+         cl.similarity,
+         q.statement,
+         q.tags,
+         q.areas_conhecimento,
+         q.exam_year,
+         q.exam_board,
+         q.exam_institution
+       FROM content_links cl
+       JOIN questions q ON q.id = cl.target_id
+       WHERE cl.source_type = 'question'
+         AND cl.source_id = $1
+         AND cl.target_type = 'question'
+         AND cl.similarity >= 0.70
+       ORDER BY cl.similarity DESC
+       LIMIT $2`,
+      [questionId, limit]
+    );
+
+    if (precomputed.rows.length > 0) {
+      const results = precomputed.rows.map((r) => ({
+        id: r.id,
+        statement: r.statement,
+        tags: r.tags ? JSON.parse(r.tags) : [],
+        areas_conhecimento: r.areas_conhecimento ? JSON.parse(r.areas_conhecimento) : [],
+        exam_year: r.exam_year,
+        exam_board: r.exam_board,
+        exam_institution: r.exam_institution,
+        similarity: parseFloat(r.similarity),
+      }));
+      return NextResponse.json({ questions: results, backend: 'content_links' });
+    }
 
     // ── Pinecone path ──────────────────────────────────────────────────────
     if (isPineconeEnabled()) {

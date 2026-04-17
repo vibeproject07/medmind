@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { ArrowLeft, Edit, HelpCircle, BookOpen, Sparkles, Image as ImageIcon, X, Star } from 'lucide-react';
+import { ArrowLeft, Edit, HelpCircle, BookOpen, Sparkles, Image as ImageIcon, X, Star, Brain, ExternalLink, Loader2 } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
 import {
@@ -133,6 +133,13 @@ export default function NoteDetailPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [questionsCount, setQuestionsCount] = useState<number>(0);
 
+  type SimilarNote = { id: number; title: string; description: string; tags: string[]; areas_conhecimento: string[]; similarity: number };
+  type SimilarQuestion = { id: number; statement: string; tags: string[]; areas_conhecimento: string[]; exam_year: number | null; exam_board: string | null; exam_institution: string | null; similarity: number };
+  const [similarNotes, setSimilarNotes] = useState<SimilarNote[]>([]);
+  const [similarQuestions2, setSimilarQuestions2] = useState<SimilarQuestion[]>([]);
+  const [similarLoading, setSimilarLoading] = useState(false);
+  const [similarTab, setSimilarTab] = useState<'notes' | 'questions'>('notes');
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -163,6 +170,20 @@ export default function NoteDetailPage() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [noteId, note]);
+
+  useEffect(() => {
+    if (!noteId || !note) return;
+    setSimilarLoading(true);
+    fetch(`/api/notes/${noteId}/similar?limit=5`)
+      .then((r) => r.ok ? r.json() : { notes: [], questions: [] })
+      .then((data) => {
+        setSimilarNotes(data.notes ?? []);
+        setSimilarQuestions2(data.questions ?? []);
+      })
+      .catch(() => {})
+      .finally(() => setSimilarLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [noteId, note?.id]);
 
   useEffect(() => {
     // Buscar quantidade de questões disponíveis baseado nas tags da nota
@@ -1034,6 +1055,124 @@ export default function NoteDetailPage() {
             </div>
           </div>
         )}
+      </div>
+
+      {/* Conteúdo Relacionado (similaridade semântica) */}
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+        <div className="flex items-center gap-2 px-6 py-4 border-b border-gray-200">
+          <Brain className="h-4 w-4 text-violet-500" />
+          <h3 className="text-lg font-semibold text-gray-800">Conteúdo relacionado</h3>
+          <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">busca semântica</span>
+        </div>
+
+        {/* Tabs */}
+        <div className="flex gap-1 px-4 pt-3 border-b border-gray-100 bg-gray-50">
+          <button
+            onClick={() => setSimilarTab('notes')}
+            className={`px-4 py-2 text-sm font-medium rounded-t-md transition ${
+              similarTab === 'notes'
+                ? 'bg-white text-violet-600 border border-b-white border-gray-200 -mb-px'
+                : 'text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            Notas parecidas
+            {similarNotes.length > 0 && (
+              <span className="ml-1.5 text-xs bg-violet-100 text-violet-600 px-1.5 py-0.5 rounded-full">{similarNotes.length}</span>
+            )}
+          </button>
+          <button
+            onClick={() => setSimilarTab('questions')}
+            className={`px-4 py-2 text-sm font-medium rounded-t-md transition ${
+              similarTab === 'questions'
+                ? 'bg-white text-violet-600 border border-b-white border-gray-200 -mb-px'
+                : 'text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            Questões do mesmo tema
+            {similarQuestions2.length > 0 && (
+              <span className="ml-1.5 text-xs bg-violet-100 text-violet-600 px-1.5 py-0.5 rounded-full">{similarQuestions2.length}</span>
+            )}
+          </button>
+        </div>
+
+        <div className="p-6">
+          {similarLoading ? (
+            <div className="flex items-center gap-2 text-gray-500 text-sm py-4">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span>Buscando conteúdo similar…</span>
+            </div>
+          ) : similarTab === 'notes' ? (
+            similarNotes.length === 0 ? (
+              <div className="text-center py-6">
+                <Brain className="h-8 w-8 text-gray-300 mx-auto mb-2" />
+                <p className="text-gray-400 text-sm">Nenhuma nota similar encontrada. O embedding desta nota precisa ser gerado primeiro.</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {similarNotes.map((sn) => (
+                  <div
+                    key={sn.id}
+                    className="flex items-start gap-3 p-3 rounded-lg border border-gray-100 hover:border-violet-200 hover:bg-violet-50/30 transition group"
+                  >
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-800 truncate">{sn.title}</p>
+                      <p className="text-xs text-gray-500 line-clamp-1 mt-0.5">{sn.description}</p>
+                      <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
+                        {sn.areas_conhecimento?.slice(0, 2).map((a) => (
+                          <span key={a} className="text-xs px-1.5 py-0.5 bg-violet-50 text-violet-600 rounded-full">{a}</span>
+                        ))}
+                        <span className="ml-auto text-xs font-medium text-violet-600">{Math.round(sn.similarity * 100)}% similar</span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => router.push(`/dashboard/notes/${sn.id}`)}
+                      className="flex-shrink-0 p-1.5 text-gray-400 hover:text-violet-600 transition opacity-0 group-hover:opacity-100"
+                      title="Ver nota"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )
+          ) : (
+            similarQuestions2.length === 0 ? (
+              <div className="text-center py-6">
+                <Brain className="h-8 w-8 text-gray-300 mx-auto mb-2" />
+                <p className="text-gray-400 text-sm">Nenhuma questão similar encontrada. O embedding desta nota precisa ser gerado primeiro.</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {similarQuestions2.map((sq) => (
+                  <div
+                    key={sq.id}
+                    className="flex items-start gap-3 p-3 rounded-lg border border-gray-100 hover:border-violet-200 hover:bg-violet-50/30 transition group"
+                  >
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-gray-700 line-clamp-2">{sq.statement}</p>
+                      <div className="flex flex-wrap items-center gap-2 mt-1.5">
+                        {sq.exam_year && <span className="text-xs text-gray-500">{sq.exam_year}</span>}
+                        {sq.exam_board && <span className="text-xs text-gray-500">· {sq.exam_board}</span>}
+                        {sq.exam_institution && <span className="text-xs text-gray-500">· {sq.exam_institution}</span>}
+                        {sq.areas_conhecimento?.slice(0, 2).map((a) => (
+                          <span key={a} className="text-xs px-1.5 py-0.5 bg-violet-50 text-violet-600 rounded-full">{a}</span>
+                        ))}
+                        <span className="ml-auto text-xs font-medium text-violet-600">{Math.round(sq.similarity * 100)}% similar</span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => router.push(`/dashboard/questions/${sq.id}`)}
+                      className="flex-shrink-0 p-1.5 text-gray-400 hover:text-violet-600 transition opacity-0 group-hover:opacity-100"
+                      title="Ver questão"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )
+          )}
+        </div>
       </div>
 
     </div>

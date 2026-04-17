@@ -183,3 +183,19 @@ CREATE UNIQUE INDEX IF NOT EXISTS decs_descriptors_ui_idx ON decs_descriptors(ui
 CREATE INDEX IF NOT EXISTS decs_descriptors_name_pt_idx ON decs_descriptors USING gin(to_tsvector('portuguese', name_pt));
 -- pgvector 0.8+: use halfvec cast for HNSW on dimensions > 2000
 CREATE INDEX IF NOT EXISTS decs_descriptors_embedding_hnsw_idx ON decs_descriptors USING hnsw ((embedding::halfvec(3072)) halfvec_cosine_ops) WHERE embedding IS NOT NULL;
+
+-- content_links: pré-computed semantic similarity pairs
+-- Batch: node --env-file=.env.local scripts/compute-similarities.mjs
+CREATE TABLE IF NOT EXISTS content_links (
+  id          SERIAL PRIMARY KEY,
+  source_type TEXT NOT NULL CHECK (source_type IN ('question', 'note')),
+  source_id   INTEGER NOT NULL,
+  target_type TEXT NOT NULL CHECK (target_type IN ('question', 'note')),
+  target_id   INTEGER NOT NULL,
+  similarity  FLOAT NOT NULL,
+  computed_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(source_type, source_id, target_type, target_id)
+);
+
+CREATE INDEX IF NOT EXISTS content_links_source_idx ON content_links(source_type, source_id);
+CREATE INDEX IF NOT EXISTS content_links_target_idx ON content_links(target_type, target_id);
