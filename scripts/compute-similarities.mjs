@@ -64,10 +64,10 @@ async function processQuestion(id, embText) {
       `SELECT n.id, 1 - (n.embedding <=> $1::vector) AS similarity
        FROM notes n
        WHERE n.embedding IS NOT NULL
-         AND (1 - (n.embedding <=> $1::vector)) >= $3
+         AND (1 - (n.embedding <=> $1::vector)) >= $2
        ORDER BY n.embedding <=> $1::vector
-       LIMIT $4`,
-      [embText, id, THRESHOLD, TOP_K]
+       LIMIT $3`,
+      [embText, THRESHOLD, TOP_K]
     ),
   ]);
 
@@ -88,10 +88,10 @@ async function processNote(id, embText) {
       `SELECT q.id, 1 - (q.embedding <=> $1::vector) AS similarity
        FROM questions q
        WHERE q.embedding IS NOT NULL
-         AND (1 - (q.embedding <=> $1::vector)) >= $3
+         AND (1 - (q.embedding <=> $1::vector)) >= $2
        ORDER BY q.embedding <=> $1::vector
-       LIMIT $4`,
-      [embText, id, THRESHOLD, TOP_K]
+       LIMIT $3`,
+      [embText, THRESHOLD, TOP_K]
     ),
     pool.query(
       `SELECT n.id, 1 - (n.embedding <=> $1::vector) AS similarity
