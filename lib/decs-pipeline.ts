@@ -182,16 +182,17 @@ export async function searchDeCSLocal(
     const embedding = await generateEmbedding(searchTerm, geminiKey);
     const vec = vectorToString(embedding);
 
+    // Cast to halfvec to use the halfvec HNSW index (pgvector 0.8, >2000 dims)
     const res = await query(`
       SELECT
         ui AS code,
         name_pt AS term,
         tree_numbers,
-        1 - (embedding <=> $1::vector) AS similarity
+        1 - (embedding::halfvec(3072) <=> $1::halfvec(3072)) AS similarity
       FROM decs_descriptors
       WHERE embedding IS NOT NULL
-        AND (1 - (embedding <=> $1::vector)) >= $2
-      ORDER BY embedding <=> $1::vector
+        AND (1 - (embedding::halfvec(3072) <=> $1::halfvec(3072))) >= $2
+      ORDER BY embedding::halfvec(3072) <=> $1::halfvec(3072)
       LIMIT $3
     `, [vec, minSimilarity, maxCandidates]);
 

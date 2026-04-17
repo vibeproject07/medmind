@@ -2,16 +2,16 @@
  * Import DeCS 2026 descriptors from bireme_decs_por2026.xml (inside TGZ)
  * into the decs_descriptors PostgreSQL table.
  *
+ * Uses streaming (tar pipe) to avoid loading 360MB into Node.js heap.
+ *
  * Usage:
  *   node --env-file=.env.local scripts/import-decs-xml.mjs [--resume]
  *
  * Options:
- *   --resume   Skip descriptors already in the DB (default: upsert all)
- *
- * No external XML library needed — uses streaming regex parsing.
+ *   --resume   Skip descriptors already in the DB
  */
 
-import { execFileSync } from 'child_process';
+import { spawn } from 'child_process';
 import pg from 'pg';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -19,7 +19,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const TGZ_PATH  = path.join(__dirname, '../attached_assets/decs_pt_2026_1776458030474.tgz');
 const XML_FILE  = 'bireme_decs_por2026.xml';
-const BATCH_SIZE = 200;
+const BATCH_SIZE = 300;
 const RESUME     = process.argv.includes('--resume');
 
 const { Pool } = pg;
@@ -47,86 +47,80 @@ async function ensureTable() {
     )
   `);
   await pool.query(`CREATE UNIQUE INDEX IF NOT EXISTS decs_descriptors_ui_idx ON decs_descriptors(ui)`);
-  await pool.query(`CREATE INDEX IF NOT EXISTS decs_descriptors_name_pt_idx ON decs_descriptors USING gin(to_tsvector('portuguese', name_pt))`);
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS decs_descriptors_name_pt_idx
+    ON decs_descriptors USING gin(to_tsvector('portuguese', name_pt))
+  `);
 }
 
-// ── XML record parser (regex-based, no external library) ─────────────────────
+// ── Record parser ─────────────────────────────────────────────────────────────
 
-function extractCDATA(xml, outerTag) {
-  const re = new RegExp(`<${outerTag}[^>]*>[\\s\\S]*?<!\\[CDATA\\[([\\s\\S]*?)\\]\\]>`, 'i');
-  const m = xml.match(re);
+function cdataOf(xml) {
+  const m = xml.match(/<!\[CDATA\[([\s\S]*?)\]\]>/);
   return m ? m[1].trim() : '';
 }
 
-function extractAllCDATA(xml) {
-  const results = [];
-  const re = /<!\\[CDATA\\[([\s\S]*?)\]\]>/g;
+function allCdataOf(xml) {
+  const re = /<!\[CDATA\[([\s\S]*?)\]\]>/g;
+  const out = [];
   let m;
-  while ((m = re.exec(xml)) !== null) results.push(m[1].trim());
-  return results;
+  while ((m = re.exec(xml)) !== null) {
+    const v = m[1].trim();
+    if (v && !out.includes(v)) out.push(v);
+  }
+  return out;
+}
+
+function textOf(xml, tag) {
+  const m = xml.match(new RegExp(`<${tag}>([^<]*)</${tag}>`));
+  return m ? m[1].trim() : '';
+}
+
+function allTextOf(xml, tag) {
+  const re = new RegExp(`<${tag}>([^<]*)</${tag}>`, 'g');
+  const out = [];
+  let m;
+  while ((m = re.exec(xml)) !== null) out.push(m[1].trim());
+  return out;
 }
 
 function parseRecord(xml) {
-  // DescriptorUI
-  const uiMatch = xml.match(/<DescriptorUI>(D\w+)<\/DescriptorUI>/);
-  if (!uiMatch) return null;
-  const ui = uiMatch[1];
+  const ui = textOf(xml, 'DescriptorUI');
+  if (!ui || !ui.startsWith('D')) return null;
 
-  // DescriptorClass attribute
   const classMatch = xml.match(/DescriptorClass="(\d+)"/);
   const descriptor_class = classMatch ? classMatch[1] : '1';
 
-  // Descriptor name from DescriptorName/String CDATA
-  const nameRaw = extractCDATA(xml, 'DescriptorName');
+  const nameBlock = xml.match(/<DescriptorName>([\s\S]*?)<\/DescriptorName>/);
+  const nameRaw   = nameBlock ? cdataOf(nameBlock[1]) : '';
   const ptEnMatch = nameRaw.match(/^(.+?)\[(.+?)\]\s*$/);
-  const name_pt = ptEnMatch ? ptEnMatch[1].trim() : nameRaw;
-  const name_en = ptEnMatch ? ptEnMatch[2].trim() : '';
+  const name_pt   = ptEnMatch ? ptEnMatch[1].trim() : nameRaw;
+  const name_en   = ptEnMatch ? ptEnMatch[2].trim() : '';
 
-  // Tree numbers
-  const tree_numbers = [];
-  const treeRe = /<TreeNumber>([^<]+)<\/TreeNumber>/g;
-  let m;
-  while ((m = treeRe.exec(xml)) !== null) tree_numbers.push(m[1].trim());
+  const tree_numbers = allTextOf(xml, 'TreeNumber');
 
-  // Entry terms from ConceptList — all CDATA String values
-  const entry_terms = [];
   const conceptBlock = xml.match(/<ConceptList>([\s\S]*?)<\/ConceptList>/);
-  if (conceptBlock) {
-    const termRe = /<!\[CDATA\[([\s\S]*?)\]\]>/g;
-    while ((m = termRe.exec(conceptBlock[1])) !== null) {
-      const t = m[1].trim();
-      if (t && !entry_terms.includes(t)) entry_terms.push(t);
-    }
-  }
+  const entry_terms  = conceptBlock ? allCdataOf(conceptBlock[1]) : [];
 
-  // Scope note
   const scopeBlock = xml.match(/<ScopeNote>([\s\S]*?)<\/ScopeNote>/);
   let scope_note = '';
   if (scopeBlock) {
-    const cdataM = scopeBlock[1].match(/<!\[CDATA\[([\s\S]*?)\]\]>/);
-    scope_note = cdataM ? cdataM[1].trim() : scopeBlock[1].replace(/<[^>]+>/g, '').trim();
+    scope_note = cdataOf(scopeBlock[1]) || scopeBlock[1].replace(/<[^>]+>/g, '').trim();
   }
 
-  // See related descriptors
-  const see_related = [];
-  const seeBlock = xml.match(/<SeeRelatedList>([\s\S]*?)<\/SeeRelatedList>/);
-  if (seeBlock) {
-    const relRe = /<DescriptorUI>(D\w+)<\/DescriptorUI>/g;
-    while ((m = relRe.exec(seeBlock[1])) !== null) see_related.push(m[1]);
-  }
+  const seeBlock   = xml.match(/<SeeRelatedList>([\s\S]*?)<\/SeeRelatedList>/);
+  const see_related = seeBlock
+    ? allTextOf(seeBlock[1], 'DescriptorUI').filter(v => v.startsWith('D'))
+    : [];
 
-  // Qualifiers
-  const qualifiers = [];
-  const qualRe = /<QualifierUI>(Q\w+)<\/QualifierUI>/g;
-  while ((m = qualRe.exec(xml)) !== null) qualifiers.push(m[1]);
+  const qualifiers = allTextOf(xml, 'QualifierUI').filter(v => v.startsWith('Q'));
 
-  // Date established
   let date_established = null;
   const estBlock = xml.match(/<DateEstablished>([\s\S]*?)<\/DateEstablished>/);
   if (estBlock) {
-    const y  = estBlock[1].match(/<Year>(\d+)<\/Year>/)?.[1];
-    const mo = estBlock[1].match(/<Month>(\d+)<\/Month>/)?.[1] ?? '01';
-    const d  = estBlock[1].match(/<Day>(\d+)<\/Day>/)?.[1]   ?? '01';
+    const y  = textOf(estBlock[1], 'Year');
+    const mo = textOf(estBlock[1], 'Month') || '01';
+    const d  = textOf(estBlock[1], 'Day')   || '01';
     if (y) date_established = `${y}-${mo.padStart(2,'0')}-${d.padStart(2,'0')}`;
   }
 
@@ -145,7 +139,8 @@ async function insertBatch(records) {
     for (const r of records) {
       await client.query(`
         INSERT INTO decs_descriptors
-          (ui, name_pt, name_en, descriptor_class, scope_note, entry_terms, tree_numbers, see_related, qualifiers, date_established)
+          (ui, name_pt, name_en, descriptor_class, scope_note,
+           entry_terms, tree_numbers, see_related, qualifiers, date_established)
         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
         ON CONFLICT (ui) DO UPDATE SET
           name_pt          = EXCLUDED.name_pt,
@@ -178,82 +173,118 @@ async function insertBatch(records) {
   return ok;
 }
 
+// ── Streaming import ──────────────────────────────────────────────────────────
+
+async function streamImport(existingUIs) {
+  const CLOSE_TAG = '</DescriptorRecord>';
+  const OPEN_TAG  = '<DescriptorRecord';
+
+  let buffer  = '';
+  const batch = [];
+  let parsed = 0, inserted = 0, errors = 0;
+
+  // Serialise all DB writes through a promise chain so we can safely pause/resume
+  let dbChain  = Promise.resolve();
+  const start  = Date.now();
+
+  function printProgress() {
+    const s = ((Date.now() - start) / 1000).toFixed(0);
+    process.stdout.write(`\r⏳ ${inserted} inseridos | ${parsed} parseados | ${errors} erros | ${s}s  `);
+  }
+
+  function flushBatch() {
+    if (batch.length === 0) return;
+    const toInsert = batch.splice(0); // drain
+    dbChain = dbChain
+      .then(() => insertBatch(toInsert))
+      .then((ok) => {
+        inserted += ok;
+        printProgress();
+      })
+      .catch((e) => {
+        errors++;
+        process.stdout.write(`\n❌ Batch insert error: ${e.message}\n`);
+      });
+  }
+
+  await new Promise((resolve, reject) => {
+    const tar = spawn('tar', ['-xOf', TGZ_PATH, XML_FILE]);
+
+    tar.stderr.on('data', (d) => {
+      const msg = d.toString().trim();
+      if (msg) process.stderr.write(`tar: ${msg}\n`);
+    });
+
+    tar.on('error', reject);
+
+    tar.stdout.on('data', (chunk) => {
+      buffer += chunk.toString('utf8');
+
+      let closeIdx;
+      while ((closeIdx = buffer.indexOf(CLOSE_TAG)) !== -1) {
+        const end      = closeIdx + CLOSE_TAG.length;
+        const openIdx  = buffer.lastIndexOf(OPEN_TAG, closeIdx);
+        const recXml   = openIdx !== -1 ? buffer.slice(openIdx, end) : null;
+        buffer         = buffer.slice(end);
+
+        if (!recXml) continue;
+
+        const rec = parseRecord(recXml);
+        if (!rec || (RESUME && existingUIs.has(rec.ui))) continue;
+
+        batch.push(rec);
+        parsed++;
+
+        if (batch.length >= BATCH_SIZE) {
+          tar.stdout.pause();
+          flushBatch();
+          dbChain.then(() => tar.stdout.resume());
+        }
+      }
+
+      // Keep buffer bounded — drop content before the last open tag
+      const lastOpen = buffer.lastIndexOf(OPEN_TAG);
+      if (lastOpen > 50_000) buffer = buffer.slice(lastOpen);
+    });
+
+    tar.stdout.on('end', () => {
+      flushBatch(); // flush remainder
+      dbChain.then(resolve).catch(reject);
+    });
+  });
+
+  return { parsed, inserted, errors };
+}
+
 // ── Main ──────────────────────────────────────────────────────────────────────
 
 async function main() {
-  console.log('🗄️  DeCS 2026 — Import para PostgreSQL');
+  console.log('🗄️  DeCS 2026 — Import para PostgreSQL (streaming)');
   console.log(`   Arquivo: ${TGZ_PATH}`);
   console.log(`   Modo   : ${RESUME ? 'resume (skip existentes)' : 'upsert tudo'}\n`);
 
   await ensureTable();
   console.log('✅ Tabela decs_descriptors pronta\n');
 
-  // Get existing UIs if resume mode
   let existingUIs = new Set();
   if (RESUME) {
     const { rows } = await pool.query('SELECT ui FROM decs_descriptors');
     existingUIs = new Set(rows.map(r => r.ui));
-    console.log(`📋 ${existingUIs.size} descritores já existem no DB (serão pulados)`);
+    console.log(`📋 ${existingUIs.size} descritores já existem (serão pulados)\n`);
   }
 
-  // Extract XML from TGZ (379MB decompressed — managed in memory)
-  console.log('📦 Extraindo XML do TGZ...');
-  const startExtract = Date.now();
-  let xmlContent;
-  try {
-    xmlContent = execFileSync('tar', ['-xOf', TGZ_PATH, XML_FILE], {
-      maxBuffer: 500 * 1024 * 1024,
-    }).toString('utf8');
-  } catch (e) {
-    console.error('Erro ao extrair TGZ:', e.message);
-    process.exit(1);
-  }
-  console.log(`✅ XML carregado (${(xmlContent.length / 1024 / 1024).toFixed(1)} MB) em ${((Date.now()-startExtract)/1000).toFixed(1)}s\n`);
-
-  // Parse all DescriptorRecord blocks
-  console.log('🔍 Parseando registros DeCS...');
-  const startParse = Date.now();
-  const recRe = /<DescriptorRecord[^>]*>[\s\S]*?<\/DescriptorRecord>/g;
-  const records = [];
-  let m;
-  while ((m = recRe.exec(xmlContent)) !== null) {
-    const rec = parseRecord(m[0]);
-    if (rec && !(RESUME && existingUIs.has(rec.ui))) {
-      records.push(rec);
-    }
-  }
-  console.log(`✅ ${records.length} registros parseados em ${((Date.now()-startParse)/1000).toFixed(1)}s\n`);
-
-  if (records.length === 0) {
-    console.log('✅ Nada a importar.');
-    await pool.end();
-    return;
-  }
-
-  // Insert in batches
-  console.log(`📥 Inserindo ${records.length} registros em batches de ${BATCH_SIZE}...`);
-  const startInsert = Date.now();
-  let inserted = 0, errors = 0;
-
-  for (let i = 0; i < records.length; i += BATCH_SIZE) {
-    const batch = records.slice(i, i + BATCH_SIZE);
-    try {
-      const ok = await insertBatch(batch);
-      inserted += ok;
-    } catch (e) {
-      errors++;
-      console.error(`\n❌ Erro no batch ${i/BATCH_SIZE}: ${e.message}`);
-    }
-    process.stdout.write(
-      `\r⏳ ${inserted}/${records.length} inseridos | ${errors} erros | ${((Date.now()-startInsert)/1000).toFixed(0)}s  `
-    );
-  }
+  console.log('📥 Iniciando streaming XML → PostgreSQL...\n');
+  const start = Date.now();
+  const { parsed, inserted, errors } = await streamImport(existingUIs);
+  const duration = ((Date.now() - start) / 1000).toFixed(1);
 
   console.log(`\n\n🎉 Importação concluída!`);
+  console.log(`   Parseados : ${parsed}`);
   console.log(`   Inseridos : ${inserted}`);
   console.log(`   Erros     : ${errors}`);
-  console.log(`   Duração   : ${((Date.now()-startInsert)/1000).toFixed(1)}s`);
-  console.log(`\n💡 Próximo passo: node --env-file=.env.local scripts/embed-decs-descriptors.mjs`);
+  console.log(`   Duração   : ${duration}s`);
+  if (errors > 0) console.log(`\n⚠️  Re-execute com --resume para processar apenas os que falharam.`);
+  console.log(`\n💡 Próximo: node --env-file=.env.local scripts/embed-decs-descriptors.mjs`);
 
   await pool.end();
 }

@@ -145,16 +145,17 @@ async function main() {
     if (i + CONCURRENCY < rows.length) await sleep(DELAY_MS);
   }
 
-  // Create HNSW index after embedding
+  // Create halfvec HNSW index after embedding
+  // pgvector 0.8+: HNSW max 2000 dims for vector, but halfvec supports up to 4000 dims
   if (success > 0) {
-    process.stdout.write('\n🔧 Criando índice HNSW...\n');
+    process.stdout.write('\n🔧 Criando índice halfvec HNSW...\n');
     try {
       await pool.query(`
         CREATE INDEX IF NOT EXISTS decs_descriptors_embedding_hnsw_idx
-        ON decs_descriptors USING hnsw (embedding vector_cosine_ops)
+        ON decs_descriptors USING hnsw ((embedding::halfvec(3072)) halfvec_cosine_ops)
         WHERE embedding IS NOT NULL
       `);
-      console.log('✅ Índice HNSW criado');
+      console.log('✅ Índice halfvec HNSW criado');
     } catch (e) {
       console.error('⚠️  Erro ao criar índice:', e.message);
     }

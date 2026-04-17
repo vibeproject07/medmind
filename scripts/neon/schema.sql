@@ -175,4 +175,5 @@ CREATE TABLE IF NOT EXISTS decs_descriptors (
 
 CREATE UNIQUE INDEX IF NOT EXISTS decs_descriptors_ui_idx ON decs_descriptors(ui);
 CREATE INDEX IF NOT EXISTS decs_descriptors_name_pt_idx ON decs_descriptors USING gin(to_tsvector('portuguese', name_pt));
-CREATE INDEX IF NOT EXISTS decs_descriptors_embedding_hnsw_idx ON decs_descriptors USING hnsw (embedding vector_cosine_ops) WHERE embedding IS NOT NULL;
+-- pgvector 0.8+: use halfvec cast for HNSW on dimensions > 2000
+CREATE INDEX IF NOT EXISTS decs_descriptors_embedding_hnsw_idx ON decs_descriptors USING hnsw ((embedding::halfvec(3072)) halfvec_cosine_ops) WHERE embedding IS NOT NULL;
