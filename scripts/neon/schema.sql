@@ -2,6 +2,9 @@
 -- Recria todas as tabelas. Execute com: psql $DATABASE_URL -f schema.sql
 -- ou use o script: node scripts/neon/seed.js
 
+-- pgvector must be enabled before any table that uses the vector type
+CREATE EXTENSION IF NOT EXISTS vector;
+
 -- Remover tabelas na ordem inversa de dependência (FK)
 DROP TABLE IF EXISTS note_questions;
 DROP TABLE IF EXISTS email_tokens;
@@ -160,7 +163,6 @@ CREATE INDEX IF NOT EXISTS idx_note_questions_question_id ON note_questions(ques
 -- decs_descriptors (DeCS 2026 — 35,034 descritores com pgvector cosine)
 -- Importar: node --env-file=.env.local scripts/import-decs-xml.mjs
 -- Vetorizar: node --env-file=.env.local scripts/embed-decs-descriptors.mjs
-CREATE EXTENSION IF NOT EXISTS vector;
 CREATE TABLE IF NOT EXISTS decs_descriptors (
   id               SERIAL PRIMARY KEY,
   ui               TEXT    NOT NULL,
