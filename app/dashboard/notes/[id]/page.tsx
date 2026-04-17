@@ -173,8 +173,12 @@ export default function NoteDetailPage() {
 
   useEffect(() => {
     if (!noteId || !note) return;
+    const token = localStorage.getItem('token');
+    if (!token) return;
     setSimilarLoading(true);
-    fetch(`/api/notes/${noteId}/similar?limit=5`)
+    fetch(`/api/notes/${noteId}/similar?limit=5`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((r) => r.ok ? r.json() : { notes: [], questions: [] })
       .then((data) => {
         setSimilarNotes(data.notes ?? []);

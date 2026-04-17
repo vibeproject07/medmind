@@ -9,7 +9,7 @@
  * All errors are caught and logged — never throw back to the caller.
  */
 
-import { query } from '@/lib/db';
+import { query, getPool } from '@/lib/db';
 import {
   generateEmbedding,
   buildQuestionText,
@@ -200,14 +200,16 @@ async function recomputeContentLinks(
     ),
   ]);
 
-  await query('BEGIN');
+  // Use a single pooled client so BEGIN/COMMIT are on the same connection
+  const client = await getPool().connect();
   try {
-    await query(
+    await client.query('BEGIN');
+    await client.query(
       `DELETE FROM content_links WHERE source_type = $1 AND source_id = $2`,
       [type, id]
     );
     for (const row of simQs.rows) {
-      await query(
+      await client.query(
         `INSERT INTO content_links (source_type, source_id, target_type, target_id, similarity, computed_at)
          VALUES ($1, $2, 'question', $3, $4, NOW())
          ON CONFLICT (source_type, source_id, target_type, target_id)
@@ -216,7 +218,7 @@ async function recomputeContentLinks(
       );
     }
     for (const row of simNs.rows) {
-      await query(
+      await client.query(
         `INSERT INTO content_links (source_type, source_id, target_type, target_id, similarity, computed_at)
          VALUES ($1, $2, 'note', $3, $4, NOW())
          ON CONFLICT (source_type, source_id, target_type, target_id)
@@ -224,14 +226,16 @@ async function recomputeContentLinks(
         [type, id, row.id, parseFloat(row.similarity)]
       );
     }
-    await query('COMMIT');
+    await client.query('COMMIT');
     console.log(
       `[enrichment] content_links for ${type} ${id}: ` +
       `${simQs.rows.length} q-links, ${simNs.rows.length} n-links`
     );
   } catch (err) {
-    await query('ROLLBACK');
+    await client.query('ROLLBACK');
     throw err;
+  } finally {
+    client.release();
   }
 }
 

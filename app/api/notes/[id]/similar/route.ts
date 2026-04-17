@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
+import { verifyToken } from '@/lib/jwt';
 import { findSimilarNotes } from '@/lib/embeddings';
 
 export const runtime = 'nodejs';
@@ -10,8 +11,32 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    // ── Auth ───────────────────────────────────────────────────────────────
+    const authHeader = req.headers.get('authorization');
+    let token = authHeader?.replace('Bearer ', '') || req.cookies.get('token')?.value;
+    if (token) token = token.trim().replace(/^["']|["']$/g, '');
+    if (!token) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
+
+    const user = verifyToken(token);
+    if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
+
     const { id } = await params;
     const noteId = parseInt(id);
+    if (isNaN(noteId)) return NextResponse.json({ error: 'ID inválido' }, { status: 400 });
+
+    // ── Ownership check ────────────────────────────────────────────────────
+    const noteCheck = await query(
+      `SELECT user_id FROM notes WHERE id = $1`,
+      [noteId]
+    );
+    if (noteCheck.rows.length === 0) {
+      return NextResponse.json({ error: 'Nota não encontrada' }, { status: 404 });
+    }
+    const noteOwnerId = noteCheck.rows[0].user_id;
+    if (user.role !== 'admin' && noteOwnerId !== user.id) {
+      return NextResponse.json({ error: 'Acesso negado' }, { status: 403 });
+    }
+
     const limit = Math.min(parseInt(req.nextUrl.searchParams.get('limit') ?? '5'), 20);
 
     // ── Precomputed similar notes ──────────────────────────────────────────
@@ -56,7 +81,7 @@ export async function GET(
       [noteId, limit]
     );
 
-    // ── Fallback: live pgvector if no precomputed links ────────────────────
+    // ── Fallback: live pgvector for notes if no precomputed links ──────────
     let notesResult = similarNotes.rows.map((r) => ({
       id: r.id,
       title: r.title,
