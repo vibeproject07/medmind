@@ -78,6 +78,28 @@ export async function GET(req: NextRequest) {
       }
     }
 
+    // DeCS stats — decs_descriptors table (may not exist yet)
+    let decs = { total: 0, withEmbedding: 0, pending: 0, percent: 0, available: false };
+    try {
+      const decsRes = await query(`
+        SELECT
+          COUNT(*)           AS total,
+          COUNT(embedding)   AS with_embedding
+        FROM decs_descriptors
+      `);
+      const decsTotal = parseInt(decsRes.rows[0].total);
+      const decsEmb   = parseInt(decsRes.rows[0].with_embedding);
+      decs = {
+        total: decsTotal,
+        withEmbedding: decsEmb,
+        pending: decsTotal - decsEmb,
+        percent: decsTotal > 0 ? Math.round((decsEmb / decsTotal) * 100 * 10) / 10 : 0,
+        available: decsTotal > 0,
+      };
+    } catch {
+      // table does not exist yet — silently return zeroes
+    }
+
     return NextResponse.json({
       pgvector: {
         total,
@@ -86,6 +108,7 @@ export async function GET(req: NextRequest) {
         percent: total > 0 ? Math.round((withEmbedding / total) * 100 * 10) / 10 : 0,
       },
       pinecone,
+      decs,
     });
   } catch (err) {
     console.error('[embed-batch GET]', err);

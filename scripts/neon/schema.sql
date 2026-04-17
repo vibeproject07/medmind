@@ -152,3 +152,26 @@ CREATE TABLE note_questions (
 
 CREATE INDEX IF NOT EXISTS idx_note_questions_note_id ON note_questions(note_id);
 CREATE INDEX IF NOT EXISTS idx_note_questions_question_id ON note_questions(question_id);
+
+-- decs_descriptors (DeCS 2026 — 35,034 descritores com pgvector cosine)
+-- Importar: node --env-file=.env.local scripts/import-decs-xml.mjs
+-- Vetorizar: node --env-file=.env.local scripts/embed-decs-descriptors.mjs
+CREATE TABLE IF NOT EXISTS decs_descriptors (
+  id               SERIAL PRIMARY KEY,
+  ui               TEXT    NOT NULL,
+  name_pt          TEXT    NOT NULL DEFAULT '',
+  name_en          TEXT    NOT NULL DEFAULT '',
+  descriptor_class TEXT    NOT NULL DEFAULT '1',
+  scope_note       TEXT    NOT NULL DEFAULT '',
+  entry_terms      JSONB   NOT NULL DEFAULT '[]'::jsonb,
+  tree_numbers     JSONB   NOT NULL DEFAULT '[]'::jsonb,
+  see_related      JSONB   NOT NULL DEFAULT '[]'::jsonb,
+  qualifiers       JSONB   NOT NULL DEFAULT '[]'::jsonb,
+  date_established TEXT,
+  embedding        vector(3072),
+  created_at       TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS decs_descriptors_ui_idx ON decs_descriptors(ui);
+CREATE INDEX IF NOT EXISTS decs_descriptors_name_pt_idx ON decs_descriptors USING gin(to_tsvector('portuguese', name_pt));
+CREATE INDEX IF NOT EXISTS decs_descriptors_embedding_hnsw_idx ON decs_descriptors USING hnsw (embedding vector_cosine_ops) WHERE embedding IS NOT NULL;

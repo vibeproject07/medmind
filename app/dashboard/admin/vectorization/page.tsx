@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import {
   Database, Zap, Play, RefreshCw, CheckCircle2,
   Clock, AlertCircle, ChevronRight, ExternalLink,
-  Code2, Layers, Activity,
+  Code2, Layers, Activity, BookOpen,
 } from 'lucide-react';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -24,9 +24,18 @@ interface PineconeStats {
   error?: string;
 }
 
+interface DeCSStats {
+  total: number;
+  withEmbedding: number;
+  pending: number;
+  percent: number;
+  available: boolean;
+}
+
 interface StatusData {
   pgvector: PgVectorStats;
   pinecone: PineconeStats;
+  decs: DeCSStats;
 }
 
 interface BatchOptions {
@@ -142,6 +151,7 @@ export default function VectorizationPage() {
 
   const pg = status?.pgvector;
   const pc = status?.pinecone;
+  const dc = status?.decs;
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8">
@@ -337,6 +347,110 @@ LIMIT 10`}</pre>
   includeMetadata: true,
 })`}</pre>
           </div>
+        </div>
+      </div>
+
+      {/* ── DeCS 2026 card ── */}
+      <div className="border border-gray-200 rounded-xl p-5 bg-white shadow-sm space-y-4">
+        <div className="flex items-center gap-2">
+          <div className="p-1.5 rounded-lg bg-teal-100">
+            <BookOpen className="w-4 h-4 text-teal-600" />
+          </div>
+          <div>
+            <p className="font-semibold text-gray-900 text-sm">DeCS 2026 — Vocabulário Local</p>
+            <p className="text-xs text-gray-500">
+              35.034 descritores · pgvector cosine · tabela{' '}
+              <code className="bg-gray-100 px-1 rounded">decs_descriptors</code>
+            </p>
+          </div>
+        </div>
+
+        {loading ? (
+          <div className="h-3 bg-gray-100 rounded-full animate-pulse" />
+        ) : !dc?.available ? (
+          <div className="flex items-start gap-2 p-3 bg-amber-50 rounded-lg border border-amber-200 text-amber-700 text-xs">
+            <AlertCircle className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
+            <span>
+              Tabela vazia. Execute:{' '}
+              <code className="font-mono bg-amber-100 px-1 rounded">
+                node --env-file=.env.local scripts/import-decs-xml.mjs
+              </code>
+              {' '}e depois{' '}
+              <code className="font-mono bg-amber-100 px-1 rounded">
+                node --env-file=.env.local scripts/embed-decs-descriptors.mjs
+              </code>
+            </span>
+          </div>
+        ) : dc ? (
+          <div className="space-y-3">
+            {/* Progress bar */}
+            <div className="space-y-1.5">
+              <ProgressBar percent={dc.percent} color="bg-teal-500" />
+              <div className="flex justify-between text-xs text-gray-500">
+                <span>{fmtNum(dc.withEmbedding)} vetorizados</span>
+                <span className="font-medium">{dc.percent}%</span>
+                <span>{fmtNum(dc.total)} total</span>
+              </div>
+              {dc.pending > 0 && (
+                <p className="text-xs text-amber-600 flex items-center gap-1">
+                  <Clock className="w-3 h-3" />
+                  {fmtNum(dc.pending)} pendentes · execute embed-decs-descriptors.mjs
+                </p>
+              )}
+              {dc.pending === 0 && dc.total > 0 && (
+                <p className="text-xs text-green-600 flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3" /> Todos os descritores vetorizados
+                </p>
+              )}
+            </div>
+
+            {/* Stats grid */}
+            <div className="grid grid-cols-3 gap-2 text-xs">
+              <div className="bg-teal-50 rounded-lg p-2 border border-teal-100 text-center">
+                <p className="text-teal-500 font-medium">Descritores</p>
+                <p className="text-gray-800 font-semibold">{fmtNum(dc.total)}</p>
+              </div>
+              <div className="bg-teal-50 rounded-lg p-2 border border-teal-100 text-center">
+                <p className="text-teal-500 font-medium">Embeddings</p>
+                <p className="text-gray-800 font-semibold">{fmtNum(dc.withEmbedding)}</p>
+              </div>
+              <div className="bg-teal-50 rounded-lg p-2 border border-teal-100 text-center">
+                <p className="text-teal-500 font-medium">Modelo</p>
+                <p className="text-gray-800 font-mono text-[10px]">gemini-emb-001</p>
+              </div>
+            </div>
+          </div>
+        ) : null}
+
+        {/* Functions */}
+        <div className="border-t border-gray-100 pt-3 space-y-2">
+          <p className="text-xs font-semibold text-gray-500 flex items-center gap-1">
+            <Code2 className="w-3 h-3" /> Pipeline em{' '}
+            <code className="bg-gray-100 px-1 rounded">lib/decs-pipeline.ts</code>
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            {[
+              'searchDeCSLocal()',
+              'findBestDeCSMatch()',
+              'isLocalDeCSAvailable()',
+              'isCategoryAcceptable()',
+              'validateWithGemini()',
+            ].map((fn) => <FnBadge key={fn} name={fn} />)}
+          </div>
+          <p className="text-[11px] text-gray-400">
+            Estratégia: pgvector local → fallback BVS API · Índice HNSW cosine
+          </p>
+        </div>
+
+        {/* Search example */}
+        <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
+          <p className="text-[11px] font-semibold text-gray-500 mb-1">Busca local DeCS (pgvector)</p>
+          <pre className="text-[10px] text-gray-600 leading-relaxed overflow-x-auto">{`SELECT ui, name_pt,
+  1 - (embedding <=> $1::vector) AS score
+FROM decs_descriptors
+WHERE embedding IS NOT NULL
+ORDER BY embedding <=> $1::vector
+LIMIT 5`}</pre>
         </div>
       </div>
 

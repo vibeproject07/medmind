@@ -2,7 +2,8 @@
  * DeCS AI Pipeline — shared classifier logic
  *
  * Three quality layers:
- *   1. Multi-candidate DeCS search  (top-N records, pick best by similarity)
+ *   1. Local pgvector search (decs_descriptors table) — fast, offline
+ *      Fallback → BVS API when local table is empty
  *   2. Category filter              (reject organism/virus categories unless biomed context)
  *   3. Gemini relevance validation  (one extra call to drop false positives)
  */
@@ -144,6 +145,75 @@ function parseDeCSRecord(rec: Record<string, unknown>): DeCSRecord | null {
   return { term, code, tree_ids, hierarchy_path: buildHierarchyPath(tree_ids[0] ?? '') };
 }
 
+// ── Layer 1 (primary): Local pgvector search ─────────────────────────────────
+
+/**
+ * Returns true if the decs_descriptors table is populated (has at least 1 row).
+ * Used to decide whether to use the local index or fall back to BVS API.
+ */
+async function isLocalDeCSAvailable(): Promise<boolean> {
+  try {
+    // Dynamic import so this file is usable in scripts that don't have the DB pool
+    const { query } = await import('@/lib/db');
+    const res = await query(`SELECT 1 FROM decs_descriptors LIMIT 1`);
+    return res.rows.length > 0;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Search local decs_descriptors via pgvector cosine similarity.
+ * Embeds the search term with gemini-embedding-001 and returns the
+ * top candidates sorted by semantic similarity.
+ *
+ * Returns an empty array when the local table is empty or on any error.
+ */
+export async function searchDeCSLocal(
+  searchTerm: string,
+  geminiKey: string,
+  maxCandidates = 5,
+  minSimilarity = 0.60
+): Promise<DeCSRecord[]> {
+  try {
+    const { generateEmbedding, vectorToString } = await import('@/lib/embeddings');
+    const { query } = await import('@/lib/db');
+
+    const embedding = await generateEmbedding(searchTerm, geminiKey);
+    const vec = vectorToString(embedding);
+
+    const res = await query(`
+      SELECT
+        ui AS code,
+        name_pt AS term,
+        tree_numbers,
+        1 - (embedding <=> $1::vector) AS similarity
+      FROM decs_descriptors
+      WHERE embedding IS NOT NULL
+        AND (1 - (embedding <=> $1::vector)) >= $2
+      ORDER BY embedding <=> $1::vector
+      LIMIT $3
+    `, [vec, minSimilarity, maxCandidates]);
+
+    return res.rows.map((r) => {
+      const tree_ids: string[] = Array.isArray(r.tree_numbers)
+        ? r.tree_numbers
+        : JSON.parse(r.tree_numbers ?? '[]');
+      return {
+        term: r.term,
+        code: r.code,
+        tree_ids,
+        hierarchy_path: buildHierarchyPath(tree_ids[0] ?? ''),
+        similarity: parseFloat(r.similarity ?? '0'),
+      };
+    });
+  } catch {
+    return [];
+  }
+}
+
+// ── BVS API (fallback) ────────────────────────────────────────────────────────
+
 const DECS_BASE = 'https://api.bvsalud.org/decs/v2';
 
 /**
@@ -184,14 +254,29 @@ export async function searchDeCSCandidates(
 /**
  * Search DeCS, rank candidates by similarity to the search term,
  * apply category filter, and return the single best match (or null).
+ *
+ * Strategy:
+ *   1. Try local pgvector search on decs_descriptors (fast, offline)
+ *   2. If local returns nothing OR local table is empty → fall back to BVS API
  */
 export async function findBestDeCSMatch(
   searchTerm: string,
   apiKey: string,
   questionText: string,
   minSimilarity = 0.15,
-  maxCandidates = 5
+  maxCandidates = 5,
+  geminiKey?: string
 ): Promise<DeCSRecord | null> {
+  // ── Try local pgvector first ──────────────────────────────────────────────
+  if (geminiKey && await isLocalDeCSAvailable()) {
+    const localCandidates = await searchDeCSLocal(searchTerm, geminiKey, maxCandidates);
+    const filtered = localCandidates
+      .filter((c) => isCategoryAcceptable(c, questionText))
+      .sort((a, b) => (b.similarity ?? 0) - (a.similarity ?? 0));
+    if (filtered.length > 0) return filtered[0];
+  }
+
+  // ── Fallback: BVS API ─────────────────────────────────────────────────────
   const candidates = await searchDeCSCandidates(searchTerm, apiKey, maxCandidates);
 
   const scored = candidates
