@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
+import { triggerEnrichment } from '@/lib/enrichment';
 
 export const runtime = 'nodejs';
 
@@ -114,6 +115,8 @@ export async function PUT(
           areas_conhecimento = $15, assuntos = $16, decs_terms = $17, updated_at = NOW()
       WHERE id = $18
     `, [statement, option_a, option_b, option_c, option_d, option_e || null, correct_answer, explanation || null, tagsJson, imagesJson, exam_year || null, exam_board || null, exam_institution || null, exam_region || null, areasConhecimentoJson, assuntosJson, decsTermsJson, params.id]);
+
+    triggerEnrichment('question', parseInt(params.id));
 
     const updatedQuestion = (await query('SELECT * FROM questions WHERE id = $1', [params.id])).rows[0];
 

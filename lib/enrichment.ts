@@ -41,18 +41,6 @@ export function buildNoteText(n: {
   return meta ? `${body}\n\n[${meta}]` : body;
 }
 
-// ── Ensure schema ─────────────────────────────────────────────────────────────
-
-async function ensureNotesColumns(): Promise<void> {
-  await query(`CREATE EXTENSION IF NOT EXISTS vector`);
-  await query(
-    `ALTER TABLE notes ADD COLUMN IF NOT EXISTS embedding vector(${EMBEDDING_DIM})`
-  );
-  await query(
-    `ALTER TABLE notes ADD COLUMN IF NOT EXISTS decs_terms JSONB DEFAULT '[]'::jsonb`
-  );
-}
-
 // ── DeCS local search ─────────────────────────────────────────────────────────
 
 interface DeCSMatch {
@@ -128,8 +116,6 @@ async function enrichQuestion(questionId: number): Promise<void> {
 // ── Note enrichment ───────────────────────────────────────────────────────────
 
 async function enrichNote(noteId: number): Promise<void> {
-  await ensureNotesColumns();
-
   const res = await query(
     `SELECT id, title, description, tags, areas_conhecimento, assuntos
      FROM notes WHERE id = $1`,

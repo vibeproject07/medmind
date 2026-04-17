@@ -841,6 +841,11 @@ LIMIT 5`}</pre>
               desc: 'Inicia batch de embeddings para notas',
               file: 'app/api/admin/embed-notes/route.ts',
             },
+            {
+              method: 'CLI', path: 'scripts/batch-decs-classify-notes.mjs',
+              desc: 'Classifica notas com DeCS via pgvector local',
+              file: 'scripts/batch-decs-classify-notes.mjs',
+            },
           ].map(({ method, path, desc, file }) => (
             <div key={`${method}${path}`} className="px-5 py-3 flex items-center gap-3">
               <span className={`text-[11px] font-bold px-2 py-0.5 rounded font-mono ${
