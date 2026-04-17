@@ -103,12 +103,16 @@ CREATE TABLE notes (
   fontes_resumo_melhorado TEXT,
   fontes_resumo_original TEXT,
   fontes_arquivos TEXT,
+  embedding vector(3072),
+  decs_terms JSONB DEFAULT '[]'::jsonb,
   created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX IF NOT EXISTS idx_notes_user_id ON notes(user_id);
 CREATE INDEX IF NOT EXISTS idx_notes_created_at ON notes(created_at);
+-- pgvector 0.8+: halfvec cast for HNSW on dims > 2000
+CREATE INDEX IF NOT EXISTS notes_embedding_hnsw_idx ON notes USING hnsw ((embedding::halfvec(3072)) halfvec_cosine_ops) WHERE embedding IS NOT NULL;
 
 -- questions (FK provas opcional)
 CREATE TABLE questions (

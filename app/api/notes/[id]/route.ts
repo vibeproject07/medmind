@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
+import { triggerEnrichment } from '@/lib/enrichment';
 
 export const runtime = 'nodejs';
 
@@ -123,6 +124,8 @@ export async function PUT(
         WHERE id = $10 AND user_id = $11
       `, [title, description, tagsJson, imagesJson, areasConhecimentoJson, assuntosJson, fontes_resumo_melhorado ?? null, fontes_resumo_original ?? null, fontesArquivosJson, params.id, user.id]);
     }
+
+    triggerEnrichment('note', parseInt(params.id));
 
     const updatedRow = (await query('SELECT * FROM notes WHERE id = $1', [params.id])).rows[0];
     return NextResponse.json({

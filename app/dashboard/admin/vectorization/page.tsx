@@ -32,10 +32,18 @@ interface DeCSStats {
   available: boolean;
 }
 
+interface NotesStats {
+  total: number;
+  withEmbedding: number;
+  pending: number;
+  percent: number;
+}
+
 interface StatusData {
   pgvector: PgVectorStats;
   pinecone: PineconeStats;
   decs: DeCSStats;
+  notes: NotesStats;
 }
 
 interface BatchOptions {
@@ -97,6 +105,9 @@ export default function VectorizationPage() {
   const [startingDecs, setStartingDecs] = useState(false);
   const [lastStartedDecs, setLastStartedDecs] = useState<string | null>(null);
   const [decsLimit, setDecsLimit]       = useState(0);
+  const [startingNotes, setStartingNotes] = useState(false);
+  const [lastStartedNotes, setLastStartedNotes] = useState<string | null>(null);
+  const [notesLimit, setNotesLimit]     = useState(0);
 
   const [opts, setOpts] = useState<BatchOptions>({
     concurrency: 3,
@@ -174,9 +185,32 @@ export default function VectorizationPage() {
     }
   }
 
+  async function startNotesBatch() {
+    setStartingNotes(true);
+    try {
+      const res = await fetch('/api/admin/embed-notes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: JSON.stringify({ concurrency: 3, delay: 350, limit: notesLimit }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? 'Erro ao iniciar notas batch');
+      setLastStartedNotes(`Notas batch iniciado (PID ${data.pid})`);
+      setTimeout(fetchStatus, 2000);
+    } catch (e) {
+      setError(String(e));
+    } finally {
+      setStartingNotes(false);
+    }
+  }
+
   const pg = status?.pgvector;
   const pc = status?.pinecone;
   const dc = status?.decs;
+  const nt = status?.notes;
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8">
@@ -522,6 +556,129 @@ LIMIT 5`}</pre>
         </div>
       </div>
 
+      {/* ── Notas card ── */}
+      <div className="border border-gray-200 rounded-xl p-5 bg-white shadow-sm space-y-4">
+        <div className="flex items-center gap-2">
+          <div className="p-1.5 rounded-lg bg-violet-100">
+            <BookOpen className="w-4 h-4 text-violet-600" />
+          </div>
+          <div>
+            <p className="font-semibold text-gray-900 text-sm">Notas de Estudo — Embeddings</p>
+            <p className="text-xs text-gray-500">
+              Vetorização automática no POST/PUT · coluna{' '}
+              <code className="bg-gray-100 px-1 rounded">embedding vector(3072)</code> + DeCS local
+            </p>
+          </div>
+        </div>
+
+        {loading ? (
+          <div className="h-3 bg-gray-100 rounded-full animate-pulse" />
+        ) : nt ? (
+          <div className="space-y-3">
+            <div className="space-y-1.5">
+              <ProgressBar percent={nt.percent} color="bg-violet-500" />
+              <div className="flex justify-between text-xs text-gray-500">
+                <span>{fmtNum(nt.withEmbedding)} vetorizadas</span>
+                <span className="font-medium">{nt.percent}%</span>
+                <span>{fmtNum(nt.total)} total</span>
+              </div>
+              {nt.pending > 0 && (
+                <p className="text-xs text-amber-600 flex items-center gap-1">
+                  <Clock className="w-3 h-3" />
+                  {fmtNum(nt.pending)} pendentes
+                </p>
+              )}
+              {nt.pending === 0 && nt.total > 0 && (
+                <p className="text-xs text-green-600 flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3" /> Todas as notas vetorizadas
+                </p>
+              )}
+              {nt.total === 0 && (
+                <p className="text-xs text-gray-400">Nenhuma nota criada ainda</p>
+              )}
+            </div>
+            <div className="grid grid-cols-3 gap-2 text-xs">
+              <div className="bg-violet-50 rounded-lg p-2 border border-violet-100 text-center">
+                <p className="text-violet-500 font-medium">Notas</p>
+                <p className="text-gray-800 font-semibold">{fmtNum(nt.total)}</p>
+              </div>
+              <div className="bg-violet-50 rounded-lg p-2 border border-violet-100 text-center">
+                <p className="text-violet-500 font-medium">Embeddings</p>
+                <p className="text-gray-800 font-semibold">{fmtNum(nt.withEmbedding)}</p>
+              </div>
+              <div className="bg-violet-50 rounded-lg p-2 border border-violet-100 text-center">
+                <p className="text-violet-500 font-medium">Auto-trigger</p>
+                <p className="text-gray-800 text-[10px]">POST / PUT</p>
+              </div>
+            </div>
+          </div>
+        ) : null}
+
+        {/* Functions */}
+        <div className="border-t border-gray-100 pt-3 space-y-2">
+          <p className="text-xs font-semibold text-gray-500 flex items-center gap-1">
+            <Code2 className="w-3 h-3" /> Funções em{' '}
+            <code className="bg-gray-100 px-1 rounded">lib/enrichment.ts</code> ·{' '}
+            <code className="bg-gray-100 px-1 rounded">lib/embeddings.ts</code>
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            {[
+              'triggerEnrichment()',
+              'buildNoteText()',
+              'saveNoteEmbedding()',
+              'getNoteEmbedding()',
+              'findSimilarNotes()',
+            ].map((fn) => <FnBadge key={fn} name={fn} />)}
+          </div>
+          <p className="text-[11px] text-gray-400">
+            Auto-disparo: notas criadas/editadas são vetorizadas e classificadas com DeCS local em background
+          </p>
+        </div>
+
+        {/* Notes batch trigger */}
+        <div className="border-t border-gray-100 pt-4 space-y-3">
+          <p className="text-xs font-semibold text-gray-700 flex items-center gap-1">
+            <Zap className="w-3.5 h-3.5 text-violet-500" />
+            Vetorizar Notas em Lote
+          </p>
+
+          {lastStartedNotes && (
+            <div className="flex items-start gap-2 p-2 bg-green-50 border border-green-200 rounded-lg text-green-700 text-xs">
+              <CheckCircle2 className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
+              {lastStartedNotes}
+            </div>
+          )}
+
+          <div className="flex items-end gap-3">
+            <div className="flex-1 max-w-[160px]">
+              <label className="block text-xs font-medium text-gray-600 mb-1">
+                Limite <span className="text-gray-400 font-normal">(0 = todas)</span>
+              </label>
+              <input
+                type="number" min={0} step={100} value={notesLimit}
+                onChange={(e) => setNotesLimit(Math.max(0, parseInt(e.target.value) || 0))}
+                className="w-full border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-violet-300"
+              />
+            </div>
+            <button
+              onClick={startNotesBatch}
+              disabled={startingNotes}
+              className="flex items-center gap-1.5 px-4 py-1.5 bg-violet-600 hover:bg-violet-700 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors"
+            >
+              {startingNotes
+                ? <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                : <Play className="w-3.5 h-3.5" />
+              }
+              {startingNotes ? 'Iniciando…' : 'Vetorizar Notas'}
+            </button>
+          </div>
+          <p className="text-[11px] text-gray-400">
+            Executa <code className="bg-gray-100 px-1 rounded">scripts/embed-notes.mjs</code> em background.
+            Concorrência: 3 req paralelas · Delay: 350ms
+          </p>
+        </div>
+      </div>
+
       {/* Batch script info */}
       <div className="border border-gray-200 rounded-xl bg-white shadow-sm overflow-hidden">
         <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-2">
@@ -678,6 +835,11 @@ LIMIT 5`}</pre>
               method: 'GET', path: '/api/questions/semantic-search',
               desc: 'Busca semântica por texto livre',
               file: 'app/api/questions/semantic-search/route.ts',
+            },
+            {
+              method: 'POST', path: '/api/admin/embed-notes',
+              desc: 'Inicia batch de embeddings para notas',
+              file: 'app/api/admin/embed-notes/route.ts',
             },
           ].map(({ method, path, desc, file }) => (
             <div key={`${method}${path}`} className="px-5 py-3 flex items-center gap-3">

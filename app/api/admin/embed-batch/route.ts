@@ -100,6 +100,27 @@ export async function GET(req: NextRequest) {
       // table does not exist yet — silently return zeroes
     }
 
+    // Notes stats
+    let notes = { total: 0, withEmbedding: 0, pending: 0, percent: 0 };
+    try {
+      const notesRes = await query(`
+        SELECT
+          COUNT(*)           AS total,
+          COUNT(embedding)   AS with_embedding
+        FROM notes
+      `);
+      const notesTotal = parseInt(notesRes.rows[0].total);
+      const notesEmb   = parseInt(notesRes.rows[0].with_embedding);
+      notes = {
+        total: notesTotal,
+        withEmbedding: notesEmb,
+        pending: notesTotal - notesEmb,
+        percent: notesTotal > 0 ? Math.round((notesEmb / notesTotal) * 100 * 10) / 10 : 0,
+      };
+    } catch {
+      // embedding column may not exist yet — silently return zeroes
+    }
+
     return NextResponse.json({
       pgvector: {
         total,
@@ -109,6 +130,7 @@ export async function GET(req: NextRequest) {
       },
       pinecone,
       decs,
+      notes,
     });
   } catch (err) {
     console.error('[embed-batch GET]', err);

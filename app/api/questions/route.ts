@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
+import { triggerEnrichment } from '@/lib/enrichment';
 
 export const runtime = 'nodejs';
 
@@ -197,7 +198,10 @@ export async function POST(request: NextRequest) {
       [statement, option_a, option_b, option_c, option_d, option_e || null, correct_answer, explanation || null, tagsJson, imagesJson, exam_year || null, exam_board || null, exam_institution || null, exam_region || null, areasConhecimentoJson, assuntosJson, decsTermsJson]
     );
 
-    const newQuestion = (await query('SELECT * FROM questions WHERE id = $1', [result.rows[0].id])).rows[0];
+    const newQuestionId = result.rows[0].id;
+    triggerEnrichment('question', newQuestionId);
+
+    const newQuestion = (await query('SELECT * FROM questions WHERE id = $1', [newQuestionId])).rows[0];
 
     return NextResponse.json({
       ...newQuestion,

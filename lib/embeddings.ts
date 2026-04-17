@@ -180,6 +180,72 @@ export async function findSimilarQuestions(
   }));
 }
 
+// ── Note-specific helpers ─────────────────────────────────────────────────────
+
+export async function saveNoteEmbedding(noteId: number, embedding: number[]): Promise<void> {
+  await query(
+    `UPDATE notes SET embedding = $1::vector WHERE id = $2`,
+    [vectorToString(embedding), noteId]
+  );
+}
+
+export async function getNoteEmbedding(noteId: number): Promise<number[] | null> {
+  const res = await query(
+    `SELECT embedding::text FROM notes WHERE id = $1`,
+    [noteId]
+  );
+  if (res.rows.length === 0 || !res.rows[0].embedding) return null;
+  const raw: string = res.rows[0].embedding;
+  return raw
+    .replace(/^\[|\]$/g, '')
+    .split(',')
+    .map(Number);
+}
+
+export interface SimilarNote {
+  id: number;
+  title: string;
+  description: string;
+  tags: string[];
+  areas_conhecimento: string[];
+  similarity: number;
+}
+
+export async function findSimilarNotes(
+  noteId: number,
+  limit = 5,
+  excludeIds: number[] = []
+): Promise<SimilarNote[]> {
+  const excludeSet = new Set([noteId, ...excludeIds]);
+  const excludeList = Array.from(excludeSet).join(',');
+
+  const res = await query(
+    `SELECT
+       n.id,
+       n.title,
+       n.description,
+       n.tags,
+       n.areas_conhecimento,
+       1 - (n.embedding <=> ref.embedding) AS similarity
+     FROM notes n,
+          (SELECT embedding FROM notes WHERE id = $1 AND embedding IS NOT NULL) AS ref
+     WHERE n.id NOT IN (${excludeList})
+       AND n.embedding IS NOT NULL
+     ORDER BY n.embedding <=> ref.embedding
+     LIMIT $2`,
+    [noteId, limit]
+  );
+
+  return res.rows.map((r) => ({
+    id: r.id,
+    title: r.title,
+    description: r.description,
+    tags: r.tags ? JSON.parse(r.tags) : [],
+    areas_conhecimento: r.areas_conhecimento ? JSON.parse(r.areas_conhecimento) : [],
+    similarity: parseFloat(r.similarity ?? 0),
+  }));
+}
+
 export async function semanticSearchQuestions(
   queryEmbedding: number[],
   limit = 20,

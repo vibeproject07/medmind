@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
+import { triggerEnrichment } from '@/lib/enrichment';
 
 export const runtime = 'nodejs';
 
@@ -187,6 +188,7 @@ export async function POST(request: NextRequest) {
     );
 
     const noteId = result.rows[0].id;
+    triggerEnrichment('note', noteId);
 
     if (question_ids && Array.isArray(question_ids) && question_ids.length > 0) {
       for (const questionId of question_ids) {
