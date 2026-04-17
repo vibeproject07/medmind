@@ -107,10 +107,12 @@ export async function GET(
       similarity: parseFloat(r.similarity),
     }));
 
+    const notesBackend = similarNotes.rows.length > 0 ? 'content_links' : 'pgvector';
+    const questionsBackend = similarQuestions.rows.length > 0 ? 'content_links' : 'none';
     return NextResponse.json({
       notes: notesResult,
       questions: questionsResult,
-      backend: similarNotes.rows.length > 0 ? 'content_links' : 'pgvector',
+      backend: { notes: notesBackend, questions: questionsBackend },
     });
   } catch (err) {
     console.error('[notes/similar GET]', err);

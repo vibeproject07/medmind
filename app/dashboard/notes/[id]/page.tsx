@@ -136,7 +136,7 @@ export default function NoteDetailPage() {
   type SimilarNote = { id: number; title: string; description: string; tags: string[]; areas_conhecimento: string[]; similarity: number };
   type SimilarQuestion = { id: number; statement: string; tags: string[]; areas_conhecimento: string[]; exam_year: number | null; exam_board: string | null; exam_institution: string | null; similarity: number };
   const [similarNotes, setSimilarNotes] = useState<SimilarNote[]>([]);
-  const [similarQuestions2, setSimilarQuestions2] = useState<SimilarQuestion[]>([]);
+  const [similarQuestions, setSimilarQuestions] = useState<SimilarQuestion[]>([]);
   const [similarLoading, setSimilarLoading] = useState(false);
   const [similarTab, setSimilarTab] = useState<'notes' | 'questions'>('notes');
 
@@ -182,7 +182,7 @@ export default function NoteDetailPage() {
       .then((r) => r.ok ? r.json() : { notes: [], questions: [] })
       .then((data) => {
         setSimilarNotes(data.notes ?? []);
-        setSimilarQuestions2(data.questions ?? []);
+        setSimilarQuestions(data.questions ?? []);
       })
       .catch(() => {})
       .finally(() => setSimilarLoading(false));
@@ -1093,8 +1093,8 @@ export default function NoteDetailPage() {
             }`}
           >
             Questões do mesmo tema
-            {similarQuestions2.length > 0 && (
-              <span className="ml-1.5 text-xs bg-violet-100 text-violet-600 px-1.5 py-0.5 rounded-full">{similarQuestions2.length}</span>
+            {similarQuestions.length > 0 && (
+              <span className="ml-1.5 text-xs bg-violet-100 text-violet-600 px-1.5 py-0.5 rounded-full">{similarQuestions.length}</span>
             )}
           </button>
         </div>
@@ -1140,14 +1140,14 @@ export default function NoteDetailPage() {
               </div>
             )
           ) : (
-            similarQuestions2.length === 0 ? (
+            similarQuestions.length === 0 ? (
               <div className="text-center py-6">
                 <Brain className="h-8 w-8 text-gray-300 mx-auto mb-2" />
                 <p className="text-gray-400 text-sm">Nenhuma questão similar encontrada. O embedding desta nota precisa ser gerado primeiro.</p>
               </div>
             ) : (
               <div className="space-y-3">
-                {similarQuestions2.map((sq) => (
+                {similarQuestions.map((sq) => (
                   <div
                     key={sq.id}
                     className="flex items-start gap-3 p-3 rounded-lg border border-gray-100 hover:border-violet-200 hover:bg-violet-50/30 transition group"
