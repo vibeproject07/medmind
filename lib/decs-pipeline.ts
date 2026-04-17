@@ -388,7 +388,7 @@ export async function runDeCSPipeline(
 
   await Promise.allSettled(
     searchTerms.map(async (term) => {
-      const match = await findBestDeCSMatch(term, decsKey, questionText);
+      const match = await findBestDeCSMatch(term, decsKey, questionText, 0.15, 5, geminiKey);
       if (match && !seenCodes.has(match.code)) {
         seenCodes.add(match.code);
         afterSearch.push(match);

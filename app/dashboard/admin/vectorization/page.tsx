@@ -92,8 +92,11 @@ export default function VectorizationPage() {
   const [status, setStatus]     = useState<StatusData | null>(null);
   const [loading, setLoading]   = useState(true);
   const [error, setError]       = useState<string | null>(null);
-  const [starting, setStarting] = useState(false);
-  const [lastStarted, setLastStarted] = useState<string | null>(null);
+  const [starting, setStarting]         = useState(false);
+  const [lastStarted, setLastStarted]   = useState<string | null>(null);
+  const [startingDecs, setStartingDecs] = useState(false);
+  const [lastStartedDecs, setLastStartedDecs] = useState<string | null>(null);
+  const [decsLimit, setDecsLimit]       = useState(0);
 
   const [opts, setOpts] = useState<BatchOptions>({
     concurrency: 3,
@@ -146,6 +149,28 @@ export default function VectorizationPage() {
       setError(String(e));
     } finally {
       setStarting(false);
+    }
+  }
+
+  async function startDeCSBatch() {
+    setStartingDecs(true);
+    try {
+      const res = await fetch('/api/admin/embed-decs', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body: JSON.stringify({ concurrency: 4, delay: 300, limit: decsLimit }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? 'Erro ao iniciar DeCS batch');
+      setLastStartedDecs(`DeCS batch iniciado (PID ${data.pid})`);
+      setTimeout(fetchStatus, 2000);
+    } catch (e) {
+      setError(String(e));
+    } finally {
+      setStartingDecs(false);
     }
   }
 
@@ -451,6 +476,49 @@ FROM decs_descriptors
 WHERE embedding IS NOT NULL
 ORDER BY embedding <=> $1::vector
 LIMIT 5`}</pre>
+        </div>
+
+        {/* ── DeCS batch trigger ── */}
+        <div className="border-t border-gray-100 pt-4 space-y-3">
+          <p className="text-xs font-semibold text-gray-700 flex items-center gap-1">
+            <Zap className="w-3.5 h-3.5 text-teal-500" />
+            Vetorizar Descritores DeCS
+          </p>
+
+          {lastStartedDecs && (
+            <div className="flex items-start gap-2 p-2 bg-green-50 border border-green-200 rounded-lg text-green-700 text-xs">
+              <CheckCircle2 className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
+              {lastStartedDecs}
+            </div>
+          )}
+
+          <div className="flex items-end gap-3">
+            <div className="flex-1 max-w-[160px]">
+              <label className="block text-xs font-medium text-gray-600 mb-1">
+                Limite <span className="text-gray-400 font-normal">(0 = todos)</span>
+              </label>
+              <input
+                type="number" min={0} step={100} value={decsLimit}
+                onChange={(e) => setDecsLimit(Math.max(0, parseInt(e.target.value) || 0))}
+                className="w-full border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-300"
+              />
+            </div>
+            <button
+              onClick={startDeCSBatch}
+              disabled={startingDecs}
+              className="flex items-center gap-1.5 px-4 py-1.5 bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors"
+            >
+              {startingDecs
+                ? <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                : <Play className="w-3.5 h-3.5" />
+              }
+              {startingDecs ? 'Iniciando…' : 'Vetorizar DeCS'}
+            </button>
+          </div>
+          <p className="text-[11px] text-gray-400">
+            Executa <code className="bg-gray-100 px-1 rounded">scripts/embed-decs-descriptors.mjs</code> em background.
+            Concorrência: 4 req paralelas · Delay: 300ms
+          </p>
         </div>
       </div>
 

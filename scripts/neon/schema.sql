@@ -156,6 +156,7 @@ CREATE INDEX IF NOT EXISTS idx_note_questions_question_id ON note_questions(ques
 -- decs_descriptors (DeCS 2026 — 35,034 descritores com pgvector cosine)
 -- Importar: node --env-file=.env.local scripts/import-decs-xml.mjs
 -- Vetorizar: node --env-file=.env.local scripts/embed-decs-descriptors.mjs
+CREATE EXTENSION IF NOT EXISTS vector;
 CREATE TABLE IF NOT EXISTS decs_descriptors (
   id               SERIAL PRIMARY KEY,
   ui               TEXT    NOT NULL,
