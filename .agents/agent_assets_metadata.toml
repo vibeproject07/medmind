@@ -24,3 +24,9 @@ id = "owMQZFI-L7qxYgp4jhuBU"
 uri = "file://content_links.json"
 type = "unspecified"
 title = "content_links.json — 1.000 links de similaridade"
+
+[[outputs]]
+id = "mHo-scN1Iwc1Uua_ornPz"
+uri = "file://test_100_questions_full.json"
+type = "unspecified"
+title = "100 Questões — DeCS + Questões Similares"

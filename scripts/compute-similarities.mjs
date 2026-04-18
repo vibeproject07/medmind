@@ -125,7 +125,7 @@ async function run() {
   if (TYPE === 'questions' || TYPE === 'all') {
     const limitClause = LIMIT > 0 ? `LIMIT ${LIMIT}` : '';
     const qs = await pool.query(
-      `SELECT id, embedding::text AS emb FROM questions WHERE embedding IS NOT NULL ${limitClause}`
+      `SELECT id, embedding::text AS emb FROM questions WHERE embedding IS NOT NULL ORDER BY id ASC ${limitClause}`
     );
     console.log(`[compute-similarities] Processing ${qs.rows.length} questions…`);
     for (let i = 0; i < qs.rows.length; i++) {
@@ -147,7 +147,7 @@ async function run() {
   if (TYPE === 'notes' || TYPE === 'all') {
     const limitClause = LIMIT > 0 ? `LIMIT ${LIMIT}` : '';
     const ns = await pool.query(
-      `SELECT id, embedding::text AS emb FROM notes WHERE embedding IS NOT NULL ${limitClause}`
+      `SELECT id, embedding::text AS emb FROM notes WHERE embedding IS NOT NULL ORDER BY id ASC ${limitClause}`
     );
     console.log(`[compute-similarities] Processing ${ns.rows.length} notes…`);
     for (let i = 0; i < ns.rows.length; i++) {
