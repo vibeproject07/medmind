@@ -44,7 +44,7 @@ const _hasFlag = (flag) => _args.includes(flag);
 const CONCURRENCY      = 5;
 const LIMIT            = parseInt(_getArg('--limit', '90'));
 const OFFSET           = parseInt(_getArg('--offset', '0'));
-const SKIP_CLASSIFIED  = _hasFlag('--skip-classified');
+const SKIP_CLASSIFIED  = !_hasFlag('--include-classified');
 const OUTPUT_FILE      = _getArg('--output', 'decs_classification_results.json');
 const GEMINI_MODEL     = 'gemini-2.5-flash';
 const DECS_BASE        = 'https://api.bvsalud.org/decs/v2';
@@ -286,7 +286,7 @@ async function processQuestion(q, idx, total) {
 // ── Main ─────────────────────────────────────────────────────────────────────
 async function main() {
   console.log(`\n🔬 MedMind — Batch DeCS Classifier v2 (3-layer pipeline)`);
-  console.log(`limit=${LIMIT} offset=${OFFSET} skip-classified=${SKIP_CLASSIFIED} concurrency=${CONCURRENCY}\n`);
+  console.log(`limit=${LIMIT} offset=${OFFSET} skip-classified=${SKIP_CLASSIFIED} (use --include-classified to reprocess) concurrency=${CONCURRENCY}\n`);
 
   await pool.query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_decs_descriptors TEXT`);
   const questions = await fetchQuestions();
@@ -316,15 +316,19 @@ async function main() {
   const output = results.map(r => ({ id_question: r.id_question, ai_decs_descriptors: r.ai_decs_descriptors }));
   writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2), 'utf8');
 
+  const processed = results.length;
   const withDesc  = results.filter(r => r.ai_decs_descriptors.length > 0).length;
+  const withoutDesc = processed - withDesc;
   const failed    = results.filter(r => r.error).length;
   const totalDesc = results.flatMap(r => r.ai_decs_descriptors).length;
 
   console.log(`\n✅ Concluído!`);
-  console.log(`   Com descritores: ${withDesc} / ${results.length}`);
+  console.log(`   Processadas:     ${processed}`);
+  console.log(`   Com descritores: ${withDesc} (${((withDesc / (processed || 1)) * 100).toFixed(1)}%)`);
+  console.log(`   Sem descritores: ${withoutDesc} (${((withoutDesc / (processed || 1)) * 100).toFixed(1)}%)`);
   console.log(`   Falhas API:      ${failed}`);
   console.log(`   Total descritores salvos: ${totalDesc}`);
-  console.log(`   Média por questão: ${(totalDesc / (withDesc || 1)).toFixed(2)}`);
+  console.log(`   Média por questão processada: ${(totalDesc / (processed || 1)).toFixed(2)}`);
   console.log(`   Arquivo: ${OUTPUT_FILE}\n`);
 
   await pool.end();
