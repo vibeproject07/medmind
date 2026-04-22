@@ -35,14 +35,21 @@ if (!GEMINI_KEY) throw new Error('GEMINI_API_KEY not set');
 if (!DECS_KEY)   throw new Error('DECS_API_KEY not set');
 if (!DB_URL)     throw new Error('DATABASE_URL not set');
 
+// ── CLI args ─────────────────────────────────────────────────────────────────
+const _args = process.argv.slice(2);
+const _getArg = (flag, def) => { const i = _args.indexOf(flag); return i !== -1 && _args[i+1] ? _args[i+1] : def; };
+const _hasFlag = (flag) => _args.includes(flag);
+
 // ── Config ───────────────────────────────────────────────────────────────────
-const CONCURRENCY    = 5;
-const LIMIT          = 100;
-const OUTPUT_FILE    = 'decs_classification_results.json';
-const GEMINI_MODEL   = 'gemini-2.5-flash';
-const DECS_BASE      = 'https://api.bvsalud.org/decs/v2';
-const MAX_CANDIDATES = 5;   // DeCS records fetched per search term
-const MIN_SIMILARITY = 0.15; // minimum word-Jaccard to accept a DeCS result
+const CONCURRENCY      = 5;
+const LIMIT            = parseInt(_getArg('--limit', '90'));
+const OFFSET           = parseInt(_getArg('--offset', '0'));
+const SKIP_CLASSIFIED  = _hasFlag('--skip-classified');
+const OUTPUT_FILE      = _getArg('--output', 'decs_classification_results.json');
+const GEMINI_MODEL     = 'gemini-2.5-flash';
+const DECS_BASE        = 'https://api.bvsalud.org/decs/v2';
+const MAX_CANDIDATES   = 5;   // DeCS records fetched per search term
+const MIN_SIMILARITY   = 0.15; // minimum word-Jaccard to accept a DeCS result
 
 // ── Prompts ──────────────────────────────────────────────────────────────────
 const EXTRACTION_PROMPT = `Você é um especialista em classificação de conteúdo médico e no vocabulário controlado DeCS (Descritores em Ciências da Saúde) / MeSH.
@@ -77,10 +84,13 @@ Sem explicação, sem markdown.`;
 const pool = new pg.Pool({ connectionString: DB_URL });
 
 async function fetchQuestions() {
+  const whereClause = SKIP_CLASSIFIED
+    ? `WHERE ai_decs_descriptors IS NULL`
+    : '';
   const res = await pool.query(
     `SELECT id, statement, option_a, option_b, option_c, option_d, option_e
-     FROM questions ORDER BY id ASC LIMIT $1`,
-    [LIMIT]
+     FROM questions ${whereClause} ORDER BY id ASC LIMIT $1 OFFSET $2`,
+    [LIMIT, OFFSET]
   );
   return res.rows;
 }
@@ -276,7 +286,7 @@ async function processQuestion(q, idx, total) {
 // ── Main ─────────────────────────────────────────────────────────────────────
 async function main() {
   console.log(`\n🔬 MedMind — Batch DeCS Classifier v2 (3-layer pipeline)`);
-  console.log(`Processando ${LIMIT} questões · concorrência ${CONCURRENCY}\n`);
+  console.log(`limit=${LIMIT} offset=${OFFSET} skip-classified=${SKIP_CLASSIFIED} concurrency=${CONCURRENCY}\n`);
 
   await pool.query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_decs_descriptors TEXT`);
   const questions = await fetchQuestions();
