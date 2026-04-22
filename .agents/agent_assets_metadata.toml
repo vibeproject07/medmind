@@ -30,3 +30,9 @@ id = "mHo-scN1Iwc1Uua_ornPz"
 uri = "file://test_100_questions_full.json"
 type = "unspecified"
 title = "100 Questões — DeCS + Questões Similares"
+
+[[outputs]]
+id = "Ou8Yi7FQ6g0GBG5VXf0zY"
+uri = "file://decs_500_questions.json"
+type = "unspecified"
+title = "DeCS 500 Questions — Classificação Completa"
