@@ -1,0 +1,17 @@
+== BUSCA PARA CLASSIFICAÇÃO POR TERMOS (DeCS && (sub)Temas)
+1. O gemini faz uma leitura do objeto (questão, nota, flashcard, outros), ignorando artigos e palavras qualificadoras (adjetivos e advérbios), separando, muito provavelmente em um array, os termos que sobrarem (substantivos e verbos, idealmente);
+2. O gemini faz a leitura de um arquivo (seja um JSON, o próprio banco de dados, uma requisição a uma API) e observa os termos presentes;
+3. O gemini faz a comparação entre o array de termos do objeto com os termos dos arquivos;
+4. Conforme forem sendo encontrados termos que estejam presentes nos dois conjuntos, essa classificação vai sendo atribuída ao objeto;
+5. No caso do DeCS, é preciso que sejam adicionados todos os termos de classificação dos grafos, partindo da árvore até a folha ou nó que se iguala a um dos termos presentes no array do objeto;
+
+== BUSCA PARA CLASSIFICAÇÃO DE ACORDO COM OS VETORES
+1. A classificação de termos e a classificação por posição dos vetores no banco de dados deve ser feita de forma separada;
+2. O gemini faz uma leitura do objeto (questão, nota, flashcard, outros), ignorando artigos e palavras qualificadoras (adjetivos e advérbios), separando, muito provavelmente em um array, os termos que sobrarem (substantivos e verbos, idealmente);
+3. A partir do array formado, deve ocorrer a vetorização de cada um deles;
+4. Com os termos vetorizados, deve ser feita a busca por vetores semelhantes (mas, é importante destacar que podem existir vetores que saiam iguais, se não houver a limpeza dos dados, ignorando termos conectores e caracterizadores);
+4.1. Como foi adicionado o XML com as informações dos descritores do DeCS no banco de dados, estarão disponíveis entre as buscas essas informações;
+4.2. A busca por vetores, sendo assim, deve encontrar: outros objetos que tenham vetores parecidos, os descritores vetorizados do XML, e, talvez, as informações que fornecermos sobre temas, subtemas e competências, se as implementarmos no banco de dados, não apenas no código;
+4.3. A resposta então vai conter vetores que mesclam questões, notas, flashcards, outros objetos, informações do app que estiverem no banco e os descritores (precisa haver uma separação aqui, seja para procurar apenas por descritores e depois apenas por objetos, ou algo do tipo); 
+5. Ao final, deve sair uma lista dos vetores que foram encontrados, bem como uma lista com as informações que possam ser lidas em linguagem natural (uma requisição SQL (um select), os dados de forma escrita mesmo (a palavra encontrada no vetor);
+6. Ao final, pode ser feita uma comparação entre os dois tipos de busca;
