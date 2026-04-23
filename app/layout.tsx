@@ -14,6 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" className="overflow-x-hidden">
+      <head>
+        <meta name="color-scheme" content="only light" />
+      </head>
       <body className="overflow-x-hidden min-h-screen">{children}</body>
     </html>
   )
