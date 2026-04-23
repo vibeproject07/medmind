@@ -53,6 +53,7 @@ interface DeCSRecord {
   code: string;
   tree_ids: string[];
   hierarchy_path: string;
+  role?: 'primary' | 'secondary';
 }
 
 interface SimilarQuestion {
@@ -1174,22 +1175,56 @@ export default function QuestionDetailPage() {
           {aiDecsError && (
             <p className="text-red-500 text-sm mb-2">{aiDecsError}</p>
           )}
-          {(question.ai_decs_descriptors ?? []).length > 0 ? (
-            <div className="flex flex-wrap gap-2">
-              {(question.ai_decs_descriptors ?? []).map((d) => (
-                <span
-                  key={d.code || d.term}
-                  title={d.hierarchy_path || d.tree_ids?.join(', ')}
-                  className="inline-flex flex-col px-3 py-1.5 text-sm font-medium bg-indigo-50 text-indigo-700 rounded-full border border-indigo-200 cursor-default"
-                >
-                  <span>{d.term}</span>
-                  {d.code && (
-                    <span className="text-xs text-indigo-400 leading-tight">{d.code}</span>
-                  )}
-                </span>
-              ))}
-            </div>
-          ) : (
+          {(question.ai_decs_descriptors ?? []).length > 0 ? (() => {
+            const allDescriptors = question.ai_decs_descriptors ?? [];
+            const primaryDescs = allDescriptors.filter((d) => d.role === 'primary');
+            const secondaryDescs = allDescriptors.filter((d) => d.role === 'secondary');
+            const untagged = allDescriptors.filter((d) => !d.role);
+            return (
+              <div className="space-y-3">
+                {(primaryDescs.length > 0 || untagged.length > 0) && (
+                  <div>
+                    {primaryDescs.length > 0 && (
+                      <p className="text-xs font-semibold text-indigo-500 uppercase tracking-wide mb-1.5">Temas Principais</p>
+                    )}
+                    <div className="flex flex-wrap gap-2">
+                      {[...primaryDescs, ...untagged].map((d) => (
+                        <span
+                          key={d.code || d.term}
+                          title={d.hierarchy_path || d.tree_ids?.join(', ')}
+                          className="inline-flex flex-col px-3 py-1.5 text-sm font-semibold bg-indigo-100 text-indigo-800 rounded-full border border-indigo-300 cursor-default"
+                        >
+                          <span>{d.term}</span>
+                          {d.code && (
+                            <span className="text-xs text-indigo-400 leading-tight">{d.code}</span>
+                          )}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {secondaryDescs.length > 0 && (
+                  <div>
+                    <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1.5">Temas Secundários</p>
+                    <div className="flex flex-wrap gap-2">
+                      {secondaryDescs.map((d) => (
+                        <span
+                          key={d.code || d.term}
+                          title={d.hierarchy_path || d.tree_ids?.join(', ')}
+                          className="inline-flex flex-col px-3 py-1.5 text-sm font-medium bg-slate-50 text-slate-600 rounded-full border border-slate-200 cursor-default"
+                        >
+                          <span>{d.term}</span>
+                          {d.code && (
+                            <span className="text-xs text-slate-400 leading-tight">{d.code}</span>
+                          )}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })() : (
             <p className="text-gray-400 italic text-sm">
               {aiDecsLoading ? 'Aguardando resposta da IA…' : 'Nenhum descritor IA gerado. Clique em "Gerar com IA" para classificar esta questão.'}
             </p>

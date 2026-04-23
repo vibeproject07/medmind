@@ -3,7 +3,7 @@ import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { getAgentPrompt } from '@/lib/ai-agents';
 import { GoogleGenAI } from '@google/genai';
-import { runDeCSPipeline, type DeCSRecord } from '@/lib/decs-pipeline';
+import { runDeCSPipeline, type DeCSRecord, type DeCSThemes } from '@/lib/decs-pipeline';
 
 export const runtime = 'nodejs';
 
@@ -53,7 +53,7 @@ export async function POST(
       .filter(Boolean)
       .join('\n');
 
-    // ── Step 1: Gemini extracts search terms ─────────────────────────────────
+    // ── Step 1: Gemini identifies primary + secondary themes ─────────────────
     const systemPrompt = await getAgentPrompt('decs_classifier');
     const ai = new GoogleGenAI({ apiKey: geminiKey, apiVersion: 'v1beta' });
     const response = await ai.models.generateContent({
@@ -75,30 +75,38 @@ export async function POST(
         .filter(Boolean)
         .join('') ?? '');
 
-    let searchTerms: string[] = [];
+    let themes: DeCSThemes = { primary: [], secondary: [] };
     try {
       const cleaned = rawText.trim().replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
       const parsed = JSON.parse(cleaned);
       if (Array.isArray(parsed)) {
-        searchTerms = parsed.filter((t) => typeof t === 'string' && t.trim()).slice(0, 6);
+        // Legacy format — treat all as primary
+        themes.primary = parsed.filter((t) => typeof t === 'string' && t.trim()).slice(0, 3);
+      } else if (parsed && typeof parsed === 'object') {
+        themes.primary = (Array.isArray(parsed.primary) ? parsed.primary : [])
+          .filter((t: unknown) => typeof t === 'string' && t.trim())
+          .slice(0, 3);
+        themes.secondary = (Array.isArray(parsed.secondary) ? parsed.secondary : [])
+          .filter((t: unknown) => typeof t === 'string' && t.trim())
+          .slice(0, 6);
       }
     } catch {
       const matches = rawText.match(/"([^"]+)"/g);
       if (matches) {
-        searchTerms = matches.map((m) => m.replace(/"/g, '').trim()).filter(Boolean).slice(0, 6);
+        themes.primary = matches.map((m) => m.replace(/"/g, '').trim()).filter(Boolean).slice(0, 3);
       }
     }
 
-    if (searchTerms.length === 0) {
+    if (themes.primary.length === 0 && themes.secondary.length === 0) {
       return NextResponse.json(
-        { error: 'O agente não conseguiu identificar termos para busca. Tente novamente.' },
+        { error: 'O agente não conseguiu identificar temas para busca. Tente novamente.' },
         { status: 422 }
       );
     }
 
     // ── Steps 2+3: Multi-candidate search + category filter + Gemini validation
     const { descriptors, dropped_by_filter, dropped_by_gemini } = await runDeCSPipeline(
-      searchTerms,
+      themes,
       questionText,
       decsKey,
       geminiKey
@@ -111,9 +119,10 @@ export async function POST(
 
     return NextResponse.json({
       descriptors,
-      search_terms_used: searchTerms,
+      themes_identified: themes,
       pipeline_stats: {
-        terms_sent: searchTerms.length,
+        primary_terms: themes.primary.length,
+        secondary_terms: themes.secondary.length,
         dropped_by_category_filter: dropped_by_filter,
         dropped_by_gemini_validation: dropped_by_gemini,
         final_count: descriptors.length,

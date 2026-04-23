@@ -14,6 +14,12 @@ export interface DeCSRecord {
   tree_ids: string[];
   hierarchy_path: string;
   similarity?: number;
+  role?: 'primary' | 'secondary';
+}
+
+export interface DeCSThemes {
+  primary: string[];
+  secondary: string[];
 }
 
 // ── Category metadata ────────────────────────────────────────────────────────
@@ -370,36 +376,50 @@ export async function validateDescriptorsWithGemini(
 // ── Full pipeline ────────────────────────────────────────────────────────────
 
 /**
- * Given a list of Gemini-suggested search terms, run the full 3-layer pipeline:
- *   1. Multi-candidate DeCS search + similarity ranking
+ * Given Gemini-extracted themes (primary + secondary), run the full 3-layer pipeline:
+ *   1. Multi-candidate DeCS search + similarity ranking (per theme, tagged with role)
  *   2. Category filter
  *   3. Gemini validation
  *
- * Returns a deduplicated, validated list of DeCS records.
+ * Returns a flat, deduplicated, validated list of DeCS records with role tags.
+ * Primary descriptors appear first; secondary follow.
+ *
+ * Also accepts a plain string[] for backward compatibility (all treated as 'primary').
  */
 export async function runDeCSPipeline(
-  searchTerms: string[],
+  themes: DeCSThemes | string[],
   questionText: string,
   decsKey: string,
   geminiKey: string
 ): Promise<{ descriptors: DeCSRecord[]; dropped_by_filter: number; dropped_by_gemini: number }> {
-  // Step 1+2: search + category filter (already inside findBestDeCSMatch)
+  // Normalise input — support legacy string[] call
+  const structured: DeCSThemes = Array.isArray(themes)
+    ? { primary: themes, secondary: [] }
+    : themes;
+
+  const totalTerms = structured.primary.length + structured.secondary.length;
   const seenCodes = new Set<string>();
   const afterSearch: DeCSRecord[] = [];
 
+  // Search primary and secondary terms in parallel, tagging each with its role
+  const searchAll = [
+    ...structured.primary.map((term) => ({ term, role: 'primary' as const })),
+    ...structured.secondary.map((term) => ({ term, role: 'secondary' as const })),
+  ];
+
   await Promise.allSettled(
-    searchTerms.map(async (term) => {
+    searchAll.map(async ({ term, role }) => {
       const match = await findBestDeCSMatch(term, decsKey, questionText, 0.15, 5, geminiKey);
       if (match && !seenCodes.has(match.code)) {
         seenCodes.add(match.code);
-        afterSearch.push(match);
+        afterSearch.push({ ...match, role });
       }
     })
   );
 
-  const droppedByFilter = searchTerms.length - afterSearch.length;
+  const droppedByFilter = totalTerms - afterSearch.length;
 
-  // Step 3: Gemini validation
+  // Step 3: Gemini validation — operates on the flat list, role is preserved
   const afterValidation = await validateDescriptorsWithGemini(
     afterSearch,
     questionText,
@@ -408,8 +428,15 @@ export async function runDeCSPipeline(
 
   const droppedByGemini = afterSearch.length - afterValidation.length;
 
-  // Strip the internal similarity field before returning
-  const descriptors = afterValidation.map(({ similarity: _s, ...rest }) => rest);
+  // Strip the internal similarity field, keep role; primary first
+  const primary = afterValidation
+    .filter((d) => d.role === 'primary')
+    .map(({ similarity: _s, ...rest }) => rest);
+  const secondary = afterValidation
+    .filter((d) => d.role !== 'primary')
+    .map(({ similarity: _s, ...rest }) => rest);
+
+  const descriptors = [...primary, ...secondary];
 
   return { descriptors, dropped_by_filter: droppedByFilter, dropped_by_gemini: droppedByGemini };
 }

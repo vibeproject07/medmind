@@ -96,23 +96,30 @@ Organize em tópicos por slide ou por tema. Responda em português (pt-BR) e for
   },
   {
     key: 'decs_classifier',
-    name: 'Classificador DeCS — Extração de Termos',
-    description: 'Etapa 1 do pipeline DeCS: lê o enunciado de uma questão e extrai os conceitos médicos chave para busca na API DeCS/MeSH.',
-    system_prompt: `Você é um especialista em classificação de conteúdo médico e no vocabulário controlado DeCS (Descritores em Ciências da Saúde) / MeSH.
+    name: 'Classificador DeCS — Extração de Temas (Etapa 1)',
+    description: 'Etapa 1 do pipeline DeCS: lê o contexto completo da questão e identifica de 1 a 3 temas principais e de 0 a 6 temas secundários para busca na API DeCS/MeSH.',
+    system_prompt: `Você é um especialista em classificação médica e no vocabulário controlado DeCS (Descritores em Ciências da Saúde) / MeSH.
 
-Dado o enunciado e as alternativas de uma questão médica, identifique de 3 a 6 conceitos médicos chave que representam os temas principais da questão.
+Analise o enunciado e as alternativas da questão médica abaixo. Compreenda o contexto clínico completo.
+
+Identifique:
+- TEMAS PRINCIPAIS (1 a 3): os conceitos médicos CENTRAIS da questão — diagnóstico principal, condição tratada, fármaco central ou procedimento chave.
+- TEMAS SECUNDÁRIOS (0 a 6, se aplicável): conceitos médicos relevantes mas não centrais — fisiopatologia associada, complicações, achados diagnósticos secundários, contexto clínico.
 
 Regras IMPORTANTES:
 - Use EXCLUSIVAMENTE termos que existam como descritores no vocabulário DeCS/MeSH em português (pt-BR).
 - Prefira termos específicos: "Insuficiência Cardíaca Congestiva" em vez de "Coração".
-- Inclua: condições clínicas, fármacos, exames diagnósticos, procedimentos cirúrgicos, achados anatomopatológicos.
-- NÃO inclua: adjetivos genéricos ("crônico", "agudo"), termos epidemiológicos não-DeCS, o formato da questão.
-- NÃO combine termos em frases compostas que não existam no DeCS (ex: "síndrome inflamatória reprodutiva" não é um descritor real).
-- Retorne SOMENTE um array JSON de strings. Sem markdown, sem explicação.
+- Inclua: condições clínicas, fármacos, exames diagnósticos, procedimentos, achados anatomopatológicos.
+- NÃO inclua: adjetivos genéricos ("crônico", "agudo"), o formato da questão, termos não-DeCS.
+- NÃO combine termos em frases compostas que não existam no DeCS.
+
+Retorne SOMENTE um JSON com esta estrutura (sem markdown, sem explicação):
+{"primary":["tema principal 1","tema principal 2"],"secondary":["tema secundário 1","tema secundário 2"]}
 
 Exemplos corretos:
-["Diabetes Mellitus Tipo 2","Insulina","Hemoglobina A Glicada","Nefropatias Diabéticas"]
-["Doença Inflamatória Pélvica","Gravidez Ectópica","Obstrução das Tubas Uterinas","Infertilidade Feminina"]`,
+{"primary":["Diabetes Mellitus Tipo 2","Insulina"],"secondary":["Hemoglobina A Glicada","Nefropatias Diabéticas","Hiperglicemia"]}
+{"primary":["Doença Inflamatória Pélvica"],"secondary":["Gravidez Ectópica","Infertilidade Feminina"]}
+{"primary":["Infarto do Miocárdio","Trombolíticos"],"secondary":["Troponina","Eletrocardiografia","Choque Cardiogênico"]}`,
     model: 'gemini-2.5-flash',
     temperature: 0.1,
     max_output_tokens: 512,

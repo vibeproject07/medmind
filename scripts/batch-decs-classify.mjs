@@ -1,9 +1,19 @@
 /**
- * Batch DeCS Classifier — 3-layer quality pipeline
+ * Batch DeCS Classifier — 5-step pipeline with primary/secondary theme extraction
  *
- *   Layer 1: Multi-candidate DeCS search + word-Jaccard similarity ranking
- *   Layer 2: Category filter (reject B-tree descriptors without biomed context)
- *   Layer 3: Gemini validation (one extra pass to drop false positives)
+ *   Step 1: Gemini reads the full question context and identifies:
+ *             • 1–3 TEMAS PRINCIPAIS (diagnóstico central, fármaco, procedimento)
+ *             • 0–6 TEMAS SECUNDÁRIOS (fisiopatologia, complicações, contexto clínico)
+ *   Step 2: Each theme is searched in the DeCS API (or local pgvector index).
+ *             Each result is tagged with its role (primary / secondary).
+ *   Step 3a: Category filter — rejects organism (Categoria B) descriptors without
+ *              explicit biomed context in the question.
+ *   Step 3b: Word-Jaccard similarity threshold (min 0.15).
+ *   Step 4: Gemini validation — second pass to drop false positives.
+ *             Role tags are preserved through validation.
+ *   Step 5: Results saved to DB (ai_decs_descriptors) and exported to JSON.
+ *
+ * Output format (per descriptor): { term, code, tree_ids, hierarchy_path, role }
  *
  * Run: node scripts/batch-decs-classify.mjs
  */
@@ -54,20 +64,28 @@ const MAX_CANDIDATES   = 5;   // DeCS records fetched per search term
 const MIN_SIMILARITY   = 0.15; // minimum word-Jaccard to accept a DeCS result
 
 // ── Prompt defaults (used as fallback if agent not customized in DB) ──────────
-const DEFAULT_EXTRACTION_PROMPT = `Você é um especialista em classificação de conteúdo médico e no vocabulário controlado DeCS (Descritores em Ciências da Saúde) / MeSH.
+const DEFAULT_EXTRACTION_PROMPT = `Você é um especialista em classificação médica e no vocabulário controlado DeCS (Descritores em Ciências da Saúde) / MeSH.
 
-Dado o enunciado e as alternativas de uma questão médica, identifique de 3 a 6 conceitos médicos chave que representam os temas principais da questão.
+Analise o enunciado e as alternativas da questão médica abaixo. Compreenda o contexto clínico completo.
+
+Identifique:
+- TEMAS PRINCIPAIS (1 a 3): os conceitos médicos CENTRAIS da questão — diagnóstico principal, condição tratada, fármaco central ou procedimento chave.
+- TEMAS SECUNDÁRIOS (0 a 6, se aplicável): conceitos médicos relevantes mas não centrais — fisiopatologia associada, complicações, achados diagnósticos secundários, contexto clínico.
 
 Regras IMPORTANTES:
 - Use EXCLUSIVAMENTE termos que existam como descritores no vocabulário DeCS/MeSH em português (pt-BR).
 - Prefira termos específicos: "Insuficiência Cardíaca Congestiva" em vez de "Coração".
-- Inclua: condições clínicas, fármacos, exames diagnósticos, procedimentos cirúrgicos, achados anatomopatológicos.
-- NÃO inclua: adjetivos genéricos ("crônico", "agudo"), termos epidemiológicos não-DeCS, o formato da questão.
-- NÃO combine termos em frases compostas que não existam no DeCS (ex: "síndrome inflamatória reprodutiva" não é um descritor real).
-- Retorne SOMENTE um array JSON de strings. Sem markdown, sem explicação.
+- Inclua: condições clínicas, fármacos, exames diagnósticos, procedimentos, achados anatomopatológicos.
+- NÃO inclua: adjetivos genéricos ("crônico", "agudo"), o formato da questão, termos não-DeCS.
+- NÃO combine termos em frases compostas que não existam no DeCS.
 
-Exemplo correto:
-["Diabetes Mellitus Tipo 2","Insulina","Hemoglobina A Glicada","Nefropatias Diabéticas"]`;
+Retorne SOMENTE um JSON com esta estrutura (sem markdown, sem explicação):
+{"primary":["tema principal 1","tema principal 2"],"secondary":["tema secundário 1","tema secundário 2"]}
+
+Exemplos corretos:
+{"primary":["Diabetes Mellitus Tipo 2","Insulina"],"secondary":["Hemoglobina A Glicada","Nefropatias Diabéticas","Hiperglicemia"]}
+{"primary":["Doença Inflamatória Pélvica"],"secondary":["Gravidez Ectópica","Infertilidade Feminina"]}
+{"primary":["Infarto do Miocárdio","Trombolíticos"],"secondary":["Troponina","Eletrocardiografia","Choque Cardiogênico"]}`;
 
 const DEFAULT_VALIDATION_PROMPT = `Você é um especialista em vocabulário controlado DeCS/MeSH e classificação de conteúdo médico.
 
@@ -229,15 +247,28 @@ async function callGemini(systemPrompt, userMessage, maxTokens = 512) {
   return (data?.candidates?.[0]?.content?.parts?.map(p => p.text).join('') ?? '').trim();
 }
 
-function parseSearchTerms(raw) {
+function parseThemes(raw) {
   try {
     const cleaned = raw.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
     const parsed = JSON.parse(cleaned);
-    if (Array.isArray(parsed)) return parsed.filter(t => typeof t === 'string' && t.trim()).slice(0, 6);
+    if (Array.isArray(parsed)) {
+      // Legacy format — treat all as primary
+      return { primary: parsed.filter(t => typeof t === 'string' && t.trim()).slice(0, 3), secondary: [] };
+    }
+    if (parsed && typeof parsed === 'object') {
+      return {
+        primary: (Array.isArray(parsed.primary) ? parsed.primary : [])
+          .filter(t => typeof t === 'string' && t.trim()).slice(0, 3),
+        secondary: (Array.isArray(parsed.secondary) ? parsed.secondary : [])
+          .filter(t => typeof t === 'string' && t.trim()).slice(0, 6),
+      };
+    }
   } catch {}
   const matches = raw.match(/"([^"]+)"/g);
-  if (matches) return matches.map(m => m.replace(/"/g, '').trim()).filter(Boolean).slice(0, 6);
-  return [];
+  if (matches) {
+    return { primary: matches.map(m => m.replace(/"/g, '').trim()).filter(Boolean).slice(0, 3), secondary: [] };
+  }
+  return { primary: [], secondary: [] };
 }
 
 // ── Layer 3: Gemini validation ────────────────────────────────────────────────
@@ -275,30 +306,43 @@ async function processQuestion(q, idx, total) {
   let error = null;
 
   try {
-    // Step 1: extract search terms
+    // Step 1: Gemini identifies primary + secondary themes
     const rawText = await callGemini(EXTRACTION_PROMPT, questionText);
-    const searchTerms = parseSearchTerms(rawText);
+    const themes = parseThemes(rawText);
+    const totalTerms = themes.primary.length + themes.secondary.length;
 
-    if (searchTerms.length === 0) {
-      error = 'No search terms extracted';
+    if (totalTerms === 0) {
+      error = 'No themes extracted';
     } else {
-      // Step 2: multi-candidate search + category filter
+      // Step 2: multi-candidate search + category filter, tagged by role
       const seen = new Set();
       const afterSearch = [];
-      await Promise.allSettled(searchTerms.map(async term => {
+      const searchAll = [
+        ...themes.primary.map(term => ({ term, role: 'primary' })),
+        ...themes.secondary.map(term => ({ term, role: 'secondary' })),
+      ];
+      await Promise.allSettled(searchAll.map(async ({ term, role }) => {
         const match = await findBestDeCSMatch(term, questionText);
-        if (match && !seen.has(match.code)) { seen.add(match.code); afterSearch.push(match); }
+        if (match && !seen.has(match.code)) {
+          seen.add(match.code);
+          afterSearch.push({ ...match, role });
+        }
       }));
 
-      // Step 3: Gemini validation
+      // Step 3: Gemini validation (role is preserved through validation)
       const afterValidation = await validateDescriptors(afterSearch, questionText);
-      descriptors = afterValidation.map(({ similarity: _s, ...rest }) => rest);
+
+      // Primary first, then secondary; strip similarity
+      const primary = afterValidation.filter(d => d.role === 'primary').map(({ similarity: _s, ...r }) => r);
+      const secondary = afterValidation.filter(d => d.role !== 'primary').map(({ similarity: _s, ...r }) => r);
+      descriptors = [...primary, ...secondary];
 
       stats = {
-        terms_sent: searchTerms.length,
+        primary_terms: themes.primary.length,
+        secondary_terms: themes.secondary.length,
         after_search: afterSearch.length,
         after_validation: descriptors.length,
-        dropped_filter: searchTerms.length - afterSearch.length,
+        dropped_filter: totalTerms - afterSearch.length,
         dropped_gemini: afterSearch.length - descriptors.length,
       };
     }
@@ -306,7 +350,7 @@ async function processQuestion(q, idx, total) {
 
   const status = error
     ? `✗ — ${error}`
-    : `✓ ${descriptors.length} desc (−${stats.dropped_filter ?? 0} filtro, −${stats.dropped_gemini ?? 0} gemini)`;
+    : `✓ ${descriptors.length} desc [${stats.primary_terms ?? 0}p+${stats.secondary_terms ?? 0}s → −${stats.dropped_filter ?? 0}filtro −${stats.dropped_gemini ?? 0}gemini]`;
   console.log(`[${String(idx + 1).padStart(3)}/${total}] Q${q.id} ${status}`);
 
   return { id_question: q.id, ai_decs_descriptors: descriptors, error };
@@ -348,18 +392,21 @@ async function main() {
   const output = results.map(r => ({ id_question: r.id_question, ai_decs_descriptors: r.ai_decs_descriptors }));
   writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2), 'utf8');
 
-  const processed = results.length;
-  const withDesc  = results.filter(r => r.ai_decs_descriptors.length > 0).length;
+  const processed   = results.length;
+  const withDesc    = results.filter(r => r.ai_decs_descriptors.length > 0).length;
   const withoutDesc = processed - withDesc;
-  const failed    = results.filter(r => r.error).length;
-  const totalDesc = results.flatMap(r => r.ai_decs_descriptors).length;
+  const failed      = results.filter(r => r.error).length;
+  const allDesc     = results.flatMap(r => r.ai_decs_descriptors);
+  const totalDesc   = allDesc.length;
+  const totalPrimary   = allDesc.filter(d => d.role === 'primary').length;
+  const totalSecondary = allDesc.filter(d => d.role === 'secondary').length;
 
   console.log(`\n✅ Concluído!`);
-  console.log(`   Processadas:     ${processed}`);
-  console.log(`   Com descritores: ${withDesc} (${((withDesc / (processed || 1)) * 100).toFixed(1)}%)`);
-  console.log(`   Sem descritores: ${withoutDesc} (${((withoutDesc / (processed || 1)) * 100).toFixed(1)}%)`);
-  console.log(`   Falhas API:      ${failed}`);
-  console.log(`   Total descritores salvos: ${totalDesc}`);
+  console.log(`   Processadas:          ${processed}`);
+  console.log(`   Com descritores:      ${withDesc} (${((withDesc / (processed || 1)) * 100).toFixed(1)}%)`);
+  console.log(`   Sem descritores:      ${withoutDesc} (${((withoutDesc / (processed || 1)) * 100).toFixed(1)}%)`);
+  console.log(`   Falhas API:           ${failed}`);
+  console.log(`   Total descritores:    ${totalDesc} (${totalPrimary} principais + ${totalSecondary} secundários)`);
   console.log(`   Média por questão processada: ${(totalDesc / (processed || 1)).toFixed(2)}`);
   console.log(`   Arquivo: ${OUTPUT_FILE}\n`);
 
