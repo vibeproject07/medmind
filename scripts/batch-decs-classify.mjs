@@ -53,8 +53,8 @@ const DECS_BASE        = 'https://api.bvsalud.org/decs/v2';
 const MAX_CANDIDATES   = 5;   // DeCS records fetched per search term
 const MIN_SIMILARITY   = 0.15; // minimum word-Jaccard to accept a DeCS result
 
-// ── Prompts ──────────────────────────────────────────────────────────────────
-const EXTRACTION_PROMPT = `Você é um especialista em classificação de conteúdo médico e no vocabulário controlado DeCS (Descritores em Ciências da Saúde) / MeSH.
+// ── Prompt defaults (used as fallback if agent not customized in DB) ──────────
+const DEFAULT_EXTRACTION_PROMPT = `Você é um especialista em classificação de conteúdo médico e no vocabulário controlado DeCS (Descritores em Ciências da Saúde) / MeSH.
 
 Dado o enunciado e as alternativas de uma questão médica, identifique de 3 a 6 conceitos médicos chave que representam os temas principais da questão.
 
@@ -69,21 +69,46 @@ Regras IMPORTANTES:
 Exemplo correto:
 ["Diabetes Mellitus Tipo 2","Insulina","Hemoglobina A Glicada","Nefropatias Diabéticas"]`;
 
-const VALIDATION_PROMPT = `Você é um especialista em vocabulário controlado DeCS/MeSH.
+const DEFAULT_VALIDATION_PROMPT = `Você é um especialista em vocabulário controlado DeCS/MeSH e classificação de conteúdo médico.
 
-Dado o enunciado de uma questão médica e uma lista de descritores DeCS candidatos, filtre e mantenha APENAS os descritores CLINICAMENTE RELEVANTES para o tema central da questão.
+Dado o enunciado de uma questão médica e uma lista de descritores DeCS candidatos (retornados pela API BVSalud), filtre e mantenha APENAS os descritores CLINICAMENTE RELEVANTES para o tema central da questão.
 
-Critérios:
-- Deve representar um conceito clínico central (condição, fármaco, exame, procedimento).
-- Organismos (vírus, bactérias, animais) só são relevantes se a questão tratar de infectologia/microbiologia explicitamente.
-- Descritores de categoria não relacionada ao tema devem ser removidos.
+Critérios de aprovação:
+- O descritor deve representar um conceito clínico central da questão (condição, fármaco, exame diagnóstico, procedimento, achado anatomopatológico).
+- Organismos (vírus, bactérias, parasitas, animais) são relevantes SOMENTE se a questão tratar de infectologia, microbiologia ou parasitologia explicitamente.
+- Descritores de categorias não relacionadas ao tema principal devem ser removidos.
+- Prefira manter descritores específicos sobre genéricos quando ambos estiverem presentes.
 
-Retorne SOMENTE um array JSON com os CÓDIGOS dos descritores aprovados.
-Ex: ["292","4794"]
-Sem explicação, sem markdown.`;
+Retorne SOMENTE um array JSON com os CÓDIGOS DeCS dos descritores aprovados.
+Exemplo: ["292","4794","51221"]
+Sem explicação, sem markdown, apenas o array JSON.`;
+
+// Prompts are loaded from DB at startup (overrides defaults if admin customized them)
+let EXTRACTION_PROMPT = DEFAULT_EXTRACTION_PROMPT;
+let VALIDATION_PROMPT = DEFAULT_VALIDATION_PROMPT;
 
 // ── DB ───────────────────────────────────────────────────────────────────────
 const pool = new pg.Pool({ connectionString: DB_URL });
+
+async function loadAgentPrompts() {
+  try {
+    const res = await pool.query(
+      `SELECT key, system_prompt FROM ai_agents WHERE key IN ('decs_classifier', 'decs_validator')`
+    );
+    for (const row of res.rows) {
+      if (row.key === 'decs_classifier' && row.system_prompt) {
+        EXTRACTION_PROMPT = row.system_prompt;
+        console.log(`   ✓ Prompt "decs_classifier" carregado do banco (customizado)`);
+      }
+      if (row.key === 'decs_validator' && row.system_prompt) {
+        VALIDATION_PROMPT = row.system_prompt;
+        console.log(`   ✓ Prompt "decs_validator" carregado do banco (customizado)`);
+      }
+    }
+  } catch {
+    console.log(`   ⚠ ai_agents não encontrada — usando prompts padrão`);
+  }
+}
 
 async function fetchQuestions() {
   const conditions = [];
@@ -291,6 +316,9 @@ async function processQuestion(q, idx, total) {
 async function main() {
   console.log(`\n🔬 MedMind — Batch DeCS Classifier v2 (3-layer pipeline)`);
   console.log(`limit=${LIMIT} offset=${OFFSET} skip-classified=${SKIP_CLASSIFIED} (use --include-classified to reprocess) concurrency=${CONCURRENCY}\n`);
+
+  console.log(`Carregando prompts dos agentes...`);
+  await loadAgentPrompts();
 
   await pool.query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_decs_descriptors TEXT`);
   const questions = await fetchQuestions();

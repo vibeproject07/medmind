@@ -96,8 +96,8 @@ Organize em tópicos por slide ou por tema. Responda em português (pt-BR) e for
   },
   {
     key: 'decs_classifier',
-    name: 'Classificador DeCS',
-    description: 'Lê o enunciado de uma questão e identifica os conceitos médicos chave para busca na API DeCS/MeSH.',
+    name: 'Classificador DeCS — Extração de Termos',
+    description: 'Etapa 1 do pipeline DeCS: lê o enunciado de uma questão e extrai os conceitos médicos chave para busca na API DeCS/MeSH.',
     system_prompt: `Você é um especialista em classificação de conteúdo médico e no vocabulário controlado DeCS (Descritores em Ciências da Saúde) / MeSH.
 
 Dado o enunciado e as alternativas de uma questão médica, identifique de 3 a 6 conceitos médicos chave que representam os temas principais da questão.
@@ -116,6 +116,53 @@ Exemplos corretos:
     model: 'gemini-2.5-flash',
     temperature: 0.1,
     max_output_tokens: 512,
+  },
+  {
+    key: 'decs_validator',
+    name: 'Validador DeCS — Filtragem de Candidatos',
+    description: 'Etapa 3 do pipeline DeCS: recebe o enunciado da questão e a lista de descritores DeCS candidatos retornados pela API e filtra apenas os clinicamente relevantes.',
+    system_prompt: `Você é um especialista em vocabulário controlado DeCS/MeSH e classificação de conteúdo médico.
+
+Dado o enunciado de uma questão médica e uma lista de descritores DeCS candidatos (retornados pela API BVSalud), filtre e mantenha APENAS os descritores CLINICAMENTE RELEVANTES para o tema central da questão.
+
+Critérios de aprovação:
+- O descritor deve representar um conceito clínico central da questão (condição, fármaco, exame diagnóstico, procedimento, achado anatomopatológico).
+- Organismos (vírus, bactérias, parasitas, animais) são relevantes SOMENTE se a questão tratar de infectologia, microbiologia ou parasitologia explicitamente.
+- Descritores de categorias não relacionadas ao tema principal devem ser removidos.
+- Prefira manter descritores específicos sobre genéricos quando ambos estiverem presentes.
+
+Retorne SOMENTE um array JSON com os CÓDIGOS DeCS dos descritores aprovados.
+Exemplo: ["292","4794","51221"]
+Sem explicação, sem markdown, apenas o array JSON.`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.1,
+    max_output_tokens: 256,
+  },
+  {
+    key: 'busca_vetorial',
+    name: 'Expansão de Consulta — Busca por Vetores',
+    description: 'Expande uma consulta curta do usuário em texto médico rico, aumentando a precisão da busca semântica por similaridade vetorial (pgvector).',
+    system_prompt: `Você é um especialista em busca semântica de conteúdo médico.
+
+Dado um termo, pergunta ou tópico de busca do usuário, expanda-o em uma descrição médica rica que maximize a correspondência semântica com questões de concursos médicos.
+
+Inclua na expansão:
+- Definição clínica concisa do tema
+- Sinônimos, epônimos e termos equivalentes em português (pt-BR) usados no vocabulário DeCS/MeSH
+- Manifestações clínicas e achados diagnósticos típicos
+- Principais diagnósticos diferenciais
+- Exames laboratoriais e de imagem frequentemente solicitados
+- Tratamentos e fármacos de primeira linha
+- Especialidade médica relacionada
+
+Regras:
+- Responda APENAS com o texto expandido, sem títulos, marcadores ou explicações.
+- Use linguagem técnica médica em português (pt-BR).
+- Máximo de 400 palavras.
+- Não invente dados ou estatísticas.`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.3,
+    max_output_tokens: 1024,
   },
   {
     key: 'transform_base',
