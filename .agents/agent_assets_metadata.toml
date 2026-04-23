@@ -36,3 +36,9 @@ id = "Ou8Yi7FQ6g0GBG5VXf0zY"
 uri = "file://decs_500_questions.json"
 type = "unspecified"
 title = "DeCS 500 Questions — Classificação Completa"
+
+[[outputs]]
+id = "4T7ZMYGai-nfkuNpMBmOK"
+uri = "file://decs_200_recent_questions.json"
+type = "unspecified"
+title = "DeCS — 200 Questões Mais Recentes"

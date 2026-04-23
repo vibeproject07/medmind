@@ -1,0 +1,2727 @@
+[
+  {
+    "id": 25452,
+    "statement_preview": "Criança de 6 meses de vida, previamente hígida, foi deixada pela mãe em seu berço, com um balão de festa de aniversário. Algum tempo depois, a criança foi encontrada com extremidades arroxeadas, tosse…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": []
+  },
+  {
+    "id": 25453,
+    "statement_preview": "Recém-nascido pretermo moderado de 33 semanas de gestação nasceu com 2050g devido a sofrimento fetal agudo, de parto cesáreo, em bom estado geral, recebendo Apgar de 7 e 8. Evoluiu nos primeiros minut…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Sofrimento Fetal",
+        "code": "5427"
+      },
+      {
+        "term": "Recém-Nascido Prematuro",
+        "code": "22228"
+      }
+    ]
+  },
+  {
+    "id": 25454,
+    "statement_preview": "Giovanna, 7 anos, recebeu BCG ao nascer, é contactante intradomiciliar de tuberculoso bacilífero, apresenta-seassintomática, Rx de tórax normal e prova tuberculínica de 8 mm, deve receber a orientação…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Vacina BCG",
+        "code": "23093"
+      },
+      {
+        "term": "Teste Tuberculínico",
+        "code": "22710"
+      },
+      {
+        "term": "Tuberculose",
+        "code": "14778"
+      }
+    ]
+  },
+  {
+    "id": 25455,
+    "statement_preview": "RN a termo com peso de 3.180 g, no terceiro dia de vida, está no alojamento conjunto. Ao realizar o teste do coraçãozinho (oximetria de pulso), observou-se uma SatO na mão direita de 93% e no pé dire…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Oximetria",
+        "code": "22594"
+      }
+    ]
+  },
+  {
+    "id": 25456,
+    "statement_preview": "Neonato de termo, com 4 dias de vida, não evacua desde o nascimento. Apresenta distensão abdominal e vômitos biliosos. Ao exame físico, durante toque retal, eliminou grande volume de mecônio, com melh…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": []
+  },
+  {
+    "id": 25457,
+    "statement_preview": "Paciente de cinco anos de idade, do sexo feminino, com edema de início insidioso, oligúria e urina espumosa, recebe o diagnóstico de síndrome nefrótica. Apresenta complemento sérico C3 dentro dos valo…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Oligúria",
+        "code": "10032"
+      }
+    ]
+  },
+  {
+    "id": 25458,
+    "statement_preview": "Uma criança de 3 meses foi diagnosticada com osteogênese imperfeita e foi encaminhada a um fisioterapeuta. Esta é uma doença genética que resulta em hipotonia e ossos frágeis que se quebram facilmente…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Osteogênese Imperfeita",
+        "code": "10192"
+      }
+    ]
+  },
+  {
+    "id": 25459,
+    "statement_preview": "Adolescente de 16 anos, sexo masculino, é levado à consulta por queda no rendimento escolar nos últimos seis meses. A mãe relata que seu filho está irritável e irresponsável, mudou seu grupo de amigos…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Baixo Rendimento Escolar",
+        "code": "14876"
+      },
+      {
+        "term": "Saúde do Adolescente",
+        "code": "36411"
+      },
+      {
+        "term": "Abuso Oral de Substâncias",
+        "code": "56970"
+      }
+    ]
+  },
+  {
+    "id": 25460,
+    "statement_preview": "Dentre os fármacos abaixo relacionados, aquele que se mostra ineficaz no tratamento da dor do paciente pediátrico em pós-operatório é:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Midazolam",
+        "code": "19248"
+      }
+    ]
+  },
+  {
+    "id": 25461,
+    "statement_preview": "Neonato masculino, com 28 dias de vida, em aleitamento materno exclusivo, apresenta há uma semana, vômitos com aspecto de \"\"leite coalhado\"\", com volume aumentando progressivamente nos últimos dias, a…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Desidratação",
+        "code": "3694"
+      }
+    ]
+  },
+  {
+    "id": 25462,
+    "statement_preview": "Mãe relata que seu filho de sete anos apresentou febre alta, calafrios, cefaleia, adinamia e dor de garganta. Dois dias depois, surgiu exantema formado por pápulas eritematosas puntiformes próximas um…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Calafrios",
+        "code": "35319"
+      }
+    ]
+  },
+  {
+    "id": 25463,
+    "statement_preview": "Lesões múltiplas com pequenas elevações (pápulas) da cor da pele, com umbilicação central, causadas por um vírus DNA grupo-poxvirus sugerem:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Poxviridae",
+        "code": "11650"
+      }
+    ]
+  },
+  {
+    "id": 25464,
+    "statement_preview": "Considerando o exame neurológico evolutivo, uma criança hígida, nascida a termo, aos 3 anos de idade, é capaz de:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Exame Neurológico",
+        "code": "9652"
+      }
+    ]
+  },
+  {
+    "id": 25465,
+    "statement_preview": "Um menino de 7 anos previamente hígido é transferido de uma unidade primária do interior do estado para um hospital terciário, por apresentar, há cerca de 5 horas, quadro de cefaleia, sialorreia, náus…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Náusea",
+        "code": "9517"
+      }
+    ]
+  },
+  {
+    "id": 25466,
+    "statement_preview": "Em relação às meningites bacterianas na infância, considere as seguintes afirmativas: 1. A idade do paciente e o tempo de instalação da doença não influenciam os sintomas clínicos. 2. O diagnóstico é …",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "/líquido cefalorraquidiano",
+        "code": "22043"
+      }
+    ]
+  },
+  {
+    "id": 25467,
+    "statement_preview": "A hipsarritmia é uma alteração eletroencefalográfica característica da seguinte síndrome epiléptica:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Sincronização de Fases em Eletroencefalografia",
+        "code": "54192"
+      }
+    ]
+  },
+  {
+    "id": 25468,
+    "statement_preview": "Com relação ao risco para recorrência de crise febril, identifique os fatores a seguir como verdadeiros (V) ou falsos (F): ( ) Idade da primeira crise febril menor ou igual há 18 meses. ( ) Crise febr…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Convulsões Febris",
+        "code": "3315"
+      }
+    ]
+  },
+  {
+    "id": 25469,
+    "statement_preview": "São critérios para o diagnóstico de neurofibromatose tipo I, EXCETO:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Manchas Café com Leite",
+        "code": "32820"
+      }
+    ]
+  },
+  {
+    "id": 25470,
+    "statement_preview": "Em relação às crianças portadoras de Transtorno do Déficit de Atenção e Hiperatividade (TDAH), é CORRETO afirmar:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Transtorno do Deficit de Atenção com Hiperatividade",
+        "code": "1295"
+      }
+    ]
+  },
+  {
+    "id": 25471,
+    "statement_preview": "A epilepsia mioclônica pode ser agravada pelas seguintes medicações:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Fenobarbital",
+        "code": "10826"
+      },
+      {
+        "term": "Carbamazepina",
+        "code": "2256"
+      },
+      {
+        "term": "Oxcarbazepina",
+        "code": "57806"
+      },
+      {
+        "term": "Fenitoína",
+        "code": "10867"
+      }
+    ]
+  },
+  {
+    "id": 25472,
+    "statement_preview": "Na malformação de Chiari tipo I:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Malformação de Arnold-Chiari",
+        "code": "1143"
+      },
+      {
+        "term": "Hipertensão Intracraniana",
+        "code": "33369"
+      }
+    ]
+  },
+  {
+    "id": 25473,
+    "statement_preview": "O diagnóstico por imagem se constitui em um instrumento extremamente útil em grande parte das situações da prática clínica em neuropediatria. Em relação a esse recurso diagnóstico, é correto afirmar:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "/diagnóstico por imagem",
+        "code": "56874"
+      }
+    ]
+  },
+  {
+    "id": 25474,
+    "statement_preview": "Paciente de 38 anos, do sexo masculino relata febre, odinofagia tontura e mialgia há 2 dias. Está em tratamento de LMA há 7 dias. Sem outras comorbidades. Sinais vitais: PA 70x50 mmHg, FC: 128 bpm, FR…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Leucemia Mieloide Aguda",
+        "code": "23731"
+      }
+    ]
+  },
+  {
+    "id": 25475,
+    "statement_preview": "Durante atividade na UBS, você se depara com dois pacientes com astenia há 2 semanas e anemia grave. Paciente 1: homem de 21 anos de idade, Hb = 8,6 g/dl, VCM = 106, leucócitos = 920 mm3, neutrófilos …",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Pancitopenia",
+        "code": "10385"
+      }
+    ]
+  },
+  {
+    "id": 25476,
+    "statement_preview": "Paciente durante exames de rotina teve os seguintes resultados: HBSAG Negativo; Anti-HBS positivo; anti-HBC IGG positivo; anti-HBC IGM negativo. Qual o significado dos seguintes exames?",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": []
+  },
+  {
+    "id": 25477,
+    "statement_preview": "Qual a manifestação extra-intestinal mais comum na doença de Crohn?",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Pioderma Gangrenoso",
+        "code": "30584"
+      },
+      {
+        "term": "Doença de Crohn",
+        "code": "23973"
+      },
+      {
+        "term": "Eritema Nodoso",
+        "code": "4980"
+      }
+    ]
+  },
+  {
+    "id": 25478,
+    "statement_preview": "Jovem de 15 anos, morador de Parintins procurou o hospital da cidade queixando de falta de ar, mal-estar geral, febre e dores em grandes articulações de início há 1 semana. Ao exame físico, paciente s…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Febre Reumática",
+        "code": "12624"
+      }
+    ]
+  },
+  {
+    "id": 25479,
+    "statement_preview": "A principal terminologia usada para definir o diagnóstico de Insuficiência Cardíaca baseia-se na fração de ejeção do ventrículo esquerdo (FEVE) sendo CORRETO afirmar:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Insuficiência Cardíaca Sistólica",
+        "code": "52612"
+      }
+    ]
+  },
+  {
+    "id": 25480,
+    "statement_preview": "Uma mulher de 29 anos apresenta-se com episódios recorrentes de cefaleia que duram de 4 a 72 horas quando não tratados. As dores de cabeça são frequentemente unilaterais, pulsáteis, de intensidade mod…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Enxaqueca com Aura",
+        "code": "34268"
+      }
+    ]
+  },
+  {
+    "id": 25481,
+    "statement_preview": "Um paciente de 37 anos de idade engenheiro bem- sucedido, casado, com epilepsia bem controlada por medicamentos, apresenta-se ao pronto-socorro após uma convulsão tônico-clônica generalizada que durou…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Convulsões",
+        "code": "13024"
+      }
+    ]
+  },
+  {
+    "id": 25482,
+    "statement_preview": "Uma estudante de 20 anos apresenta ptose palpebral, diplopia e fraqueza muscular que piora com o esforço e melhora com o repouso. A eletroneuromiografia mostra uma diminuição da amplitude do potencial…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Diplopia",
+        "code": "4229"
+      },
+      {
+        "term": "Debilidade Muscular",
+        "code": "32676"
+      }
+    ]
+  },
+  {
+    "id": 25483,
+    "statement_preview": "Doença inflamatória crônica que acomete, preferencialmente, a coluna vertebral. É mais frequente no sexo masculino, no adulto jovem e HLA-B27. Quadro clínico de dor lombar de ritmo inflamatório. A evo…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Espondilite Anquilosante",
+        "code": "13552"
+      }
+    ]
+  },
+  {
+    "id": 25484,
+    "statement_preview": "Homem de 67 anos vem à consulta com queixa de dor intensa em joelho direito há 8 dias. Refere episódios semelhantes autolimitados acometendo punho direito e joelhos, bem como artralgia mecânica recorr…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Artralgia",
+        "code": "32350"
+      }
+    ]
+  },
+  {
+    "id": 25485,
+    "statement_preview": "Alternativas que NÃO corresponde ao uso do antimalárico tafenoquina?",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Primaquina",
+        "code": "11755"
+      },
+      {
+        "term": "Malária Vivax",
+        "code": "29996"
+      },
+      {
+        "term": "Metemoglobinemia",
+        "code": "8885"
+      }
+    ]
+  },
+  {
+    "id": 25486,
+    "statement_preview": "Paciente de 34 anos, sexo feminino, apresentou-se ao Departamento de Emergência com confusão mental, letargia e episódios de síncope ao permanecer de pé. Ela também teve episódios de vômitos ao longo …",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Síncope",
+        "code": "13955"
+      }
+    ]
+  },
+  {
+    "id": 25487,
+    "statement_preview": "Paciente, sexo feminino, 36 anos de idade, recebeu diagnóstico de Doença de Graves há dois anos. Na ocasião, apresentava orbitopatia de Graves, proptose unilateral, bócio difuso, taquicardia e tremor …",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Metimazol",
+        "code": "8890"
+      },
+      {
+        "term": "Doença de Graves",
+        "code": "28071"
+      }
+    ]
+  },
+  {
+    "id": 25488,
+    "statement_preview": "Mulher, 55 anos de idade, em amenorreia há 2 anos, foi encaminhada pelo clínico ao ambulatório de endocrinologia por alteração da função tireoidiana e perda de campo visual. Apresentava TSH 0,85 mUI/m…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Amenorreia",
+        "code": "571"
+      },
+      {
+        "term": "Prolactina",
+        "code": "11821"
+      }
+    ]
+  },
+  {
+    "id": 25489,
+    "statement_preview": "Para o diagnóstico das glomerulopatias qual a melhor estratégia/ferramenta?",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Proteinúria",
+        "code": "11946"
+      }
+    ]
+  },
+  {
+    "id": 25490,
+    "statement_preview": "É considerada uma indicação dialítica de urgência:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Diálise Peritoneal",
+        "code": "29504"
+      }
+    ]
+  },
+  {
+    "id": 25491,
+    "statement_preview": "Sobre o diurético Furosemida de uso frequente na conduta do paciente edemaciado e/ou com hiperpotassemia sabemos que:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Furosemida",
+        "code": "5801"
+      },
+      {
+        "term": "Diuréticos",
+        "code": "4294"
+      }
+    ]
+  },
+  {
+    "id": 25492,
+    "statement_preview": "Marta tem 39 anos e há 5 dias iniciou quadro de febre alta, associada a dor em hemitórax direito e tosse produtiva. Ao exame físico encontra-se consciente e orientada no tempo e no espaço. Apresenta f…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Pneumonia Necrosante",
+        "code": "56377"
+      }
+    ]
+  },
+  {
+    "id": 25493,
+    "statement_preview": "Genesio tem 58 anos, é hipertenso, diabético e ex-tabagista com uma carga tabágica de 40 maços-ano. Parou de fumar há 5 anos atrás ao receber o diagnóstico de hipertensão arterial sistêmica e diabetes…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Doença Pulmonar Obstrutiva Crônica",
+        "code": "36008"
+      }
+    ]
+  },
+  {
+    "id": 25494,
+    "statement_preview": "Paciente do sexo masculino, 65 anos, portador de doença diverticular de sigmoide, teve indicação de sigmoidectomia laparoscópica eletiva após evoluir com repetidas crises de diverticulite aguda. O pac…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": []
+  },
+  {
+    "id": 25495,
+    "statement_preview": "Paciente do sexo masculino, 32 anos, sobrepeso, comparece ao pronto atendimento apresentando quadro de dor tipo cólica, mesogástrica, que migrou para FID e aumentou de intensidade, há cerca de 24hs. A…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Sobrepeso",
+        "code": "50524"
+      },
+      {
+        "term": "Apendicite",
+        "code": "1070"
+      },
+      {
+        "term": "Dor Abdominal",
+        "code": "24501"
+      }
+    ]
+  },
+  {
+    "id": 25496,
+    "statement_preview": "Paciente do sexo masculino, 48 anos, diabético, é internada com quadro de dor em peso em quadrante superior direito do abdome acompanhado de febre noturna com calafrios, náuseas e vômitos há cerca de …",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Diabetes Autoimune Latente em Adultos",
+        "code": "56402"
+      },
+      {
+        "term": "Colecistite Aguda",
+        "code": "38041"
+      },
+      {
+        "term": "Abscesso Hepático Piogênico",
+        "code": "38603"
+      }
+    ]
+  },
+  {
+    "id": 25497,
+    "statement_preview": "Paciente do sexo feminino, 48 anos, deu entrada no pronto socorro queixando dor intensa, de início súbito, em região epigástrica e que irradiava para o dorso, associada a vômitos, com evolução de 8 ho…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Proteínas Associadas a Pancreatite",
+        "code": "57130"
+      }
+    ]
+  },
+  {
+    "id": 25498,
+    "statement_preview": "Paciente do sexo feminino, 48 anos, vem ao pronto socorro queixando dor anal de início súbito há 24 horas, após episódio de defecação dificultada por fezes endurecidas. A dor era inicialmente moderada…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Constipação Intestinal",
+        "code": "3267"
+      },
+      {
+        "term": "Hemorroidas",
+        "code": "6638"
+      }
+    ]
+  },
+  {
+    "id": 25499,
+    "statement_preview": "Paciente do sexo masculino, 21 anos, procura atendimento médico referindo tosse seca persistente, associada a dispneia progressiva aos grandes esforços e perda de cerca de 10kg. Evolução de 2 meses. N…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Redução de Peso",
+        "code": "23862"
+      }
+    ]
+  },
+  {
+    "id": 25500,
+    "statement_preview": "Você é plantonista de uma unidade secundária de pronto atendimento e recebe paciente do sexo masculino, 18 anos de idade, vítima de queimadura de segundo grau em tórax anterior, abdome anterior, regiã…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Lactato de Ringer",
+        "code": "57612"
+      }
+    ]
+  },
+  {
+    "id": 25501,
+    "statement_preview": "Paciente do sexo masculino, 28 anos de idade, profissional da construção civil, é atendido no pronto socorro após queda de laje há cerca de 3 horas, queixando dor abdominal. O paciente é hígido, sem c…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Traumatismos Abdominais",
+        "code": "7"
+      }
+    ]
+  },
+  {
+    "id": 25502,
+    "statement_preview": "Paciente do sexo feminino, 45 anos, obesa, vem ao consultório queixando história de pirose crônica que tratava no domicílio com chás caseiros. Evolui há cerca de 2 meses com aumento da frequência da p…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Refluxo Gastroesofágico",
+        "code": "24004"
+      }
+    ]
+  },
+  {
+    "id": 25503,
+    "statement_preview": "Paciente do sexo feminino, 35 anos, é transferida de Manacapuru para investigação diagnóstica e continuidade de tratamento. Estava internada por 3 dias com história de dor tipo cólica em HD associada …",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Icterícia Obstrutiva",
+        "code": "38066"
+      }
+    ]
+  },
+  {
+    "id": 25504,
+    "statement_preview": "Paciente do sexo masculino, 57 anos, vem ao atendimento médico queixando dor tipo cólica em FIE com piora progressiva, associada a vômitos e constipação há 48 horas. Refere hábito intestinal inadequad…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Constipação Intestinal",
+        "code": "3267"
+      },
+      {
+        "term": "Diverticulite",
+        "code": "4301"
+      }
+    ]
+  },
+  {
+    "id": 25505,
+    "statement_preview": "Paciente do sexo feminino, 49 anos, dá entrada no pronto atendimento queixando dor abdominal tipo cólica, difusa, progressiva, há 3 dias, associada a vários episódios de vômitos. Refere parada de elim…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Dor Abdominal",
+        "code": "24501"
+      },
+      {
+        "term": "Obstrução Intestinal",
+        "code": "7578"
+      }
+    ]
+  },
+  {
+    "id": 25506,
+    "statement_preview": "Paciente do sexo masculino, 24 anos, é trazido ao pronto socorro por terceiros devido a ferimento por arma branca no tórax. O paciente é admitido desacordado, bradipneico e pálido, com lesão traumátic…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Traumatismos Torácicos",
+        "code": "14285"
+      },
+      {
+        "term": "Ferimentos Perfurantes",
+        "code": "15349"
+      }
+    ]
+  },
+  {
+    "id": 25507,
+    "statement_preview": "Paciente do sexo masculino, 10 anos de idade, apresentando quadro de dor aguda e progressiva em FID, associada a vómitos e febre e sinais de irritação peritoneal. Foi indicada a laparotomia pela hipót…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Apendicite",
+        "code": "1070"
+      },
+      {
+        "term": "Divertículo Ileal",
+        "code": "8636"
+      },
+      {
+        "term": "Laparotomia",
+        "code": "7991"
+      }
+    ]
+  },
+  {
+    "id": 25508,
+    "statement_preview": "Você foi convidado para discutir o desfecho insatisfatório de um caso clínico de um paciente politraumatizado. O paciente, do sexo masculino, 60 anos, hipertenso e diabético, foi vítima de agressão fí…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Choque Hemorrágico",
+        "code": "13149"
+      }
+    ]
+  },
+  {
+    "id": 25509,
+    "statement_preview": "Paciente do sexo masculino, 2 anos de idade, é trazido pela mãe ao pronto socorro, queixando dor inguinal intensa à direita há cerca de 4 horas. Refere aparecimento de \"caroço\" em região inguinal quan…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Hérnia Inguinal",
+        "code": "6711"
+      }
+    ]
+  },
+  {
+    "id": 25510,
+    "statement_preview": "Paciente do sexo feminino, 58 anos, diabética e obesa, apresenta quadro de dor intensa em membro inferior esquerdo. Refere que há 2 dias iniciou quadro de edema e eritema em perna esquerda, acompanhad…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Fasciite Necrosante",
+        "code": "32750"
+      }
+    ]
+  },
+  {
+    "id": 25511,
+    "statement_preview": "Paciente do sexo masculino, 45 anos, é achado desmaiado no banheiro da sua residência e trazido para o pronto socorro. Apresenta-se hipocorado +++/4, FC: 120bpm, FR: 28irpm, P.A.: 80x60mmHg e débito u…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Hemorragia Gastrointestinal",
+        "code": "6623"
+      },
+      {
+        "term": "Síncope",
+        "code": "13955"
+      },
+      {
+        "term": "Proteína do Grupo de Complementação N da Anemia de Fanconi",
+        "code": "57122"
+      },
+      {
+        "term": "Tratamento por Ondas de Choque Extracorpóreas",
+        "code": "57173"
+      }
+    ]
+  },
+  {
+    "id": 25512,
+    "statement_preview": "Paciente do sexo feminino, 62 anos, tabagista e diabética, apresenta quadro de icterícia progressiva há cerca de 1 mês, associada a prurido cutâneo e emagrecimento, sendo internada para investigação d…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Icterícia Obstrutiva",
+        "code": "38066"
+      },
+      {
+        "term": "Neoplasias Pancreáticas",
+        "code": "10378"
+      },
+      {
+        "term": "Tomografia por Emissão de Pósitrons combinada à Tomografia Computadorizada",
+        "code": "56659"
+      }
+    ]
+  },
+  {
+    "id": 25513,
+    "statement_preview": "Paciente do sexo masculino, 32 anos, portador de Retocolite Ulcerativa procura atendimento médico por dor abdominal. Teve o diagnóstico fechado após crises de diarreia sanguinolenta, sendo submetido a…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Dor Abdominal",
+        "code": "24501"
+      },
+      {
+        "term": "Colite Ulcerativa",
+        "code": "23971"
+      }
+    ]
+  },
+  {
+    "id": 25514,
+    "statement_preview": "O rastreamento de HlV/Sífilis em gestantes, além do exame na primeira consulta, deve ser realizado:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Parto Normal",
+        "code": "9514"
+      }
+    ]
+  },
+  {
+    "id": 25515,
+    "statement_preview": "A Donovanose é causada por qual agente etiológico?",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": []
+  },
+  {
+    "id": 25516,
+    "statement_preview": "Qual das alternativas abaixo é manifestação da sífilis secundária?",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": []
+  },
+  {
+    "id": 25517,
+    "statement_preview": "Paciente 28 anos foi ao ginecologista com queixa de corrimento vaginal. O PH vaginal foi 5 e o teste de KOH positivo. Baseado na conduta do Ministério da Saúde, qual a melhor conduta?",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": []
+  },
+  {
+    "id": 25518,
+    "statement_preview": "Paciente foi ao ginecologista no interior do Amazonas, referindo úlcera genital que apareceu há 2 semanas. Ao exame físico, observou-se lesão ulcerada vulvar, cuja causa provável é uma infecção sexual…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Infecções Sexualmente Transmissíveis",
+        "code": "24326"
+      }
+    ]
+  },
+  {
+    "id": 25519,
+    "statement_preview": "Paciente 38 anos foi ao mastologista com resultado de ultrassonografia, evidenciando nódulo complexo sólido cístico, de forma oval, margens circunscritas, medindo 12 x 10 mm, localizado em quadrante s…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Neoplasias Unilaterais da Mama",
+        "code": "55838"
+      }
+    ]
+  },
+  {
+    "id": 25520,
+    "statement_preview": "Paciente 40 anos foi ao mastologista com resultado de ultrassonografia evidenciando imagem cística, de forma oval, margens circunscritas, com conteúdo espesso, medindo 18x12 mm, localizado em quadrant…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Cistos não Odontogênicos",
+        "code": "24346"
+      }
+    ]
+  },
+  {
+    "id": 25521,
+    "statement_preview": "Paciente 36 anos foi ao ginecologista com queixa de dor aguda, em pontada, em fossa ilíaca direita. Trouxe Ultrassonografia evidenciando cisto hemorrágico que mede 40 mm. Qual a conduta adequada para …",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Dor Abdominal",
+        "code": "24501"
+      }
+    ]
+  },
+  {
+    "id": 25522,
+    "statement_preview": "Assinale a alternativa CORRETA sobre drenagem venosa da veia ovariana:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Veia Cava Inferior",
+        "code": "15084"
+      },
+      {
+        "term": "Varizes",
+        "code": "15051"
+      }
+    ]
+  },
+  {
+    "id": 25523,
+    "statement_preview": "A falha de fusão dos ductos de Muller originam:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Ductos Paramesonéfricos",
+        "code": "9287"
+      }
+    ]
+  },
+  {
+    "id": 25524,
+    "statement_preview": "Primipara, 24 horas após parto cesariano, apresentou temperatura axilar de 39 com hipertermia importante na incisão cirúrgica. Qual o agente etiológico mais provável?",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": []
+  },
+  {
+    "id": 25525,
+    "statement_preview": "Gestante, 37 semanas, foi a maternidade com sangramento vaginal discreto. Ao exame as mucosas estavam descoradas ++/4+, útero hipertônico colo com dilatação de 3,0 cm. Não foi identificado batimento c…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Morte Fetal",
+        "code": "5424"
+      },
+      {
+        "term": "Hemorragia Uterina",
+        "code": "14993"
+      }
+    ]
+  },
+  {
+    "id": 25526,
+    "statement_preview": "Gestante, 22 semanas, foi ao pré-natal com ultrassonografia realizada na 21ª semana, evidenciando oligodramnia acentuada. Qual a provável causa para a redução do líquido?",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Ultrassonografia Pré-Natal",
+        "code": "29142"
+      }
+    ]
+  },
+  {
+    "id": 25527,
+    "statement_preview": "Após a administração de ocitocina venosa 6mUl/min em uma gestante com 39 semanas em trabalho de parto, foi observado à cardiotocografia desacelerações tardias. Qual a conduta deve ser adotada inicialm…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Cardiotocografia",
+        "code": "23574"
+      },
+      {
+        "term": "Ocitocina",
+        "code": "22596"
+      },
+      {
+        "term": "Prova de Trabalho de Parto",
+        "code": "23043"
+      }
+    ]
+  },
+  {
+    "id": 25528,
+    "statement_preview": "Gestante, 37 semanas, foi a maternidade com sangramento vaginal abundante, vermelho rutilante. Ao exame as mucosas estavam descoradas ++/4+, útero com tônus normal, sem atividade uterina, colo com dil…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Placenta Prévia",
+        "code": "11354"
+      }
+    ]
+  },
+  {
+    "id": 25529,
+    "statement_preview": "Qual complicação pode ocorrer na gestação gemelar dicoriônica?",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": []
+  },
+  {
+    "id": 25530,
+    "statement_preview": "Gestante, 24 semanas, foi ao pré-natal com ultrassonografia realizada na 22ª semana, evidenciando polidramnia acentuada. Qual a provável causa para o aumento do líquido?",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Ultrassonografia Pré-Natal",
+        "code": "29142"
+      }
+    ]
+  },
+  {
+    "id": 25531,
+    "statement_preview": "Primigesta, 8 semanas, Rh negativo foi submetida a um procedimento de esvaziamento uterino pós aborto. Informa que o cônjuge é Rh positivo homozigoto. Qual a conduta a ser adotada?",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Aborto Espontâneo",
+        "code": "25"
+      }
+    ]
+  },
+  {
+    "id": 25532,
+    "statement_preview": "Gestante, IMC 35, na 12ª Semana de gestação foi a primeira consulta pré-natal. Quanto a profilaxia da pré-eclampsia nessa paciente, é correto afirmar que:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Pré-Eclâmpsia",
+        "code": "11662"
+      },
+      {
+        "term": "Gestantes",
+        "code": "37736"
+      },
+      {
+        "term": "Obesidade Metabolicamente Benigna",
+        "code": "55846"
+      }
+    ]
+  },
+  {
+    "id": 25533,
+    "statement_preview": "Secundigesta, 24 semanas, com relato de parto prematuro anteriormente, foi a consulta de pré-natal levando ultrassonografia transvaginal realizada com 20 semanas que referia cervicometria de 22 mm. As…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Trabalho de Parto Prematuro",
+        "code": "7925"
+      }
+    ]
+  },
+  {
+    "id": 25534,
+    "statement_preview": "Lactente de quatro meses de vida é trazida pela mãe À UBS por apresentar estridor persistente há 2 meses. Segundo a mãe, a criança melhora quando colocada em posição pronada. O diagnóstico mais prováv…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Laringocele",
+        "code": "54496"
+      }
+    ]
+  },
+  {
+    "id": 25535,
+    "statement_preview": "A afecção respiratória que acomete mais frequentemente recém-nascidos prematuros com menos de 28 semanas de gestação, do sexo masculino, em filhos de mães diabéticas, e que sofreram asfixia ao nascime…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Recém-Nascido Prematuro",
+        "code": "22228"
+      },
+      {
+        "term": "Doenças Respiratórias",
+        "code": "12560"
+      },
+      {
+        "term": "Diabetes Autoimune Latente em Adultos",
+        "code": "56402"
+      }
+    ]
+  },
+  {
+    "id": 25536,
+    "statement_preview": "Gestante adquiriu tuberculose pulmonar durante a gestação. Persiste bacilífera mesmo após o nascimento do bebê. Em relação ao recém-nascido dessa mãe, é CORRETO afirmar que:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Tuberculose Pulmonar",
+        "code": "14798"
+      }
+    ]
+  },
+  {
+    "id": 25537,
+    "statement_preview": "O sobrepeso e a obesidade são definidos pela OMS como uma epidemia mundial. 80% das crianças com sobrepeso ou obesidade tornam-se adultos obesos. Sobre a obesidade infantil, é INCORRETO afirmar que:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Obesidade Infantil",
+        "code": "55220"
+      },
+      {
+        "term": "Índice de Massa Corporal",
+        "code": "24542"
+      },
+      {
+        "term": "Obesidade Metabolicamente Benigna",
+        "code": "55846"
+      }
+    ]
+  },
+  {
+    "id": 25538,
+    "statement_preview": "Pedro, RN a termo, adequado para idade gestacional, PN 3400g, filho de mãe comorbidade e com pré-natal adequado, ultrassom morfológico normal. Sorologia de toxoplasmose com 7 semanas de gestação: IgM …",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Sorologia",
+        "code": "13078"
+      },
+      {
+        "term": "Toxoplasmose",
+        "code": "27868"
+      }
+    ]
+  },
+  {
+    "id": 25539,
+    "statement_preview": "Você recebe uma mãe de 23 anos, primeiro filho, para avaliação do recém-nascido que está com 7 dias de vida. Os pais estão cansados e cheios de dúvida, principalmente com relação à amamentação. Você p…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Aleitamento Materno",
+        "code": "1967"
+      }
+    ]
+  },
+  {
+    "id": 25540,
+    "statement_preview": "Márcia irá retomar ao trabalho daqui duas semanas e está com medo de que seu filho desmame, pois ficará muitas horas longe de casa. Quais das seguintes orientações quanto à conservação do leite matern…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Desmame",
+        "code": "15288"
+      }
+    ]
+  },
+  {
+    "id": 25541,
+    "statement_preview": "Gestante em acompanhamento pré-natal fez diagnóstico de HIV com 29 semanas. Iniciou TARV e fez uso regular até o nascimento do bebê. A Carga viral (CV) com 38 semanas era de 1400 cópias. Com relação a…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Infecções por HIV",
+        "code": "24718"
+      }
+    ]
+  },
+  {
+    "id": 25542,
+    "statement_preview": "Na cetoacidose diabética, qual é a principal alteração de eletrólitos que pode ocorrer durante o tratamento?",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Cetoacidose Diabética",
+        "code": "30156"
+      },
+      {
+        "term": "Eletrólitos",
+        "code": "4645"
+      }
+    ]
+  },
+  {
+    "id": 25543,
+    "statement_preview": "Lactente de 7 meses, reside em um grande centro urbano, foi levado pela mãe a um pronto-socorro, com história de queda do berço ao pular por cima da grade. Ao exame apresenta hematoma em tronco e frat…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Acidentes por Quedas",
+        "code": "19050"
+      }
+    ]
+  },
+  {
+    "id": 25544,
+    "statement_preview": "Lactente de 5 meses, em aleitamento materno exclusivo, deu entrada no serviço de emergência com quadro de lesões papuloeritematosa em todo o corpo, edema periorbitário a esquerda e labial. A mãe refer…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Hipersensibilidade Imediata",
+        "code": "7147"
+      }
+    ]
+  },
+  {
+    "id": 25545,
+    "statement_preview": "Escolar de 8 anos, é atendido no setor de emergência com história de tosse e coriza há 24h, evoluindo com dispneia nas últimas 6h. Mãe relata que criança tem asma controlada, não faz uso de corticoide…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": []
+  },
+  {
+    "id": 25546,
+    "statement_preview": "Adolescente de 15 anos, sexo feminino, vem ao consultório para consulta de rotina, relata ser vegetariana há 3 anos. Ao exame: Adolescente com índice de massa corporal baixo, TANNER M4P4, ciclo menstr…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Deficiência de Vitamina B 12",
+        "code": "16591"
+      }
+    ]
+  },
+  {
+    "id": 25547,
+    "statement_preview": "Lactante de 10 meses é levado ao Pronto Socorro, com quadro de diarreia liquida, várias evacuações ao dia, vômito, anorexia, temperatura não aferida há 3 dias. Ao exame físico: BEG, irritado, inquieto…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Anorexia",
+        "code": "23944"
+      }
+    ]
+  },
+  {
+    "id": 25548,
+    "statement_preview": "A princípio, qual a orientação na conduta de recém-nascido em boas condições de vitalidade, idade gestacional de 34 semanas e peso de 2.450g:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Recém-Nascido Prematuro",
+        "code": "22228"
+      }
+    ]
+  },
+  {
+    "id": 25549,
+    "statement_preview": "Escolar de 9 anos, sexo masculino, é admitido no serviço de emergência após acidente automobilístico torporoso e pouco reativo aos estímulos. Ao exame físico: dor em hemitórax direito, FC 150 bpm, PA …",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Acidentes de Trânsito",
+        "code": "23893"
+      }
+    ]
+  },
+  {
+    "id": 25550,
+    "statement_preview": "Escolar de 8 anos, sexo masculino, sofreu acidente de bicicleta. Ao ser atendido na via pública, queixava de dor no ombro esquerdo e respondia as solicitações do médico do serviço de urgência móvel. N…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Acidentes de Trânsito",
+        "code": "23893"
+      }
+    ]
+  },
+  {
+    "id": 25551,
+    "statement_preview": "Adolescente de 13 anos, é levado a consulta por apresentar febre alta há 10 dias. Ao exame físico: Dor de garganta com faringite moderada, petéquias palatais, edema de palpebral, adenomegalia cervical…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Faringite",
+        "code": "24286"
+      },
+      {
+        "term": "Linfadenopatia",
+        "code": "56398"
+      }
+    ]
+  },
+  {
+    "id": 25552,
+    "statement_preview": "Recém-nascido sexo feminino, caracterizado por uma monossomia completa ou parcial do cromossomo \"X\", ao exame apresenta: linfedema no dorso dos pés e das mãos, ausência de pulsos nos membros inferiore…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Linfedema Relacionado a Câncer de Mama",
+        "code": "56399"
+      }
+    ]
+  },
+  {
+    "id": 25553,
+    "statement_preview": "Lactente de 15 messes, portador de doença multissistêmica hereditária, um traço genético recessivo, comum entre a população branca. frequentemente chega ao setor de emergência com tosse crônica e resp…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Regulador de Condutância Transmembrana em Fibrose Cística",
+        "code": "32784"
+      }
+    ]
+  },
+  {
+    "id": 25554,
+    "statement_preview": "Em uma manhã de atendimento na UBS você atendeu diversos pacientes com situações de glicemia elevada. Assinale a alternativa a qual descreve, dentre os casos abaixo, aquela que possui indicação para i…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Hiperglicemia",
+        "code": "7124"
+      }
+    ]
+  },
+  {
+    "id": 25555,
+    "statement_preview": "A., 30 anos, comparece para iniciar seu pré-natal na UBS onde atua como médico de uma das equipes de Estratégia Saúde da Família. Ela se encontra na 10a. semana de gestação conforme a data da última m…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Cuidado Pré-Natal",
+        "code": "11731"
+      },
+      {
+        "term": "Testes de Diagnóstico Rápido",
+        "code": "60089"
+      }
+    ]
+  },
+  {
+    "id": 25556,
+    "statement_preview": "No Registro de Saúde Orientado por Problemas, o item O do SOAP refere-se a(o):",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Exame Físico",
+        "code": "11241"
+      }
+    ]
+  },
+  {
+    "id": 25557,
+    "statement_preview": "Assinale a alternativa onde estão relacionados somente os Atributos Derivados da Atenção Primária descritos por Bárbara Starfield:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Atenção Primária à Saúde",
+        "code": "11756"
+      }
+    ]
+  },
+  {
+    "id": 25558,
+    "statement_preview": "As crises do ciclo de vida familiar podem ser previsíveis, esperadas, ou acidentais, inesperadas, por isso é importante conhecer as fases do ciclo de vida familiar. Assinale a alternativa onde tem som…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Saúde do Adolescente",
+        "code": "36411"
+      },
+      {
+        "term": "Saúde da Criança",
+        "code": "28462"
+      }
+    ]
+  },
+  {
+    "id": 25559,
+    "statement_preview": "Assinale a alternativa que traz a definição de Prevenção Quaternária:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Prevenção Quaternária",
+        "code": "59281"
+      }
+    ]
+  },
+  {
+    "id": 25560,
+    "statement_preview": "J.B.S, 23 anos iniciou o tratamento com esquema básico para tuberculose pulmonar confirmada por meio do teste rápido molecular (TRM-TB) há 7 dias. A enfermeira da equipe de saúde solicitou que os cont…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Tuberculose Pulmonar",
+        "code": "14798"
+      }
+    ]
+  },
+  {
+    "id": 25561,
+    "statement_preview": "O Sr. F., 94 anos, é acompanhado há mais de 10 anos pela equipe de saúde da UBS Girassol, a qual tinha conhecimento de seu histórico de saúde que incluía Insuficiência Cardíaca Crônica, Diabetes Melli…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Diabetes Mellitus Tipo 2",
+        "code": "3946"
+      },
+      {
+        "term": "Insuficiência Cardíaca Sistólica",
+        "code": "52612"
+      }
+    ]
+  },
+  {
+    "id": 25562,
+    "statement_preview": "As medidas de rendimento de testes diagnósticos são habitualmente analisadas por meio do quadro \"2x2\" que relaciona a presença ou não de uma doença com o resultado de um teste: Qual das fórmulas abaix…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Triagem e Testes Direto ao Consumidor",
+        "code": "56028"
+      },
+      {
+        "term": "Especificidade de Órgãos",
+        "code": "10106"
+      }
+    ]
+  },
+  {
+    "id": 25563,
+    "statement_preview": "Você é médico de uma equipe de Estratégia Saúde da Família de uma cidade interiorana e, em certo dia, o secretário de saúde do município o convocou para avaliar a implantação de um programa de rastrea…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Programas de Rastreamento",
+        "code": "28162"
+      }
+    ]
+  },
+  {
+    "id": 25564,
+    "statement_preview": "O Método Clínico Centrado na Pessoa (MCCP) surgiu das demandas das pessoas por um atendimento que contemplasse de maneira integral suas necessidades, preocupações e vivências relacionadas à saúde ou à…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Assistência Centrada no Paciente",
+        "code": "32094"
+      },
+      {
+        "term": "Relações Médico-Paciente",
+        "code": "11250"
+      }
+    ]
+  },
+  {
+    "id": 25565,
+    "statement_preview": "A organização dos serviços da Atenção Primária no Brasil ocorre por meio da Estratégia Saúde da Família (ESF), organizada com base no conceito de território e de equipe multiprofissional. Dentre os me…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Atenção Primária à Saúde",
+        "code": "11756"
+      },
+      {
+        "term": "Estratégias de Saúde Nacionais",
+        "code": "16833"
+      }
+    ]
+  },
+  {
+    "id": 25566,
+    "statement_preview": "A imagem abaixo representa uma ferramenta de abordagem familiar. Qual?",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": []
+  },
+  {
+    "id": 25567,
+    "statement_preview": "A cidade de Manaus tem sofrido, nos últimos meses, efeitos do fenômeno \"El Niño\". A escassez de chuvas e o tempo seco tem favorecido a proliferação de queimadas, estando a cidade coberta de fumaça dur…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Fumaça",
+        "code": "13287"
+      }
+    ]
+  },
+  {
+    "id": 25568,
+    "statement_preview": "De acordo com a Política Nacional de Atenção Básica (PNAB) de 2017, a Equipe de Saúde da Família (eSF) é composta minimamente por:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Atenção Primária à Saúde",
+        "code": "11756"
+      },
+      {
+        "term": "Enfermeiros de Saúde da Família",
+        "code": "55446"
+      },
+      {
+        "term": "Centros Médicos Acadêmicos",
+        "code": "49"
+      }
+    ]
+  },
+  {
+    "id": 25569,
+    "statement_preview": "De acordo com as indicações de Cuidados Paliativos, qual desses pacientes NÃO preenchem os critérios para receber os serviços?",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Cuidados Paliativos",
+        "code": "10353"
+      },
+      {
+        "term": "Epidermólise Bolhosa Adquirida",
+        "code": "28924"
+      }
+    ]
+  },
+  {
+    "id": 25570,
+    "statement_preview": "Josiane, 32 anos, encontra-se na 27ª. Semana de sua segunda gravidez. Possui um filho de 4 anos de seu primeiro casamento e reside em uma casa de alvenaria na área de abrangência da UBS da qual o Dr. …",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Escabiose",
+        "code": "12914"
+      },
+      {
+        "term": "Permetrina",
+        "code": "36050"
+      },
+      {
+        "term": "Prurido",
+        "code": "11976"
+      }
+    ]
+  },
+  {
+    "id": 25571,
+    "statement_preview": "Jaime, 57 anos, morador de cidade com epidemia de dengue, procura a UBS com quadro de febre de até 39 °C há 3 dias associado à dor retro orbital de forte intensidade e mialgia. Sem quaisquer outras qu…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Dengue Grave",
+        "code": "33342"
+      }
+    ]
+  },
+  {
+    "id": 25572,
+    "statement_preview": "Sobre a Atenção Primária à Saúde (APS) e seus princípios, assinale a alternativa CORRETA:",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Atenção Primária à Saúde",
+        "code": "11756"
+      },
+      {
+        "term": "Integralidade em Saúde",
+        "code": "55475"
+      },
+      {
+        "term": "Acessibilidade aos Serviços de Saúde",
+        "code": "6448"
+      }
+    ]
+  },
+  {
+    "id": 25573,
+    "statement_preview": "Supondo que a taxa de mortalidade anual de câncer de pulmão numa dada comunidade seja de 20 por 100.000 nos fumantes e de 2 por 100.000 nos não fumantes, qual o risco relativo e o risco absoluto dos f…",
+    "exam_year": 2024,
+    "exam_board": "CERMAM",
+    "decs_descriptors": [
+      {
+        "term": "Risco",
+        "code": "28567"
+      }
+    ]
+  },
+  {
+    "id": 25574,
+    "statement_preview": "Mulher, 22 anos de idade é asmática desde infância com uso regular de beclometasona spray 400 mcg/dia. Evolui, há mais de mês, com dispneia diária ao subir escadas, nega uso de salbutamol spray. Funçõ…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Beclometasona",
+        "code": "22350"
+      }
+    ]
+  },
+  {
+    "id": 25575,
+    "statement_preview": "Homem de 25 anos de idade evolui há dois meses com tosse, inicialmente seca e há 30 dias encontra-se produtiva com expectoração branco amarelada, nega febre, perda de peso e hemoptoicos. É tabagista d…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": []
+  },
+  {
+    "id": 25576,
+    "statement_preview": "Mulher de 70 anos de idade relata dispneia há mais de seis meses sem tosse ou expectoração. Nega tabagismo, sempre trabalhou em casa usando fogão à lenha. Tem netos asmáticos. Apresenta na ausculta pu…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Doença Pulmonar Obstrutiva Crônica",
+        "code": "36008"
+      }
+    ]
+  },
+  {
+    "id": 25577,
+    "statement_preview": "CSC, 28 anos de idade, evolui há 3 dias com tosse produtiva com expectoração amarelo esverdeada, com sensação febril. Nega tabagismo, etilismo e doenças prévias. Ao exame físico: bom estado geral, eup…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Pneumonia Necrosante",
+        "code": "56377"
+      }
+    ]
+  },
+  {
+    "id": 25578,
+    "statement_preview": "Homem de 65 anos de idade é ex-tabagista e portador de DPOC, faz uso diário da associação indacaterol + glicopirrônio inalatórios. Evolui sem necessidade de idas a UPA, mas mantem dispneia mMRC: 2, se…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Doença Pulmonar Obstrutiva Crônica",
+        "code": "36008"
+      },
+      {
+        "term": "Rouquidão",
+        "code": "28094"
+      }
+    ]
+  },
+  {
+    "id": 25579,
+    "statement_preview": "Mulher de 66 anos de idade evolui há quatro dias com tosse produtiva com expectoração purulenta, sensação febril e dor torácica ventilatório dependente. Nega tabagismo, etilismo, hipertensão e diabete…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Prednisona",
+        "code": "22622"
+      },
+      {
+        "term": "Artrite Juvenil",
+        "code": "1177"
+      },
+      {
+        "term": "Pneumonia Necrosante",
+        "code": "56377"
+      }
+    ]
+  },
+  {
+    "id": 25580,
+    "statement_preview": "Paciente diabético compensado, apresentando a quatro dias febre aferida de 39o , mialgias artralgias, dor retro orbitária. Ao exame regular estado geral, febril, PA: 120 X 80 mmHg, FC; 98 bpm, abdome …",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Artralgia",
+        "code": "32350"
+      }
+    ]
+  },
+  {
+    "id": 25581,
+    "statement_preview": "R.M.T, 50 anos, procedente de Bragança, técnica de enfermagem, apresentando há quatro semanas febre aferida diariamente, com temperatura de 38,5o , realizou vários atendimentos ambulatoriais com a rea…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Febre de Causa Desconhecida",
+        "code": "5445"
+      }
+    ]
+  },
+  {
+    "id": 25582,
+    "statement_preview": "R.Q.S, sexo feminino, 30 anos, apresentando há 24 horas febre, calafrios, disúria, náuseas, punho-percussão lombar positiva no lado Direito. Diante do quadro clínico, pode-se afirmar que:",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Náusea",
+        "code": "9517"
+      },
+      {
+        "term": "Infecções Urinárias",
+        "code": "14952"
+      },
+      {
+        "term": "Disuria",
+        "code": "52157"
+      }
+    ]
+  },
+  {
+    "id": 25583,
+    "statement_preview": "M.Q.R, 35 anos, feminino, casada, técnica de enfermagem, realizou sorologia para Hepatite e foi chamada no setor de saúde ocupacional para entrega do resultado: anti-HBs positivo, HBsAg negativo, HBeA…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Vírus da Hepatite B do Pato",
+        "code": "24710"
+      }
+    ]
+  },
+  {
+    "id": 25584,
+    "statement_preview": "O acesso universal ao tratamento e à prevenção da infecção pelo HIV e das demais infecções sexualmente transmissíveis possibilitou transformar o cenário da epidemia no país. A queda nas taxas de trans…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Infecções Sexualmente Transmissíveis",
+        "code": "24326"
+      },
+      {
+        "term": "Infecções por HIV",
+        "code": "24718"
+      }
+    ]
+  },
+  {
+    "id": 25585,
+    "statement_preview": "Paciente J.S.M, Sexo masculino, 62 anos, com história de hipertensão de longa data, ecocardiograma com fração de ejeção de 35%, iniciou acompanhamento há 6 meses, quando se apresentou com sinais de co…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Abordagens Dietéticas para Conter a Hipertensão",
+        "code": "57177"
+      }
+    ]
+  },
+  {
+    "id": 25586,
+    "statement_preview": "Paciente I.A.P, 66 anos, sexo feminino, comparece à consulta de rotina na UBS após longo período sem avaliação médica. Relata ter procurado atendimento após ter aferição de pressão arterial em consult…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Anti-Hipertensivos",
+        "code": "962"
+      }
+    ]
+  },
+  {
+    "id": 25587,
+    "statement_preview": "Paciente S.L.R, 76 anos, comparece em consulta ambulatorial após queixas de palpitação, relata ser portador de hipertensão arterial há 10 anos, no momento controlada, e ter sofrido um AVE isquêmico há…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "AVC Isquêmico",
+        "code": "59375"
+      }
+    ]
+  },
+  {
+    "id": 25588,
+    "statement_preview": "Paciente A.S.E, sexo masculino, 70 anos, hipertenso, diabético e tabagista, deu entrada no pronto atendimento com quadro de dor torácica em aperto e irradiação para membro superior esquerdo e mandíbul…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Dor no Peito",
+        "code": "19100"
+      }
+    ]
+  },
+  {
+    "id": 25589,
+    "statement_preview": "A Síndrome Metabólica tem como base a resistência à ação da insulina (hormônio responsável pelo metabolismo da glicose), daí também ser conhecida como síndrome de resistência à insulina. Alguns fatore…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Síndrome Metabólica",
+        "code": "36032"
+      }
+    ]
+  },
+  {
+    "id": 25590,
+    "statement_preview": "Paciente sexo feminino, 49 anos, assintomática, procurou atendimento médico por aumento de região cervical. Ao exame físico, apresenta tireoide aumentada, consistência fibroelástica, sem nódulos palpá…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Bócio Lingual",
+        "code": "38646"
+      }
+    ]
+  },
+  {
+    "id": 25591,
+    "statement_preview": "Homem, 32 anos, ao participar de uma campanha para verificação de pressão arterial na praça da República, foi detectado, pressão arterial de 180x90 mmHg e encaminhado para o posto de saúde para invest…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Hiperaldosteronismo",
+        "code": "7108"
+      },
+      {
+        "term": "Feocromocitoma",
+        "code": "10868"
+      },
+      {
+        "term": "Pré-Hipertensão",
+        "code": "53993"
+      }
+    ]
+  },
+  {
+    "id": 25592,
+    "statement_preview": "Homem, 52 anos, com história de diabetes mellitus e hipertensão arterial há cerca de 2 anos, em seguimento clínico no posto de saúde. Faz uso de glibenclamida 5mg 2x/dia, metformina 850mg 3x/dia, losa…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Diabetes Autoimune Latente em Adultos",
+        "code": "56402"
+      }
+    ]
+  },
+  {
+    "id": 25593,
+    "statement_preview": "Homem, 72 anos, com diagnóstico de hipertensão arterial e dislipidemia há cerca de 5 anos, em seguimento clínico no posto de saúde, sem queixas clínicas. Faz uso de valsartana 160mg/dia e rosuvastatin…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Dislipidemias",
+        "code": "50514"
+      }
+    ]
+  },
+  {
+    "id": 25594,
+    "statement_preview": "Homem, 45 anos, com diagnóstico de diabetes mellitus há 3 meses, em sua primeira consulta médica no posto de saúde após diagnóstico e início de terapêutica por conta própria (usando os mesmos remédios…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Combinação Fosfato de Sitagliptina e Cloridrato de Metformina",
+        "code": "55878"
+      },
+      {
+        "term": "Diabetes Autoimune Latente em Adultos",
+        "code": "56402"
+      }
+    ]
+  },
+  {
+    "id": 25595,
+    "statement_preview": "Jerônimo, 54 anos, é internado em enfermaria de clínica médica devido quadro de dor abdominal difusa de início há cerca de 12 horas acompanhado de evacuações de coloração enegrecida. O paciente faz ac…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Hepatite C Crônica",
+        "code": "33344"
+      }
+    ]
+  },
+  {
+    "id": 25596,
+    "statement_preview": "Jerônimo, 54 anos, é internado em enfermaria de clínica médica devido quadro de dor abdominal difusa de início há cerca de 12 horas acompanhado de evacuações de coloração enegrecida. O paciente faz ac…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Hepatite C Crônica",
+        "code": "33344"
+      },
+      {
+        "term": "Varizes Esofágicas e Gástricas",
+        "code": "23995"
+      }
+    ]
+  },
+  {
+    "id": 25597,
+    "statement_preview": "Paciente feminino, 24 anos, busca atendimento ambulatorial devido presença de sangue vermelho vivo nas fezes de aspecto diarreico há cerca de 4 meses, acompanhado de dor abdominal difusa e perda ponde…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Dor Abdominal",
+        "code": "24501"
+      }
+    ]
+  },
+  {
+    "id": 25598,
+    "statement_preview": "Paciente masculino, 58 anos, comparece em consulta com resultado de endoscopia digestiva alta realizada por conta própria (sem indicação médica), pois vinha apresentando dor epigástrica em queimação h…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Dispepsia",
+        "code": "4478"
+      },
+      {
+        "term": "Endoscopia Gastrointestinal",
+        "code": "28919"
+      },
+      {
+        "term": "Gastrite",
+        "code": "5897"
+      }
+    ]
+  },
+  {
+    "id": 25599,
+    "statement_preview": "Homem, 62 anos, etilista e diabético, com cefaleia e febre há 5 dias. Não tem outras queixas. Ao exame apresenta sonolência, nuca rígida e Brudzinsk positivo. Tomografia de crânio sem contraste normal…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "/líquido cefalorraquidiano",
+        "code": "22043"
+      }
+    ]
+  },
+  {
+    "id": 25600,
+    "statement_preview": "Denise, 24 anos, tem diagnóstico de enxaqueca sem aura e faz uso de topiramato 50mg à noite. Procura a emergência a 4ª vez essa semana devido cefaleia holocraniana há 3 semanas, diferente da sua dor h…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Enxaqueca sem Aura",
+        "code": "34269"
+      },
+      {
+        "term": "Topiramato",
+        "code": "57558"
+      }
+    ]
+  },
+  {
+    "id": 25601,
+    "statement_preview": "Paciente do sexo masculino, 70 anos, hipertenso e diabético, dá entrada na emergência com discreto déficit motor a direita iniciado há 4 horas. Nega evento prévio. Ao exame, apresenta-se consciente e …",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Diabetes Autoimune Latente em Adultos",
+        "code": "56402"
+      },
+      {
+        "term": "Abordagens Dietéticas para Conter a Hipertensão",
+        "code": "57177"
+      },
+      {
+        "term": "Reabilitação do Acidente Vascular Cerebral",
+        "code": "56684"
+      }
+    ]
+  },
+  {
+    "id": 25602,
+    "statement_preview": "Mulher jovem, sem comorbidades, com quadro agudo de vertigem grave que dificulta deambulação, náuseas e vômitos. Nega zumbido e hipoacusia. Ao exame apresenta nistagmo unidirecional, horizontal e espo…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Náusea",
+        "code": "9517"
+      },
+      {
+        "term": "Nistagmo Patológico",
+        "code": "28203"
+      },
+      {
+        "term": "Vertigem",
+        "code": "27888"
+      }
+    ]
+  },
+  {
+    "id": 25603,
+    "statement_preview": "Paciente idoso, com passado de acidente vascular encefálico (AVE) há 2 anos, vem apresentando crises epilépticas há 3 meses. Ainda não iniciou tratamento medicamentoso específico. Não apresenta queixa…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Acidente Vascular Cerebral",
+        "code": "34247"
+      }
+    ]
+  },
+  {
+    "id": 25604,
+    "statement_preview": "A anemia é um dos problemas mais comumente encontrados na prática médica. Longe de ser um diagnóstico, a anemia é um achado laboratorial. Portanto, sempre necessita investigação para determinação de s…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Anemia Ferropriva",
+        "code": "32369"
+      },
+      {
+        "term": "Anemia Hemolítica",
+        "code": "758"
+      },
+      {
+        "term": "Proteína do Grupo de Complementação N da Anemia de Fanconi",
+        "code": "57122"
+      }
+    ]
+  },
+  {
+    "id": 25605,
+    "statement_preview": "Paciente de 22 anos, sem comorbidades prévias, dá entrada em unidade de urgência devido taquicardia e astenia, que se iniciou há 01 semana. Ao exame físico, encontra-se hipocorada, ictérica, sem linfo…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Anemia Hemolítica Autoimune",
+        "code": "759"
+      }
+    ]
+  },
+  {
+    "id": 25606,
+    "statement_preview": "Paciente de 21 anos, sexo masculino, previamente hígido, comparece ao atendimento de urgência, queixando astenia intensa, febre baixa vespertina, dores ósseas, equimoses espontâneas e epistaxe, que in…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Equimose",
+        "code": "4502"
+      }
+    ]
+  },
+  {
+    "id": 25607,
+    "statement_preview": "Sobre o mieloma múltiplo, analise atentamente as assertivas abaixo: I. O mieloma múltiplo é uma neoplasia maligna de plasmócitos, caracterizada pelo surgimento de uma para-proteína monoclonal, que cau…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Hipercalcemia",
+        "code": "7114"
+      }
+    ]
+  },
+  {
+    "id": 25608,
+    "statement_preview": "Analise atentamente as seguintes afirmativas sobre trombofilias hereditárias e adquiridas: I. Para pacientes com tromboembolismo venoso provocado por cirurgia, não é recomendado investigar trombofilia…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Trombofilia",
+        "code": "33361"
+      }
+    ]
+  },
+  {
+    "id": 25609,
+    "statement_preview": "Paciente de 21 anos, previamente hígido, sexo masculino, apresentou edema de membros inferiores que iniciou há 3 dias e queda do estado geral, procurando pronto atendimento devido esta queixa. No exam…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": []
+  },
+  {
+    "id": 25610,
+    "statement_preview": "Paciente 31 anos é encaminhada para avaliação devido fraturas múltiplas de baixo impacto que iniciaram quando possuía 16 anos. Paciente sem antecedentes de alterações ginecológicas. Na avaliação inici…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Cálculos Renais",
+        "code": "24256"
+      },
+      {
+        "term": "Hipocalcemia",
+        "code": "7172"
+      }
+    ]
+  },
+  {
+    "id": 25611,
+    "statement_preview": "Paciente masculino, 65 anos, com antecedente pessoal de HAS (hipertensão arterial sistêmica) e Diabetes Melittus tipo 2 em seguimento no ambulatório de nefrologia devido Doença renal crônica (DRC) est…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Diabetes Mellitus Tipo 2",
+        "code": "3946"
+      }
+    ]
+  },
+  {
+    "id": 25612,
+    "statement_preview": "Paciente do sexo masculino, 35 anos, previamente hígido, deu entrada no hospital após quadro de acidente automobilístico, devido ao qual necessitou de laparotomia exploradora com esplenectomia e trans…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Injúria Renal Aguda",
+        "code": "53982"
+      }
+    ]
+  },
+  {
+    "id": 25613,
+    "statement_preview": "Paciente do sexo masculino, 34 anos, técnico em enfermagem, com quadro súbito de fraqueza muscular e turvação visual. A avaliação oftalmológica foi normal. Na avaliação clínica, foi detectado apenas a…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Debilidade Muscular",
+        "code": "32676"
+      }
+    ]
+  },
+  {
+    "id": 25614,
+    "statement_preview": "Paciente José Antônio,55 anos, chega à UPA referindo tonturas, dispneia e opressão torácica após ter sofrido síncope há cerca de 20 minutos. Na avaliação inicial, está sonolento, com resposta lentific…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Síncope",
+        "code": "13955"
+      }
+    ]
+  },
+  {
+    "id": 25615,
+    "statement_preview": "Paciente José,75 anos chegou à UPA com quadro de dor torácica, foi encaminhado para sala vermelha e iniciado o atendimento adequado, pórem durante o atendimento, apresentou perda do nível de consciênc…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Dor no Peito",
+        "code": "19100"
+      }
+    ]
+  },
+  {
+    "id": 25616,
+    "statement_preview": "Antônia, 68 anos, portadora de hipertensão arterial e diabetes, procura unidade de saúde com queixa de dor em hipocôndrio direito náuseas e vômitos, foi medicada, liberada com sintomáticos e antibióti…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Sepse",
+        "code": "32031"
+      },
+      {
+        "term": "Choque Séptico",
+        "code": "13150"
+      },
+      {
+        "term": "Abordagens Dietéticas para Conter a Hipertensão",
+        "code": "57177"
+      }
+    ]
+  },
+  {
+    "id": 25617,
+    "statement_preview": "Jovem 22 anos,60 kg, chega na UPA, com quadro súbito de dificuldade de respirar com falta de ar, coceira intensa na garganta e tonturas. Relata ter comido um sanduiche de atum e suco de manga. Chega r…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Hipóxia Tumoral",
+        "code": "56754"
+      }
+    ]
+  },
+  {
+    "id": 25618,
+    "statement_preview": "Motoboy vítima de acidente automobilístico, carro x moto, foi atendido pela equipe de resgate do SAMU. A vítima estava de capacete, bastante agitado e desorientado, com ferimento sangrante em região f…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Acidentes de Trânsito",
+        "code": "23893"
+      },
+      {
+        "term": "Choque",
+        "code": "13147"
+      }
+    ]
+  },
+  {
+    "id": 25619,
+    "statement_preview": "Na abordagem dos pacientes com dores articulares, é importante avaliar o padrão de acometimento articular, a distribuição e o número de articulações acometidas. Nesse contexto, é correto afirmar:",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Artrite Reativa",
+        "code": "30249"
+      }
+    ]
+  },
+  {
+    "id": 25620,
+    "statement_preview": "De acordo como os novos critérios de classificação para lúpus eritematoso sistêmico (LES) de 2019 EULAR/ACR, para classificar uma pessoa com LES, ela obrigatoriamente terá que apresentar fator antinuc…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": []
+  },
+  {
+    "id": 25621,
+    "statement_preview": "Mulher de 32 anos foi encaminhada para avaliação na reumatologia relatando que há 04 semanas vem apresentando quadro de poliartrite de pequenas e grandes articulações com padrão de acometimento aditiv…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Artrite Juvenil",
+        "code": "1177"
+      }
+    ]
+  },
+  {
+    "id": 25622,
+    "statement_preview": "Homem, 36 anos, motorista, refere que há 02 anos vem apresentando lombalgia central baixa localizada que piora com as atividades de vida diária e melhora com repouso. Eventualmente, faz uso de anti-in…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": []
+  },
+  {
+    "id": 25623,
+    "statement_preview": "Cerca de 20% dos pacientes com doença pulmonar intersticial (DPI) são portadores de doença reumáticas imunomediadas. As manifestações pulmonares podem ser frequentes e precederem, acompanharem ou suce…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Doenças Pulmonares Intersticiais",
+        "code": "31333"
+      },
+      {
+        "term": "Doenças Reumáticas",
+        "code": "28302"
+      }
+    ]
+  },
+  {
+    "id": 25624,
+    "statement_preview": "Jovem, sexo feminino, 18 anos, procura atendimento devido quadro de icterícia que notou há 2 dias. Vinha investigando há 2 semanas quadro de dor abdominal em hipocôndrio direito que irradiava para o d…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Icterícia Obstrutiva",
+        "code": "38066"
+      }
+    ]
+  },
+  {
+    "id": 25625,
+    "statement_preview": "Rosa, 45 anos, foi diagnosticada com DM2. Nos exames iniciais apresentava HbA1c de 7,6%. A taxa de filtração glomerular estava em 68mL/min/1.73m2, microalbuminúria de 35mg/g. IMC de 31kg/m2. PA: 135x8…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Diabetes Mellitus Tipo 2",
+        "code": "3946"
+      }
+    ]
+  },
+  {
+    "id": 25626,
+    "statement_preview": "Irinete, 58 anos, vem à consulta na unidade de saúde devido a dor nas juntas . Relata que sente dor desde a hora que acorda, principalmente enquanto faz as tarefas domésticas e cuida do neto de 4 anos…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Fibromialgia",
+        "code": "24385"
+      },
+      {
+        "term": "Osteoartrite",
+        "code": "10179"
+      }
+    ]
+  },
+  {
+    "id": 25627,
+    "statement_preview": "Jurandir, 54 anos, vem à consulta após ter sofrido um infarto há 2 meses. Ficou hospitalizado uma semana e recebeu alta. Trouxe o ecocardiograma que realizou antes da alta hospitalar. Relata estar usa…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Infarto do Miocárdio com Supradesnível do Segmento ST",
+        "code": "56394"
+      }
+    ]
+  },
+  {
+    "id": 25628,
+    "statement_preview": "Cecilia, 38 anos, ao iniciar a consulta com seu médico de família cai no choro, relata que vem tendo problemas com o marido e que tiveram uma discussão momentos antes, ao sair de casa. Encontra-se com…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Estresse Psicológico",
+        "code": "13703"
+      }
+    ]
+  },
+  {
+    "id": 25629,
+    "statement_preview": "Gumercindo, 64 anos, comparece à unidade de saúde com lesão característica de mal perfurante plantar, com drenagem de secreção purulenta há 5 dias. Nega dor ou febre, mas refere piora do aspecto da fe…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Diabetes Mellitus Tipo 2",
+        "code": "3946"
+      }
+    ]
+  },
+  {
+    "id": 25630,
+    "statement_preview": "Paciente de 35 anos vem à consulta com febre e tosse. Relata quadro de rinorreia e odinofagia há 5 dias. Vinha com febre baixa, mas, desde o dia anterior, houve piora da febre e da tosse. Na ausculta …",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Pneumonia Necrosante",
+        "code": "56377"
+      }
+    ]
+  },
+  {
+    "id": 25631,
+    "statement_preview": "João, masculino, 62 anos, foi trazido pelo irmão, pois estava confuso e sonolento desde a véspera. Paciente é hipertenso e diabético em uso irregular das medicações. Irmão relata que o paciente esteve…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Distúrbio Mineral e Ósseo na Doença Renal Crônica",
+        "code": "12501"
+      },
+      {
+        "term": "Diabetes Autoimune Latente em Adultos",
+        "code": "56402"
+      },
+      {
+        "term": "Abordagens Dietéticas para Conter a Hipertensão",
+        "code": "57177"
+      }
+    ]
+  },
+  {
+    "id": 25632,
+    "statement_preview": "Idosa, 75 anos, procura atendimento em decorrência de dispneia e tosse. Foi internada para tratar pneumonia, contudo, durante a internação, passou a evoluir com vertigem postural. Ao exame físico apre…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Tontura Postural-Perceptual Persistente",
+        "code": "61023"
+      },
+      {
+        "term": "Pneumonia Necrosante",
+        "code": "56377"
+      }
+    ]
+  },
+  {
+    "id": 25633,
+    "statement_preview": "Você faz parte do time de resposta rápida de um hospital e foi acionado para atender uma paciente que estava em tratamento por uma erisipela há 5 dias e começou a queixar de dispneia. Sinais vitais no…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Erisipela Suína",
+        "code": "13935"
+      },
+      {
+        "term": "Sepse Neonatal",
+        "code": "56353"
+      }
+    ]
+  },
+  {
+    "id": 25634,
+    "statement_preview": "Paciente submetido à passagem de acesso venoso central (Cateter Duplo-lúmen- CDL), para reposição volêmica pós choque hemorrágico. Apesar da indicação adequada para o procedimento, houve evolução em p…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Choque Hemorrágico",
+        "code": "13149"
+      },
+      {
+        "term": "Cateterismo Venoso Central",
+        "code": "22859"
+      },
+      {
+        "term": "Pneumotórax",
+        "code": "11460"
+      }
+    ]
+  },
+  {
+    "id": 25635,
+    "statement_preview": "É inquestionável a importância da identificação precoce da desnutrição, planejamento e prescrição do suporte nutricional em pacientes cirúrgicos, independente da fase em que se encontrem (pré ou pós-o…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Terapia Nutricional",
+        "code": "38344"
+      },
+      {
+        "term": "Desnutrição Aguda Grave",
+        "code": "55845"
+      }
+    ]
+  },
+  {
+    "id": 25636,
+    "statement_preview": "Natural o surgimento de novas e modernas técnicas para o tratamento das hérnias da parede abdominal, contudo o conhecimento anatômico se mantém obrigatório. Especificamente em relação à topografia ing…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Hérnia Abdominal",
+        "code": "38620"
+      }
+    ]
+  },
+  {
+    "id": 25637,
+    "statement_preview": "Em relação ao uso de antibiótico profiláticos, seguindo as recomendações de boas práticas em cirurgias, podemos considerar:",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Antibioticoprofilaxia",
+        "code": "32857"
+      },
+      {
+        "term": "Infecção Hospitalar",
+        "code": "28477"
+      },
+      {
+        "term": "Vias de Administração de Medicamentos",
+        "code": "27864"
+      },
+      {
+        "term": "/cirurgia",
+        "code": "22009"
+      }
+    ]
+  },
+  {
+    "id": 25638,
+    "statement_preview": "Complicações comuns das feridas operatórias elevam a morbidade e mortalidade em pacientes cirúrgicos, podendo causar sequelas crônicas, impactos econômicos e sociais. Uma das alternativas abaixo conte…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Complicações Pós-Operatórias",
+        "code": "11622"
+      }
+    ]
+  },
+  {
+    "id": 25639,
+    "statement_preview": "Paciente do sexo feminino 18 anos, com história de dor abdominal em região de QID (quadrante inferior direito) iniciada há 24h, contínua e que piora aos movimentos, sem queixas urinárias ou ginecológi…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Dor Abdominal",
+        "code": "24501"
+      },
+      {
+        "term": "Proteína C-Reativa",
+        "code": "22124"
+      }
+    ]
+  },
+  {
+    "id": 25640,
+    "statement_preview": "A pancreatite aguda (PA) é uma condição inflamatória do pâncreas, levando à autodigestão glandular, com resposta inflamatória sistêmica (SIRS) e disfunção orgânica em graus variáveis. As principais ca…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Pancreatite Necrosante Aguda",
+        "code": "32940"
+      }
+    ]
+  },
+  {
+    "id": 25641,
+    "statement_preview": "Paciente de 46 anos com diagnóstico de pancreatite grave (com necrose infectada), foi submetida a tratamento cirúrgico (Laparotomia com Necrosectomia) e transferida imediatamente para UTI para seguime…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Laparotomia",
+        "code": "7991"
+      },
+      {
+        "term": "Pancreatite Necrosante Aguda",
+        "code": "32940"
+      }
+    ]
+  },
+  {
+    "id": 25642,
+    "statement_preview": "Inegável a evolução dos dispositivos de imagens nos últimos anos, que aumentaram a segurança durante o implante de um Cateter Venoso Central (CVC). Em relação às técnicas necessárias para esse procedi…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Cateterismo Venoso Central",
+        "code": "22859"
+      }
+    ]
+  },
+  {
+    "id": 25643,
+    "statement_preview": "A Hemorragia Digestiva Alta pode ser definida como sangramentos digestivos de pontos oriundos até o ligamento de Treitz como referência. Mais comum acima dos 60 anos, com mortalidade em torno de 10% n…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Hemorragia Gastrointestinal",
+        "code": "6623"
+      }
+    ]
+  },
+  {
+    "id": 25644,
+    "statement_preview": "Idoso, 70 anos, estava realizando poda no quintal de sua casa, quando despencou da árvore e acabou vindo a óbito no local. A família acionou o médico da UBS/ESF para orientações, visto que o idoso era…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Diabetes Autoimune Latente em Adultos",
+        "code": "56402"
+      },
+      {
+        "term": "Abordagens Dietéticas para Conter a Hipertensão",
+        "code": "57177"
+      },
+      {
+        "term": "Cuidado de Enfermagem ao Idoso Hospitalizado",
+        "code": "57456"
+      }
+    ]
+  },
+  {
+    "id": 25645,
+    "statement_preview": "Observe a figura abaixo e assinale a alternativa correta quanto a esse instrumento de abordagem familiar:",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Sistemas de Apoio Psicossocial",
+        "code": "56796"
+      },
+      {
+        "term": "Relações Familiares",
+        "code": "5299"
+      }
+    ]
+  },
+  {
+    "id": 25646,
+    "statement_preview": "Mulher de 32 anos, chega à unidade de saúde após acidente com material perfurocortante durante o trabalho na cozinha de uma lanchonete próxima da UBS. Após limpeza e sutura da lesão, quais orientações…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Acidentes de Trabalho",
+        "code": "23892"
+      }
+    ]
+  },
+  {
+    "id": 25647,
+    "statement_preview": "As comunidades ribeirinhas são compostas de vários agrupamentos familiares, vivendo em casas de madeira, adaptadas ao sistema de cheias dos rios, dispersas ao longo de um percurso fluvial. Vivem, em s…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Atenção Primária à Saúde",
+        "code": "11756"
+      }
+    ]
+  },
+  {
+    "id": 25648,
+    "statement_preview": "A atenção domiciliar (AD) é a forma de atenção à saúde oferecida na moradia do paciente e caracterizada por um conjunto de ações de promoção à saúde, prevenção e tratamento de doenças e reabilitação, …",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Sistema Único de Saúde",
+        "code": "16771"
+      }
+    ]
+  },
+  {
+    "id": 25649,
+    "statement_preview": "Na pandemia da COVID-19, ainda com casos detectados neste ano de 2023, os testes diagnósticos rápidos de Ag, com material de swab de oro e naso faringe foram comparados com o padrão-ouro RT-PCR com ma…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Testes de Diagnóstico Rápido",
+        "code": "60089"
+      },
+      {
+        "term": "Infecções por Coronavirus",
+        "code": "31543"
+      }
+    ]
+  },
+  {
+    "id": 25650,
+    "statement_preview": "Um novo teste diagnóstico de TB pulmonar (denominado provisoriamente de Ellispot). Foi comparado ao teste padrão ouro de cultura (cultura de Lowestein Johson), que tem sensibilidade de 91,9% e especif…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Tuberculose Pulmonar",
+        "code": "14798"
+      }
+    ]
+  },
+  {
+    "id": 25651,
+    "statement_preview": "Um ensaio clínico com a nova vacina contra dengue (QdengaR), autorizada pela Anvisa para uso no Brasil, produzida pelo Laboratório TAKEDA mostrou os resultados na análise por protocolo, com duas doses…",
+    "exam_year": 2024,
+    "exam_board": "CESUPA",
+    "decs_descriptors": [
+      {
+        "term": "Vacinas contra Dengue",
+        "code": "52405"
+      }
+    ]
+  }
+]

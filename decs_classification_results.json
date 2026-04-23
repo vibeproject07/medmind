@@ -1,136 +1,113 @@
 [
   {
-    "id_question": 2110,
+    "id_question": 25607,
     "ai_decs_descriptors": [
       {
-        "term": "Oligúria",
-        "code": "10032",
+        "term": "Hipercalcemia",
+        "code": "7114",
         "tree_ids": [
-          "C12.050.351.968.934.600",
-          "C12.200.777.934.600",
-          "C12.950.934.600",
-          "C23.888.942.400"
+          "C18.452.174.451",
+          "C18.452.950.340"
         ],
-        "hierarchy_path": "Doenças › C12.050.351.968.934.600"
+        "hierarchy_path": "Doenças › C18.452.174.451"
       }
     ]
   },
   {
-    "id_question": 2111,
+    "id_question": 25608,
     "ai_decs_descriptors": [
       {
-        "term": "Convulsões",
-        "code": "13024",
+        "term": "Trombofilia",
+        "code": "33361",
         "tree_ids": [
-          "C10.597.742",
-          "C23.888.592.742"
+          "C15.378.925"
         ],
-        "hierarchy_path": "Doenças › C10.597.742"
+        "hierarchy_path": "Doenças › C15.378.925"
       }
     ]
   },
   {
-    "id_question": 2112,
+    "id_question": 25609,
+    "ai_decs_descriptors": []
+  },
+  {
+    "id_question": 25610,
     "ai_decs_descriptors": [
       {
-        "term": "Taquipneia Transitória do Recém-Nascido",
-        "code": "54498",
+        "term": "Cálculos Renais",
+        "code": "24256",
         "tree_ids": [
-          "C08.381.840.500.737",
-          "C08.618.840.500.737",
-          "C08.618.961.500",
-          "C16.614.521.563.737",
-          "C23.888.852.944.500"
+          "C12.050.351.968.419.600.500",
+          "C12.050.351.968.967.249.500",
+          "C12.050.351.968.967.500.503",
+          "C12.200.777.419.600.500",
+          "C12.200.777.967.249.500",
+          "C12.200.777.967.500.503",
+          "C12.950.419.600.500",
+          "C12.950.967.249.500",
+          "C12.950.967.500.503",
+          "C23.300.175.850.550"
         ],
-        "hierarchy_path": "Doenças › C08.381.840.500.737"
+        "hierarchy_path": "Doenças › C12.050.351.968.419.600.500"
+      },
+      {
+        "term": "Hipocalcemia",
+        "code": "7172",
+        "tree_ids": [
+          "C18.452.174.509",
+          "C18.452.950.509"
+        ],
+        "hierarchy_path": "Doenças › C18.452.174.509"
       }
     ]
   },
   {
-    "id_question": 2113,
+    "id_question": 25611,
     "ai_decs_descriptors": [
       {
-        "term": "Doença de Fabry",
-        "code": "30299",
+        "term": "Diabetes Mellitus Tipo 2",
+        "code": "3946",
         "tree_ids": [
-          "C10.228.140.163.100.435.825.200",
-          "C10.228.140.300.275.374",
-          "C14.907.253.329.374",
-          "C16.320.322.124",
-          "C16.320.565.189.435.825.200",
-          "C16.320.565.398.641.803.300",
-          "C16.320.565.595.554.825.200",
-          "C18.452.132.100.435.825.200",
-          "C18.452.584.563.641.803.300",
-          "C18.452.648.189.435.825.200",
-          "C18.452.648.398.641.803.300",
-          "C18.452.648.595.554.825.200"
+          "C18.452.394.750.149",
+          "C19.246.300"
         ],
-        "hierarchy_path": "Doenças › C10.228.140.163.100.435.825.200"
+        "hierarchy_path": "Doenças › C18.452.394.750.149"
       }
     ]
   },
   {
-    "id_question": 2114,
+    "id_question": 25612,
     "ai_decs_descriptors": [
       {
-        "term": "Obstrução Intestinal",
-        "code": "7578",
+        "term": "Injúria Renal Aguda",
+        "code": "53982",
         "tree_ids": [
-          "C06.405.469.531"
+          "C12.050.351.968.419.780.050",
+          "C12.200.777.419.780.050",
+          "C12.950.419.780.050"
         ],
-        "hierarchy_path": "Doenças › C06.405.469.531"
+        "hierarchy_path": "Doenças › C12.050.351.968.419.780.050"
       }
     ]
   },
   {
-    "id_question": 2115,
+    "id_question": 25613,
     "ai_decs_descriptors": [
       {
-        "term": "Terapia Nutricional",
-        "code": "38344",
+        "term": "Debilidade Muscular",
+        "code": "32676",
         "tree_ids": [
-          "E02.642",
-          "MT3.465.763",
-          "SP6.680"
+          "C05.651.515",
+          "C10.597.613.593",
+          "C23.550.695",
+          "C23.888.592.608.593"
         ],
-        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.642"
+        "hierarchy_path": "Doenças › C05.651.515"
       }
     ]
   },
   {
-    "id_question": 2116,
-    "ai_decs_descriptors": [
-      {
-        "term": "Dislexia",
-        "code": "4473",
-        "tree_ids": [
-          "C10.597.606.150.500.300",
-          "C10.597.606.150.550.700.500",
-          "C23.888.592.604.150.500.300",
-          "C23.888.592.604.150.550.700.500",
-          "F03.625.374.188.700.500",
-          "F03.625.562.700.500"
-        ],
-        "hierarchy_path": "Doenças › C10.597.606.150.500.300"
-      }
-    ]
-  },
-  {
-    "id_question": 2117,
-    "ai_decs_descriptors": [
-      {
-        "term": "Exame Físico",
-        "code": "11241",
-        "tree_ids": [
-          "E01.370.600"
-        ],
-        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.600"
-      }
-    ]
-  },
-  {
-    "id_question": 2118,
+    "id_question": 25614,
     "ai_decs_descriptors": [
       {
         "term": "Síncope",
@@ -144,386 +121,41 @@
     ]
   },
   {
-    "id_question": 2119,
+    "id_question": 25615,
     "ai_decs_descriptors": [
       {
-        "term": "Síndrome Metabólica",
-        "code": "36032",
+        "term": "Dor no Peito",
+        "code": "19100",
         "tree_ids": [
-          "C18.452.394.968.500.570",
-          "C18.452.625"
+          "C23.888.592.612.233",
+          "F02.830.816.444.427",
+          "G11.561.790.444.451"
         ],
-        "hierarchy_path": "Doenças › C18.452.394.968.500.570"
+        "hierarchy_path": "Doenças › C23.888.592.612.233"
       }
     ]
   },
   {
-    "id_question": 2120,
+    "id_question": 25616,
     "ai_decs_descriptors": [
       {
-        "term": "Dermatite Atópica",
-        "code": "3893",
+        "term": "Sepse",
+        "code": "32031",
         "tree_ids": [
-          "C16.320.850.210",
-          "C17.800.174.193",
-          "C17.800.815.193",
-          "C17.800.827.210",
-          "C20.543.480.343"
+          "C01.757",
+          "C23.550.470.790.500"
         ],
-        "hierarchy_path": "Doenças › C16.320.850.210"
-      }
-    ]
-  },
-  {
-    "id_question": 2121,
-    "ai_decs_descriptors": [
-      {
-        "term": "Exantema Vesicular de Suínos",
-        "code": "15125",
-        "tree_ids": [
-          "C01.925.782.160.927",
-          "C22.905.927"
-        ],
-        "hierarchy_path": "Doenças › C01.925.782.160.927"
+        "hierarchy_path": "Doenças › C01.757"
       },
       {
-        "term": "Saúde do Lactente",
-        "code": "56207",
+        "term": "Choque Séptico",
+        "code": "13150",
         "tree_ids": [
-          "N01.400.388",
-          "SP2.770.750.708"
+          "C01.757.800",
+          "C23.550.470.790.500.800",
+          "C23.550.835.900.712"
         ],
-        "hierarchy_path": "N › N01.400.388"
-      }
-    ]
-  },
-  {
-    "id_question": 2122,
-    "ai_decs_descriptors": []
-  },
-  {
-    "id_question": 2123,
-    "ai_decs_descriptors": [
-      {
-        "term": "Desidratação",
-        "code": "3694",
-        "tree_ids": [
-          "C18.452.950.179",
-          "C23.550.274"
-        ],
-        "hierarchy_path": "Doenças › C18.452.950.179"
-      }
-    ]
-  },
-  {
-    "id_question": 2124,
-    "ai_decs_descriptors": [
-      {
-        "term": "Saúde do Lactente",
-        "code": "56207",
-        "tree_ids": [
-          "N01.400.388",
-          "SP2.770.750.708"
-        ],
-        "hierarchy_path": "N › N01.400.388"
-      }
-    ]
-  },
-  {
-    "id_question": 2125,
-    "ai_decs_descriptors": [
-      {
-        "term": "Cuidado Pré-Natal",
-        "code": "11731",
-        "tree_ids": [
-          "E02.760.786",
-          "N02.421.143.620.704",
-          "N02.421.585.786"
-        ],
-        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.760.786"
-      },
-      {
-        "term": "Toxoplasmose",
-        "code": "27868",
-        "tree_ids": [
-          "C01.610.752.250.800"
-        ],
-        "hierarchy_path": "Doenças › C01.610.752.250.800"
-      },
-      {
-        "term": "Toxoplasmose Congênita",
-        "code": "27870",
-        "tree_ids": [
-          "C01.207.205.300.900",
-          "C01.610.752.250.800.445",
-          "C10.228.228.205.300.900",
-          "C16.614.909"
-        ],
-        "hierarchy_path": "Doenças › C01.207.205.300.900"
-      }
-    ]
-  },
-  {
-    "id_question": 2126,
-    "ai_decs_descriptors": [
-      {
-        "term": "Dor Abdominal",
-        "code": "24501",
-        "tree_ids": [
-          "C23.888.592.612.054",
-          "C23.888.821.030",
-          "F02.830.816.444.001",
-          "G11.561.790.444.001"
-        ],
-        "hierarchy_path": "Doenças › C23.888.592.612.054"
-      },
-      {
-        "term": "Hemorragia Uterina",
-        "code": "14993",
-        "tree_ids": [
-          "C12.050.351.500.852.691",
-          "C12.100.250.852.691",
-          "C23.550.414.993"
-        ],
-        "hierarchy_path": "Doenças › C12.050.351.500.852.691"
-      },
-      {
-        "term": "Gravidez Ectópica",
-        "code": "11694",
-        "tree_ids": [
-          "C12.050.703.733"
-        ],
-        "hierarchy_path": "Doenças › C12.050.703.733"
-      }
-    ]
-  },
-  {
-    "id_question": 2127,
-    "ai_decs_descriptors": [
-      {
-        "term": "Esterilização Reprodutiva",
-        "code": "13633",
-        "tree_ids": [
-          "E02.875.194.910",
-          "E04.950.599"
-        ],
-        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.875.194.910"
-      }
-    ]
-  },
-  {
-    "id_question": 2128,
-    "ai_decs_descriptors": [
-      {
-        "term": "Neoplasias do Colo do Útero",
-        "code": "2623",
-        "tree_ids": [
-          "C04.588.945.418.948.850",
-          "C12.050.351.500.852.593.131",
-          "C12.050.351.500.852.762.850",
-          "C12.050.351.937.418.875.850",
-          "C12.100.250.852.593.131",
-          "C12.100.250.852.762.850",
-          "C12.900.418.875.850"
-        ],
-        "hierarchy_path": "Doenças › C04.588.945.418.948.850"
-      },
-      {
-        "term": "/radioterapia",
-        "code": "22059",
-        "tree_ids": [
-          "Q65.050"
-        ],
-        "hierarchy_path": "Q › Q65.050"
-      }
-    ]
-  },
-  {
-    "id_question": 2129,
-    "ai_decs_descriptors": []
-  },
-  {
-    "id_question": 2130,
-    "ai_decs_descriptors": [
-      {
-        "term": "Doenças da Hipófise",
-        "code": "11333",
-        "tree_ids": [
-          "C10.228.140.617.738",
-          "C19.700"
-        ],
-        "hierarchy_path": "Doenças › C10.228.140.617.738"
-      }
-    ]
-  },
-  {
-    "id_question": 2131,
-    "ai_decs_descriptors": [
-      {
-        "term": "Cuidado Pré-Natal",
-        "code": "11731",
-        "tree_ids": [
-          "E02.760.786",
-          "N02.421.143.620.704",
-          "N02.421.585.786"
-        ],
-        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.760.786"
-      }
-    ]
-  },
-  {
-    "id_question": 2132,
-    "ai_decs_descriptors": [
-      {
-        "term": "Unidade Hospitalar de Ginecologia e Obstetrícia",
-        "code": "17116",
-        "tree_ids": [
-          "N02.278.216.500.968.495",
-          "N04.452.442.452.422.495",
-          "VS3.002.001.001.008.002"
-        ],
-        "hierarchy_path": "N › N02.278.216.500.968.495"
-      }
-    ]
-  },
-  {
-    "id_question": 2133,
-    "ai_decs_descriptors": []
-  },
-  {
-    "id_question": 2134,
-    "ai_decs_descriptors": [
-      {
-        "term": "Débito Cardíaco Elevado",
-        "code": "30215",
-        "tree_ids": [
-          "C14.280.142",
-          "C23.888.176"
-        ],
-        "hierarchy_path": "Doenças › C14.280.142"
-      },
-      {
-        "term": "/fisiologia",
-        "code": "22031",
-        "tree_ids": [
-          "Q50"
-        ],
-        "hierarchy_path": "Q"
-      }
-    ]
-  },
-  {
-    "id_question": 2135,
-    "ai_decs_descriptors": [
-      {
-        "term": "Prova de Trabalho de Parto",
-        "code": "23043",
-        "tree_ids": [
-          "G08.686.784.769.326.660"
-        ],
-        "hierarchy_path": "Fenômenos Biológicos › G08.686.784.769.326.660"
-      }
-    ]
-  },
-  {
-    "id_question": 2136,
-    "ai_decs_descriptors": [
-      {
-        "term": "Sulfato de Magnésio",
-        "code": "8453",
-        "tree_ids": [
-          "D01.524.550",
-          "D01.875.800.800.850.500"
-        ],
-        "hierarchy_path": "Compostos Químicos e Drogas › D01.524.550"
-      },
-      {
-        "term": "Pré-Eclâmpsia",
-        "code": "11662",
-        "tree_ids": [
-          "C12.050.703.395.249"
-        ],
-        "hierarchy_path": "Doenças › C12.050.703.395.249"
-      },
-      {
-        "term": "Convulsões",
-        "code": "13024",
-        "tree_ids": [
-          "C10.597.742",
-          "C23.888.592.742"
-        ],
-        "hierarchy_path": "Doenças › C10.597.742"
-      }
-    ]
-  },
-  {
-    "id_question": 2137,
-    "ai_decs_descriptors": []
-  },
-  {
-    "id_question": 2138,
-    "ai_decs_descriptors": [
-      {
-        "term": "Contracepção Reversível de Longo Prazo",
-        "code": "57180",
-        "tree_ids": [
-          "E02.875.194.589"
-        ],
-        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.875.194.589"
-      }
-    ]
-  },
-  {
-    "id_question": 2139,
-    "ai_decs_descriptors": [
-      {
-        "term": "Tétano",
-        "code": "14121",
-        "tree_ids": [
-          "C01.150.252.410.222.864"
-        ],
-        "hierarchy_path": "Doenças › C01.150.252.410.222.864"
-      },
-      {
-        "term": "Vacina contra Difteria, Tétano e Coqueluche",
-        "code": "24608",
-        "tree_ids": [
-          "D20.215.894.135.535.300",
-          "D20.215.894.691.263.300",
-          "D20.215.894.691.824.300",
-          "D20.215.894.815.300"
-        ],
-        "hierarchy_path": "Compostos Químicos e Drogas › D20.215.894.135.535.300"
-      },
-      {
-        "term": "Movimento contra Vacinação",
-        "code": "56802",
-        "tree_ids": [
-          "I03.088"
-        ],
-        "hierarchy_path": "I › I03.088"
-      }
-    ]
-  },
-  {
-    "id_question": 2140,
-    "ai_decs_descriptors": [
-      {
-        "term": "Obesidade Metabolicamente Benigna",
-        "code": "55846",
-        "tree_ids": [
-          "C18.654.726.750.500.650",
-          "C23.888.144.699.500.250"
-        ],
-        "hierarchy_path": "Doenças › C18.654.726.750.500.650"
-      },
-      {
-        "term": "Depressão por Endogamia",
-        "code": "56762",
-        "tree_ids": [
-          "G05.410"
-        ],
-        "hierarchy_path": "Fenômenos Biológicos › G05.410"
+        "hierarchy_path": "Doenças › C01.757.800"
       },
       {
         "term": "Abordagens Dietéticas para Conter a Hipertensão",
@@ -537,133 +169,107 @@
     ]
   },
   {
-    "id_question": 2141,
+    "id_question": 25617,
+    "ai_decs_descriptors": [
+      {
+        "term": "Hipóxia Tumoral",
+        "code": "56754",
+        "tree_ids": [
+          "G03.197.300.500",
+          "G04.270.300.500"
+        ],
+        "hierarchy_path": "Fenômenos Biológicos › G03.197.300.500"
+      }
+    ]
+  },
+  {
+    "id_question": 25618,
+    "ai_decs_descriptors": [
+      {
+        "term": "Acidentes de Trânsito",
+        "code": "23893",
+        "tree_ids": [
+          "N06.850.135.392",
+          "SP8.095.415"
+        ],
+        "hierarchy_path": "N › N06.850.135.392"
+      },
+      {
+        "term": "Choque",
+        "code": "13147",
+        "tree_ids": [
+          "C23.550.835"
+        ],
+        "hierarchy_path": "Doenças › C23.550.835"
+      }
+    ]
+  },
+  {
+    "id_question": 25619,
+    "ai_decs_descriptors": [
+      {
+        "term": "Artrite Reativa",
+        "code": "30249",
+        "tree_ids": [
+          "C01.100.500",
+          "C05.116.900.853.625.800.637",
+          "C05.550.114.099.500",
+          "C05.550.114.865.800.637",
+          "C23.550.291.500.829.125"
+        ],
+        "hierarchy_path": "Doenças › C01.100.500"
+      }
+    ]
+  },
+  {
+    "id_question": 25620,
     "ai_decs_descriptors": []
   },
   {
-    "id_question": 2142,
+    "id_question": 25621,
     "ai_decs_descriptors": [
       {
-        "term": "Doença Celíaca",
-        "code": "2481",
+        "term": "Artrite Juvenil",
+        "code": "1177",
         "tree_ids": [
-          "C06.405.469.637.250",
-          "C18.452.603.250"
+          "C05.550.114.122",
+          "C05.799.056",
+          "C17.300.775.049",
+          "C20.111.198"
         ],
-        "hierarchy_path": "Doenças › C06.405.469.637.250"
+        "hierarchy_path": "Doenças › C05.550.114.122"
       }
     ]
   },
   {
-    "id_question": 2143,
-    "ai_decs_descriptors": [
-      {
-        "term": "Acidente Vascular Cerebral",
-        "code": "34247",
-        "tree_ids": [
-          "C10.228.140.300.775",
-          "C14.907.253.855"
-        ],
-        "hierarchy_path": "Doenças › C10.228.140.300.775"
-      }
-    ]
-  },
-  {
-    "id_question": 2144,
-    "ai_decs_descriptors": [
-      {
-        "term": "Hemoptise",
-        "code": "6621",
-        "tree_ids": [
-          "C08.381.348",
-          "C23.550.414.896",
-          "C23.888.852.430"
-        ],
-        "hierarchy_path": "Doenças › C08.381.348"
-      }
-    ]
-  },
-  {
-    "id_question": 2145,
-    "ai_decs_descriptors": [
-      {
-        "term": "Nódulo da Glândula Tireoide",
-        "code": "29779",
-        "tree_ids": [
-          "C04.588.322.894.800",
-          "C04.588.443.915.800",
-          "C19.344.894.800",
-          "C19.874.788.800"
-        ],
-        "hierarchy_path": "Doenças › C04.588.322.894.800"
-      },
-      {
-        "term": "Biópsia por Agulha Fina",
-        "code": "38338",
-        "tree_ids": [
-          "E01.370.225.500.384.100.119.500",
-          "E01.370.225.998.054.119.500",
-          "E01.370.388.100.100.500",
-          "E04.074.119.500",
-          "E04.665.100.500",
-          "E05.200.500.384.100.119.500",
-          "E05.200.998.054.119.500",
-          "E05.242.384.100.119.500"
-        ],
-        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.225.500.384.100.119.500"
-      }
-    ]
-  },
-  {
-    "id_question": 2146,
-    "ai_decs_descriptors": [
-      {
-        "term": "Bronquiectasia",
-        "code": "2017",
-        "tree_ids": [
-          "C08.127.384"
-        ],
-        "hierarchy_path": "Doenças › C08.127.384"
-      },
-      {
-        "term": "/fisiopatologia",
-        "code": "22032",
-        "tree_ids": [
-          "Q50.050"
-        ],
-        "hierarchy_path": "Q › Q50.050"
-      }
-    ]
-  },
-  {
-    "id_question": 2147,
+    "id_question": 25622,
     "ai_decs_descriptors": []
   },
   {
-    "id_question": 2148,
+    "id_question": 25623,
     "ai_decs_descriptors": [
       {
-        "term": "Anemia Megaloblástica",
-        "code": "764",
+        "term": "Doenças Pulmonares Intersticiais",
+        "code": "31333",
         "tree_ids": [
-          "C15.378.050.252.196"
+          "C08.381.483"
         ],
-        "hierarchy_path": "Doenças › C15.378.050.252.196"
+        "hierarchy_path": "Doenças › C08.381.483"
+      },
+      {
+        "term": "Doenças Reumáticas",
+        "code": "28302",
+        "tree_ids": [
+          "C05.799",
+          "C17.300.775"
+        ],
+        "hierarchy_path": "Doenças › C05.799"
       }
     ]
   },
   {
-    "id_question": 2149,
+    "id_question": 25624,
     "ai_decs_descriptors": [
-      {
-        "term": "Anemia Hemolítica Autoimune",
-        "code": "759",
-        "tree_ids": [
-          "C15.378.050.141.125",
-          "C20.111.175"
-        ],
-        "hierarchy_path": "Doenças › C15.378.050.141.125"
-      },
       {
         "term": "Icterícia Obstrutiva",
         "code": "38066",
@@ -672,106 +278,124 @@
           "C23.888.885.375.500"
         ],
         "hierarchy_path": "Doenças › C23.550.429.500.755"
-      },
-      {
-        "term": "Esplenomegalia",
-        "code": "13546",
-        "tree_ids": [
-          "C23.300.775.750"
-        ],
-        "hierarchy_path": "Doenças › C23.300.775.750"
       }
     ]
   },
   {
-    "id_question": 2150,
+    "id_question": 25625,
     "ai_decs_descriptors": [
       {
-        "term": "Sobrecarga de Ferro",
-        "code": "32960",
+        "term": "Diabetes Mellitus Tipo 2",
+        "code": "3946",
         "tree_ids": [
-          "C18.452.565.500"
+          "C18.452.394.750.149",
+          "C19.246.300"
         ],
-        "hierarchy_path": "Doenças › C18.452.565.500"
-      },
-      {
-        "term": "Ferritinas",
-        "code": "5402",
-        "tree_ids": [
-          "D12.776.157.427.249",
-          "D12.776.556.579.249"
-        ],
-        "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.427.249"
-      },
-      {
-        "term": "Proteína da Hemocromatose",
-        "code": "56631",
-        "tree_ids": [
-          "D09.400.430.890.489.200",
-          "D12.776.395.550.489.200",
-          "D12.776.543.550.439.200",
-          "D23.050.301.500.100.363",
-          "D23.050.705.552.100.375"
-        ],
-        "hierarchy_path": "Compostos Químicos e Drogas › D09.400.430.890.489.200"
+        "hierarchy_path": "Doenças › C18.452.394.750.149"
       }
     ]
   },
   {
-    "id_question": 2151,
+    "id_question": 25626,
     "ai_decs_descriptors": [
       {
-        "term": "Furosemida",
-        "code": "5801",
+        "term": "Fibromialgia",
+        "code": "24385",
         "tree_ids": [
-          "D02.065.884.725.300",
-          "D02.092.146.807.300",
-          "D02.886.590.700.725.300"
+          "C05.651.324",
+          "C05.799.321",
+          "C10.668.491.425"
         ],
-        "hierarchy_path": "Compostos Químicos e Drogas › D02.065.884.725.300"
+        "hierarchy_path": "Doenças › C05.651.324"
       },
       {
-        "term": "Cirrose Hepática",
-        "code": "8276",
+        "term": "Osteoartrite",
+        "code": "10179",
         "tree_ids": [
-          "C06.552.630",
-          "C23.550.355.412"
+          "C05.550.114.606",
+          "C05.799.613"
         ],
-        "hierarchy_path": "Doenças › C06.552.630"
-      },
-      {
-        "term": "Diuréticos",
-        "code": "4294",
-        "tree_ids": [
-          "D27.505.696.560.500"
-        ],
-        "hierarchy_path": "Compostos Químicos e Drogas › D27.505.696.560.500"
+        "hierarchy_path": "Doenças › C05.550.114.606"
       }
     ]
   },
   {
-    "id_question": 2152,
+    "id_question": 25627,
     "ai_decs_descriptors": [
       {
-        "term": "Ácido Úrico",
-        "code": "14926",
+        "term": "Infarto do Miocárdio com Supradesnível do Segmento ST",
+        "code": "56394",
         "tree_ids": [
-          "D03.132.960.877",
-          "D03.633.100.759.758.824.877"
+          "C14.280.647.500.875",
+          "C14.907.585.500.875",
+          "C23.550.513.355.750.875",
+          "C23.550.717.489.750.875"
         ],
-        "hierarchy_path": "Compostos Químicos e Drogas › D03.132.960.877"
-      },
+        "hierarchy_path": "Doenças › C14.280.647.500.875"
+      }
+    ]
+  },
+  {
+    "id_question": 25628,
+    "ai_decs_descriptors": [
       {
-        "term": "Artrite Gotosa",
-        "code": "23659",
+        "term": "Estresse Psicológico",
+        "code": "13703",
         "tree_ids": [
-          "C05.550.114.423.410",
-          "C05.550.354.500.500",
-          "C05.799.414.410",
-          "C16.320.565.798.368.410",
-          "C18.452.648.798.368.410"
+          "F01.145.126.990",
+          "F02.830.900"
         ],
-        "hierarchy_path": "Doenças › C05.550.114.423.410"
+        "hierarchy_path": "Psiquiatria e Psicologia › F01.145.126.990"
+      }
+    ]
+  },
+  {
+    "id_question": 25629,
+    "ai_decs_descriptors": [
+      {
+        "term": "Diabetes Mellitus Tipo 2",
+        "code": "3946",
+        "tree_ids": [
+          "C18.452.394.750.149",
+          "C19.246.300"
+        ],
+        "hierarchy_path": "Doenças › C18.452.394.750.149"
+      }
+    ]
+  },
+  {
+    "id_question": 25630,
+    "ai_decs_descriptors": [
+      {
+        "term": "Pneumonia Necrosante",
+        "code": "56377",
+        "tree_ids": [
+          "C01.748.610.608",
+          "C08.381.677.608",
+          "C08.730.610.608"
+        ],
+        "hierarchy_path": "Doenças › C01.748.610.608"
+      }
+    ]
+  },
+  {
+    "id_question": 25631,
+    "ai_decs_descriptors": [
+      {
+        "term": "Distúrbio Mineral e Ósseo na Doença Renal Crônica",
+        "code": "12501",
+        "tree_ids": [
+          "C05.116.198.816.750",
+          "C12.050.351.968.419.795",
+          "C12.200.777.419.080",
+          "C12.950.419.795",
+          "C18.452.104.816.750",
+          "C18.452.174.845.750",
+          "C18.654.521.500.133.770.734.750",
+          "C19.642.355.480.500",
+          "C23.550.291.500.290"
+        ],
+        "hierarchy_path": "Doenças › C05.116.198.816.750"
       },
       {
         "term": "Diabetes Autoimune Latente em Adultos",
@@ -795,88 +419,114 @@
     ]
   },
   {
-    "id_question": 2153,
+    "id_question": 25632,
     "ai_decs_descriptors": [
       {
-        "term": "Abordagens Dietéticas para Conter a Hipertensão",
-        "code": "57177",
+        "term": "Tontura Postural-Perceptual Persistente",
+        "code": "61023",
         "tree_ids": [
-          "E02.642.249.645",
-          "G07.203.650.240.320"
+          "C09.218.568.900.553",
+          "C23.888.592.763.237.003"
         ],
-        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.642.249.645"
-      }
-    ]
-  },
-  {
-    "id_question": 2154,
-    "ai_decs_descriptors": [
-      {
-        "term": "Hematúria",
-        "code": "6566",
-        "tree_ids": [
-          "C12.050.351.968.934.442",
-          "C12.200.777.934.442",
-          "C12.950.934.442",
-          "C23.550.414.849"
-        ],
-        "hierarchy_path": "Doenças › C12.050.351.968.934.442"
+        "hierarchy_path": "Doenças › C09.218.568.900.553"
       },
       {
-        "term": "Proteinúria",
-        "code": "11946",
+        "term": "Pneumonia Necrosante",
+        "code": "56377",
         "tree_ids": [
-          "C12.050.351.968.934.734",
-          "C12.200.777.934.734",
-          "C12.950.934.734",
-          "C23.888.942.750"
+          "C01.748.610.608",
+          "C08.381.677.608",
+          "C08.730.610.608"
         ],
-        "hierarchy_path": "Doenças › C12.050.351.968.934.734"
+        "hierarchy_path": "Doenças › C01.748.610.608"
       }
     ]
   },
   {
-    "id_question": 2155,
-    "ai_decs_descriptors": []
-  },
-  {
-    "id_question": 2156,
+    "id_question": 25633,
     "ai_decs_descriptors": [
       {
-        "term": "Doenças Inflamatórias Intestinais",
-        "code": "23695",
+        "term": "Erisipela Suína",
+        "code": "13935",
         "tree_ids": [
-          "C06.405.205.731",
-          "C06.405.469.432"
+          "C01.150.252.410.334.776",
+          "C22.331.693",
+          "C22.905.832"
         ],
-        "hierarchy_path": "Doenças › C06.405.205.731"
-      }
-    ]
-  },
-  {
-    "id_question": 2157,
-    "ai_decs_descriptors": [
-      {
-        "term": "Hérnia Inguinal",
-        "code": "6711",
-        "tree_ids": [
-          "C23.300.707.374.875"
-        ],
-        "hierarchy_path": "Doenças › C23.300.707.374.875"
-      }
-    ]
-  },
-  {
-    "id_question": 2158,
-    "ai_decs_descriptors": [
-      {
-        "term": "Doenças da Vesícula Biliar",
-        "code": "5844",
-        "tree_ids": [
-          "C06.130.564"
-        ],
-        "hierarchy_path": "Doenças › C06.130.564"
+        "hierarchy_path": "Doenças › C01.150.252.410.334.776"
       },
+      {
+        "term": "Sepse Neonatal",
+        "code": "56353",
+        "tree_ids": [
+          "C01.757.580",
+          "C16.614.627",
+          "C23.550.470.790.500.470"
+        ],
+        "hierarchy_path": "Doenças › C01.757.580"
+      }
+    ]
+  },
+  {
+    "id_question": 25634,
+    "ai_decs_descriptors": [
+      {
+        "term": "Choque Hemorrágico",
+        "code": "13149",
+        "tree_ids": [
+          "C23.550.414.980",
+          "C23.550.835.650"
+        ],
+        "hierarchy_path": "Doenças › C23.550.414.980"
+      },
+      {
+        "term": "Cateterismo Venoso Central",
+        "code": "22859",
+        "tree_ids": [
+          "E02.148.167",
+          "E04.100.814.529.875",
+          "E04.502.382.875",
+          "E05.157.313"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.148.167"
+      },
+      {
+        "term": "Pneumotórax",
+        "code": "11460",
+        "tree_ids": [
+          "C08.528.778"
+        ],
+        "hierarchy_path": "Doenças › C08.528.778"
+      }
+    ]
+  },
+  {
+    "id_question": 25635,
+    "ai_decs_descriptors": [
+      {
+        "term": "Terapia Nutricional",
+        "code": "38344",
+        "tree_ids": [
+          "E02.642",
+          "MT3.465.763",
+          "SP6.680"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.642"
+      },
+      {
+        "term": "Desnutrição Aguda Grave",
+        "code": "55845",
+        "tree_ids": [
+          "C18.654.521.719",
+          "SP6.990.625.344.482"
+        ],
+        "hierarchy_path": "Doenças › C18.654.521.719"
+      }
+    ]
+  },
+  {
+    "id_question": 25636,
+    "ai_decs_descriptors": [
       {
         "term": "Hérnia Abdominal",
         "code": "38620",
@@ -884,176 +534,37 @@
           "C23.300.707.374"
         ],
         "hierarchy_path": "Doenças › C23.300.707.374"
-      },
-      {
-        "term": "Icterícia Obstrutiva",
-        "code": "38066",
-        "tree_ids": [
-          "C23.550.429.500.755",
-          "C23.888.885.375.500"
-        ],
-        "hierarchy_path": "Doenças › C23.550.429.500.755"
       }
     ]
   },
   {
-    "id_question": 2159,
+    "id_question": 25637,
     "ai_decs_descriptors": [
       {
-        "term": "Obstrução Intestinal",
-        "code": "7578",
+        "term": "Antibioticoprofilaxia",
+        "code": "32857",
         "tree_ids": [
-          "C06.405.469.531"
+          "E02.319.162.150",
+          "E02.319.703.150"
         ],
-        "hierarchy_path": "Doenças › C06.405.469.531"
-      }
-    ]
-  },
-  {
-    "id_question": 2160,
-    "ai_decs_descriptors": [
-      {
-        "term": "Raiva",
-        "code": "12257",
-        "tree_ids": [
-          "C01.925.782.580.830.750",
-          "SP4.909.332.966.756"
-        ],
-        "hierarchy_path": "Doenças › C01.925.782.580.830.750"
-      }
-    ]
-  },
-  {
-    "id_question": 2161,
-    "ai_decs_descriptors": [
-      {
-        "term": "Neoplasias Gástricas",
-        "code": "13662",
-        "tree_ids": [
-          "C04.588.274.476.767",
-          "C06.301.371.767",
-          "C06.405.249.767",
-          "C06.405.748.789"
-        ],
-        "hierarchy_path": "Doenças › C04.588.274.476.767"
-      }
-    ]
-  },
-  {
-    "id_question": 2162,
-    "ai_decs_descriptors": [
-      {
-        "term": "Obesidade Mórbida",
-        "code": "19272",
-        "tree_ids": [
-          "C18.654.726.750.500.700",
-          "C23.888.144.699.500.500"
-        ],
-        "hierarchy_path": "Doenças › C18.654.726.750.500.700"
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.319.162.150"
       },
       {
-        "term": "Cirurgia Bariátrica",
-        "code": "51221",
+        "term": "Infecção Hospitalar",
+        "code": "28477",
         "tree_ids": [
-          "E02.650.500.062",
-          "E04.062"
+          "C01.248",
+          "C23.550.291.875.500"
         ],
-        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.650.500.062"
+        "hierarchy_path": "Doenças › C01.248"
       },
       {
-        "term": "Síndrome Metabólica",
-        "code": "36032",
+        "term": "Vias de Administração de Medicamentos",
+        "code": "27864",
         "tree_ids": [
-          "C18.452.394.968.500.570",
-          "C18.452.625"
+          "E02.319.267"
         ],
-        "hierarchy_path": "Doenças › C18.452.394.968.500.570"
-      }
-    ]
-  },
-  {
-    "id_question": 2163,
-    "ai_decs_descriptors": [
-      {
-        "term": "Dor Abdominal",
-        "code": "24501",
-        "tree_ids": [
-          "C23.888.592.612.054",
-          "C23.888.821.030",
-          "F02.830.816.444.001",
-          "G11.561.790.444.001"
-        ],
-        "hierarchy_path": "Doenças › C23.888.592.612.054"
-      },
-      {
-        "term": "Icterícia Obstrutiva",
-        "code": "38066",
-        "tree_ids": [
-          "C23.550.429.500.755",
-          "C23.888.885.375.500"
-        ],
-        "hierarchy_path": "Doenças › C23.550.429.500.755"
-      },
-      {
-        "term": "Diabetes Autoimune Latente em Adultos",
-        "code": "56402",
-        "tree_ids": [
-          "C18.452.394.750.714",
-          "C19.246.656",
-          "C20.111.576"
-        ],
-        "hierarchy_path": "Doenças › C18.452.394.750.714"
-      }
-    ]
-  },
-  {
-    "id_question": 2164,
-    "ai_decs_descriptors": [
-      {
-        "term": "/fisiopatologia",
-        "code": "22032",
-        "tree_ids": [
-          "Q50.050"
-        ],
-        "hierarchy_path": "Q › Q50.050"
-      },
-      {
-        "term": "Receptores de Peptídeos Semelhantes ao Glucagon",
-        "code": "55998",
-        "tree_ids": [
-          "D12.776.543.750.695.021",
-          "D12.776.543.750.750.360.100"
-        ],
-        "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.750.695.021"
-      },
-      {
-        "term": "/metabolismo",
-        "code": "22044",
-        "tree_ids": [
-          "Q50.040"
-        ],
-        "hierarchy_path": "Q › Q50.040"
-      }
-    ]
-  },
-  {
-    "id_question": 2165,
-    "ai_decs_descriptors": [
-      {
-        "term": "Doença do Refluxo não Erosivo",
-        "code": "60501",
-        "tree_ids": [
-          "C06.405.117.119.500.484.750"
-        ],
-        "hierarchy_path": "Doenças › C06.405.117.119.500.484.750"
-      },
-      {
-        "term": "Hérnia Hiatal",
-        "code": "6710",
-        "tree_ids": [
-          "C23.300.707.960.500.467"
-        ],
-        "hierarchy_path": "Doenças › C23.300.707.960.500.467"
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.319.267"
       },
       {
         "term": "/cirurgia",
@@ -1066,37 +577,20 @@
     ]
   },
   {
-    "id_question": 2166,
+    "id_question": 25638,
     "ai_decs_descriptors": [
       {
-        "term": "Traumatismos Torácicos",
-        "code": "14285",
+        "term": "Complicações Pós-Operatórias",
+        "code": "11622",
         "tree_ids": [
-          "C26.891"
+          "C23.550.767"
         ],
-        "hierarchy_path": "Doenças › C26.891"
+        "hierarchy_path": "Doenças › C23.550.767"
       }
     ]
   },
   {
-    "id_question": 2167,
-    "ai_decs_descriptors": [
-      {
-        "term": "Neoplasias Esofágicas",
-        "code": "22446",
-        "tree_ids": [
-          "C04.588.274.476.205",
-          "C04.588.443.353",
-          "C06.301.371.205",
-          "C06.405.117.430",
-          "C06.405.249.205"
-        ],
-        "hierarchy_path": "Doenças › C04.588.274.476.205"
-      }
-    ]
-  },
-  {
-    "id_question": 2168,
+    "id_question": 25639,
     "ai_decs_descriptors": [
       {
         "term": "Dor Abdominal",
@@ -1110,300 +604,53 @@
         "hierarchy_path": "Doenças › C23.888.592.612.054"
       },
       {
-        "term": "Colecistite Aguda",
-        "code": "38041",
+        "term": "Proteína C-Reativa",
+        "code": "22124",
         "tree_ids": [
-          "C06.130.564.263.500"
+          "D12.776.034.145",
+          "D12.776.124.050.001.001",
+          "D12.776.124.486.157"
         ],
-        "hierarchy_path": "Doenças › C06.130.564.263.500"
+        "hierarchy_path": "Compostos Químicos e Drogas › D12.776.034.145"
       }
     ]
   },
   {
-    "id_question": 2169,
+    "id_question": 25640,
     "ai_decs_descriptors": [
       {
-        "term": "Adenoma de Células Hepáticas",
-        "code": "31680",
+        "term": "Pancreatite Necrosante Aguda",
+        "code": "32940",
         "tree_ids": [
-          "C04.557.470.035.120",
-          "C04.588.274.623.040",
-          "C06.301.623.040",
-          "C06.552.697.040"
+          "C06.689.750.650"
         ],
-        "hierarchy_path": "Doenças › C04.557.470.035.120"
+        "hierarchy_path": "Doenças › C06.689.750.650"
       }
     ]
   },
   {
-    "id_question": 2170,
+    "id_question": 25641,
     "ai_decs_descriptors": [
       {
-        "term": "Dislipidemias",
-        "code": "50514",
+        "term": "Laparotomia",
+        "code": "7991",
         "tree_ids": [
-          "C18.452.584.500"
+          "E04.406"
         ],
-        "hierarchy_path": "Doenças › C18.452.584.500"
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E04.406"
       },
       {
-        "term": "Fatores de Risco de Doenças Cardíacas",
-        "code": "59351",
+        "term": "Pancreatite Necrosante Aguda",
+        "code": "32940",
         "tree_ids": [
-          "E05.318.740.600.800.725.500",
-          "N05.715.350.200.700.500",
-          "N05.715.360.750.625.700.700.500",
-          "N06.850.490.625.750.500",
-          "N06.850.520.830.600.800.725.500"
+          "C06.689.750.650"
         ],
-        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E05.318.740.600.800.725.500"
-      },
-      {
-        "term": "Diabetes Mellitus Tipo 2",
-        "code": "3946",
-        "tree_ids": [
-          "C18.452.394.750.149",
-          "C19.246.300"
-        ],
-        "hierarchy_path": "Doenças › C18.452.394.750.149"
-      },
-      {
-        "term": "LDL-Colesterol",
-        "code": "8252",
-        "tree_ids": [
-          "D04.210.500.247.808.197.244",
-          "D10.532.515.500",
-          "D10.570.938.208.275",
-          "D12.776.521.550.500"
-        ],
-        "hierarchy_path": "Compostos Químicos e Drogas › D04.210.500.247.808.197.244"
+        "hierarchy_path": "Doenças › C06.689.750.650"
       }
     ]
   },
   {
-    "id_question": 2171,
-    "ai_decs_descriptors": []
-  },
-  {
-    "id_question": 2172,
-    "ai_decs_descriptors": [
-      {
-        "term": "Anti-Hipertensivos",
-        "code": "962",
-        "tree_ids": [
-          "D27.505.954.411.162"
-        ],
-        "hierarchy_path": "Compostos Químicos e Drogas › D27.505.954.411.162"
-      },
-      {
-        "term": "Renina",
-        "code": "29553",
-        "tree_ids": [
-          "D08.811.277.656.074.500.780",
-          "D08.811.277.656.300.048.780",
-          "D08.811.277.656.837.750"
-        ],
-        "hierarchy_path": "Compostos Químicos e Drogas › D08.811.277.656.074.500.780"
-      }
-    ]
-  },
-  {
-    "id_question": 2173,
-    "ai_decs_descriptors": [
-      {
-        "term": "Creatinina",
-        "code": "3421",
-        "tree_ids": [
-          "D03.383.129.308.207"
-        ],
-        "hierarchy_path": "Compostos Químicos e Drogas › D03.383.129.308.207"
-      },
-      {
-        "term": "Ureia",
-        "code": "14907",
-        "tree_ids": [
-          "D02.065.950"
-        ],
-        "hierarchy_path": "Compostos Químicos e Drogas › D02.065.950"
-      }
-    ]
-  },
-  {
-    "id_question": 2174,
-    "ai_decs_descriptors": [
-      {
-        "term": "Celulite",
-        "code": "56409",
-        "tree_ids": [
-          "C23.888.885.281"
-        ],
-        "hierarchy_path": "Doenças › C23.888.885.281"
-      }
-    ]
-  },
-  {
-    "id_question": 2175,
-    "ai_decs_descriptors": [
-      {
-        "term": "Deficiência de Vitamina B 12",
-        "code": "16591",
-        "tree_ids": [
-          "C18.654.521.500.133.699.923",
-          "SP6.990.625.344.378.400.332.535"
-        ],
-        "hierarchy_path": "Doenças › C18.654.521.500.133.699.923"
-      },
-      {
-        "term": "Gastrite Atrófica",
-        "code": "5898",
-        "tree_ids": [
-          "C06.405.205.697.394",
-          "C06.405.748.398.394"
-        ],
-        "hierarchy_path": "Doenças › C06.405.205.697.394"
-      }
-    ]
-  },
-  {
-    "id_question": 2176,
-    "ai_decs_descriptors": [
-      {
-        "term": "Neuralgia Pós-Herpética",
-        "code": "50489",
-        "tree_ids": [
-          "C10.668.829.600.550",
-          "C23.888.592.612.664.550"
-        ],
-        "hierarchy_path": "Doenças › C10.668.829.600.550"
-      }
-    ]
-  },
-  {
-    "id_question": 2177,
-    "ai_decs_descriptors": [
-      {
-        "term": "Zidovudina",
-        "code": "23867",
-        "tree_ids": [
-          "D03.383.742.680.705.950",
-          "D13.570.230.500.950",
-          "D13.570.230.855.950",
-          "D13.570.685.705.950"
-        ],
-        "hierarchy_path": "Compostos Químicos e Drogas › D03.383.742.680.705.950"
-      },
-      {
-        "term": "Antirretrovirais",
-        "code": "38332",
-        "tree_ids": [
-          "D27.505.954.122.388.077"
-        ],
-        "hierarchy_path": "Compostos Químicos e Drogas › D27.505.954.122.388.077"
-      }
-    ]
-  },
-  {
-    "id_question": 2178,
-    "ai_decs_descriptors": [
-      {
-        "term": "Anemia Ferropriva",
-        "code": "32369",
-        "tree_ids": [
-          "C15.378.050.196.300",
-          "C18.452.565.400.500",
-          "SP6.990.625.344.127.255"
-        ],
-        "hierarchy_path": "Doenças › C15.378.050.196.300"
-      }
-    ]
-  },
-  {
-    "id_question": 2179,
-    "ai_decs_descriptors": [
-      {
-        "term": "Exame Físico",
-        "code": "11241",
-        "tree_ids": [
-          "E01.370.600"
-        ],
-        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.600"
-      }
-    ]
-  },
-  {
-    "id_question": 2180,
-    "ai_decs_descriptors": [
-      {
-        "term": "Dor Abdominal",
-        "code": "24501",
-        "tree_ids": [
-          "C23.888.592.612.054",
-          "C23.888.821.030",
-          "F02.830.816.444.001",
-          "G11.561.790.444.001"
-        ],
-        "hierarchy_path": "Doenças › C23.888.592.612.054"
-      },
-      {
-        "term": "Abdome Agudo",
-        "code": "6",
-        "tree_ids": [
-          "C23.888.592.612.054.200",
-          "C23.888.821.030.249"
-        ],
-        "hierarchy_path": "Doenças › C23.888.592.612.054.200"
-      }
-    ]
-  },
-  {
-    "id_question": 2181,
-    "ai_decs_descriptors": []
-  },
-  {
-    "id_question": 2182,
-    "ai_decs_descriptors": [
-      {
-        "term": "Traumatismos Torácicos",
-        "code": "14285",
-        "tree_ids": [
-          "C26.891"
-        ],
-        "hierarchy_path": "Doenças › C26.891"
-      }
-    ]
-  },
-  {
-    "id_question": 2183,
-    "ai_decs_descriptors": [
-      {
-        "term": "Colecistite Aguda",
-        "code": "38041",
-        "tree_ids": [
-          "C06.130.564.263.500"
-        ],
-        "hierarchy_path": "Doenças › C06.130.564.263.500"
-      }
-    ]
-  },
-  {
-    "id_question": 2184,
-    "ai_decs_descriptors": []
-  },
-  {
-    "id_question": 2185,
-    "ai_decs_descriptors": [
-      {
-        "term": "Abdome",
-        "code": "5",
-        "tree_ids": [
-          "A01.923.047"
-        ],
-        "hierarchy_path": "Anatomia › A01.923.047"
-      }
-    ]
-  },
-  {
-    "id_question": 2186,
+    "id_question": 25642,
     "ai_decs_descriptors": [
       {
         "term": "Cateterismo Venoso Central",
@@ -1419,158 +666,166 @@
     ]
   },
   {
-    "id_question": 2187,
+    "id_question": 25643,
     "ai_decs_descriptors": [
       {
-        "term": "Drenagem Linfática Manual",
-        "code": "57165",
+        "term": "Hemorragia Gastrointestinal",
+        "code": "6623",
         "tree_ids": [
-          "E02.190.599.750.750.500",
-          "E02.309.416",
-          "E02.779.867.880.750.500",
-          "E02.831.535.867.880.750.500",
-          "MT3.575.510.219"
+          "C06.405.227",
+          "C23.550.414.788"
         ],
-        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.190.599.750.750.500"
+        "hierarchy_path": "Doenças › C06.405.227"
       }
     ]
   },
   {
-    "id_question": 2188,
+    "id_question": 25644,
     "ai_decs_descriptors": [
       {
-        "term": "Hiperplasia Prostática",
-        "code": "11913",
+        "term": "Diabetes Autoimune Latente em Adultos",
+        "code": "56402",
         "tree_ids": [
-          "C12.100.500.565.500",
-          "C12.200.294.565.500"
+          "C18.452.394.750.714",
+          "C19.246.656",
+          "C20.111.576"
         ],
-        "hierarchy_path": "Doenças › C12.100.500.565.500"
+        "hierarchy_path": "Doenças › C18.452.394.750.714"
       },
       {
-        "term": "Retenção Urinária",
-        "code": "29144",
+        "term": "Abordagens Dietéticas para Conter a Hipertensão",
+        "code": "57177",
         "tree_ids": [
-          "C12.050.351.968.934.880",
-          "C12.200.777.934.880",
-          "C12.950.934.880"
+          "E02.642.249.645",
+          "G07.203.650.240.320"
         ],
-        "hierarchy_path": "Doenças › C12.050.351.968.934.880"
-      }
-    ]
-  },
-  {
-    "id_question": 2189,
-    "ai_decs_descriptors": [
-      {
-        "term": "Antissepsia",
-        "code": "27916",
-        "tree_ids": [
-          "N06.850.780.200.450.150"
-        ],
-        "hierarchy_path": "N › N06.850.780.200.450.150"
-      }
-    ]
-  },
-  {
-    "id_question": 2190,
-    "ai_decs_descriptors": [
-      {
-        "term": "Saúde do Lactente",
-        "code": "56207",
-        "tree_ids": [
-          "N01.400.388",
-          "SP2.770.750.708"
-        ],
-        "hierarchy_path": "N › N01.400.388"
-      }
-    ]
-  },
-  {
-    "id_question": 2191,
-    "ai_decs_descriptors": [
-      {
-        "term": "Poliomielite",
-        "code": "11483",
-        "tree_ids": [
-          "C01.207.618.750",
-          "C01.925.782.687.359.764",
-          "C10.228.228.618.750",
-          "C10.228.854.525.850",
-          "C10.586.750.850",
-          "C10.668.864"
-        ],
-        "hierarchy_path": "Doenças › C01.207.618.750"
-      }
-    ]
-  },
-  {
-    "id_question": 2192,
-    "ai_decs_descriptors": [
-      {
-        "term": "Claudicação Intermitente",
-        "code": "7547",
-        "tree_ids": [
-          "C14.907.617.671.750",
-          "C23.888.531"
-        ],
-        "hierarchy_path": "Doenças › C14.907.617.671.750"
-      }
-    ]
-  },
-  {
-    "id_question": 2193,
-    "ai_decs_descriptors": [
-      {
-        "term": "Radiografia Torácica",
-        "code": "23481",
-        "tree_ids": [
-          "E01.370.350.700.730"
-        ],
-        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.350.700.730"
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.642.249.645"
       },
       {
-        "term": "Variação Anatômica",
-        "code": "55116",
+        "term": "Cuidado de Enfermagem ao Idoso Hospitalizado",
+        "code": "57456",
         "tree_ids": [
-          "G07.049",
-          "G16.117.500"
+          "N05.300.559"
         ],
-        "hierarchy_path": "Fenômenos Biológicos › G07.049"
-      },
-      {
-        "term": "Doenças Pulmonares Intersticiais",
-        "code": "31333",
-        "tree_ids": [
-          "C08.381.483"
-        ],
-        "hierarchy_path": "Doenças › C08.381.483"
+        "hierarchy_path": "N › N05.300.559"
       }
     ]
   },
   {
-    "id_question": 2194,
+    "id_question": 25645,
     "ai_decs_descriptors": [
       {
-        "term": "Teste de Tolerância a Lactose",
-        "code": "7967",
+        "term": "Sistemas de Apoio Psicossocial",
+        "code": "56796",
         "tree_ids": [
-          "E01.370.225.124.100.450",
-          "E01.370.372.450",
-          "E05.200.124.100.450"
+          "I01.880.853.500.600.500"
         ],
-        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.225.124.100.450"
+        "hierarchy_path": "I › I01.880.853.500.600.500"
       },
       {
-        "term": "Intolerância à Lactose",
-        "code": "7964",
+        "term": "Relações Familiares",
+        "code": "5299",
         "tree_ids": [
-          "C06.405.469.637.506",
-          "C16.320.565.202.589",
-          "C18.452.603.506",
-          "C18.452.648.202.589"
+          "F01.829.263.370",
+          "I01.880.853.150.439",
+          "SP3.311.750.536.600"
         ],
-        "hierarchy_path": "Doenças › C06.405.469.637.506"
+        "hierarchy_path": "Psiquiatria e Psicologia › F01.829.263.370"
+      }
+    ]
+  },
+  {
+    "id_question": 25646,
+    "ai_decs_descriptors": [
+      {
+        "term": "Acidentes de Trabalho",
+        "code": "23892",
+        "tree_ids": [
+          "N06.850.135.240",
+          "SP8.095.664",
+          "VS4.002.001.001.007.001"
+        ],
+        "hierarchy_path": "N › N06.850.135.240"
+      }
+    ]
+  },
+  {
+    "id_question": 25647,
+    "ai_decs_descriptors": [
+      {
+        "term": "Atenção Primária à Saúde",
+        "code": "11756",
+        "tree_ids": [
+          "N04.590.233.727",
+          "SP2.630.121"
+        ],
+        "hierarchy_path": "N › N04.590.233.727"
+      }
+    ]
+  },
+  {
+    "id_question": 25648,
+    "ai_decs_descriptors": [
+      {
+        "term": "Sistema Único de Saúde",
+        "code": "16771",
+        "tree_ids": [
+          "SP1.852.900.766.548",
+          "SP9.242.315.475.901.672"
+        ],
+        "hierarchy_path": "Saúde Pública › SP1.852.900.766.548"
+      }
+    ]
+  },
+  {
+    "id_question": 25649,
+    "ai_decs_descriptors": [
+      {
+        "term": "Testes de Diagnóstico Rápido",
+        "code": "60089",
+        "tree_ids": [
+          "E01.370.225.989",
+          "E05.200.989",
+          "N04.590.874.500.625"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.225.989"
+      },
+      {
+        "term": "Infecções por Coronavirus",
+        "code": "31543",
+        "tree_ids": [
+          "C01.925.782.600.550.200"
+        ],
+        "hierarchy_path": "Doenças › C01.925.782.600.550.200"
+      }
+    ]
+  },
+  {
+    "id_question": 25650,
+    "ai_decs_descriptors": [
+      {
+        "term": "Tuberculose Pulmonar",
+        "code": "14798",
+        "tree_ids": [
+          "C01.150.252.410.040.552.846.899",
+          "C01.748.939",
+          "C08.381.922",
+          "C08.730.939"
+        ],
+        "hierarchy_path": "Doenças › C01.150.252.410.040.552.846.899"
+      }
+    ]
+  },
+  {
+    "id_question": 25651,
+    "ai_decs_descriptors": [
+      {
+        "term": "Vacinas contra Dengue",
+        "code": "52405",
+        "tree_ids": [
+          "D20.215.894.899.162"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D20.215.894.899.162"
       }
     ]
   }

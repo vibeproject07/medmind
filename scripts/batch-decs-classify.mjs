@@ -44,6 +44,8 @@ const _hasFlag = (flag) => _args.includes(flag);
 const CONCURRENCY      = 5;
 const LIMIT            = parseInt(_getArg('--limit', '90'));
 const OFFSET           = parseInt(_getArg('--offset', '0'));
+const MIN_ID           = _getArg('--min-id', null) ? parseInt(_getArg('--min-id', null)) : null;
+const MAX_ID           = _getArg('--max-id', null) ? parseInt(_getArg('--max-id', null)) : null;
 const SKIP_CLASSIFIED  = !_hasFlag('--include-classified');
 const OUTPUT_FILE      = _getArg('--output', 'decs_classification_results.json');
 const GEMINI_MODEL     = 'gemini-2.5-flash';
@@ -84,9 +86,11 @@ Sem explicação, sem markdown.`;
 const pool = new pg.Pool({ connectionString: DB_URL });
 
 async function fetchQuestions() {
-  const whereClause = SKIP_CLASSIFIED
-    ? `WHERE ai_decs_descriptors IS NULL`
-    : '';
+  const conditions = [];
+  if (SKIP_CLASSIFIED) conditions.push(`ai_decs_descriptors IS NULL`);
+  if (MIN_ID !== null) conditions.push(`id >= ${MIN_ID}`);
+  if (MAX_ID !== null) conditions.push(`id <= ${MAX_ID}`);
+  const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
   const res = await pool.query(
     `SELECT id, statement, option_a, option_b, option_c, option_d, option_e
      FROM questions ${whereClause} ORDER BY id ASC LIMIT $1 OFFSET $2`,
