@@ -42,3 +42,9 @@ id = "4T7ZMYGai-nfkuNpMBmOK"
 uri = "file://decs_200_recent_questions.json"
 type = "unspecified"
 title = "DeCS — 200 Questões Mais Recentes"
+
+[[outputs]]
+id = "74-O34G4j7eS9T-8bWHWQ"
+uri = "file://decs_200_recent_v2.json"
+type = "unspecified"
+title = "DeCS — 200 Questões Mais Recentes (Pipeline v2 — Temas Primários/Secundários)"
