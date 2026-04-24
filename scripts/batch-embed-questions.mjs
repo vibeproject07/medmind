@@ -51,7 +51,13 @@ async function generateEmbedding(text) {
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ content: { parts: [{ text: trimmed }] } }),
+    // taskType: RETRIEVAL_DOCUMENT — creates embeddings optimized for document retrieval.
+    // Search queries must use RETRIEVAL_QUERY (done in semantic-search route).
+    // Both sides must use matching task types; do not mix with SEMANTIC_SIMILARITY.
+    body: JSON.stringify({
+      taskType: 'RETRIEVAL_DOCUMENT',
+      content: { parts: [{ text: trimmed }] },
+    }),
   });
   if (!res.ok) {
     const errBody = await res.text();

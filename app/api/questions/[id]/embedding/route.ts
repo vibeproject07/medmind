@@ -88,7 +88,7 @@ export async function POST(
 
     const q = res.rows[0];
     const text = buildQuestionText(q);
-    const embedding = await generateEmbedding(text);
+    const embedding = await generateEmbedding(text, undefined, 'RETRIEVAL_DOCUMENT');
 
     // Always save to pgvector (local cache + fallback)
     await saveQuestionEmbedding(questionId, embedding);

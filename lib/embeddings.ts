@@ -2,6 +2,16 @@
  * Embedding utilities for MedMind
  * Uses Google's gemini-embedding-001 model (3072 dimensions)
  * Backed by pgvector 0.8.0 for cosine similarity search
+ *
+ * taskType guidance (gemini-embedding-001):
+ *   - Indexing questions in DB  → "RETRIEVAL_DOCUMENT"  (batch-embed-questions.mjs)
+ *   - Search query from user    → "RETRIEVAL_QUERY"     (semantic-search route)
+ *   - Symmetric similarity      → omit (defaults to SEMANTIC_SIMILARITY)
+ *
+ * IMPORTANT: stored question embeddings must be re-generated with RETRIEVAL_DOCUMENT
+ * before switching the search route to RETRIEVAL_QUERY.  Until re-embedding is done,
+ * the search route uses query expansion (busca_vetorial agent) to improve relevance
+ * while keeping both sides in the same embedding space.
  */
 
 import { query } from '@/lib/db';
@@ -72,7 +82,18 @@ export function buildQuestionText(q: {
 
 // ── Embedding generation ──────────────────────────────────────────────────────
 
-export async function generateEmbedding(text: string, apiKey?: string): Promise<number[]> {
+export type EmbeddingTaskType =
+  | 'RETRIEVAL_DOCUMENT'
+  | 'RETRIEVAL_QUERY'
+  | 'SEMANTIC_SIMILARITY'
+  | 'CLASSIFICATION'
+  | 'CLUSTERING';
+
+export async function generateEmbedding(
+  text: string,
+  apiKey?: string,
+  taskType?: EmbeddingTaskType,
+): Promise<number[]> {
   const key = (apiKey ?? process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY)?.trim();
   if (!key) throw new Error('GEMINI_API_KEY not configured');
 
@@ -83,10 +104,13 @@ export async function generateEmbedding(text: string, apiKey?: string): Promise<
   const url =
     `https://generativelanguage.googleapis.com/v1beta/models/${EMBEDDING_MODEL}:embedContent?key=${key}`;
 
+  const body: Record<string, unknown> = { content: { parts: [{ text: trimmed }] } };
+  if (taskType) body.taskType = taskType;
+
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ content: { parts: [{ text: trimmed }] } }),
+    body: JSON.stringify(body),
   });
 
   if (!res.ok) {
@@ -100,6 +124,67 @@ export async function generateEmbedding(text: string, apiKey?: string): Promise<
     throw new Error('Empty embedding response from Google API');
   }
   return values;
+}
+
+/**
+ * Expands a short user query into rich medical text using the busca_vetorial agent
+ * prompt, then generates a SEMANTIC_SIMILARITY embedding compatible with the stored
+ * question embeddings.  Falls back to embedding the raw query if the LLM call fails.
+ *
+ * When questions are re-embedded with RETRIEVAL_DOCUMENT, switch to:
+ *   generateEmbedding(expandedText, undefined, 'RETRIEVAL_QUERY')
+ */
+export async function expandAndEmbedQuery(
+  rawQuery: string,
+  systemPrompt: string,
+  apiKey?: string,
+): Promise<{ embedding: number[]; expandedQuery: string }> {
+  const key = (apiKey ?? process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY)?.trim();
+  if (!key) throw new Error('GEMINI_API_KEY not configured');
+
+  let expandedQuery = rawQuery;
+
+  try {
+    // Call gemini-2.5-flash to expand the query (max 10 s timeout via AbortController)
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 10_000);
+
+    const llmRes = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: ctrl.signal,
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: systemPrompt }] },
+          contents: [{ role: 'user', parts: [{ text: rawQuery }] }],
+          generationConfig: { temperature: 0.3, maxOutputTokens: 1024 },
+        }),
+      },
+    );
+
+    clearTimeout(timer);
+
+    if (llmRes.ok) {
+      const llmData = await llmRes.json() as {
+        candidates?: { content?: { parts?: { text?: string }[] } }[];
+      };
+      const text = llmData?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+      if (text && text.length > 20) expandedQuery = text;
+    }
+  } catch {
+    // timeout or network error — fall back to raw query silently
+  }
+
+  // Use RETRIEVAL_QUERY once questions have been re-embedded with RETRIEVAL_DOCUMENT.
+  // Set env var EMBEDDING_TASK_TYPE=retrieval after running the batch re-embedding script.
+  const useRetrieval = process.env.EMBEDDING_TASK_TYPE === 'retrieval';
+  const embedding = await generateEmbedding(
+    expandedQuery,
+    key,
+    useRetrieval ? 'RETRIEVAL_QUERY' : undefined,
+  );
+  return { embedding, expandedQuery };
 }
 
 /**

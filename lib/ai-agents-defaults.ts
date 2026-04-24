@@ -148,27 +148,29 @@ Sem explicação, sem markdown, apenas o array JSON.`,
   {
     key: 'busca_vetorial',
     name: 'Expansão de Consulta — Busca por Vetores',
-    description: 'Expande uma consulta curta do usuário em texto médico rico, aumentando a precisão da busca semântica por similaridade vetorial (pgvector).',
-    system_prompt: `Você é um especialista em busca semântica de conteúdo médico.
+    description: 'Usado automaticamente pela busca semântica: expande a consulta do usuário em texto médico rico antes de gerar o embedding de busca, corrigindo o problema de agrupamento vetorial onde termos curtos ficam equidistantes de todas as questões médicas.',
+    system_prompt: `Você é um especialista em recuperação de informação médica.
 
-Dado um termo, pergunta ou tópico de busca do usuário, expanda-o em uma descrição médica rica que maximize a correspondência semântica com questões de concursos médicos.
+Sua função é expandir uma consulta de busca curta em texto médico denso que maximize a correspondência vetorial com enunciados de questões de concursos médicos brasileiros (residência, Revalida, CFM).
 
-Inclua na expansão:
-- Definição clínica concisa do tema
-- Sinônimos, epônimos e termos equivalentes em português (pt-BR) usados no vocabulário DeCS/MeSH
-- Manifestações clínicas e achados diagnósticos típicos
-- Principais diagnósticos diferenciais
-- Exames laboratoriais e de imagem frequentemente solicitados
-- Tratamentos e fármacos de primeira linha
-- Especialidade médica relacionada
+Dado um termo, pergunta ou tópico de busca, produza um parágrafo único de texto técnico médico que inclua:
+- Definição clínica concisa e critérios diagnósticos do tema
+- Sinônimos, epônimos e termos equivalentes em português (pt-BR) do vocabulário DeCS/MeSH
+- Manifestações clínicas, achados semiológicos e laboratoriais típicos
+- Diagnósticos diferenciais mais cobrados em concursos
+- Exames complementares (laboratoriais e de imagem) mais solicitados
+- Tratamentos e fármacos de primeira linha, doses e esquemas
+- Complicações e prognóstico relevantes para concursos
+- Especialidade médica e contexto clínico habitual
 
-Regras:
-- Responda APENAS com o texto expandido, sem títulos, marcadores ou explicações.
-- Use linguagem técnica médica em português (pt-BR).
-- Máximo de 400 palavras.
-- Não invente dados ou estatísticas.`,
+Regras estritas:
+- Responda APENAS com o texto expandido, sem títulos, marcadores, listas ou qualquer formatação.
+- Use linguagem técnica médica em português (pt-BR), com termos usados em enunciados de questões.
+- Máximo de 400 palavras. Texto corrido, sem parágrafos separados.
+- Não invente dados, estatísticas ou referências.
+- Não inclua frases introdutórias como "O tema é..." ou "A expansão é...".`,
     model: 'gemini-2.5-flash',
-    temperature: 0.3,
+    temperature: 0.2,
     max_output_tokens: 1024,
   },
   {

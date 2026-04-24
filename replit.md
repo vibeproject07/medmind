@@ -109,21 +109,39 @@ scripts/
 
 ### Embedding model
 - `gemini-embedding-001` (3072 dims) via Google REST API `v1beta`
+- **taskType**: questions indexed with `RETRIEVAL_DOCUMENT`; search queries use `RETRIEVAL_QUERY`
+- **Migration note**: existing embeddings were generated without taskType (SEMANTIC_SIMILARITY).
+  To activate `RETRIEVAL_QUERY` for searches, first re-run the batch script (which now uses `RETRIEVAL_DOCUMENT`),
+  then set `EMBEDDING_TASK_TYPE=retrieval` in `.env.local` and restart.
+
+### Search pipeline (semantic-search route)
+1. Load `busca_vetorial` AI agent system prompt from DB (fallback to built-in default)
+2. Expand the user's short query into rich medical text via Gemini 2.5 Flash (10 s timeout)
+3. Embed the expanded text (SEMANTIC_SIMILARITY now; RETRIEVAL_QUERY after re-embedding+env var)
+4. Run halfvec cosine search against `questions.embedding` HNSW index
+- Expansion fallback: if LLM times out or fails, raw query is embedded directly
+- `expanded` field in response indicates whether expansion was applied
 
 ### API Routes
 - `GET  /api/questions/[id]/embedding` — check embedding status
-- `POST /api/questions/[id]/embedding` — generate + save to pgvector + Pinecone (admin)
+- `POST /api/questions/[id]/embedding` — generate (RETRIEVAL_DOCUMENT) + save to pgvector + Pinecone (admin)
 - `GET  /api/questions/[id]/similar` — similar questions (Pinecone → pgvector fallback)
-- `GET  /api/questions/semantic-search?q=...` — semantic search (Pinecone → pgvector fallback)
+- `GET  /api/questions/semantic-search?q=...` — semantic search with AI query expansion
 - `GET  /api/pinecone/status` — index stats (admin only)
 - `GET  /api/admin/embed-batch` — live progress (pgvector count + Pinecone vector count)
 - `POST /api/admin/embed-batch` — start batch script as detached background process (admin)
 
 ### Batch script
-- `scripts/batch-embed-questions.mjs` — embeds all questions, upserts to pgvector + Pinecone
+- `scripts/batch-embed-questions.mjs` — embeds all questions with `RETRIEVAL_DOCUMENT`, upserts to pgvector + Pinecone
 - Options: `--limit N --concurrency 3 --delay 350 --no-resume --pinecone-batch 100`
 - Run from API: `POST /api/admin/embed-batch` (uses `--env-file=.env.local` internally)
 - Run from terminal: `node --env-file=.env.local scripts/batch-embed-questions.mjs --concurrency 5 --delay 300`
+- After run: set `EMBEDDING_TASK_TYPE=retrieval` in `.env.local` and restart to activate RETRIEVAL_QUERY mode
+
+### AI Agent: busca_vetorial
+- Key: `busca_vetorial` in `ai_agents` table / `lib/ai-agents-defaults.ts`
+- Role: **called automatically** by the semantic search route to expand queries before embedding
+- Customizable via the AI agents admin panel (key: `busca_vetorial`)
 
 ### UI
 - Semantic search bar (violet gradient) on questions list page

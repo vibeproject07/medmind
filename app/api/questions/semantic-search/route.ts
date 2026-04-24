@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { generateEmbedding, semanticSearchQuestions } from '@/lib/embeddings';
+import { expandAndEmbedQuery, semanticSearchQuestions } from '@/lib/embeddings';
 import { isPineconeEnabled, queryPineconeSimilar } from '@/lib/pinecone';
 import { query } from '@/lib/db';
+import { getAgentPrompt } from '@/lib/ai-agents';
+
+export const runtime = 'nodejs';
 
 // GET /api/questions/semantic-search?q=...&limit=20&offset=0
 export async function GET(req: NextRequest) {
@@ -17,17 +20,20 @@ export async function GET(req: NextRequest) {
     const limit = Math.min(parseInt(req.nextUrl.searchParams.get('limit') ?? '20'), 50);
     const offset = parseInt(req.nextUrl.searchParams.get('offset') ?? '0');
 
-    // Generate embedding for the search query
-    const queryEmbedding = await generateEmbedding(q);
+    // Load the busca_vetorial agent system prompt (falls back to default if not customized)
+    const systemPrompt = await getAgentPrompt('busca_vetorial');
+
+    // Expand query with AI and embed — falls back to raw query if AI times out or fails
+    const { embedding: queryEmbedding, expandedQuery } = await expandAndEmbedQuery(q, systemPrompt);
+
+    const usedExpansion = expandedQuery !== q;
 
     // ── Pinecone path ────────────────────────────────────────────────────────
     if (isPineconeEnabled()) {
-      // For Pinecone we need to fetch limit+offset results and then slice
       const topK = Math.min(limit + offset, 50);
       const pineconeResults = await queryPineconeSimilar(queryEmbedding, topK);
       const pageResults = pineconeResults.slice(offset, offset + limit);
 
-      // Enrich with full statement from Postgres
       let enriched = pageResults;
       if (pageResults.length > 0) {
         const ids = pageResults.map((r) => r.id);
@@ -51,14 +57,15 @@ export async function GET(req: NextRequest) {
 
       return NextResponse.json({
         questions: enriched,
-        total: pineconeResults.length, // approximate (Pinecone topK)
+        total: pineconeResults.length,
         limit,
         offset,
         backend: 'pinecone',
+        expanded: usedExpansion,
       });
     }
 
-    // ── pgvector fallback ────────────────────────────────────────────────────
+    // ── pgvector path ────────────────────────────────────────────────────────
     const results = await semanticSearchQuestions(queryEmbedding, limit, offset);
     const total = results[0]?.total_count ?? 0;
 
@@ -68,6 +75,7 @@ export async function GET(req: NextRequest) {
       limit,
       offset,
       backend: 'pgvector',
+      expanded: usedExpansion,
     });
   } catch (err) {
     console.error('[semantic-search GET]', err);
