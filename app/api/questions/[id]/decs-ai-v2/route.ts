@@ -1,0 +1,102 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { query } from '@/lib/db';
+import { verifyToken } from '@/lib/jwt';
+import { runDeCSPipelineV2, type DeCSV2Result } from '@/lib/decs-pipeline-v2';
+
+export const runtime = 'nodejs';
+
+async function ensureColumn() {
+  await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_decs_v2 TEXT`);
+}
+
+export async function POST(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const authHeader = req.headers.get('authorization');
+  let token = authHeader?.replace('Bearer ', '') || req.cookies.get('token')?.value;
+  if (token) token = token.trim().replace(/^["']|["']$/g, '');
+  if (!token) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
+
+  const user = verifyToken(token);
+  if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
+  if (user.role !== 'admin')
+    return NextResponse.json({ error: 'Apenas administradores podem executar este agente' }, { status: 403 });
+
+  const geminiKey = (process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY)?.trim();
+  if (!geminiKey) return NextResponse.json({ error: 'GEMINI_API_KEY não configurada' }, { status: 500 });
+
+  const decsKey = process.env.DECS_API_KEY?.trim();
+  if (!decsKey) return NextResponse.json({ error: 'DECS_API_KEY não configurada' }, { status: 500 });
+
+  try {
+    await ensureColumn();
+
+    const qRes = await query('SELECT * FROM questions WHERE id = $1', [params.id]);
+    if (qRes.rows.length === 0) {
+      return NextResponse.json({ error: 'Questão não encontrada' }, { status: 404 });
+    }
+    const question = qRes.rows[0] as Record<string, unknown>;
+
+    const questionText = [
+      'Enunciado:',
+      question.statement as string,
+      '',
+      'Alternativa A: ' + (question.option_a as string),
+      'Alternativa B: ' + (question.option_b as string),
+      question.option_c ? 'Alternativa C: ' + (question.option_c as string) : null,
+      question.option_d ? 'Alternativa D: ' + (question.option_d as string) : null,
+      question.option_e ? 'Alternativa E: ' + (question.option_e as string) : null,
+    ]
+      .filter(Boolean)
+      .join('\n');
+
+    const { result, themes_identified, stats } = await runDeCSPipelineV2(
+      questionText,
+      decsKey,
+      geminiKey
+    );
+
+    await query(
+      'UPDATE questions SET ai_decs_v2 = $1, updated_at = NOW() WHERE id = $2',
+      [JSON.stringify(result), params.id]
+    );
+
+    return NextResponse.json({
+      result,
+      themes_identified,
+      pipeline_stats: stats,
+    });
+  } catch (err: unknown) {
+    console.error('[decs-ai-v2] error:', err);
+    const message = err instanceof Error ? err.message : 'Erro interno';
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}
+
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const authHeader = req.headers.get('authorization');
+  let token = authHeader?.replace('Bearer ', '') || req.cookies.get('token')?.value;
+  if (token) token = token.trim().replace(/^["']|["']$/g, '');
+  if (!token) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
+
+  const user = verifyToken(token);
+  if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
+
+  try {
+    await ensureColumn();
+    const qRes = await query('SELECT ai_decs_v2 FROM questions WHERE id = $1', [params.id]);
+    if (qRes.rows.length === 0) {
+      return NextResponse.json({ error: 'Questão não encontrada' }, { status: 404 });
+    }
+    const raw = qRes.rows[0].ai_decs_v2 as string | null;
+    const result: DeCSV2Result = raw ? JSON.parse(raw) : { decs_primary: [], decs_secondary: [] };
+    return NextResponse.json({ result });
+  } catch (err: unknown) {
+    console.error('[decs-ai-v2] GET error:', err);
+    return NextResponse.json({ error: 'Erro interno' }, { status: 500 });
+  }
+}

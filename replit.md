@@ -143,6 +143,33 @@ scripts/
 - Role: **called automatically** by the semantic search route to expand queries before embedding
 - Customizable via the AI agents admin panel (key: `busca_vetorial`)
 
+## DeCS Classification Pipeline
+
+### V1 pipeline (current default)
+- Agent `decs_classifier` (Etapa 1) → returns `{primary, secondary}` string themes
+- `runDeCSPipeline()` in `lib/decs-pipeline.ts` → vector/text search + BVS API fallback
+- Agent `decs_validator` / `VALIDATION_PROMPT` (Etapa 3) → validates candidates
+- **Enriched (2025-04)**: candidates now include `scope_note`, `name_en` from `decs_descriptors`; validation prompt uses these for better filtering
+- Endpoint: `POST /api/questions/[id]/decs-ai`
+- Saved to: `questions.ai_decs_descriptors`
+
+### V2 pipeline (RAG-enhanced, for A/B testing)
+- Agent `decs_indexer_v2` → deep semantic interpretation (indexer mindset), same output `{primary, secondary}`
+- `runDeCSPipelineV2()` in `lib/decs-pipeline-v2.ts`:
+  1. Semantic extraction (decs_indexer_v2)
+  2. Per-concept search: vector (local) → text ILIKE fallback → BVS API last resort
+  3. Enrich from `decs_descriptors` (scope_note, name_en)
+  4. Agent `decs_selector_v2` selects best candidate per concept with full context
+  5. Resolve parents/children from `tree_numbers` in DB
+- Endpoint: `POST /api/questions/[id]/decs-ai-v2`
+- Saved to: `questions.ai_decs_v2`
+- UI: "Gerar v2 (RAG)" button in question detail page; expandable results with hierarchy
+
+### DeCS database
+- Table: `decs_descriptors` — 35,033 rows
+- Columns: `ui`, `name_pt`, `name_en`, `scope_note`, `entry_terms` (JSONB), `tree_numbers` (JSONB), `embedding`
+- 93/35,033 descriptors have embeddings (run `scripts/embed-decs-descriptors.mjs` for full coverage)
+
 ### UI
 - Semantic search bar (violet gradient) on questions list page
 - "Questões Similares" section on question detail page

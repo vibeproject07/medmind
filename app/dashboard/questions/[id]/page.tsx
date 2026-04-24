@@ -54,6 +54,25 @@ interface DeCSRecord {
   tree_ids: string[];
   hierarchy_path: string;
   role?: 'primary' | 'secondary';
+  scope_note?: string;
+  name_en?: string;
+}
+
+interface DeCSV2Descriptor {
+  id: string;
+  term: string;
+  name_en?: string;
+  scope_note?: string;
+  tree_ids?: string[];
+  hierarchy_path?: string;
+  parents: Array<{ id: string; term: string }>;
+  children: Array<{ id: string; term: string }>;
+  role?: 'primary' | 'secondary';
+}
+
+interface DeCSV2Result {
+  decs_primary: DeCSV2Descriptor[];
+  decs_secondary: DeCSV2Descriptor[];
 }
 
 interface SimilarQuestion {
@@ -97,6 +116,10 @@ export default function QuestionDetailPage() {
   const [togglingAnulada, setTogglingAnulada] = useState(false);
   const [aiDecsLoading, setAiDecsLoading] = useState(false);
   const [aiDecsError, setAiDecsError] = useState<string | null>(null);
+  const [aiDecsV2Loading, setAiDecsV2Loading] = useState(false);
+  const [aiDecsV2Error, setAiDecsV2Error] = useState<string | null>(null);
+  const [aiDecsV2Result, setAiDecsV2Result] = useState<DeCSV2Result | null>(null);
+  const [showDecsV2, setShowDecsV2] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [similarQuestions, setSimilarQuestions] = useState<SimilarQuestion[]>([]);
@@ -176,6 +199,29 @@ export default function QuestionDetailPage() {
         }
       } catch {
         // non-critical — silently ignore
+      }
+    })();
+  }, [questionId]);
+
+  // Load existing V2 results on page load (non-critical)
+  useEffect(() => {
+    if (!questionId) return;
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    (async () => {
+      try {
+        const res = await fetch(`/api/questions/${questionId}/decs-ai-v2`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const r = data.result as DeCSV2Result;
+          if (r && (r.decs_primary?.length > 0 || r.decs_secondary?.length > 0)) {
+            setAiDecsV2Result(r);
+          }
+        }
+      } catch {
+        // non-critical
       }
     })();
   }, [questionId]);
@@ -474,6 +520,31 @@ export default function QuestionDetailPage() {
       setAiDecsError('Erro ao conectar com o servidor.');
     } finally {
       setAiDecsLoading(false);
+    }
+  };
+
+  const handleGenerateAiDecsV2 = async () => {
+    if (!question) return;
+    setAiDecsV2Loading(true);
+    setAiDecsV2Error(null);
+    setShowDecsV2(true);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const res = await fetch(`/api/questions/${questionId}/decs-ai-v2`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setAiDecsV2Error(data.error || 'Erro ao gerar descritores v2.');
+        return;
+      }
+      setAiDecsV2Result(data.result as DeCSV2Result);
+    } catch {
+      setAiDecsV2Error('Erro ao conectar com o servidor.');
+    } finally {
+      setAiDecsV2Loading(false);
     }
   };
 
@@ -1162,16 +1233,29 @@ export default function QuestionDetailPage() {
               <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">gerado automaticamente</span>
             </div>
             {!isEditing && (
-              <button
-                onClick={handleGenerateAiDecs}
-                disabled={aiDecsLoading}
-                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition"
-              >
-                <Sparkles className="h-3.5 w-3.5" />
-                {aiDecsLoading ? 'Gerando…' : 'Gerar com IA'}
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleGenerateAiDecs}
+                  disabled={aiDecsLoading}
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition"
+                >
+                  <Sparkles className="h-3.5 w-3.5" />
+                  {aiDecsLoading ? 'Gerando…' : 'Gerar v1'}
+                </button>
+                <button
+                  onClick={handleGenerateAiDecsV2}
+                  disabled={aiDecsV2Loading}
+                  title="Pipeline v2: interpretação semântica profunda + busca RAG no banco DeCS + hierarquia completa"
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 disabled:opacity-50 transition"
+                >
+                  <Sparkles className="h-3.5 w-3.5" />
+                  {aiDecsV2Loading ? 'Gerando v2…' : 'Gerar v2 (RAG)'}
+                </button>
+              </div>
             )}
           </div>
+
+          {/* V1 results */}
           {aiDecsError && (
             <p className="text-red-500 text-sm mb-2">{aiDecsError}</p>
           )}
@@ -1182,6 +1266,7 @@ export default function QuestionDetailPage() {
             const untagged = allDescriptors.filter((d) => !d.role);
             return (
               <div className="space-y-3">
+                <p className="text-xs font-medium text-gray-400 uppercase tracking-wide">Pipeline v1</p>
                 {(primaryDescs.length > 0 || untagged.length > 0) && (
                   <div>
                     {primaryDescs.length > 0 && (
@@ -1225,9 +1310,125 @@ export default function QuestionDetailPage() {
               </div>
             );
           })() : (
-            <p className="text-gray-400 italic text-sm">
-              {aiDecsLoading ? 'Aguardando resposta da IA…' : 'Nenhum descritor IA gerado. Clique em "Gerar com IA" para classificar esta questão.'}
+            <p className="text-gray-400 italic text-sm mb-3">
+              {aiDecsLoading ? 'Aguardando resposta da IA…' : 'Nenhum descritor v1 gerado. Clique em "Gerar v1" para classificar esta questão.'}
             </p>
+          )}
+
+          {/* V2 results — RAG-enhanced with hierarchy */}
+          {(aiDecsV2Result || aiDecsV2Loading || aiDecsV2Error) && (
+            <div className="mt-4 pt-4 border-t border-gray-100">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <p className="text-xs font-medium text-emerald-600 uppercase tracking-wide">Pipeline v2 — RAG + Hierarquia</p>
+                  <button
+                    onClick={() => setShowDecsV2(!showDecsV2)}
+                    className="text-xs text-gray-400 hover:text-gray-600 transition"
+                  >
+                    {showDecsV2 ? '▲ ocultar' : '▼ expandir'}
+                  </button>
+                </div>
+              </div>
+
+              {aiDecsV2Error && (
+                <p className="text-red-500 text-sm mb-2">{aiDecsV2Error}</p>
+              )}
+
+              {showDecsV2 && aiDecsV2Result && (
+                <div className="space-y-4">
+                  {aiDecsV2Result.decs_primary.length > 0 && (
+                    <div>
+                      <p className="text-xs font-semibold text-emerald-600 uppercase tracking-wide mb-2">Descritores Primários</p>
+                      <div className="space-y-2">
+                        {aiDecsV2Result.decs_primary.map((d) => (
+                          <div key={d.id} className="p-3 bg-emerald-50 rounded-lg border border-emerald-200">
+                            <div className="flex items-start justify-between gap-2">
+                              <div>
+                                <span className="text-sm font-semibold text-emerald-800">{d.term}</span>
+                                {d.name_en && (
+                                  <span className="ml-2 text-xs text-emerald-500 italic">{d.name_en}</span>
+                                )}
+                              </div>
+                              <span className="text-xs text-emerald-400 font-mono shrink-0">{d.id}</span>
+                            </div>
+                            {d.scope_note && (
+                              <p className="text-xs text-gray-500 mt-1 line-clamp-2">{d.scope_note}</p>
+                            )}
+                            {d.hierarchy_path && (
+                              <p className="text-xs text-emerald-400 mt-1">{d.hierarchy_path}</p>
+                            )}
+                            {d.parents.length > 0 && (
+                              <div className="mt-2 flex flex-wrap gap-1 items-center">
+                                <span className="text-xs text-gray-400">↑ pai:</span>
+                                {d.parents.map((p) => (
+                                  <span key={p.id} className="text-xs px-1.5 py-0.5 bg-white border border-emerald-200 rounded text-emerald-600">{p.term}</span>
+                                ))}
+                              </div>
+                            )}
+                            {d.children.length > 0 && (
+                              <div className="mt-1 flex flex-wrap gap-1 items-center">
+                                <span className="text-xs text-gray-400">↓ filhos:</span>
+                                {d.children.map((c) => (
+                                  <span key={c.id} className="text-xs px-1.5 py-0.5 bg-white border border-gray-200 rounded text-gray-500">{c.term}</span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {aiDecsV2Result.decs_secondary.length > 0 && (
+                    <div>
+                      <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">Descritores Secundários</p>
+                      <div className="space-y-2">
+                        {aiDecsV2Result.decs_secondary.map((d) => (
+                          <div key={d.id} className="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                            <div className="flex items-start justify-between gap-2">
+                              <div>
+                                <span className="text-sm font-medium text-slate-700">{d.term}</span>
+                                {d.name_en && (
+                                  <span className="ml-2 text-xs text-slate-400 italic">{d.name_en}</span>
+                                )}
+                              </div>
+                              <span className="text-xs text-slate-400 font-mono shrink-0">{d.id}</span>
+                            </div>
+                            {d.scope_note && (
+                              <p className="text-xs text-gray-500 mt-1 line-clamp-2">{d.scope_note}</p>
+                            )}
+                            {d.parents.length > 0 && (
+                              <div className="mt-2 flex flex-wrap gap-1 items-center">
+                                <span className="text-xs text-gray-400">↑ pai:</span>
+                                {d.parents.map((p) => (
+                                  <span key={p.id} className="text-xs px-1.5 py-0.5 bg-white border border-slate-200 rounded text-slate-500">{p.term}</span>
+                                ))}
+                              </div>
+                            )}
+                            {d.children.length > 0 && (
+                              <div className="mt-1 flex flex-wrap gap-1 items-center">
+                                <span className="text-xs text-gray-400">↓ filhos:</span>
+                                {d.children.map((c) => (
+                                  <span key={c.id} className="text-xs px-1.5 py-0.5 bg-white border border-gray-100 rounded text-gray-400">{c.term}</span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {showDecsV2 && aiDecsV2Loading && (
+                <p className="text-sm text-emerald-500 italic">Executando pipeline RAG… pode levar alguns segundos.</p>
+              )}
+
+              {showDecsV2 && !aiDecsV2Loading && !aiDecsV2Error && (!aiDecsV2Result || (aiDecsV2Result.decs_primary.length === 0 && aiDecsV2Result.decs_secondary.length === 0)) && (
+                <p className="text-gray-400 italic text-sm">Nenhum resultado v2 ainda.</p>
+              )}
+            </div>
           )}
         </div>
       )}

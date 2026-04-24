@@ -15,6 +15,8 @@ export interface DeCSRecord {
   hierarchy_path: string;
   similarity?: number;
   role?: 'primary' | 'secondary';
+  scope_note?: string;
+  name_en?: string;
 }
 
 export interface DeCSThemes {
@@ -193,6 +195,8 @@ export async function searchDeCSLocal(
       SELECT
         ui AS code,
         name_pt AS term,
+        name_en,
+        scope_note,
         tree_numbers,
         1 - (embedding::halfvec(3072) <=> $1::halfvec(3072)) AS similarity
       FROM decs_descriptors
@@ -212,6 +216,8 @@ export async function searchDeCSLocal(
         tree_ids,
         hierarchy_path: buildHierarchyPath(tree_ids[0] ?? ''),
         similarity: parseFloat(r.similarity ?? '0'),
+        scope_note: r.scope_note ?? undefined,
+        name_en: r.name_en ?? undefined,
       };
     });
   } catch {
@@ -297,18 +303,20 @@ export async function findBestDeCSMatch(
 
 // ── Improvement 3: Gemini validation ────────────────────────────────────────
 
-const VALIDATION_PROMPT = `Você é um especialista em vocabulário controlado DeCS/MeSH.
+const VALIDATION_PROMPT = `Você é um especialista em vocabulário controlado DeCS/MeSH e indexação biomédica.
 
-Dado o enunciado de uma questão médica e uma lista de descritores DeCS candidatos, filtre e mantenha APENAS os descritores que são CLINICAMENTE RELEVANTES para o tema central da questão.
+Dado o enunciado de uma questão médica e uma lista de descritores DeCS candidatos (cada um com código, termo, termo em inglês, definição abreviada e categoria), filtre e mantenha APENAS os descritores CLINICAMENTE RELEVANTES para o tema central da questão.
 
 Critérios de relevância:
-- O descritor deve representar um conceito clínico central da questão (condição, fármaco, exame, procedimento).
-- Descritores de organismos (vírus, bactérias, animais) só são relevantes se a questão tratar explicitamente de infectologia/microbiologia.
+- O descritor deve representar um conceito clínico CENTRAL da questão (condição principal, fármaco, exame diagnóstico, procedimento, achado anatomopatológico relevante).
+- Use o campo "scope" (definição) para confirmar se o conceito corresponde ao que a questão aborda.
+- Descritores de organismos (vírus, bactérias, animais) só são relevantes se a questão tratar explicitamente de infectologia, microbiologia ou parasitologia.
 - Descritores muito genéricos ou de área não relacionada devem ser removidos.
+- Prefira manter descritores específicos sobre genéricos quando ambos estiverem presentes.
 
 Retorne SOMENTE um array JSON com os códigos dos descritores aprovados.
-Exemplo: ["292","4794","1234"]
-Sem explicação, sem markdown.`;
+Exemplo: ["D011014","D001523","D020521"]
+Sem explicação, sem markdown, apenas o array JSON.`;
 
 /**
  * Ask Gemini to validate which descriptors are truly relevant for the question.
@@ -327,6 +335,8 @@ export async function validateDescriptorsWithGemini(
     .map((d) => ({
       code: d.code,
       term: d.term,
+      term_en: d.name_en ?? undefined,
+      scope: d.scope_note ? d.scope_note.substring(0, 180) : undefined,
       categoria: buildHierarchyPath(d.tree_ids[0] ?? '').split(' › ')[0],
     }));
 
