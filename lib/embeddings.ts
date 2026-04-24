@@ -249,7 +249,8 @@ export async function findSimilarNotes(
 export async function semanticSearchQuestions(
   queryEmbedding: number[],
   limit = 20,
-  offset = 0
+  offset = 0,
+  minSimilarity = 0.35
 ): Promise<(SimilarQuestion & { total_count: number })[]> {
   const res = await query(
     `SELECT
@@ -260,14 +261,14 @@ export async function semanticSearchQuestions(
        q.exam_year,
        q.exam_board,
        q.exam_institution,
-       1 - (q.embedding <=> $1::vector) AS similarity,
+       1 - (q.embedding::halfvec(3072) <=> $1::halfvec(3072)) AS similarity,
        COUNT(*) OVER() AS total_count
      FROM questions q
      WHERE q.embedding IS NOT NULL
-       AND (1 - (q.embedding <=> $1::vector)) > 0.5
-     ORDER BY q.embedding <=> $1::vector
+       AND (1 - (q.embedding::halfvec(3072) <=> $1::halfvec(3072))) > $4
+     ORDER BY q.embedding::halfvec(3072) <=> $1::halfvec(3072)
      LIMIT $2 OFFSET $3`,
-    [vectorToString(queryEmbedding), limit, offset]
+    [vectorToString(queryEmbedding), limit, offset, minSimilarity]
   );
 
   return res.rows.map((r) => ({

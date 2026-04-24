@@ -147,6 +147,8 @@ CREATE TABLE questions (
 
 CREATE INDEX IF NOT EXISTS idx_questions_created_at ON questions(created_at);
 CREATE INDEX IF NOT EXISTS idx_questions_prova_id ON questions(prova_id);
+-- pgvector 0.8+: use halfvec cast for HNSW on dimensions > 2000
+CREATE INDEX IF NOT EXISTS questions_embedding_hnsw_idx ON questions USING hnsw ((embedding::halfvec(3072)) halfvec_cosine_ops) WHERE embedding IS NOT NULL;
 
 -- note_questions (FK notes, questions)
 CREATE TABLE note_questions (
