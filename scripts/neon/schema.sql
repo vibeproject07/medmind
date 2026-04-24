@@ -141,6 +141,7 @@ CREATE TABLE questions (
   assuntos TEXT,
   anulada BOOLEAN DEFAULT FALSE,
   decs_terms TEXT,
+  embedding vector(3072),
   created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );

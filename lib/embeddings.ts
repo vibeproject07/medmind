@@ -23,9 +23,12 @@ export async function ensureEmbeddingColumn(): Promise<void> {
 }
 
 export async function ensureEmbeddingIndex(): Promise<void> {
+  // Use halfvec cast (required for pgvector HNSW on dims > 2000)
+  // CONCURRENTLY avoids write-blocking on populated tables
   await query(`
-    CREATE INDEX IF NOT EXISTS questions_embedding_hnsw_idx
-    ON questions USING hnsw (embedding vector_cosine_ops)
+    CREATE INDEX CONCURRENTLY IF NOT EXISTS questions_embedding_hnsw_idx
+    ON questions USING hnsw ((embedding::halfvec(3072)) halfvec_cosine_ops)
+    WHERE embedding IS NOT NULL
   `);
 }
 
