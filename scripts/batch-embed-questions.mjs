@@ -236,15 +236,20 @@ async function main() {
     await pineconeUpsertBatch(pendingPinecone);
   }
 
-  // Create pgvector HNSW index
+  // Create pgvector HNSW index (halfvec required for dims > 2000)
   if (success > 0) {
-    process.stdout.write('\n🔧 Criando índice HNSW no pgvector…\n');
+    process.stdout.write('\n🔧 Criando índice HNSW (halfvec) no pgvector…\n');
     try {
+      // Drop old vector_cosine_ops index if present (incompatible with halfvec queries)
       await pool.query(`
-        CREATE INDEX IF NOT EXISTS questions_embedding_hnsw_idx
-        ON questions USING hnsw (embedding vector_cosine_ops)
+        DROP INDEX CONCURRENTLY IF EXISTS questions_embedding_hnsw_idx
       `);
-      console.log('✅ Índice HNSW criado');
+      await pool.query(`
+        CREATE INDEX CONCURRENTLY IF NOT EXISTS questions_embedding_hnsw_idx
+        ON questions USING hnsw ((embedding::halfvec(3072)) halfvec_cosine_ops)
+        WHERE embedding IS NOT NULL
+      `);
+      console.log('✅ Índice HNSW (halfvec) criado');
     } catch (e) {
       console.error('⚠️ Erro ao criar índice:', e.message);
     }
