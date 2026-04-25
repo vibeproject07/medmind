@@ -15,6 +15,8 @@ import {
   BookOpen,
   X,
   FlaskConical,
+  TestTube2,
+  Cpu,
 } from 'lucide-react';
 import { useSidebar } from '@/contexts/SidebarContext';
 
@@ -59,6 +61,8 @@ export default function Sidebar() {
     { href: '/dashboard/users', icon: Users, label: 'Usuários', roles: ['admin', 'manager'] as UserRole[] },
     { href: '/dashboard/settings', icon: Settings, label: 'Configurações', roles: ['admin', 'manager'] as UserRole[] },
     { href: '/dashboard/agentes-editor', icon: FlaskConical, label: 'Editor de Agentes', roles: ['admin'] as UserRole[] },
+    { href: '/dashboard/admin/vectorization', icon: Cpu, label: 'Vetorização', roles: ['admin'] as UserRole[] },
+    { href: '/dashboard/admin/decs-test', icon: TestTube2, label: 'Teste DeCS A/B', roles: ['admin'] as UserRole[] },
   ];
 
   // Filtrar menu items baseado no role do usuário
