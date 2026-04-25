@@ -71,7 +71,7 @@ function buildQuestionText(q: Record<string, unknown>): string {
 
 async function runV1Full(questionText: string, decsKey: string, geminiKey: string) {
   const systemPrompt = await getAgentPrompt('decs_classifier');
-  const url = `${GEMINI_BASE}/gemini-2.5-flash:generateContent?key=${geminiKey}`;
+  const url = `${GEMINI_BASE}/gemini-3-pro-preview:generateContent?key=${geminiKey}`;
 
   const res = await fetch(url, {
     method: 'POST',
@@ -79,7 +79,7 @@ async function runV1Full(questionText: string, decsKey: string, geminiKey: strin
     body: JSON.stringify({
       system_instruction: { parts: [{ text: systemPrompt }] },
       contents: [{ role: 'user', parts: [{ text: questionText }] }],
-      generationConfig: { temperature: 0.1, maxOutputTokens: 2048, thinkingConfig: { thinkingBudget: 0 } },
+      generationConfig: { temperature: 0.1, maxOutputTokens: 8192 },
     }),
   });
   if (!res.ok) throw new Error(`Gemini V1 step1 failed: ${res.status}`);
@@ -87,7 +87,9 @@ async function runV1Full(questionText: string, decsKey: string, geminiKey: strin
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const data = await res.json() as any;
   const rawText: string =
-    data?.candidates?.[0]?.content?.parts?.map((p: Record<string, unknown>) => p?.text).filter(Boolean).join('') ?? '';
+    data?.candidates?.[0]?.content?.parts
+      ?.filter((p: Record<string, unknown>) => !p?.thought)
+      ?.map((p: Record<string, unknown>) => p?.text).filter(Boolean).join('') ?? '';
   const cleaned = rawText.trim().replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
   const parsed = JSON.parse(cleaned);
 

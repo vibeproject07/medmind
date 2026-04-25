@@ -327,7 +327,7 @@ export async function validateDescriptorsWithGemini(
   descriptors: DeCSRecord[],
   questionText: string,
   geminiKey: string,
-  model = 'gemini-2.5-flash'
+  model = 'gemini-3-pro-preview'
 ): Promise<DeCSRecord[]> {
   if (descriptors.length === 0) return [];
 
@@ -353,7 +353,7 @@ export async function validateDescriptorsWithGemini(
     const body = {
       system_instruction: { parts: [{ text: VALIDATION_PROMPT }] },
       contents: [{ role: 'user', parts: [{ text: userMessage }] }],
-      generationConfig: { temperature: 0, maxOutputTokens: 256 },
+      generationConfig: { temperature: 0, maxOutputTokens: 8192 },
     };
     const res = await fetch(url, {
       method: 'POST',
@@ -366,6 +366,7 @@ export async function validateDescriptorsWithGemini(
     const data = await res.json() as any;
     const rawText: string =
       (data?.candidates?.[0]?.content?.parts
+        ?.filter((p: Record<string, unknown>) => !p?.thought)
         ?.map((p: Record<string, unknown>) => p?.text)
         .filter(Boolean)
         .join('') ?? '');

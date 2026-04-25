@@ -206,11 +206,11 @@ async function selectDescriptorsWithGemini(
   const selectorPrompt = await getAgentPrompt('decs_selector_v2');
 
   try {
-    const url = `${GEMINI_BASE}/gemini-2.5-flash:generateContent?key=${geminiKey}`;
+    const url = `${GEMINI_BASE}/gemini-3-pro-preview:generateContent?key=${geminiKey}`;
     const body = {
       system_instruction: { parts: [{ text: selectorPrompt }] },
       contents: [{ role: 'user', parts: [{ text: JSON.stringify(contextInput, null, 2) }] }],
-      generationConfig: { temperature: 0.05, maxOutputTokens: 2048, thinkingConfig: { thinkingBudget: 0 } },
+      generationConfig: { temperature: 0.05, maxOutputTokens: 8192 },
     };
     const res = await fetch(url, {
       method: 'POST',
@@ -223,6 +223,7 @@ async function selectDescriptorsWithGemini(
     const data = await res.json() as any;
     const rawText: string =
       data?.candidates?.[0]?.content?.parts
+        ?.filter((p: Record<string, unknown>) => !p?.thought)
         ?.map((p: Record<string, unknown>) => p?.text)
         .filter(Boolean)
         .join('') ?? '';
@@ -299,11 +300,11 @@ export async function runDeCSPipelineV2(
   let themes: { primary: string[]; secondary: string[] } = { primary: [], secondary: [] };
 
   try {
-    const url = `${GEMINI_BASE}/gemini-2.5-flash:generateContent?key=${geminiKey}`;
+    const url = `${GEMINI_BASE}/gemini-3-pro-preview:generateContent?key=${geminiKey}`;
     const body = {
       system_instruction: { parts: [{ text: indexerPrompt }] },
       contents: [{ role: 'user', parts: [{ text: questionText }] }],
-      generationConfig: { temperature: 0.1, maxOutputTokens: 2048, thinkingConfig: { thinkingBudget: 0 } },
+      generationConfig: { temperature: 0.1, maxOutputTokens: 8192 },
     };
     const res = await fetch(url, {
       method: 'POST',
@@ -315,6 +316,7 @@ export async function runDeCSPipelineV2(
       const data = await res.json() as any;
       const rawText: string =
         data?.candidates?.[0]?.content?.parts
+          ?.filter((p: Record<string, unknown>) => !p?.thought)
           ?.map((p: Record<string, unknown>) => p?.text)
           .filter(Boolean)
           .join('') ?? '';

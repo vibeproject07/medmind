@@ -57,13 +57,12 @@ export async function POST(
     const systemPrompt = await getAgentPrompt('decs_classifier');
     const ai = new GoogleGenAI({ apiKey: geminiKey, apiVersion: 'v1beta' });
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3-pro-preview',
       contents: [{ role: 'user', parts: [{ text: questionText }] }],
       config: {
         systemInstruction: systemPrompt,
         temperature: 0.1,
-        maxOutputTokens: 2048,
-        thinkingConfig: { thinkingBudget: 0 },
+        maxOutputTokens: 8192,
       },
     });
 
