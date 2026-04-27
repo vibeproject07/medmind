@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
-import { runDeCSPipelineV2, type DeCSV2Result } from '@/lib/decs-pipeline-v2';
+import { runDeCSPipelineV2, type DeCSV2Result, type DeCSV2CandidateGroup } from '@/lib/decs-pipeline-v2';
 
 export const runtime = 'nodejs';
 
@@ -51,7 +51,7 @@ export async function POST(
       .filter(Boolean)
       .join('\n');
 
-    const { result, themes_identified, stats } = await runDeCSPipelineV2(
+    const { result, themes_identified, candidate_groups, stats } = await runDeCSPipelineV2(
       questionText,
       decsKey,
       geminiKey
@@ -59,12 +59,13 @@ export async function POST(
 
     await query(
       'UPDATE questions SET ai_decs_v2 = $1, updated_at = NOW() WHERE id = $2',
-      [JSON.stringify(result), params.id]
+      [JSON.stringify({ result, themes_identified, candidate_groups, stats }), params.id]
     );
 
     return NextResponse.json({
       result,
       themes_identified,
+      candidate_groups,
       pipeline_stats: stats,
     });
   } catch (err: unknown) {
@@ -93,8 +94,13 @@ export async function GET(
       return NextResponse.json({ error: 'Questão não encontrada' }, { status: 404 });
     }
     const raw = qRes.rows[0].ai_decs_v2 as string | null;
-    const result: DeCSV2Result = raw ? JSON.parse(raw) : { decs_primary: [], decs_secondary: [] };
-    return NextResponse.json({ result });
+    const parsed = raw ? JSON.parse(raw) : {};
+    return NextResponse.json({
+      result: parsed.result ?? { decs_primary: [], decs_secondary: [] },
+      themes_identified: parsed.themes_identified ?? { primary: [], secondary: [] },
+      candidate_groups: parsed.candidate_groups ?? [],
+      pipeline_stats: parsed.stats ?? null,
+    });
   } catch (err: unknown) {
     console.error('[decs-ai-v2] GET error:', err);
     return NextResponse.json({ error: 'Erro interno' }, { status: 500 });

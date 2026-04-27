@@ -379,6 +379,15 @@ export async function runDeCSPipelineV2(
       candidates = apiCandidates.filter((c) => isCategoryAcceptable(c, questionText));
     }
 
+    if (candidates.length === 0) {
+      candidates = [{
+        code: `fallback:${term}`,
+        term,
+        tree_ids: [],
+        hierarchy_path: '',
+      }];
+    }
+
     // Enrich records that came from BVS API (no scope_note)
     candidates = await enrichFromDB(candidates);
 
