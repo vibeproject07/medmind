@@ -31,6 +31,21 @@ export interface DeCSV2Result {
   decs_secondary: DeCSV2Descriptor[];
 }
 
+export interface DeCSV2CandidateGroup {
+  label: string;
+  concepts: Array<{
+    concept: string;
+    candidates: Array<{
+      id: string;
+      term: string;
+      term_en?: string;
+      scope?: string;
+      categoria?: string;
+      arvore?: string[];
+    }>;
+  }>;
+}
+
 // ── Hierarchy resolver ─────────────────────────────────────────────────────────
 
 /**
@@ -424,9 +439,41 @@ export async function runDeCSPipelineV2(
     resolveAll(selectedSecondary, 'secondary'),
   ]);
 
+  const candidate_groups: DeCSV2CandidateGroup[] = [
+    {
+      label: 'primários',
+      concepts: Array.from(primaryCandidates.entries()).map(([concept, candidates]) => ({
+        concept,
+        candidates: candidates.map((c) => ({
+          id: c.code,
+          term: c.term,
+          term_en: c.name_en,
+          scope: c.scope_note ? c.scope_note.substring(0, 200) : undefined,
+          categoria: buildHierarchyPath(c.tree_ids[0] ?? '').split(' › ')[0],
+          arvore: c.tree_ids.slice(0, 2),
+        })),
+      })),
+    },
+    {
+      label: 'secundários',
+      concepts: Array.from(secondaryCandidates.entries()).map(([concept, candidates]) => ({
+        concept,
+        candidates: candidates.map((c) => ({
+          id: c.code,
+          term: c.term,
+          term_en: c.name_en,
+          scope: c.scope_note ? c.scope_note.substring(0, 200) : undefined,
+          categoria: buildHierarchyPath(c.tree_ids[0] ?? '').split(' › ')[0],
+          arvore: c.tree_ids.slice(0, 2),
+        })),
+      })),
+    },
+  ];
+
   return {
     result: { decs_primary: primDesc, decs_secondary: secDesc },
     themes_identified: themes,
+    candidate_groups,
     stats: {
       primary_concepts: themes.primary.length,
       secondary_concepts: themes.secondary.length,
