@@ -46,6 +46,15 @@ export interface DeCSV2CandidateGroup {
   }>;
 }
 
+export interface DeCSV2DebugTrace {
+  themes: { primary: string[]; secondary: string[] };
+  candidate_groups: DeCSV2CandidateGroup[];
+  selected_candidates: {
+    primary: Array<{ id: string; term: string }>;
+    secondary: Array<{ id: string; term: string }>;
+  };
+}
+
 // ── Hierarchy resolver ─────────────────────────────────────────────────────────
 
 /**
@@ -302,6 +311,8 @@ export async function runDeCSPipelineV2(
 ): Promise<{
   result: DeCSV2Result;
   themes_identified: { primary: string[]; secondary: string[] };
+  candidate_groups: DeCSV2CandidateGroup[];
+  debug_trace: DeCSV2DebugTrace;
   stats: {
     primary_concepts: number;
     secondary_concepts: number;
@@ -483,6 +494,14 @@ export async function runDeCSPipelineV2(
     result: { decs_primary: primDesc, decs_secondary: secDesc },
     themes_identified: themes,
     candidate_groups,
+    debug_trace: {
+      themes,
+      candidate_groups,
+      selected_candidates: {
+        primary: primDesc.map((d) => ({ id: d.id, term: d.term })),
+        secondary: secDesc.map((d) => ({ id: d.id, term: d.term })),
+      },
+    },
     stats: {
       primary_concepts: themes.primary.length,
       secondary_concepts: themes.secondary.length,

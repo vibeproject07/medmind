@@ -51,7 +51,7 @@ export async function POST(
       .filter(Boolean)
       .join('\n');
 
-    const { result, themes_identified, candidate_groups, stats } = await runDeCSPipelineV2(
+    const { result, themes_identified, candidate_groups, debug_trace, stats } = await runDeCSPipelineV2(
       questionText,
       decsKey,
       geminiKey
@@ -59,13 +59,14 @@ export async function POST(
 
     await query(
       'UPDATE questions SET ai_decs_v2 = $1, updated_at = NOW() WHERE id = $2',
-      [JSON.stringify({ result, themes_identified, candidate_groups, stats }), params.id]
+      [JSON.stringify({ result, themes_identified, candidate_groups, debug_trace, stats }), params.id]
     );
 
     return NextResponse.json({
       result,
       themes_identified,
       candidate_groups,
+      debug_trace,
       pipeline_stats: stats,
     });
   } catch (err: unknown) {
@@ -99,6 +100,7 @@ export async function GET(
       result: parsed.result ?? { decs_primary: [], decs_secondary: [] },
       themes_identified: parsed.themes_identified ?? { primary: [], secondary: [] },
       candidate_groups: parsed.candidate_groups ?? [],
+      debug_trace: parsed.debug_trace ?? null,
       pipeline_stats: parsed.stats ?? null,
     });
   } catch (err: unknown) {
