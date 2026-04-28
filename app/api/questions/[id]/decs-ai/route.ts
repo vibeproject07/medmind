@@ -4,6 +4,7 @@ import { verifyToken } from '@/lib/jwt';
 import { getAgentPrompt } from '@/lib/ai-agents';
 import { GoogleGenAI } from '@google/genai';
 import { runDeCSPipeline, type DeCSRecord, type DeCSThemes } from '@/lib/decs-pipeline';
+import { saveClassificationArtifact } from '@/lib/decs-classification-storage';
 
 export const runtime = 'nodejs';
 
@@ -112,13 +113,8 @@ export async function POST(
       geminiKey
     );
 
-    await query(
-      'UPDATE questions SET ai_decs_descriptors = $1, updated_at = NOW() WHERE id = $2',
-      [JSON.stringify(descriptors), params.id]
-    );
-
-    return NextResponse.json({
-      descriptors,
+    const artifact = {
+      result: descriptors,
       themes_identified: themes,
       pipeline_stats: {
         primary_terms: themes.primary.length,
@@ -127,7 +123,15 @@ export async function POST(
         dropped_by_gemini_validation: dropped_by_gemini,
         final_count: descriptors.length,
       },
-    });
+    };
+
+    await query(
+      'UPDATE questions SET ai_decs_descriptors = $1, updated_at = NOW() WHERE id = $2',
+      [JSON.stringify(descriptors), params.id]
+    );
+    await saveClassificationArtifact(params.id, 'v1', artifact);
+
+    return NextResponse.json(artifact);
   } catch (err: unknown) {
     console.error('[decs-ai] error:', err);
     const message = err instanceof Error ? err.message : 'Erro interno';

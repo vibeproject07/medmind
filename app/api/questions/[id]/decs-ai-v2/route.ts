@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { runDeCSPipelineV2, type DeCSV2Result, type DeCSV2CandidateGroup } from '@/lib/decs-pipeline-v2';
+import { saveClassificationArtifact } from '@/lib/decs-classification-storage';
 
 export const runtime = 'nodejs';
 
@@ -61,6 +62,7 @@ export async function POST(
       'UPDATE questions SET ai_decs_v2 = $1, updated_at = NOW() WHERE id = $2',
       [JSON.stringify({ result, themes_identified, candidate_groups, debug_trace, stats }), params.id]
     );
+    await saveClassificationArtifact(params.id, 'v2', { result, themes_identified, candidate_groups, debug_trace, stats });
 
     return NextResponse.json({
       result,
