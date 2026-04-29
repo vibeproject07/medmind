@@ -1,0 +1,383 @@
+{
+  "result": {
+    "decs_primary": [],
+    "decs_secondary": []
+  },
+  "themes_identified": {
+    "primary": [
+      "Enunciado",
+      "Observe a figura abaixo e assinale a alternativa correta quanto a esse instrumento de abordagem familiar",
+      "Alternativa A"
+    ],
+    "secondary": []
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Enunciado",
+          "candidates": [
+            {
+              "id": "DDCS032482",
+              "term": "Recursos Renováveis",
+              "term_en": "Renewable Resources",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.837.868"
+              ]
+            },
+            {
+              "id": "DDCS051583",
+              "term": "Varredoras",
+              "term_en": "Sweepers",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.987.506.871"
+              ]
+            },
+            {
+              "id": "DDCS051857",
+              "term": "Utilização de Recursos Locais",
+              "term_en": "Local Resources Uses",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.303.766"
+              ]
+            },
+            {
+              "id": "DDCS051642",
+              "term": "Leito Fixo",
+              "term_en": "Fixed Bed",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.806.945.750.207.899.660"
+              ]
+            },
+            {
+              "id": "DDCS025556",
+              "term": "Tanques de Concreto",
+              "term_en": "Reinforced Concrete Tanks",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.141.089.248.433.561"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Observe a figura abaixo e assinale a alternativa correta quanto a esse instrumento de abordagem familiar",
+          "candidates": [
+            {
+              "id": "DDCS059936",
+              "term": "Constelação Familiar",
+              "term_en": "Family Constellation",
+              "scope": "Intervenção em grupo de curto prazo com o objetivo de ajudar pessoas a entender melhor e depois mudar suas experiências conflitantes dentro de um sistema social familiar.",
+              "categoria": "MT",
+              "arvore": [
+                "MT3.795.248"
+              ]
+            },
+            {
+              "id": "D000092802",
+              "term": "Apoio Familiar",
+              "term_en": "Family Support",
+              "scope": "Sistemas de apoio que prestam ajuda e incentivo mútuo aos membros de uma FAMÍLIA e entre eles.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.829.263.370.082",
+                "I01.880.853.150.439.500"
+              ]
+            },
+            {
+              "id": "D011368",
+              "term": "Relações Profissional-Família",
+              "term_en": "Professional-Family Relations",
+              "scope": "As interações entre o profissional e a família.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.829.401.550"
+              ]
+            },
+            {
+              "id": "D022143",
+              "term": "Enfermagem Familiar",
+              "term_en": "Family Nursing",
+              "scope": "A provisão de cuidados envolvendo o processo de enfermagem a famílias e membros da família em situações de saúde e enfermidade.",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.478.676.218"
+              ]
+            },
+            {
+              "id": "D005196",
+              "term": "Terapia Familiar",
+              "term_en": "Family Therapy",
+              "scope": "Forma de psicoterapia de grupo. Envolve o tratamento simultâneo de mais de um membro da família na mesma sessão.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F04.754.864.581.273"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Alternativa A",
+          "candidates": [
+            {
+              "id": "D034904",
+              "term": "Lamina Tipo A",
+              "term_en": "Lamin Type A",
+              "scope": "Subclasse de lâminas regulada pelo desenvolvimento possuindo um ponto isoelétrico neutro. Dissociam-se das membranas nucleares durante a mitose.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.660.650.875.500"
+              ]
+            },
+            {
+              "id": "D038202",
+              "term": "Cadeia A de alfa-Cristalina",
+              "term_en": "alpha-Crystallin A Chain",
+              "scope": "Uma das subunidades de alfa-cristalinas. Diferentemente da CADEIA B DE ALFA-CRISTALINA, a expressão da CADEIA A DE ALFA-CRISTALINA está limitada basicamente ao CRISTALINO.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.306.366.100.149",
+                "D12.776.580.157.149"
+              ]
+            },
+            {
+              "id": "D038205",
+              "term": "Cadeia A de beta-Cristalina",
+              "term_en": "beta-Crystallin A Chain",
+              "scope": "Subunidade ácida de beta-cristalina.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.306.366.300.100"
+              ]
+            },
+            {
+              "id": "D019925",
+              "term": "Ciclina A",
+              "term_en": "Cyclin A",
+              "scope": "Subtipo de ciclina que possui especificidade para a PROTEÍNA QUINASE CDC2 e QUINASE 2 DEPENDENTE DE CICLINA. Exerce papel na progressão do CICLO CELULAR nas transições entre as fases G1/S e G2/M.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.644.360.262.100",
+                "D12.776.167.218.100"
+              ]
+            },
+            {
+              "id": "D018514",
+              "term": "Estruturas Vegetais",
+              "term_en": "Plant Structures",
+              "scope": "Partes das plantas, incluindo as SEMENTES.",
+              "categoria": "Anatomia",
+              "arvore": [
+                "A18"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": []
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Enunciado",
+        "Observe a figura abaixo e assinale a alternativa correta quanto a esse instrumento de abordagem familiar",
+        "Alternativa A"
+      ],
+      "secondary": []
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Enunciado",
+            "candidates": [
+              {
+                "id": "DDCS032482",
+                "term": "Recursos Renováveis",
+                "term_en": "Renewable Resources",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.837.868"
+                ]
+              },
+              {
+                "id": "DDCS051583",
+                "term": "Varredoras",
+                "term_en": "Sweepers",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.987.506.871"
+                ]
+              },
+              {
+                "id": "DDCS051857",
+                "term": "Utilização de Recursos Locais",
+                "term_en": "Local Resources Uses",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.303.766"
+                ]
+              },
+              {
+                "id": "DDCS051642",
+                "term": "Leito Fixo",
+                "term_en": "Fixed Bed",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.806.945.750.207.899.660"
+                ]
+              },
+              {
+                "id": "DDCS025556",
+                "term": "Tanques de Concreto",
+                "term_en": "Reinforced Concrete Tanks",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.141.089.248.433.561"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Observe a figura abaixo e assinale a alternativa correta quanto a esse instrumento de abordagem familiar",
+            "candidates": [
+              {
+                "id": "DDCS059936",
+                "term": "Constelação Familiar",
+                "term_en": "Family Constellation",
+                "scope": "Intervenção em grupo de curto prazo com o objetivo de ajudar pessoas a entender melhor e depois mudar suas experiências conflitantes dentro de um sistema social familiar.",
+                "categoria": "MT",
+                "arvore": [
+                  "MT3.795.248"
+                ]
+              },
+              {
+                "id": "D000092802",
+                "term": "Apoio Familiar",
+                "term_en": "Family Support",
+                "scope": "Sistemas de apoio que prestam ajuda e incentivo mútuo aos membros de uma FAMÍLIA e entre eles.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.829.263.370.082",
+                  "I01.880.853.150.439.500"
+                ]
+              },
+              {
+                "id": "D011368",
+                "term": "Relações Profissional-Família",
+                "term_en": "Professional-Family Relations",
+                "scope": "As interações entre o profissional e a família.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.829.401.550"
+                ]
+              },
+              {
+                "id": "D022143",
+                "term": "Enfermagem Familiar",
+                "term_en": "Family Nursing",
+                "scope": "A provisão de cuidados envolvendo o processo de enfermagem a famílias e membros da família em situações de saúde e enfermidade.",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.478.676.218"
+                ]
+              },
+              {
+                "id": "D005196",
+                "term": "Terapia Familiar",
+                "term_en": "Family Therapy",
+                "scope": "Forma de psicoterapia de grupo. Envolve o tratamento simultâneo de mais de um membro da família na mesma sessão.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F04.754.864.581.273"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Alternativa A",
+            "candidates": [
+              {
+                "id": "D034904",
+                "term": "Lamina Tipo A",
+                "term_en": "Lamin Type A",
+                "scope": "Subclasse de lâminas regulada pelo desenvolvimento possuindo um ponto isoelétrico neutro. Dissociam-se das membranas nucleares durante a mitose.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.660.650.875.500"
+                ]
+              },
+              {
+                "id": "D038202",
+                "term": "Cadeia A de alfa-Cristalina",
+                "term_en": "alpha-Crystallin A Chain",
+                "scope": "Uma das subunidades de alfa-cristalinas. Diferentemente da CADEIA B DE ALFA-CRISTALINA, a expressão da CADEIA A DE ALFA-CRISTALINA está limitada basicamente ao CRISTALINO.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.306.366.100.149",
+                  "D12.776.580.157.149"
+                ]
+              },
+              {
+                "id": "D038205",
+                "term": "Cadeia A de beta-Cristalina",
+                "term_en": "beta-Crystallin A Chain",
+                "scope": "Subunidade ácida de beta-cristalina.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.306.366.300.100"
+                ]
+              },
+              {
+                "id": "D019925",
+                "term": "Ciclina A",
+                "term_en": "Cyclin A",
+                "scope": "Subtipo de ciclina que possui especificidade para a PROTEÍNA QUINASE CDC2 e QUINASE 2 DEPENDENTE DE CICLINA. Exerce papel na progressão do CICLO CELULAR nas transições entre as fases G1/S e G2/M.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.644.360.262.100",
+                  "D12.776.167.218.100"
+                ]
+              },
+              {
+                "id": "D018514",
+                "term": "Estruturas Vegetais",
+                "term_en": "Plant Structures",
+                "scope": "Partes das plantas, incluindo as SEMENTES.",
+                "categoria": "Anatomia",
+                "arvore": [
+                  "A18"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": []
+      }
+    ],
+    "selected_candidates": {
+      "primary": [],
+      "secondary": []
+    }
+  },
+  "stats": {
+    "primary_concepts": 3,
+    "secondary_concepts": 0,
+    "total_candidates": 15,
+    "final_primary": 0,
+    "final_secondary": 0
+  }
+}

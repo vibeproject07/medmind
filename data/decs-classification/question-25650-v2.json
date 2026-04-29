@@ -1,0 +1,460 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D014397",
+        "term": "Tuberculose Pulmonar",
+        "name_en": "Tuberculosis, Pulmonary",
+        "scope_note": "Infecções por MYCOBACTERIUM nos pulmões.",
+        "tree_ids": [
+          "C01.150.252.410.040.552.846.899",
+          "C01.748.939",
+          "C08.381.922",
+          "C08.730.939"
+        ],
+        "hierarchy_path": "Doenças › C01.150.252.410.040.552.846.899",
+        "parents": [
+          {
+            "id": "D014376",
+            "term": "Tuberculose"
+          },
+          {
+            "id": "D012141",
+            "term": "Infecções Respiratórias"
+          },
+          {
+            "id": "D008171",
+            "term": "Pneumopatias"
+          }
+        ],
+        "children": [
+          {
+            "id": "D012830",
+            "term": "Silicotuberculose"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D058501",
+        "term": "ELISPOT",
+        "name_en": "Enzyme-Linked Immunospot Assay",
+        "scope_note": "Método para detecção do número de células em uma amostra que secreta uma molécula determinada. Com este método, uma população de células é plaqueada sobre um substrato imuno[ad]sorvente que captura as moléculas secretadas.",
+        "tree_ids": [
+          "E01.370.225.500.508",
+          "E05.200.500.508",
+          "E05.242.551",
+          "E05.478.566.350.170.500",
+          "E05.478.566.380.360.500",
+          "E05.478.583.400.170.500",
+          "E05.601.470.350.170.500",
+          "E05.601.470.380.360.500"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.225.500.508",
+        "parents": [
+          {
+            "id": "D003584",
+            "term": "Técnicas Citológicas"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": []
+  },
+  "themes_identified": {
+    "primary": [
+      "Enunciado",
+      "Um novo teste diagnóstico de TB pulmonar",
+      "denominado provisoriamente de Ellispot"
+    ],
+    "secondary": []
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Enunciado",
+          "candidates": [
+            {
+              "id": "DDCS032482",
+              "term": "Recursos Renováveis",
+              "term_en": "Renewable Resources",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.837.868"
+              ]
+            },
+            {
+              "id": "DDCS051583",
+              "term": "Varredoras",
+              "term_en": "Sweepers",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.987.506.871"
+              ]
+            },
+            {
+              "id": "DDCS051857",
+              "term": "Utilização de Recursos Locais",
+              "term_en": "Local Resources Uses",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.303.766"
+              ]
+            },
+            {
+              "id": "DDCS051642",
+              "term": "Leito Fixo",
+              "term_en": "Fixed Bed",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.806.945.750.207.899.660"
+              ]
+            },
+            {
+              "id": "DDCS025556",
+              "term": "Tanques de Concreto",
+              "term_en": "Reinforced Concrete Tanks",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.141.089.248.433.561"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Um novo teste diagnóstico de TB pulmonar",
+          "candidates": [
+            {
+              "id": "D000099137",
+              "term": "Baciloscopia",
+              "term_en": "Bacilloscopy",
+              "scope": "Teste diagnóstico utilizado principalmente para detectar TUBERCULOSE e outras infecções respiratórias.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.386.001",
+                "VS3.003.001.006.005.004.156"
+              ]
+            },
+            {
+              "id": "D014397",
+              "term": "Tuberculose Pulmonar",
+              "term_en": "Tuberculosis, Pulmonary",
+              "scope": "Infecções por MYCOBACTERIUM nos pulmões.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.150.252.410.040.552.846.899",
+                "C01.748.939"
+              ]
+            },
+            {
+              "id": "D014374",
+              "term": "Teste Tuberculínico",
+              "term_en": "Tuberculin Test",
+              "scope": "Um dos vários testes cutâneos para determinar uma tuberculose desenvolvida no passado ou no presente. Uma proteína purificada derivada do bacilo da tuberculose, chamada tuberculina, é introduzida na p",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.225.812.871.800",
+                "E05.200.812.871.800"
+              ]
+            },
+            {
+              "id": "D014373",
+              "term": "Tuberculina",
+              "term_en": "Tuberculin",
+              "scope": "Proteína extraída da cultura fervida do bacilo da tuberculose (MYCOBACTERIUM TUBERCULOSIS). É usada no TESTE TUBERCULÍNICO cutâneo para o diagnóstico da infecção por tuberculose em pessoas assintomáti",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.097.025.845",
+                "D23.050.161.845"
+              ]
+            },
+            {
+              "id": "D003948",
+              "term": "Técnicas de Diagnóstico do Sistema Respiratório",
+              "term_en": "Diagnostic Techniques, Respiratory System",
+              "scope": "Métodos e procedimentos para o diagnóstico de doenças do trato respiratório ou seus órgãos. Abrangem TESTES DE FUNÇÃO RESPIRATÓRIA.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.386"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "denominado provisoriamente de Ellispot",
+          "candidates": [
+            {
+              "id": "D058501",
+              "term": "ELISPOT",
+              "term_en": "Enzyme-Linked Immunospot Assay",
+              "scope": "Método para detecção do número de células em uma amostra que secreta uma molécula determinada. Com este método, uma população de células é plaqueada sobre um substrato imuno[ad]sorvente que captura as",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.225.500.508",
+                "E05.200.500.508"
+              ]
+            },
+            {
+              "id": "D059425",
+              "term": "Testes de Liberação de Interferon-gama",
+              "term_en": "Interferon-gamma Release Tests",
+              "scope": "Ensaio de liberação de INTERFERON GAMA dos linfócitos depois da exposição um antígeno teste específico, a fim de verificar a MEMÓRIA IMUNOLÓGICA resultante de uma exposição prévia ao antígeno. A quant",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.225.812.453",
+                "E05.200.812.453"
+              ]
+            },
+            {
+              "id": "D018984",
+              "term": "Epitopos de Linfócito T",
+              "term_en": "Epitopes, T-Lymphocyte",
+              "scope": "Determinantes antigênicos reconhecidos e ligados pelo receptor da célula T. Os epitopos reconhecidos pelo receptor da célula T frequentemente estão localizados no lado interno (não exposto) do antígen",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D23.050.550.402"
+              ]
+            },
+            {
+              "id": "D016056",
+              "term": "Epitopos Imunodominantes",
+              "term_en": "Immunodominant Epitopes",
+              "scope": "Subunidades do determinante antigênico que são mais facilmente reconhecidos pelo sistema imune, e assim influenciam extremamente a especificidade do anticorpo induzido.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D23.050.550.500"
+              ]
+            },
+            {
+              "id": "D000094632",
+              "term": "Linfopoietina do Estroma do Timo",
+              "term_en": "Thymic Stromal Lymphopoietin",
+              "scope": "Citocina pleiotrópica envolvida na INFLAMAÇÃO e na imunorregulação. A linfopoietina do estroma do timo pode ativar os MASTÓCITOS, as CÉLULAS DENDRÍTICAS e os LINFÓCITOS T, sendo produzida por vários t",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.644.276.374.656",
+                "D12.776.467.374.656"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": []
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Enunciado",
+        "Um novo teste diagnóstico de TB pulmonar",
+        "denominado provisoriamente de Ellispot"
+      ],
+      "secondary": []
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Enunciado",
+            "candidates": [
+              {
+                "id": "DDCS032482",
+                "term": "Recursos Renováveis",
+                "term_en": "Renewable Resources",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.837.868"
+                ]
+              },
+              {
+                "id": "DDCS051583",
+                "term": "Varredoras",
+                "term_en": "Sweepers",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.987.506.871"
+                ]
+              },
+              {
+                "id": "DDCS051857",
+                "term": "Utilização de Recursos Locais",
+                "term_en": "Local Resources Uses",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.303.766"
+                ]
+              },
+              {
+                "id": "DDCS051642",
+                "term": "Leito Fixo",
+                "term_en": "Fixed Bed",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.806.945.750.207.899.660"
+                ]
+              },
+              {
+                "id": "DDCS025556",
+                "term": "Tanques de Concreto",
+                "term_en": "Reinforced Concrete Tanks",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.141.089.248.433.561"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Um novo teste diagnóstico de TB pulmonar",
+            "candidates": [
+              {
+                "id": "D000099137",
+                "term": "Baciloscopia",
+                "term_en": "Bacilloscopy",
+                "scope": "Teste diagnóstico utilizado principalmente para detectar TUBERCULOSE e outras infecções respiratórias.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.386.001",
+                  "VS3.003.001.006.005.004.156"
+                ]
+              },
+              {
+                "id": "D014397",
+                "term": "Tuberculose Pulmonar",
+                "term_en": "Tuberculosis, Pulmonary",
+                "scope": "Infecções por MYCOBACTERIUM nos pulmões.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.150.252.410.040.552.846.899",
+                  "C01.748.939"
+                ]
+              },
+              {
+                "id": "D014374",
+                "term": "Teste Tuberculínico",
+                "term_en": "Tuberculin Test",
+                "scope": "Um dos vários testes cutâneos para determinar uma tuberculose desenvolvida no passado ou no presente. Uma proteína purificada derivada do bacilo da tuberculose, chamada tuberculina, é introduzida na p",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.225.812.871.800",
+                  "E05.200.812.871.800"
+                ]
+              },
+              {
+                "id": "D014373",
+                "term": "Tuberculina",
+                "term_en": "Tuberculin",
+                "scope": "Proteína extraída da cultura fervida do bacilo da tuberculose (MYCOBACTERIUM TUBERCULOSIS). É usada no TESTE TUBERCULÍNICO cutâneo para o diagnóstico da infecção por tuberculose em pessoas assintomáti",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.097.025.845",
+                  "D23.050.161.845"
+                ]
+              },
+              {
+                "id": "D003948",
+                "term": "Técnicas de Diagnóstico do Sistema Respiratório",
+                "term_en": "Diagnostic Techniques, Respiratory System",
+                "scope": "Métodos e procedimentos para o diagnóstico de doenças do trato respiratório ou seus órgãos. Abrangem TESTES DE FUNÇÃO RESPIRATÓRIA.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.386"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "denominado provisoriamente de Ellispot",
+            "candidates": [
+              {
+                "id": "D058501",
+                "term": "ELISPOT",
+                "term_en": "Enzyme-Linked Immunospot Assay",
+                "scope": "Método para detecção do número de células em uma amostra que secreta uma molécula determinada. Com este método, uma população de células é plaqueada sobre um substrato imuno[ad]sorvente que captura as",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.225.500.508",
+                  "E05.200.500.508"
+                ]
+              },
+              {
+                "id": "D059425",
+                "term": "Testes de Liberação de Interferon-gama",
+                "term_en": "Interferon-gamma Release Tests",
+                "scope": "Ensaio de liberação de INTERFERON GAMA dos linfócitos depois da exposição um antígeno teste específico, a fim de verificar a MEMÓRIA IMUNOLÓGICA resultante de uma exposição prévia ao antígeno. A quant",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.225.812.453",
+                  "E05.200.812.453"
+                ]
+              },
+              {
+                "id": "D018984",
+                "term": "Epitopos de Linfócito T",
+                "term_en": "Epitopes, T-Lymphocyte",
+                "scope": "Determinantes antigênicos reconhecidos e ligados pelo receptor da célula T. Os epitopos reconhecidos pelo receptor da célula T frequentemente estão localizados no lado interno (não exposto) do antígen",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D23.050.550.402"
+                ]
+              },
+              {
+                "id": "D016056",
+                "term": "Epitopos Imunodominantes",
+                "term_en": "Immunodominant Epitopes",
+                "scope": "Subunidades do determinante antigênico que são mais facilmente reconhecidos pelo sistema imune, e assim influenciam extremamente a especificidade do anticorpo induzido.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D23.050.550.500"
+                ]
+              },
+              {
+                "id": "D000094632",
+                "term": "Linfopoietina do Estroma do Timo",
+                "term_en": "Thymic Stromal Lymphopoietin",
+                "scope": "Citocina pleiotrópica envolvida na INFLAMAÇÃO e na imunorregulação. A linfopoietina do estroma do timo pode ativar os MASTÓCITOS, as CÉLULAS DENDRÍTICAS e os LINFÓCITOS T, sendo produzida por vários t",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.644.276.374.656",
+                  "D12.776.467.374.656"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": []
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D014397",
+          "term": "Tuberculose Pulmonar"
+        },
+        {
+          "id": "D058501",
+          "term": "ELISPOT"
+        }
+      ],
+      "secondary": []
+    }
+  },
+  "stats": {
+    "primary_concepts": 3,
+    "secondary_concepts": 0,
+    "total_candidates": 15,
+    "final_primary": 2,
+    "final_secondary": 0
+  }
+}

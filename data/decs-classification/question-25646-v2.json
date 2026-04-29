@@ -1,0 +1,488 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D000062",
+        "term": "Acidentes de Trabalho",
+        "name_en": "Accidents, Occupational",
+        "scope_note": "Ocorrências imprevistas, especialmente lesões ou traumatismos durante atividades relacionadas ao trabalho.",
+        "tree_ids": [
+          "N06.850.135.240",
+          "SP8.095.664",
+          "VS4.002.001.001.007.001"
+        ],
+        "hierarchy_path": "Saúde › N06.850.135.240",
+        "parents": [
+          {
+            "id": "D000059",
+            "term": "Acidentes"
+          },
+          {
+            "id": "D012449",
+            "term": "Segurança"
+          }
+        ],
+        "children": [
+          {
+            "id": "DDCS016385",
+            "term": "Notificação de Acidentes de Trabalho"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "DDCS016385",
+        "term": "Notificação de Acidentes de Trabalho",
+        "name_en": "Occupational Accidents Registry",
+        "scope_note": "Documento oficial que informa às instituições pertinentes (seguradoras ou previdenciárias) que o trabalhador sofreu acidente de trabalho ou que haja suspeita que tenha adquirido alguma doença relacionada ao trabalho.",
+        "tree_ids": [
+          "VS4.002.001.001.007.001.001"
+        ],
+        "hierarchy_path": "Vigilância Sanitária › VS4.002.001.001.007.001.001",
+        "parents": [
+          {
+            "id": "D000062",
+            "term": "Acidentes de Trabalho"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      },
+      {
+        "id": "D000328",
+        "term": "Adulto",
+        "name_en": "Adult",
+        "scope_note": "Pessoa que atingiu crescimento total ou maturidade. Adultos vão dos 19 até 44 anos de idade. Para uma pessoa entre 19 e 24 anos, está disponível o termo ADULTO JOVEM.",
+        "tree_ids": [
+          "M01.060.116"
+        ],
+        "hierarchy_path": "Grupos Identificados › M01.060.116",
+        "parents": [
+          {
+            "id": "D009273",
+            "term": "Grupos Etários"
+          }
+        ],
+        "children": [
+          {
+            "id": "D055815",
+            "term": "Adulto Jovem"
+          },
+          {
+            "id": "D008875",
+            "term": "Pessoa de Meia-Idade"
+          },
+          {
+            "id": "D000369",
+            "term": "Idoso de 80 Anos ou mais"
+          },
+          {
+            "id": "D000087742",
+            "term": "Octogenários"
+          },
+          {
+            "id": "D000087662",
+            "term": "Centenários"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D005260",
+        "term": "Feminino",
+        "name_en": "Female",
+        "scope_note": "Organismos com o SEXO biológico que produz ÓVULOS para reprodução sexuada.",
+        "tree_ids": [],
+        "hierarchy_path": "",
+        "parents": [],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": []
+  },
+  "themes_identified": {
+    "primary": [
+      "Enunciado",
+      "Mulher de 32 anos",
+      "chega à unidade de saúde após acidente com material perfurocortante durante o trabalho na cozinha de uma lanchonete próxima da UBS"
+    ],
+    "secondary": []
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Enunciado",
+          "candidates": [
+            {
+              "id": "DDCS032482",
+              "term": "Recursos Renováveis",
+              "term_en": "Renewable Resources",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.837.868"
+              ]
+            },
+            {
+              "id": "DDCS051583",
+              "term": "Varredoras",
+              "term_en": "Sweepers",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.987.506.871"
+              ]
+            },
+            {
+              "id": "DDCS051857",
+              "term": "Utilização de Recursos Locais",
+              "term_en": "Local Resources Uses",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.303.766"
+              ]
+            },
+            {
+              "id": "DDCS051642",
+              "term": "Leito Fixo",
+              "term_en": "Fixed Bed",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.806.945.750.207.899.660"
+              ]
+            },
+            {
+              "id": "DDCS025556",
+              "term": "Tanques de Concreto",
+              "term_en": "Reinforced Concrete Tanks",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.141.089.248.433.561"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "chega à unidade de saúde após acidente com material perfurocortante durante o trabalho na cozinha de uma lanchonete próxima da UBS",
+          "candidates": [
+            {
+              "id": "D016602",
+              "term": "Ferimentos Penetrantes Produzidos por Agulha",
+              "term_en": "Needlestick Injuries",
+              "scope": "Ferimentos cortantes, penetrantes, causados por agulhas. São concernentes especialmente a trabalhadores da área de saúde, uma vez que tais lesões os colocam em risco de desenvolverem doença infecciosa",
+              "categoria": "Doenças",
+              "arvore": [
+                "C26.986.950.500"
+              ]
+            },
+            {
+              "id": "D060051",
+              "term": "Traumatismos Ocupacionais",
+              "term_en": "Occupational Injuries",
+              "scope": "Lesões adquiridas em incidentes durante atividades laborais.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C26.716"
+              ]
+            },
+            {
+              "id": "DDCS016385",
+              "term": "Notificação de Acidentes de Trabalho",
+              "term_en": "Occupational Accidents Registry",
+              "scope": "Documento oficial que informa às instituições pertinentes (seguradoras ou previdenciárias) que o trabalhador sofreu acidente de trabalho ou que haja suspeita que tenha adquirido alguma doença relacion",
+              "categoria": "Vigilância Sanitária",
+              "arvore": [
+                "VS4.002.001.001.007.001.001"
+              ]
+            },
+            {
+              "id": "D014951",
+              "term": "Ferimentos Perfurantes",
+              "term_en": "Wounds, Stab",
+              "scope": "Ferimentos penetrantes causados por um objeto pontiagudo.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C26.986.950"
+              ]
+            },
+            {
+              "id": "D000062",
+              "term": "Acidentes de Trabalho",
+              "term_en": "Accidents, Occupational",
+              "scope": "Ocorrências imprevistas, especialmente lesões ou traumatismos durante atividades relacionadas ao trabalho.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N06.850.135.240",
+                "SP8.095.664"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Mulher de 32 anos",
+          "candidates": [
+            {
+              "id": "D008875",
+              "term": "Pessoa de Meia-Idade",
+              "term_en": "Middle Aged",
+              "scope": "Adulto com idade entre 45 e 64 anos.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.060.116.630"
+              ]
+            },
+            {
+              "id": "D005260",
+              "term": "Feminino",
+              "term_en": "Female",
+              "scope": "Organismos com o SEXO biológico que produz ÓVULOS para reprodução sexuada.",
+              "categoria": "",
+              "arvore": []
+            },
+            {
+              "id": "DDCS060373",
+              "term": "Mulheres Lactantes",
+              "term_en": "Breastfeeding Women",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP3.522.561.200.492"
+              ]
+            },
+            {
+              "id": "D000328",
+              "term": "Adulto",
+              "term_en": "Adult",
+              "scope": "Pessoa que atingiu crescimento total ou maturidade. Adultos vão dos 19 até 44 anos de idade. Para uma pessoa entre 19 e 24 anos, está disponível o termo ADULTO JOVEM.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.060.116"
+              ]
+            },
+            {
+              "id": "D055815",
+              "term": "Adulto Jovem",
+              "term_en": "Young Adult",
+              "scope": "Uma pessoa entre 19 e 24 anos de idade.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.060.116.815"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": []
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Enunciado",
+        "Mulher de 32 anos",
+        "chega à unidade de saúde após acidente com material perfurocortante durante o trabalho na cozinha de uma lanchonete próxima da UBS"
+      ],
+      "secondary": []
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Enunciado",
+            "candidates": [
+              {
+                "id": "DDCS032482",
+                "term": "Recursos Renováveis",
+                "term_en": "Renewable Resources",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.837.868"
+                ]
+              },
+              {
+                "id": "DDCS051583",
+                "term": "Varredoras",
+                "term_en": "Sweepers",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.987.506.871"
+                ]
+              },
+              {
+                "id": "DDCS051857",
+                "term": "Utilização de Recursos Locais",
+                "term_en": "Local Resources Uses",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.303.766"
+                ]
+              },
+              {
+                "id": "DDCS051642",
+                "term": "Leito Fixo",
+                "term_en": "Fixed Bed",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.806.945.750.207.899.660"
+                ]
+              },
+              {
+                "id": "DDCS025556",
+                "term": "Tanques de Concreto",
+                "term_en": "Reinforced Concrete Tanks",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.141.089.248.433.561"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "chega à unidade de saúde após acidente com material perfurocortante durante o trabalho na cozinha de uma lanchonete próxima da UBS",
+            "candidates": [
+              {
+                "id": "D016602",
+                "term": "Ferimentos Penetrantes Produzidos por Agulha",
+                "term_en": "Needlestick Injuries",
+                "scope": "Ferimentos cortantes, penetrantes, causados por agulhas. São concernentes especialmente a trabalhadores da área de saúde, uma vez que tais lesões os colocam em risco de desenvolverem doença infecciosa",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C26.986.950.500"
+                ]
+              },
+              {
+                "id": "D060051",
+                "term": "Traumatismos Ocupacionais",
+                "term_en": "Occupational Injuries",
+                "scope": "Lesões adquiridas em incidentes durante atividades laborais.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C26.716"
+                ]
+              },
+              {
+                "id": "DDCS016385",
+                "term": "Notificação de Acidentes de Trabalho",
+                "term_en": "Occupational Accidents Registry",
+                "scope": "Documento oficial que informa às instituições pertinentes (seguradoras ou previdenciárias) que o trabalhador sofreu acidente de trabalho ou que haja suspeita que tenha adquirido alguma doença relacion",
+                "categoria": "Vigilância Sanitária",
+                "arvore": [
+                  "VS4.002.001.001.007.001.001"
+                ]
+              },
+              {
+                "id": "D014951",
+                "term": "Ferimentos Perfurantes",
+                "term_en": "Wounds, Stab",
+                "scope": "Ferimentos penetrantes causados por um objeto pontiagudo.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C26.986.950"
+                ]
+              },
+              {
+                "id": "D000062",
+                "term": "Acidentes de Trabalho",
+                "term_en": "Accidents, Occupational",
+                "scope": "Ocorrências imprevistas, especialmente lesões ou traumatismos durante atividades relacionadas ao trabalho.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N06.850.135.240",
+                  "SP8.095.664"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Mulher de 32 anos",
+            "candidates": [
+              {
+                "id": "D008875",
+                "term": "Pessoa de Meia-Idade",
+                "term_en": "Middle Aged",
+                "scope": "Adulto com idade entre 45 e 64 anos.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.060.116.630"
+                ]
+              },
+              {
+                "id": "D005260",
+                "term": "Feminino",
+                "term_en": "Female",
+                "scope": "Organismos com o SEXO biológico que produz ÓVULOS para reprodução sexuada.",
+                "categoria": "",
+                "arvore": []
+              },
+              {
+                "id": "DDCS060373",
+                "term": "Mulheres Lactantes",
+                "term_en": "Breastfeeding Women",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP3.522.561.200.492"
+                ]
+              },
+              {
+                "id": "D000328",
+                "term": "Adulto",
+                "term_en": "Adult",
+                "scope": "Pessoa que atingiu crescimento total ou maturidade. Adultos vão dos 19 até 44 anos de idade. Para uma pessoa entre 19 e 24 anos, está disponível o termo ADULTO JOVEM.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.060.116"
+                ]
+              },
+              {
+                "id": "D055815",
+                "term": "Adulto Jovem",
+                "term_en": "Young Adult",
+                "scope": "Uma pessoa entre 19 e 24 anos de idade.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.060.116.815"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": []
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D000062",
+          "term": "Acidentes de Trabalho"
+        },
+        {
+          "id": "DDCS016385",
+          "term": "Notificação de Acidentes de Trabalho"
+        },
+        {
+          "id": "D000328",
+          "term": "Adulto"
+        },
+        {
+          "id": "D005260",
+          "term": "Feminino"
+        }
+      ],
+      "secondary": []
+    }
+  },
+  "stats": {
+    "primary_concepts": 3,
+    "secondary_concepts": 0,
+    "total_candidates": 15,
+    "final_primary": 4,
+    "final_secondary": 0
+  }
+}

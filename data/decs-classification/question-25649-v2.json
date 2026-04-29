@@ -1,0 +1,422 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D000086382",
+        "term": "COVID-19",
+        "name_en": "COVID-19",
+        "scope_note": "Transtorno viral geralmente caracterizado por alta FEBRE, TOSSE, DISPNÉIA, ARREPIOS, TREMOR PERSISTENTE, DOR MUSCULAR, DOR DE CABEÇA, DOR DE GARGANTA, uma nova perda de paladar e/ou olfato (veja AGEUSIA e ANOSMIA) e outros sintomas de PNEUMONIA VIRAL. Um coronavírus, SARS-CoV-2, do gênero BETACORONAVIRUS é o agente causador.",
+        "tree_ids": [
+          "C01.748.610.763.500",
+          "C01.925.705.500",
+          "C01.925.782.600.550.200.163",
+          "C08.381.677.807.500",
+          "C08.730.610.763.500"
+        ],
+        "hierarchy_path": "Doenças › C01.748.610.763.500",
+        "parents": [
+          {
+            "id": "D011024",
+            "term": "Pneumonia Viral"
+          },
+          {
+            "id": "D018352",
+            "term": "Infecções por Coronavirus"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000094024",
+            "term": "Síndrome de Pós-COVID-19 Aguda"
+          }
+        ],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": []
+  },
+  "themes_identified": {
+    "primary": [
+      "Enunciado",
+      "Na pandemia da COVID",
+      "ainda com casos detectados neste ano de 2023"
+    ],
+    "secondary": []
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Enunciado",
+          "candidates": [
+            {
+              "id": "DDCS032482",
+              "term": "Recursos Renováveis",
+              "term_en": "Renewable Resources",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.837.868"
+              ]
+            },
+            {
+              "id": "DDCS051583",
+              "term": "Varredoras",
+              "term_en": "Sweepers",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.987.506.871"
+              ]
+            },
+            {
+              "id": "DDCS051857",
+              "term": "Utilização de Recursos Locais",
+              "term_en": "Local Resources Uses",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.303.766"
+              ]
+            },
+            {
+              "id": "DDCS051642",
+              "term": "Leito Fixo",
+              "term_en": "Fixed Bed",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.806.945.750.207.899.660"
+              ]
+            },
+            {
+              "id": "DDCS025556",
+              "term": "Tanques de Concreto",
+              "term_en": "Reinforced Concrete Tanks",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.141.089.248.433.561"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "ainda com casos detectados neste ano de 2023",
+          "candidates": [
+            {
+              "id": "D000094143",
+              "term": "Relatos de Casos como Assunto",
+              "term_en": "Case Reports as Topic",
+              "scope": "Apresentações clínicas que podem ser seguidas por estudos de avaliação que eventualmente levam a um diagnóstico.",
+              "categoria": "Ciência da Informação",
+              "arvore": [
+                "L01.559.423.906.654.500"
+              ]
+            },
+            {
+              "id": "D058345",
+              "term": "Infecções Assintomáticas",
+              "term_en": "Asymptomatic Infections",
+              "scope": "Infecções que não exibem sintomas.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.125",
+                "C23.550.291.187.500"
+              ]
+            },
+            {
+              "id": "D012900",
+              "term": "Vacina Antivariólica",
+              "term_en": "Smallpox Vaccine",
+              "scope": "Vacina de VACCINIA VIRUS usada para imunização contra a VARÍOLA. Tem sido ultimamente recomendada apenas para trabalhadores de laboratório expostos ao VÍRUS DA VARÍOLA. Certos países continuam a vacin",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D20.215.894.899.859"
+              ]
+            },
+            {
+              "id": "D058070",
+              "term": "Doenças Assintomáticas",
+              "term_en": "Asymptomatic Diseases",
+              "scope": "Doenças que não exibem sintomas.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.550.291.187"
+              ]
+            },
+            {
+              "id": "D002363",
+              "term": "Relatos de Casos",
+              "term_en": "Case Reports",
+              "scope": "Apresentações clínicas que podem ser seguidas pelos estudos avaliativos que conduzem eventualmente a um diagnóstico.",
+              "categoria": "V",
+              "arvore": [
+                "V03.100"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Na pandemia da COVID",
+          "candidates": [
+            {
+              "id": "D058873",
+              "term": "Pandemias",
+              "term_en": "Pandemics",
+              "scope": "Epidemia de doença infecciosa que se disseminou para vários países, com frequência mais de um continente e que afeta geralmente um grande número de pessoas.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N06.850.290.200.600"
+              ]
+            },
+            {
+              "id": "D000096763",
+              "term": "Preparação para Pandemia",
+              "term_en": "Pandemic Preparedness",
+              "scope": "Estratégias traçadas para o atendimento de vítimas e a manutenção dos serviços em uma PANDEMIA. O plano de preparação para pandemias inclui o FORTALECIMENTO INSTITUCIONAL em infra-estruturas flexíveis",
+              "categoria": "Saúde",
+              "arvore": [
+                "N06.230.100.035.250",
+                "N06.850.780.200.625"
+              ]
+            },
+            {
+              "id": "D004196",
+              "term": "Surtos de Doenças",
+              "term_en": "Disease Outbreaks",
+              "scope": "Aumento repentino na incidência de uma doença. O conceito inclui EPIDEMIAS e PANDEMIAS.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N06.850.290",
+                "SP5.312.507.830.899"
+              ]
+            },
+            {
+              "id": "D000086382",
+              "term": "COVID-19",
+              "term_en": "COVID-19",
+              "scope": "Transtorno viral geralmente caracterizado por alta FEBRE, TOSSE, DISPNÉIA, ARREPIOS, TREMOR PERSISTENTE, DOR MUSCULAR, DOR DE CABEÇA, DOR DE GARGANTA, uma nova perda de paladar e/ou olfato (veja AGEUS",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.748.610.763.500",
+                "C01.925.705.500"
+              ]
+            },
+            {
+              "id": "D000085762",
+              "term": "Distanciamento Físico",
+              "term_en": "Physical Distancing",
+              "scope": "Mantutenção do espaçamento físico recomendado entre si e os outros.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N06.850.780.200.688"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": []
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Enunciado",
+        "Na pandemia da COVID",
+        "ainda com casos detectados neste ano de 2023"
+      ],
+      "secondary": []
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Enunciado",
+            "candidates": [
+              {
+                "id": "DDCS032482",
+                "term": "Recursos Renováveis",
+                "term_en": "Renewable Resources",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.837.868"
+                ]
+              },
+              {
+                "id": "DDCS051583",
+                "term": "Varredoras",
+                "term_en": "Sweepers",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.987.506.871"
+                ]
+              },
+              {
+                "id": "DDCS051857",
+                "term": "Utilização de Recursos Locais",
+                "term_en": "Local Resources Uses",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.303.766"
+                ]
+              },
+              {
+                "id": "DDCS051642",
+                "term": "Leito Fixo",
+                "term_en": "Fixed Bed",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.806.945.750.207.899.660"
+                ]
+              },
+              {
+                "id": "DDCS025556",
+                "term": "Tanques de Concreto",
+                "term_en": "Reinforced Concrete Tanks",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.141.089.248.433.561"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "ainda com casos detectados neste ano de 2023",
+            "candidates": [
+              {
+                "id": "D000094143",
+                "term": "Relatos de Casos como Assunto",
+                "term_en": "Case Reports as Topic",
+                "scope": "Apresentações clínicas que podem ser seguidas por estudos de avaliação que eventualmente levam a um diagnóstico.",
+                "categoria": "Ciência da Informação",
+                "arvore": [
+                  "L01.559.423.906.654.500"
+                ]
+              },
+              {
+                "id": "D058345",
+                "term": "Infecções Assintomáticas",
+                "term_en": "Asymptomatic Infections",
+                "scope": "Infecções que não exibem sintomas.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.125",
+                  "C23.550.291.187.500"
+                ]
+              },
+              {
+                "id": "D012900",
+                "term": "Vacina Antivariólica",
+                "term_en": "Smallpox Vaccine",
+                "scope": "Vacina de VACCINIA VIRUS usada para imunização contra a VARÍOLA. Tem sido ultimamente recomendada apenas para trabalhadores de laboratório expostos ao VÍRUS DA VARÍOLA. Certos países continuam a vacin",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D20.215.894.899.859"
+                ]
+              },
+              {
+                "id": "D058070",
+                "term": "Doenças Assintomáticas",
+                "term_en": "Asymptomatic Diseases",
+                "scope": "Doenças que não exibem sintomas.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.550.291.187"
+                ]
+              },
+              {
+                "id": "D002363",
+                "term": "Relatos de Casos",
+                "term_en": "Case Reports",
+                "scope": "Apresentações clínicas que podem ser seguidas pelos estudos avaliativos que conduzem eventualmente a um diagnóstico.",
+                "categoria": "V",
+                "arvore": [
+                  "V03.100"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Na pandemia da COVID",
+            "candidates": [
+              {
+                "id": "D058873",
+                "term": "Pandemias",
+                "term_en": "Pandemics",
+                "scope": "Epidemia de doença infecciosa que se disseminou para vários países, com frequência mais de um continente e que afeta geralmente um grande número de pessoas.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N06.850.290.200.600"
+                ]
+              },
+              {
+                "id": "D000096763",
+                "term": "Preparação para Pandemia",
+                "term_en": "Pandemic Preparedness",
+                "scope": "Estratégias traçadas para o atendimento de vítimas e a manutenção dos serviços em uma PANDEMIA. O plano de preparação para pandemias inclui o FORTALECIMENTO INSTITUCIONAL em infra-estruturas flexíveis",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N06.230.100.035.250",
+                  "N06.850.780.200.625"
+                ]
+              },
+              {
+                "id": "D004196",
+                "term": "Surtos de Doenças",
+                "term_en": "Disease Outbreaks",
+                "scope": "Aumento repentino na incidência de uma doença. O conceito inclui EPIDEMIAS e PANDEMIAS.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N06.850.290",
+                  "SP5.312.507.830.899"
+                ]
+              },
+              {
+                "id": "D000086382",
+                "term": "COVID-19",
+                "term_en": "COVID-19",
+                "scope": "Transtorno viral geralmente caracterizado por alta FEBRE, TOSSE, DISPNÉIA, ARREPIOS, TREMOR PERSISTENTE, DOR MUSCULAR, DOR DE CABEÇA, DOR DE GARGANTA, uma nova perda de paladar e/ou olfato (veja AGEUS",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.748.610.763.500",
+                  "C01.925.705.500"
+                ]
+              },
+              {
+                "id": "D000085762",
+                "term": "Distanciamento Físico",
+                "term_en": "Physical Distancing",
+                "scope": "Mantutenção do espaçamento físico recomendado entre si e os outros.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N06.850.780.200.688"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": []
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D000086382",
+          "term": "COVID-19"
+        }
+      ],
+      "secondary": []
+    }
+  },
+  "stats": {
+    "primary_concepts": 3,
+    "secondary_concepts": 0,
+    "total_candidates": 15,
+    "final_primary": 1,
+    "final_secondary": 0
+  }
+}

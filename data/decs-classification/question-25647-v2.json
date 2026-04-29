@@ -1,0 +1,413 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "DDCS061013",
+        "term": "População Ribeirinha",
+        "name_en": "Riverside Population",
+        "scope_note": "Grupo de pessoas que vive às margens de rios, igarapés, lagos ou áreas alagadiças e que dependem fortemente dos recursos do rio como meio de subsistência.",
+        "tree_ids": [
+          "SP3.522.561.575.631"
+        ],
+        "hierarchy_path": "Saúde Pública › SP3.522.561.575.631",
+        "parents": [
+          {
+            "id": "DDCS061011",
+            "term": "Populações Tradicionais"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": []
+  },
+  "themes_identified": {
+    "primary": [
+      "Enunciado",
+      "As comunidades ribeirinhas são compostas de vários agrupamentos familiares",
+      "vivendo em casas de madeira"
+    ],
+    "secondary": []
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Enunciado",
+          "candidates": [
+            {
+              "id": "DDCS032482",
+              "term": "Recursos Renováveis",
+              "term_en": "Renewable Resources",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.837.868"
+              ]
+            },
+            {
+              "id": "DDCS051583",
+              "term": "Varredoras",
+              "term_en": "Sweepers",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.987.506.871"
+              ]
+            },
+            {
+              "id": "DDCS051857",
+              "term": "Utilização de Recursos Locais",
+              "term_en": "Local Resources Uses",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.303.766"
+              ]
+            },
+            {
+              "id": "DDCS051642",
+              "term": "Leito Fixo",
+              "term_en": "Fixed Bed",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.806.945.750.207.899.660"
+              ]
+            },
+            {
+              "id": "DDCS025556",
+              "term": "Tanques de Concreto",
+              "term_en": "Reinforced Concrete Tanks",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.141.089.248.433.561"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "vivendo em casas de madeira",
+          "candidates": [
+            {
+              "id": "D014934",
+              "term": "Madeira",
+              "term_en": "Wood",
+              "scope": "Produto duro do xilema secundário (composto por CELULOSE, hemicelulose e LIGNANAS) que está sob a casca das árvores e arbustos. É usado na construção, como fonte de CARVÃO VEGETAL e muitos outros prod",
+              "categoria": "Anatomia",
+              "arvore": [
+                "A18.450.500.500",
+                "J01.637.241.900"
+              ]
+            },
+            {
+              "id": "DDCS025296",
+              "term": "Indústria da Madeira",
+              "term_en": "Lumber Industry",
+              "categoria": "SH",
+              "arvore": [
+                "SH2.113.348.055"
+              ]
+            },
+            {
+              "id": "D006798",
+              "term": "Habitação",
+              "term_en": "Housing",
+              "scope": "Instalações para alojar humanos.",
+              "categoria": "Tecnologia, Indústria, Agricultura",
+              "arvore": [
+                "J03.340",
+                "N01.224.791.400"
+              ]
+            },
+            {
+              "id": "DDCS059973",
+              "term": "Fornos à Lenha",
+              "term_en": "Wood-Fired Ovens",
+              "scope": "Tipo de forno construído com tijolos refratários e argamassa apropriada cuja chama é mantida pela combustão de lenha.",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.505.467.300.562"
+              ]
+            },
+            {
+              "id": "D003407",
+              "term": "Creosoto",
+              "term_en": "Creosote",
+              "scope": "Substância gordurosa com odor de fumaça e gosto de queimado, produzido por tratamento a alta temperatura de FAIA e outra MADEIRA, ALCATRÃO ou resina da CREOSOTO (PLANTA). Contém CRESÓIS e HIDROCARBONE",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.455.426.559.389.657.239.327",
+                "SP4.808.749.996.231"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "As comunidades ribeirinhas são compostas de vários agrupamentos familiares",
+          "candidates": [
+            {
+              "id": "DDCS061013",
+              "term": "População Ribeirinha",
+              "term_en": "Riverside Population",
+              "scope": "Grupo de pessoas que vive às margens de rios, igarapés, lagos ou áreas alagadiças e que dependem fortemente dos recursos do rio como meio de subsistência.",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP3.522.561.575.631"
+              ]
+            },
+            {
+              "id": "D000091443",
+              "term": "Apoio Comunitário",
+              "term_en": "Community Support",
+              "scope": "Sistemas de apoio comunitário que podem ser organizados por membros da família extendida, amigos, vizinhos, organizações religiosas, programas comunitários, organizações culturais e étnicas ou outros ",
+              "categoria": "Antropologia, Educação, Sociologia",
+              "arvore": [
+                "I01.880.853.500.600.250",
+                "N02.421.143.212.150"
+              ]
+            },
+            {
+              "id": "D005190",
+              "term": "Família",
+              "term_en": "Family",
+              "scope": "Grupo social que consiste de pais ou pais substitutos e crianças.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.829.263",
+                "I01.880.853.150"
+              ]
+            },
+            {
+              "id": "D005191",
+              "term": "Características da Família",
+              "term_en": "Family Characteristics",
+              "scope": "Composição e tamanho da família.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.829.263.315",
+                "I01.240.361"
+              ]
+            },
+            {
+              "id": "D019058",
+              "term": "Redes Comunitárias",
+              "term_en": "Community Networks",
+              "scope": "Organizações e indivíduos cooperando juntos para atingir uma meta comum em nível local ou de origem popular.",
+              "categoria": "Antropologia, Educação, Sociologia",
+              "arvore": [
+                "I01.880.853.500.300",
+                "L01.313.500.750.300.184"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": []
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Enunciado",
+        "As comunidades ribeirinhas são compostas de vários agrupamentos familiares",
+        "vivendo em casas de madeira"
+      ],
+      "secondary": []
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Enunciado",
+            "candidates": [
+              {
+                "id": "DDCS032482",
+                "term": "Recursos Renováveis",
+                "term_en": "Renewable Resources",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.837.868"
+                ]
+              },
+              {
+                "id": "DDCS051583",
+                "term": "Varredoras",
+                "term_en": "Sweepers",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.987.506.871"
+                ]
+              },
+              {
+                "id": "DDCS051857",
+                "term": "Utilização de Recursos Locais",
+                "term_en": "Local Resources Uses",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.303.766"
+                ]
+              },
+              {
+                "id": "DDCS051642",
+                "term": "Leito Fixo",
+                "term_en": "Fixed Bed",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.806.945.750.207.899.660"
+                ]
+              },
+              {
+                "id": "DDCS025556",
+                "term": "Tanques de Concreto",
+                "term_en": "Reinforced Concrete Tanks",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.141.089.248.433.561"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "vivendo em casas de madeira",
+            "candidates": [
+              {
+                "id": "D014934",
+                "term": "Madeira",
+                "term_en": "Wood",
+                "scope": "Produto duro do xilema secundário (composto por CELULOSE, hemicelulose e LIGNANAS) que está sob a casca das árvores e arbustos. É usado na construção, como fonte de CARVÃO VEGETAL e muitos outros prod",
+                "categoria": "Anatomia",
+                "arvore": [
+                  "A18.450.500.500",
+                  "J01.637.241.900"
+                ]
+              },
+              {
+                "id": "DDCS025296",
+                "term": "Indústria da Madeira",
+                "term_en": "Lumber Industry",
+                "categoria": "SH",
+                "arvore": [
+                  "SH2.113.348.055"
+                ]
+              },
+              {
+                "id": "D006798",
+                "term": "Habitação",
+                "term_en": "Housing",
+                "scope": "Instalações para alojar humanos.",
+                "categoria": "Tecnologia, Indústria, Agricultura",
+                "arvore": [
+                  "J03.340",
+                  "N01.224.791.400"
+                ]
+              },
+              {
+                "id": "DDCS059973",
+                "term": "Fornos à Lenha",
+                "term_en": "Wood-Fired Ovens",
+                "scope": "Tipo de forno construído com tijolos refratários e argamassa apropriada cuja chama é mantida pela combustão de lenha.",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.505.467.300.562"
+                ]
+              },
+              {
+                "id": "D003407",
+                "term": "Creosoto",
+                "term_en": "Creosote",
+                "scope": "Substância gordurosa com odor de fumaça e gosto de queimado, produzido por tratamento a alta temperatura de FAIA e outra MADEIRA, ALCATRÃO ou resina da CREOSOTO (PLANTA). Contém CRESÓIS e HIDROCARBONE",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.455.426.559.389.657.239.327",
+                  "SP4.808.749.996.231"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "As comunidades ribeirinhas são compostas de vários agrupamentos familiares",
+            "candidates": [
+              {
+                "id": "DDCS061013",
+                "term": "População Ribeirinha",
+                "term_en": "Riverside Population",
+                "scope": "Grupo de pessoas que vive às margens de rios, igarapés, lagos ou áreas alagadiças e que dependem fortemente dos recursos do rio como meio de subsistência.",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP3.522.561.575.631"
+                ]
+              },
+              {
+                "id": "D000091443",
+                "term": "Apoio Comunitário",
+                "term_en": "Community Support",
+                "scope": "Sistemas de apoio comunitário que podem ser organizados por membros da família extendida, amigos, vizinhos, organizações religiosas, programas comunitários, organizações culturais e étnicas ou outros ",
+                "categoria": "Antropologia, Educação, Sociologia",
+                "arvore": [
+                  "I01.880.853.500.600.250",
+                  "N02.421.143.212.150"
+                ]
+              },
+              {
+                "id": "D005190",
+                "term": "Família",
+                "term_en": "Family",
+                "scope": "Grupo social que consiste de pais ou pais substitutos e crianças.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.829.263",
+                  "I01.880.853.150"
+                ]
+              },
+              {
+                "id": "D005191",
+                "term": "Características da Família",
+                "term_en": "Family Characteristics",
+                "scope": "Composição e tamanho da família.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.829.263.315",
+                  "I01.240.361"
+                ]
+              },
+              {
+                "id": "D019058",
+                "term": "Redes Comunitárias",
+                "term_en": "Community Networks",
+                "scope": "Organizações e indivíduos cooperando juntos para atingir uma meta comum em nível local ou de origem popular.",
+                "categoria": "Antropologia, Educação, Sociologia",
+                "arvore": [
+                  "I01.880.853.500.300",
+                  "L01.313.500.750.300.184"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": []
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "DDCS061013",
+          "term": "População Ribeirinha"
+        }
+      ],
+      "secondary": []
+    }
+  },
+  "stats": {
+    "primary_concepts": 3,
+    "secondary_concepts": 0,
+    "total_candidates": 15,
+    "final_primary": 1,
+    "final_secondary": 0
+  }
+}

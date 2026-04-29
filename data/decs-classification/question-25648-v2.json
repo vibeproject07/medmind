@@ -1,0 +1,446 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D006699",
+        "term": "Serviços de Assistência Domiciliar",
+        "name_en": "Home Care Services",
+        "scope_note": "Serviços de saúde comunitária e SERVIÇOS DE ENFERMAGEM que provêm serviços múltiplos e coordenados aos pacientes em seus domicílios. Estes serviços de assistência domiciliar oferecem a visita de enfermeiros, unidades de saúde, HOSPITAIS ou grupos comunitários organizados que utilizam equipe profissional especializada na área da saúde. Difere da ENFERMAGEM DOMICILIAR que é composta por não profissionais.",
+        "tree_ids": [
+          "N02.421.143.524",
+          "N02.421.539.089",
+          "SP2.840.052"
+        ],
+        "hierarchy_path": "Saúde › N02.421.143.524",
+        "parents": [
+          {
+            "id": "D003153",
+            "term": "Serviços de Saúde Comunitária"
+          },
+          {
+            "id": "D009739",
+            "term": "Serviços de Enfermagem"
+          },
+          {
+            "id": "D006296",
+            "term": "Serviços de Saúde"
+          }
+        ],
+        "children": [
+          {
+            "id": "D006701",
+            "term": "Assistência Domiciliar"
+          },
+          {
+            "id": "D006437",
+            "term": "Hemodiálise no Domicílio"
+          },
+          {
+            "id": "D006704",
+            "term": "Serviços de Cuidados Domésticos"
+          },
+          {
+            "id": "D018575",
+            "term": "Serviços Hospitalares de Assistência Domiciliar"
+          },
+          {
+            "id": "D012144",
+            "term": "Cuidados Intermitentes"
+          }
+        ],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": []
+  },
+  "themes_identified": {
+    "primary": [
+      "Enunciado",
+      "A atenção domiciliar",
+      "é a forma de atenção à saúde oferecida na moradia do paciente e caracterizada por um conjunto de ações de promoção à saúde"
+    ],
+    "secondary": []
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Enunciado",
+          "candidates": [
+            {
+              "id": "DDCS032482",
+              "term": "Recursos Renováveis",
+              "term_en": "Renewable Resources",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.837.868"
+              ]
+            },
+            {
+              "id": "DDCS051583",
+              "term": "Varredoras",
+              "term_en": "Sweepers",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.987.506.871"
+              ]
+            },
+            {
+              "id": "DDCS051857",
+              "term": "Utilização de Recursos Locais",
+              "term_en": "Local Resources Uses",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.303.766"
+              ]
+            },
+            {
+              "id": "DDCS051642",
+              "term": "Leito Fixo",
+              "term_en": "Fixed Bed",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.806.945.750.207.899.660"
+              ]
+            },
+            {
+              "id": "DDCS025556",
+              "term": "Tanques de Concreto",
+              "term_en": "Reinforced Concrete Tanks",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.141.089.248.433.561"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "A atenção domiciliar",
+          "candidates": [
+            {
+              "id": "D006792",
+              "term": "Visita Domiciliar",
+              "term_en": "House Calls",
+              "scope": "Visita feita por profissionais a um paciente no domicílio deste com o propósito de realizar um diagnóstico ou tratamento.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N04.452.758.307",
+                "SP2.140.443"
+              ]
+            },
+            {
+              "id": "D006701",
+              "term": "Assistência Domiciliar",
+              "term_en": "Home Nursing",
+              "scope": "Cuidados de enfermagem prestados a uma pessoa no domicílio, que podem ser prestados por um familiar ou amigo. A assistência domiciliar por um não profissional deve ser diferenciada de SERVIÇOS DE ASSI",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.760.611.470",
+                "N02.421.143.524.470"
+              ]
+            },
+            {
+              "id": "D006699",
+              "term": "Serviços de Assistência Domiciliar",
+              "term_en": "Home Care Services",
+              "scope": "Serviços de saúde comunitária e SERVIÇOS DE ENFERMAGEM que provêm serviços múltiplos e coordenados aos pacientes em seus domicílios. Estes serviços de assistência domiciliar oferecem a visita de enfer",
+              "categoria": "Saúde",
+              "arvore": [
+                "N02.421.143.524",
+                "N02.421.539.089"
+              ]
+            },
+            {
+              "id": "D064650",
+              "term": "Enfermagem Domiciliar",
+              "term_en": "Home Health Nursing",
+              "scope": "Especialidade de enfermagem em que cuidados especializados são fornecidos a pacientes em seus domicílios por ENFERMEIROS registrados ou licenciados. Enfermagem domiciliar difere de ASSISTÊNCIA DOMICIL",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.478.676.150.500",
+                "N02.421.143.150.500"
+              ]
+            },
+            {
+              "id": "D018577",
+              "term": "Pacientes Domiciliares",
+              "term_en": "Homebound Persons",
+              "scope": "Aqueles impossibilitados de deixar sua casa sem esforço excepcional e apoio; os pacientes (nesta condição) que são providos com ou são qualificados para serviços de saúde em casa, incluindo tratamento",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.276"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "é a forma de atenção à saúde oferecida na moradia do paciente e caracterizada por um conjunto de ações de promoção à saúde",
+          "candidates": [
+            {
+              "id": "D006792",
+              "term": "Visita Domiciliar",
+              "term_en": "House Calls",
+              "scope": "Visita feita por profissionais a um paciente no domicílio deste com o propósito de realizar um diagnóstico ou tratamento.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N04.452.758.307",
+                "SP2.140.443"
+              ]
+            },
+            {
+              "id": "D018575",
+              "term": "Serviços Hospitalares de Assistência Domiciliar",
+              "term_en": "Home Care Services, Hospital-Based",
+              "scope": "Provisão de serviços de saúde patrocinadas por hospitais, como enfermagem, terapia e serviços caseiros relacionados à saúde ou serviço social prestados na casa do paciente.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N02.421.143.524.403"
+              ]
+            },
+            {
+              "id": "D006699",
+              "term": "Serviços de Assistência Domiciliar",
+              "term_en": "Home Care Services",
+              "scope": "Serviços de saúde comunitária e SERVIÇOS DE ENFERMAGEM que provêm serviços múltiplos e coordenados aos pacientes em seus domicílios. Estes serviços de assistência domiciliar oferecem a visita de enfer",
+              "categoria": "Saúde",
+              "arvore": [
+                "N02.421.143.524",
+                "N02.421.539.089"
+              ]
+            },
+            {
+              "id": "D064650",
+              "term": "Enfermagem Domiciliar",
+              "term_en": "Home Health Nursing",
+              "scope": "Especialidade de enfermagem em que cuidados especializados são fornecidos a pacientes em seus domicílios por ENFERMEIROS registrados ou licenciados. Enfermagem domiciliar difere de ASSISTÊNCIA DOMICIL",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.478.676.150.500",
+                "N02.421.143.150.500"
+              ]
+            },
+            {
+              "id": "D018577",
+              "term": "Pacientes Domiciliares",
+              "term_en": "Homebound Persons",
+              "scope": "Aqueles impossibilitados de deixar sua casa sem esforço excepcional e apoio; os pacientes (nesta condição) que são providos com ou são qualificados para serviços de saúde em casa, incluindo tratamento",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.276"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": []
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Enunciado",
+        "A atenção domiciliar",
+        "é a forma de atenção à saúde oferecida na moradia do paciente e caracterizada por um conjunto de ações de promoção à saúde"
+      ],
+      "secondary": []
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Enunciado",
+            "candidates": [
+              {
+                "id": "DDCS032482",
+                "term": "Recursos Renováveis",
+                "term_en": "Renewable Resources",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.837.868"
+                ]
+              },
+              {
+                "id": "DDCS051583",
+                "term": "Varredoras",
+                "term_en": "Sweepers",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.987.506.871"
+                ]
+              },
+              {
+                "id": "DDCS051857",
+                "term": "Utilização de Recursos Locais",
+                "term_en": "Local Resources Uses",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.303.766"
+                ]
+              },
+              {
+                "id": "DDCS051642",
+                "term": "Leito Fixo",
+                "term_en": "Fixed Bed",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.806.945.750.207.899.660"
+                ]
+              },
+              {
+                "id": "DDCS025556",
+                "term": "Tanques de Concreto",
+                "term_en": "Reinforced Concrete Tanks",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.141.089.248.433.561"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "A atenção domiciliar",
+            "candidates": [
+              {
+                "id": "D006792",
+                "term": "Visita Domiciliar",
+                "term_en": "House Calls",
+                "scope": "Visita feita por profissionais a um paciente no domicílio deste com o propósito de realizar um diagnóstico ou tratamento.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N04.452.758.307",
+                  "SP2.140.443"
+                ]
+              },
+              {
+                "id": "D006701",
+                "term": "Assistência Domiciliar",
+                "term_en": "Home Nursing",
+                "scope": "Cuidados de enfermagem prestados a uma pessoa no domicílio, que podem ser prestados por um familiar ou amigo. A assistência domiciliar por um não profissional deve ser diferenciada de SERVIÇOS DE ASSI",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.760.611.470",
+                  "N02.421.143.524.470"
+                ]
+              },
+              {
+                "id": "D006699",
+                "term": "Serviços de Assistência Domiciliar",
+                "term_en": "Home Care Services",
+                "scope": "Serviços de saúde comunitária e SERVIÇOS DE ENFERMAGEM que provêm serviços múltiplos e coordenados aos pacientes em seus domicílios. Estes serviços de assistência domiciliar oferecem a visita de enfer",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N02.421.143.524",
+                  "N02.421.539.089"
+                ]
+              },
+              {
+                "id": "D064650",
+                "term": "Enfermagem Domiciliar",
+                "term_en": "Home Health Nursing",
+                "scope": "Especialidade de enfermagem em que cuidados especializados são fornecidos a pacientes em seus domicílios por ENFERMEIROS registrados ou licenciados. Enfermagem domiciliar difere de ASSISTÊNCIA DOMICIL",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.478.676.150.500",
+                  "N02.421.143.150.500"
+                ]
+              },
+              {
+                "id": "D018577",
+                "term": "Pacientes Domiciliares",
+                "term_en": "Homebound Persons",
+                "scope": "Aqueles impossibilitados de deixar sua casa sem esforço excepcional e apoio; os pacientes (nesta condição) que são providos com ou são qualificados para serviços de saúde em casa, incluindo tratamento",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.276"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "é a forma de atenção à saúde oferecida na moradia do paciente e caracterizada por um conjunto de ações de promoção à saúde",
+            "candidates": [
+              {
+                "id": "D006792",
+                "term": "Visita Domiciliar",
+                "term_en": "House Calls",
+                "scope": "Visita feita por profissionais a um paciente no domicílio deste com o propósito de realizar um diagnóstico ou tratamento.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N04.452.758.307",
+                  "SP2.140.443"
+                ]
+              },
+              {
+                "id": "D018575",
+                "term": "Serviços Hospitalares de Assistência Domiciliar",
+                "term_en": "Home Care Services, Hospital-Based",
+                "scope": "Provisão de serviços de saúde patrocinadas por hospitais, como enfermagem, terapia e serviços caseiros relacionados à saúde ou serviço social prestados na casa do paciente.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N02.421.143.524.403"
+                ]
+              },
+              {
+                "id": "D006699",
+                "term": "Serviços de Assistência Domiciliar",
+                "term_en": "Home Care Services",
+                "scope": "Serviços de saúde comunitária e SERVIÇOS DE ENFERMAGEM que provêm serviços múltiplos e coordenados aos pacientes em seus domicílios. Estes serviços de assistência domiciliar oferecem a visita de enfer",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N02.421.143.524",
+                  "N02.421.539.089"
+                ]
+              },
+              {
+                "id": "D064650",
+                "term": "Enfermagem Domiciliar",
+                "term_en": "Home Health Nursing",
+                "scope": "Especialidade de enfermagem em que cuidados especializados são fornecidos a pacientes em seus domicílios por ENFERMEIROS registrados ou licenciados. Enfermagem domiciliar difere de ASSISTÊNCIA DOMICIL",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.478.676.150.500",
+                  "N02.421.143.150.500"
+                ]
+              },
+              {
+                "id": "D018577",
+                "term": "Pacientes Domiciliares",
+                "term_en": "Homebound Persons",
+                "scope": "Aqueles impossibilitados de deixar sua casa sem esforço excepcional e apoio; os pacientes (nesta condição) que são providos com ou são qualificados para serviços de saúde em casa, incluindo tratamento",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.276"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": []
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D006699",
+          "term": "Serviços de Assistência Domiciliar"
+        }
+      ],
+      "secondary": []
+    }
+  },
+  "stats": {
+    "primary_concepts": 3,
+    "secondary_concepts": 0,
+    "total_candidates": 15,
+    "final_primary": 1,
+    "final_secondary": 0
+  }
+}

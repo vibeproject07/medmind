@@ -1,0 +1,464 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D000368",
+        "term": "Idoso",
+        "name_en": "Aged",
+        "scope_note": "Pessoa de 65 anos de idade ou mais. Para uma pessoa com mais de 79 anos, IDOSO DE 80 ANOS OU MAIS está disponível.",
+        "tree_ids": [
+          "M01.060.116.100"
+        ],
+        "hierarchy_path": "Grupos Identificados › M01.060.116.100",
+        "parents": [
+          {
+            "id": "D000328",
+            "term": "Adulto"
+          }
+        ],
+        "children": [
+          {
+            "id": "D016330",
+            "term": "Idoso Fragilizado"
+          },
+          {
+            "id": "D000369",
+            "term": "Idoso de 80 Anos ou mais"
+          },
+          {
+            "id": "D000087742",
+            "term": "Octogenários"
+          },
+          {
+            "id": "D000087662",
+            "term": "Centenários"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D006471",
+        "term": "Hemorragia Gastrointestinal",
+        "name_en": "Gastrointestinal Hemorrhage",
+        "scope_note": "Sangramento em qualquer segmento do TRATO GASTROINTESTINAL do ESÔFAGO até o RETO.",
+        "tree_ids": [
+          "C06.405.227",
+          "C23.550.414.788"
+        ],
+        "hierarchy_path": "Doenças › C06.405.227",
+        "parents": [
+          {
+            "id": "D005767",
+            "term": "Gastroenteropatias"
+          },
+          {
+            "id": "D006470",
+            "term": "Hemorragia"
+          }
+        ],
+        "children": [
+          {
+            "id": "D006396",
+            "term": "Hematemese"
+          },
+          {
+            "id": "D008551",
+            "term": "Melena"
+          },
+          {
+            "id": "D010438",
+            "term": "Úlcera Péptica Hemorrágica"
+          }
+        ],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": []
+  },
+  "themes_identified": {
+    "primary": [
+      "Enunciado",
+      "A Hemorragia Digestiva Alta pode ser definida como sangramentos digestivos de pontos oriundos até o ligamento de Treitz como referência",
+      "Mais comum acima dos 60 anos"
+    ],
+    "secondary": []
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Enunciado",
+          "candidates": [
+            {
+              "id": "DDCS032482",
+              "term": "Recursos Renováveis",
+              "term_en": "Renewable Resources",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.837.868"
+              ]
+            },
+            {
+              "id": "DDCS051583",
+              "term": "Varredoras",
+              "term_en": "Sweepers",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.987.506.871"
+              ]
+            },
+            {
+              "id": "DDCS051857",
+              "term": "Utilização de Recursos Locais",
+              "term_en": "Local Resources Uses",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.303.766"
+              ]
+            },
+            {
+              "id": "DDCS051642",
+              "term": "Leito Fixo",
+              "term_en": "Fixed Bed",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.806.945.750.207.899.660"
+              ]
+            },
+            {
+              "id": "DDCS025556",
+              "term": "Tanques de Concreto",
+              "term_en": "Reinforced Concrete Tanks",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.141.089.248.433.561"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Mais comum acima dos 60 anos",
+          "candidates": [
+            {
+              "id": "D000368",
+              "term": "Idoso",
+              "term_en": "Aged",
+              "scope": "Pessoa de 65 anos de idade ou mais. Para uma pessoa com mais de 79 anos, IDOSO DE 80 ANOS OU MAIS está disponível.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.060.116.100"
+              ]
+            },
+            {
+              "id": "DDCS050320",
+              "term": "Nutrição do Idoso",
+              "term_en": "Elderly Nutrition",
+              "scope": "Nutrição do indivíduo com 60 anos ou mais (países em desenvolvimento), que se encontra mais propenso a apresentar alterações no seu estado de saúde frente a um agressor, externo ou interno, tornando-o",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP6.810.304.415"
+              ]
+            },
+            {
+              "id": "D008875",
+              "term": "Pessoa de Meia-Idade",
+              "term_en": "Middle Aged",
+              "scope": "Adulto com idade entre 45 e 64 anos.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.060.116.630"
+              ]
+            },
+            {
+              "id": "D000369",
+              "term": "Idoso de 80 Anos ou mais",
+              "term_en": "Aged, 80 and over",
+              "scope": "Pessoas entre 80 e 89 anos de idade.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.060.116.100.080"
+              ]
+            },
+            {
+              "id": "D000066492",
+              "term": "Envelhecimento Cognitivo",
+              "term_en": "Cognitive Aging",
+              "scope": "Fenômeno que ocorre quando as capacidades de aprendizado e de memorização decaem naturalmente devido à idade.",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G07.345.124.260"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "A Hemorragia Digestiva Alta pode ser definida como sangramentos digestivos de pontos oriundos até o ligamento de Treitz como referência",
+          "candidates": [
+            {
+              "id": "D006471",
+              "term": "Hemorragia Gastrointestinal",
+              "term_en": "Gastrointestinal Hemorrhage",
+              "scope": "Sangramento em qualquer segmento do TRATO GASTROINTESTINAL do ESÔFAGO até o RETO.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C06.405.227",
+                "C23.550.414.788"
+              ]
+            },
+            {
+              "id": "D006396",
+              "term": "Hematemese",
+              "term_en": "Hematemesis",
+              "scope": "Vômito de sangue que apresenta característica de cores vermelho claro ou café. Geralmente indica sangramento do TRATO GASTROINTESTINAL SUPERIOR.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C06.405.227.400",
+                "C23.550.414.788.400"
+              ]
+            },
+            {
+              "id": "D010438",
+              "term": "Úlcera Péptica Hemorrágica",
+              "term_en": "Peptic Ulcer Hemorrhage",
+              "scope": "Sangramento proveniente de ÚLCERA PÉPTICA que pode estar localizada em qualquer segmento do TRATO GASTROINTESTINAL.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C06.405.227.700",
+                "C23.550.414.788.700"
+              ]
+            },
+            {
+              "id": "D041742",
+              "term": "Trato Gastrointestinal Superior",
+              "term_en": "Upper Gastrointestinal Tract",
+              "scope": "O segmento do TRATO GASTROINTESTINAL que inclui o ESÔFAGO, o ESTÔMAGO e o DUODENO.",
+              "categoria": "Anatomia",
+              "arvore": [
+                "A03.556.875"
+              ]
+            },
+            {
+              "id": "D006431",
+              "term": "Hemobilia",
+              "term_en": "Hemobilia",
+              "scope": "Hemorragia dentro ou através do TRATO BILIAR devido a trauma, inflamação, COLELITÍASE, doença vascular ou neoplasias.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.550.414.864"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": []
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Enunciado",
+        "A Hemorragia Digestiva Alta pode ser definida como sangramentos digestivos de pontos oriundos até o ligamento de Treitz como referência",
+        "Mais comum acima dos 60 anos"
+      ],
+      "secondary": []
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Enunciado",
+            "candidates": [
+              {
+                "id": "DDCS032482",
+                "term": "Recursos Renováveis",
+                "term_en": "Renewable Resources",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.837.868"
+                ]
+              },
+              {
+                "id": "DDCS051583",
+                "term": "Varredoras",
+                "term_en": "Sweepers",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.987.506.871"
+                ]
+              },
+              {
+                "id": "DDCS051857",
+                "term": "Utilização de Recursos Locais",
+                "term_en": "Local Resources Uses",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.303.766"
+                ]
+              },
+              {
+                "id": "DDCS051642",
+                "term": "Leito Fixo",
+                "term_en": "Fixed Bed",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.806.945.750.207.899.660"
+                ]
+              },
+              {
+                "id": "DDCS025556",
+                "term": "Tanques de Concreto",
+                "term_en": "Reinforced Concrete Tanks",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.141.089.248.433.561"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Mais comum acima dos 60 anos",
+            "candidates": [
+              {
+                "id": "D000368",
+                "term": "Idoso",
+                "term_en": "Aged",
+                "scope": "Pessoa de 65 anos de idade ou mais. Para uma pessoa com mais de 79 anos, IDOSO DE 80 ANOS OU MAIS está disponível.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.060.116.100"
+                ]
+              },
+              {
+                "id": "DDCS050320",
+                "term": "Nutrição do Idoso",
+                "term_en": "Elderly Nutrition",
+                "scope": "Nutrição do indivíduo com 60 anos ou mais (países em desenvolvimento), que se encontra mais propenso a apresentar alterações no seu estado de saúde frente a um agressor, externo ou interno, tornando-o",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP6.810.304.415"
+                ]
+              },
+              {
+                "id": "D008875",
+                "term": "Pessoa de Meia-Idade",
+                "term_en": "Middle Aged",
+                "scope": "Adulto com idade entre 45 e 64 anos.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.060.116.630"
+                ]
+              },
+              {
+                "id": "D000369",
+                "term": "Idoso de 80 Anos ou mais",
+                "term_en": "Aged, 80 and over",
+                "scope": "Pessoas entre 80 e 89 anos de idade.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.060.116.100.080"
+                ]
+              },
+              {
+                "id": "D000066492",
+                "term": "Envelhecimento Cognitivo",
+                "term_en": "Cognitive Aging",
+                "scope": "Fenômeno que ocorre quando as capacidades de aprendizado e de memorização decaem naturalmente devido à idade.",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G07.345.124.260"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "A Hemorragia Digestiva Alta pode ser definida como sangramentos digestivos de pontos oriundos até o ligamento de Treitz como referência",
+            "candidates": [
+              {
+                "id": "D006471",
+                "term": "Hemorragia Gastrointestinal",
+                "term_en": "Gastrointestinal Hemorrhage",
+                "scope": "Sangramento em qualquer segmento do TRATO GASTROINTESTINAL do ESÔFAGO até o RETO.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C06.405.227",
+                  "C23.550.414.788"
+                ]
+              },
+              {
+                "id": "D006396",
+                "term": "Hematemese",
+                "term_en": "Hematemesis",
+                "scope": "Vômito de sangue que apresenta característica de cores vermelho claro ou café. Geralmente indica sangramento do TRATO GASTROINTESTINAL SUPERIOR.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C06.405.227.400",
+                  "C23.550.414.788.400"
+                ]
+              },
+              {
+                "id": "D010438",
+                "term": "Úlcera Péptica Hemorrágica",
+                "term_en": "Peptic Ulcer Hemorrhage",
+                "scope": "Sangramento proveniente de ÚLCERA PÉPTICA que pode estar localizada em qualquer segmento do TRATO GASTROINTESTINAL.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C06.405.227.700",
+                  "C23.550.414.788.700"
+                ]
+              },
+              {
+                "id": "D041742",
+                "term": "Trato Gastrointestinal Superior",
+                "term_en": "Upper Gastrointestinal Tract",
+                "scope": "O segmento do TRATO GASTROINTESTINAL que inclui o ESÔFAGO, o ESTÔMAGO e o DUODENO.",
+                "categoria": "Anatomia",
+                "arvore": [
+                  "A03.556.875"
+                ]
+              },
+              {
+                "id": "D006431",
+                "term": "Hemobilia",
+                "term_en": "Hemobilia",
+                "scope": "Hemorragia dentro ou através do TRATO BILIAR devido a trauma, inflamação, COLELITÍASE, doença vascular ou neoplasias.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.550.414.864"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": []
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D000368",
+          "term": "Idoso"
+        },
+        {
+          "id": "D006471",
+          "term": "Hemorragia Gastrointestinal"
+        }
+      ],
+      "secondary": []
+    }
+  },
+  "stats": {
+    "primary_concepts": 3,
+    "secondary_concepts": 0,
+    "total_candidates": 15,
+    "final_primary": 2,
+    "final_secondary": 0
+  }
+}
