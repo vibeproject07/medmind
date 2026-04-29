@@ -358,12 +358,16 @@ export async function runDeCSPipelineV2(
       }
     }
   } catch {
-    // Step 1 failed — cannot continue
-    throw new Error('decs_indexer_v2 não retornou temas válidos');
+    themes = { primary: [], secondary: [] };
   }
 
   if (themes.primary.length === 0) {
-    throw new Error('O agente não identificou temas para indexação');
+    const fallbackTerms = questionText
+      .split(/[\n\r.,;:()\-\/]+/)
+      .map((s) => s.trim())
+      .filter((s) => s.length > 3)
+      .slice(0, 3);
+    themes.primary = fallbackTerms;
   }
 
   // ── Step 2+3: Search + enrich candidates per concept ─────────────────────

@@ -1,0 +1,395 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D053059",
+        "term": "Vacinas contra Dengue",
+        "name_en": "Dengue Vaccines",
+        "scope_note": "Vacinas ou candidatos a vacinas utilizadas para impedir infecção com o VÍRUS DA DENGUE. Incluem a vacina atenuada viva, subunidade de DNA e vacinas inativas.",
+        "tree_ids": [
+          "D20.215.894.899.162"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D20.215.894.899.162",
+        "parents": [
+          {
+            "id": "D014765",
+            "term": "Vacinas Virais"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": []
+  },
+  "themes_identified": {
+    "primary": [
+      "Enunciado",
+      "Um ensaio clínico com a nova vacina contra dengue",
+      "QdengaR"
+    ],
+    "secondary": []
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Um ensaio clínico com a nova vacina contra dengue",
+          "candidates": [
+            {
+              "id": "D053059",
+              "term": "Vacinas contra Dengue",
+              "term_en": "Dengue Vaccines",
+              "scope": "Vacinas ou candidatos a vacinas utilizadas para impedir infecção com o VÍRUS DA DENGUE. Incluem a vacina atenuada viva, subunidade de DNA e vacinas inativas.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D20.215.894.899.162"
+              ]
+            },
+            {
+              "id": "D022321",
+              "term": "Vacinas contra Encefalite Japonesa",
+              "term_en": "Japanese Encephalitis Vaccines",
+              "scope": "Vacinas ou vacinas candidatas usadas para prevenir infecção com vírus da encefalite japonesa B (VÍRUS DA ENCEFALITE JAPONESA (ESPÉCIE))",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D20.215.894.899.320"
+              ]
+            },
+            {
+              "id": "D053060",
+              "term": "Vacinas contra o Vírus do Nilo Ocidental",
+              "term_en": "West Nile Virus Vaccines",
+              "scope": "Vacinas ou candidatos a vacinas utilizadas para impedir infecção com o VÍRUS DO NILO OCIDENTAL. .",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D20.215.894.899.962"
+              ]
+            },
+            {
+              "id": "D022123",
+              "term": "Vacinas contra Doença de Lyme",
+              "term_en": "Lyme Disease Vaccines",
+              "scope": "Vacinas ou vacinas candidatas usadas para prevenir DOENÇA DE LYME.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D20.215.894.135.492"
+              ]
+            },
+            {
+              "id": "D000087506",
+              "term": "Desenvolvimento de Vacinas",
+              "term_en": "Vaccine Development",
+              "scope": "Processo integral de introdução de uma nova vacina para uso em VACINAÇÃO, incluindo o desenvolvimento pré-clínico, testes em ENSAIO CLÍNICO CONTROLADO, fabricação, aprovação, licenciamento e distribui",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.952"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "QdengaR",
+          "candidates": [
+            {
+              "id": "D011798",
+              "term": "Quinaldinas",
+              "term_en": "Quinaldines",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D03.633.100.810.637"
+              ]
+            },
+            {
+              "id": "D011804",
+              "term": "Quinolinas",
+              "term_en": "Quinolines",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D03.633.100.810"
+              ]
+            },
+            {
+              "id": "D000077764",
+              "term": "Dronedarona",
+              "term_en": "Dronedarone",
+              "scope": "Derivado não iodado da AMIODARONA usada para o tratamento da ARRITMIA.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D03.633.100.127.075.500"
+              ]
+            },
+            {
+              "id": "D003868",
+              "term": "Dequalínio",
+              "term_en": "Dequalinium",
+              "scope": "Bacteriostático tópico disponível como vários sais. É usado nos curativos de ferimentos e em infecções bucais, e pode também ter ação antimicótica, mas pode provocar ulceração na pele.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D03.633.100.810.824.200"
+              ]
+            },
+            {
+              "id": "D011807",
+              "term": "Quinolizinas",
+              "term_en": "Quinolizines",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D03.633.100.834"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Enunciado",
+          "candidates": [
+            {
+              "id": "DDCS032482",
+              "term": "Recursos Renováveis",
+              "term_en": "Renewable Resources",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.837.868"
+              ]
+            },
+            {
+              "id": "DDCS051583",
+              "term": "Varredoras",
+              "term_en": "Sweepers",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.987.506.871"
+              ]
+            },
+            {
+              "id": "DDCS051857",
+              "term": "Utilização de Recursos Locais",
+              "term_en": "Local Resources Uses",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.303.766"
+              ]
+            },
+            {
+              "id": "DDCS051642",
+              "term": "Leito Fixo",
+              "term_en": "Fixed Bed",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.806.945.750.207.899.660"
+              ]
+            },
+            {
+              "id": "DDCS025556",
+              "term": "Tanques de Concreto",
+              "term_en": "Reinforced Concrete Tanks",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.141.089.248.433.561"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": []
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Enunciado",
+        "Um ensaio clínico com a nova vacina contra dengue",
+        "QdengaR"
+      ],
+      "secondary": []
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Um ensaio clínico com a nova vacina contra dengue",
+            "candidates": [
+              {
+                "id": "D053059",
+                "term": "Vacinas contra Dengue",
+                "term_en": "Dengue Vaccines",
+                "scope": "Vacinas ou candidatos a vacinas utilizadas para impedir infecção com o VÍRUS DA DENGUE. Incluem a vacina atenuada viva, subunidade de DNA e vacinas inativas.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D20.215.894.899.162"
+                ]
+              },
+              {
+                "id": "D022321",
+                "term": "Vacinas contra Encefalite Japonesa",
+                "term_en": "Japanese Encephalitis Vaccines",
+                "scope": "Vacinas ou vacinas candidatas usadas para prevenir infecção com vírus da encefalite japonesa B (VÍRUS DA ENCEFALITE JAPONESA (ESPÉCIE))",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D20.215.894.899.320"
+                ]
+              },
+              {
+                "id": "D053060",
+                "term": "Vacinas contra o Vírus do Nilo Ocidental",
+                "term_en": "West Nile Virus Vaccines",
+                "scope": "Vacinas ou candidatos a vacinas utilizadas para impedir infecção com o VÍRUS DO NILO OCIDENTAL. .",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D20.215.894.899.962"
+                ]
+              },
+              {
+                "id": "D022123",
+                "term": "Vacinas contra Doença de Lyme",
+                "term_en": "Lyme Disease Vaccines",
+                "scope": "Vacinas ou vacinas candidatas usadas para prevenir DOENÇA DE LYME.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D20.215.894.135.492"
+                ]
+              },
+              {
+                "id": "D000087506",
+                "term": "Desenvolvimento de Vacinas",
+                "term_en": "Vaccine Development",
+                "scope": "Processo integral de introdução de uma nova vacina para uso em VACINAÇÃO, incluindo o desenvolvimento pré-clínico, testes em ENSAIO CLÍNICO CONTROLADO, fabricação, aprovação, licenciamento e distribui",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.952"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "QdengaR",
+            "candidates": [
+              {
+                "id": "D011798",
+                "term": "Quinaldinas",
+                "term_en": "Quinaldines",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D03.633.100.810.637"
+                ]
+              },
+              {
+                "id": "D011804",
+                "term": "Quinolinas",
+                "term_en": "Quinolines",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D03.633.100.810"
+                ]
+              },
+              {
+                "id": "D000077764",
+                "term": "Dronedarona",
+                "term_en": "Dronedarone",
+                "scope": "Derivado não iodado da AMIODARONA usada para o tratamento da ARRITMIA.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D03.633.100.127.075.500"
+                ]
+              },
+              {
+                "id": "D003868",
+                "term": "Dequalínio",
+                "term_en": "Dequalinium",
+                "scope": "Bacteriostático tópico disponível como vários sais. É usado nos curativos de ferimentos e em infecções bucais, e pode também ter ação antimicótica, mas pode provocar ulceração na pele.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D03.633.100.810.824.200"
+                ]
+              },
+              {
+                "id": "D011807",
+                "term": "Quinolizinas",
+                "term_en": "Quinolizines",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D03.633.100.834"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Enunciado",
+            "candidates": [
+              {
+                "id": "DDCS032482",
+                "term": "Recursos Renováveis",
+                "term_en": "Renewable Resources",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.837.868"
+                ]
+              },
+              {
+                "id": "DDCS051583",
+                "term": "Varredoras",
+                "term_en": "Sweepers",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.987.506.871"
+                ]
+              },
+              {
+                "id": "DDCS051857",
+                "term": "Utilização de Recursos Locais",
+                "term_en": "Local Resources Uses",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.303.766"
+                ]
+              },
+              {
+                "id": "DDCS051642",
+                "term": "Leito Fixo",
+                "term_en": "Fixed Bed",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.806.945.750.207.899.660"
+                ]
+              },
+              {
+                "id": "DDCS025556",
+                "term": "Tanques de Concreto",
+                "term_en": "Reinforced Concrete Tanks",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.141.089.248.433.561"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": []
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D053059",
+          "term": "Vacinas contra Dengue"
+        }
+      ],
+      "secondary": []
+    }
+  },
+  "stats": {
+    "primary_concepts": 3,
+    "secondary_concepts": 0,
+    "total_candidates": 15,
+    "final_primary": 1,
+    "final_secondary": 0
+  }
+}
