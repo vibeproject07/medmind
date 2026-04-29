@@ -1,0 +1,113 @@
+{
+  "result": [
+    {
+      "term": "Diálise Renal",
+      "code": "D006435",
+      "tree_ids": [
+        "E02.870.300",
+        "E02.912.800"
+      ],
+      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.870.300",
+      "scope_note": "Terapia para a purificação insuficiente do SANGUE pelos rins, baseado na diálise e incluindo a hemodiálise, DIÁLISE PERITONEAL e HEMODIAFILTRAÇÃO.",
+      "name_en": "Renal Dialysis",
+      "role": "primary"
+    },
+    {
+      "term": "Insuficiência Renal Crônica",
+      "code": "D051436",
+      "tree_ids": [
+        "C12.050.351.968.419.780.750",
+        "C12.200.777.419.780.750",
+        "C12.950.419.780.750",
+        "C23.550.291.500.906"
+      ],
+      "hierarchy_path": "Doenças › C12.050.351.968.419.780.750",
+      "scope_note": "Afecções nas quais os RINS apresentam uma atividade abaixo do nível normal por mais de três meses. A insuficiência renal crônica é classificada em cinco estágios de acordo com o declínio da TAXA DE FILTRAÇÃO GLOMERULAR e o grau de lesão ao rim (como medido pelo nível de PROTEINURIA). A forma mais grave é a doença renal terminal (FALÊNCIA RENAL CRÔNICA). (Tradução livre do original: Kidney Foundation: Kidney Disease Outcome Quality Initiative, 2002)",
+      "name_en": "Renal Insufficiency, Chronic",
+      "role": "primary"
+    },
+    {
+      "term": "Hipertensão",
+      "code": "D006973",
+      "tree_ids": [
+        "C14.907.489"
+      ],
+      "hierarchy_path": "Doenças › C14.907.489",
+      "scope_note": "PRESSÃO ARTERIAL sistêmica persistentemente alta. Com base em várias medições (DETERMINAÇÃO DA PRESSÃO ARTERIAL), a hipertensão é atualmente definida como sendo a PRESSÃO SISTÓLICA repetidamente maior que 140 mm Hg ou a PRESSÃO DIASTÓLICA de 90 mm Hg ou superior.",
+      "name_en": "Hypertension",
+      "role": "secondary"
+    },
+    {
+      "term": "Diabetes Mellitus",
+      "code": "D003920",
+      "tree_ids": [
+        "C18.452.394.750",
+        "C19.246"
+      ],
+      "hierarchy_path": "Doenças › C18.452.394.750",
+      "scope_note": "Grupo de transtornos heterogêneos caracterizados por HIPERGLICEMIA e INTOLERÂNCIA À GLUCOSE.",
+      "name_en": "Diabetes Mellitus",
+      "role": "secondary"
+    },
+    {
+      "term": "Injúria Renal Aguda",
+      "code": "D058186",
+      "tree_ids": [
+        "C12.050.351.968.419.780.050",
+        "C12.200.777.419.780.050",
+        "C12.950.419.780.050"
+      ],
+      "hierarchy_path": "Doenças › C12.050.351.968.419.780.050",
+      "scope_note": "Redução abrupta da função renal. A lesão renal aguda abrange o espectro inteiro da síndrome, incluindo a falência renal aguda, NECROSE TUBULAR AGUDA e outras afecções menos graves.",
+      "name_en": "Acute Kidney Injury",
+      "role": "secondary"
+    },
+    {
+      "term": "Hematúria",
+      "code": "D006417",
+      "tree_ids": [
+        "C12.050.351.968.934.442",
+        "C12.200.777.934.442",
+        "C12.950.934.442",
+        "C23.550.414.849"
+      ],
+      "hierarchy_path": "Doenças › C12.050.351.968.934.442",
+      "scope_note": "Presença de sangue na urina.",
+      "name_en": "Hematuria",
+      "role": "secondary"
+    },
+    {
+      "term": "Edema",
+      "code": "D004487",
+      "tree_ids": [
+        "C23.888.277"
+      ],
+      "hierarchy_path": "Doenças › C23.888.277",
+      "scope_note": "Acúmulo anormal de líquido em TECIDOS ou cavidades do corpo. Na maioria dos casos, estão presentes sob a PELE, na TELA SUBCUTÂNEA.",
+      "name_en": "Edema",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Insuficiência Renal Crônica",
+      "Uremia",
+      "Diálise Renal"
+    ],
+    "secondary": [
+      "Lesão Renal Aguda",
+      "Hipertensão",
+      "Diabetes Mellitus",
+      "Edema",
+      "Hematúria",
+      "Creatinina"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 3,
+    "secondary_terms": 6,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 2,
+    "final_count": 7
+  }
+}
