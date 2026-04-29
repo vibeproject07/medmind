@@ -2,6 +2,56 @@
   "result": {
     "decs_primary": [
       {
+        "id": "D005260",
+        "term": "Feminino",
+        "name_en": "Female",
+        "scope_note": "Organismos com o SEXO biológico que produz ÓVULOS para reprodução sexuada.",
+        "tree_ids": [],
+        "hierarchy_path": "",
+        "parents": [],
+        "children": [],
+        "role": "primary"
+      },
+      {
+        "id": "D000328",
+        "term": "Adulto",
+        "name_en": "Adult",
+        "scope_note": "Pessoa que atingiu crescimento total ou maturidade. Adultos vão dos 19 até 44 anos de idade. Para uma pessoa entre 19 e 24 anos, está disponível o termo ADULTO JOVEM.",
+        "tree_ids": [
+          "M01.060.116"
+        ],
+        "hierarchy_path": "Grupos Identificados › M01.060.116",
+        "parents": [
+          {
+            "id": "D009273",
+            "term": "Grupos Etários"
+          }
+        ],
+        "children": [
+          {
+            "id": "D016330",
+            "term": "Idoso Fragilizado"
+          },
+          {
+            "id": "D055815",
+            "term": "Adulto Jovem"
+          },
+          {
+            "id": "D008875",
+            "term": "Pessoa de Meia-Idade"
+          },
+          {
+            "id": "D000369",
+            "term": "Idoso de 80 Anos ou mais"
+          },
+          {
+            "id": "D000087742",
+            "term": "Octogenários"
+          }
+        ],
+        "role": "primary"
+      },
+      {
         "id": "D000062",
         "term": "Acidentes de Trabalho",
         "name_en": "Accidents, Occupational",
@@ -31,6 +81,29 @@
         "role": "primary"
       },
       {
+        "id": "D014951",
+        "term": "Ferimentos Perfurantes",
+        "name_en": "Wounds, Stab",
+        "scope_note": "Ferimentos penetrantes causados por um objeto pontiagudo.",
+        "tree_ids": [
+          "C26.986.950"
+        ],
+        "hierarchy_path": "Doenças › C26.986.950",
+        "parents": [
+          {
+            "id": "D014950",
+            "term": "Ferimentos Penetrantes"
+          }
+        ],
+        "children": [
+          {
+            "id": "D016602",
+            "term": "Ferimentos Penetrantes Produzidos por Agulha"
+          }
+        ],
+        "role": "primary"
+      },
+      {
         "id": "DDCS016385",
         "term": "Notificação de Acidentes de Trabalho",
         "name_en": "Occupational Accidents Registry",
@@ -45,56 +118,6 @@
             "term": "Acidentes de Trabalho"
           }
         ],
-        "children": [],
-        "role": "primary"
-      },
-      {
-        "id": "D000328",
-        "term": "Adulto",
-        "name_en": "Adult",
-        "scope_note": "Pessoa que atingiu crescimento total ou maturidade. Adultos vão dos 19 até 44 anos de idade. Para uma pessoa entre 19 e 24 anos, está disponível o termo ADULTO JOVEM.",
-        "tree_ids": [
-          "M01.060.116"
-        ],
-        "hierarchy_path": "Grupos Identificados › M01.060.116",
-        "parents": [
-          {
-            "id": "D009273",
-            "term": "Grupos Etários"
-          }
-        ],
-        "children": [
-          {
-            "id": "D055815",
-            "term": "Adulto Jovem"
-          },
-          {
-            "id": "D008875",
-            "term": "Pessoa de Meia-Idade"
-          },
-          {
-            "id": "D000369",
-            "term": "Idoso de 80 Anos ou mais"
-          },
-          {
-            "id": "D000087742",
-            "term": "Octogenários"
-          },
-          {
-            "id": "D000087662",
-            "term": "Centenários"
-          }
-        ],
-        "role": "primary"
-      },
-      {
-        "id": "D005260",
-        "term": "Feminino",
-        "name_en": "Female",
-        "scope_note": "Organismos com o SEXO biológico que produz ÓVULOS para reprodução sexuada.",
-        "tree_ids": [],
-        "hierarchy_path": "",
-        "parents": [],
         "children": [],
         "role": "primary"
       }
@@ -113,6 +136,58 @@
     {
       "label": "primários",
       "concepts": [
+        {
+          "concept": "Mulher de 32 anos",
+          "candidates": [
+            {
+              "id": "D008875",
+              "term": "Pessoa de Meia-Idade",
+              "term_en": "Middle Aged",
+              "scope": "Adulto com idade entre 45 e 64 anos.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.060.116.630"
+              ]
+            },
+            {
+              "id": "D005260",
+              "term": "Feminino",
+              "term_en": "Female",
+              "scope": "Organismos com o SEXO biológico que produz ÓVULOS para reprodução sexuada.",
+              "categoria": "",
+              "arvore": []
+            },
+            {
+              "id": "DDCS060373",
+              "term": "Mulheres Lactantes",
+              "term_en": "Breastfeeding Women",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP3.522.561.200.492"
+              ]
+            },
+            {
+              "id": "D000328",
+              "term": "Adulto",
+              "term_en": "Adult",
+              "scope": "Pessoa que atingiu crescimento total ou maturidade. Adultos vão dos 19 até 44 anos de idade. Para uma pessoa entre 19 e 24 anos, está disponível o termo ADULTO JOVEM.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.060.116"
+              ]
+            },
+            {
+              "id": "D055815",
+              "term": "Adulto Jovem",
+              "term_en": "Young Adult",
+              "scope": "Uma pessoa entre 19 e 24 anos de idade.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.060.116.815"
+              ]
+            }
+          ]
+        },
         {
           "concept": "Enunciado",
           "candidates": [
@@ -218,58 +293,6 @@
               ]
             }
           ]
-        },
-        {
-          "concept": "Mulher de 32 anos",
-          "candidates": [
-            {
-              "id": "D008875",
-              "term": "Pessoa de Meia-Idade",
-              "term_en": "Middle Aged",
-              "scope": "Adulto com idade entre 45 e 64 anos.",
-              "categoria": "Grupos Identificados",
-              "arvore": [
-                "M01.060.116.630"
-              ]
-            },
-            {
-              "id": "D005260",
-              "term": "Feminino",
-              "term_en": "Female",
-              "scope": "Organismos com o SEXO biológico que produz ÓVULOS para reprodução sexuada.",
-              "categoria": "",
-              "arvore": []
-            },
-            {
-              "id": "DDCS060373",
-              "term": "Mulheres Lactantes",
-              "term_en": "Breastfeeding Women",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP3.522.561.200.492"
-              ]
-            },
-            {
-              "id": "D000328",
-              "term": "Adulto",
-              "term_en": "Adult",
-              "scope": "Pessoa que atingiu crescimento total ou maturidade. Adultos vão dos 19 até 44 anos de idade. Para uma pessoa entre 19 e 24 anos, está disponível o termo ADULTO JOVEM.",
-              "categoria": "Grupos Identificados",
-              "arvore": [
-                "M01.060.116"
-              ]
-            },
-            {
-              "id": "D055815",
-              "term": "Adulto Jovem",
-              "term_en": "Young Adult",
-              "scope": "Uma pessoa entre 19 e 24 anos de idade.",
-              "categoria": "Grupos Identificados",
-              "arvore": [
-                "M01.060.116.815"
-              ]
-            }
-          ]
         }
       ]
     },
@@ -291,6 +314,58 @@
       {
         "label": "primários",
         "concepts": [
+          {
+            "concept": "Mulher de 32 anos",
+            "candidates": [
+              {
+                "id": "D008875",
+                "term": "Pessoa de Meia-Idade",
+                "term_en": "Middle Aged",
+                "scope": "Adulto com idade entre 45 e 64 anos.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.060.116.630"
+                ]
+              },
+              {
+                "id": "D005260",
+                "term": "Feminino",
+                "term_en": "Female",
+                "scope": "Organismos com o SEXO biológico que produz ÓVULOS para reprodução sexuada.",
+                "categoria": "",
+                "arvore": []
+              },
+              {
+                "id": "DDCS060373",
+                "term": "Mulheres Lactantes",
+                "term_en": "Breastfeeding Women",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP3.522.561.200.492"
+                ]
+              },
+              {
+                "id": "D000328",
+                "term": "Adulto",
+                "term_en": "Adult",
+                "scope": "Pessoa que atingiu crescimento total ou maturidade. Adultos vão dos 19 até 44 anos de idade. Para uma pessoa entre 19 e 24 anos, está disponível o termo ADULTO JOVEM.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.060.116"
+                ]
+              },
+              {
+                "id": "D055815",
+                "term": "Adulto Jovem",
+                "term_en": "Young Adult",
+                "scope": "Uma pessoa entre 19 e 24 anos de idade.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.060.116.815"
+                ]
+              }
+            ]
+          },
           {
             "concept": "Enunciado",
             "candidates": [
@@ -396,58 +471,6 @@
                 ]
               }
             ]
-          },
-          {
-            "concept": "Mulher de 32 anos",
-            "candidates": [
-              {
-                "id": "D008875",
-                "term": "Pessoa de Meia-Idade",
-                "term_en": "Middle Aged",
-                "scope": "Adulto com idade entre 45 e 64 anos.",
-                "categoria": "Grupos Identificados",
-                "arvore": [
-                  "M01.060.116.630"
-                ]
-              },
-              {
-                "id": "D005260",
-                "term": "Feminino",
-                "term_en": "Female",
-                "scope": "Organismos com o SEXO biológico que produz ÓVULOS para reprodução sexuada.",
-                "categoria": "",
-                "arvore": []
-              },
-              {
-                "id": "DDCS060373",
-                "term": "Mulheres Lactantes",
-                "term_en": "Breastfeeding Women",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP3.522.561.200.492"
-                ]
-              },
-              {
-                "id": "D000328",
-                "term": "Adulto",
-                "term_en": "Adult",
-                "scope": "Pessoa que atingiu crescimento total ou maturidade. Adultos vão dos 19 até 44 anos de idade. Para uma pessoa entre 19 e 24 anos, está disponível o termo ADULTO JOVEM.",
-                "categoria": "Grupos Identificados",
-                "arvore": [
-                  "M01.060.116"
-                ]
-              },
-              {
-                "id": "D055815",
-                "term": "Adulto Jovem",
-                "term_en": "Young Adult",
-                "scope": "Uma pessoa entre 19 e 24 anos de idade.",
-                "categoria": "Grupos Identificados",
-                "arvore": [
-                  "M01.060.116.815"
-                ]
-              }
-            ]
           }
         ]
       },
@@ -459,20 +482,24 @@
     "selected_candidates": {
       "primary": [
         {
-          "id": "D000062",
-          "term": "Acidentes de Trabalho"
-        },
-        {
-          "id": "DDCS016385",
-          "term": "Notificação de Acidentes de Trabalho"
+          "id": "D005260",
+          "term": "Feminino"
         },
         {
           "id": "D000328",
           "term": "Adulto"
         },
         {
-          "id": "D005260",
-          "term": "Feminino"
+          "id": "D000062",
+          "term": "Acidentes de Trabalho"
+        },
+        {
+          "id": "D014951",
+          "term": "Ferimentos Perfurantes"
+        },
+        {
+          "id": "DDCS016385",
+          "term": "Notificação de Acidentes de Trabalho"
         }
       ],
       "secondary": []
@@ -482,7 +509,7 @@
     "primary_concepts": 3,
     "secondary_concepts": 0,
     "total_candidates": 15,
-    "final_primary": 4,
+    "final_primary": 5,
     "final_secondary": 0
   }
 }

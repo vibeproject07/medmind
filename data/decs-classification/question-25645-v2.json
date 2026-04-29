@@ -66,62 +66,6 @@
           ]
         },
         {
-          "concept": "Observe a figura abaixo e assinale a alternativa correta quanto a esse instrumento de abordagem familiar",
-          "candidates": [
-            {
-              "id": "DDCS059936",
-              "term": "Constelação Familiar",
-              "term_en": "Family Constellation",
-              "scope": "Intervenção em grupo de curto prazo com o objetivo de ajudar pessoas a entender melhor e depois mudar suas experiências conflitantes dentro de um sistema social familiar.",
-              "categoria": "MT",
-              "arvore": [
-                "MT3.795.248"
-              ]
-            },
-            {
-              "id": "D000092802",
-              "term": "Apoio Familiar",
-              "term_en": "Family Support",
-              "scope": "Sistemas de apoio que prestam ajuda e incentivo mútuo aos membros de uma FAMÍLIA e entre eles.",
-              "categoria": "Psiquiatria e Psicologia",
-              "arvore": [
-                "F01.829.263.370.082",
-                "I01.880.853.150.439.500"
-              ]
-            },
-            {
-              "id": "D011368",
-              "term": "Relações Profissional-Família",
-              "term_en": "Professional-Family Relations",
-              "scope": "As interações entre o profissional e a família.",
-              "categoria": "Psiquiatria e Psicologia",
-              "arvore": [
-                "F01.829.401.550"
-              ]
-            },
-            {
-              "id": "D022143",
-              "term": "Enfermagem Familiar",
-              "term_en": "Family Nursing",
-              "scope": "A provisão de cuidados envolvendo o processo de enfermagem a famílias e membros da família em situações de saúde e enfermidade.",
-              "categoria": "Disciplinas e Ocupações",
-              "arvore": [
-                "H02.478.676.218"
-              ]
-            },
-            {
-              "id": "D005196",
-              "term": "Terapia Familiar",
-              "term_en": "Family Therapy",
-              "scope": "Forma de psicoterapia de grupo. Envolve o tratamento simultâneo de mais de um membro da família na mesma sessão.",
-              "categoria": "Psiquiatria e Psicologia",
-              "arvore": [
-                "F04.754.864.581.273"
-              ]
-            }
-          ]
-        },
-        {
           "concept": "Alternativa A",
           "candidates": [
             {
@@ -174,6 +118,62 @@
               "categoria": "Anatomia",
               "arvore": [
                 "A18"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Observe a figura abaixo e assinale a alternativa correta quanto a esse instrumento de abordagem familiar",
+          "candidates": [
+            {
+              "id": "DDCS059936",
+              "term": "Constelação Familiar",
+              "term_en": "Family Constellation",
+              "scope": "Intervenção em grupo de curto prazo com o objetivo de ajudar pessoas a entender melhor e depois mudar suas experiências conflitantes dentro de um sistema social familiar.",
+              "categoria": "MT",
+              "arvore": [
+                "MT3.795.248"
+              ]
+            },
+            {
+              "id": "D000092802",
+              "term": "Apoio Familiar",
+              "term_en": "Family Support",
+              "scope": "Sistemas de apoio que prestam ajuda e incentivo mútuo aos membros de uma FAMÍLIA e entre eles.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.829.263.370.082",
+                "I01.880.853.150.439.500"
+              ]
+            },
+            {
+              "id": "D011368",
+              "term": "Relações Profissional-Família",
+              "term_en": "Professional-Family Relations",
+              "scope": "As interações entre o profissional e a família.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.829.401.550"
+              ]
+            },
+            {
+              "id": "D022143",
+              "term": "Enfermagem Familiar",
+              "term_en": "Family Nursing",
+              "scope": "A provisão de cuidados envolvendo o processo de enfermagem a famílias e membros da família em situações de saúde e enfermidade.",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.478.676.218"
+              ]
+            },
+            {
+              "id": "D005196",
+              "term": "Terapia Familiar",
+              "term_en": "Family Therapy",
+              "scope": "Forma de psicoterapia de grupo. Envolve o tratamento simultâneo de mais de um membro da família na mesma sessão.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F04.754.864.581.273"
               ]
             }
           ]
@@ -249,62 +249,6 @@
             ]
           },
           {
-            "concept": "Observe a figura abaixo e assinale a alternativa correta quanto a esse instrumento de abordagem familiar",
-            "candidates": [
-              {
-                "id": "DDCS059936",
-                "term": "Constelação Familiar",
-                "term_en": "Family Constellation",
-                "scope": "Intervenção em grupo de curto prazo com o objetivo de ajudar pessoas a entender melhor e depois mudar suas experiências conflitantes dentro de um sistema social familiar.",
-                "categoria": "MT",
-                "arvore": [
-                  "MT3.795.248"
-                ]
-              },
-              {
-                "id": "D000092802",
-                "term": "Apoio Familiar",
-                "term_en": "Family Support",
-                "scope": "Sistemas de apoio que prestam ajuda e incentivo mútuo aos membros de uma FAMÍLIA e entre eles.",
-                "categoria": "Psiquiatria e Psicologia",
-                "arvore": [
-                  "F01.829.263.370.082",
-                  "I01.880.853.150.439.500"
-                ]
-              },
-              {
-                "id": "D011368",
-                "term": "Relações Profissional-Família",
-                "term_en": "Professional-Family Relations",
-                "scope": "As interações entre o profissional e a família.",
-                "categoria": "Psiquiatria e Psicologia",
-                "arvore": [
-                  "F01.829.401.550"
-                ]
-              },
-              {
-                "id": "D022143",
-                "term": "Enfermagem Familiar",
-                "term_en": "Family Nursing",
-                "scope": "A provisão de cuidados envolvendo o processo de enfermagem a famílias e membros da família em situações de saúde e enfermidade.",
-                "categoria": "Disciplinas e Ocupações",
-                "arvore": [
-                  "H02.478.676.218"
-                ]
-              },
-              {
-                "id": "D005196",
-                "term": "Terapia Familiar",
-                "term_en": "Family Therapy",
-                "scope": "Forma de psicoterapia de grupo. Envolve o tratamento simultâneo de mais de um membro da família na mesma sessão.",
-                "categoria": "Psiquiatria e Psicologia",
-                "arvore": [
-                  "F04.754.864.581.273"
-                ]
-              }
-            ]
-          },
-          {
             "concept": "Alternativa A",
             "candidates": [
               {
@@ -357,6 +301,62 @@
                 "categoria": "Anatomia",
                 "arvore": [
                   "A18"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Observe a figura abaixo e assinale a alternativa correta quanto a esse instrumento de abordagem familiar",
+            "candidates": [
+              {
+                "id": "DDCS059936",
+                "term": "Constelação Familiar",
+                "term_en": "Family Constellation",
+                "scope": "Intervenção em grupo de curto prazo com o objetivo de ajudar pessoas a entender melhor e depois mudar suas experiências conflitantes dentro de um sistema social familiar.",
+                "categoria": "MT",
+                "arvore": [
+                  "MT3.795.248"
+                ]
+              },
+              {
+                "id": "D000092802",
+                "term": "Apoio Familiar",
+                "term_en": "Family Support",
+                "scope": "Sistemas de apoio que prestam ajuda e incentivo mútuo aos membros de uma FAMÍLIA e entre eles.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.829.263.370.082",
+                  "I01.880.853.150.439.500"
+                ]
+              },
+              {
+                "id": "D011368",
+                "term": "Relações Profissional-Família",
+                "term_en": "Professional-Family Relations",
+                "scope": "As interações entre o profissional e a família.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.829.401.550"
+                ]
+              },
+              {
+                "id": "D022143",
+                "term": "Enfermagem Familiar",
+                "term_en": "Family Nursing",
+                "scope": "A provisão de cuidados envolvendo o processo de enfermagem a famílias e membros da família em situações de saúde e enfermidade.",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.478.676.218"
+                ]
+              },
+              {
+                "id": "D005196",
+                "term": "Terapia Familiar",
+                "term_en": "Family Therapy",
+                "scope": "Forma de psicoterapia de grupo. Envolve o tratamento simultâneo de mais de um membro da família na mesma sessão.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F04.754.864.581.273"
                 ]
               }
             ]

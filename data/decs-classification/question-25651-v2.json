@@ -35,61 +35,6 @@
       "label": "primários",
       "concepts": [
         {
-          "concept": "Um ensaio clínico com a nova vacina contra dengue",
-          "candidates": [
-            {
-              "id": "D053059",
-              "term": "Vacinas contra Dengue",
-              "term_en": "Dengue Vaccines",
-              "scope": "Vacinas ou candidatos a vacinas utilizadas para impedir infecção com o VÍRUS DA DENGUE. Incluem a vacina atenuada viva, subunidade de DNA e vacinas inativas.",
-              "categoria": "Compostos Químicos e Drogas",
-              "arvore": [
-                "D20.215.894.899.162"
-              ]
-            },
-            {
-              "id": "D022321",
-              "term": "Vacinas contra Encefalite Japonesa",
-              "term_en": "Japanese Encephalitis Vaccines",
-              "scope": "Vacinas ou vacinas candidatas usadas para prevenir infecção com vírus da encefalite japonesa B (VÍRUS DA ENCEFALITE JAPONESA (ESPÉCIE))",
-              "categoria": "Compostos Químicos e Drogas",
-              "arvore": [
-                "D20.215.894.899.320"
-              ]
-            },
-            {
-              "id": "D053060",
-              "term": "Vacinas contra o Vírus do Nilo Ocidental",
-              "term_en": "West Nile Virus Vaccines",
-              "scope": "Vacinas ou candidatos a vacinas utilizadas para impedir infecção com o VÍRUS DO NILO OCIDENTAL. .",
-              "categoria": "Compostos Químicos e Drogas",
-              "arvore": [
-                "D20.215.894.899.962"
-              ]
-            },
-            {
-              "id": "D022123",
-              "term": "Vacinas contra Doença de Lyme",
-              "term_en": "Lyme Disease Vaccines",
-              "scope": "Vacinas ou vacinas candidatas usadas para prevenir DOENÇA DE LYME.",
-              "categoria": "Compostos Químicos e Drogas",
-              "arvore": [
-                "D20.215.894.135.492"
-              ]
-            },
-            {
-              "id": "D000087506",
-              "term": "Desenvolvimento de Vacinas",
-              "term_en": "Vaccine Development",
-              "scope": "Processo integral de introdução de uma nova vacina para uso em VACINAÇÃO, incluindo o desenvolvimento pré-clínico, testes em ENSAIO CLÍNICO CONTROLADO, fabricação, aprovação, licenciamento e distribui",
-              "categoria": "Técnicas e Equipamentos Analíticos",
-              "arvore": [
-                "E05.952"
-              ]
-            }
-          ]
-        },
-        {
           "concept": "Enunciado",
           "candidates": [
             {
@@ -190,6 +135,61 @@
               ]
             }
           ]
+        },
+        {
+          "concept": "Um ensaio clínico com a nova vacina contra dengue",
+          "candidates": [
+            {
+              "id": "D053059",
+              "term": "Vacinas contra Dengue",
+              "term_en": "Dengue Vaccines",
+              "scope": "Vacinas ou candidatos a vacinas utilizadas para impedir infecção com o VÍRUS DA DENGUE. Incluem a vacina atenuada viva, subunidade de DNA e vacinas inativas.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D20.215.894.899.162"
+              ]
+            },
+            {
+              "id": "D022321",
+              "term": "Vacinas contra Encefalite Japonesa",
+              "term_en": "Japanese Encephalitis Vaccines",
+              "scope": "Vacinas ou vacinas candidatas usadas para prevenir infecção com vírus da encefalite japonesa B (VÍRUS DA ENCEFALITE JAPONESA (ESPÉCIE))",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D20.215.894.899.320"
+              ]
+            },
+            {
+              "id": "D053060",
+              "term": "Vacinas contra o Vírus do Nilo Ocidental",
+              "term_en": "West Nile Virus Vaccines",
+              "scope": "Vacinas ou candidatos a vacinas utilizadas para impedir infecção com o VÍRUS DO NILO OCIDENTAL. .",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D20.215.894.899.962"
+              ]
+            },
+            {
+              "id": "D022123",
+              "term": "Vacinas contra Doença de Lyme",
+              "term_en": "Lyme Disease Vaccines",
+              "scope": "Vacinas ou vacinas candidatas usadas para prevenir DOENÇA DE LYME.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D20.215.894.135.492"
+              ]
+            },
+            {
+              "id": "D000087506",
+              "term": "Desenvolvimento de Vacinas",
+              "term_en": "Vaccine Development",
+              "scope": "Processo integral de introdução de uma nova vacina para uso em VACINAÇÃO, incluindo o desenvolvimento pré-clínico, testes em ENSAIO CLÍNICO CONTROLADO, fabricação, aprovação, licenciamento e distribui",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.952"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -211,61 +211,6 @@
       {
         "label": "primários",
         "concepts": [
-          {
-            "concept": "Um ensaio clínico com a nova vacina contra dengue",
-            "candidates": [
-              {
-                "id": "D053059",
-                "term": "Vacinas contra Dengue",
-                "term_en": "Dengue Vaccines",
-                "scope": "Vacinas ou candidatos a vacinas utilizadas para impedir infecção com o VÍRUS DA DENGUE. Incluem a vacina atenuada viva, subunidade de DNA e vacinas inativas.",
-                "categoria": "Compostos Químicos e Drogas",
-                "arvore": [
-                  "D20.215.894.899.162"
-                ]
-              },
-              {
-                "id": "D022321",
-                "term": "Vacinas contra Encefalite Japonesa",
-                "term_en": "Japanese Encephalitis Vaccines",
-                "scope": "Vacinas ou vacinas candidatas usadas para prevenir infecção com vírus da encefalite japonesa B (VÍRUS DA ENCEFALITE JAPONESA (ESPÉCIE))",
-                "categoria": "Compostos Químicos e Drogas",
-                "arvore": [
-                  "D20.215.894.899.320"
-                ]
-              },
-              {
-                "id": "D053060",
-                "term": "Vacinas contra o Vírus do Nilo Ocidental",
-                "term_en": "West Nile Virus Vaccines",
-                "scope": "Vacinas ou candidatos a vacinas utilizadas para impedir infecção com o VÍRUS DO NILO OCIDENTAL. .",
-                "categoria": "Compostos Químicos e Drogas",
-                "arvore": [
-                  "D20.215.894.899.962"
-                ]
-              },
-              {
-                "id": "D022123",
-                "term": "Vacinas contra Doença de Lyme",
-                "term_en": "Lyme Disease Vaccines",
-                "scope": "Vacinas ou vacinas candidatas usadas para prevenir DOENÇA DE LYME.",
-                "categoria": "Compostos Químicos e Drogas",
-                "arvore": [
-                  "D20.215.894.135.492"
-                ]
-              },
-              {
-                "id": "D000087506",
-                "term": "Desenvolvimento de Vacinas",
-                "term_en": "Vaccine Development",
-                "scope": "Processo integral de introdução de uma nova vacina para uso em VACINAÇÃO, incluindo o desenvolvimento pré-clínico, testes em ENSAIO CLÍNICO CONTROLADO, fabricação, aprovação, licenciamento e distribui",
-                "categoria": "Técnicas e Equipamentos Analíticos",
-                "arvore": [
-                  "E05.952"
-                ]
-              }
-            ]
-          },
           {
             "concept": "Enunciado",
             "candidates": [
@@ -364,6 +309,61 @@
                 "categoria": "Compostos Químicos e Drogas",
                 "arvore": [
                   "D03.633.100.834"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Um ensaio clínico com a nova vacina contra dengue",
+            "candidates": [
+              {
+                "id": "D053059",
+                "term": "Vacinas contra Dengue",
+                "term_en": "Dengue Vaccines",
+                "scope": "Vacinas ou candidatos a vacinas utilizadas para impedir infecção com o VÍRUS DA DENGUE. Incluem a vacina atenuada viva, subunidade de DNA e vacinas inativas.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D20.215.894.899.162"
+                ]
+              },
+              {
+                "id": "D022321",
+                "term": "Vacinas contra Encefalite Japonesa",
+                "term_en": "Japanese Encephalitis Vaccines",
+                "scope": "Vacinas ou vacinas candidatas usadas para prevenir infecção com vírus da encefalite japonesa B (VÍRUS DA ENCEFALITE JAPONESA (ESPÉCIE))",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D20.215.894.899.320"
+                ]
+              },
+              {
+                "id": "D053060",
+                "term": "Vacinas contra o Vírus do Nilo Ocidental",
+                "term_en": "West Nile Virus Vaccines",
+                "scope": "Vacinas ou candidatos a vacinas utilizadas para impedir infecção com o VÍRUS DO NILO OCIDENTAL. .",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D20.215.894.899.962"
+                ]
+              },
+              {
+                "id": "D022123",
+                "term": "Vacinas contra Doença de Lyme",
+                "term_en": "Lyme Disease Vaccines",
+                "scope": "Vacinas ou vacinas candidatas usadas para prevenir DOENÇA DE LYME.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D20.215.894.135.492"
+                ]
+              },
+              {
+                "id": "D000087506",
+                "term": "Desenvolvimento de Vacinas",
+                "term_en": "Vaccine Development",
+                "scope": "Processo integral de introdução de uma nova vacina para uso em VACINAÇÃO, incluindo o desenvolvimento pré-clínico, testes em ENSAIO CLÍNICO CONTROLADO, fabricação, aprovação, licenciamento e distribui",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.952"
                 ]
               }
             ]

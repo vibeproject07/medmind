@@ -31,6 +31,24 @@
           }
         ],
         "role": "primary"
+      },
+      {
+        "id": "D058873",
+        "term": "Pandemias",
+        "name_en": "Pandemics",
+        "scope_note": "Epidemia de doença infecciosa que se disseminou para vários países, com frequência mais de um continente e que afeta geralmente um grande número de pessoas.",
+        "tree_ids": [
+          "N06.850.290.200.600"
+        ],
+        "hierarchy_path": "Saúde › N06.850.290.200.600",
+        "parents": [
+          {
+            "id": "D058872",
+            "term": "Epidemias"
+          }
+        ],
+        "children": [],
+        "role": "primary"
       }
     ],
     "decs_secondary": []
@@ -98,62 +116,6 @@
           ]
         },
         {
-          "concept": "ainda com casos detectados neste ano de 2023",
-          "candidates": [
-            {
-              "id": "D000094143",
-              "term": "Relatos de Casos como Assunto",
-              "term_en": "Case Reports as Topic",
-              "scope": "Apresentações clínicas que podem ser seguidas por estudos de avaliação que eventualmente levam a um diagnóstico.",
-              "categoria": "Ciência da Informação",
-              "arvore": [
-                "L01.559.423.906.654.500"
-              ]
-            },
-            {
-              "id": "D058345",
-              "term": "Infecções Assintomáticas",
-              "term_en": "Asymptomatic Infections",
-              "scope": "Infecções que não exibem sintomas.",
-              "categoria": "Doenças",
-              "arvore": [
-                "C01.125",
-                "C23.550.291.187.500"
-              ]
-            },
-            {
-              "id": "D012900",
-              "term": "Vacina Antivariólica",
-              "term_en": "Smallpox Vaccine",
-              "scope": "Vacina de VACCINIA VIRUS usada para imunização contra a VARÍOLA. Tem sido ultimamente recomendada apenas para trabalhadores de laboratório expostos ao VÍRUS DA VARÍOLA. Certos países continuam a vacin",
-              "categoria": "Compostos Químicos e Drogas",
-              "arvore": [
-                "D20.215.894.899.859"
-              ]
-            },
-            {
-              "id": "D058070",
-              "term": "Doenças Assintomáticas",
-              "term_en": "Asymptomatic Diseases",
-              "scope": "Doenças que não exibem sintomas.",
-              "categoria": "Doenças",
-              "arvore": [
-                "C23.550.291.187"
-              ]
-            },
-            {
-              "id": "D002363",
-              "term": "Relatos de Casos",
-              "term_en": "Case Reports",
-              "scope": "Apresentações clínicas que podem ser seguidas pelos estudos avaliativos que conduzem eventualmente a um diagnóstico.",
-              "categoria": "V",
-              "arvore": [
-                "V03.100"
-              ]
-            }
-          ]
-        },
-        {
           "concept": "Na pandemia da COVID",
           "candidates": [
             {
@@ -207,6 +169,62 @@
               "categoria": "Saúde",
               "arvore": [
                 "N06.850.780.200.688"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "ainda com casos detectados neste ano de 2023",
+          "candidates": [
+            {
+              "id": "D000094143",
+              "term": "Relatos de Casos como Assunto",
+              "term_en": "Case Reports as Topic",
+              "scope": "Apresentações clínicas que podem ser seguidas por estudos de avaliação que eventualmente levam a um diagnóstico.",
+              "categoria": "Ciência da Informação",
+              "arvore": [
+                "L01.559.423.906.654.500"
+              ]
+            },
+            {
+              "id": "D058345",
+              "term": "Infecções Assintomáticas",
+              "term_en": "Asymptomatic Infections",
+              "scope": "Infecções que não exibem sintomas.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.125",
+                "C23.550.291.187.500"
+              ]
+            },
+            {
+              "id": "D012900",
+              "term": "Vacina Antivariólica",
+              "term_en": "Smallpox Vaccine",
+              "scope": "Vacina de VACCINIA VIRUS usada para imunização contra a VARÍOLA. Tem sido ultimamente recomendada apenas para trabalhadores de laboratório expostos ao VÍRUS DA VARÍOLA. Certos países continuam a vacin",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D20.215.894.899.859"
+              ]
+            },
+            {
+              "id": "D058070",
+              "term": "Doenças Assintomáticas",
+              "term_en": "Asymptomatic Diseases",
+              "scope": "Doenças que não exibem sintomas.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.550.291.187"
+              ]
+            },
+            {
+              "id": "D002363",
+              "term": "Relatos de Casos",
+              "term_en": "Case Reports",
+              "scope": "Apresentações clínicas que podem ser seguidas pelos estudos avaliativos que conduzem eventualmente a um diagnóstico.",
+              "categoria": "V",
+              "arvore": [
+                "V03.100"
               ]
             }
           ]
@@ -282,62 +300,6 @@
             ]
           },
           {
-            "concept": "ainda com casos detectados neste ano de 2023",
-            "candidates": [
-              {
-                "id": "D000094143",
-                "term": "Relatos de Casos como Assunto",
-                "term_en": "Case Reports as Topic",
-                "scope": "Apresentações clínicas que podem ser seguidas por estudos de avaliação que eventualmente levam a um diagnóstico.",
-                "categoria": "Ciência da Informação",
-                "arvore": [
-                  "L01.559.423.906.654.500"
-                ]
-              },
-              {
-                "id": "D058345",
-                "term": "Infecções Assintomáticas",
-                "term_en": "Asymptomatic Infections",
-                "scope": "Infecções que não exibem sintomas.",
-                "categoria": "Doenças",
-                "arvore": [
-                  "C01.125",
-                  "C23.550.291.187.500"
-                ]
-              },
-              {
-                "id": "D012900",
-                "term": "Vacina Antivariólica",
-                "term_en": "Smallpox Vaccine",
-                "scope": "Vacina de VACCINIA VIRUS usada para imunização contra a VARÍOLA. Tem sido ultimamente recomendada apenas para trabalhadores de laboratório expostos ao VÍRUS DA VARÍOLA. Certos países continuam a vacin",
-                "categoria": "Compostos Químicos e Drogas",
-                "arvore": [
-                  "D20.215.894.899.859"
-                ]
-              },
-              {
-                "id": "D058070",
-                "term": "Doenças Assintomáticas",
-                "term_en": "Asymptomatic Diseases",
-                "scope": "Doenças que não exibem sintomas.",
-                "categoria": "Doenças",
-                "arvore": [
-                  "C23.550.291.187"
-                ]
-              },
-              {
-                "id": "D002363",
-                "term": "Relatos de Casos",
-                "term_en": "Case Reports",
-                "scope": "Apresentações clínicas que podem ser seguidas pelos estudos avaliativos que conduzem eventualmente a um diagnóstico.",
-                "categoria": "V",
-                "arvore": [
-                  "V03.100"
-                ]
-              }
-            ]
-          },
-          {
             "concept": "Na pandemia da COVID",
             "candidates": [
               {
@@ -394,6 +356,62 @@
                 ]
               }
             ]
+          },
+          {
+            "concept": "ainda com casos detectados neste ano de 2023",
+            "candidates": [
+              {
+                "id": "D000094143",
+                "term": "Relatos de Casos como Assunto",
+                "term_en": "Case Reports as Topic",
+                "scope": "Apresentações clínicas que podem ser seguidas por estudos de avaliação que eventualmente levam a um diagnóstico.",
+                "categoria": "Ciência da Informação",
+                "arvore": [
+                  "L01.559.423.906.654.500"
+                ]
+              },
+              {
+                "id": "D058345",
+                "term": "Infecções Assintomáticas",
+                "term_en": "Asymptomatic Infections",
+                "scope": "Infecções que não exibem sintomas.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.125",
+                  "C23.550.291.187.500"
+                ]
+              },
+              {
+                "id": "D012900",
+                "term": "Vacina Antivariólica",
+                "term_en": "Smallpox Vaccine",
+                "scope": "Vacina de VACCINIA VIRUS usada para imunização contra a VARÍOLA. Tem sido ultimamente recomendada apenas para trabalhadores de laboratório expostos ao VÍRUS DA VARÍOLA. Certos países continuam a vacin",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D20.215.894.899.859"
+                ]
+              },
+              {
+                "id": "D058070",
+                "term": "Doenças Assintomáticas",
+                "term_en": "Asymptomatic Diseases",
+                "scope": "Doenças que não exibem sintomas.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.550.291.187"
+                ]
+              },
+              {
+                "id": "D002363",
+                "term": "Relatos de Casos",
+                "term_en": "Case Reports",
+                "scope": "Apresentações clínicas que podem ser seguidas pelos estudos avaliativos que conduzem eventualmente a um diagnóstico.",
+                "categoria": "V",
+                "arvore": [
+                  "V03.100"
+                ]
+              }
+            ]
           }
         ]
       },
@@ -407,6 +425,10 @@
         {
           "id": "D000086382",
           "term": "COVID-19"
+        },
+        {
+          "id": "D058873",
+          "term": "Pandemias"
         }
       ],
       "secondary": []
@@ -416,7 +438,7 @@
     "primary_concepts": 3,
     "secondary_concepts": 0,
     "total_candidates": 15,
-    "final_primary": 1,
+    "final_primary": 2,
     "final_secondary": 0
   }
 }

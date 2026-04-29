@@ -1,0 +1,422 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D002405",
+        "term": "Cateterismo Venoso Central",
+        "name_en": "Catheterization, Central Venous",
+        "scope_note": "Colocação de um CATETER intravenoso na veia subclávia, jugular ou outra veia central.",
+        "tree_ids": [
+          "E02.148.167",
+          "E04.100.814.529.875",
+          "E04.502.382.875",
+          "E05.157.313"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.148.167",
+        "parents": [
+          {
+            "id": "D002404",
+            "term": "Cateterismo"
+          },
+          {
+            "id": "D057510",
+            "term": "Procedimentos Endovasculares"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": []
+  },
+  "themes_identified": {
+    "primary": [
+      "Enunciado",
+      "Inegável a evolução dos dispositivos de imagens nos últimos anos",
+      "que aumentaram a segurança durante o implante de um Cateter Venoso Central"
+    ],
+    "secondary": []
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Enunciado",
+          "candidates": [
+            {
+              "id": "DDCS032482",
+              "term": "Recursos Renováveis",
+              "term_en": "Renewable Resources",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.837.868"
+              ]
+            },
+            {
+              "id": "DDCS051583",
+              "term": "Varredoras",
+              "term_en": "Sweepers",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.987.506.871"
+              ]
+            },
+            {
+              "id": "DDCS051857",
+              "term": "Utilização de Recursos Locais",
+              "term_en": "Local Resources Uses",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.303.766"
+              ]
+            },
+            {
+              "id": "DDCS051642",
+              "term": "Leito Fixo",
+              "term_en": "Fixed Bed",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.806.945.750.207.899.660"
+              ]
+            },
+            {
+              "id": "DDCS025556",
+              "term": "Tanques de Concreto",
+              "term_en": "Reinforced Concrete Tanks",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.141.089.248.433.561"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "que aumentaram a segurança durante o implante de um Cateter Venoso Central",
+          "candidates": [
+            {
+              "id": "D062905",
+              "term": "Cateteres Venosos Centrais",
+              "term_en": "Central Venous Catheters",
+              "scope": "Cateteres inseridos em uma veia central grande como a VEIA SUBCLÁVIA ou a VEIA FEMORAL.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E07.132.750.500"
+              ]
+            },
+            {
+              "id": "D002405",
+              "term": "Cateterismo Venoso Central",
+              "term_en": "Catheterization, Central Venous",
+              "scope": "Colocação de um CATETER intravenoso na veia subclávia, jugular ou outra veia central.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.148.167",
+                "E04.100.814.529.875"
+              ]
+            },
+            {
+              "id": "D002407",
+              "term": "Cateterismo de Swan-Ganz",
+              "term_en": "Catheterization, Swan-Ganz",
+              "scope": "Colocação de um cateter com balão na artéria pulmonar através das veias antecubital, subclávia e, algumas vezes, a femoral. É utilizado para medir a pressão da artéria pulmonar e a pressão propulsora ",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.370.380.140.210",
+                "E02.148.224.165"
+              ]
+            },
+            {
+              "id": "D057785",
+              "term": "Catéteres",
+              "term_en": "Catheters",
+              "scope": "Dispositivo flexível e tubular usado para transportar líquidos para dentro ou para fora de um vaso sanguíneo, órgão oco ou cavidade corpórea.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E07.132"
+              ]
+            },
+            {
+              "id": "D002406",
+              "term": "Cateterismo Periférico",
+              "term_en": "Catheterization, Peripheral",
+              "scope": "Inserção de um cateter numa artéria periférica, veia ou vias aéreas, com fins diagnósticos ou terapêuticos.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.148.224",
+                "E04.100.814.529.937"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Inegável a evolução dos dispositivos de imagens nos últimos anos",
+          "candidates": [
+            {
+              "id": "D007089",
+              "term": "Melhoramento de Imagens",
+              "term_en": "Image Enhancement",
+              "scope": "Melhora da qualidade de uma imagem por várias técnicas, inclusive processamento computadorizado, filtração digital, técnicas ecocardiográficas, MICROSCOPIA ótica e ultraestrutural, espectroscopia e mi",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.350.600.350",
+                "L01.224.308.380"
+              ]
+            },
+            {
+              "id": "D059008",
+              "term": "Imagem com Lapso de Tempo",
+              "term_en": "Time-Lapse Imaging",
+              "scope": "Imagens de um processo gravadas em série a intervalos regulares espaçados ao longo de um período de tempo maior do que o período em que as gravações serão reproduzidas.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.350.600.817",
+                "E05.712.657"
+              ]
+            },
+            {
+              "id": "D000097785",
+              "term": "Imageamento Forense",
+              "term_en": "Forensic Imaging",
+              "scope": "Uso de várias imagens e técnicas de imageamento melhoradas nas disciplinas de investigação forense. Inclui, com bastante frequência, plataformas de MEDICINA FORENSE como RAIOS X, RAIO-CT (ver TOMOGRAF",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.350.295",
+                "I01.198.780.922"
+              ]
+            },
+            {
+              "id": "D011856",
+              "term": "Intensificação de Imagem Radiográfica",
+              "term_en": "Radiographic Image Enhancement",
+              "scope": "Melhora na qualidade de uma imagem de raio x pelo uso de uma tela, tubo ou filtro de intensificação e por técnicas otimizadas de exposição. Métodos de processamento digital são geralmente aplicados.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.350.600.350.700",
+                "E01.370.350.700.700"
+              ]
+            },
+            {
+              "id": "D015898",
+              "term": "Tomógrafos Computadorizados",
+              "term_en": "Tomography Scanners, X-Ray Computed",
+              "scope": "Dispositivos detectores de imagem em raio X que fazem uma imagem focada de estruturas corporais estendidas em um plano pré-determinado do qual são computadas imagens mais complexas.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E07.913"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": []
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Enunciado",
+        "Inegável a evolução dos dispositivos de imagens nos últimos anos",
+        "que aumentaram a segurança durante o implante de um Cateter Venoso Central"
+      ],
+      "secondary": []
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Enunciado",
+            "candidates": [
+              {
+                "id": "DDCS032482",
+                "term": "Recursos Renováveis",
+                "term_en": "Renewable Resources",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.837.868"
+                ]
+              },
+              {
+                "id": "DDCS051583",
+                "term": "Varredoras",
+                "term_en": "Sweepers",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.987.506.871"
+                ]
+              },
+              {
+                "id": "DDCS051857",
+                "term": "Utilização de Recursos Locais",
+                "term_en": "Local Resources Uses",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.303.766"
+                ]
+              },
+              {
+                "id": "DDCS051642",
+                "term": "Leito Fixo",
+                "term_en": "Fixed Bed",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.806.945.750.207.899.660"
+                ]
+              },
+              {
+                "id": "DDCS025556",
+                "term": "Tanques de Concreto",
+                "term_en": "Reinforced Concrete Tanks",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.141.089.248.433.561"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "que aumentaram a segurança durante o implante de um Cateter Venoso Central",
+            "candidates": [
+              {
+                "id": "D062905",
+                "term": "Cateteres Venosos Centrais",
+                "term_en": "Central Venous Catheters",
+                "scope": "Cateteres inseridos em uma veia central grande como a VEIA SUBCLÁVIA ou a VEIA FEMORAL.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E07.132.750.500"
+                ]
+              },
+              {
+                "id": "D002405",
+                "term": "Cateterismo Venoso Central",
+                "term_en": "Catheterization, Central Venous",
+                "scope": "Colocação de um CATETER intravenoso na veia subclávia, jugular ou outra veia central.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.148.167",
+                  "E04.100.814.529.875"
+                ]
+              },
+              {
+                "id": "D002407",
+                "term": "Cateterismo de Swan-Ganz",
+                "term_en": "Catheterization, Swan-Ganz",
+                "scope": "Colocação de um cateter com balão na artéria pulmonar através das veias antecubital, subclávia e, algumas vezes, a femoral. É utilizado para medir a pressão da artéria pulmonar e a pressão propulsora ",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.370.380.140.210",
+                  "E02.148.224.165"
+                ]
+              },
+              {
+                "id": "D057785",
+                "term": "Catéteres",
+                "term_en": "Catheters",
+                "scope": "Dispositivo flexível e tubular usado para transportar líquidos para dentro ou para fora de um vaso sanguíneo, órgão oco ou cavidade corpórea.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E07.132"
+                ]
+              },
+              {
+                "id": "D002406",
+                "term": "Cateterismo Periférico",
+                "term_en": "Catheterization, Peripheral",
+                "scope": "Inserção de um cateter numa artéria periférica, veia ou vias aéreas, com fins diagnósticos ou terapêuticos.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.148.224",
+                  "E04.100.814.529.937"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Inegável a evolução dos dispositivos de imagens nos últimos anos",
+            "candidates": [
+              {
+                "id": "D007089",
+                "term": "Melhoramento de Imagens",
+                "term_en": "Image Enhancement",
+                "scope": "Melhora da qualidade de uma imagem por várias técnicas, inclusive processamento computadorizado, filtração digital, técnicas ecocardiográficas, MICROSCOPIA ótica e ultraestrutural, espectroscopia e mi",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.350.600.350",
+                  "L01.224.308.380"
+                ]
+              },
+              {
+                "id": "D059008",
+                "term": "Imagem com Lapso de Tempo",
+                "term_en": "Time-Lapse Imaging",
+                "scope": "Imagens de um processo gravadas em série a intervalos regulares espaçados ao longo de um período de tempo maior do que o período em que as gravações serão reproduzidas.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.350.600.817",
+                  "E05.712.657"
+                ]
+              },
+              {
+                "id": "D000097785",
+                "term": "Imageamento Forense",
+                "term_en": "Forensic Imaging",
+                "scope": "Uso de várias imagens e técnicas de imageamento melhoradas nas disciplinas de investigação forense. Inclui, com bastante frequência, plataformas de MEDICINA FORENSE como RAIOS X, RAIO-CT (ver TOMOGRAF",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.350.295",
+                  "I01.198.780.922"
+                ]
+              },
+              {
+                "id": "D011856",
+                "term": "Intensificação de Imagem Radiográfica",
+                "term_en": "Radiographic Image Enhancement",
+                "scope": "Melhora na qualidade de uma imagem de raio x pelo uso de uma tela, tubo ou filtro de intensificação e por técnicas otimizadas de exposição. Métodos de processamento digital são geralmente aplicados.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.350.600.350.700",
+                  "E01.370.350.700.700"
+                ]
+              },
+              {
+                "id": "D015898",
+                "term": "Tomógrafos Computadorizados",
+                "term_en": "Tomography Scanners, X-Ray Computed",
+                "scope": "Dispositivos detectores de imagem em raio X que fazem uma imagem focada de estruturas corporais estendidas em um plano pré-determinado do qual são computadas imagens mais complexas.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E07.913"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": []
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D002405",
+          "term": "Cateterismo Venoso Central"
+        }
+      ],
+      "secondary": []
+    }
+  },
+  "stats": {
+    "primary_concepts": 3,
+    "secondary_concepts": 0,
+    "total_candidates": 15,
+    "final_primary": 1,
+    "final_secondary": 0
+  }
+}

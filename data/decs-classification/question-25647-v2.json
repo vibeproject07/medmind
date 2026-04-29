@@ -18,6 +18,58 @@
         ],
         "children": [],
         "role": "primary"
+      },
+      {
+        "id": "D006798",
+        "term": "Habitação",
+        "name_en": "Housing",
+        "scope_note": "Instalações para alojar humanos.",
+        "tree_ids": [
+          "J03.340",
+          "N01.224.791.400",
+          "N06.230.150.360",
+          "N06.850.505.400.800.400",
+          "SP3.311.150.321",
+          "SP4.707.368.330"
+        ],
+        "hierarchy_path": "Tecnologia, Indústria, Agricultura › J03.340",
+        "parents": [
+          {
+            "id": "D000072182",
+            "term": "Instalações não Médicas Públicas e Privadas"
+          },
+          {
+            "id": "D012111",
+            "term": "Características de Residência"
+          },
+          {
+            "id": "D004780",
+            "term": "Ambiente Controlado"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000073017",
+            "term": "Campos de Refugiados"
+          },
+          {
+            "id": "D006799",
+            "term": "Abrigo para Animais"
+          },
+          {
+            "id": "D016852",
+            "term": "Habitação para Idosos"
+          },
+          {
+            "id": "D011638",
+            "term": "Habitação Popular"
+          },
+          {
+            "id": "D000082483",
+            "term": "Casas de Trabalho"
+          }
+        ],
+        "role": "primary"
       }
     ],
     "decs_secondary": []
@@ -85,63 +137,6 @@
           ]
         },
         {
-          "concept": "vivendo em casas de madeira",
-          "candidates": [
-            {
-              "id": "D014934",
-              "term": "Madeira",
-              "term_en": "Wood",
-              "scope": "Produto duro do xilema secundário (composto por CELULOSE, hemicelulose e LIGNANAS) que está sob a casca das árvores e arbustos. É usado na construção, como fonte de CARVÃO VEGETAL e muitos outros prod",
-              "categoria": "Anatomia",
-              "arvore": [
-                "A18.450.500.500",
-                "J01.637.241.900"
-              ]
-            },
-            {
-              "id": "DDCS025296",
-              "term": "Indústria da Madeira",
-              "term_en": "Lumber Industry",
-              "categoria": "SH",
-              "arvore": [
-                "SH2.113.348.055"
-              ]
-            },
-            {
-              "id": "D006798",
-              "term": "Habitação",
-              "term_en": "Housing",
-              "scope": "Instalações para alojar humanos.",
-              "categoria": "Tecnologia, Indústria, Agricultura",
-              "arvore": [
-                "J03.340",
-                "N01.224.791.400"
-              ]
-            },
-            {
-              "id": "DDCS059973",
-              "term": "Fornos à Lenha",
-              "term_en": "Wood-Fired Ovens",
-              "scope": "Tipo de forno construído com tijolos refratários e argamassa apropriada cuja chama é mantida pela combustão de lenha.",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.505.467.300.562"
-              ]
-            },
-            {
-              "id": "D003407",
-              "term": "Creosoto",
-              "term_en": "Creosote",
-              "scope": "Substância gordurosa com odor de fumaça e gosto de queimado, produzido por tratamento a alta temperatura de FAIA e outra MADEIRA, ALCATRÃO ou resina da CREOSOTO (PLANTA). Contém CRESÓIS e HIDROCARBONE",
-              "categoria": "Compostos Químicos e Drogas",
-              "arvore": [
-                "D02.455.426.559.389.657.239.327",
-                "SP4.808.749.996.231"
-              ]
-            }
-          ]
-        },
-        {
           "concept": "As comunidades ribeirinhas são compostas de vários agrupamentos familiares",
           "candidates": [
             {
@@ -196,6 +191,63 @@
               "arvore": [
                 "I01.880.853.500.300",
                 "L01.313.500.750.300.184"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "vivendo em casas de madeira",
+          "candidates": [
+            {
+              "id": "D014934",
+              "term": "Madeira",
+              "term_en": "Wood",
+              "scope": "Produto duro do xilema secundário (composto por CELULOSE, hemicelulose e LIGNANAS) que está sob a casca das árvores e arbustos. É usado na construção, como fonte de CARVÃO VEGETAL e muitos outros prod",
+              "categoria": "Anatomia",
+              "arvore": [
+                "A18.450.500.500",
+                "J01.637.241.900"
+              ]
+            },
+            {
+              "id": "DDCS025296",
+              "term": "Indústria da Madeira",
+              "term_en": "Lumber Industry",
+              "categoria": "SH",
+              "arvore": [
+                "SH2.113.348.055"
+              ]
+            },
+            {
+              "id": "D006798",
+              "term": "Habitação",
+              "term_en": "Housing",
+              "scope": "Instalações para alojar humanos.",
+              "categoria": "Tecnologia, Indústria, Agricultura",
+              "arvore": [
+                "J03.340",
+                "N01.224.791.400"
+              ]
+            },
+            {
+              "id": "DDCS059973",
+              "term": "Fornos à Lenha",
+              "term_en": "Wood-Fired Ovens",
+              "scope": "Tipo de forno construído com tijolos refratários e argamassa apropriada cuja chama é mantida pela combustão de lenha.",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.505.467.300.562"
+              ]
+            },
+            {
+              "id": "D003407",
+              "term": "Creosoto",
+              "term_en": "Creosote",
+              "scope": "Substância gordurosa com odor de fumaça e gosto de queimado, produzido por tratamento a alta temperatura de FAIA e outra MADEIRA, ALCATRÃO ou resina da CREOSOTO (PLANTA). Contém CRESÓIS e HIDROCARBONE",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.455.426.559.389.657.239.327",
+                "SP4.808.749.996.231"
               ]
             }
           ]
@@ -271,63 +323,6 @@
             ]
           },
           {
-            "concept": "vivendo em casas de madeira",
-            "candidates": [
-              {
-                "id": "D014934",
-                "term": "Madeira",
-                "term_en": "Wood",
-                "scope": "Produto duro do xilema secundário (composto por CELULOSE, hemicelulose e LIGNANAS) que está sob a casca das árvores e arbustos. É usado na construção, como fonte de CARVÃO VEGETAL e muitos outros prod",
-                "categoria": "Anatomia",
-                "arvore": [
-                  "A18.450.500.500",
-                  "J01.637.241.900"
-                ]
-              },
-              {
-                "id": "DDCS025296",
-                "term": "Indústria da Madeira",
-                "term_en": "Lumber Industry",
-                "categoria": "SH",
-                "arvore": [
-                  "SH2.113.348.055"
-                ]
-              },
-              {
-                "id": "D006798",
-                "term": "Habitação",
-                "term_en": "Housing",
-                "scope": "Instalações para alojar humanos.",
-                "categoria": "Tecnologia, Indústria, Agricultura",
-                "arvore": [
-                  "J03.340",
-                  "N01.224.791.400"
-                ]
-              },
-              {
-                "id": "DDCS059973",
-                "term": "Fornos à Lenha",
-                "term_en": "Wood-Fired Ovens",
-                "scope": "Tipo de forno construído com tijolos refratários e argamassa apropriada cuja chama é mantida pela combustão de lenha.",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.505.467.300.562"
-                ]
-              },
-              {
-                "id": "D003407",
-                "term": "Creosoto",
-                "term_en": "Creosote",
-                "scope": "Substância gordurosa com odor de fumaça e gosto de queimado, produzido por tratamento a alta temperatura de FAIA e outra MADEIRA, ALCATRÃO ou resina da CREOSOTO (PLANTA). Contém CRESÓIS e HIDROCARBONE",
-                "categoria": "Compostos Químicos e Drogas",
-                "arvore": [
-                  "D02.455.426.559.389.657.239.327",
-                  "SP4.808.749.996.231"
-                ]
-              }
-            ]
-          },
-          {
             "concept": "As comunidades ribeirinhas são compostas de vários agrupamentos familiares",
             "candidates": [
               {
@@ -385,6 +380,63 @@
                 ]
               }
             ]
+          },
+          {
+            "concept": "vivendo em casas de madeira",
+            "candidates": [
+              {
+                "id": "D014934",
+                "term": "Madeira",
+                "term_en": "Wood",
+                "scope": "Produto duro do xilema secundário (composto por CELULOSE, hemicelulose e LIGNANAS) que está sob a casca das árvores e arbustos. É usado na construção, como fonte de CARVÃO VEGETAL e muitos outros prod",
+                "categoria": "Anatomia",
+                "arvore": [
+                  "A18.450.500.500",
+                  "J01.637.241.900"
+                ]
+              },
+              {
+                "id": "DDCS025296",
+                "term": "Indústria da Madeira",
+                "term_en": "Lumber Industry",
+                "categoria": "SH",
+                "arvore": [
+                  "SH2.113.348.055"
+                ]
+              },
+              {
+                "id": "D006798",
+                "term": "Habitação",
+                "term_en": "Housing",
+                "scope": "Instalações para alojar humanos.",
+                "categoria": "Tecnologia, Indústria, Agricultura",
+                "arvore": [
+                  "J03.340",
+                  "N01.224.791.400"
+                ]
+              },
+              {
+                "id": "DDCS059973",
+                "term": "Fornos à Lenha",
+                "term_en": "Wood-Fired Ovens",
+                "scope": "Tipo de forno construído com tijolos refratários e argamassa apropriada cuja chama é mantida pela combustão de lenha.",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.505.467.300.562"
+                ]
+              },
+              {
+                "id": "D003407",
+                "term": "Creosoto",
+                "term_en": "Creosote",
+                "scope": "Substância gordurosa com odor de fumaça e gosto de queimado, produzido por tratamento a alta temperatura de FAIA e outra MADEIRA, ALCATRÃO ou resina da CREOSOTO (PLANTA). Contém CRESÓIS e HIDROCARBONE",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.455.426.559.389.657.239.327",
+                  "SP4.808.749.996.231"
+                ]
+              }
+            ]
           }
         ]
       },
@@ -398,6 +450,10 @@
         {
           "id": "DDCS061013",
           "term": "População Ribeirinha"
+        },
+        {
+          "id": "D006798",
+          "term": "Habitação"
         }
       ],
       "secondary": []
@@ -407,7 +463,7 @@
     "primary_concepts": 3,
     "secondary_concepts": 0,
     "total_candidates": 15,
-    "final_primary": 1,
+    "final_primary": 2,
     "final_secondary": 0
   }
 }

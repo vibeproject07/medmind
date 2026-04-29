@@ -116,7 +116,7 @@
           ]
         },
         {
-          "concept": "A atenção domiciliar",
+          "concept": "é a forma de atenção à saúde oferecida na moradia do paciente e caracterizada por um conjunto de ações de promoção à saúde",
           "candidates": [
             {
               "id": "D006792",
@@ -130,14 +130,13 @@
               ]
             },
             {
-              "id": "D006701",
-              "term": "Assistência Domiciliar",
-              "term_en": "Home Nursing",
-              "scope": "Cuidados de enfermagem prestados a uma pessoa no domicílio, que podem ser prestados por um familiar ou amigo. A assistência domiciliar por um não profissional deve ser diferenciada de SERVIÇOS DE ASSI",
-              "categoria": "Técnicas e Equipamentos Analíticos",
+              "id": "D018575",
+              "term": "Serviços Hospitalares de Assistência Domiciliar",
+              "term_en": "Home Care Services, Hospital-Based",
+              "scope": "Provisão de serviços de saúde patrocinadas por hospitais, como enfermagem, terapia e serviços caseiros relacionados à saúde ou serviço social prestados na casa do paciente.",
+              "categoria": "Saúde",
               "arvore": [
-                "E02.760.611.470",
-                "N02.421.143.524.470"
+                "N02.421.143.524.403"
               ]
             },
             {
@@ -175,7 +174,7 @@
           ]
         },
         {
-          "concept": "é a forma de atenção à saúde oferecida na moradia do paciente e caracterizada por um conjunto de ações de promoção à saúde",
+          "concept": "A atenção domiciliar",
           "candidates": [
             {
               "id": "D006792",
@@ -189,13 +188,14 @@
               ]
             },
             {
-              "id": "D018575",
-              "term": "Serviços Hospitalares de Assistência Domiciliar",
-              "term_en": "Home Care Services, Hospital-Based",
-              "scope": "Provisão de serviços de saúde patrocinadas por hospitais, como enfermagem, terapia e serviços caseiros relacionados à saúde ou serviço social prestados na casa do paciente.",
-              "categoria": "Saúde",
+              "id": "D006701",
+              "term": "Assistência Domiciliar",
+              "term_en": "Home Nursing",
+              "scope": "Cuidados de enfermagem prestados a uma pessoa no domicílio, que podem ser prestados por um familiar ou amigo. A assistência domiciliar por um não profissional deve ser diferenciada de SERVIÇOS DE ASSI",
+              "categoria": "Técnicas e Equipamentos Analíticos",
               "arvore": [
-                "N02.421.143.524.403"
+                "E02.760.611.470",
+                "N02.421.143.524.470"
               ]
             },
             {
@@ -303,7 +303,7 @@
             ]
           },
           {
-            "concept": "A atenção domiciliar",
+            "concept": "é a forma de atenção à saúde oferecida na moradia do paciente e caracterizada por um conjunto de ações de promoção à saúde",
             "candidates": [
               {
                 "id": "D006792",
@@ -317,14 +317,13 @@
                 ]
               },
               {
-                "id": "D006701",
-                "term": "Assistência Domiciliar",
-                "term_en": "Home Nursing",
-                "scope": "Cuidados de enfermagem prestados a uma pessoa no domicílio, que podem ser prestados por um familiar ou amigo. A assistência domiciliar por um não profissional deve ser diferenciada de SERVIÇOS DE ASSI",
-                "categoria": "Técnicas e Equipamentos Analíticos",
+                "id": "D018575",
+                "term": "Serviços Hospitalares de Assistência Domiciliar",
+                "term_en": "Home Care Services, Hospital-Based",
+                "scope": "Provisão de serviços de saúde patrocinadas por hospitais, como enfermagem, terapia e serviços caseiros relacionados à saúde ou serviço social prestados na casa do paciente.",
+                "categoria": "Saúde",
                 "arvore": [
-                  "E02.760.611.470",
-                  "N02.421.143.524.470"
+                  "N02.421.143.524.403"
                 ]
               },
               {
@@ -362,7 +361,7 @@
             ]
           },
           {
-            "concept": "é a forma de atenção à saúde oferecida na moradia do paciente e caracterizada por um conjunto de ações de promoção à saúde",
+            "concept": "A atenção domiciliar",
             "candidates": [
               {
                 "id": "D006792",
@@ -376,13 +375,14 @@
                 ]
               },
               {
-                "id": "D018575",
-                "term": "Serviços Hospitalares de Assistência Domiciliar",
-                "term_en": "Home Care Services, Hospital-Based",
-                "scope": "Provisão de serviços de saúde patrocinadas por hospitais, como enfermagem, terapia e serviços caseiros relacionados à saúde ou serviço social prestados na casa do paciente.",
-                "categoria": "Saúde",
+                "id": "D006701",
+                "term": "Assistência Domiciliar",
+                "term_en": "Home Nursing",
+                "scope": "Cuidados de enfermagem prestados a uma pessoa no domicílio, que podem ser prestados por um familiar ou amigo. A assistência domiciliar por um não profissional deve ser diferenciada de SERVIÇOS DE ASSI",
+                "categoria": "Técnicas e Equipamentos Analíticos",
                 "arvore": [
-                  "N02.421.143.524.403"
+                  "E02.760.611.470",
+                  "N02.421.143.524.470"
                 ]
               },
               {
