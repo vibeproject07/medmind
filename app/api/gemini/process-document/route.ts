@@ -29,7 +29,7 @@ function isAllowedMimeType(type: string): boolean {
   return ALLOWED_MIME_TYPES.includes(type) || type.startsWith('image/');
 }
 
-function getAgentKeyByMimeType(mimeType: string): string {
+function getAgentKeyByMimeType(mimeType: string, contentHint?: string): string {
   const m = (mimeType || '').toLowerCase();
   if (m.startsWith('image/')) return 'resumo_imagem';
   if (
@@ -38,6 +38,7 @@ function getAgentKeyByMimeType(mimeType: string): string {
   ) {
     return 'resumo_slides_pdf';
   }
+  if (contentHint === 'slides') return 'resumo_slides_pdf';
   return 'resumo_documento';
 }
 
@@ -75,6 +76,10 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    const contentHint = typeof formData.get('type') === 'string'
+      ? (formData.get('type') as string).toLowerCase()
+      : undefined;
 
     const mimeType = (file.type || 'application/octet-stream').toLowerCase();
     if (!isAllowedMimeType(mimeType)) {
@@ -116,7 +121,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ text: summary, originalText: extractedText });
     }
 
-    const agentKey = getAgentKeyByMimeType(mimeType);
+    const agentKey = getAgentKeyByMimeType(mimeType, contentHint);
     const result = await geminiProcessDocument({ file: buffer, mimeType, agentKey });
 
     const isPdfOrWord =

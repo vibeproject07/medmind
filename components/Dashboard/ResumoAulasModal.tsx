@@ -3,9 +3,6 @@
 import { useState, useEffect } from 'react';
 import { X, Mic, Upload, Link as LinkIcon } from 'lucide-react';
 
-/** Instrução fixa do agente "Ajuste da transcrição" */
-const AGENTE_AJUSTE_TRANSCRICAO =
-  'Você é o agente "Ajuste da transcrição". Faça um resumo claro e organizado dos conteúdos transcritos: preserve termos técnicos e pontos principais, organize em tópicos e destaque o que for mais relevante para estudo. Responda em português (pt-BR) e formate em Markdown.';
 
 export interface ResumoAulasModalProps {
   isOpen: boolean;
@@ -240,7 +237,8 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
           },
           body: JSON.stringify({
             transcription: transcriptionText,
-            instruction: AGENTE_AJUSTE_TRANSCRICAO,
+            instruction: 'Analise e organize a transcrição acima em material de estudo.',
+            agentKey: 'ajuste_transcricao',
           }),
         });
         const geminiText = await geminiRes.text();
