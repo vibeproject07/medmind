@@ -2,36 +2,42 @@
   "result": {
     "decs_primary": [
       {
-        "id": "D000368",
-        "term": "Idoso",
-        "name_en": "Aged",
-        "scope_note": "Pessoa de 65 anos de idade ou mais. Para uma pessoa com mais de 79 anos, IDOSO DE 80 ANOS OU MAIS está disponível.",
+        "id": "D012720",
+        "term": "Índice de Gravidade de Doença",
+        "name_en": "Severity of Illness Index",
+        "scope_note": "Níveis dentro de um grupo de diagnósticos estabelecidos por vários critérios de medição aplicados à gravidade do transtorno de um paciente.",
         "tree_ids": [
-          "M01.060.116.100"
+          "E05.318.308.980.438.475.456.500",
+          "N05.715.360.300.800.438.375.364.500",
+          "N06.850.520.308.980.438.475.364.500"
         ],
-        "hierarchy_path": "Grupos Identificados › M01.060.116.100",
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E05.318.308.980.438.475.456.500",
         "parents": [
           {
-            "id": "D000328",
-            "term": "Adulto"
+            "id": "D062072",
+            "term": "Gravidade do Paciente"
           }
         ],
         "children": [
           {
-            "id": "D000369",
-            "term": "Idoso de 80 Anos ou mais"
+            "id": "D000080162",
+            "term": "Escore de Alerta Precoce"
           },
           {
-            "id": "D000087742",
-            "term": "Octogenários"
+            "id": "D000072878",
+            "term": "Escore Fisiológico Agudo Simplificado"
           },
           {
-            "id": "D000087662",
-            "term": "Centenários"
+            "id": "D018806",
+            "term": "APACHE"
           },
           {
-            "id": "D016330",
-            "term": "Idoso Fragilizado"
+            "id": "D017567",
+            "term": "Avaliação de Estado de Karnofsky"
+          },
+          {
+            "id": "D063305",
+            "term": "Escores de Disfunção Orgânica"
           }
         ],
         "role": "primary"
@@ -73,127 +79,272 @@
         "role": "primary"
       }
     ],
-    "decs_secondary": []
+    "decs_secondary": [
+      {
+        "id": "D018570",
+        "term": "Medição de Risco",
+        "name_en": "Risk Assessment",
+        "scope_note": "Estimativa qualitativa ou quantitativa da probabilidade de efeitos adversos decorrentes da exposição a riscos específicos à saúde ou da ausência de efeitos benéficos. (Tradução livre do original: Last, Dictionary of Epidemiology, 1988)",
+        "tree_ids": [
+          "E05.318.740.600.800.715",
+          "N04.452.871.715",
+          "N05.715.360.750.625.700.690",
+          "N06.850.505.715",
+          "N06.850.520.830.600.800.715",
+          "SP4.606.806.350.755",
+          "SP8.665.152",
+          "VS1.001.003.001.001.002.001.005"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E05.318.740.600.800.715",
+        "parents": [
+          {
+            "id": "D012306",
+            "term": "Risco"
+          },
+          {
+            "id": "D012308",
+            "term": "Gestão de Riscos"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000067495",
+            "term": "Análise do Modo e do Efeito de Falhas na Assistência à Saúde"
+          },
+          {
+            "id": "D000073931",
+            "term": "Rotas de Resultados Adversos"
+          },
+          {
+            "id": "D020379",
+            "term": "Risco Ajustado"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D009026",
+        "term": "Mortalidade",
+        "name_en": "Mortality",
+        "scope_note": "Todas as mortes notificadas em uma população.",
+        "tree_ids": [
+          "E05.318.308.985.550",
+          "N01.224.935.698",
+          "N06.850.505.400.975.550",
+          "N06.850.520.308.985.550",
+          "SP3.311.300.392.432",
+          "SP5.467.413.330.903"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E05.318.308.985.550",
+        "parents": [
+          {
+            "id": "D014798",
+            "term": "Estatísticas Vitais"
+          }
+        ],
+        "children": [
+          {
+            "id": "D046689",
+            "term": "Mortalidade Fetal"
+          },
+          {
+            "id": "D046688",
+            "term": "Mortalidade da Criança"
+          },
+          {
+            "id": "D015996",
+            "term": "Taxa de Sobrevida"
+          },
+          {
+            "id": "D017052",
+            "term": "Mortalidade Hospitalar"
+          },
+          {
+            "id": "D017809",
+            "term": "Evolução Fatal"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D016099",
+        "term": "Endoscopia Gastrointestinal",
+        "name_en": "Endoscopy, Gastrointestinal",
+        "scope_note": "Exame endoscópico, terapia ou cirurgia do trato gastrointestinal.",
+        "tree_ids": [
+          "E01.370.372.250.250",
+          "E01.370.388.250.250.250",
+          "E04.210.240.250",
+          "E04.502.250.250.250"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.372.250.250",
+        "parents": [
+          {
+            "id": "D016145",
+            "term": "Endoscopia do Sistema Digestório"
+          }
+        ],
+        "children": [
+          {
+            "id": "D058582",
+            "term": "Enteroscopia de Duplo Balão"
+          },
+          {
+            "id": "D000069916",
+            "term": "Ressecção Endoscópica de Mucosa"
+          },
+          {
+            "id": "D000071085",
+            "term": "Enteroscopia de Balão Único"
+          },
+          {
+            "id": "D000071087",
+            "term": "Enteroscopia de Balão"
+          },
+          {
+            "id": "D012812",
+            "term": "Sigmoidoscopia"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D013274",
+        "term": "Neoplasias Gástricas",
+        "name_en": "Stomach Neoplasms",
+        "scope_note": "Tumores ou câncer do ESTÔMAGO.",
+        "tree_ids": [
+          "C04.588.274.476.767",
+          "C06.301.371.767",
+          "C06.405.249.767",
+          "C06.405.748.789"
+        ],
+        "hierarchy_path": "Doenças › C04.588.274.476.767",
+        "parents": [
+          {
+            "id": "D005770",
+            "term": "Neoplasias Gastrointestinais"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D000368",
+        "term": "Idoso",
+        "name_en": "Aged",
+        "scope_note": "Pessoa de 65 anos de idade ou mais. Para uma pessoa com mais de 79 anos, IDOSO DE 80 ANOS OU MAIS está disponível.",
+        "tree_ids": [
+          "M01.060.116.100"
+        ],
+        "hierarchy_path": "Grupos Identificados › M01.060.116.100",
+        "parents": [
+          {
+            "id": "D000328",
+            "term": "Adulto"
+          }
+        ],
+        "children": [
+          {
+            "id": "D016330",
+            "term": "Idoso Fragilizado"
+          },
+          {
+            "id": "D000369",
+            "term": "Idoso de 80 Anos ou mais"
+          },
+          {
+            "id": "D000087742",
+            "term": "Octogenários"
+          },
+          {
+            "id": "D000087662",
+            "term": "Centenários"
+          }
+        ],
+        "role": "secondary"
+      }
+    ]
   },
   "themes_identified": {
     "primary": [
-      "Enunciado",
-      "A Hemorragia Digestiva Alta pode ser definida como sangramentos digestivos de pontos oriundos até o ligamento de Treitz como referência",
-      "Mais comum acima dos 60 anos"
+      "Gastrointestinal Hemorrhage",
+      "Severity of Illness Index"
     ],
-    "secondary": []
+    "secondary": [
+      "Risk Assessment",
+      "Stomach Neoplasms",
+      "Mortality",
+      "Endoscopy, Gastrointestinal",
+      "Aged"
+    ]
   },
   "candidate_groups": [
     {
       "label": "primários",
       "concepts": [
         {
-          "concept": "Enunciado",
+          "concept": "Severity of Illness Index",
           "candidates": [
             {
-              "id": "DDCS032482",
-              "term": "Recursos Renováveis",
-              "term_en": "Renewable Resources",
-              "categoria": "Saúde Pública",
+              "id": "D012720",
+              "term": "Índice de Gravidade de Doença",
+              "term_en": "Severity of Illness Index",
+              "scope": "Níveis dentro de um grupo de diagnósticos estabelecidos por vários critérios de medição aplicados à gravidade do transtorno de um paciente.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
               "arvore": [
-                "SP4.606.837.868"
+                "E05.318.308.980.438.475.456.500",
+                "N05.715.360.300.800.438.375.364.500"
               ]
             },
             {
-              "id": "DDCS051583",
-              "term": "Varredoras",
-              "term_en": "Sweepers",
-              "categoria": "Saúde Pública",
+              "id": "D000072878",
+              "term": "Escore Fisiológico Agudo Simplificado",
+              "term_en": "Simplified Acute Physiology Score",
+              "scope": "Sistema de classificação de gravidade de doença concebido para medir a gravidade da doença em pacientes maiores de 15 anos internados em unidades de terapia intensiva.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
               "arvore": [
-                "SP4.895.987.506.871"
+                "E05.318.308.980.438.475.456.500.750",
+                "N05.715.360.300.800.438.375.364.500.750"
               ]
             },
             {
-              "id": "DDCS051857",
-              "term": "Utilização de Recursos Locais",
-              "term_en": "Local Resources Uses",
-              "categoria": "Saúde Pública",
+              "id": "D018746",
+              "term": "Síndrome de Resposta Inflamatória Sistêmica",
+              "term_en": "Systemic Inflammatory Response Syndrome",
+              "scope": "Resposta inflamatória sistêmica a várias agressões clínicas, caracterizada por duas ou mais das seguintes situações: (1) febre acima de 38 graus Celsius ou HIPOTERMIA abaixo de 36 graus Celsius, (2) T",
+              "categoria": "Doenças",
               "arvore": [
-                "SP4.303.766"
+                "C23.550.470.790",
+                "C23.550.835.900"
               ]
             },
             {
-              "id": "DDCS051642",
-              "term": "Leito Fixo",
-              "term_en": "Fixed Bed",
-              "categoria": "Saúde Pública",
+              "id": "D000080162",
+              "term": "Escore de Alerta Precoce",
+              "term_en": "Early Warning Score",
+              "scope": "Ferramenta para avaliação baseada em cinco parâmetros fisiológicos: PRESSÃO SANGUÍNEA, PULSO ARTERIAL, TAXA RESPIRATÓRIA, TEMPERATURA CORPORAL e escore AVPU (alerta, voz, dor, não resposta)",
+              "categoria": "Técnicas e Equipamentos Analíticos",
               "arvore": [
-                "SP4.606.806.945.750.207.899.660"
+                "E05.318.308.980.438.475.456.500.375",
+                "N05.715.360.300.800.438.375.364.500.375"
               ]
             },
             {
-              "id": "DDCS025556",
-              "term": "Tanques de Concreto",
-              "term_en": "Reinforced Concrete Tanks",
-              "categoria": "Saúde Pública",
+              "id": "D015601",
+              "term": "Escala de Gravidade do Ferimento",
+              "term_en": "Injury Severity Score",
+              "scope": "Escala de severidade anatômica, baseada na Escala Resumida de Ferimentos (EAF/AIS) e desenvolvida especificamente para escores de ferimentos traumáticos múltiplos. Tem sido usada como um preditor de m",
+              "categoria": "Técnicas e Equipamentos Analíticos",
               "arvore": [
-                "SP4.895.141.089.248.433.561"
+                "E05.318.308.940.968.875.500",
+                "E05.944.600"
               ]
             }
           ]
         },
         {
-          "concept": "Mais comum acima dos 60 anos",
-          "candidates": [
-            {
-              "id": "D000368",
-              "term": "Idoso",
-              "term_en": "Aged",
-              "scope": "Pessoa de 65 anos de idade ou mais. Para uma pessoa com mais de 79 anos, IDOSO DE 80 ANOS OU MAIS está disponível.",
-              "categoria": "Grupos Identificados",
-              "arvore": [
-                "M01.060.116.100"
-              ]
-            },
-            {
-              "id": "DDCS050320",
-              "term": "Nutrição do Idoso",
-              "term_en": "Elderly Nutrition",
-              "scope": "Nutrição do indivíduo com 60 anos ou mais (países em desenvolvimento), que se encontra mais propenso a apresentar alterações no seu estado de saúde frente a um agressor, externo ou interno, tornando-o",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP6.810.304.415"
-              ]
-            },
-            {
-              "id": "D008875",
-              "term": "Pessoa de Meia-Idade",
-              "term_en": "Middle Aged",
-              "scope": "Adulto com idade entre 45 e 64 anos.",
-              "categoria": "Grupos Identificados",
-              "arvore": [
-                "M01.060.116.630"
-              ]
-            },
-            {
-              "id": "D000369",
-              "term": "Idoso de 80 Anos ou mais",
-              "term_en": "Aged, 80 and over",
-              "scope": "Pessoas entre 80 e 89 anos de idade.",
-              "categoria": "Grupos Identificados",
-              "arvore": [
-                "M01.060.116.100.080"
-              ]
-            },
-            {
-              "id": "D000066492",
-              "term": "Envelhecimento Cognitivo",
-              "term_en": "Cognitive Aging",
-              "scope": "Fenômeno que ocorre quando as capacidades de aprendizado e de memorização decaem naturalmente devido à idade.",
-              "categoria": "Fenômenos Biológicos",
-              "arvore": [
-                "G07.345.124.260"
-              ]
-            }
-          ]
-        },
-        {
-          "concept": "A Hemorragia Digestiva Alta pode ser definida como sangramentos digestivos de pontos oriundos até o ligamento de Treitz como referência",
+          "concept": "Gastrointestinal Hemorrhage",
           "candidates": [
             {
               "id": "D006471",
@@ -204,17 +355,6 @@
               "arvore": [
                 "C06.405.227",
                 "C23.550.414.788"
-              ]
-            },
-            {
-              "id": "D006396",
-              "term": "Hematemese",
-              "term_en": "Hematemesis",
-              "scope": "Vômito de sangue que apresenta característica de cores vermelho claro ou café. Geralmente indica sangramento do TRATO GASTROINTESTINAL SUPERIOR.",
-              "categoria": "Doenças",
-              "arvore": [
-                "C06.405.227.400",
-                "C23.550.414.788.400"
               ]
             },
             {
@@ -229,23 +369,34 @@
               ]
             },
             {
-              "id": "D041742",
-              "term": "Trato Gastrointestinal Superior",
-              "term_en": "Upper Gastrointestinal Tract",
-              "scope": "O segmento do TRATO GASTROINTESTINAL que inclui o ESÔFAGO, o ESTÔMAGO e o DUODENO.",
-              "categoria": "Anatomia",
+              "id": "D016558",
+              "term": "Hemostase Endoscópica",
+              "term_en": "Hemostasis, Endoscopic",
+              "scope": "Controle do sangramento feito através do canal do endoscópio. A técnica inclui a utilização de lasers, sondas aquecidas, eletrocoagulação bipolar e injeção local. A hemostase endoscópica é geralmente ",
+              "categoria": "Técnicas e Equipamentos Analíticos",
               "arvore": [
-                "A03.556.875"
+                "E02.520.425"
               ]
             },
             {
-              "id": "D006431",
-              "term": "Hemobilia",
-              "term_en": "Hemobilia",
-              "scope": "Hemorragia dentro ou através do TRATO BILIAR devido a trauma, inflamação, COLELITÍASE, doença vascular ou neoplasias.",
+              "id": "D006470",
+              "term": "Hemorragia",
+              "term_en": "Hemorrhage",
+              "scope": "Sangramento ou escape de sangue [a partir] de um vaso.",
               "categoria": "Doenças",
               "arvore": [
-                "C23.550.414.864"
+                "C23.550.414"
+              ]
+            },
+            {
+              "id": "D020252",
+              "term": "Ectasia Vascular Gástrica Antral",
+              "term_en": "Gastric Antral Vascular Ectasia",
+              "scope": "Lesão vascular distinta no ANTRO PILÓRICO, caracterizada por vasos sanguíneos dilatados e tortuosos (ectasia) espalhando-se para fora do PILORO. O padrão vascular é semelhante as faixas da superfície ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C06.405.748.280",
+                "C14.907.075.280"
               ]
             }
           ]
@@ -254,129 +405,379 @@
     },
     {
       "label": "secundários",
-      "concepts": []
+      "concepts": [
+        {
+          "concept": "Risk Assessment",
+          "candidates": [
+            {
+              "id": "DDCS060054",
+              "term": "Metodologias de Avaliação de Riscos",
+              "term_en": "Risk Assessment Methodologies",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP8.665.152.379"
+              ]
+            },
+            {
+              "id": "D018570",
+              "term": "Medição de Risco",
+              "term_en": "Risk Assessment",
+              "scope": "Estimativa qualitativa ou quantitativa da probabilidade de efeitos adversos decorrentes da exposição a riscos específicos à saúde ou da ausência de efeitos benéficos. (Tradução livre do original: Last",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.740.600.800.715",
+                "N04.452.871.715"
+              ]
+            },
+            {
+              "id": "DDCS032485",
+              "term": "Riscos Ambientais",
+              "term_en": "Environmental Hazards",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.806.420.737",
+                "VS4.001.002"
+              ]
+            },
+            {
+              "id": "DDCS051311",
+              "term": "Grau de Risco",
+              "term_en": "Risk Grade",
+              "scope": "Nível de efeitos adversos que cada tipo de produto pode ou não oferecer considerando sua formulação, finalidade e modo de uso.",
+              "categoria": "Vigilância Sanitária",
+              "arvore": [
+                "VS1.001.003.001.001.002.001.005.001"
+              ]
+            },
+            {
+              "id": "D000073938",
+              "term": "Avaliação de Risco e Mitigação",
+              "term_en": "Risk Evaluation and Mitigation",
+              "scope": "Estratégias exigidas pela Lei de Alterações [Amendments Act] da Agência de Controle de Alimentos e Medicamentos dos EUA (FDA) de 2007, quando existe uma questão sobre se os benefícios de um medicament",
+              "categoria": "Saúde",
+              "arvore": [
+                "N04.452.871.758",
+                "N06.850.505.715.750"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Mortality",
+          "candidates": [
+            {
+              "id": "D009026",
+              "term": "Mortalidade",
+              "term_en": "Mortality",
+              "scope": "Todas as mortes notificadas em uma população.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.308.985.550",
+                "N01.224.935.698"
+              ]
+            },
+            {
+              "id": "DDCS028403",
+              "term": "Registros de Mortalidade",
+              "term_en": "Mortality Registries",
+              "scope": "Sistema de registro baseado em documentos como atestado e declaração de óbito.",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP5.467.733"
+              ]
+            },
+            {
+              "id": "D061213",
+              "term": "Mortalidade Prematura",
+              "term_en": "Mortality, Premature",
+              "scope": "Mortes que ocorrem antes que a EXPECTATIVA DE VIDA seja alcançada em uma determinada população.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.308.985.550.550",
+                "N01.224.935.698.700"
+              ]
+            },
+            {
+              "id": "D017052",
+              "term": "Mortalidade Hospitalar",
+              "term_en": "Hospital Mortality",
+              "scope": "Registro ou coleta de dados referentes à mortalidade por quaisquer causas em grupos de indivíduos hospitalizados.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.308.985.550.400",
+                "N01.224.935.698.400"
+              ]
+            },
+            {
+              "id": "D007226",
+              "term": "Mortalidade Infantil",
+              "term_en": "Infant Mortality",
+              "scope": "Óbitos ocorridos desde o NASCIMENTO até 365 dias após o nascimento em uma dada população. Mortalidade pós-neonatal representa as mortes ocorridas entre 28 e 365 dias após o nascimento (conforme defini",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.308.985.550.475",
+                "N01.224.935.698.489"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Endoscopy, Gastrointestinal",
+          "candidates": [
+            {
+              "id": "D016099",
+              "term": "Endoscopia Gastrointestinal",
+              "term_en": "Endoscopy, Gastrointestinal",
+              "scope": "Exame endoscópico, terapia ou cirurgia do trato gastrointestinal.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.372.250.250",
+                "E01.370.388.250.250.250"
+              ]
+            },
+            {
+              "id": "D020776",
+              "term": "Endoscópios Gastrointestinais",
+              "term_en": "Endoscopes, Gastrointestinal",
+              "scope": "Instrumentos para o exame visual do interior do trato gastrointestinal.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E07.230.220.260",
+                "E07.858.240.260"
+              ]
+            },
+            {
+              "id": "D016145",
+              "term": "Endoscopia do Sistema Digestório",
+              "term_en": "Endoscopy, Digestive System",
+              "scope": "Exame endoscópico, terapia ou cirurgia do trato digestório.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.372.250",
+                "E01.370.388.250.250"
+              ]
+            },
+            {
+              "id": "D004724",
+              "term": "Endoscopia",
+              "term_en": "Endoscopy",
+              "scope": "Procedimentos em que se empregam ENDOSCÓPIOS para diagnóstico e tratamento de doenças. A endoscopia envolve a passagem de um instrumento óptico através de pequena incisão na pele, isto é, percutânea; ",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.388.250",
+                "E04.502.250"
+              ]
+            },
+            {
+              "id": "D005762",
+              "term": "Gastroenterologia",
+              "term_en": "Gastroenterology",
+              "scope": "Subespecialidade da medicina interna voltada para o estudo da fisiologia e das doenças do sistema digestório e de estruturas relacionadas (esôfago, fígado, vesícula biliar e pâncreas).",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.403.429.405"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Stomach Neoplasms",
+          "candidates": [
+            {
+              "id": "D013274",
+              "term": "Neoplasias Gástricas",
+              "term_en": "Stomach Neoplasms",
+              "scope": "Tumores ou câncer do ESTÔMAGO.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C04.588.274.476.767",
+                "C06.301.371.767"
+              ]
+            },
+            {
+              "id": "D000008",
+              "term": "Neoplasias Abdominais",
+              "term_en": "Abdominal Neoplasms",
+              "scope": "Crescimento novo e anormal de tecido no ABDOME.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C04.588.033"
+              ]
+            },
+            {
+              "id": "D005770",
+              "term": "Neoplasias Gastrointestinais",
+              "term_en": "Gastrointestinal Neoplasms",
+              "scope": "Tumores ou câncer do TRATO GASTROINTESTINAL, desde a BOCA até o CANAL ANAL.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C04.588.274.476",
+                "C06.301.371"
+              ]
+            },
+            {
+              "id": "D004067",
+              "term": "Neoplasias do Sistema Digestório",
+              "term_en": "Digestive System Neoplasms",
+              "scope": "Tumores ou câncer do SISTEMA DIGESTÓRIO.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C04.588.274",
+                "C06.301"
+              ]
+            },
+            {
+              "id": "D019042",
+              "term": "Neoplasias Musculares",
+              "term_en": "Muscle Neoplasms",
+              "scope": "Câncer ou tumores localizados no tecido muscular ou músculos específicos. Eles se distinguem das NEOPLASIAS DE TECIDO MUSCULAR, que são neoplasias compostas de tecido muscular esquelético, cardíaco ou",
+              "categoria": "Doenças",
+              "arvore": [
+                "C04.588.839.500",
+                "C05.651.494"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Aged",
+          "candidates": [
+            {
+              "id": "D000368",
+              "term": "Idoso",
+              "term_en": "Aged",
+              "scope": "Pessoa de 65 anos de idade ou mais. Para uma pessoa com mais de 79 anos, IDOSO DE 80 ANOS OU MAIS está disponível.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.060.116.100"
+              ]
+            },
+            {
+              "id": "D000369",
+              "term": "Idoso de 80 Anos ou mais",
+              "term_en": "Aged, 80 and over",
+              "scope": "Pessoas entre 80 e 89 anos de idade.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.060.116.100.080"
+              ]
+            },
+            {
+              "id": "D000367",
+              "term": "Fatores Etários",
+              "term_en": "Age Factors",
+              "scope": "Idade como um elemento ou influência que contribui à produção de um resultado. Pode ser aplicável à causa ou efeito de uma circunstância. É usado com os conceitos humano e animal, mas devem ser difere",
+              "categoria": "Saúde",
+              "arvore": [
+                "N05.715.350.075",
+                "N06.850.490.250"
+              ]
+            },
+            {
+              "id": "D008875",
+              "term": "Pessoa de Meia-Idade",
+              "term_en": "Middle Aged",
+              "scope": "Adulto com idade entre 45 e 64 anos.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.060.116.630"
+              ]
+            },
+            {
+              "id": "DDCS017556",
+              "term": "Direitos dos Idosos",
+              "term_en": "Aged Rights",
+              "scope": "Promoção e proteção dos direitos dos IDOSOS, frequentemente através de processos legais.",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP9.242.315.643"
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "debug_trace": {
     "themes": {
       "primary": [
-        "Enunciado",
-        "A Hemorragia Digestiva Alta pode ser definida como sangramentos digestivos de pontos oriundos até o ligamento de Treitz como referência",
-        "Mais comum acima dos 60 anos"
+        "Gastrointestinal Hemorrhage",
+        "Severity of Illness Index"
       ],
-      "secondary": []
+      "secondary": [
+        "Risk Assessment",
+        "Stomach Neoplasms",
+        "Mortality",
+        "Endoscopy, Gastrointestinal",
+        "Aged"
+      ]
     },
     "candidate_groups": [
       {
         "label": "primários",
         "concepts": [
           {
-            "concept": "Enunciado",
+            "concept": "Severity of Illness Index",
             "candidates": [
               {
-                "id": "DDCS032482",
-                "term": "Recursos Renováveis",
-                "term_en": "Renewable Resources",
-                "categoria": "Saúde Pública",
+                "id": "D012720",
+                "term": "Índice de Gravidade de Doença",
+                "term_en": "Severity of Illness Index",
+                "scope": "Níveis dentro de um grupo de diagnósticos estabelecidos por vários critérios de medição aplicados à gravidade do transtorno de um paciente.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
                 "arvore": [
-                  "SP4.606.837.868"
+                  "E05.318.308.980.438.475.456.500",
+                  "N05.715.360.300.800.438.375.364.500"
                 ]
               },
               {
-                "id": "DDCS051583",
-                "term": "Varredoras",
-                "term_en": "Sweepers",
-                "categoria": "Saúde Pública",
+                "id": "D000072878",
+                "term": "Escore Fisiológico Agudo Simplificado",
+                "term_en": "Simplified Acute Physiology Score",
+                "scope": "Sistema de classificação de gravidade de doença concebido para medir a gravidade da doença em pacientes maiores de 15 anos internados em unidades de terapia intensiva.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
                 "arvore": [
-                  "SP4.895.987.506.871"
+                  "E05.318.308.980.438.475.456.500.750",
+                  "N05.715.360.300.800.438.375.364.500.750"
                 ]
               },
               {
-                "id": "DDCS051857",
-                "term": "Utilização de Recursos Locais",
-                "term_en": "Local Resources Uses",
-                "categoria": "Saúde Pública",
+                "id": "D018746",
+                "term": "Síndrome de Resposta Inflamatória Sistêmica",
+                "term_en": "Systemic Inflammatory Response Syndrome",
+                "scope": "Resposta inflamatória sistêmica a várias agressões clínicas, caracterizada por duas ou mais das seguintes situações: (1) febre acima de 38 graus Celsius ou HIPOTERMIA abaixo de 36 graus Celsius, (2) T",
+                "categoria": "Doenças",
                 "arvore": [
-                  "SP4.303.766"
+                  "C23.550.470.790",
+                  "C23.550.835.900"
                 ]
               },
               {
-                "id": "DDCS051642",
-                "term": "Leito Fixo",
-                "term_en": "Fixed Bed",
-                "categoria": "Saúde Pública",
+                "id": "D000080162",
+                "term": "Escore de Alerta Precoce",
+                "term_en": "Early Warning Score",
+                "scope": "Ferramenta para avaliação baseada em cinco parâmetros fisiológicos: PRESSÃO SANGUÍNEA, PULSO ARTERIAL, TAXA RESPIRATÓRIA, TEMPERATURA CORPORAL e escore AVPU (alerta, voz, dor, não resposta)",
+                "categoria": "Técnicas e Equipamentos Analíticos",
                 "arvore": [
-                  "SP4.606.806.945.750.207.899.660"
+                  "E05.318.308.980.438.475.456.500.375",
+                  "N05.715.360.300.800.438.375.364.500.375"
                 ]
               },
               {
-                "id": "DDCS025556",
-                "term": "Tanques de Concreto",
-                "term_en": "Reinforced Concrete Tanks",
-                "categoria": "Saúde Pública",
+                "id": "D015601",
+                "term": "Escala de Gravidade do Ferimento",
+                "term_en": "Injury Severity Score",
+                "scope": "Escala de severidade anatômica, baseada na Escala Resumida de Ferimentos (EAF/AIS) e desenvolvida especificamente para escores de ferimentos traumáticos múltiplos. Tem sido usada como um preditor de m",
+                "categoria": "Técnicas e Equipamentos Analíticos",
                 "arvore": [
-                  "SP4.895.141.089.248.433.561"
+                  "E05.318.308.940.968.875.500",
+                  "E05.944.600"
                 ]
               }
             ]
           },
           {
-            "concept": "Mais comum acima dos 60 anos",
-            "candidates": [
-              {
-                "id": "D000368",
-                "term": "Idoso",
-                "term_en": "Aged",
-                "scope": "Pessoa de 65 anos de idade ou mais. Para uma pessoa com mais de 79 anos, IDOSO DE 80 ANOS OU MAIS está disponível.",
-                "categoria": "Grupos Identificados",
-                "arvore": [
-                  "M01.060.116.100"
-                ]
-              },
-              {
-                "id": "DDCS050320",
-                "term": "Nutrição do Idoso",
-                "term_en": "Elderly Nutrition",
-                "scope": "Nutrição do indivíduo com 60 anos ou mais (países em desenvolvimento), que se encontra mais propenso a apresentar alterações no seu estado de saúde frente a um agressor, externo ou interno, tornando-o",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP6.810.304.415"
-                ]
-              },
-              {
-                "id": "D008875",
-                "term": "Pessoa de Meia-Idade",
-                "term_en": "Middle Aged",
-                "scope": "Adulto com idade entre 45 e 64 anos.",
-                "categoria": "Grupos Identificados",
-                "arvore": [
-                  "M01.060.116.630"
-                ]
-              },
-              {
-                "id": "D000369",
-                "term": "Idoso de 80 Anos ou mais",
-                "term_en": "Aged, 80 and over",
-                "scope": "Pessoas entre 80 e 89 anos de idade.",
-                "categoria": "Grupos Identificados",
-                "arvore": [
-                  "M01.060.116.100.080"
-                ]
-              },
-              {
-                "id": "D000066492",
-                "term": "Envelhecimento Cognitivo",
-                "term_en": "Cognitive Aging",
-                "scope": "Fenômeno que ocorre quando as capacidades de aprendizado e de memorização decaem naturalmente devido à idade.",
-                "categoria": "Fenômenos Biológicos",
-                "arvore": [
-                  "G07.345.124.260"
-                ]
-              }
-            ]
-          },
-          {
-            "concept": "A Hemorragia Digestiva Alta pode ser definida como sangramentos digestivos de pontos oriundos até o ligamento de Treitz como referência",
+            "concept": "Gastrointestinal Hemorrhage",
             "candidates": [
               {
                 "id": "D006471",
@@ -387,17 +788,6 @@
                 "arvore": [
                   "C06.405.227",
                   "C23.550.414.788"
-                ]
-              },
-              {
-                "id": "D006396",
-                "term": "Hematemese",
-                "term_en": "Hematemesis",
-                "scope": "Vômito de sangue que apresenta característica de cores vermelho claro ou café. Geralmente indica sangramento do TRATO GASTROINTESTINAL SUPERIOR.",
-                "categoria": "Doenças",
-                "arvore": [
-                  "C06.405.227.400",
-                  "C23.550.414.788.400"
                 ]
               },
               {
@@ -412,23 +802,34 @@
                 ]
               },
               {
-                "id": "D041742",
-                "term": "Trato Gastrointestinal Superior",
-                "term_en": "Upper Gastrointestinal Tract",
-                "scope": "O segmento do TRATO GASTROINTESTINAL que inclui o ESÔFAGO, o ESTÔMAGO e o DUODENO.",
-                "categoria": "Anatomia",
+                "id": "D016558",
+                "term": "Hemostase Endoscópica",
+                "term_en": "Hemostasis, Endoscopic",
+                "scope": "Controle do sangramento feito através do canal do endoscópio. A técnica inclui a utilização de lasers, sondas aquecidas, eletrocoagulação bipolar e injeção local. A hemostase endoscópica é geralmente ",
+                "categoria": "Técnicas e Equipamentos Analíticos",
                 "arvore": [
-                  "A03.556.875"
+                  "E02.520.425"
                 ]
               },
               {
-                "id": "D006431",
-                "term": "Hemobilia",
-                "term_en": "Hemobilia",
-                "scope": "Hemorragia dentro ou através do TRATO BILIAR devido a trauma, inflamação, COLELITÍASE, doença vascular ou neoplasias.",
+                "id": "D006470",
+                "term": "Hemorragia",
+                "term_en": "Hemorrhage",
+                "scope": "Sangramento ou escape de sangue [a partir] de um vaso.",
                 "categoria": "Doenças",
                 "arvore": [
-                  "C23.550.414.864"
+                  "C23.550.414"
+                ]
+              },
+              {
+                "id": "D020252",
+                "term": "Ectasia Vascular Gástrica Antral",
+                "term_en": "Gastric Antral Vascular Ectasia",
+                "scope": "Lesão vascular distinta no ANTRO PILÓRICO, caracterizada por vasos sanguíneos dilatados e tortuosos (ectasia) espalhando-se para fora do PILORO. O padrão vascular é semelhante as faixas da superfície ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C06.405.748.280",
+                  "C14.907.075.280"
                 ]
               }
             ]
@@ -437,28 +838,339 @@
       },
       {
         "label": "secundários",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Risk Assessment",
+            "candidates": [
+              {
+                "id": "DDCS060054",
+                "term": "Metodologias de Avaliação de Riscos",
+                "term_en": "Risk Assessment Methodologies",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP8.665.152.379"
+                ]
+              },
+              {
+                "id": "D018570",
+                "term": "Medição de Risco",
+                "term_en": "Risk Assessment",
+                "scope": "Estimativa qualitativa ou quantitativa da probabilidade de efeitos adversos decorrentes da exposição a riscos específicos à saúde ou da ausência de efeitos benéficos. (Tradução livre do original: Last",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.740.600.800.715",
+                  "N04.452.871.715"
+                ]
+              },
+              {
+                "id": "DDCS032485",
+                "term": "Riscos Ambientais",
+                "term_en": "Environmental Hazards",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.806.420.737",
+                  "VS4.001.002"
+                ]
+              },
+              {
+                "id": "DDCS051311",
+                "term": "Grau de Risco",
+                "term_en": "Risk Grade",
+                "scope": "Nível de efeitos adversos que cada tipo de produto pode ou não oferecer considerando sua formulação, finalidade e modo de uso.",
+                "categoria": "Vigilância Sanitária",
+                "arvore": [
+                  "VS1.001.003.001.001.002.001.005.001"
+                ]
+              },
+              {
+                "id": "D000073938",
+                "term": "Avaliação de Risco e Mitigação",
+                "term_en": "Risk Evaluation and Mitigation",
+                "scope": "Estratégias exigidas pela Lei de Alterações [Amendments Act] da Agência de Controle de Alimentos e Medicamentos dos EUA (FDA) de 2007, quando existe uma questão sobre se os benefícios de um medicament",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N04.452.871.758",
+                  "N06.850.505.715.750"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Mortality",
+            "candidates": [
+              {
+                "id": "D009026",
+                "term": "Mortalidade",
+                "term_en": "Mortality",
+                "scope": "Todas as mortes notificadas em uma população.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.308.985.550",
+                  "N01.224.935.698"
+                ]
+              },
+              {
+                "id": "DDCS028403",
+                "term": "Registros de Mortalidade",
+                "term_en": "Mortality Registries",
+                "scope": "Sistema de registro baseado em documentos como atestado e declaração de óbito.",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP5.467.733"
+                ]
+              },
+              {
+                "id": "D061213",
+                "term": "Mortalidade Prematura",
+                "term_en": "Mortality, Premature",
+                "scope": "Mortes que ocorrem antes que a EXPECTATIVA DE VIDA seja alcançada em uma determinada população.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.308.985.550.550",
+                  "N01.224.935.698.700"
+                ]
+              },
+              {
+                "id": "D017052",
+                "term": "Mortalidade Hospitalar",
+                "term_en": "Hospital Mortality",
+                "scope": "Registro ou coleta de dados referentes à mortalidade por quaisquer causas em grupos de indivíduos hospitalizados.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.308.985.550.400",
+                  "N01.224.935.698.400"
+                ]
+              },
+              {
+                "id": "D007226",
+                "term": "Mortalidade Infantil",
+                "term_en": "Infant Mortality",
+                "scope": "Óbitos ocorridos desde o NASCIMENTO até 365 dias após o nascimento em uma dada população. Mortalidade pós-neonatal representa as mortes ocorridas entre 28 e 365 dias após o nascimento (conforme defini",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.308.985.550.475",
+                  "N01.224.935.698.489"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Endoscopy, Gastrointestinal",
+            "candidates": [
+              {
+                "id": "D016099",
+                "term": "Endoscopia Gastrointestinal",
+                "term_en": "Endoscopy, Gastrointestinal",
+                "scope": "Exame endoscópico, terapia ou cirurgia do trato gastrointestinal.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.372.250.250",
+                  "E01.370.388.250.250.250"
+                ]
+              },
+              {
+                "id": "D020776",
+                "term": "Endoscópios Gastrointestinais",
+                "term_en": "Endoscopes, Gastrointestinal",
+                "scope": "Instrumentos para o exame visual do interior do trato gastrointestinal.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E07.230.220.260",
+                  "E07.858.240.260"
+                ]
+              },
+              {
+                "id": "D016145",
+                "term": "Endoscopia do Sistema Digestório",
+                "term_en": "Endoscopy, Digestive System",
+                "scope": "Exame endoscópico, terapia ou cirurgia do trato digestório.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.372.250",
+                  "E01.370.388.250.250"
+                ]
+              },
+              {
+                "id": "D004724",
+                "term": "Endoscopia",
+                "term_en": "Endoscopy",
+                "scope": "Procedimentos em que se empregam ENDOSCÓPIOS para diagnóstico e tratamento de doenças. A endoscopia envolve a passagem de um instrumento óptico através de pequena incisão na pele, isto é, percutânea; ",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.388.250",
+                  "E04.502.250"
+                ]
+              },
+              {
+                "id": "D005762",
+                "term": "Gastroenterologia",
+                "term_en": "Gastroenterology",
+                "scope": "Subespecialidade da medicina interna voltada para o estudo da fisiologia e das doenças do sistema digestório e de estruturas relacionadas (esôfago, fígado, vesícula biliar e pâncreas).",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.403.429.405"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Stomach Neoplasms",
+            "candidates": [
+              {
+                "id": "D013274",
+                "term": "Neoplasias Gástricas",
+                "term_en": "Stomach Neoplasms",
+                "scope": "Tumores ou câncer do ESTÔMAGO.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C04.588.274.476.767",
+                  "C06.301.371.767"
+                ]
+              },
+              {
+                "id": "D000008",
+                "term": "Neoplasias Abdominais",
+                "term_en": "Abdominal Neoplasms",
+                "scope": "Crescimento novo e anormal de tecido no ABDOME.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C04.588.033"
+                ]
+              },
+              {
+                "id": "D005770",
+                "term": "Neoplasias Gastrointestinais",
+                "term_en": "Gastrointestinal Neoplasms",
+                "scope": "Tumores ou câncer do TRATO GASTROINTESTINAL, desde a BOCA até o CANAL ANAL.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C04.588.274.476",
+                  "C06.301.371"
+                ]
+              },
+              {
+                "id": "D004067",
+                "term": "Neoplasias do Sistema Digestório",
+                "term_en": "Digestive System Neoplasms",
+                "scope": "Tumores ou câncer do SISTEMA DIGESTÓRIO.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C04.588.274",
+                  "C06.301"
+                ]
+              },
+              {
+                "id": "D019042",
+                "term": "Neoplasias Musculares",
+                "term_en": "Muscle Neoplasms",
+                "scope": "Câncer ou tumores localizados no tecido muscular ou músculos específicos. Eles se distinguem das NEOPLASIAS DE TECIDO MUSCULAR, que são neoplasias compostas de tecido muscular esquelético, cardíaco ou",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C04.588.839.500",
+                  "C05.651.494"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Aged",
+            "candidates": [
+              {
+                "id": "D000368",
+                "term": "Idoso",
+                "term_en": "Aged",
+                "scope": "Pessoa de 65 anos de idade ou mais. Para uma pessoa com mais de 79 anos, IDOSO DE 80 ANOS OU MAIS está disponível.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.060.116.100"
+                ]
+              },
+              {
+                "id": "D000369",
+                "term": "Idoso de 80 Anos ou mais",
+                "term_en": "Aged, 80 and over",
+                "scope": "Pessoas entre 80 e 89 anos de idade.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.060.116.100.080"
+                ]
+              },
+              {
+                "id": "D000367",
+                "term": "Fatores Etários",
+                "term_en": "Age Factors",
+                "scope": "Idade como um elemento ou influência que contribui à produção de um resultado. Pode ser aplicável à causa ou efeito de uma circunstância. É usado com os conceitos humano e animal, mas devem ser difere",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N05.715.350.075",
+                  "N06.850.490.250"
+                ]
+              },
+              {
+                "id": "D008875",
+                "term": "Pessoa de Meia-Idade",
+                "term_en": "Middle Aged",
+                "scope": "Adulto com idade entre 45 e 64 anos.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.060.116.630"
+                ]
+              },
+              {
+                "id": "DDCS017556",
+                "term": "Direitos dos Idosos",
+                "term_en": "Aged Rights",
+                "scope": "Promoção e proteção dos direitos dos IDOSOS, frequentemente através de processos legais.",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP9.242.315.643"
+                ]
+              }
+            ]
+          }
+        ]
       }
     ],
     "selected_candidates": {
       "primary": [
         {
-          "id": "D000368",
-          "term": "Idoso"
+          "id": "D012720",
+          "term": "Índice de Gravidade de Doença"
         },
         {
           "id": "D006471",
           "term": "Hemorragia Gastrointestinal"
         }
       ],
-      "secondary": []
+      "secondary": [
+        {
+          "id": "D018570",
+          "term": "Medição de Risco"
+        },
+        {
+          "id": "D009026",
+          "term": "Mortalidade"
+        },
+        {
+          "id": "D016099",
+          "term": "Endoscopia Gastrointestinal"
+        },
+        {
+          "id": "D013274",
+          "term": "Neoplasias Gástricas"
+        },
+        {
+          "id": "D000368",
+          "term": "Idoso"
+        }
+      ]
     }
   },
   "stats": {
-    "primary_concepts": 3,
-    "secondary_concepts": 0,
-    "total_candidates": 15,
+    "primary_concepts": 2,
+    "secondary_concepts": 5,
+    "total_candidates": 35,
     "final_primary": 2,
-    "final_secondary": 0
+    "final_secondary": 5
   }
 }

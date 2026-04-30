@@ -2,40 +2,6 @@
   "result": {
     "decs_primary": [
       {
-        "id": "D014397",
-        "term": "Tuberculose Pulmonar",
-        "name_en": "Tuberculosis, Pulmonary",
-        "scope_note": "Infecções por MYCOBACTERIUM nos pulmões.",
-        "tree_ids": [
-          "C01.150.252.410.040.552.846.899",
-          "C01.748.939",
-          "C08.381.922",
-          "C08.730.939"
-        ],
-        "hierarchy_path": "Doenças › C01.150.252.410.040.552.846.899",
-        "parents": [
-          {
-            "id": "D014376",
-            "term": "Tuberculose"
-          },
-          {
-            "id": "D012141",
-            "term": "Infecções Respiratórias"
-          },
-          {
-            "id": "D008171",
-            "term": "Pneumopatias"
-          }
-        ],
-        "children": [
-          {
-            "id": "D012830",
-            "term": "Silicotuberculose"
-          }
-        ],
-        "role": "primary"
-      },
-      {
         "id": "D012680",
         "term": "Sensibilidade e Especificidade",
         "name_en": "Sensitivity and Specificity",
@@ -83,71 +49,43 @@
           }
         ],
         "role": "primary"
-      }
-    ],
-    "decs_secondary": [
+      },
       {
-        "id": "D019937",
-        "term": "Técnicas e Procedimentos Diagnósticos",
-        "name_en": "Diagnostic Techniques and Procedures",
-        "scope_note": "Métodos, procedimentos e testes feitos para diagnosticar doenças, distúrbios ou incapacidades de função.",
+        "id": "D014397",
+        "term": "Tuberculose Pulmonar",
+        "name_en": "Tuberculosis, Pulmonary",
+        "scope_note": "Infecções por MYCOBACTERIUM nos pulmões.",
         "tree_ids": [
-          "E01.370",
-          "VS3.003.001.006.005"
+          "C01.150.252.410.040.552.846.899",
+          "C01.748.939",
+          "C08.381.922",
+          "C08.730.939"
         ],
-        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370",
+        "hierarchy_path": "Doenças › C01.150.252.410.040.552.846.899",
         "parents": [
           {
-            "id": "D003933",
-            "term": "Diagnóstico"
+            "id": "D014376",
+            "term": "Tuberculose"
           },
           {
-            "id": "D013812",
-            "term": "Terapêutica"
+            "id": "D012141",
+            "term": "Infecções Respiratórias"
+          },
+          {
+            "id": "D008171",
+            "term": "Pneumopatias"
           }
         ],
         "children": [
           {
-            "id": "D025202",
-            "term": "Técnicas de Diagnóstico Molecular"
-          },
-          {
-            "id": "D025401",
-            "term": "Ecocardiografia sob Estresse"
-          },
-          {
-            "id": "D012703",
-            "term": "Sorotipagem"
-          },
-          {
-            "id": "D000067029",
-            "term": "Aparência Física"
-          },
-          {
-            "id": "D005772",
-            "term": "Trânsito Gastrointestinal"
+            "id": "D012830",
+            "term": "Silicotuberculose"
           }
         ],
-        "role": "secondary"
-      },
-      {
-        "id": "D005188",
-        "term": "Reações Falso-Negativas",
-        "name_en": "False Negative Reactions",
-        "scope_note": "Resultados negativos em pacientes que têm as características para as quais o teste é feito. A classificação de pessoas doentes como saudáveis quando examinadas para a detecção de doenças.",
-        "tree_ids": [
-          "E01.354.340"
-        ],
-        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.354.340",
-        "parents": [
-          {
-            "id": "D003951",
-            "term": "Erros de Diagnóstico"
-          }
-        ],
-        "children": [],
-        "role": "secondary"
-      },
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
       {
         "id": "D012015",
         "term": "Padrões de Referência",
@@ -178,6 +116,47 @@
           }
         ],
         "role": "secondary"
+      },
+      {
+        "id": "D005188",
+        "term": "Reações Falso-Negativas",
+        "name_en": "False Negative Reactions",
+        "scope_note": "Resultados negativos em pacientes que têm as características para as quais o teste é feito. A classificação de pessoas doentes como saudáveis quando examinadas para a detecção de doenças.",
+        "tree_ids": [
+          "E01.354.340"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.354.340",
+        "parents": [
+          {
+            "id": "D003951",
+            "term": "Erros de Diagnóstico"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D003955",
+        "term": "Testes Diagnósticos de Rotina",
+        "name_en": "Diagnostic Tests, Routine",
+        "scope_note": "Procedimentos diagnósticos tais como testes de laboratório e raios x, feitos rotineiramente em todos os indivíduos ou em determinadas categorias de indivíduos em uma situação específica, por exemplo, em pacientes que são admitidos em um hospital. Estes incluem testes de rotina feitos em recém-nascidos.",
+        "tree_ids": [
+          "E01.370.395"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.395",
+        "parents": [
+          {
+            "id": "D019937",
+            "term": "Técnicas e Procedimentos Diagnósticos"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000092682",
+            "term": "Captura de Movimento"
+          }
+        ],
+        "role": "secondary"
       }
     ]
   },
@@ -189,70 +168,13 @@
     "secondary": [
       "Reference Standards",
       "False Negative Reactions",
-      "Diagnostic Techniques and Procedures"
+      "Diagnostic Tests, Routine"
     ]
   },
   "candidate_groups": [
     {
       "label": "primários",
       "concepts": [
-        {
-          "concept": "Tuberculosis, Pulmonary",
-          "candidates": [
-            {
-              "id": "D014397",
-              "term": "Tuberculose Pulmonar",
-              "term_en": "Tuberculosis, Pulmonary",
-              "scope": "Infecções por MYCOBACTERIUM nos pulmões.",
-              "categoria": "Doenças",
-              "arvore": [
-                "C01.150.252.410.040.552.846.899",
-                "C01.748.939"
-              ]
-            },
-            {
-              "id": "D000099298",
-              "term": "Doença Tuberculosa",
-              "term_en": "Tuberculosis Disease",
-              "scope": "Forma avançada de TUBERCULOSE não controlada pelo SISTEMA IMUNITÁRIO que requer tratamento rápido e eficaz para impedir complicações médicas e a transmissão da doença para outras pessoas.",
-              "categoria": "Doenças",
-              "arvore": [
-                "C01.150.252.410.040.552.846.505"
-              ]
-            },
-            {
-              "id": "D014376",
-              "term": "Tuberculose",
-              "term_en": "Tuberculosis",
-              "scope": "Qualquer uma das doenças infecciosas em SERES HUMANOS e de outros animais causadas por espécies de MYCOBACTERIUM TUBERCULOSIS.",
-              "categoria": "Doenças",
-              "arvore": [
-                "C01.150.252.410.040.552.846"
-              ]
-            },
-            {
-              "id": "D000092225",
-              "term": "Tuberculose Extrapulmonar",
-              "term_en": "Tuberculosis, Extrapulmonary",
-              "scope": "Infecções por MYCOBACTERIUM em órgãos diferentes do pulmão.",
-              "categoria": "Doenças",
-              "arvore": [
-                "C01.150.252.410.040.552.846.617"
-              ]
-            },
-            {
-              "id": "D020306",
-              "term": "Tuberculose do Sistema Nervoso Central",
-              "term_en": "Tuberculosis, Central Nervous System",
-              "scope": "A tuberculose do cérebro, medula espinhal ou meninges (TUBERCULOSE MENINGEA), mais frequentemente causada pelo MYCOBACTERIUM TUBERCULOSIS e raramemente pelo MYCOBACTERIUM BOVIS. A infecção pode estar ",
-              "categoria": "Doenças",
-              "arvore": [
-                "C01.150.252.223.850",
-                "C01.150.252.410.040.552.846.617.200"
-              ]
-            }
-          ]
-        },
         {
           "concept": "Sensitivity and Specificity",
           "candidates": [
@@ -309,6 +231,63 @@
               ]
             }
           ]
+        },
+        {
+          "concept": "Tuberculosis, Pulmonary",
+          "candidates": [
+            {
+              "id": "D014397",
+              "term": "Tuberculose Pulmonar",
+              "term_en": "Tuberculosis, Pulmonary",
+              "scope": "Infecções por MYCOBACTERIUM nos pulmões.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.150.252.410.040.552.846.899",
+                "C01.748.939"
+              ]
+            },
+            {
+              "id": "D000099298",
+              "term": "Doença Tuberculosa",
+              "term_en": "Tuberculosis Disease",
+              "scope": "Forma avançada de TUBERCULOSE não controlada pelo SISTEMA IMUNITÁRIO que requer tratamento rápido e eficaz para impedir complicações médicas e a transmissão da doença para outras pessoas.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.150.252.410.040.552.846.505"
+              ]
+            },
+            {
+              "id": "D014376",
+              "term": "Tuberculose",
+              "term_en": "Tuberculosis",
+              "scope": "Qualquer uma das doenças infecciosas em SERES HUMANOS e de outros animais causadas por espécies de MYCOBACTERIUM TUBERCULOSIS.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.150.252.410.040.552.846"
+              ]
+            },
+            {
+              "id": "D000092225",
+              "term": "Tuberculose Extrapulmonar",
+              "term_en": "Tuberculosis, Extrapulmonary",
+              "scope": "Infecções por MYCOBACTERIUM em órgãos diferentes do pulmão.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.150.252.410.040.552.846.617"
+              ]
+            },
+            {
+              "id": "D020306",
+              "term": "Tuberculose do Sistema Nervoso Central",
+              "term_en": "Tuberculosis, Central Nervous System",
+              "scope": "A tuberculose do cérebro, medula espinhal ou meninges (TUBERCULOSE MENINGEA), mais frequentemente causada pelo MYCOBACTERIUM TUBERCULOSIS e raramemente pelo MYCOBACTERIUM BOVIS. A infecção pode estar ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.150.252.223.850",
+                "C01.150.252.410.040.552.846.617.200"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -316,57 +295,57 @@
       "label": "secundários",
       "concepts": [
         {
-          "concept": "Diagnostic Techniques and Procedures",
+          "concept": "Reference Standards",
           "candidates": [
             {
-              "id": "D019937",
-              "term": "Técnicas e Procedimentos Diagnósticos",
-              "term_en": "Diagnostic Techniques and Procedures",
-              "scope": "Métodos, procedimentos e testes feitos para diagnosticar doenças, distúrbios ou incapacidades de função.",
+              "id": "D012015",
+              "term": "Padrões de Referência",
+              "term_en": "Reference Standards",
+              "scope": "Base [metodológica] com valores estabelecidos para se medir quantidade, massa, extensão ou qualidade, p.ex. padrões para massa, soluções, métodos, técnicas e procedimentos usados no diagnóstico e na t",
               "categoria": "Técnicas e Equipamentos Analíticos",
               "arvore": [
-                "E01.370",
-                "VS3.003.001.006.005"
+                "E05.978.808"
               ]
             },
             {
-              "id": "D003949",
-              "term": "Técnicas de Diagnóstico por Cirurgia",
-              "term_en": "Diagnostic Techniques, Surgical",
-              "scope": "Métodos e procedimentos para o diagnóstico de doenças ou disfunções pela avaliação do local da patologia ou do campo operativo durante uma intervenção cirúrgica.",
-              "categoria": "Técnicas e Equipamentos Analíticos",
+              "id": "DDCS051557",
+              "term": "Normas de Qualidade do Solo",
+              "term_en": "Standards of Soil Quality",
+              "categoria": "Vigilância Sanitária",
               "arvore": [
-                "E01.370.388"
+                "VS4.001.001.003.001.001"
               ]
             },
             {
-              "id": "D003948",
-              "term": "Técnicas de Diagnóstico do Sistema Respiratório",
-              "term_en": "Diagnostic Techniques, Respiratory System",
-              "scope": "Métodos e procedimentos para o diagnóstico de doenças do trato respiratório ou seus órgãos. Abrangem TESTES DE FUNÇÃO RESPIRATÓRIA.",
+              "id": "D012016",
+              "term": "Valores de Referência",
+              "term_en": "Reference Values",
+              "scope": "Faixa (ou distribuição de frequências) dos [valores] medidos em uma população (de organismos, órgãos ou coisas) que não foi selecionada para [indicar] a presença de doença ou de anormalidade.",
               "categoria": "Técnicas e Equipamentos Analíticos",
               "arvore": [
-                "E01.370.386"
+                "E05.978.810"
               ]
             },
             {
-              "id": "D003935",
-              "term": "Técnicas de Diagnóstico Cardiovascular",
-              "term_en": "Diagnostic Techniques, Cardiovascular",
-              "scope": "Métodos e procedimentos para diagnóstico de doenças ou disfunções do sistema cardiovascular ou seus órgãos, ou ainda para a demonstração de seus processos fisiológicos.",
-              "categoria": "Técnicas e Equipamentos Analíticos",
+              "id": "D059039",
+              "term": "Padrão de Cuidado",
+              "term_en": "Standard of Care",
+              "scope": "Mínimo aceitável de assistência ao paciente, baseado em estatutos, decisões judiciais, políticas ou orientações de classes profissionais.",
+              "categoria": "Saúde",
               "arvore": [
-                "E01.370.370"
+                "N04.761.789.900",
+                "N05.715.840"
               ]
             },
             {
-              "id": "D003944",
-              "term": "Técnicas de Diagnóstico Obstétrico e Ginecológico",
-              "term_en": "Diagnostic Techniques, Obstetrical and Gynecological",
-              "scope": "Métodos e procedimentos para o diagnóstico de afecções relacionadas à gestação, parto e puerpério, e enfermidades ginecológicas. Inclui também a demonstração da fisiologia genital e da gestação.",
-              "categoria": "Técnicas e Equipamentos Analíticos",
+              "id": "DDCS025398",
+              "term": "Normas de Qualidade da Água",
+              "term_en": "Water Quality Standards",
+              "scope": "Padrão de potabilidade da água: Conjunto de valores permitidos como parâmetro da qualidade da água para consumo humano, conforme definido em norma legal. (Fonte: BRASIL, 2017)",
+              "categoria": "Saúde Pública",
               "arvore": [
-                "E01.370.378"
+                "SP4.606.837.620.114.812.626",
+                "VS4.001.001.002.001.001"
               ]
             }
           ]
@@ -428,57 +407,58 @@
           ]
         },
         {
-          "concept": "Reference Standards",
+          "concept": "Diagnostic Tests, Routine",
           "candidates": [
             {
-              "id": "D012015",
-              "term": "Padrões de Referência",
-              "term_en": "Reference Standards",
-              "scope": "Base [metodológica] com valores estabelecidos para se medir quantidade, massa, extensão ou qualidade, p.ex. padrões para massa, soluções, métodos, técnicas e procedimentos usados no diagnóstico e na t",
+              "id": "D003955",
+              "term": "Testes Diagnósticos de Rotina",
+              "term_en": "Diagnostic Tests, Routine",
+              "scope": "Procedimentos diagnósticos tais como testes de laboratório e raios x, feitos rotineiramente em todos os indivíduos ou em determinadas categorias de indivíduos em uma situação específica, por exemplo, ",
               "categoria": "Técnicas e Equipamentos Analíticos",
               "arvore": [
-                "E05.978.808"
+                "E01.370.395"
               ]
             },
             {
-              "id": "DDCS051557",
-              "term": "Normas de Qualidade do Solo",
-              "term_en": "Standards of Soil Quality",
-              "categoria": "Vigilância Sanitária",
-              "arvore": [
-                "VS4.001.001.003.001.001"
-              ]
-            },
-            {
-              "id": "D012016",
-              "term": "Valores de Referência",
-              "term_en": "Reference Values",
-              "scope": "Faixa (ou distribuição de frequências) dos [valores] medidos em uma população (de organismos, órgãos ou coisas) que não foi selecionada para [indicar] a presença de doença ou de anormalidade.",
+              "id": "D019937",
+              "term": "Técnicas e Procedimentos Diagnósticos",
+              "term_en": "Diagnostic Techniques and Procedures",
+              "scope": "Métodos, procedimentos e testes feitos para diagnosticar doenças, distúrbios ou incapacidades de função.",
               "categoria": "Técnicas e Equipamentos Analíticos",
               "arvore": [
-                "E05.978.810"
+                "E01.370",
+                "VS3.003.001.006.005"
               ]
             },
             {
-              "id": "D059039",
-              "term": "Padrão de Cuidado",
-              "term_en": "Standard of Care",
-              "scope": "Mínimo aceitável de assistência ao paciente, baseado em estatutos, decisões judiciais, políticas ou orientações de classes profissionais.",
-              "categoria": "Saúde",
+              "id": "D000092025",
+              "term": "Testes de Diagnóstico Rápido",
+              "term_en": "Rapid Diagnostic Tests",
+              "scope": "Ensaios diagnósticos projetados para uso no Ponto de Atendimento (Point-of-Care) que podem ser adaptados para uso em ambientes de poucos recursos. Estes testes são de baixo custo, simples de operar e ",
+              "categoria": "Técnicas e Equipamentos Analíticos",
               "arvore": [
-                "N04.761.789.900",
-                "N05.715.840"
+                "E01.370.225.989",
+                "E05.200.989"
               ]
             },
             {
-              "id": "DDCS025398",
-              "term": "Normas de Qualidade da Água",
-              "term_en": "Water Quality Standards",
-              "scope": "Padrão de potabilidade da água: Conjunto de valores permitidos como parâmetro da qualidade da água para consumo humano, conforme definido em norma legal. (Fonte: BRASIL, 2017)",
-              "categoria": "Saúde Pública",
+              "id": "D003948",
+              "term": "Técnicas de Diagnóstico do Sistema Respiratório",
+              "term_en": "Diagnostic Techniques, Respiratory System",
+              "scope": "Métodos e procedimentos para o diagnóstico de doenças do trato respiratório ou seus órgãos. Abrangem TESTES DE FUNÇÃO RESPIRATÓRIA.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
               "arvore": [
-                "SP4.606.837.620.114.812.626",
-                "VS4.001.001.002.001.001"
+                "E01.370.386"
+              ]
+            },
+            {
+              "id": "D003944",
+              "term": "Técnicas de Diagnóstico Obstétrico e Ginecológico",
+              "term_en": "Diagnostic Techniques, Obstetrical and Gynecological",
+              "scope": "Métodos e procedimentos para o diagnóstico de afecções relacionadas à gestação, parto e puerpério, e enfermidades ginecológicas. Inclui também a demonstração da fisiologia genital e da gestação.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.378"
               ]
             }
           ]
@@ -495,70 +475,13 @@
       "secondary": [
         "Reference Standards",
         "False Negative Reactions",
-        "Diagnostic Techniques and Procedures"
+        "Diagnostic Tests, Routine"
       ]
     },
     "candidate_groups": [
       {
         "label": "primários",
         "concepts": [
-          {
-            "concept": "Tuberculosis, Pulmonary",
-            "candidates": [
-              {
-                "id": "D014397",
-                "term": "Tuberculose Pulmonar",
-                "term_en": "Tuberculosis, Pulmonary",
-                "scope": "Infecções por MYCOBACTERIUM nos pulmões.",
-                "categoria": "Doenças",
-                "arvore": [
-                  "C01.150.252.410.040.552.846.899",
-                  "C01.748.939"
-                ]
-              },
-              {
-                "id": "D000099298",
-                "term": "Doença Tuberculosa",
-                "term_en": "Tuberculosis Disease",
-                "scope": "Forma avançada de TUBERCULOSE não controlada pelo SISTEMA IMUNITÁRIO que requer tratamento rápido e eficaz para impedir complicações médicas e a transmissão da doença para outras pessoas.",
-                "categoria": "Doenças",
-                "arvore": [
-                  "C01.150.252.410.040.552.846.505"
-                ]
-              },
-              {
-                "id": "D014376",
-                "term": "Tuberculose",
-                "term_en": "Tuberculosis",
-                "scope": "Qualquer uma das doenças infecciosas em SERES HUMANOS e de outros animais causadas por espécies de MYCOBACTERIUM TUBERCULOSIS.",
-                "categoria": "Doenças",
-                "arvore": [
-                  "C01.150.252.410.040.552.846"
-                ]
-              },
-              {
-                "id": "D000092225",
-                "term": "Tuberculose Extrapulmonar",
-                "term_en": "Tuberculosis, Extrapulmonary",
-                "scope": "Infecções por MYCOBACTERIUM em órgãos diferentes do pulmão.",
-                "categoria": "Doenças",
-                "arvore": [
-                  "C01.150.252.410.040.552.846.617"
-                ]
-              },
-              {
-                "id": "D020306",
-                "term": "Tuberculose do Sistema Nervoso Central",
-                "term_en": "Tuberculosis, Central Nervous System",
-                "scope": "A tuberculose do cérebro, medula espinhal ou meninges (TUBERCULOSE MENINGEA), mais frequentemente causada pelo MYCOBACTERIUM TUBERCULOSIS e raramemente pelo MYCOBACTERIUM BOVIS. A infecção pode estar ",
-                "categoria": "Doenças",
-                "arvore": [
-                  "C01.150.252.223.850",
-                  "C01.150.252.410.040.552.846.617.200"
-                ]
-              }
-            ]
-          },
           {
             "concept": "Sensitivity and Specificity",
             "candidates": [
@@ -615,6 +538,63 @@
                 ]
               }
             ]
+          },
+          {
+            "concept": "Tuberculosis, Pulmonary",
+            "candidates": [
+              {
+                "id": "D014397",
+                "term": "Tuberculose Pulmonar",
+                "term_en": "Tuberculosis, Pulmonary",
+                "scope": "Infecções por MYCOBACTERIUM nos pulmões.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.150.252.410.040.552.846.899",
+                  "C01.748.939"
+                ]
+              },
+              {
+                "id": "D000099298",
+                "term": "Doença Tuberculosa",
+                "term_en": "Tuberculosis Disease",
+                "scope": "Forma avançada de TUBERCULOSE não controlada pelo SISTEMA IMUNITÁRIO que requer tratamento rápido e eficaz para impedir complicações médicas e a transmissão da doença para outras pessoas.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.150.252.410.040.552.846.505"
+                ]
+              },
+              {
+                "id": "D014376",
+                "term": "Tuberculose",
+                "term_en": "Tuberculosis",
+                "scope": "Qualquer uma das doenças infecciosas em SERES HUMANOS e de outros animais causadas por espécies de MYCOBACTERIUM TUBERCULOSIS.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.150.252.410.040.552.846"
+                ]
+              },
+              {
+                "id": "D000092225",
+                "term": "Tuberculose Extrapulmonar",
+                "term_en": "Tuberculosis, Extrapulmonary",
+                "scope": "Infecções por MYCOBACTERIUM em órgãos diferentes do pulmão.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.150.252.410.040.552.846.617"
+                ]
+              },
+              {
+                "id": "D020306",
+                "term": "Tuberculose do Sistema Nervoso Central",
+                "term_en": "Tuberculosis, Central Nervous System",
+                "scope": "A tuberculose do cérebro, medula espinhal ou meninges (TUBERCULOSE MENINGEA), mais frequentemente causada pelo MYCOBACTERIUM TUBERCULOSIS e raramemente pelo MYCOBACTERIUM BOVIS. A infecção pode estar ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.150.252.223.850",
+                  "C01.150.252.410.040.552.846.617.200"
+                ]
+              }
+            ]
           }
         ]
       },
@@ -622,57 +602,57 @@
         "label": "secundários",
         "concepts": [
           {
-            "concept": "Diagnostic Techniques and Procedures",
+            "concept": "Reference Standards",
             "candidates": [
               {
-                "id": "D019937",
-                "term": "Técnicas e Procedimentos Diagnósticos",
-                "term_en": "Diagnostic Techniques and Procedures",
-                "scope": "Métodos, procedimentos e testes feitos para diagnosticar doenças, distúrbios ou incapacidades de função.",
+                "id": "D012015",
+                "term": "Padrões de Referência",
+                "term_en": "Reference Standards",
+                "scope": "Base [metodológica] com valores estabelecidos para se medir quantidade, massa, extensão ou qualidade, p.ex. padrões para massa, soluções, métodos, técnicas e procedimentos usados no diagnóstico e na t",
                 "categoria": "Técnicas e Equipamentos Analíticos",
                 "arvore": [
-                  "E01.370",
-                  "VS3.003.001.006.005"
+                  "E05.978.808"
                 ]
               },
               {
-                "id": "D003949",
-                "term": "Técnicas de Diagnóstico por Cirurgia",
-                "term_en": "Diagnostic Techniques, Surgical",
-                "scope": "Métodos e procedimentos para o diagnóstico de doenças ou disfunções pela avaliação do local da patologia ou do campo operativo durante uma intervenção cirúrgica.",
-                "categoria": "Técnicas e Equipamentos Analíticos",
+                "id": "DDCS051557",
+                "term": "Normas de Qualidade do Solo",
+                "term_en": "Standards of Soil Quality",
+                "categoria": "Vigilância Sanitária",
                 "arvore": [
-                  "E01.370.388"
+                  "VS4.001.001.003.001.001"
                 ]
               },
               {
-                "id": "D003948",
-                "term": "Técnicas de Diagnóstico do Sistema Respiratório",
-                "term_en": "Diagnostic Techniques, Respiratory System",
-                "scope": "Métodos e procedimentos para o diagnóstico de doenças do trato respiratório ou seus órgãos. Abrangem TESTES DE FUNÇÃO RESPIRATÓRIA.",
+                "id": "D012016",
+                "term": "Valores de Referência",
+                "term_en": "Reference Values",
+                "scope": "Faixa (ou distribuição de frequências) dos [valores] medidos em uma população (de organismos, órgãos ou coisas) que não foi selecionada para [indicar] a presença de doença ou de anormalidade.",
                 "categoria": "Técnicas e Equipamentos Analíticos",
                 "arvore": [
-                  "E01.370.386"
+                  "E05.978.810"
                 ]
               },
               {
-                "id": "D003935",
-                "term": "Técnicas de Diagnóstico Cardiovascular",
-                "term_en": "Diagnostic Techniques, Cardiovascular",
-                "scope": "Métodos e procedimentos para diagnóstico de doenças ou disfunções do sistema cardiovascular ou seus órgãos, ou ainda para a demonstração de seus processos fisiológicos.",
-                "categoria": "Técnicas e Equipamentos Analíticos",
+                "id": "D059039",
+                "term": "Padrão de Cuidado",
+                "term_en": "Standard of Care",
+                "scope": "Mínimo aceitável de assistência ao paciente, baseado em estatutos, decisões judiciais, políticas ou orientações de classes profissionais.",
+                "categoria": "Saúde",
                 "arvore": [
-                  "E01.370.370"
+                  "N04.761.789.900",
+                  "N05.715.840"
                 ]
               },
               {
-                "id": "D003944",
-                "term": "Técnicas de Diagnóstico Obstétrico e Ginecológico",
-                "term_en": "Diagnostic Techniques, Obstetrical and Gynecological",
-                "scope": "Métodos e procedimentos para o diagnóstico de afecções relacionadas à gestação, parto e puerpério, e enfermidades ginecológicas. Inclui também a demonstração da fisiologia genital e da gestação.",
-                "categoria": "Técnicas e Equipamentos Analíticos",
+                "id": "DDCS025398",
+                "term": "Normas de Qualidade da Água",
+                "term_en": "Water Quality Standards",
+                "scope": "Padrão de potabilidade da água: Conjunto de valores permitidos como parâmetro da qualidade da água para consumo humano, conforme definido em norma legal. (Fonte: BRASIL, 2017)",
+                "categoria": "Saúde Pública",
                 "arvore": [
-                  "E01.370.378"
+                  "SP4.606.837.620.114.812.626",
+                  "VS4.001.001.002.001.001"
                 ]
               }
             ]
@@ -734,57 +714,58 @@
             ]
           },
           {
-            "concept": "Reference Standards",
+            "concept": "Diagnostic Tests, Routine",
             "candidates": [
               {
-                "id": "D012015",
-                "term": "Padrões de Referência",
-                "term_en": "Reference Standards",
-                "scope": "Base [metodológica] com valores estabelecidos para se medir quantidade, massa, extensão ou qualidade, p.ex. padrões para massa, soluções, métodos, técnicas e procedimentos usados no diagnóstico e na t",
+                "id": "D003955",
+                "term": "Testes Diagnósticos de Rotina",
+                "term_en": "Diagnostic Tests, Routine",
+                "scope": "Procedimentos diagnósticos tais como testes de laboratório e raios x, feitos rotineiramente em todos os indivíduos ou em determinadas categorias de indivíduos em uma situação específica, por exemplo, ",
                 "categoria": "Técnicas e Equipamentos Analíticos",
                 "arvore": [
-                  "E05.978.808"
+                  "E01.370.395"
                 ]
               },
               {
-                "id": "DDCS051557",
-                "term": "Normas de Qualidade do Solo",
-                "term_en": "Standards of Soil Quality",
-                "categoria": "Vigilância Sanitária",
-                "arvore": [
-                  "VS4.001.001.003.001.001"
-                ]
-              },
-              {
-                "id": "D012016",
-                "term": "Valores de Referência",
-                "term_en": "Reference Values",
-                "scope": "Faixa (ou distribuição de frequências) dos [valores] medidos em uma população (de organismos, órgãos ou coisas) que não foi selecionada para [indicar] a presença de doença ou de anormalidade.",
+                "id": "D019937",
+                "term": "Técnicas e Procedimentos Diagnósticos",
+                "term_en": "Diagnostic Techniques and Procedures",
+                "scope": "Métodos, procedimentos e testes feitos para diagnosticar doenças, distúrbios ou incapacidades de função.",
                 "categoria": "Técnicas e Equipamentos Analíticos",
                 "arvore": [
-                  "E05.978.810"
+                  "E01.370",
+                  "VS3.003.001.006.005"
                 ]
               },
               {
-                "id": "D059039",
-                "term": "Padrão de Cuidado",
-                "term_en": "Standard of Care",
-                "scope": "Mínimo aceitável de assistência ao paciente, baseado em estatutos, decisões judiciais, políticas ou orientações de classes profissionais.",
-                "categoria": "Saúde",
+                "id": "D000092025",
+                "term": "Testes de Diagnóstico Rápido",
+                "term_en": "Rapid Diagnostic Tests",
+                "scope": "Ensaios diagnósticos projetados para uso no Ponto de Atendimento (Point-of-Care) que podem ser adaptados para uso em ambientes de poucos recursos. Estes testes são de baixo custo, simples de operar e ",
+                "categoria": "Técnicas e Equipamentos Analíticos",
                 "arvore": [
-                  "N04.761.789.900",
-                  "N05.715.840"
+                  "E01.370.225.989",
+                  "E05.200.989"
                 ]
               },
               {
-                "id": "DDCS025398",
-                "term": "Normas de Qualidade da Água",
-                "term_en": "Water Quality Standards",
-                "scope": "Padrão de potabilidade da água: Conjunto de valores permitidos como parâmetro da qualidade da água para consumo humano, conforme definido em norma legal. (Fonte: BRASIL, 2017)",
-                "categoria": "Saúde Pública",
+                "id": "D003948",
+                "term": "Técnicas de Diagnóstico do Sistema Respiratório",
+                "term_en": "Diagnostic Techniques, Respiratory System",
+                "scope": "Métodos e procedimentos para o diagnóstico de doenças do trato respiratório ou seus órgãos. Abrangem TESTES DE FUNÇÃO RESPIRATÓRIA.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
                 "arvore": [
-                  "SP4.606.837.620.114.812.626",
-                  "VS4.001.001.002.001.001"
+                  "E01.370.386"
+                ]
+              },
+              {
+                "id": "D003944",
+                "term": "Técnicas de Diagnóstico Obstétrico e Ginecológico",
+                "term_en": "Diagnostic Techniques, Obstetrical and Gynecological",
+                "scope": "Métodos e procedimentos para o diagnóstico de afecções relacionadas à gestação, parto e puerpério, e enfermidades ginecológicas. Inclui também a demonstração da fisiologia genital e da gestação.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.378"
                 ]
               }
             ]
@@ -795,26 +776,26 @@
     "selected_candidates": {
       "primary": [
         {
-          "id": "D014397",
-          "term": "Tuberculose Pulmonar"
-        },
-        {
           "id": "D012680",
           "term": "Sensibilidade e Especificidade"
+        },
+        {
+          "id": "D014397",
+          "term": "Tuberculose Pulmonar"
         }
       ],
       "secondary": [
         {
-          "id": "D019937",
-          "term": "Técnicas e Procedimentos Diagnósticos"
+          "id": "D012015",
+          "term": "Padrões de Referência"
         },
         {
           "id": "D005188",
           "term": "Reações Falso-Negativas"
         },
         {
-          "id": "D012015",
-          "term": "Padrões de Referência"
+          "id": "D003955",
+          "term": "Testes Diagnósticos de Rotina"
         }
       ]
     }

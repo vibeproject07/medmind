@@ -2,6 +2,85 @@
   "result": {
     "decs_primary": [
       {
+        "id": "D012680",
+        "term": "Sensibilidade e Especificidade",
+        "name_en": "Sensitivity and Specificity",
+        "scope_note": "Medidas de classificação binária para avaliar resultados de exames. Sensibilidade ou taxa de recall é a proporção de verdadeiros positivos. Especificidade é a probabilidade do teste determinar corretamente a ausência de uma afecção. (Tradução livre do original: Last, Dictionary of Epidemiology, 2d ed)",
+        "tree_ids": [
+          "E05.318.370.800",
+          "E05.318.740.872",
+          "G17.800",
+          "N05.715.360.325.700",
+          "N05.715.360.750.725",
+          "N06.850.520.445.800",
+          "N06.850.520.830.872"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E05.318.370.800",
+        "parents": [
+          {
+            "id": "D015340",
+            "term": "Projetos de Pesquisa Epidemiológica"
+          },
+          {
+            "id": "D013223",
+            "term": "Estatística como Assunto"
+          },
+          {
+            "id": "D055641",
+            "term": "Conceitos Matemáticos"
+          }
+        ],
+        "children": [
+          {
+            "id": "D059629",
+            "term": "Razão Sinal-Ruído"
+          },
+          {
+            "id": "D011237",
+            "term": "Valor Preditivo dos Testes"
+          },
+          {
+            "id": "D012372",
+            "term": "Curva ROC"
+          },
+          {
+            "id": "D057230",
+            "term": "Limite de Detecção"
+          }
+        ],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D000086742",
+        "term": "Teste para COVID-19",
+        "name_en": "COVID-19 Testing",
+        "scope_note": "Diagnóstico de COVID-19 analisando fluidos corporais ou tecidos para a presença de anticorpos COVID-19, antígenos SARS-COV-2 ou o RNA VIRAL de SARS-COV-2.",
+        "tree_ids": [
+          "E01.370.225.312",
+          "E05.200.312"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.225.312",
+        "parents": [
+          {
+            "id": "D019411",
+            "term": "Técnicas de Laboratório Clínico"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000087123",
+            "term": "Teste de Ácido Nucleico para COVID-19"
+          },
+          {
+            "id": "D000087124",
+            "term": "Teste Sorológico para COVID-19"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
         "id": "D000086382",
         "term": "COVID-19",
         "name_en": "COVID-19",
@@ -30,126 +109,237 @@
             "term": "Síndrome de Pós-COVID-19 Aguda"
           }
         ],
-        "role": "primary"
+        "role": "secondary"
       },
       {
-        "id": "D058873",
-        "term": "Pandemias",
-        "name_en": "Pandemics",
-        "scope_note": "Epidemia de doença infecciosa que se disseminou para vários países, com frequência mais de um continente e que afeta geralmente um grande número de pessoas.",
+        "id": "D016013",
+        "term": "Funções Verossimilhança",
+        "name_en": "Likelihood Functions",
+        "scope_note": "Funções formuladas a partir de um modelo estatístico e um conjunto de dados observados que dão a probabilidade desses dados para diversos valores dos parâmetros desconhecidos do modelo. Esses valores de parâmetros que aumentam ao máximo a probabilidade são as estimativas de verossimilhança máxima dos parâmetros.",
         "tree_ids": [
-          "N06.850.290.200.600"
+          "E05.318.740.500.475",
+          "E05.318.740.600.400",
+          "E05.599.835.500",
+          "N05.715.360.750.530.450",
+          "N05.715.360.750.625.450",
+          "N06.850.520.830.500.475",
+          "N06.850.520.830.600.400"
         ],
-        "hierarchy_path": "Saúde › N06.850.290.200.600",
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E05.318.740.500.475",
         "parents": [
           {
-            "id": "D058872",
-            "term": "Epidemias"
+            "id": "D015233",
+            "term": "Modelos Estatísticos"
+          },
+          {
+            "id": "D011336",
+            "term": "Probabilidade"
           }
         ],
         "children": [],
-        "role": "primary"
+        "role": "secondary"
       }
-    ],
-    "decs_secondary": []
+    ]
   },
   "themes_identified": {
     "primary": [
-      "Enunciado",
-      "Na pandemia da COVID",
-      "ainda com casos detectados neste ano de 2023"
+      "Odds Ratio",
+      "Sensitivity and Specificity"
     ],
-    "secondary": []
+    "secondary": [
+      "Likelihood Functions",
+      "ROC Curve",
+      "COVID-19",
+      "COVID-19 Testing"
+    ]
   },
   "candidate_groups": [
     {
       "label": "primários",
       "concepts": [
         {
-          "concept": "Enunciado",
+          "concept": "Sensitivity and Specificity",
           "candidates": [
             {
-              "id": "DDCS032482",
-              "term": "Recursos Renováveis",
-              "term_en": "Renewable Resources",
-              "categoria": "Saúde Pública",
+              "id": "D012680",
+              "term": "Sensibilidade e Especificidade",
+              "term_en": "Sensitivity and Specificity",
+              "scope": "Medidas de classificação binária para avaliar resultados de exames. Sensibilidade ou taxa de recall é a proporção de verdadeiros positivos. Especificidade é a probabilidade do teste determinar correta",
+              "categoria": "Técnicas e Equipamentos Analíticos",
               "arvore": [
-                "SP4.606.837.868"
+                "E05.318.370.800",
+                "E05.318.740.872"
               ]
             },
             {
-              "id": "DDCS051583",
-              "term": "Varredoras",
-              "term_en": "Sweepers",
-              "categoria": "Saúde Pública",
+              "id": "D011237",
+              "term": "Valor Preditivo dos Testes",
+              "term_en": "Predictive Value of Tests",
+              "scope": "O valor preditivo de um teste diagnóstico é a probabilidade de um resultado positivo (ou negativo) corresponder a um indivíduo doente (ou não doente). Depende da sensibilidade e especificidade do test",
+              "categoria": "Técnicas e Equipamentos Analíticos",
               "arvore": [
-                "SP4.895.987.506.871"
+                "E05.318.370.800.650",
+                "N05.715.360.325.700.640"
               ]
             },
             {
-              "id": "DDCS051857",
-              "term": "Utilização de Recursos Locais",
-              "term_en": "Local Resources Uses",
-              "categoria": "Saúde Pública",
+              "id": "D013045",
+              "term": "Especificidade da Espécie",
+              "term_en": "Species Specificity",
+              "scope": "Restrição de um comportamento característico, estrutura anatômica ou sistema físico, como resposta imunológica, resposta metabólica ou gene ou variante gênico dos membros de uma espécie. Refere-se às ",
+              "categoria": "Fenômenos Biológicos",
               "arvore": [
-                "SP4.303.766"
+                "G16.824"
               ]
             },
             {
-              "id": "DDCS051642",
-              "term": "Leito Fixo",
-              "term_en": "Fixed Bed",
-              "categoria": "Saúde Pública",
+              "id": "D000918",
+              "term": "Especificidade de Anticorpos",
+              "term_en": "Antibody Specificity",
+              "scope": "Propriedade dos anticorpos que os capacita a reagir com alguns EPITOPOS e não com outros. A especificidade é dependente da composição química, de forças físicas e da estrutura molecular no sítio de li",
+              "categoria": "Fenômenos Biológicos",
               "arvore": [
-                "SP4.606.806.945.750.207.899.660"
+                "G12.100"
               ]
             },
             {
-              "id": "DDCS025556",
-              "term": "Tanques de Concreto",
-              "term_en": "Reinforced Concrete Tanks",
-              "categoria": "Saúde Pública",
+              "id": "D009928",
+              "term": "Especificidade de Órgãos",
+              "term_en": "Organ Specificity",
+              "scope": "Característica restrita a um órgão em particular do corpo, como tipo de célula, resposta metabólica ou expressão de uma proteína ou antígeno em particular.",
+              "categoria": "Fenômenos Biológicos",
               "arvore": [
-                "SP4.895.141.089.248.433.561"
+                "G07.650"
               ]
             }
           ]
         },
         {
-          "concept": "Na pandemia da COVID",
+          "concept": "Odds Ratio",
           "candidates": [
             {
-              "id": "D058873",
-              "term": "Pandemias",
-              "term_en": "Pandemics",
-              "scope": "Epidemia de doença infecciosa que se disseminou para vários países, com frequência mais de um continente e que afeta geralmente um grande número de pessoas.",
-              "categoria": "Saúde",
+              "id": "D047628",
+              "term": "Receptor alfa de Estrogênio",
+              "term_en": "Estrogen Receptor alpha",
+              "scope": "Um dos RECEPTORES DE ESTROGÊNIO que tem grande afinidade pelo ESTRADIOL. Sua expressão e função diferem e, de certa forma, são opostos às do RECEPTOR BETA DE ESTROGÊNIO.",
+              "categoria": "Compostos Químicos e Drogas",
               "arvore": [
-                "N06.850.290.200.600"
+                "D12.776.826.750.350.174"
               ]
             },
             {
-              "id": "D000096763",
-              "term": "Preparação para Pandemia",
-              "term_en": "Pandemic Preparedness",
-              "scope": "Estratégias traçadas para o atendimento de vítimas e a manutenção dos serviços em uma PANDEMIA. O plano de preparação para pandemias inclui o FORTALECIMENTO INSTITUCIONAL em infra-estruturas flexíveis",
-              "categoria": "Saúde",
+              "id": "D015689",
+              "term": "Proteína Oncogênica p21(ras)",
+              "term_en": "Oncogene Protein p21(ras)",
+              "scope": "Proteína transformante codificada por oncogenes ras. Mutações de ponto no gene ras celular (c-ras) também podem resultar em uma proteína p21 mutante que pode transformar células de mamíferos. A proteí",
+              "categoria": "Compostos Químicos e Drogas",
               "arvore": [
-                "N06.230.100.035.250",
-                "N06.850.780.200.625"
+                "D08.811.277.040.330.300.400.500.300",
+                "D12.776.157.325.515.500.300"
               ]
             },
             {
-              "id": "D004196",
-              "term": "Surtos de Doenças",
-              "term_en": "Disease Outbreaks",
-              "scope": "Aumento repentino na incidência de uma doença. O conceito inclui EPIDEMIAS e PANDEMIAS.",
-              "categoria": "Saúde",
+              "id": "D055452",
+              "term": "Fator 1 de Diferenciação de Crescimento",
+              "term_en": "Growth Differentiation Factor 1",
+              "scope": "Fator de diferenciação do crescimento que desempenha um papel na gênese da assimetria esquerda-direita durante o desenvolvimento dos vertebrados. Evidências desta função são vistas em CAMUNDONGOS, em ",
+              "categoria": "Compostos Químicos e Drogas",
               "arvore": [
-                "N06.850.290",
-                "SP5.312.507.830.899"
+                "D12.644.276.954.300.100",
+                "D12.644.276.954.550.100"
               ]
             },
+            {
+              "id": "D047990",
+              "term": "Fator 1 Associado a Receptor de TNF",
+              "term_en": "TNF Receptor-Associated Factor 1",
+              "scope": "Fator associado a receptor do fator de transdução de sinal de necrose tumoral envolvido na regulação da retroalimentação do receptor de TNF. É estruturalmente semelhante ao FATOR 2 ASSOCIADO A RECEPTO",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.644.360.024.500.500",
+                "D12.776.157.057.500.500"
+              ]
+            },
+            {
+              "id": "D000097983",
+              "term": "Receptor ERRalfa Relacionado ao Estrogênio",
+              "term_en": "ERRalpha Estrogen-Related Receptor",
+              "scope": "Receptor nuclear órfão que pertence à subfamília ERR. É altamente expresso em tecidos com elevada capacidade metabólica oxidativa.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.826.750.350.087",
+                "D12.776.930.778.350.500"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "COVID-19 Testing",
+          "candidates": [
+            {
+              "id": "D000086742",
+              "term": "Teste para COVID-19",
+              "term_en": "COVID-19 Testing",
+              "scope": "Diagnóstico de COVID-19 analisando fluidos corporais ou tecidos para a presença de anticorpos COVID-19, antígenos SARS-COV-2 ou o RNA VIRAL de SARS-COV-2.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.225.312",
+                "E05.200.312"
+              ]
+            },
+            {
+              "id": "D000087123",
+              "term": "Teste de Ácido Nucleico para COVID-19",
+              "term_en": "COVID-19 Nucleic Acid Testing",
+              "scope": "Diagnóstico de COVID-19 através da análise de fluidos ou tecidos corporais para a presença do RNA VIRAL de SARS-CoV-2.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.225.312.500",
+                "E05.200.312.500"
+              ]
+            },
+            {
+              "id": "D000087124",
+              "term": "Teste Sorológico para COVID-19",
+              "term_en": "COVID-19 Serological Testing",
+              "scope": "Diagnóstico de COVID-19 por meio da análise de fluidos ou tecidos corporais para a presença de anticorpos específicos para SARS-COV-2 ou seus antígenos.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.225.312.250",
+                "E01.370.225.812.735.258"
+              ]
+            },
+            {
+              "id": "D000082922",
+              "term": "Teste de HIV",
+              "term_en": "HIV Testing",
+              "scope": "Diagnóstico de INFECÇÕES POR HIV por análise de fluidos corporais ou tecidos para a presença de ANTICORPOS HIV; ANTÍGENOS DE HIV; ou o RNA VIRAL do HIV.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.225.875.408",
+                "E05.200.875.408"
+              ]
+            },
+            {
+              "id": "D000084782",
+              "term": "Unidades de Diagnóstico Rápido",
+              "term_en": "Quick Diagnosis Units",
+              "scope": "Alternativas à internação convencional para o diagnóstico de suspeitas de doenças graves, permitindo procedimentos diagnósticos coordenados.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N02.278.388.720"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "COVID-19",
+          "candidates": [
             {
               "id": "D000086382",
               "term": "COVID-19",
@@ -162,178 +352,316 @@
               ]
             },
             {
-              "id": "D000085762",
-              "term": "Distanciamento Físico",
-              "term_en": "Physical Distancing",
-              "scope": "Mantutenção do espaçamento físico recomendado entre si e os outros.",
-              "categoria": "Saúde",
+              "id": "D003333",
+              "term": "Infecções por Coronaviridae",
+              "term_en": "Coronaviridae Infections",
+              "scope": "As doenças virais causadas por CORONAVIRIDAE.",
+              "categoria": "Doenças",
               "arvore": [
-                "N06.850.780.200.688"
+                "C01.925.782.600.550"
+              ]
+            },
+            {
+              "id": "D018352",
+              "term": "Infecções por Coronavirus",
+              "term_en": "Coronavirus Infections",
+              "scope": "Doenças virais causadas pelo gênero CORONAVIRUS. Algumas das condições incluem a enterite transmissível dos perus (ENTERITE TRANSMISSÍVEL DOS PERUS, PERITONITE INFECCIOSA FELINA e a GASTROENTERITE SUÍ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.925.782.600.550.200"
+              ]
+            },
+            {
+              "id": "D000094024",
+              "term": "Síndrome de Pós-COVID-19 Aguda",
+              "term_en": "Post-Acute COVID-19 Syndrome",
+              "scope": "Fase pós-aguda da infecção pelo vírus causador da COVID-19, incluindo sinais, sintomas e condições que continuam ou se desenvolvem depois da infecção aguda por SARS-CoV-2. FADIGA, DISPNEIA e PERDA DE ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.748.610.763.500.500",
+                "C01.925.705.500.500"
               ]
             }
           ]
         },
         {
-          "concept": "ainda com casos detectados neste ano de 2023",
+          "concept": "ROC Curve",
           "candidates": [
             {
-              "id": "D000094143",
-              "term": "Relatos de Casos como Assunto",
-              "term_en": "Case Reports as Topic",
-              "scope": "Apresentações clínicas que podem ser seguidas por estudos de avaliação que eventualmente levam a um diagnóstico.",
-              "categoria": "Ciência da Informação",
-              "arvore": [
-                "L01.559.423.906.654.500"
-              ]
-            },
-            {
-              "id": "D058345",
-              "term": "Infecções Assintomáticas",
-              "term_en": "Asymptomatic Infections",
-              "scope": "Infecções que não exibem sintomas.",
-              "categoria": "Doenças",
-              "arvore": [
-                "C01.125",
-                "C23.550.291.187.500"
-              ]
-            },
-            {
-              "id": "D012900",
-              "term": "Vacina Antivariólica",
-              "term_en": "Smallpox Vaccine",
-              "scope": "Vacina de VACCINIA VIRUS usada para imunização contra a VARÍOLA. Tem sido ultimamente recomendada apenas para trabalhadores de laboratório expostos ao VÍRUS DA VARÍOLA. Certos países continuam a vacin",
+              "id": "D000075024",
+              "term": "Proteína de Ligação a GTP rhoC",
+              "term_en": "rhoC GTP-Binding Protein",
+              "scope": "Proteína rho de ligação a GTP que é prenilada (ver PRENILAÇÃO DE PROTEÍNAS) em seu domínio C-terminal e transita entre o citoplasma e a membrana plasmática, conferindo ligação entre as vias de sinaliz",
               "categoria": "Compostos Químicos e Drogas",
               "arvore": [
-                "D20.215.894.899.859"
+                "D08.811.277.040.330.300.400.700.650",
+                "D12.776.157.325.515.700.650"
               ]
             },
             {
-              "id": "D058070",
-              "term": "Doenças Assintomáticas",
-              "term_en": "Asymptomatic Diseases",
-              "scope": "Doenças que não exibem sintomas.",
-              "categoria": "Doenças",
+              "id": "D000071999",
+              "term": "Proteína A4 de Ligação a Cálcio da Família S100",
+              "term_en": "S100 Calcium-Binding Protein A4",
+              "scope": "Proteína S100 caracterizada por quatro eixos em hélice que formam os MOTIVOS EF HAND N- e C-terminais. Atuam como homodímeros e interagem com proteínas de sinalização intra- e extracelulares. A ativid",
+              "categoria": "Compostos Químicos e Drogas",
               "arvore": [
-                "C23.550.291.187"
+                "D12.776.157.125.750.813"
               ]
             },
             {
-              "id": "D002363",
-              "term": "Relatos de Casos",
-              "term_en": "Case Reports",
-              "scope": "Apresentações clínicas que podem ser seguidas pelos estudos avaliativos que conduzem eventualmente a um diagnóstico.",
-              "categoria": "V",
+              "id": "D054421",
+              "term": "Quimiocina CCL21",
+              "term_en": "Chemokine CCL21",
+              "scope": "Quimiocina tipo CC com especificidade para os RECEPTORES CCR7. Possui atividade para as CÉLULAS DENDRÍTICAS e LINFÓCITOS T.",
+              "categoria": "Compostos Químicos e Drogas",
               "arvore": [
-                "V03.100"
+                "D12.644.276.374.200.110.890",
+                "D12.776.467.374.200.110.890"
+              ]
+            },
+            {
+              "id": "D054400",
+              "term": "Receptores CCR7",
+              "term_en": "Receptors, CCR7",
+              "scope": "Receptores CCR com especificidade para QUIMIOCINA CCL19 e QUIMIOCINA CCL21. São expressados em níveis elevados em LINFÓCITOS T, LINFÓCITOS B e CÉLULAS DENDRÍTICAS.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.543.750.695.160.150.700",
+                "D12.776.543.750.705.852.125.150.700"
+              ]
+            },
+            {
+              "id": "D000099207",
+              "term": "Antígeno SS-A",
+              "term_en": "SS-A Antigen",
+              "scope": "Autoantígeno ribonucleoproteico citoplasmático implicado na proteção do RNA nascente. É um alvo de AUTOANTICORPOS em pacientes com SÍNDROME DE SJOGREN.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.157.725.500.910",
+                "D12.776.664.962.500.910"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Likelihood Functions",
+          "candidates": [
+            {
+              "id": "D016013",
+              "term": "Funções Verossimilhança",
+              "term_en": "Likelihood Functions",
+              "scope": "Funções formuladas a partir de um modelo estatístico e um conjunto de dados observados que dão a probabilidade desses dados para diversos valores dos parâmetros desconhecidos do modelo. Esses valores ",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.740.500.475",
+                "E05.318.740.600.400"
               ]
             }
           ]
         }
       ]
-    },
-    {
-      "label": "secundários",
-      "concepts": []
     }
   ],
   "debug_trace": {
     "themes": {
       "primary": [
-        "Enunciado",
-        "Na pandemia da COVID",
-        "ainda com casos detectados neste ano de 2023"
+        "Odds Ratio",
+        "Sensitivity and Specificity"
       ],
-      "secondary": []
+      "secondary": [
+        "Likelihood Functions",
+        "ROC Curve",
+        "COVID-19",
+        "COVID-19 Testing"
+      ]
     },
     "candidate_groups": [
       {
         "label": "primários",
         "concepts": [
           {
-            "concept": "Enunciado",
+            "concept": "Sensitivity and Specificity",
             "candidates": [
               {
-                "id": "DDCS032482",
-                "term": "Recursos Renováveis",
-                "term_en": "Renewable Resources",
-                "categoria": "Saúde Pública",
+                "id": "D012680",
+                "term": "Sensibilidade e Especificidade",
+                "term_en": "Sensitivity and Specificity",
+                "scope": "Medidas de classificação binária para avaliar resultados de exames. Sensibilidade ou taxa de recall é a proporção de verdadeiros positivos. Especificidade é a probabilidade do teste determinar correta",
+                "categoria": "Técnicas e Equipamentos Analíticos",
                 "arvore": [
-                  "SP4.606.837.868"
+                  "E05.318.370.800",
+                  "E05.318.740.872"
                 ]
               },
               {
-                "id": "DDCS051583",
-                "term": "Varredoras",
-                "term_en": "Sweepers",
-                "categoria": "Saúde Pública",
+                "id": "D011237",
+                "term": "Valor Preditivo dos Testes",
+                "term_en": "Predictive Value of Tests",
+                "scope": "O valor preditivo de um teste diagnóstico é a probabilidade de um resultado positivo (ou negativo) corresponder a um indivíduo doente (ou não doente). Depende da sensibilidade e especificidade do test",
+                "categoria": "Técnicas e Equipamentos Analíticos",
                 "arvore": [
-                  "SP4.895.987.506.871"
+                  "E05.318.370.800.650",
+                  "N05.715.360.325.700.640"
                 ]
               },
               {
-                "id": "DDCS051857",
-                "term": "Utilização de Recursos Locais",
-                "term_en": "Local Resources Uses",
-                "categoria": "Saúde Pública",
+                "id": "D013045",
+                "term": "Especificidade da Espécie",
+                "term_en": "Species Specificity",
+                "scope": "Restrição de um comportamento característico, estrutura anatômica ou sistema físico, como resposta imunológica, resposta metabólica ou gene ou variante gênico dos membros de uma espécie. Refere-se às ",
+                "categoria": "Fenômenos Biológicos",
                 "arvore": [
-                  "SP4.303.766"
+                  "G16.824"
                 ]
               },
               {
-                "id": "DDCS051642",
-                "term": "Leito Fixo",
-                "term_en": "Fixed Bed",
-                "categoria": "Saúde Pública",
+                "id": "D000918",
+                "term": "Especificidade de Anticorpos",
+                "term_en": "Antibody Specificity",
+                "scope": "Propriedade dos anticorpos que os capacita a reagir com alguns EPITOPOS e não com outros. A especificidade é dependente da composição química, de forças físicas e da estrutura molecular no sítio de li",
+                "categoria": "Fenômenos Biológicos",
                 "arvore": [
-                  "SP4.606.806.945.750.207.899.660"
+                  "G12.100"
                 ]
               },
               {
-                "id": "DDCS025556",
-                "term": "Tanques de Concreto",
-                "term_en": "Reinforced Concrete Tanks",
-                "categoria": "Saúde Pública",
+                "id": "D009928",
+                "term": "Especificidade de Órgãos",
+                "term_en": "Organ Specificity",
+                "scope": "Característica restrita a um órgão em particular do corpo, como tipo de célula, resposta metabólica ou expressão de uma proteína ou antígeno em particular.",
+                "categoria": "Fenômenos Biológicos",
                 "arvore": [
-                  "SP4.895.141.089.248.433.561"
+                  "G07.650"
                 ]
               }
             ]
           },
           {
-            "concept": "Na pandemia da COVID",
+            "concept": "Odds Ratio",
             "candidates": [
               {
-                "id": "D058873",
-                "term": "Pandemias",
-                "term_en": "Pandemics",
-                "scope": "Epidemia de doença infecciosa que se disseminou para vários países, com frequência mais de um continente e que afeta geralmente um grande número de pessoas.",
-                "categoria": "Saúde",
+                "id": "D047628",
+                "term": "Receptor alfa de Estrogênio",
+                "term_en": "Estrogen Receptor alpha",
+                "scope": "Um dos RECEPTORES DE ESTROGÊNIO que tem grande afinidade pelo ESTRADIOL. Sua expressão e função diferem e, de certa forma, são opostos às do RECEPTOR BETA DE ESTROGÊNIO.",
+                "categoria": "Compostos Químicos e Drogas",
                 "arvore": [
-                  "N06.850.290.200.600"
+                  "D12.776.826.750.350.174"
                 ]
               },
               {
-                "id": "D000096763",
-                "term": "Preparação para Pandemia",
-                "term_en": "Pandemic Preparedness",
-                "scope": "Estratégias traçadas para o atendimento de vítimas e a manutenção dos serviços em uma PANDEMIA. O plano de preparação para pandemias inclui o FORTALECIMENTO INSTITUCIONAL em infra-estruturas flexíveis",
-                "categoria": "Saúde",
+                "id": "D015689",
+                "term": "Proteína Oncogênica p21(ras)",
+                "term_en": "Oncogene Protein p21(ras)",
+                "scope": "Proteína transformante codificada por oncogenes ras. Mutações de ponto no gene ras celular (c-ras) também podem resultar em uma proteína p21 mutante que pode transformar células de mamíferos. A proteí",
+                "categoria": "Compostos Químicos e Drogas",
                 "arvore": [
-                  "N06.230.100.035.250",
-                  "N06.850.780.200.625"
+                  "D08.811.277.040.330.300.400.500.300",
+                  "D12.776.157.325.515.500.300"
                 ]
               },
               {
-                "id": "D004196",
-                "term": "Surtos de Doenças",
-                "term_en": "Disease Outbreaks",
-                "scope": "Aumento repentino na incidência de uma doença. O conceito inclui EPIDEMIAS e PANDEMIAS.",
-                "categoria": "Saúde",
+                "id": "D055452",
+                "term": "Fator 1 de Diferenciação de Crescimento",
+                "term_en": "Growth Differentiation Factor 1",
+                "scope": "Fator de diferenciação do crescimento que desempenha um papel na gênese da assimetria esquerda-direita durante o desenvolvimento dos vertebrados. Evidências desta função são vistas em CAMUNDONGOS, em ",
+                "categoria": "Compostos Químicos e Drogas",
                 "arvore": [
-                  "N06.850.290",
-                  "SP5.312.507.830.899"
+                  "D12.644.276.954.300.100",
+                  "D12.644.276.954.550.100"
                 ]
               },
+              {
+                "id": "D047990",
+                "term": "Fator 1 Associado a Receptor de TNF",
+                "term_en": "TNF Receptor-Associated Factor 1",
+                "scope": "Fator associado a receptor do fator de transdução de sinal de necrose tumoral envolvido na regulação da retroalimentação do receptor de TNF. É estruturalmente semelhante ao FATOR 2 ASSOCIADO A RECEPTO",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.644.360.024.500.500",
+                  "D12.776.157.057.500.500"
+                ]
+              },
+              {
+                "id": "D000097983",
+                "term": "Receptor ERRalfa Relacionado ao Estrogênio",
+                "term_en": "ERRalpha Estrogen-Related Receptor",
+                "scope": "Receptor nuclear órfão que pertence à subfamília ERR. É altamente expresso em tecidos com elevada capacidade metabólica oxidativa.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.826.750.350.087",
+                  "D12.776.930.778.350.500"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "COVID-19 Testing",
+            "candidates": [
+              {
+                "id": "D000086742",
+                "term": "Teste para COVID-19",
+                "term_en": "COVID-19 Testing",
+                "scope": "Diagnóstico de COVID-19 analisando fluidos corporais ou tecidos para a presença de anticorpos COVID-19, antígenos SARS-COV-2 ou o RNA VIRAL de SARS-COV-2.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.225.312",
+                  "E05.200.312"
+                ]
+              },
+              {
+                "id": "D000087123",
+                "term": "Teste de Ácido Nucleico para COVID-19",
+                "term_en": "COVID-19 Nucleic Acid Testing",
+                "scope": "Diagnóstico de COVID-19 através da análise de fluidos ou tecidos corporais para a presença do RNA VIRAL de SARS-CoV-2.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.225.312.500",
+                  "E05.200.312.500"
+                ]
+              },
+              {
+                "id": "D000087124",
+                "term": "Teste Sorológico para COVID-19",
+                "term_en": "COVID-19 Serological Testing",
+                "scope": "Diagnóstico de COVID-19 por meio da análise de fluidos ou tecidos corporais para a presença de anticorpos específicos para SARS-COV-2 ou seus antígenos.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.225.312.250",
+                  "E01.370.225.812.735.258"
+                ]
+              },
+              {
+                "id": "D000082922",
+                "term": "Teste de HIV",
+                "term_en": "HIV Testing",
+                "scope": "Diagnóstico de INFECÇÕES POR HIV por análise de fluidos corporais ou tecidos para a presença de ANTICORPOS HIV; ANTÍGENOS DE HIV; ou o RNA VIRAL do HIV.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.225.875.408",
+                  "E05.200.875.408"
+                ]
+              },
+              {
+                "id": "D000084782",
+                "term": "Unidades de Diagnóstico Rápido",
+                "term_en": "Quick Diagnosis Units",
+                "scope": "Alternativas à internação convencional para o diagnóstico de suspeitas de doenças graves, permitindo procedimentos diagnósticos coordenados.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N02.278.388.720"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "COVID-19",
+            "candidates": [
               {
                 "id": "D000086382",
                 "term": "COVID-19",
@@ -346,99 +674,144 @@
                 ]
               },
               {
-                "id": "D000085762",
-                "term": "Distanciamento Físico",
-                "term_en": "Physical Distancing",
-                "scope": "Mantutenção do espaçamento físico recomendado entre si e os outros.",
-                "categoria": "Saúde",
+                "id": "D003333",
+                "term": "Infecções por Coronaviridae",
+                "term_en": "Coronaviridae Infections",
+                "scope": "As doenças virais causadas por CORONAVIRIDAE.",
+                "categoria": "Doenças",
                 "arvore": [
-                  "N06.850.780.200.688"
+                  "C01.925.782.600.550"
+                ]
+              },
+              {
+                "id": "D018352",
+                "term": "Infecções por Coronavirus",
+                "term_en": "Coronavirus Infections",
+                "scope": "Doenças virais causadas pelo gênero CORONAVIRUS. Algumas das condições incluem a enterite transmissível dos perus (ENTERITE TRANSMISSÍVEL DOS PERUS, PERITONITE INFECCIOSA FELINA e a GASTROENTERITE SUÍ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.925.782.600.550.200"
+                ]
+              },
+              {
+                "id": "D000094024",
+                "term": "Síndrome de Pós-COVID-19 Aguda",
+                "term_en": "Post-Acute COVID-19 Syndrome",
+                "scope": "Fase pós-aguda da infecção pelo vírus causador da COVID-19, incluindo sinais, sintomas e condições que continuam ou se desenvolvem depois da infecção aguda por SARS-CoV-2. FADIGA, DISPNEIA e PERDA DE ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.748.610.763.500.500",
+                  "C01.925.705.500.500"
                 ]
               }
             ]
           },
           {
-            "concept": "ainda com casos detectados neste ano de 2023",
+            "concept": "ROC Curve",
             "candidates": [
               {
-                "id": "D000094143",
-                "term": "Relatos de Casos como Assunto",
-                "term_en": "Case Reports as Topic",
-                "scope": "Apresentações clínicas que podem ser seguidas por estudos de avaliação que eventualmente levam a um diagnóstico.",
-                "categoria": "Ciência da Informação",
-                "arvore": [
-                  "L01.559.423.906.654.500"
-                ]
-              },
-              {
-                "id": "D058345",
-                "term": "Infecções Assintomáticas",
-                "term_en": "Asymptomatic Infections",
-                "scope": "Infecções que não exibem sintomas.",
-                "categoria": "Doenças",
-                "arvore": [
-                  "C01.125",
-                  "C23.550.291.187.500"
-                ]
-              },
-              {
-                "id": "D012900",
-                "term": "Vacina Antivariólica",
-                "term_en": "Smallpox Vaccine",
-                "scope": "Vacina de VACCINIA VIRUS usada para imunização contra a VARÍOLA. Tem sido ultimamente recomendada apenas para trabalhadores de laboratório expostos ao VÍRUS DA VARÍOLA. Certos países continuam a vacin",
+                "id": "D000075024",
+                "term": "Proteína de Ligação a GTP rhoC",
+                "term_en": "rhoC GTP-Binding Protein",
+                "scope": "Proteína rho de ligação a GTP que é prenilada (ver PRENILAÇÃO DE PROTEÍNAS) em seu domínio C-terminal e transita entre o citoplasma e a membrana plasmática, conferindo ligação entre as vias de sinaliz",
                 "categoria": "Compostos Químicos e Drogas",
                 "arvore": [
-                  "D20.215.894.899.859"
+                  "D08.811.277.040.330.300.400.700.650",
+                  "D12.776.157.325.515.700.650"
                 ]
               },
               {
-                "id": "D058070",
-                "term": "Doenças Assintomáticas",
-                "term_en": "Asymptomatic Diseases",
-                "scope": "Doenças que não exibem sintomas.",
-                "categoria": "Doenças",
+                "id": "D000071999",
+                "term": "Proteína A4 de Ligação a Cálcio da Família S100",
+                "term_en": "S100 Calcium-Binding Protein A4",
+                "scope": "Proteína S100 caracterizada por quatro eixos em hélice que formam os MOTIVOS EF HAND N- e C-terminais. Atuam como homodímeros e interagem com proteínas de sinalização intra- e extracelulares. A ativid",
+                "categoria": "Compostos Químicos e Drogas",
                 "arvore": [
-                  "C23.550.291.187"
+                  "D12.776.157.125.750.813"
                 ]
               },
               {
-                "id": "D002363",
-                "term": "Relatos de Casos",
-                "term_en": "Case Reports",
-                "scope": "Apresentações clínicas que podem ser seguidas pelos estudos avaliativos que conduzem eventualmente a um diagnóstico.",
-                "categoria": "V",
+                "id": "D054421",
+                "term": "Quimiocina CCL21",
+                "term_en": "Chemokine CCL21",
+                "scope": "Quimiocina tipo CC com especificidade para os RECEPTORES CCR7. Possui atividade para as CÉLULAS DENDRÍTICAS e LINFÓCITOS T.",
+                "categoria": "Compostos Químicos e Drogas",
                 "arvore": [
-                  "V03.100"
+                  "D12.644.276.374.200.110.890",
+                  "D12.776.467.374.200.110.890"
+                ]
+              },
+              {
+                "id": "D054400",
+                "term": "Receptores CCR7",
+                "term_en": "Receptors, CCR7",
+                "scope": "Receptores CCR com especificidade para QUIMIOCINA CCL19 e QUIMIOCINA CCL21. São expressados em níveis elevados em LINFÓCITOS T, LINFÓCITOS B e CÉLULAS DENDRÍTICAS.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.543.750.695.160.150.700",
+                  "D12.776.543.750.705.852.125.150.700"
+                ]
+              },
+              {
+                "id": "D000099207",
+                "term": "Antígeno SS-A",
+                "term_en": "SS-A Antigen",
+                "scope": "Autoantígeno ribonucleoproteico citoplasmático implicado na proteção do RNA nascente. É um alvo de AUTOANTICORPOS em pacientes com SÍNDROME DE SJOGREN.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.157.725.500.910",
+                  "D12.776.664.962.500.910"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Likelihood Functions",
+            "candidates": [
+              {
+                "id": "D016013",
+                "term": "Funções Verossimilhança",
+                "term_en": "Likelihood Functions",
+                "scope": "Funções formuladas a partir de um modelo estatístico e um conjunto de dados observados que dão a probabilidade desses dados para diversos valores dos parâmetros desconhecidos do modelo. Esses valores ",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.740.500.475",
+                  "E05.318.740.600.400"
                 ]
               }
             ]
           }
         ]
-      },
-      {
-        "label": "secundários",
-        "concepts": []
       }
     ],
     "selected_candidates": {
       "primary": [
         {
+          "id": "D012680",
+          "term": "Sensibilidade e Especificidade"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D000086742",
+          "term": "Teste para COVID-19"
+        },
+        {
           "id": "D000086382",
           "term": "COVID-19"
         },
         {
-          "id": "D058873",
-          "term": "Pandemias"
+          "id": "D016013",
+          "term": "Funções Verossimilhança"
         }
-      ],
-      "secondary": []
+      ]
     }
   },
   "stats": {
-    "primary_concepts": 3,
-    "secondary_concepts": 0,
-    "total_candidates": 15,
-    "final_primary": 2,
-    "final_secondary": 0
+    "primary_concepts": 2,
+    "secondary_concepts": 4,
+    "total_candidates": 25,
+    "final_primary": 1,
+    "final_secondary": 3
   }
 }

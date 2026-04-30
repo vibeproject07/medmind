@@ -1,138 +1,315 @@
 {
   "result": {
-    "decs_primary": [],
-    "decs_secondary": []
+    "decs_primary": [
+      {
+        "id": "D005194",
+        "term": "Medicina de Família e Comunidade",
+        "name_en": "Family Practice",
+        "scope_note": "Especialidade médica voltada para a provisão contínua e integrada de cuidados primários de saúde para toda a família.",
+        "tree_ids": [
+          "H02.403.340.500"
+        ],
+        "hierarchy_path": "Disciplinas e Ocupações › H02.403.340.500",
+        "parents": [
+          {
+            "id": "D058006",
+            "term": "Medicina Geral"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D012944",
+        "term": "Apoio Social",
+        "name_en": "Social Support",
+        "scope_note": "Sistemas de apoio que fornecem assistência e encorajamento para os indivíduos com inaptidão física ou emocional para que eles possam melhor superá-la. O apoio social informal é normalmente provido por amigos, parentes ou semelhantes, enquanto o apoio formal, como o APOIO COMUNITÁRIO, é oferecido por igrejas, grupos etc.",
+        "tree_ids": [
+          "I01.880.853.500.600"
+        ],
+        "hierarchy_path": "Antropologia, Educação, Sociologia › I01.880.853.500.600",
+        "parents": [
+          {
+            "id": "D012931",
+            "term": "Meio Social"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000091443",
+            "term": "Apoio Comunitário"
+          },
+          {
+            "id": "D000092802",
+            "term": "Apoio Familiar"
+          },
+          {
+            "id": "D000099076",
+            "term": "Prescrição Social"
+          },
+          {
+            "id": "D000072858",
+            "term": "Sistemas de Apoio Psicossocial"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D011320",
+        "term": "Atenção Primária à Saúde",
+        "name_en": "Primary Health Care",
+        "scope_note": "É a assistência sanitária essencial baseada em métodos e tecnologias práticas, cientificamente fundados e socialmente aceitáveis, postos ao alcance de todos os indivíduos e famílias da comunidade mediante a sua plena participação e a um custo que a comunidade e o país possam suportar, em todas e cada etapa do seu desenvolvimento, com um espírito de autorresponsabilidade e autodeterminação. (Declaração de Alma-Ata - Organização Pan-Americana da Saúde, 2003)",
+        "tree_ids": [
+          "N04.590.233.727",
+          "SP2.630.121"
+        ],
+        "hierarchy_path": "Saúde › N04.590.233.727",
+        "parents": [
+          {
+            "id": "D003191",
+            "term": "Assistência Integral à Saúde"
+          },
+          {
+            "id": "DDCS017209",
+            "term": "Níveis de Atenção à Saúde"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000078383",
+            "term": "Objeção de Consciência"
+          },
+          {
+            "id": "D000359",
+            "term": "Assistência ao Convalescente"
+          },
+          {
+            "id": "D000069341",
+            "term": "Cuidado Transicional"
+          },
+          {
+            "id": "D000073935",
+            "term": "Medicina Narrativa"
+          },
+          {
+            "id": "D010351",
+            "term": "Alta do Paciente"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D012963",
+        "term": "Técnicas Sociométricas",
+        "name_en": "Sociometric Techniques",
+        "scope_note": "Métodos para avaliar quantitativamente e medir as relações interpessoais e grupais.",
+        "tree_ids": [
+          "I01.880.866",
+          "SP3.311.900.913"
+        ],
+        "hierarchy_path": "Antropologia, Educação, Sociologia › I01.880.866",
+        "parents": [
+          {
+            "id": "D012961",
+            "term": "Sociologia"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000083482",
+            "term": "Análise de Rede Social"
+          },
+          {
+            "id": "DDCS060346",
+            "term": "Análise Institucional"
+          }
+        ],
+        "role": "secondary"
+      }
+    ]
   },
   "themes_identified": {
     "primary": [
-      "Enunciado",
-      "Observe a figura abaixo e assinale a alternativa correta quanto a esse instrumento de abordagem familiar",
-      "Alternativa A"
+      "Family Practice",
+      "Family Relations"
     ],
-    "secondary": []
+    "secondary": [
+      "Social Support",
+      "Sociometric Techniques",
+      "Pedigree",
+      "Primary Health Care"
+    ]
   },
   "candidate_groups": [
     {
       "label": "primários",
       "concepts": [
         {
-          "concept": "Enunciado",
+          "concept": "Family Practice",
           "candidates": [
             {
-              "id": "DDCS032482",
-              "term": "Recursos Renováveis",
-              "term_en": "Renewable Resources",
-              "categoria": "Saúde Pública",
+              "id": "D005194",
+              "term": "Medicina de Família e Comunidade",
+              "term_en": "Family Practice",
+              "scope": "Especialidade médica voltada para a provisão contínua e integrada de cuidados primários de saúde para toda a família.",
+              "categoria": "Disciplinas e Ocupações",
               "arvore": [
-                "SP4.606.837.868"
+                "H02.403.340.500"
               ]
             },
             {
-              "id": "DDCS051583",
-              "term": "Varredoras",
-              "term_en": "Sweepers",
-              "categoria": "Saúde Pública",
+              "id": "D010821",
+              "term": "Médicos de Família",
+              "term_en": "Physicians, Family",
+              "scope": "Médicos com atividade voltada para indivíduos, famílias e comunidade e que, independentemente de idade, sexo ou patologia do paciente, propõe-se a prestar-lhe uma assistência integral, contínua e pers",
+              "categoria": "Grupos Identificados",
               "arvore": [
-                "SP4.895.987.506.871"
+                "M01.526.485.810.770",
+                "N02.360.810.770"
               ]
             },
             {
-              "id": "DDCS051857",
-              "term": "Utilização de Recursos Locais",
-              "term_en": "Local Resources Uses",
-              "categoria": "Saúde Pública",
+              "id": "D058005",
+              "term": "Clínicos Gerais",
+              "term_en": "General Practitioners",
+              "scope": "Médicos cuja prática não é restrita a uma área específica da MEDICINA.",
+              "categoria": "Grupos Identificados",
               "arvore": [
-                "SP4.303.766"
+                "M01.526.485.810.485",
+                "N02.360.810.485"
               ]
             },
             {
-              "id": "DDCS051642",
-              "term": "Leito Fixo",
-              "term_en": "Fixed Bed",
-              "categoria": "Saúde Pública",
+              "id": "D064703",
+              "term": "Enfermeiros de Saúde da Família",
+              "term_en": "Family Nurse Practitioners",
+              "scope": "Enfermeiros registrados com graduação em enfermagem que fornecem assistência a pacientes de todas as idades, e que focam seus esforços nas necessidades de saúde de toda a família.",
+              "categoria": "Grupos Identificados",
               "arvore": [
-                "SP4.606.806.945.750.207.899.660"
+                "M01.526.485.650.640.249",
+                "N02.360.650.640.249"
               ]
             },
             {
-              "id": "DDCS025556",
-              "term": "Tanques de Concreto",
-              "term_en": "Reinforced Concrete Tanks",
-              "categoria": "Saúde Pública",
+              "id": "D058006",
+              "term": "Medicina Geral",
+              "term_en": "General Practice",
+              "scope": "Cuidados médicos baseados no paciente prestados transversalmente aos limites de idade, gênero ou especialidade.",
+              "categoria": "Disciplinas e Ocupações",
               "arvore": [
-                "SP4.895.141.089.248.433.561"
+                "H02.403.340"
               ]
             }
           ]
         },
         {
-          "concept": "Alternativa A",
+          "concept": "Family Relations",
           "candidates": [
             {
-              "id": "D034904",
-              "term": "Lamina Tipo A",
-              "term_en": "Lamin Type A",
-              "scope": "Subclasse de lâminas regulada pelo desenvolvimento possuindo um ponto isoelétrico neutro. Dissociam-se das membranas nucleares durante a mitose.",
+              "id": "D000071797",
+              "term": "Butirofilinas",
+              "term_en": "Butyrophilins",
+              "scope": "Família de glicoproteínas de membrana presente em mamíferos caracterizada por DOMÍNIOS DE IMUNOGLOBULINA. Alguns membros também possuem um DOMÍNIO B30.2-SPRY ou DOMÍNIO SPRY. A proteína butirofilina (",
               "categoria": "Compostos Químicos e Drogas",
               "arvore": [
-                "D12.776.660.650.875.500"
+                "D09.400.430.890.114",
+                "D12.776.395.550.114"
               ]
             },
             {
-              "id": "D038202",
-              "term": "Cadeia A de alfa-Cristalina",
-              "term_en": "alpha-Crystallin A Chain",
-              "scope": "Uma das subunidades de alfa-cristalinas. Diferentemente da CADEIA B DE ALFA-CRISTALINA, a expressão da CADEIA A DE ALFA-CRISTALINA está limitada basicamente ao CRISTALINO.",
+              "id": "D000075983",
+              "term": "Nectinas",
+              "term_en": "Nectins",
+              "scope": "Família de moléculas de adesão celular independente de cálcio da superfamília das imunoglobulinas. São expressos pela maioria das células e medeiam as adesões celulares homotípicas e heterotípicas. As",
               "categoria": "Compostos Químicos e Drogas",
               "arvore": [
-                "D12.776.306.366.100.149",
-                "D12.776.580.157.149"
+                "D09.400.430.890.200.123",
+                "D12.776.395.550.200.123"
               ]
             },
             {
-              "id": "D038205",
-              "term": "Cadeia A de beta-Cristalina",
-              "term_en": "beta-Crystallin A Chain",
-              "scope": "Subunidade ácida de beta-cristalina.",
+              "id": "D026502",
+              "term": "Proteínas Relacionadas a Receptor de LDL",
+              "term_en": "LDL-Receptor Related Proteins",
+              "scope": "Família de proteínas que compartilha a semelhança da sequência com o receptor de lipoproteína de baixa densidade (RECEPTORES DE LDL).",
               "categoria": "Compostos Químicos e Drogas",
               "arvore": [
-                "D12.776.306.366.300.100"
+                "D12.776.526",
+                "D12.776.543.750.710.450.500"
               ]
             },
             {
-              "id": "D019925",
-              "term": "Ciclina A",
-              "term_en": "Cyclin A",
-              "scope": "Subtipo de ciclina que possui especificidade para a PROTEÍNA QUINASE CDC2 e QUINASE 2 DEPENDENTE DE CICLINA. Exerce papel na progressão do CICLO CELULAR nas transições entre as fases G1/S e G2/M.",
+              "id": "D055655",
+              "term": "Subfamília K de Receptores Semelhantes a Lectina de Células NK",
+              "term_en": "NK Cell Lectin-Like Receptor Subfamily K",
+              "scope": "Subfamília de receptores semelhantes a lectina de células NK ativadores que regula as respostas imunes à INFECÇÃO e às NEOPLASIAS. Membros desta subfamília geralmente ocorrem como homodímeros.",
               "categoria": "Compostos Químicos e Drogas",
               "arvore": [
-                "D12.644.360.262.100",
-                "D12.776.167.218.100"
+                "D12.776.543.750.705.895.800.910"
               ]
             },
             {
-              "id": "D018514",
-              "term": "Estruturas Vegetais",
-              "term_en": "Plant Structures",
-              "scope": "Partes das plantas, incluindo as SEMENTES.",
-              "categoria": "Anatomia",
+              "id": "D055412",
+              "term": "Fatores de Diferenciação de Crescimento",
+              "term_en": "Growth Differentiation Factors",
+              "scope": "Família de proteínas relacionadas à PROTEÍNAS MORFOGENÉTICAS ÓSSEAS envolvidas primariamente na regulação da DIFERENCIAÇÃO CELULAR.",
+              "categoria": "Compostos Químicos e Drogas",
               "arvore": [
-                "A18"
+                "D12.644.276.954.300",
+                "D12.776.467.942.300"
               ]
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
         {
-          "concept": "Observe a figura abaixo e assinale a alternativa correta quanto a esse instrumento de abordagem familiar",
+          "concept": "Social Support",
           "candidates": [
             {
-              "id": "DDCS059936",
-              "term": "Constelação Familiar",
-              "term_en": "Family Constellation",
-              "scope": "Intervenção em grupo de curto prazo com o objetivo de ajudar pessoas a entender melhor e depois mudar suas experiências conflitantes dentro de um sistema social familiar.",
-              "categoria": "MT",
+              "id": "D012944",
+              "term": "Apoio Social",
+              "term_en": "Social Support",
+              "scope": "Sistemas de apoio que fornecem assistência e encorajamento para os indivíduos com inaptidão física ou emocional para que eles possam melhor superá-la. O apoio social informal é normalmente provido por",
+              "categoria": "Antropologia, Educação, Sociologia",
               "arvore": [
-                "MT3.795.248"
+                "I01.880.853.500.600"
+              ]
+            },
+            {
+              "id": "D000091443",
+              "term": "Apoio Comunitário",
+              "term_en": "Community Support",
+              "scope": "Sistemas de apoio comunitário que podem ser organizados por membros da família extendida, amigos, vizinhos, organizações religiosas, programas comunitários, organizações culturais e étnicas ou outros ",
+              "categoria": "Antropologia, Educação, Sociologia",
+              "arvore": [
+                "I01.880.853.500.600.250",
+                "N02.421.143.212.150"
+              ]
+            },
+            {
+              "id": "D000072858",
+              "term": "Sistemas de Apoio Psicossocial",
+              "term_en": "Psychosocial Support Systems",
+              "scope": "Esforços organizados para identificar problemas psicológicos e sociais em curso de indivíduos, seus parceiros, famílias e cuidadores.",
+              "categoria": "Antropologia, Educação, Sociologia",
+              "arvore": [
+                "I01.880.853.500.600.500"
+              ]
+            },
+            {
+              "id": "D060756",
+              "term": "Rede Social",
+              "term_en": "Social Networking",
+              "scope": "Indivíduos conectados por família, trabalho ou outros interesses. Também inclui a conectividade facilitada por comunicações baseadas em computador.",
+              "categoria": "Ciência da Informação",
+              "arvore": [
+                "L01.143.910"
               ]
             },
             {
@@ -145,177 +322,367 @@
                 "F01.829.263.370.082",
                 "I01.880.853.150.439.500"
               ]
-            },
+            }
+          ]
+        },
+        {
+          "concept": "Primary Health Care",
+          "candidates": [
             {
-              "id": "D011368",
-              "term": "Relações Profissional-Família",
-              "term_en": "Professional-Family Relations",
-              "scope": "As interações entre o profissional e a família.",
-              "categoria": "Psiquiatria e Psicologia",
+              "id": "D011320",
+              "term": "Atenção Primária à Saúde",
+              "term_en": "Primary Health Care",
+              "scope": "É a assistência sanitária essencial baseada em métodos e tecnologias práticas, cientificamente fundados e socialmente aceitáveis, postos ao alcance de todos os indivíduos e famílias da comunidade medi",
+              "categoria": "Saúde",
               "arvore": [
-                "F01.829.401.550"
+                "N04.590.233.727",
+                "SP2.630.121"
               ]
             },
             {
-              "id": "D022143",
-              "term": "Enfermagem Familiar",
-              "term_en": "Family Nursing",
-              "scope": "A provisão de cuidados envolvendo o processo de enfermagem a famílias e membros da família em situações de saúde e enfermidade.",
-              "categoria": "Disciplinas e Ocupações",
+              "id": "D000092863",
+              "term": "Acesso à Atenção Primária",
+              "term_en": "Access to Primary Care",
+              "scope": "O grau em que as pessoas são inibidas ou facilitadas em sua capacidade de ter acesso e de receber CUIDADOS PRIMÁRIOS.",
+              "categoria": "Saúde",
               "arvore": [
-                "H02.478.676.218"
+                "N04.590.374.350.250",
+                "N05.300.430.188"
               ]
             },
             {
-              "id": "D005196",
-              "term": "Terapia Familiar",
-              "term_en": "Family Therapy",
-              "scope": "Forma de psicoterapia de grupo. Envolve o tratamento simultâneo de mais de um membro da família na mesma sessão.",
+              "id": "DDCS059590",
+              "term": "Territorialização da Atenção Primária",
+              "term_en": "Territorialization in Primary Health Care",
+              "scope": "Um dos pressupostos da organização do processo de trabalho de atenção básica, que visa definir o território de atuação e a população sob responsabilidade das equipes de saúde. Cada equipe de saúde exe",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP2.630.121.754"
+              ]
+            },
+            {
+              "id": "D000076602",
+              "term": "Gestão da Saúde da População",
+              "term_en": "Population Health Management",
+              "scope": "Engajamento da comunidade, monitoramento de instalações e acesso a cuidados financeiramente e temporalmente acessíveis, disponibilidade dos serviços efetivos e a alta qualidade da assistência à saúde ",
+              "categoria": "Saúde",
+              "arvore": [
+                "N05.300.570"
+              ]
+            },
+            {
+              "id": "D059017",
+              "term": "Enfermagem de Atenção Primária",
+              "term_en": "Primary Care Nursing",
+              "scope": "Técnicas ou métodos de assistência ao paciente usados por enfermeiros enquanto cuidadores primários.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.760.611.735"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Sociometric Techniques",
+          "candidates": [
+            {
+              "id": "D012963",
+              "term": "Técnicas Sociométricas",
+              "term_en": "Sociometric Techniques",
+              "scope": "Métodos para avaliar quantitativamente e medir as relações interpessoais e grupais.",
+              "categoria": "Antropologia, Educação, Sociologia",
+              "arvore": [
+                "I01.880.866",
+                "SP3.311.900.913"
+              ]
+            },
+            {
+              "id": "D000083482",
+              "term": "Análise de Rede Social",
+              "term_en": "Social Network Analysis",
+              "scope": "Um conjunto de métodos que identifica os laços ou relacionamentos que ligam cada membro de um grupo a todos os outros membros.",
+              "categoria": "Antropologia, Educação, Sociologia",
+              "arvore": [
+                "I01.880.866.500",
+                "SP3.311.900.913.122"
+              ]
+            },
+            {
+              "id": "D011386",
+              "term": "Técnicas Projetivas",
+              "term_en": "Projective Techniques",
+              "scope": "Técnicas usadas para revelar os atributos de personalidade pelas respostas do indivíduo a estímulos relativamente pouco estruturados ou ambíguos.",
               "categoria": "Psiquiatria e Psicologia",
               "arvore": [
-                "F04.754.864.581.273"
+                "F04.711.647.622"
+              ]
+            },
+            {
+              "id": "D011779",
+              "term": "Q-Sort",
+              "term_en": "Q-Sort",
+              "scope": "Técnica de avaliação da personalidade em que o indivíduo ou observador indica o quanto um determinado conjunto de sentenças descritivas é adequado para descrever o indivíduo. O termo reflete procedime",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F04.513.636"
+              ]
+            },
+            {
+              "id": "D012659",
+              "term": "Diferencial Semântico",
+              "term_en": "Semantic Differential",
+              "scope": "A análise de palavras-conceitos através da associação de adjetivos opostos, por exemplo bom-mau, ao conceito, pai. Os adjetivos são geralmente apresentados em uma escala de 7 graus. A colocação que o ",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F02.694.663",
+                "F04.711.647.745"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Pedigree",
+          "candidates": [
+            {
+              "id": "D002609",
+              "term": "Síndrome de Chediak-Higashi",
+              "term_en": "Chediak-Higashi Syndrome",
+              "scope": "Forma de disfunção bactericida fagocitária, caracterizada por albinismo oculocutâneo incomum, alta incidência de neoplasias linforreticulares, e infecções piogênicas recidivantes. Em vários tipos celu",
+              "categoria": "Doenças",
+              "arvore": [
+                "C11.270.040.772",
+                "C15.378.553.774.257"
+              ]
+            },
+            {
+              "id": "D019717",
+              "term": "Inibidor Tecidual de Metaloproteinase-3",
+              "term_en": "Tissue Inhibitor of Metalloproteinase-3",
+              "scope": "Membro da família de inibidores teciduais de metaloproteinases. As mutações do gene da PROTEÍNA TIMP3 provoca a distrofia do fundo de Sorsby.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.815.875.550"
+              ]
+            },
+            {
+              "id": "D005166",
+              "term": "Deficiência do Fator V",
+              "term_en": "Factor V Deficiency",
+              "scope": "Proacelarina: um material lábil ao calor e ao armazenamento, presente no plasma, porém não no soro, que funciona tanto na via intrínseca quanto na extrínseca da coagulação sanguínea. Deficiência deste",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.100.100.300",
+                "C15.378.100.141.300"
+              ]
+            },
+            {
+              "id": "D015325",
+              "term": "Doença da Deficiência do Complexo de Piruvato Desidrogenase",
+              "term_en": "Pyruvate Dehydrogenase Complex Deficiency Disease",
+              "scope": "Transtorno metabólico hereditário, causado por atividade enzimática deficiente no COMPLEXO PIRUVATO DESIDROGENASE, resultando na deficiência de acetil CoA e redução na síntese de acetilcolina. Duas fo",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.228.140.163.100.750",
+                "C10.597.606.360.455.875"
+              ]
+            },
+            {
+              "id": "D012805",
+              "term": "Traço Falciforme",
+              "term_en": "Sickle Cell Trait",
+              "scope": "Estado de heterozigose para o gene da hemoglobina S.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.141.150.150.670",
+                "C15.378.420.155.668"
               ]
             }
           ]
         }
       ]
-    },
-    {
-      "label": "secundários",
-      "concepts": []
     }
   ],
   "debug_trace": {
     "themes": {
       "primary": [
-        "Enunciado",
-        "Observe a figura abaixo e assinale a alternativa correta quanto a esse instrumento de abordagem familiar",
-        "Alternativa A"
+        "Family Practice",
+        "Family Relations"
       ],
-      "secondary": []
+      "secondary": [
+        "Social Support",
+        "Sociometric Techniques",
+        "Pedigree",
+        "Primary Health Care"
+      ]
     },
     "candidate_groups": [
       {
         "label": "primários",
         "concepts": [
           {
-            "concept": "Enunciado",
+            "concept": "Family Practice",
             "candidates": [
               {
-                "id": "DDCS032482",
-                "term": "Recursos Renováveis",
-                "term_en": "Renewable Resources",
-                "categoria": "Saúde Pública",
+                "id": "D005194",
+                "term": "Medicina de Família e Comunidade",
+                "term_en": "Family Practice",
+                "scope": "Especialidade médica voltada para a provisão contínua e integrada de cuidados primários de saúde para toda a família.",
+                "categoria": "Disciplinas e Ocupações",
                 "arvore": [
-                  "SP4.606.837.868"
+                  "H02.403.340.500"
                 ]
               },
               {
-                "id": "DDCS051583",
-                "term": "Varredoras",
-                "term_en": "Sweepers",
-                "categoria": "Saúde Pública",
+                "id": "D010821",
+                "term": "Médicos de Família",
+                "term_en": "Physicians, Family",
+                "scope": "Médicos com atividade voltada para indivíduos, famílias e comunidade e que, independentemente de idade, sexo ou patologia do paciente, propõe-se a prestar-lhe uma assistência integral, contínua e pers",
+                "categoria": "Grupos Identificados",
                 "arvore": [
-                  "SP4.895.987.506.871"
+                  "M01.526.485.810.770",
+                  "N02.360.810.770"
                 ]
               },
               {
-                "id": "DDCS051857",
-                "term": "Utilização de Recursos Locais",
-                "term_en": "Local Resources Uses",
-                "categoria": "Saúde Pública",
+                "id": "D058005",
+                "term": "Clínicos Gerais",
+                "term_en": "General Practitioners",
+                "scope": "Médicos cuja prática não é restrita a uma área específica da MEDICINA.",
+                "categoria": "Grupos Identificados",
                 "arvore": [
-                  "SP4.303.766"
+                  "M01.526.485.810.485",
+                  "N02.360.810.485"
                 ]
               },
               {
-                "id": "DDCS051642",
-                "term": "Leito Fixo",
-                "term_en": "Fixed Bed",
-                "categoria": "Saúde Pública",
+                "id": "D064703",
+                "term": "Enfermeiros de Saúde da Família",
+                "term_en": "Family Nurse Practitioners",
+                "scope": "Enfermeiros registrados com graduação em enfermagem que fornecem assistência a pacientes de todas as idades, e que focam seus esforços nas necessidades de saúde de toda a família.",
+                "categoria": "Grupos Identificados",
                 "arvore": [
-                  "SP4.606.806.945.750.207.899.660"
+                  "M01.526.485.650.640.249",
+                  "N02.360.650.640.249"
                 ]
               },
               {
-                "id": "DDCS025556",
-                "term": "Tanques de Concreto",
-                "term_en": "Reinforced Concrete Tanks",
-                "categoria": "Saúde Pública",
+                "id": "D058006",
+                "term": "Medicina Geral",
+                "term_en": "General Practice",
+                "scope": "Cuidados médicos baseados no paciente prestados transversalmente aos limites de idade, gênero ou especialidade.",
+                "categoria": "Disciplinas e Ocupações",
                 "arvore": [
-                  "SP4.895.141.089.248.433.561"
+                  "H02.403.340"
                 ]
               }
             ]
           },
           {
-            "concept": "Alternativa A",
+            "concept": "Family Relations",
             "candidates": [
               {
-                "id": "D034904",
-                "term": "Lamina Tipo A",
-                "term_en": "Lamin Type A",
-                "scope": "Subclasse de lâminas regulada pelo desenvolvimento possuindo um ponto isoelétrico neutro. Dissociam-se das membranas nucleares durante a mitose.",
+                "id": "D000071797",
+                "term": "Butirofilinas",
+                "term_en": "Butyrophilins",
+                "scope": "Família de glicoproteínas de membrana presente em mamíferos caracterizada por DOMÍNIOS DE IMUNOGLOBULINA. Alguns membros também possuem um DOMÍNIO B30.2-SPRY ou DOMÍNIO SPRY. A proteína butirofilina (",
                 "categoria": "Compostos Químicos e Drogas",
                 "arvore": [
-                  "D12.776.660.650.875.500"
+                  "D09.400.430.890.114",
+                  "D12.776.395.550.114"
                 ]
               },
               {
-                "id": "D038202",
-                "term": "Cadeia A de alfa-Cristalina",
-                "term_en": "alpha-Crystallin A Chain",
-                "scope": "Uma das subunidades de alfa-cristalinas. Diferentemente da CADEIA B DE ALFA-CRISTALINA, a expressão da CADEIA A DE ALFA-CRISTALINA está limitada basicamente ao CRISTALINO.",
+                "id": "D000075983",
+                "term": "Nectinas",
+                "term_en": "Nectins",
+                "scope": "Família de moléculas de adesão celular independente de cálcio da superfamília das imunoglobulinas. São expressos pela maioria das células e medeiam as adesões celulares homotípicas e heterotípicas. As",
                 "categoria": "Compostos Químicos e Drogas",
                 "arvore": [
-                  "D12.776.306.366.100.149",
-                  "D12.776.580.157.149"
+                  "D09.400.430.890.200.123",
+                  "D12.776.395.550.200.123"
                 ]
               },
               {
-                "id": "D038205",
-                "term": "Cadeia A de beta-Cristalina",
-                "term_en": "beta-Crystallin A Chain",
-                "scope": "Subunidade ácida de beta-cristalina.",
+                "id": "D026502",
+                "term": "Proteínas Relacionadas a Receptor de LDL",
+                "term_en": "LDL-Receptor Related Proteins",
+                "scope": "Família de proteínas que compartilha a semelhança da sequência com o receptor de lipoproteína de baixa densidade (RECEPTORES DE LDL).",
                 "categoria": "Compostos Químicos e Drogas",
                 "arvore": [
-                  "D12.776.306.366.300.100"
+                  "D12.776.526",
+                  "D12.776.543.750.710.450.500"
                 ]
               },
               {
-                "id": "D019925",
-                "term": "Ciclina A",
-                "term_en": "Cyclin A",
-                "scope": "Subtipo de ciclina que possui especificidade para a PROTEÍNA QUINASE CDC2 e QUINASE 2 DEPENDENTE DE CICLINA. Exerce papel na progressão do CICLO CELULAR nas transições entre as fases G1/S e G2/M.",
+                "id": "D055655",
+                "term": "Subfamília K de Receptores Semelhantes a Lectina de Células NK",
+                "term_en": "NK Cell Lectin-Like Receptor Subfamily K",
+                "scope": "Subfamília de receptores semelhantes a lectina de células NK ativadores que regula as respostas imunes à INFECÇÃO e às NEOPLASIAS. Membros desta subfamília geralmente ocorrem como homodímeros.",
                 "categoria": "Compostos Químicos e Drogas",
                 "arvore": [
-                  "D12.644.360.262.100",
-                  "D12.776.167.218.100"
+                  "D12.776.543.750.705.895.800.910"
                 ]
               },
               {
-                "id": "D018514",
-                "term": "Estruturas Vegetais",
-                "term_en": "Plant Structures",
-                "scope": "Partes das plantas, incluindo as SEMENTES.",
-                "categoria": "Anatomia",
+                "id": "D055412",
+                "term": "Fatores de Diferenciação de Crescimento",
+                "term_en": "Growth Differentiation Factors",
+                "scope": "Família de proteínas relacionadas à PROTEÍNAS MORFOGENÉTICAS ÓSSEAS envolvidas primariamente na regulação da DIFERENCIAÇÃO CELULAR.",
+                "categoria": "Compostos Químicos e Drogas",
                 "arvore": [
-                  "A18"
+                  "D12.644.276.954.300",
+                  "D12.776.467.942.300"
                 ]
               }
             ]
-          },
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
           {
-            "concept": "Observe a figura abaixo e assinale a alternativa correta quanto a esse instrumento de abordagem familiar",
+            "concept": "Social Support",
             "candidates": [
               {
-                "id": "DDCS059936",
-                "term": "Constelação Familiar",
-                "term_en": "Family Constellation",
-                "scope": "Intervenção em grupo de curto prazo com o objetivo de ajudar pessoas a entender melhor e depois mudar suas experiências conflitantes dentro de um sistema social familiar.",
-                "categoria": "MT",
+                "id": "D012944",
+                "term": "Apoio Social",
+                "term_en": "Social Support",
+                "scope": "Sistemas de apoio que fornecem assistência e encorajamento para os indivíduos com inaptidão física ou emocional para que eles possam melhor superá-la. O apoio social informal é normalmente provido por",
+                "categoria": "Antropologia, Educação, Sociologia",
                 "arvore": [
-                  "MT3.795.248"
+                  "I01.880.853.500.600"
+                ]
+              },
+              {
+                "id": "D000091443",
+                "term": "Apoio Comunitário",
+                "term_en": "Community Support",
+                "scope": "Sistemas de apoio comunitário que podem ser organizados por membros da família extendida, amigos, vizinhos, organizações religiosas, programas comunitários, organizações culturais e étnicas ou outros ",
+                "categoria": "Antropologia, Educação, Sociologia",
+                "arvore": [
+                  "I01.880.853.500.600.250",
+                  "N02.421.143.212.150"
+                ]
+              },
+              {
+                "id": "D000072858",
+                "term": "Sistemas de Apoio Psicossocial",
+                "term_en": "Psychosocial Support Systems",
+                "scope": "Esforços organizados para identificar problemas psicológicos e sociais em curso de indivíduos, seus parceiros, famílias e cuidadores.",
+                "categoria": "Antropologia, Educação, Sociologia",
+                "arvore": [
+                  "I01.880.853.500.600.500"
+                ]
+              },
+              {
+                "id": "D060756",
+                "term": "Rede Social",
+                "term_en": "Social Networking",
+                "scope": "Indivíduos conectados por família, trabalho ou outros interesses. Também inclui a conectividade facilitada por comunicações baseadas em computador.",
+                "categoria": "Ciência da Informação",
+                "arvore": [
+                  "L01.143.910"
                 ]
               },
               {
@@ -328,56 +695,214 @@
                   "F01.829.263.370.082",
                   "I01.880.853.150.439.500"
                 ]
-              },
+              }
+            ]
+          },
+          {
+            "concept": "Primary Health Care",
+            "candidates": [
               {
-                "id": "D011368",
-                "term": "Relações Profissional-Família",
-                "term_en": "Professional-Family Relations",
-                "scope": "As interações entre o profissional e a família.",
-                "categoria": "Psiquiatria e Psicologia",
+                "id": "D011320",
+                "term": "Atenção Primária à Saúde",
+                "term_en": "Primary Health Care",
+                "scope": "É a assistência sanitária essencial baseada em métodos e tecnologias práticas, cientificamente fundados e socialmente aceitáveis, postos ao alcance de todos os indivíduos e famílias da comunidade medi",
+                "categoria": "Saúde",
                 "arvore": [
-                  "F01.829.401.550"
+                  "N04.590.233.727",
+                  "SP2.630.121"
                 ]
               },
               {
-                "id": "D022143",
-                "term": "Enfermagem Familiar",
-                "term_en": "Family Nursing",
-                "scope": "A provisão de cuidados envolvendo o processo de enfermagem a famílias e membros da família em situações de saúde e enfermidade.",
-                "categoria": "Disciplinas e Ocupações",
+                "id": "D000092863",
+                "term": "Acesso à Atenção Primária",
+                "term_en": "Access to Primary Care",
+                "scope": "O grau em que as pessoas são inibidas ou facilitadas em sua capacidade de ter acesso e de receber CUIDADOS PRIMÁRIOS.",
+                "categoria": "Saúde",
                 "arvore": [
-                  "H02.478.676.218"
+                  "N04.590.374.350.250",
+                  "N05.300.430.188"
                 ]
               },
               {
-                "id": "D005196",
-                "term": "Terapia Familiar",
-                "term_en": "Family Therapy",
-                "scope": "Forma de psicoterapia de grupo. Envolve o tratamento simultâneo de mais de um membro da família na mesma sessão.",
+                "id": "DDCS059590",
+                "term": "Territorialização da Atenção Primária",
+                "term_en": "Territorialization in Primary Health Care",
+                "scope": "Um dos pressupostos da organização do processo de trabalho de atenção básica, que visa definir o território de atuação e a população sob responsabilidade das equipes de saúde. Cada equipe de saúde exe",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP2.630.121.754"
+                ]
+              },
+              {
+                "id": "D000076602",
+                "term": "Gestão da Saúde da População",
+                "term_en": "Population Health Management",
+                "scope": "Engajamento da comunidade, monitoramento de instalações e acesso a cuidados financeiramente e temporalmente acessíveis, disponibilidade dos serviços efetivos e a alta qualidade da assistência à saúde ",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N05.300.570"
+                ]
+              },
+              {
+                "id": "D059017",
+                "term": "Enfermagem de Atenção Primária",
+                "term_en": "Primary Care Nursing",
+                "scope": "Técnicas ou métodos de assistência ao paciente usados por enfermeiros enquanto cuidadores primários.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.760.611.735"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Sociometric Techniques",
+            "candidates": [
+              {
+                "id": "D012963",
+                "term": "Técnicas Sociométricas",
+                "term_en": "Sociometric Techniques",
+                "scope": "Métodos para avaliar quantitativamente e medir as relações interpessoais e grupais.",
+                "categoria": "Antropologia, Educação, Sociologia",
+                "arvore": [
+                  "I01.880.866",
+                  "SP3.311.900.913"
+                ]
+              },
+              {
+                "id": "D000083482",
+                "term": "Análise de Rede Social",
+                "term_en": "Social Network Analysis",
+                "scope": "Um conjunto de métodos que identifica os laços ou relacionamentos que ligam cada membro de um grupo a todos os outros membros.",
+                "categoria": "Antropologia, Educação, Sociologia",
+                "arvore": [
+                  "I01.880.866.500",
+                  "SP3.311.900.913.122"
+                ]
+              },
+              {
+                "id": "D011386",
+                "term": "Técnicas Projetivas",
+                "term_en": "Projective Techniques",
+                "scope": "Técnicas usadas para revelar os atributos de personalidade pelas respostas do indivíduo a estímulos relativamente pouco estruturados ou ambíguos.",
                 "categoria": "Psiquiatria e Psicologia",
                 "arvore": [
-                  "F04.754.864.581.273"
+                  "F04.711.647.622"
+                ]
+              },
+              {
+                "id": "D011779",
+                "term": "Q-Sort",
+                "term_en": "Q-Sort",
+                "scope": "Técnica de avaliação da personalidade em que o indivíduo ou observador indica o quanto um determinado conjunto de sentenças descritivas é adequado para descrever o indivíduo. O termo reflete procedime",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F04.513.636"
+                ]
+              },
+              {
+                "id": "D012659",
+                "term": "Diferencial Semântico",
+                "term_en": "Semantic Differential",
+                "scope": "A análise de palavras-conceitos através da associação de adjetivos opostos, por exemplo bom-mau, ao conceito, pai. Os adjetivos são geralmente apresentados em uma escala de 7 graus. A colocação que o ",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F02.694.663",
+                  "F04.711.647.745"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Pedigree",
+            "candidates": [
+              {
+                "id": "D002609",
+                "term": "Síndrome de Chediak-Higashi",
+                "term_en": "Chediak-Higashi Syndrome",
+                "scope": "Forma de disfunção bactericida fagocitária, caracterizada por albinismo oculocutâneo incomum, alta incidência de neoplasias linforreticulares, e infecções piogênicas recidivantes. Em vários tipos celu",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C11.270.040.772",
+                  "C15.378.553.774.257"
+                ]
+              },
+              {
+                "id": "D019717",
+                "term": "Inibidor Tecidual de Metaloproteinase-3",
+                "term_en": "Tissue Inhibitor of Metalloproteinase-3",
+                "scope": "Membro da família de inibidores teciduais de metaloproteinases. As mutações do gene da PROTEÍNA TIMP3 provoca a distrofia do fundo de Sorsby.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.815.875.550"
+                ]
+              },
+              {
+                "id": "D005166",
+                "term": "Deficiência do Fator V",
+                "term_en": "Factor V Deficiency",
+                "scope": "Proacelarina: um material lábil ao calor e ao armazenamento, presente no plasma, porém não no soro, que funciona tanto na via intrínseca quanto na extrínseca da coagulação sanguínea. Deficiência deste",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.100.100.300",
+                  "C15.378.100.141.300"
+                ]
+              },
+              {
+                "id": "D015325",
+                "term": "Doença da Deficiência do Complexo de Piruvato Desidrogenase",
+                "term_en": "Pyruvate Dehydrogenase Complex Deficiency Disease",
+                "scope": "Transtorno metabólico hereditário, causado por atividade enzimática deficiente no COMPLEXO PIRUVATO DESIDROGENASE, resultando na deficiência de acetil CoA e redução na síntese de acetilcolina. Duas fo",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.228.140.163.100.750",
+                  "C10.597.606.360.455.875"
+                ]
+              },
+              {
+                "id": "D012805",
+                "term": "Traço Falciforme",
+                "term_en": "Sickle Cell Trait",
+                "scope": "Estado de heterozigose para o gene da hemoglobina S.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.141.150.150.670",
+                  "C15.378.420.155.668"
                 ]
               }
             ]
           }
         ]
-      },
-      {
-        "label": "secundários",
-        "concepts": []
       }
     ],
     "selected_candidates": {
-      "primary": [],
-      "secondary": []
+      "primary": [
+        {
+          "id": "D005194",
+          "term": "Medicina de Família e Comunidade"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D012944",
+          "term": "Apoio Social"
+        },
+        {
+          "id": "D011320",
+          "term": "Atenção Primária à Saúde"
+        },
+        {
+          "id": "D012963",
+          "term": "Técnicas Sociométricas"
+        }
+      ]
     }
   },
   "stats": {
-    "primary_concepts": 3,
-    "secondary_concepts": 0,
-    "total_candidates": 15,
-    "final_primary": 0,
-    "final_secondary": 0
+    "primary_concepts": 2,
+    "secondary_concepts": 4,
+    "total_candidates": 30,
+    "final_primary": 1,
+    "final_secondary": 3
   }
 }

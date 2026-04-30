@@ -2,56 +2,6 @@
   "result": {
     "decs_primary": [
       {
-        "id": "D005260",
-        "term": "Feminino",
-        "name_en": "Female",
-        "scope_note": "Organismos com o SEXO biológico que produz ÓVULOS para reprodução sexuada.",
-        "tree_ids": [],
-        "hierarchy_path": "",
-        "parents": [],
-        "children": [],
-        "role": "primary"
-      },
-      {
-        "id": "D000328",
-        "term": "Adulto",
-        "name_en": "Adult",
-        "scope_note": "Pessoa que atingiu crescimento total ou maturidade. Adultos vão dos 19 até 44 anos de idade. Para uma pessoa entre 19 e 24 anos, está disponível o termo ADULTO JOVEM.",
-        "tree_ids": [
-          "M01.060.116"
-        ],
-        "hierarchy_path": "Grupos Identificados › M01.060.116",
-        "parents": [
-          {
-            "id": "D009273",
-            "term": "Grupos Etários"
-          }
-        ],
-        "children": [
-          {
-            "id": "D016330",
-            "term": "Idoso Fragilizado"
-          },
-          {
-            "id": "D055815",
-            "term": "Adulto Jovem"
-          },
-          {
-            "id": "D008875",
-            "term": "Pessoa de Meia-Idade"
-          },
-          {
-            "id": "D000369",
-            "term": "Idoso de 80 Anos ou mais"
-          },
-          {
-            "id": "D000087742",
-            "term": "Octogenários"
-          }
-        ],
-        "role": "primary"
-      },
-      {
         "id": "D000062",
         "term": "Acidentes de Trabalho",
         "name_en": "Accidents, Occupational",
@@ -81,28 +31,56 @@
         "role": "primary"
       },
       {
-        "id": "D014951",
-        "term": "Ferimentos Perfurantes",
-        "name_en": "Wounds, Stab",
-        "scope_note": "Ferimentos penetrantes causados por um objeto pontiagudo.",
+        "id": "D016272",
+        "term": "Saúde Ocupacional",
+        "name_en": "Occupational Health",
+        "scope_note": "Promoção e manutenção no mais alto grau do bem-estar físico, mental e social dos trabalhadores em todas as ocupações.",
         "tree_ids": [
-          "C26.986.950"
+          "N01.400.525",
+          "SP2.770.750.763",
+          "VS4.002.001"
         ],
-        "hierarchy_path": "Doenças › C26.986.950",
+        "hierarchy_path": "Saúde › N01.400.525",
         "parents": [
           {
-            "id": "D014950",
-            "term": "Ferimentos Penetrantes"
+            "id": "D006262",
+            "term": "Saúde"
+          },
+          {
+            "id": "DDCS050232",
+            "term": "Saúde de Grupos Específicos"
+          },
+          {
+            "id": "DDCS051559",
+            "term": "Vigilância em Saúde do Trabalhador"
           }
         ],
         "children": [
           {
-            "id": "D016602",
-            "term": "Ferimentos Penetrantes Produzidos por Agulha"
+            "id": "D011835",
+            "term": "Proteção Radiológica"
+          },
+          {
+            "id": "DDCS051665",
+            "term": "Segurança Industrial"
+          },
+          {
+            "id": "DDCS051759",
+            "term": "OHSAS 18000"
+          },
+          {
+            "id": "DDCS032480",
+            "term": "Proteção Pessoal"
+          },
+          {
+            "id": "D000062",
+            "term": "Acidentes de Trabalho"
           }
         ],
         "role": "primary"
-      },
+      }
+    ],
+    "decs_secondary": [
       {
         "id": "DDCS016385",
         "term": "Notificação de Acidentes de Trabalho",
@@ -119,136 +97,250 @@
           }
         ],
         "children": [],
-        "role": "primary"
+        "role": "secondary"
+      },
+      {
+        "id": "D011320",
+        "term": "Atenção Primária à Saúde",
+        "name_en": "Primary Health Care",
+        "scope_note": "É a assistência sanitária essencial baseada em métodos e tecnologias práticas, cientificamente fundados e socialmente aceitáveis, postos ao alcance de todos os indivíduos e famílias da comunidade mediante a sua plena participação e a um custo que a comunidade e o país possam suportar, em todas e cada etapa do seu desenvolvimento, com um espírito de autorresponsabilidade e autodeterminação. (Declaração de Alma-Ata - Organização Pan-Americana da Saúde, 2003)",
+        "tree_ids": [
+          "N04.590.233.727",
+          "SP2.630.121"
+        ],
+        "hierarchy_path": "Saúde › N04.590.233.727",
+        "parents": [
+          {
+            "id": "D003191",
+            "term": "Assistência Integral à Saúde"
+          },
+          {
+            "id": "DDCS017209",
+            "term": "Níveis de Atenção à Saúde"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000069341",
+            "term": "Cuidado Transicional"
+          },
+          {
+            "id": "D000073935",
+            "term": "Medicina Narrativa"
+          },
+          {
+            "id": "D010351",
+            "term": "Alta do Paciente"
+          },
+          {
+            "id": "D003266",
+            "term": "Continuidade da Assistência ao Paciente"
+          },
+          {
+            "id": "D010360",
+            "term": "Transferência de Pacientes"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D014950",
+        "term": "Ferimentos Penetrantes",
+        "name_en": "Wounds, Penetrating",
+        "scope_note": "Ferimentos causados por objetos que penetram na pele.",
+        "tree_ids": [
+          "C26.986"
+        ],
+        "hierarchy_path": "Doenças › C26.986",
+        "parents": [
+          {
+            "id": "D014947",
+            "term": "Ferimentos e Lesões"
+          }
+        ],
+        "children": [
+          {
+            "id": "D016602",
+            "term": "Ferimentos Penetrantes Produzidos por Agulha"
+          },
+          {
+            "id": "D020197",
+            "term": "Traumatismos Cranianos Penetrantes"
+          },
+          {
+            "id": "D056146",
+            "term": "Desmembramento de Cadáver"
+          },
+          {
+            "id": "D014948",
+            "term": "Ferimentos por Arma de Fogo"
+          },
+          {
+            "id": "D015807",
+            "term": "Ferimentos Oculares Penetrantes"
+          }
+        ],
+        "role": "secondary"
       }
-    ],
-    "decs_secondary": []
+    ]
   },
   "themes_identified": {
     "primary": [
-      "Enunciado",
-      "Mulher de 32 anos",
-      "chega à unidade de saúde após acidente com material perfurocortante durante o trabalho na cozinha de uma lanchonete próxima da UBS"
+      "Accidents, Occupational",
+      "Occupational Health"
     ],
-    "secondary": []
+    "secondary": [
+      "Mandatory Reporting",
+      "Workers' Compensation",
+      "Primary Health Care",
+      "Wounds and Injuries"
+    ]
   },
   "candidate_groups": [
     {
       "label": "primários",
       "concepts": [
         {
-          "concept": "Mulher de 32 anos",
+          "concept": "Accidents, Occupational",
           "candidates": [
             {
-              "id": "D008875",
-              "term": "Pessoa de Meia-Idade",
-              "term_en": "Middle Aged",
-              "scope": "Adulto com idade entre 45 e 64 anos.",
-              "categoria": "Grupos Identificados",
+              "id": "D000062",
+              "term": "Acidentes de Trabalho",
+              "term_en": "Accidents, Occupational",
+              "scope": "Ocorrências imprevistas, especialmente lesões ou traumatismos durante atividades relacionadas ao trabalho.",
+              "categoria": "Saúde",
               "arvore": [
-                "M01.060.116.630"
+                "N06.850.135.240",
+                "SP8.095.664"
               ]
             },
             {
-              "id": "D005260",
-              "term": "Feminino",
-              "term_en": "Female",
-              "scope": "Organismos com o SEXO biológico que produz ÓVULOS para reprodução sexuada.",
-              "categoria": "",
-              "arvore": []
-            },
-            {
-              "id": "DDCS060373",
-              "term": "Mulheres Lactantes",
-              "term_en": "Breastfeeding Women",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP3.522.561.200.492"
-              ]
-            },
-            {
-              "id": "D000328",
-              "term": "Adulto",
-              "term_en": "Adult",
-              "scope": "Pessoa que atingiu crescimento total ou maturidade. Adultos vão dos 19 até 44 anos de idade. Para uma pessoa entre 19 e 24 anos, está disponível o termo ADULTO JOVEM.",
-              "categoria": "Grupos Identificados",
-              "arvore": [
-                "M01.060.116"
-              ]
-            },
-            {
-              "id": "D055815",
-              "term": "Adulto Jovem",
-              "term_en": "Young Adult",
-              "scope": "Uma pessoa entre 19 e 24 anos de idade.",
-              "categoria": "Grupos Identificados",
-              "arvore": [
-                "M01.060.116.815"
-              ]
-            }
-          ]
-        },
-        {
-          "concept": "Enunciado",
-          "candidates": [
-            {
-              "id": "DDCS032482",
-              "term": "Recursos Renováveis",
-              "term_en": "Renewable Resources",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.606.837.868"
-              ]
-            },
-            {
-              "id": "DDCS051583",
-              "term": "Varredoras",
-              "term_en": "Sweepers",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.895.987.506.871"
-              ]
-            },
-            {
-              "id": "DDCS051857",
-              "term": "Utilização de Recursos Locais",
-              "term_en": "Local Resources Uses",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.303.766"
-              ]
-            },
-            {
-              "id": "DDCS051642",
-              "term": "Leito Fixo",
-              "term_en": "Fixed Bed",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.606.806.945.750.207.899.660"
-              ]
-            },
-            {
-              "id": "DDCS025556",
-              "term": "Tanques de Concreto",
-              "term_en": "Reinforced Concrete Tanks",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.895.141.089.248.433.561"
-              ]
-            }
-          ]
-        },
-        {
-          "concept": "chega à unidade de saúde após acidente com material perfurocortante durante o trabalho na cozinha de uma lanchonete próxima da UBS",
-          "candidates": [
-            {
-              "id": "D016602",
-              "term": "Ferimentos Penetrantes Produzidos por Agulha",
-              "term_en": "Needlestick Injuries",
-              "scope": "Ferimentos cortantes, penetrantes, causados por agulhas. São concernentes especialmente a trabalhadores da área de saúde, uma vez que tais lesões os colocam em risco de desenvolverem doença infecciosa",
+              "id": "D060051",
+              "term": "Traumatismos Ocupacionais",
+              "term_en": "Occupational Injuries",
+              "scope": "Lesões adquiridas em incidentes durante atividades laborais.",
               "categoria": "Doenças",
               "arvore": [
-                "C26.986.950.500"
+                "C26.716"
+              ]
+            },
+            {
+              "id": "DDCS060066",
+              "term": "Acidentes com Materiais Perigosos",
+              "term_en": "Accidents with Hazardous Materials",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP8.095.249"
+              ]
+            },
+            {
+              "id": "DDCS051763",
+              "term": "Acidentes por Explosivos",
+              "term_en": "Accidents Caused by Explosives",
+              "scope": "Acidentes de explosão em massa ou não.",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP8.095.581"
+              ]
+            },
+            {
+              "id": "D000059",
+              "term": "Acidentes",
+              "term_en": "Accidents",
+              "scope": "Eventos inesperados e não intencionais, tipicamente resultando em LESÕES ACIDENTAIS.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N06.850.135",
+                "SH1.050.313.562.601.900.516"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Occupational Health",
+          "candidates": [
+            {
+              "id": "D016272",
+              "term": "Saúde Ocupacional",
+              "term_en": "Occupational Health",
+              "scope": "Promoção e manutenção no mais alto grau do bem-estar físico, mental e social dos trabalhadores em todas as ocupações.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N01.400.525",
+                "SP2.770.750.763"
+              ]
+            },
+            {
+              "id": "D009785",
+              "term": "Enfermagem do Trabalho",
+              "term_en": "Occupational Health Nursing",
+              "scope": "Prática da enfermagem no ambiente de trabalho.",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.478.676.590",
+                "N02.421.533.585"
+              ]
+            },
+            {
+              "id": "DDCS051561",
+              "term": "Política de Saúde do Trabalhador",
+              "term_en": "Occupational Health Policy",
+              "categoria": "Vigilância Sanitária",
+              "arvore": [
+                "VS4.002.002"
+              ]
+            },
+            {
+              "id": "D054538",
+              "term": "Médicos do Trabalho",
+              "term_en": "Occupational Health Physicians",
+              "scope": "Médicos empregados em uma companhia ou corporação que geralmente não faz parte da indústria da saúde.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.526.485.810.675",
+                "N02.360.810.675"
+              ]
+            },
+            {
+              "id": "DDCS016379",
+              "term": "Programa de Saúde Ocupacional",
+              "term_en": "Occupational Health Program",
+              "scope": "Abordagem sistemática adotadas por organizações para proteger e promover a saúde e o bem-estar de seus empregados. Tais programas objetivam prevenir acidentes de trabalho, reduzir os dannos ocupaciona",
+              "categoria": "Vigilância Sanitária",
+              "arvore": [
+                "VS4.002.002.001"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Workers' Compensation",
+          "candidates": [
+            {
+              "id": "D014942",
+              "term": "Indenização aos Trabalhadores",
+              "term_en": "Workers' Compensation",
+              "scope": "Cobertura do seguro que estabelece compensação e benefícios médicos aos trabalhadores por lesões ou doenças relacionados ao trabalho ou à prática laboral.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N03.219.521.346.866",
+                "N03.219.521.576.300.900"
+              ]
+            },
+            {
+              "id": "D000062",
+              "term": "Acidentes de Trabalho",
+              "term_en": "Accidents, Occupational",
+              "scope": "Ocorrências imprevistas, especialmente lesões ou traumatismos durante atividades relacionadas ao trabalho.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N06.850.135.240",
+                "SP8.095.664"
               ]
             },
             {
@@ -272,161 +364,351 @@
               ]
             },
             {
-              "id": "D014951",
-              "term": "Ferimentos Perfurantes",
-              "term_en": "Wounds, Stab",
-              "scope": "Ferimentos penetrantes causados por um objeto pontiagudo.",
-              "categoria": "Doenças",
+              "id": "D062707",
+              "term": "Retorno ao Trabalho",
+              "term_en": "Return to Work",
+              "scope": "Retomada da rotina de trabalho normal seguida de um intervalo de ausência devido a um ferimento, incapacidade ou outros motivos.",
+              "categoria": "Antropologia, Educação, Sociologia",
               "arvore": [
-                "C26.986.950"
+                "I03.946.449",
+                "N01.824.245.725"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Primary Health Care",
+          "candidates": [
+            {
+              "id": "D011320",
+              "term": "Atenção Primária à Saúde",
+              "term_en": "Primary Health Care",
+              "scope": "É a assistência sanitária essencial baseada em métodos e tecnologias práticas, cientificamente fundados e socialmente aceitáveis, postos ao alcance de todos os indivíduos e famílias da comunidade medi",
+              "categoria": "Saúde",
+              "arvore": [
+                "N04.590.233.727",
+                "SP2.630.121"
               ]
             },
             {
-              "id": "D000062",
-              "term": "Acidentes de Trabalho",
-              "term_en": "Accidents, Occupational",
-              "scope": "Ocorrências imprevistas, especialmente lesões ou traumatismos durante atividades relacionadas ao trabalho.",
+              "id": "D000092863",
+              "term": "Acesso à Atenção Primária",
+              "term_en": "Access to Primary Care",
+              "scope": "O grau em que as pessoas são inibidas ou facilitadas em sua capacidade de ter acesso e de receber CUIDADOS PRIMÁRIOS.",
               "categoria": "Saúde",
               "arvore": [
-                "N06.850.135.240",
-                "SP8.095.664"
+                "N04.590.374.350.250",
+                "N05.300.430.188"
+              ]
+            },
+            {
+              "id": "DDCS059590",
+              "term": "Territorialização da Atenção Primária",
+              "term_en": "Territorialization in Primary Health Care",
+              "scope": "Um dos pressupostos da organização do processo de trabalho de atenção básica, que visa definir o território de atuação e a população sob responsabilidade das equipes de saúde. Cada equipe de saúde exe",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP2.630.121.754"
+              ]
+            },
+            {
+              "id": "D000076602",
+              "term": "Gestão da Saúde da População",
+              "term_en": "Population Health Management",
+              "scope": "Engajamento da comunidade, monitoramento de instalações e acesso a cuidados financeiramente e temporalmente acessíveis, disponibilidade dos serviços efetivos e a alta qualidade da assistência à saúde ",
+              "categoria": "Saúde",
+              "arvore": [
+                "N05.300.570"
+              ]
+            },
+            {
+              "id": "D059017",
+              "term": "Enfermagem de Atenção Primária",
+              "term_en": "Primary Care Nursing",
+              "scope": "Técnicas ou métodos de assistência ao paciente usados por enfermeiros enquanto cuidadores primários.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.760.611.735"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Mandatory Reporting",
+          "candidates": [
+            {
+              "id": "D019221",
+              "term": "Notificação de Abuso",
+              "term_en": "Mandatory Reporting",
+              "scope": "Exigência legal de que determinados tipos de informação adquirida por profissionais ou instituições durante o desempenho do trabalho sejam notificados a autoridades competentes.",
+              "categoria": "Antropologia, Educação, Sociologia",
+              "arvore": [
+                "I01.880.604.583.080.134.300",
+                "I01.880.604.583.527"
+              ]
+            },
+            {
+              "id": "D018563",
+              "term": "Notificação de Doenças",
+              "term_en": "Disease Notification",
+              "scope": "Comunicação obrigatória de determinadas doenças às autoridades de saúde pública locais, após diagnosticadas. (Tradução livre do original: Last, 2001)",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.362",
+                "N06.850.520.373"
+              ]
+            },
+            {
+              "id": "D037141",
+              "term": "Programas Obrigatórios",
+              "term_en": "Mandatory Programs",
+              "scope": "Proqrama em que a participação é requerida.",
+              "categoria": "Antropologia, Educação, Sociologia",
+              "arvore": [
+                "I01.880.604.622",
+                "N03.706.657"
+              ]
+            },
+            {
+              "id": "D018580",
+              "term": "Testes Obrigatórios",
+              "term_en": "Mandatory Testing",
+              "scope": "Testes ou triagem exigidos por lei federal, estadual ou local, ou de outras agências, para o diagnóstico de afecções específicas. Geralmente se limita a populações específicas como as categorias dos p",
+              "categoria": "Antropologia, Educação, Sociologia",
+              "arvore": [
+                "I01.880.604.622.500",
+                "N03.706.657.500"
+              ]
+            },
+            {
+              "id": "D017007",
+              "term": "Responsabilidade pela Informação",
+              "term_en": "Duty to Warn",
+              "scope": "Obrigação do profissional da saúde de quebrar a CONFIDENCIALIDADE do paciente para notificar terceiros sobre o risco de ser acometido ou de contrair infecção grave.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.829.401.046.800.200",
+                "F04.096.544.335.240.270"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Wounds and Injuries",
+          "candidates": [
+            {
+              "id": "D014947",
+              "term": "Ferimentos e Lesões",
+              "term_en": "Wounds and Injuries",
+              "scope": "Danos infligidos no corpo como resultado direto ou indireto de uma força externa, com ou sem rompimento da continuidade estrutural.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C26"
+              ]
+            },
+            {
+              "id": "D007869",
+              "term": "Traumatismos da Perna",
+              "term_en": "Leg Injuries",
+              "scope": "Traumatismos gerais ou inespecíficos envolvendo a perna.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C26.558"
+              ]
+            },
+            {
+              "id": "D017695",
+              "term": "Lesões dos Tecidos Moles",
+              "term_en": "Soft Tissue Injuries",
+              "scope": "Lesões de outros tecidos que não sejam ossos. O conceito é normalmente geral e não se refere normalmente a vísceras ou órgãos internos. O significado completo se refere a regiões ou órgãos em que os t",
+              "categoria": "Doenças",
+              "arvore": [
+                "C26.808"
+              ]
+            },
+            {
+              "id": "D001134",
+              "term": "Traumatismos do Braço",
+              "term_en": "Arm Injuries",
+              "scope": "Traumatismos gerais ou não especificados que envolvem o BRAÇO e o ANTEBRAÇO.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C26.088"
+              ]
+            },
+            {
+              "id": "D014950",
+              "term": "Ferimentos Penetrantes",
+              "term_en": "Wounds, Penetrating",
+              "scope": "Ferimentos causados por objetos que penetram na pele.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C26.986"
               ]
             }
           ]
         }
       ]
-    },
-    {
-      "label": "secundários",
-      "concepts": []
     }
   ],
   "debug_trace": {
     "themes": {
       "primary": [
-        "Enunciado",
-        "Mulher de 32 anos",
-        "chega à unidade de saúde após acidente com material perfurocortante durante o trabalho na cozinha de uma lanchonete próxima da UBS"
+        "Accidents, Occupational",
+        "Occupational Health"
       ],
-      "secondary": []
+      "secondary": [
+        "Mandatory Reporting",
+        "Workers' Compensation",
+        "Primary Health Care",
+        "Wounds and Injuries"
+      ]
     },
     "candidate_groups": [
       {
         "label": "primários",
         "concepts": [
           {
-            "concept": "Mulher de 32 anos",
+            "concept": "Accidents, Occupational",
             "candidates": [
               {
-                "id": "D008875",
-                "term": "Pessoa de Meia-Idade",
-                "term_en": "Middle Aged",
-                "scope": "Adulto com idade entre 45 e 64 anos.",
-                "categoria": "Grupos Identificados",
+                "id": "D000062",
+                "term": "Acidentes de Trabalho",
+                "term_en": "Accidents, Occupational",
+                "scope": "Ocorrências imprevistas, especialmente lesões ou traumatismos durante atividades relacionadas ao trabalho.",
+                "categoria": "Saúde",
                 "arvore": [
-                  "M01.060.116.630"
+                  "N06.850.135.240",
+                  "SP8.095.664"
                 ]
               },
               {
-                "id": "D005260",
-                "term": "Feminino",
-                "term_en": "Female",
-                "scope": "Organismos com o SEXO biológico que produz ÓVULOS para reprodução sexuada.",
-                "categoria": "",
-                "arvore": []
-              },
-              {
-                "id": "DDCS060373",
-                "term": "Mulheres Lactantes",
-                "term_en": "Breastfeeding Women",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP3.522.561.200.492"
-                ]
-              },
-              {
-                "id": "D000328",
-                "term": "Adulto",
-                "term_en": "Adult",
-                "scope": "Pessoa que atingiu crescimento total ou maturidade. Adultos vão dos 19 até 44 anos de idade. Para uma pessoa entre 19 e 24 anos, está disponível o termo ADULTO JOVEM.",
-                "categoria": "Grupos Identificados",
-                "arvore": [
-                  "M01.060.116"
-                ]
-              },
-              {
-                "id": "D055815",
-                "term": "Adulto Jovem",
-                "term_en": "Young Adult",
-                "scope": "Uma pessoa entre 19 e 24 anos de idade.",
-                "categoria": "Grupos Identificados",
-                "arvore": [
-                  "M01.060.116.815"
-                ]
-              }
-            ]
-          },
-          {
-            "concept": "Enunciado",
-            "candidates": [
-              {
-                "id": "DDCS032482",
-                "term": "Recursos Renováveis",
-                "term_en": "Renewable Resources",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.606.837.868"
-                ]
-              },
-              {
-                "id": "DDCS051583",
-                "term": "Varredoras",
-                "term_en": "Sweepers",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.895.987.506.871"
-                ]
-              },
-              {
-                "id": "DDCS051857",
-                "term": "Utilização de Recursos Locais",
-                "term_en": "Local Resources Uses",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.303.766"
-                ]
-              },
-              {
-                "id": "DDCS051642",
-                "term": "Leito Fixo",
-                "term_en": "Fixed Bed",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.606.806.945.750.207.899.660"
-                ]
-              },
-              {
-                "id": "DDCS025556",
-                "term": "Tanques de Concreto",
-                "term_en": "Reinforced Concrete Tanks",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.895.141.089.248.433.561"
-                ]
-              }
-            ]
-          },
-          {
-            "concept": "chega à unidade de saúde após acidente com material perfurocortante durante o trabalho na cozinha de uma lanchonete próxima da UBS",
-            "candidates": [
-              {
-                "id": "D016602",
-                "term": "Ferimentos Penetrantes Produzidos por Agulha",
-                "term_en": "Needlestick Injuries",
-                "scope": "Ferimentos cortantes, penetrantes, causados por agulhas. São concernentes especialmente a trabalhadores da área de saúde, uma vez que tais lesões os colocam em risco de desenvolverem doença infecciosa",
+                "id": "D060051",
+                "term": "Traumatismos Ocupacionais",
+                "term_en": "Occupational Injuries",
+                "scope": "Lesões adquiridas em incidentes durante atividades laborais.",
                 "categoria": "Doenças",
                 "arvore": [
-                  "C26.986.950.500"
+                  "C26.716"
+                ]
+              },
+              {
+                "id": "DDCS060066",
+                "term": "Acidentes com Materiais Perigosos",
+                "term_en": "Accidents with Hazardous Materials",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP8.095.249"
+                ]
+              },
+              {
+                "id": "DDCS051763",
+                "term": "Acidentes por Explosivos",
+                "term_en": "Accidents Caused by Explosives",
+                "scope": "Acidentes de explosão em massa ou não.",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP8.095.581"
+                ]
+              },
+              {
+                "id": "D000059",
+                "term": "Acidentes",
+                "term_en": "Accidents",
+                "scope": "Eventos inesperados e não intencionais, tipicamente resultando em LESÕES ACIDENTAIS.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N06.850.135",
+                  "SH1.050.313.562.601.900.516"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Occupational Health",
+            "candidates": [
+              {
+                "id": "D016272",
+                "term": "Saúde Ocupacional",
+                "term_en": "Occupational Health",
+                "scope": "Promoção e manutenção no mais alto grau do bem-estar físico, mental e social dos trabalhadores em todas as ocupações.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N01.400.525",
+                  "SP2.770.750.763"
+                ]
+              },
+              {
+                "id": "D009785",
+                "term": "Enfermagem do Trabalho",
+                "term_en": "Occupational Health Nursing",
+                "scope": "Prática da enfermagem no ambiente de trabalho.",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.478.676.590",
+                  "N02.421.533.585"
+                ]
+              },
+              {
+                "id": "DDCS051561",
+                "term": "Política de Saúde do Trabalhador",
+                "term_en": "Occupational Health Policy",
+                "categoria": "Vigilância Sanitária",
+                "arvore": [
+                  "VS4.002.002"
+                ]
+              },
+              {
+                "id": "D054538",
+                "term": "Médicos do Trabalho",
+                "term_en": "Occupational Health Physicians",
+                "scope": "Médicos empregados em uma companhia ou corporação que geralmente não faz parte da indústria da saúde.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.526.485.810.675",
+                  "N02.360.810.675"
+                ]
+              },
+              {
+                "id": "DDCS016379",
+                "term": "Programa de Saúde Ocupacional",
+                "term_en": "Occupational Health Program",
+                "scope": "Abordagem sistemática adotadas por organizações para proteger e promover a saúde e o bem-estar de seus empregados. Tais programas objetivam prevenir acidentes de trabalho, reduzir os dannos ocupaciona",
+                "categoria": "Vigilância Sanitária",
+                "arvore": [
+                  "VS4.002.002.001"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Workers' Compensation",
+            "candidates": [
+              {
+                "id": "D014942",
+                "term": "Indenização aos Trabalhadores",
+                "term_en": "Workers' Compensation",
+                "scope": "Cobertura do seguro que estabelece compensação e benefícios médicos aos trabalhadores por lesões ou doenças relacionados ao trabalho ou à prática laboral.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N03.219.521.346.866",
+                  "N03.219.521.576.300.900"
+                ]
+              },
+              {
+                "id": "D000062",
+                "term": "Acidentes de Trabalho",
+                "term_en": "Accidents, Occupational",
+                "scope": "Ocorrências imprevistas, especialmente lesões ou traumatismos durante atividades relacionadas ao trabalho.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N06.850.135.240",
+                  "SP8.095.664"
                 ]
               },
               {
@@ -450,66 +732,225 @@
                 ]
               },
               {
-                "id": "D014951",
-                "term": "Ferimentos Perfurantes",
-                "term_en": "Wounds, Stab",
-                "scope": "Ferimentos penetrantes causados por um objeto pontiagudo.",
-                "categoria": "Doenças",
+                "id": "D062707",
+                "term": "Retorno ao Trabalho",
+                "term_en": "Return to Work",
+                "scope": "Retomada da rotina de trabalho normal seguida de um intervalo de ausência devido a um ferimento, incapacidade ou outros motivos.",
+                "categoria": "Antropologia, Educação, Sociologia",
                 "arvore": [
-                  "C26.986.950"
+                  "I03.946.449",
+                  "N01.824.245.725"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Primary Health Care",
+            "candidates": [
+              {
+                "id": "D011320",
+                "term": "Atenção Primária à Saúde",
+                "term_en": "Primary Health Care",
+                "scope": "É a assistência sanitária essencial baseada em métodos e tecnologias práticas, cientificamente fundados e socialmente aceitáveis, postos ao alcance de todos os indivíduos e famílias da comunidade medi",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N04.590.233.727",
+                  "SP2.630.121"
                 ]
               },
               {
-                "id": "D000062",
-                "term": "Acidentes de Trabalho",
-                "term_en": "Accidents, Occupational",
-                "scope": "Ocorrências imprevistas, especialmente lesões ou traumatismos durante atividades relacionadas ao trabalho.",
+                "id": "D000092863",
+                "term": "Acesso à Atenção Primária",
+                "term_en": "Access to Primary Care",
+                "scope": "O grau em que as pessoas são inibidas ou facilitadas em sua capacidade de ter acesso e de receber CUIDADOS PRIMÁRIOS.",
                 "categoria": "Saúde",
                 "arvore": [
-                  "N06.850.135.240",
-                  "SP8.095.664"
+                  "N04.590.374.350.250",
+                  "N05.300.430.188"
+                ]
+              },
+              {
+                "id": "DDCS059590",
+                "term": "Territorialização da Atenção Primária",
+                "term_en": "Territorialization in Primary Health Care",
+                "scope": "Um dos pressupostos da organização do processo de trabalho de atenção básica, que visa definir o território de atuação e a população sob responsabilidade das equipes de saúde. Cada equipe de saúde exe",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP2.630.121.754"
+                ]
+              },
+              {
+                "id": "D000076602",
+                "term": "Gestão da Saúde da População",
+                "term_en": "Population Health Management",
+                "scope": "Engajamento da comunidade, monitoramento de instalações e acesso a cuidados financeiramente e temporalmente acessíveis, disponibilidade dos serviços efetivos e a alta qualidade da assistência à saúde ",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N05.300.570"
+                ]
+              },
+              {
+                "id": "D059017",
+                "term": "Enfermagem de Atenção Primária",
+                "term_en": "Primary Care Nursing",
+                "scope": "Técnicas ou métodos de assistência ao paciente usados por enfermeiros enquanto cuidadores primários.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.760.611.735"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Mandatory Reporting",
+            "candidates": [
+              {
+                "id": "D019221",
+                "term": "Notificação de Abuso",
+                "term_en": "Mandatory Reporting",
+                "scope": "Exigência legal de que determinados tipos de informação adquirida por profissionais ou instituições durante o desempenho do trabalho sejam notificados a autoridades competentes.",
+                "categoria": "Antropologia, Educação, Sociologia",
+                "arvore": [
+                  "I01.880.604.583.080.134.300",
+                  "I01.880.604.583.527"
+                ]
+              },
+              {
+                "id": "D018563",
+                "term": "Notificação de Doenças",
+                "term_en": "Disease Notification",
+                "scope": "Comunicação obrigatória de determinadas doenças às autoridades de saúde pública locais, após diagnosticadas. (Tradução livre do original: Last, 2001)",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.362",
+                  "N06.850.520.373"
+                ]
+              },
+              {
+                "id": "D037141",
+                "term": "Programas Obrigatórios",
+                "term_en": "Mandatory Programs",
+                "scope": "Proqrama em que a participação é requerida.",
+                "categoria": "Antropologia, Educação, Sociologia",
+                "arvore": [
+                  "I01.880.604.622",
+                  "N03.706.657"
+                ]
+              },
+              {
+                "id": "D018580",
+                "term": "Testes Obrigatórios",
+                "term_en": "Mandatory Testing",
+                "scope": "Testes ou triagem exigidos por lei federal, estadual ou local, ou de outras agências, para o diagnóstico de afecções específicas. Geralmente se limita a populações específicas como as categorias dos p",
+                "categoria": "Antropologia, Educação, Sociologia",
+                "arvore": [
+                  "I01.880.604.622.500",
+                  "N03.706.657.500"
+                ]
+              },
+              {
+                "id": "D017007",
+                "term": "Responsabilidade pela Informação",
+                "term_en": "Duty to Warn",
+                "scope": "Obrigação do profissional da saúde de quebrar a CONFIDENCIALIDADE do paciente para notificar terceiros sobre o risco de ser acometido ou de contrair infecção grave.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.829.401.046.800.200",
+                  "F04.096.544.335.240.270"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Wounds and Injuries",
+            "candidates": [
+              {
+                "id": "D014947",
+                "term": "Ferimentos e Lesões",
+                "term_en": "Wounds and Injuries",
+                "scope": "Danos infligidos no corpo como resultado direto ou indireto de uma força externa, com ou sem rompimento da continuidade estrutural.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C26"
+                ]
+              },
+              {
+                "id": "D007869",
+                "term": "Traumatismos da Perna",
+                "term_en": "Leg Injuries",
+                "scope": "Traumatismos gerais ou inespecíficos envolvendo a perna.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C26.558"
+                ]
+              },
+              {
+                "id": "D017695",
+                "term": "Lesões dos Tecidos Moles",
+                "term_en": "Soft Tissue Injuries",
+                "scope": "Lesões de outros tecidos que não sejam ossos. O conceito é normalmente geral e não se refere normalmente a vísceras ou órgãos internos. O significado completo se refere a regiões ou órgãos em que os t",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C26.808"
+                ]
+              },
+              {
+                "id": "D001134",
+                "term": "Traumatismos do Braço",
+                "term_en": "Arm Injuries",
+                "scope": "Traumatismos gerais ou não especificados que envolvem o BRAÇO e o ANTEBRAÇO.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C26.088"
+                ]
+              },
+              {
+                "id": "D014950",
+                "term": "Ferimentos Penetrantes",
+                "term_en": "Wounds, Penetrating",
+                "scope": "Ferimentos causados por objetos que penetram na pele.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C26.986"
                 ]
               }
             ]
           }
         ]
-      },
-      {
-        "label": "secundários",
-        "concepts": []
       }
     ],
     "selected_candidates": {
       "primary": [
         {
-          "id": "D005260",
-          "term": "Feminino"
-        },
-        {
-          "id": "D000328",
-          "term": "Adulto"
-        },
-        {
           "id": "D000062",
           "term": "Acidentes de Trabalho"
         },
         {
-          "id": "D014951",
-          "term": "Ferimentos Perfurantes"
-        },
+          "id": "D016272",
+          "term": "Saúde Ocupacional"
+        }
+      ],
+      "secondary": [
         {
           "id": "DDCS016385",
           "term": "Notificação de Acidentes de Trabalho"
+        },
+        {
+          "id": "D011320",
+          "term": "Atenção Primária à Saúde"
+        },
+        {
+          "id": "D014950",
+          "term": "Ferimentos Penetrantes"
         }
-      ],
-      "secondary": []
+      ]
     }
   },
   "stats": {
-    "primary_concepts": 3,
-    "secondary_concepts": 0,
-    "total_candidates": 15,
-    "final_primary": 5,
-    "final_secondary": 0
+    "primary_concepts": 2,
+    "secondary_concepts": 4,
+    "total_candidates": 30,
+    "final_primary": 2,
+    "final_secondary": 3
   }
 }

@@ -2,252 +2,385 @@
   "result": {
     "decs_primary": [
       {
-        "id": "DDCS061013",
-        "term": "População Ribeirinha",
-        "name_en": "Riverside Population",
-        "scope_note": "Grupo de pessoas que vive às margens de rios, igarapés, lagos ou áreas alagadiças e que dependem fortemente dos recursos do rio como meio de subsistência.",
+        "id": "D011320",
+        "term": "Atenção Primária à Saúde",
+        "name_en": "Primary Health Care",
+        "scope_note": "É a assistência sanitária essencial baseada em métodos e tecnologias práticas, cientificamente fundados e socialmente aceitáveis, postos ao alcance de todos os indivíduos e famílias da comunidade mediante a sua plena participação e a um custo que a comunidade e o país possam suportar, em todas e cada etapa do seu desenvolvimento, com um espírito de autorresponsabilidade e autodeterminação. (Declaração de Alma-Ata - Organização Pan-Americana da Saúde, 2003)",
         "tree_ids": [
-          "SP3.522.561.575.631"
+          "N04.590.233.727",
+          "SP2.630.121"
         ],
-        "hierarchy_path": "Saúde Pública › SP3.522.561.575.631",
+        "hierarchy_path": "Saúde › N04.590.233.727",
         "parents": [
           {
-            "id": "DDCS061011",
-            "term": "Populações Tradicionais"
+            "id": "D003191",
+            "term": "Assistência Integral à Saúde"
+          },
+          {
+            "id": "DDCS017209",
+            "term": "Níveis de Atenção à Saúde"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000069341",
+            "term": "Cuidado Transicional"
+          },
+          {
+            "id": "D000073935",
+            "term": "Medicina Narrativa"
+          },
+          {
+            "id": "D010351",
+            "term": "Alta do Paciente"
+          },
+          {
+            "id": "D003266",
+            "term": "Continuidade da Assistência ao Paciente"
+          },
+          {
+            "id": "D010360",
+            "term": "Transferência de Pacientes"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D012424",
+        "term": "População Rural",
+        "name_en": "Rural Population",
+        "scope_note": "Habitantes da área rural ou de pequenos municípios classificados como rurais.",
+        "tree_ids": [
+          "N01.600.725",
+          "SP3.522.561.500",
+          "SP4.707.368.780.510.346"
+        ],
+        "hierarchy_path": "Saúde › N01.600.725",
+        "parents": [
+          {
+            "id": "D011153",
+            "term": "População"
+          },
+          {
+            "id": "DDCS024470",
+            "term": "Assentamentos Humanos"
           }
         ],
         "children": [],
         "role": "primary"
       },
       {
-        "id": "D006798",
-        "term": "Habitação",
-        "name_en": "Housing",
-        "scope_note": "Instalações para alojar humanos.",
+        "id": "D005192",
+        "term": "Saúde da Família",
+        "name_en": "Family Health",
+        "scope_note": "Estado de saúde de uma família como unidade incluindo o impacto causado pela saúde de um membro sobre a unidade e sobre cada um dos membros; inclui o impacto causado pela alteração ou não do estado de saúde de seus membros.",
         "tree_ids": [
-          "J03.340",
-          "N01.224.791.400",
-          "N06.230.150.360",
-          "N06.850.505.400.800.400",
-          "SP3.311.150.321",
-          "SP4.707.368.330"
+          "N01.400.300",
+          "SP2.770.750.103"
         ],
-        "hierarchy_path": "Tecnologia, Indústria, Agricultura › J03.340",
+        "hierarchy_path": "Saúde › N01.400.300",
         "parents": [
           {
-            "id": "D000072182",
-            "term": "Instalações não Médicas Públicas e Privadas"
+            "id": "D006262",
+            "term": "Saúde"
           },
           {
-            "id": "D012111",
-            "term": "Características de Residência"
-          },
-          {
-            "id": "D004780",
-            "term": "Ambiente Controlado"
+            "id": "DDCS050232",
+            "term": "Saúde de Grupos Específicos"
           }
         ],
         "children": [
           {
-            "id": "D000073017",
-            "term": "Campos de Refugiados"
-          },
-          {
-            "id": "D006799",
-            "term": "Abrigo para Animais"
-          },
-          {
-            "id": "D016852",
-            "term": "Habitação para Idosos"
-          },
-          {
-            "id": "D011638",
-            "term": "Habitação Popular"
-          },
-          {
-            "id": "D000082483",
-            "term": "Casas de Trabalho"
+            "id": "D017579",
+            "term": "Violência Doméstica"
           }
         ],
         "role": "primary"
       }
     ],
-    "decs_secondary": []
+    "decs_secondary": [
+      {
+        "id": "D006297",
+        "term": "Acessibilidade aos Serviços de Saúde",
+        "name_en": "Health Services Accessibility",
+        "scope_note": "Possibilidade dos indivíduos adentrarem e utilizarem os serviços de atenção à saúde, com vistas à resolução de problemas que afetem a saúde. Dentre os fatores que influem nesta possibilidade incluem considerações geográficas, arquitetônicas, de transporte, financeiras entre outras.",
+        "tree_ids": [
+          "N04.590.374.350",
+          "N05.300.430",
+          "SP1.852.113",
+          "SP2.070",
+          "SP9.242.315.475.156"
+        ],
+        "hierarchy_path": "Saúde › N04.590.374.350",
+        "parents": [
+          {
+            "id": "D003695",
+            "term": "Atenção à Saúde"
+          },
+          {
+            "id": "D006291",
+            "term": "Política de Saúde"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000092863",
+            "term": "Acesso à Atenção Primária"
+          },
+          {
+            "id": "D000080564",
+            "term": "Direito à Saúde"
+          },
+          {
+            "id": "D000069576",
+            "term": "Equidade em Saúde"
+          },
+          {
+            "id": "D014187",
+            "term": "Transporte de Pacientes"
+          },
+          {
+            "id": "D000080423",
+            "term": "Assistência de Saúde Universal"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D008507",
+        "term": "Área Carente de Assistência Médica",
+        "name_en": "Medically Underserved Area",
+        "scope_note": "Área geográfica cujos recursos de saúde são insuficientes (recursos humanos e/ou instalações) para suprir as necessidades médicas da população aí residente.",
+        "tree_ids": [
+          "N03.349.650.340",
+          "N05.300.450.520"
+        ],
+        "hierarchy_path": "Saúde › N03.349.650.340",
+        "parents": [
+          {
+            "id": "D012040",
+            "term": "Regionalização da Saúde"
+          },
+          {
+            "id": "D006301",
+            "term": "Necessidades e Demandas de Serviços de Saúde"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D002983",
+        "term": "Competência Clínica",
+        "name_en": "Clinical Competence",
+        "scope_note": "A capacidade de realizar aceitavelmente aqueles deveres diretamente relacionados ao cuidado de paciente.",
+        "tree_ids": [
+          "I02.399.630.210",
+          "N04.761.210",
+          "N05.715.175"
+        ],
+        "hierarchy_path": "Antropologia, Educação, Sociologia › I02.399.630.210",
+        "parents": [
+          {
+            "id": "D011361",
+            "term": "Competência Profissional"
+          },
+          {
+            "id": "D011787",
+            "term": "Qualidade da Assistência à Saúde"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      }
+    ]
   },
   "themes_identified": {
     "primary": [
-      "Enunciado",
-      "As comunidades ribeirinhas são compostas de vários agrupamentos familiares",
-      "vivendo em casas de madeira"
+      "Primary Health Care",
+      "Rural Population",
+      "Family Health Strategy"
     ],
-    "secondary": []
+    "secondary": [
+      "Health Services Accessibility",
+      "Medically Underserved Area",
+      "Clinical Competence"
+    ]
   },
   "candidate_groups": [
     {
       "label": "primários",
       "concepts": [
         {
-          "concept": "Enunciado",
+          "concept": "Primary Health Care",
           "candidates": [
             {
-              "id": "DDCS032482",
-              "term": "Recursos Renováveis",
-              "term_en": "Renewable Resources",
-              "categoria": "Saúde Pública",
+              "id": "D011320",
+              "term": "Atenção Primária à Saúde",
+              "term_en": "Primary Health Care",
+              "scope": "É a assistência sanitária essencial baseada em métodos e tecnologias práticas, cientificamente fundados e socialmente aceitáveis, postos ao alcance de todos os indivíduos e famílias da comunidade medi",
+              "categoria": "Saúde",
               "arvore": [
-                "SP4.606.837.868"
+                "N04.590.233.727",
+                "SP2.630.121"
               ]
             },
             {
-              "id": "DDCS051583",
-              "term": "Varredoras",
-              "term_en": "Sweepers",
-              "categoria": "Saúde Pública",
+              "id": "D000092863",
+              "term": "Acesso à Atenção Primária",
+              "term_en": "Access to Primary Care",
+              "scope": "O grau em que as pessoas são inibidas ou facilitadas em sua capacidade de ter acesso e de receber CUIDADOS PRIMÁRIOS.",
+              "categoria": "Saúde",
               "arvore": [
-                "SP4.895.987.506.871"
+                "N04.590.374.350.250",
+                "N05.300.430.188"
               ]
             },
             {
-              "id": "DDCS051857",
-              "term": "Utilização de Recursos Locais",
-              "term_en": "Local Resources Uses",
+              "id": "DDCS059590",
+              "term": "Territorialização da Atenção Primária",
+              "term_en": "Territorialization in Primary Health Care",
+              "scope": "Um dos pressupostos da organização do processo de trabalho de atenção básica, que visa definir o território de atuação e a população sob responsabilidade das equipes de saúde. Cada equipe de saúde exe",
               "categoria": "Saúde Pública",
               "arvore": [
-                "SP4.303.766"
+                "SP2.630.121.754"
               ]
             },
             {
-              "id": "DDCS051642",
-              "term": "Leito Fixo",
-              "term_en": "Fixed Bed",
-              "categoria": "Saúde Pública",
+              "id": "D000076602",
+              "term": "Gestão da Saúde da População",
+              "term_en": "Population Health Management",
+              "scope": "Engajamento da comunidade, monitoramento de instalações e acesso a cuidados financeiramente e temporalmente acessíveis, disponibilidade dos serviços efetivos e a alta qualidade da assistência à saúde ",
+              "categoria": "Saúde",
               "arvore": [
-                "SP4.606.806.945.750.207.899.660"
+                "N05.300.570"
               ]
             },
             {
-              "id": "DDCS025556",
-              "term": "Tanques de Concreto",
-              "term_en": "Reinforced Concrete Tanks",
-              "categoria": "Saúde Pública",
+              "id": "D059017",
+              "term": "Enfermagem de Atenção Primária",
+              "term_en": "Primary Care Nursing",
+              "scope": "Técnicas ou métodos de assistência ao paciente usados por enfermeiros enquanto cuidadores primários.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
               "arvore": [
-                "SP4.895.141.089.248.433.561"
+                "E02.760.611.735"
               ]
             }
           ]
         },
         {
-          "concept": "As comunidades ribeirinhas são compostas de vários agrupamentos familiares",
+          "concept": "Rural Population",
           "candidates": [
             {
-              "id": "DDCS061013",
-              "term": "População Ribeirinha",
-              "term_en": "Riverside Population",
-              "scope": "Grupo de pessoas que vive às margens de rios, igarapés, lagos ou áreas alagadiças e que dependem fortemente dos recursos do rio como meio de subsistência.",
+              "id": "D012424",
+              "term": "População Rural",
+              "term_en": "Rural Population",
+              "scope": "Habitantes da área rural ou de pequenos municípios classificados como rurais.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N01.600.725",
+                "SP3.522.561.500"
+              ]
+            },
+            {
+              "id": "D012423",
+              "term": "Saúde da População Rural",
+              "term_en": "Rural Health",
+              "scope": "O conceito engloba assistir às comunidades rurais para identificação de suas necessidades e prioridades; desenvolver programas nacionais de vigilância, pesquisa e educação; e investigar o impacto da p",
+              "categoria": "Saúde",
+              "arvore": [
+                "N01.400.548.750",
+                "SP2.770.750.213"
+              ]
+            },
+            {
+              "id": "DDCS016060",
+              "term": "Trabalhadores Rurais",
+              "term_en": "Rural Workers",
+              "scope": "Refere-se àquelas pessoas que desenvolvem seu trabalho em áreas rurais.",
               "categoria": "Saúde Pública",
               "arvore": [
-                "SP3.522.561.575.631"
+                "SP3.522.561.200.811"
               ]
             },
             {
-              "id": "D000091443",
-              "term": "Apoio Comunitário",
-              "term_en": "Community Support",
-              "scope": "Sistemas de apoio comunitário que podem ser organizados por membros da família extendida, amigos, vizinhos, organizações religiosas, programas comunitários, organizações culturais e étnicas ou outros ",
-              "categoria": "Antropologia, Educação, Sociologia",
+              "id": "D013383",
+              "term": "População Suburbana",
+              "term_en": "Suburban Population",
+              "scope": "Habitantes de áreas adjacentes a cidades.",
+              "categoria": "Saúde",
               "arvore": [
-                "I01.880.853.500.600.250",
-                "N02.421.143.212.150"
+                "N01.600.775",
+                "SP3.522.561.550"
               ]
             },
             {
-              "id": "D005190",
-              "term": "Família",
-              "term_en": "Family",
-              "scope": "Grupo social que consiste de pais ou pais substitutos e crianças.",
-              "categoria": "Psiquiatria e Psicologia",
+              "id": "DDCS025658",
+              "term": "Zona Rural",
+              "term_en": "Rural Areas",
+              "scope": "Apoiam-se numa multiplicidade de critérios, não existindo em muitos casos uma definição oficial. As tipologias mais comuns baseiam-se fundamentalmente em critérios quantitativos - densidade populacion",
+              "categoria": "Saúde Pública",
               "arvore": [
-                "F01.829.263",
-                "I01.880.853.150"
-              ]
-            },
-            {
-              "id": "D005191",
-              "term": "Características da Família",
-              "term_en": "Family Characteristics",
-              "scope": "Composição e tamanho da família.",
-              "categoria": "Psiquiatria e Psicologia",
-              "arvore": [
-                "F01.829.263.315",
-                "I01.240.361"
-              ]
-            },
-            {
-              "id": "D019058",
-              "term": "Redes Comunitárias",
-              "term_en": "Community Networks",
-              "scope": "Organizações e indivíduos cooperando juntos para atingir uma meta comum em nível local ou de origem popular.",
-              "categoria": "Antropologia, Educação, Sociologia",
-              "arvore": [
-                "I01.880.853.500.300",
-                "L01.313.500.750.300.184"
+                "SP3.311.300.705",
+                "SP4.707.368.780.950"
               ]
             }
           ]
         },
         {
-          "concept": "vivendo em casas de madeira",
+          "concept": "Family Health Strategy",
           "candidates": [
             {
-              "id": "D014934",
-              "term": "Madeira",
-              "term_en": "Wood",
-              "scope": "Produto duro do xilema secundário (composto por CELULOSE, hemicelulose e LIGNANAS) que está sob a casca das árvores e arbustos. É usado na construção, como fonte de CARVÃO VEGETAL e muitos outros prod",
-              "categoria": "Anatomia",
+              "id": "D005192",
+              "term": "Saúde da Família",
+              "term_en": "Family Health",
+              "scope": "Estado de saúde de uma família como unidade incluindo o impacto causado pela saúde de um membro sobre a unidade e sobre cada um dos membros; inclui o impacto causado pela alteração ou não do estado de",
+              "categoria": "Saúde",
               "arvore": [
-                "A18.450.500.500",
-                "J01.637.241.900"
+                "N01.400.300",
+                "SP2.770.750.103"
               ]
             },
             {
-              "id": "DDCS025296",
-              "term": "Indústria da Madeira",
-              "term_en": "Lumber Industry",
-              "categoria": "SH",
-              "arvore": [
-                "SH2.113.348.055"
-              ]
-            },
-            {
-              "id": "D006798",
-              "term": "Habitação",
-              "term_en": "Housing",
-              "scope": "Instalações para alojar humanos.",
-              "categoria": "Tecnologia, Indústria, Agricultura",
-              "arvore": [
-                "J03.340",
-                "N01.224.791.400"
-              ]
-            },
-            {
-              "id": "DDCS059973",
-              "term": "Fornos à Lenha",
-              "term_en": "Wood-Fired Ovens",
-              "scope": "Tipo de forno construído com tijolos refratários e argamassa apropriada cuja chama é mantida pela combustão de lenha.",
+              "id": "DDCS016833",
+              "term": "Estratégias de Saúde Nacionais",
+              "term_en": "National Health Strategies",
+              "scope": "Diretrizes desenvolvidas no nível nacional com o intuito de interferir, modificar e/ou transformar uma determinada realidade sanitária em um país ou território que envolve várias regiões.",
               "categoria": "Saúde Pública",
               "arvore": [
-                "SP4.505.467.300.562"
+                "SP1.852.401.413",
+                "SP2.560.312"
               ]
             },
             {
-              "id": "D003407",
-              "term": "Creosoto",
-              "term_en": "Creosote",
-              "scope": "Substância gordurosa com odor de fumaça e gosto de queimado, produzido por tratamento a alta temperatura de FAIA e outra MADEIRA, ALCATRÃO ou resina da CREOSOTO (PLANTA). Contém CRESÓIS e HIDROCARBONE",
-              "categoria": "Compostos Químicos e Drogas",
+              "id": "DDCS029653",
+              "term": "Estratégias de Saúde",
+              "term_en": "Health Strategies",
+              "scope": "Amplas linhas de ação requeridas em todos os setores para colocar em execução a política de saúde.",
+              "categoria": "Saúde Pública",
               "arvore": [
-                "D02.455.426.559.389.657.239.327",
-                "SP4.808.749.996.231"
+                "SP1.852.401"
+              ]
+            },
+            {
+              "id": "DDCS016834",
+              "term": "Estratégias de Saúde Globais",
+              "term_en": "Global Health Strategies",
+              "scope": "Diretrizes desenvolvidas no nível mundial com o intuito de interferir, modificar e/ou transformar uma determinada realidade sanitária em um território ou continente.",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP1.852.401.398",
+                "SP4.303.655"
+              ]
+            },
+            {
+              "id": "D022143",
+              "term": "Enfermagem Familiar",
+              "term_en": "Family Nursing",
+              "scope": "A provisão de cuidados envolvendo o processo de enfermagem a famílias e membros da família em situações de saúde e enfermidade.",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.478.676.218"
               ]
             }
           ]
@@ -256,184 +389,369 @@
     },
     {
       "label": "secundários",
-      "concepts": []
+      "concepts": [
+        {
+          "concept": "Health Services Accessibility",
+          "candidates": [
+            {
+              "id": "D006297",
+              "term": "Acessibilidade aos Serviços de Saúde",
+              "term_en": "Health Services Accessibility",
+              "scope": "Possibilidade dos indivíduos adentrarem e utilizarem os serviços de atenção à saúde, com vistas à resolução de problemas que afetem a saúde. Dentre os fatores que influem nesta possibilidade incluem c",
+              "categoria": "Saúde",
+              "arvore": [
+                "N04.590.374.350",
+                "N05.300.430"
+              ]
+            },
+            {
+              "id": "DDCS057951",
+              "term": "Acesso Efetivo aos Serviços de Saúde",
+              "term_en": "Effective Access to Health Services",
+              "scope": "Probabilidade de acessar os serviços de saúde necessários no momento preciso. (Traduçãolivre do original: https://bit.ly/2gNLzvf)",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP9.242.315.475.156.202"
+              ]
+            },
+            {
+              "id": "DDCS057977",
+              "term": "Barreiras ao Acesso aos Cuidados de Saúde",
+              "term_en": "Barriers to Access of Health Services",
+              "scope": "Fatores que impedem o acesso equitativo aos serviços, medicamentos e tecnologias de saúde. (De: https://bit.ly/2IoQzV9)",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP9.242.315.475.156.404"
+              ]
+            },
+            {
+              "id": "DDCS033962",
+              "term": "Equidade no Acesso aos Serviços de Saúde",
+              "term_en": "Equity in Access to Health Services",
+              "scope": "Possibilidade do sistema de saúde oferecer alternativas para os indivíduos que mais têm dificuldades de adentrarem e se utilizarem dos serviços de saúde oferecidos, numa região territorialmente delimi",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP1.852.365.503",
+                "SP9.242.315.475.156.606.344"
+              ]
+            },
+            {
+              "id": "DDCS033970",
+              "term": "Acesso Universal aos Serviços de Saúde",
+              "term_en": "Universal Access to Health Care Services",
+              "scope": "Acesso de toda a população aos serviços de saúde, independentemente de seu poder aquisitivo.",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP9.242.315.475.156.303"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Medically Underserved Area",
+          "candidates": [
+            {
+              "id": "D008507",
+              "term": "Área Carente de Assistência Médica",
+              "term_en": "Medically Underserved Area",
+              "scope": "Área geográfica cujos recursos de saúde são insuficientes (recursos humanos e/ou instalações) para suprir as necessidades médicas da população aí residente.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N03.349.650.340",
+                "N05.300.450.520"
+              ]
+            },
+            {
+              "id": "D001113",
+              "term": "Centros Educacionais de Áreas de Saúde",
+              "term_en": "Area Health Education Centers",
+              "scope": "Centros educacionais autorizados pela 'Comprehensive Health Manpower Training Act', 1971, para o treinamento de pessoal da saúde nas áreas em que as necessidades de saúde são maiores. Podem ser usados",
+              "categoria": "Antropologia, Educação, Sociologia",
+              "arvore": [
+                "I02.783.495.125"
+              ]
+            },
+            {
+              "id": "D002391",
+              "term": "Área Programática de Saúde",
+              "term_en": "Catchment Area, Health",
+              "scope": "Área geográfica definida e servida por um programa ou instituição de saúde.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N01.224.791.200",
+                "N03.349.650.095"
+              ]
+            },
+            {
+              "id": "D003151",
+              "term": "Centros Comunitários de Saúde",
+              "term_en": "Community Health Centers",
+              "scope": "Centros que administram a provisão de tratamentos de saúde aos habitantes de uma comunidade e arredores.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N02.278.035.128",
+                "SP2.840.026.233"
+              ]
+            },
+            {
+              "id": "D000091202",
+              "term": "Minorias Desiguais em Saúde e Populações Vulneráveis",
+              "term_en": "Health Disparate Minority and Vulnerable Populations",
+              "scope": "Grupos de pessoas cujas características circunstanciais especiais (por ex. DETERMINANTES SOCIAIS DA SAÚDE) as tornam minorias vulneráveis e frequentemente sujeitas a condições com níveis limitados de ",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.270"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Clinical Competence",
+          "candidates": [
+            {
+              "id": "D002983",
+              "term": "Competência Clínica",
+              "term_en": "Clinical Competence",
+              "scope": "A capacidade de realizar aceitavelmente aqueles deveres diretamente relacionados ao cuidado de paciente.",
+              "categoria": "Antropologia, Educação, Sociologia",
+              "arvore": [
+                "I02.399.630.210",
+                "N04.761.210"
+              ]
+            },
+            {
+              "id": "D011361",
+              "term": "Competência Profissional",
+              "term_en": "Professional Competence",
+              "scope": "A capacidade para executar os deveres de uma profissão em geral ou de executar uma tarefa profissional especial com habilidade de qualidade aceitável.",
+              "categoria": "Antropologia, Educação, Sociologia",
+              "arvore": [
+                "I02.399.630"
+              ]
+            },
+            {
+              "id": "DDCS061181",
+              "term": "Pirâmide de Miller",
+              "term_en": "Miller's Pyramid",
+              "scope": "Metodologia que avalia a competência de estudantes do conhecimento teórico à aplicação prática.",
+              "categoria": "SH",
+              "arvore": [
+                "SH1.030.030.328.647"
+              ]
+            },
+            {
+              "id": "D000079103",
+              "term": "Âmbito da Prática",
+              "term_en": "Scope of Practice",
+              "scope": "Serviços que os profissionais licenciados são considerados competentes e com permissão para executar de acordo com os termos de sua licença profissional.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.829.316.616.625.800"
+              ]
+            },
+            {
+              "id": "D000068616",
+              "term": "Profissionalismo",
+              "term_en": "Professionalism",
+              "scope": "Nível de aptidão, bom senso e polidez esperado de pessoas treinadas para fazerem bem o seu trabalho.",
+              "categoria": "Humanidades",
+              "arvore": [
+                "K01.752.566.479.171.566",
+                "N05.350.340.581"
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "debug_trace": {
     "themes": {
       "primary": [
-        "Enunciado",
-        "As comunidades ribeirinhas são compostas de vários agrupamentos familiares",
-        "vivendo em casas de madeira"
+        "Primary Health Care",
+        "Rural Population",
+        "Family Health Strategy"
       ],
-      "secondary": []
+      "secondary": [
+        "Health Services Accessibility",
+        "Medically Underserved Area",
+        "Clinical Competence"
+      ]
     },
     "candidate_groups": [
       {
         "label": "primários",
         "concepts": [
           {
-            "concept": "Enunciado",
+            "concept": "Primary Health Care",
             "candidates": [
               {
-                "id": "DDCS032482",
-                "term": "Recursos Renováveis",
-                "term_en": "Renewable Resources",
-                "categoria": "Saúde Pública",
+                "id": "D011320",
+                "term": "Atenção Primária à Saúde",
+                "term_en": "Primary Health Care",
+                "scope": "É a assistência sanitária essencial baseada em métodos e tecnologias práticas, cientificamente fundados e socialmente aceitáveis, postos ao alcance de todos os indivíduos e famílias da comunidade medi",
+                "categoria": "Saúde",
                 "arvore": [
-                  "SP4.606.837.868"
+                  "N04.590.233.727",
+                  "SP2.630.121"
                 ]
               },
               {
-                "id": "DDCS051583",
-                "term": "Varredoras",
-                "term_en": "Sweepers",
-                "categoria": "Saúde Pública",
+                "id": "D000092863",
+                "term": "Acesso à Atenção Primária",
+                "term_en": "Access to Primary Care",
+                "scope": "O grau em que as pessoas são inibidas ou facilitadas em sua capacidade de ter acesso e de receber CUIDADOS PRIMÁRIOS.",
+                "categoria": "Saúde",
                 "arvore": [
-                  "SP4.895.987.506.871"
+                  "N04.590.374.350.250",
+                  "N05.300.430.188"
                 ]
               },
               {
-                "id": "DDCS051857",
-                "term": "Utilização de Recursos Locais",
-                "term_en": "Local Resources Uses",
+                "id": "DDCS059590",
+                "term": "Territorialização da Atenção Primária",
+                "term_en": "Territorialization in Primary Health Care",
+                "scope": "Um dos pressupostos da organização do processo de trabalho de atenção básica, que visa definir o território de atuação e a população sob responsabilidade das equipes de saúde. Cada equipe de saúde exe",
                 "categoria": "Saúde Pública",
                 "arvore": [
-                  "SP4.303.766"
+                  "SP2.630.121.754"
                 ]
               },
               {
-                "id": "DDCS051642",
-                "term": "Leito Fixo",
-                "term_en": "Fixed Bed",
-                "categoria": "Saúde Pública",
+                "id": "D000076602",
+                "term": "Gestão da Saúde da População",
+                "term_en": "Population Health Management",
+                "scope": "Engajamento da comunidade, monitoramento de instalações e acesso a cuidados financeiramente e temporalmente acessíveis, disponibilidade dos serviços efetivos e a alta qualidade da assistência à saúde ",
+                "categoria": "Saúde",
                 "arvore": [
-                  "SP4.606.806.945.750.207.899.660"
+                  "N05.300.570"
                 ]
               },
               {
-                "id": "DDCS025556",
-                "term": "Tanques de Concreto",
-                "term_en": "Reinforced Concrete Tanks",
-                "categoria": "Saúde Pública",
+                "id": "D059017",
+                "term": "Enfermagem de Atenção Primária",
+                "term_en": "Primary Care Nursing",
+                "scope": "Técnicas ou métodos de assistência ao paciente usados por enfermeiros enquanto cuidadores primários.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
                 "arvore": [
-                  "SP4.895.141.089.248.433.561"
+                  "E02.760.611.735"
                 ]
               }
             ]
           },
           {
-            "concept": "As comunidades ribeirinhas são compostas de vários agrupamentos familiares",
+            "concept": "Rural Population",
             "candidates": [
               {
-                "id": "DDCS061013",
-                "term": "População Ribeirinha",
-                "term_en": "Riverside Population",
-                "scope": "Grupo de pessoas que vive às margens de rios, igarapés, lagos ou áreas alagadiças e que dependem fortemente dos recursos do rio como meio de subsistência.",
+                "id": "D012424",
+                "term": "População Rural",
+                "term_en": "Rural Population",
+                "scope": "Habitantes da área rural ou de pequenos municípios classificados como rurais.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N01.600.725",
+                  "SP3.522.561.500"
+                ]
+              },
+              {
+                "id": "D012423",
+                "term": "Saúde da População Rural",
+                "term_en": "Rural Health",
+                "scope": "O conceito engloba assistir às comunidades rurais para identificação de suas necessidades e prioridades; desenvolver programas nacionais de vigilância, pesquisa e educação; e investigar o impacto da p",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N01.400.548.750",
+                  "SP2.770.750.213"
+                ]
+              },
+              {
+                "id": "DDCS016060",
+                "term": "Trabalhadores Rurais",
+                "term_en": "Rural Workers",
+                "scope": "Refere-se àquelas pessoas que desenvolvem seu trabalho em áreas rurais.",
                 "categoria": "Saúde Pública",
                 "arvore": [
-                  "SP3.522.561.575.631"
+                  "SP3.522.561.200.811"
                 ]
               },
               {
-                "id": "D000091443",
-                "term": "Apoio Comunitário",
-                "term_en": "Community Support",
-                "scope": "Sistemas de apoio comunitário que podem ser organizados por membros da família extendida, amigos, vizinhos, organizações religiosas, programas comunitários, organizações culturais e étnicas ou outros ",
-                "categoria": "Antropologia, Educação, Sociologia",
+                "id": "D013383",
+                "term": "População Suburbana",
+                "term_en": "Suburban Population",
+                "scope": "Habitantes de áreas adjacentes a cidades.",
+                "categoria": "Saúde",
                 "arvore": [
-                  "I01.880.853.500.600.250",
-                  "N02.421.143.212.150"
+                  "N01.600.775",
+                  "SP3.522.561.550"
                 ]
               },
               {
-                "id": "D005190",
-                "term": "Família",
-                "term_en": "Family",
-                "scope": "Grupo social que consiste de pais ou pais substitutos e crianças.",
-                "categoria": "Psiquiatria e Psicologia",
+                "id": "DDCS025658",
+                "term": "Zona Rural",
+                "term_en": "Rural Areas",
+                "scope": "Apoiam-se numa multiplicidade de critérios, não existindo em muitos casos uma definição oficial. As tipologias mais comuns baseiam-se fundamentalmente em critérios quantitativos - densidade populacion",
+                "categoria": "Saúde Pública",
                 "arvore": [
-                  "F01.829.263",
-                  "I01.880.853.150"
-                ]
-              },
-              {
-                "id": "D005191",
-                "term": "Características da Família",
-                "term_en": "Family Characteristics",
-                "scope": "Composição e tamanho da família.",
-                "categoria": "Psiquiatria e Psicologia",
-                "arvore": [
-                  "F01.829.263.315",
-                  "I01.240.361"
-                ]
-              },
-              {
-                "id": "D019058",
-                "term": "Redes Comunitárias",
-                "term_en": "Community Networks",
-                "scope": "Organizações e indivíduos cooperando juntos para atingir uma meta comum em nível local ou de origem popular.",
-                "categoria": "Antropologia, Educação, Sociologia",
-                "arvore": [
-                  "I01.880.853.500.300",
-                  "L01.313.500.750.300.184"
+                  "SP3.311.300.705",
+                  "SP4.707.368.780.950"
                 ]
               }
             ]
           },
           {
-            "concept": "vivendo em casas de madeira",
+            "concept": "Family Health Strategy",
             "candidates": [
               {
-                "id": "D014934",
-                "term": "Madeira",
-                "term_en": "Wood",
-                "scope": "Produto duro do xilema secundário (composto por CELULOSE, hemicelulose e LIGNANAS) que está sob a casca das árvores e arbustos. É usado na construção, como fonte de CARVÃO VEGETAL e muitos outros prod",
-                "categoria": "Anatomia",
+                "id": "D005192",
+                "term": "Saúde da Família",
+                "term_en": "Family Health",
+                "scope": "Estado de saúde de uma família como unidade incluindo o impacto causado pela saúde de um membro sobre a unidade e sobre cada um dos membros; inclui o impacto causado pela alteração ou não do estado de",
+                "categoria": "Saúde",
                 "arvore": [
-                  "A18.450.500.500",
-                  "J01.637.241.900"
+                  "N01.400.300",
+                  "SP2.770.750.103"
                 ]
               },
               {
-                "id": "DDCS025296",
-                "term": "Indústria da Madeira",
-                "term_en": "Lumber Industry",
-                "categoria": "SH",
-                "arvore": [
-                  "SH2.113.348.055"
-                ]
-              },
-              {
-                "id": "D006798",
-                "term": "Habitação",
-                "term_en": "Housing",
-                "scope": "Instalações para alojar humanos.",
-                "categoria": "Tecnologia, Indústria, Agricultura",
-                "arvore": [
-                  "J03.340",
-                  "N01.224.791.400"
-                ]
-              },
-              {
-                "id": "DDCS059973",
-                "term": "Fornos à Lenha",
-                "term_en": "Wood-Fired Ovens",
-                "scope": "Tipo de forno construído com tijolos refratários e argamassa apropriada cuja chama é mantida pela combustão de lenha.",
+                "id": "DDCS016833",
+                "term": "Estratégias de Saúde Nacionais",
+                "term_en": "National Health Strategies",
+                "scope": "Diretrizes desenvolvidas no nível nacional com o intuito de interferir, modificar e/ou transformar uma determinada realidade sanitária em um país ou território que envolve várias regiões.",
                 "categoria": "Saúde Pública",
                 "arvore": [
-                  "SP4.505.467.300.562"
+                  "SP1.852.401.413",
+                  "SP2.560.312"
                 ]
               },
               {
-                "id": "D003407",
-                "term": "Creosoto",
-                "term_en": "Creosote",
-                "scope": "Substância gordurosa com odor de fumaça e gosto de queimado, produzido por tratamento a alta temperatura de FAIA e outra MADEIRA, ALCATRÃO ou resina da CREOSOTO (PLANTA). Contém CRESÓIS e HIDROCARBONE",
-                "categoria": "Compostos Químicos e Drogas",
+                "id": "DDCS029653",
+                "term": "Estratégias de Saúde",
+                "term_en": "Health Strategies",
+                "scope": "Amplas linhas de ação requeridas em todos os setores para colocar em execução a política de saúde.",
+                "categoria": "Saúde Pública",
                 "arvore": [
-                  "D02.455.426.559.389.657.239.327",
-                  "SP4.808.749.996.231"
+                  "SP1.852.401"
+                ]
+              },
+              {
+                "id": "DDCS016834",
+                "term": "Estratégias de Saúde Globais",
+                "term_en": "Global Health Strategies",
+                "scope": "Diretrizes desenvolvidas no nível mundial com o intuito de interferir, modificar e/ou transformar uma determinada realidade sanitária em um território ou continente.",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP1.852.401.398",
+                  "SP4.303.655"
+                ]
+              },
+              {
+                "id": "D022143",
+                "term": "Enfermagem Familiar",
+                "term_en": "Family Nursing",
+                "scope": "A provisão de cuidados envolvendo o processo de enfermagem a famílias e membros da família em situações de saúde e enfermidade.",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.478.676.218"
                 ]
               }
             ]
@@ -442,28 +760,218 @@
       },
       {
         "label": "secundários",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Health Services Accessibility",
+            "candidates": [
+              {
+                "id": "D006297",
+                "term": "Acessibilidade aos Serviços de Saúde",
+                "term_en": "Health Services Accessibility",
+                "scope": "Possibilidade dos indivíduos adentrarem e utilizarem os serviços de atenção à saúde, com vistas à resolução de problemas que afetem a saúde. Dentre os fatores que influem nesta possibilidade incluem c",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N04.590.374.350",
+                  "N05.300.430"
+                ]
+              },
+              {
+                "id": "DDCS057951",
+                "term": "Acesso Efetivo aos Serviços de Saúde",
+                "term_en": "Effective Access to Health Services",
+                "scope": "Probabilidade de acessar os serviços de saúde necessários no momento preciso. (Traduçãolivre do original: https://bit.ly/2gNLzvf)",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP9.242.315.475.156.202"
+                ]
+              },
+              {
+                "id": "DDCS057977",
+                "term": "Barreiras ao Acesso aos Cuidados de Saúde",
+                "term_en": "Barriers to Access of Health Services",
+                "scope": "Fatores que impedem o acesso equitativo aos serviços, medicamentos e tecnologias de saúde. (De: https://bit.ly/2IoQzV9)",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP9.242.315.475.156.404"
+                ]
+              },
+              {
+                "id": "DDCS033962",
+                "term": "Equidade no Acesso aos Serviços de Saúde",
+                "term_en": "Equity in Access to Health Services",
+                "scope": "Possibilidade do sistema de saúde oferecer alternativas para os indivíduos que mais têm dificuldades de adentrarem e se utilizarem dos serviços de saúde oferecidos, numa região territorialmente delimi",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP1.852.365.503",
+                  "SP9.242.315.475.156.606.344"
+                ]
+              },
+              {
+                "id": "DDCS033970",
+                "term": "Acesso Universal aos Serviços de Saúde",
+                "term_en": "Universal Access to Health Care Services",
+                "scope": "Acesso de toda a população aos serviços de saúde, independentemente de seu poder aquisitivo.",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP9.242.315.475.156.303"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Medically Underserved Area",
+            "candidates": [
+              {
+                "id": "D008507",
+                "term": "Área Carente de Assistência Médica",
+                "term_en": "Medically Underserved Area",
+                "scope": "Área geográfica cujos recursos de saúde são insuficientes (recursos humanos e/ou instalações) para suprir as necessidades médicas da população aí residente.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N03.349.650.340",
+                  "N05.300.450.520"
+                ]
+              },
+              {
+                "id": "D001113",
+                "term": "Centros Educacionais de Áreas de Saúde",
+                "term_en": "Area Health Education Centers",
+                "scope": "Centros educacionais autorizados pela 'Comprehensive Health Manpower Training Act', 1971, para o treinamento de pessoal da saúde nas áreas em que as necessidades de saúde são maiores. Podem ser usados",
+                "categoria": "Antropologia, Educação, Sociologia",
+                "arvore": [
+                  "I02.783.495.125"
+                ]
+              },
+              {
+                "id": "D002391",
+                "term": "Área Programática de Saúde",
+                "term_en": "Catchment Area, Health",
+                "scope": "Área geográfica definida e servida por um programa ou instituição de saúde.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N01.224.791.200",
+                  "N03.349.650.095"
+                ]
+              },
+              {
+                "id": "D003151",
+                "term": "Centros Comunitários de Saúde",
+                "term_en": "Community Health Centers",
+                "scope": "Centros que administram a provisão de tratamentos de saúde aos habitantes de uma comunidade e arredores.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N02.278.035.128",
+                  "SP2.840.026.233"
+                ]
+              },
+              {
+                "id": "D000091202",
+                "term": "Minorias Desiguais em Saúde e Populações Vulneráveis",
+                "term_en": "Health Disparate Minority and Vulnerable Populations",
+                "scope": "Grupos de pessoas cujas características circunstanciais especiais (por ex. DETERMINANTES SOCIAIS DA SAÚDE) as tornam minorias vulneráveis e frequentemente sujeitas a condições com níveis limitados de ",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.270"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Clinical Competence",
+            "candidates": [
+              {
+                "id": "D002983",
+                "term": "Competência Clínica",
+                "term_en": "Clinical Competence",
+                "scope": "A capacidade de realizar aceitavelmente aqueles deveres diretamente relacionados ao cuidado de paciente.",
+                "categoria": "Antropologia, Educação, Sociologia",
+                "arvore": [
+                  "I02.399.630.210",
+                  "N04.761.210"
+                ]
+              },
+              {
+                "id": "D011361",
+                "term": "Competência Profissional",
+                "term_en": "Professional Competence",
+                "scope": "A capacidade para executar os deveres de uma profissão em geral ou de executar uma tarefa profissional especial com habilidade de qualidade aceitável.",
+                "categoria": "Antropologia, Educação, Sociologia",
+                "arvore": [
+                  "I02.399.630"
+                ]
+              },
+              {
+                "id": "DDCS061181",
+                "term": "Pirâmide de Miller",
+                "term_en": "Miller's Pyramid",
+                "scope": "Metodologia que avalia a competência de estudantes do conhecimento teórico à aplicação prática.",
+                "categoria": "SH",
+                "arvore": [
+                  "SH1.030.030.328.647"
+                ]
+              },
+              {
+                "id": "D000079103",
+                "term": "Âmbito da Prática",
+                "term_en": "Scope of Practice",
+                "scope": "Serviços que os profissionais licenciados são considerados competentes e com permissão para executar de acordo com os termos de sua licença profissional.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.829.316.616.625.800"
+                ]
+              },
+              {
+                "id": "D000068616",
+                "term": "Profissionalismo",
+                "term_en": "Professionalism",
+                "scope": "Nível de aptidão, bom senso e polidez esperado de pessoas treinadas para fazerem bem o seu trabalho.",
+                "categoria": "Humanidades",
+                "arvore": [
+                  "K01.752.566.479.171.566",
+                  "N05.350.340.581"
+                ]
+              }
+            ]
+          }
+        ]
       }
     ],
     "selected_candidates": {
       "primary": [
         {
-          "id": "DDCS061013",
-          "term": "População Ribeirinha"
+          "id": "D011320",
+          "term": "Atenção Primária à Saúde"
         },
         {
-          "id": "D006798",
-          "term": "Habitação"
+          "id": "D012424",
+          "term": "População Rural"
+        },
+        {
+          "id": "D005192",
+          "term": "Saúde da Família"
         }
       ],
-      "secondary": []
+      "secondary": [
+        {
+          "id": "D006297",
+          "term": "Acessibilidade aos Serviços de Saúde"
+        },
+        {
+          "id": "D008507",
+          "term": "Área Carente de Assistência Médica"
+        },
+        {
+          "id": "D002983",
+          "term": "Competência Clínica"
+        }
+      ]
     }
   },
   "stats": {
     "primary_concepts": 3,
-    "secondary_concepts": 0,
-    "total_candidates": 15,
-    "final_primary": 2,
-    "final_secondary": 0
+    "secondary_concepts": 3,
+    "total_candidates": 30,
+    "final_primary": 3,
+    "final_secondary": 3
   }
 }
