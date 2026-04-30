@@ -98,8 +98,12 @@ export async function GET(
     }
     const raw = qRes.rows[0].ai_decs_v2 as string | null;
     const parsed = raw ? JSON.parse(raw) : {};
+    const result = parsed.result ?? {
+      decs_primary: parsed.decs_primary ?? [],
+      decs_secondary: parsed.decs_secondary ?? [],
+    };
     return NextResponse.json({
-      result: parsed.result ?? { decs_primary: [], decs_secondary: [] },
+      result,
       themes_identified: parsed.themes_identified ?? { primary: [], secondary: [] },
       candidate_groups: parsed.candidate_groups ?? [],
       debug_trace: parsed.debug_trace ?? null,
