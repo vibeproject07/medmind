@@ -1,0 +1,73 @@
+{
+  "result": [
+    {
+      "term": "Acidentes de Trabalho",
+      "code": "D000062",
+      "tree_ids": [
+        "N06.850.135.240",
+        "SP8.095.664",
+        "VS4.002.001.001.007.001"
+      ],
+      "hierarchy_path": "Saúde › N06.850.135.240",
+      "scope_note": "Ocorrências imprevistas, especialmente lesões ou traumatismos durante atividades relacionadas ao trabalho.",
+      "name_en": "Accidents, Occupational",
+      "role": "primary"
+    },
+    {
+      "term": "Saúde Ocupacional",
+      "code": "D016272",
+      "tree_ids": [
+        "N01.400.525",
+        "SP2.770.750.763",
+        "VS4.002.001"
+      ],
+      "hierarchy_path": "Saúde › N01.400.525",
+      "scope_note": "Promoção e manutenção no mais alto grau do bem-estar físico, mental e social dos trabalhadores em todas as ocupações.",
+      "name_en": "Occupational Health",
+      "role": "primary"
+    },
+    {
+      "term": "Traumatismos Ocupacionais",
+      "code": "D060051",
+      "tree_ids": [
+        "C26.716"
+      ],
+      "hierarchy_path": "Doenças › C26.716",
+      "scope_note": "Lesões adquiridas em incidentes durante atividades laborais.",
+      "name_en": "Occupational Injuries",
+      "role": "secondary"
+    },
+    {
+      "term": "Indenização aos Trabalhadores",
+      "code": "D014942",
+      "tree_ids": [
+        "N03.219.521.346.866",
+        "N03.219.521.576.300.900",
+        "SP8.095.830.702"
+      ],
+      "hierarchy_path": "Saúde › N03.219.521.346.866",
+      "scope_note": "Cobertura do seguro que estabelece compensação e benefícios médicos aos trabalhadores por lesões ou doenças relacionados ao trabalho ou à prática laboral.",
+      "name_en": "Workers' Compensation",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Accidents, Occupational",
+      "Occupational Health"
+    ],
+    "secondary": [
+      "Occupational Injuries",
+      "Mandatory Reporting",
+      "Workers' Compensation",
+      "Primary Health Care"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 2,
+    "secondary_terms": 4,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 2,
+    "final_count": 4
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "result": [
+    {
+      "term": "Serviços de Assistência Domiciliar",
+      "code": "D006699",
+      "tree_ids": [
+        "N02.421.143.524",
+        "N02.421.539.089",
+        "SP2.840.052"
+      ],
+      "hierarchy_path": "Saúde › N02.421.143.524",
+      "scope_note": "Serviços de saúde comunitária e SERVIÇOS DE ENFERMAGEM que provêm serviços múltiplos e coordenados aos pacientes em seus domicílios. Estes serviços de assistência domiciliar oferecem a visita de enfermeiros, unidades de saúde, HOSPITAIS ou grupos comunitários organizados que utilizam equipe profissional especializada na área da saúde. Difere da ENFERMAGEM DOMICILIAR que é composta por não profissionais.",
+      "name_en": "Home Care Services",
+      "role": "primary"
+    },
+    {
+      "term": "Sistema Único de Saúde",
+      "code": "DDCS016771",
+      "tree_ids": [
+        "SP1.852.900.766.548",
+        "SP9.242.315.475.901.672"
+      ],
+      "hierarchy_path": "Saúde Pública › SP1.852.900.766.548",
+      "scope_note": "Conjunto de ações e serviços de saúde, prestados por órgãos ou instituições públicas federais, estaduais e municipais, da administração direta e indireta das fundações mantidas pelo poder público, incluídas as instituições públicas federais, estaduais e municipais de controle de qualidade, pesquisa e produção de insumos, medicamentos, inclusive de sangue e hemoderivados, e de equipamentos para saúde. (Lei 8080 de 19/set/1990 - Lei Orgânica da Saúde)",
+      "name_en": "Unified Health System",
+      "role": "primary"
+    },
+    {
+      "term": "Saúde da Família",
+      "code": "D005192",
+      "tree_ids": [
+        "N01.400.300",
+        "SP2.770.750.103"
+      ],
+      "hierarchy_path": "Saúde › N01.400.300",
+      "scope_note": "Estado de saúde de uma família como unidade incluindo o impacto causado pela saúde de um membro sobre a unidade e sobre cada um dos membros; inclui o impacto causado pela alteração ou não do estado de saúde de seus membros.",
+      "name_en": "Family Health",
+      "role": "secondary"
+    },
+    {
+      "term": "Legislação como Assunto",
+      "code": "D007878",
+      "tree_ids": [
+        "N03.706.615",
+        "SH1.010.030",
+        "SP9.353",
+        "VS1.001.002"
+      ],
+      "hierarchy_path": "Saúde › N03.706.615",
+      "scope_note": "Trabalhos sobre sanções e promulgações de leis, decretos e sua regulamentação por órgãos oficiais de uma nação, estado, ou outra organização legislativa. Refere-se também a leis e regulamentos em geral relacionados à saúde ou para os quais não há descritor específico.",
+      "name_en": "Legislation as Topic",
+      "role": "secondary"
+    },
+    {
+      "term": "Equipe de Assistência ao Paciente",
+      "code": "D010348",
+      "tree_ids": [
+        "N04.590.715"
+      ],
+      "hierarchy_path": "Saúde › N04.590.715",
+      "scope_note": "Cuidados prestados a pacientes por uma equipe multidisciplinar comumente organizada sob a direção de um médico; cada membro da equipe tem responsabilidades específicas e toda a equipe contribui para a assistência ao paciente.",
+      "name_en": "Patient Care Team",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Home Care Services",
+      "Unified Health System"
+    ],
+    "secondary": [
+      "Legislation, Health",
+      "Family Health Strategy",
+      "Patient Care Team"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 2,
+    "secondary_terms": 3,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 0,
+    "final_count": 5
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "result": [
+    {
+      "term": "Atenção Primária à Saúde",
+      "code": "D011320",
+      "tree_ids": [
+        "N04.590.233.727",
+        "SP2.630.121"
+      ],
+      "hierarchy_path": "Saúde › N04.590.233.727",
+      "scope_note": "É a assistência sanitária essencial baseada em métodos e tecnologias práticas, cientificamente fundados e socialmente aceitáveis, postos ao alcance de todos os indivíduos e famílias da comunidade mediante a sua plena participação e a um custo que a comunidade e o país possam suportar, em todas e cada etapa do seu desenvolvimento, com um espírito de autorresponsabilidade e autodeterminação. (Declaração de Alma-Ata - Organização Pan-Americana da Saúde, 2003)",
+      "name_en": "Primary Health Care",
+      "role": "primary"
+    },
+    {
+      "term": "População Rural",
+      "code": "D012424",
+      "tree_ids": [
+        "N01.600.725",
+        "SP3.522.561.500",
+        "SP4.707.368.780.510.346"
+      ],
+      "hierarchy_path": "Saúde › N01.600.725",
+      "scope_note": "Habitantes da área rural ou de pequenos municípios classificados como rurais.",
+      "name_en": "Rural Population",
+      "role": "primary"
+    },
+    {
+      "term": "Saúde da Família",
+      "code": "D005192",
+      "tree_ids": [
+        "N01.400.300",
+        "SP2.770.750.103"
+      ],
+      "hierarchy_path": "Saúde › N01.400.300",
+      "scope_note": "Estado de saúde de uma família como unidade incluindo o impacto causado pela saúde de um membro sobre a unidade e sobre cada um dos membros; inclui o impacto causado pela alteração ou não do estado de saúde de seus membros.",
+      "name_en": "Family Health",
+      "role": "secondary"
+    },
+    {
+      "term": "Acessibilidade aos Serviços de Saúde",
+      "code": "D006297",
+      "tree_ids": [
+        "N04.590.374.350",
+        "N05.300.430",
+        "SP1.852.113",
+        "SP2.070",
+        "SP9.242.315.475.156"
+      ],
+      "hierarchy_path": "Saúde › N04.590.374.350",
+      "scope_note": "Possibilidade dos indivíduos adentrarem e utilizarem os serviços de atenção à saúde, com vistas à resolução de problemas que afetem a saúde. Dentre os fatores que influem nesta possibilidade incluem considerações geográficas, arquitetônicas, de transporte, financeiras entre outras.",
+      "name_en": "Health Services Accessibility",
+      "role": "secondary"
+    },
+    {
+      "term": "Área Carente de Assistência Médica",
+      "code": "D008507",
+      "tree_ids": [
+        "N03.349.650.340",
+        "N05.300.450.520"
+      ],
+      "hierarchy_path": "Saúde › N03.349.650.340",
+      "scope_note": "Área geográfica cujos recursos de saúde são insuficientes (recursos humanos e/ou instalações) para suprir as necessidades médicas da população aí residente.",
+      "name_en": "Medically Underserved Area",
+      "role": "secondary"
+    },
+    {
+      "term": "Competência Clínica",
+      "code": "D002983",
+      "tree_ids": [
+        "I02.399.630.210",
+        "N04.761.210",
+        "N05.715.175"
+      ],
+      "hierarchy_path": "Antropologia, Educação, Sociologia › I02.399.630.210",
+      "scope_note": "A capacidade de realizar aceitavelmente aqueles deveres diretamente relacionados ao cuidado de paciente.",
+      "name_en": "Clinical Competence",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Primary Health Care",
+      "Rural Population"
+    ],
+    "secondary": [
+      "Family Health Strategy",
+      "Health Services Accessibility",
+      "Clinical Competence",
+      "Medically Underserved Area"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 2,
+    "secondary_terms": 4,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 0,
+    "final_count": 6
+  }
+}
