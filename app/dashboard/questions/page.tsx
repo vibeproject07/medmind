@@ -72,6 +72,7 @@ interface Question {
   anulada?: boolean;
   decs_terms?: string[];
   ai_decs_descriptors?: AiDeCSRecord[];
+  ai_decs_v2?: AiDeCSV2Result | null;
   created_at: string;
   updated_at: string;
 }
@@ -79,7 +80,19 @@ interface Question {
 interface AiDeCSRecord {
   term: string;
   role?: 'primary' | 'secondary';
-  group?: 'v1' | 'v2';
+}
+
+interface AiDeCSV2Item {
+  id: string;
+  term: string;
+  role?: 'primary' | 'secondary';
+}
+
+interface AiDeCSV2Result {
+  result?: {
+    decs_primary?: AiDeCSV2Item[];
+    decs_secondary?: AiDeCSV2Item[];
+  };
 }
 
 export default function QuestionsPage() {
@@ -1075,13 +1088,13 @@ export default function QuestionsPage() {
                   {aiDecsErrors[question.id] && (
                     <p className="text-xs text-red-500 mb-1">{aiDecsErrors[question.id]}</p>
                   )}
-                  {(question.ai_decs_descriptors ?? []).length > 0 ? (
+                  {((question.ai_decs_descriptors ?? []).length > 0 || (question.ai_decs_v2?.result?.decs_primary ?? []).length > 0 || (question.ai_decs_v2?.result?.decs_secondary ?? []).length > 0) ? (
                     (() => {
                       const all = question.ai_decs_descriptors ?? [];
-                      const v1Primary = all.filter((d) => d.group !== 'v2' && d.role === 'primary');
-                      const v1Secondary = all.filter((d) => d.group !== 'v2' && d.role === 'secondary');
-                      const v2Primary = all.filter((d) => d.group === 'v2' && d.role === 'primary');
-                      const v2Secondary = all.filter((d) => d.group === 'v2' && d.role === 'secondary');
+                      const v1Primary = all.filter((d) => d.role === 'primary');
+                      const v1Secondary = all.filter((d) => d.role === 'secondary');
+                      const v2Primary = question.ai_decs_v2?.result?.decs_primary ?? [];
+                      const v2Secondary = question.ai_decs_v2?.result?.decs_secondary ?? [];
                       const maxRows = Math.max(v1Primary.length, v1Secondary.length, v2Primary.length, v2Secondary.length, 1);
                       return (
                         <table className="w-full min-w-[860px] text-sm border-collapse">
