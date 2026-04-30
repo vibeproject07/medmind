@@ -200,6 +200,7 @@ export type GeminiTransformTranscriptionParams = {
   maxOutputTokens?: number;
   apiKey?: string;
   systemPrompt?: string;
+  agentKey?: string;
 };
 
 const DEFAULT_MODEL = 'gemini-2.5-flash';
@@ -247,6 +248,7 @@ export async function geminiTransformTranscription({
   maxOutputTokens,
   apiKey,
   systemPrompt,
+  agentKey,
 }: GeminiTransformTranscriptionParams): Promise<string> {
   if (!transcription || !transcription.trim()) {
     throw new Error('Transcrição vazia.');
@@ -260,15 +262,31 @@ export async function geminiTransformTranscription({
     throw new Error('GEMINI_API_KEY não configurada no servidor.');
   }
 
+  let effectiveSystemPrompt = systemPrompt;
+  let effectiveTemperature = temperature;
+  let effectiveMaxTokens = maxOutputTokens;
+
+  if (!effectiveSystemPrompt && agentKey) {
+    const resolved = await getAgentPrompt(agentKey).catch(() => '');
+    effectiveSystemPrompt = resolved || getDefault(agentKey)?.system_prompt;
+    if (effectiveTemperature === undefined || effectiveMaxTokens === undefined) {
+      const def = getDefault(agentKey);
+      if (def) {
+        effectiveTemperature = effectiveTemperature ?? def.temperature;
+        effectiveMaxTokens = effectiveMaxTokens ?? def.max_output_tokens;
+      }
+    }
+  }
+
   const ai = new GoogleGenAI({ apiKey: key, apiVersion: 'v1' });
-  const prompt = buildPrompt(transcription, instruction, systemPrompt);
+  const prompt = buildPrompt(transcription, instruction, effectiveSystemPrompt);
 
   const response = await ai.models.generateContent({
     model: model || DEFAULT_MODEL,
     contents: prompt,
     config: {
-      temperature: temperature ?? 0.2,
-      maxOutputTokens: maxOutputTokens ?? 8192,
+      temperature: effectiveTemperature ?? 0.2,
+      maxOutputTokens: effectiveMaxTokens ?? 8192,
     },
   });
 

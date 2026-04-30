@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/jwt';
-import { geminiProcessDocument, geminiTransformTranscription, EXTRACT_TEXT_INSTRUCTION } from '@/lib/gemini';
+import { geminiProcessDocument, geminiTransformTranscription } from '@/lib/gemini';
 import { extractTextFromDocx, extractTextFromPptx } from '@/lib/document-extract';
-import { getAgentPrompt } from '@/lib/ai-agents';
-import { getDefault } from '@/lib/ai-agents-defaults';
 
 export const runtime = 'nodejs';
 
@@ -41,16 +39,6 @@ function getAgentKeyByMimeType(mimeType: string): string {
     return 'resumo_slides_pdf';
   }
   return 'resumo_documento';
-}
-
-async function resolveAgent(agentKey: string) {
-  const prompt = await getAgentPrompt(agentKey).catch(() => '');
-  const def = getDefault(agentKey);
-  return {
-    systemPrompt: prompt || def?.system_prompt || '',
-    temperature: def?.temperature ?? 0.2,
-    maxOutputTokens: def?.max_output_tokens ?? 8192,
-  };
 }
 
 export async function POST(request: NextRequest) {
@@ -118,28 +106,18 @@ export async function POST(request: NextRequest) {
       }
 
       const agentKey = extractType === 'pptx' ? 'resumo_pptx' : 'resumo_docx';
-      const { systemPrompt, temperature, maxOutputTokens } = await resolveAgent(agentKey);
 
       const summary = await geminiTransformTranscription({
         transcription: extractedText,
-        instruction: 'Produza o material de estudo conforme as instruções do sistema acima.',
-        systemPrompt,
-        temperature,
-        maxOutputTokens,
+        instruction: 'Produza o material de estudo conforme as instruções do sistema.',
+        agentKey,
       });
 
       return NextResponse.json({ text: summary, originalText: extractedText });
     }
 
     const agentKey = getAgentKeyByMimeType(mimeType);
-    const { temperature, maxOutputTokens } = await resolveAgent(agentKey);
-    const result = await geminiProcessDocument({
-      file: buffer,
-      mimeType,
-      agentKey,
-      temperature,
-      maxOutputTokens,
-    });
+    const result = await geminiProcessDocument({ file: buffer, mimeType, agentKey });
 
     const isPdfOrWord =
       mimeType === 'application/pdf' ||
@@ -152,9 +130,7 @@ export async function POST(request: NextRequest) {
         originalText = await geminiProcessDocument({
           file: buffer,
           mimeType,
-          instruction: EXTRACT_TEXT_INSTRUCTION,
-          temperature: 0.0,
-          maxOutputTokens: 16384,
+          agentKey: 'extrair_texto',
         });
       } catch {
         originalText = undefined;

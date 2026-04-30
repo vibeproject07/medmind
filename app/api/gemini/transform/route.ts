@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/jwt';
 import { geminiTransformTranscription } from '@/lib/gemini';
-import { getAgentPrompt } from '@/lib/ai-agents';
-import { getDefault } from '@/lib/ai-agents-defaults';
 
 export const runtime = 'nodejs';
+
+const ALLOWED_AGENT_KEYS = new Set(['transform_base', 'ajuste_transcricao']);
 
 export async function POST(request: NextRequest) {
   try {
@@ -30,6 +30,8 @@ export async function POST(request: NextRequest) {
       (typeof body?.text === 'string' ? body.text : '');
     const instruction = typeof body?.instruction === 'string' ? body.instruction : '';
     const model = typeof body?.model === 'string' ? body.model : undefined;
+    const requestedAgentKey = typeof body?.agentKey === 'string' ? body.agentKey : 'transform_base';
+    const agentKey = ALLOWED_AGENT_KEYS.has(requestedAgentKey) ? requestedAgentKey : 'transform_base';
 
     if (!transcription || !transcription.trim()) {
       return NextResponse.json({ error: 'Envie a transcrição em { transcription: string }.' }, { status: 400 });
@@ -45,18 +47,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Instrução muito grande. Reduza o texto e tente novamente.' }, { status: 400 });
     }
 
-    const systemPrompt = await getAgentPrompt('transform_base').catch(() => '');
-    const def = getDefault('transform_base');
-    const temperature = def?.temperature ?? 0.2;
-    const maxOutputTokens = def?.max_output_tokens ?? 8192;
-
     const result = await geminiTransformTranscription({
       transcription,
       instruction,
       model,
-      systemPrompt: systemPrompt || undefined,
-      temperature,
-      maxOutputTokens,
+      agentKey,
     });
 
     return NextResponse.json({ text: result });
