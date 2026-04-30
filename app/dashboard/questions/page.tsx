@@ -78,9 +78,8 @@ interface Question {
 
 interface AiDeCSRecord {
   term: string;
-  code: string;
-  tree_ids: string[];
-  hierarchy_path: string;
+  role?: 'primary' | 'secondary';
+  group?: 'v1' | 'v2';
 }
 
 export default function QuestionsPage() {
@@ -1059,9 +1058,8 @@ export default function QuestionsPage() {
                 </div>
               )}
 
-              {/* Descritores DeCS IA — apenas admin */}
               {isAdmin && (
-                <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="mt-4 pt-4 border-t border-gray-100 overflow-x-auto">
                   <div className="flex items-center gap-2 mb-2">
                     <Sparkles className="h-3.5 w-3.5 text-indigo-400" />
                     <span className="text-xs font-medium text-gray-500">Descritores DeCS — IA</span>
@@ -1078,17 +1076,36 @@ export default function QuestionsPage() {
                     <p className="text-xs text-red-500 mb-1">{aiDecsErrors[question.id]}</p>
                   )}
                   {(question.ai_decs_descriptors ?? []).length > 0 ? (
-                    <div className="flex flex-wrap gap-1">
-                      {(question.ai_decs_descriptors ?? []).map((d) => (
-                        <span
-                          key={d.code || d.term}
-                          title={d.hierarchy_path}
-                          className="inline-block px-2 py-0.5 text-xs font-medium bg-indigo-50 text-indigo-700 rounded-full border border-indigo-200"
-                        >
-                          {d.term}
-                        </span>
-                      ))}
-                    </div>
+                    (() => {
+                      const all = question.ai_decs_descriptors ?? [];
+                      const v1Primary = all.filter((d) => d.group !== 'v2' && d.role === 'primary');
+                      const v1Secondary = all.filter((d) => d.group !== 'v2' && d.role === 'secondary');
+                      const v2Primary = all.filter((d) => d.group === 'v2' && d.role === 'primary');
+                      const v2Secondary = all.filter((d) => d.group === 'v2' && d.role === 'secondary');
+                      const maxRows = Math.max(v1Primary.length, v1Secondary.length, v2Primary.length, v2Secondary.length, 1);
+                      return (
+                        <table className="w-full min-w-[860px] text-sm border-collapse">
+                          <thead>
+                            <tr>
+                              <th className="text-left py-2 px-3 bg-indigo-50 border border-indigo-100 rounded-tl-lg text-xs font-semibold text-indigo-700 uppercase tracking-wide">V1 — Primary</th>
+                              <th className="text-left py-2 px-3 bg-slate-50 border border-slate-100 text-xs font-semibold text-slate-500 uppercase tracking-wide">V1 — Secondary</th>
+                              <th className="text-left py-2 px-3 bg-emerald-50 border border-emerald-100 text-xs font-semibold text-emerald-700 uppercase tracking-wide">V2 — Primary</th>
+                              <th className="text-left py-2 px-3 bg-teal-50 border border-teal-100 rounded-tr-lg text-xs font-semibold text-teal-600 uppercase tracking-wide">V2 — Secondary</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {Array.from({ length: maxRows }).map((_, i) => (
+                              <tr key={i} className="align-top">
+                                <td className="py-2 px-3 border border-indigo-100 bg-indigo-50/40 font-semibold text-indigo-800">{v1Primary[i]?.term ?? '—'}</td>
+                                <td className="py-2 px-3 border border-slate-100 bg-slate-50/40 font-medium text-slate-700">{v1Secondary[i]?.term ?? '—'}</td>
+                                <td className="py-2 px-3 border border-emerald-100 bg-emerald-50/40 font-semibold text-emerald-800">{v2Primary[i]?.term ?? '—'}</td>
+                                <td className="py-2 px-3 border border-teal-100 bg-teal-50/40 font-medium text-teal-800">{v2Secondary[i]?.term ?? '—'}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      );
+                    })()
                   ) : (
                     !aiDecsLoadingIds.has(question.id) && (
                       <p className="text-xs text-gray-400 italic">Nenhum descritor IA gerado.</p>
