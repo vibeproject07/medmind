@@ -35,3 +35,6 @@ yarn-error.log*
 *.db-wal
 medmind.db
 
+
+# TypeScript build info
+*.tsbuildinfo
