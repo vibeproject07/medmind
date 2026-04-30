@@ -1,0 +1,86 @@
+{
+  "result": [
+    {
+      "term": "Erisipela",
+      "code": "D004886",
+      "tree_ids": [
+        "C01.150.252.410.890.503",
+        "C01.150.252.819.260",
+        "C01.800.720.260",
+        "C17.800.838.765.260"
+      ],
+      "hierarchy_path": "Doenças › C01.150.252.410.890.503",
+      "scope_note": "Infecção aguda da pele causada por espécies de STREPTOCOCCUS. A doença afeta mais frequentemente lactentes, crianças jovens e os idosos. As características incluem lesões de cor rósea ou avermelhadas mornas ao toque que se espalham rapidamente. O local mais frequentemente acometido é a face.",
+      "name_en": "Erysipelas",
+      "role": "primary"
+    },
+    {
+      "term": "Sepse",
+      "code": "D018805",
+      "tree_ids": [
+        "C01.757",
+        "C23.550.470.790.500"
+      ],
+      "hierarchy_path": "Doenças › C01.757",
+      "scope_note": "Síndrome de resposta inflamatória sistêmica com uma etiologia infecciosa suspeita ou comprovada. Quando a sepse está associada com uma disfunção orgânica distante do local de infecção, é denominada sepse grave. Quando a sepse está acompanhada por HIPOTENSÃO apesar de uma infusão adequada de líquidos, é denominada CHOQUE SÉPTICO.",
+      "name_en": "Sepsis",
+      "role": "primary"
+    },
+    {
+      "term": "Antibacterianos",
+      "code": "D000900",
+      "tree_ids": [
+        "D27.505.954.122.085",
+        "SP4.606.635.823.796.135",
+        "VS2.002.001.012",
+        "VS2.004.001.002.006"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D27.505.954.122.085",
+      "scope_note": "Substâncias que inibem a proliferação ou a reprodução de BACTÉRIAS.",
+      "name_en": "Anti-Bacterial Agents",
+      "role": "secondary"
+    },
+    {
+      "term": "Dispneia",
+      "code": "D004417",
+      "tree_ids": [
+        "C08.618.326",
+        "C23.888.852.371"
+      ],
+      "hierarchy_path": "Doenças › C08.618.326",
+      "scope_note": "A respiração com dificuldade ou com esforço.",
+      "name_en": "Dyspnea",
+      "role": "secondary"
+    },
+    {
+      "term": "Síndrome de Resposta Inflamatória Sistêmica",
+      "code": "D018746",
+      "tree_ids": [
+        "C23.550.470.790",
+        "C23.550.835.900"
+      ],
+      "hierarchy_path": "Doenças › C23.550.470.790",
+      "scope_note": "Resposta inflamatória sistêmica a várias agressões clínicas, caracterizada por duas ou mais das seguintes situações: (1) febre acima de 38 graus Celsius ou HIPOTERMIA abaixo de 36 graus Celsius, (2) TAQUICARDIA de mais de 90 batimentos por min, (3) taquipneia de mais de 24 respirações por min, (4) LEUCOCITOSE maior que 12.000 células por mm3 ou 10 por cento de formas imaturas. Embora geralmente associada com infecção, a SRIS também pode estar associada a acometimentos não infecciosos, como TRAUMA, QUEIMADURAS ou PANCREATITE. Se houver infecção, diz-se que o paciente com SRIS tem SEPSE.",
+      "name_en": "Systemic Inflammatory Response Syndrome",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Sepsis",
+      "Erysipelas"
+    ],
+    "secondary": [
+      "Anti-Bacterial Agents",
+      "Dyspnea",
+      "Systemic Inflammatory Response Syndrome"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 2,
+    "secondary_terms": 3,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 0,
+    "final_count": 5
+  }
+}

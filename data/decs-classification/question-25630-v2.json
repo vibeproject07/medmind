@@ -2,15 +2,117 @@
   "result": {
     "decs_primary": [
       {
-        "id": "D000086722",
-        "term": "Rinorreia",
-        "name_en": "Rhinorrhea",
-        "scope_note": "Excesso de drenagem nasal.",
+        "id": "D011014",
+        "term": "Pneumonia",
+        "name_en": "Pneumonia",
+        "scope_note": "Infecção do pulmão frequentemente acompanhada por inflamação.",
         "tree_ids": [
-          "C23.888.852.834"
+          "C01.748.610",
+          "C08.381.677",
+          "C08.730.610"
         ],
-        "hierarchy_path": "Doenças › C23.888.852.834",
+        "hierarchy_path": "Doenças › C01.748.610",
         "parents": [
+          {
+            "id": "D012141",
+            "term": "Infecções Respiratórias"
+          },
+          {
+            "id": "D008171",
+            "term": "Pneumopatias"
+          }
+        ],
+        "children": [
+          {
+            "id": "D011001",
+            "term": "Pleuropneumonia"
+          },
+          {
+            "id": "D011017",
+            "term": "Pneumonia Lipoide"
+          },
+          {
+            "id": "D011023",
+            "term": "Pneumonia Estafilocócica"
+          },
+          {
+            "id": "D011022",
+            "term": "Pneumonia por Rickettsiaceae"
+          },
+          {
+            "id": "D011024",
+            "term": "Pneumonia Viral"
+          }
+        ],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D000900",
+        "term": "Antibacterianos",
+        "name_en": "Anti-Bacterial Agents",
+        "scope_note": "Substâncias que inibem a proliferação ou a reprodução de BACTÉRIAS.",
+        "tree_ids": [
+          "D27.505.954.122.085",
+          "SP4.606.635.823.796.135",
+          "VS2.002.001.012",
+          "VS2.004.001.002.006"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D27.505.954.122.085",
+        "parents": [
+          {
+            "id": "D000890",
+            "term": "Anti-Infecciosos"
+          },
+          {
+            "id": "D020313",
+            "term": "Usos Especializados de Substâncias Químicas"
+          },
+          {
+            "id": "D004364",
+            "term": "Preparações Farmacêuticas"
+          }
+        ],
+        "children": [
+          {
+            "id": "D007917",
+            "term": "Hansenostáticos"
+          },
+          {
+            "id": "D000904",
+            "term": "Antibióticos Antituberculose"
+          },
+          {
+            "id": "D000993",
+            "term": "Antitreponêmicos"
+          },
+          {
+            "id": "D000995",
+            "term": "Antituberculosos"
+          },
+          {
+            "id": "D000097909",
+            "term": "Cefalosporinas de Segunda Geração"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D003371",
+        "term": "Tosse",
+        "name_en": "Cough",
+        "scope_note": "Expulsão súbita e audível de ar dos pulmões através de uma glote parcialmente fechada precedida por inalação. É uma resposta protetora que serve para limpar a traqueia, brônquios e/ou pulmões de irritantes e secreções ou para prevenir a aspiração de materiais estranhos para dentro dos pulmões.",
+        "tree_ids": [
+          "C08.618.248",
+          "C23.888.852.293"
+        ],
+        "hierarchy_path": "Doenças › C08.618.248",
+        "parents": [
+          {
+            "id": "D012120",
+            "term": "Transtornos Respiratórios"
+          },
           {
             "id": "D012818",
             "term": "Sinais e Sintomas Respiratórios"
@@ -18,191 +120,115 @@
         ],
         "children": [
           {
-            "id": "D002559",
-            "term": "Rinorreia de Líquido Cefalorraquidiano"
+            "id": "D000096822",
+            "term": "Tosse Crônica"
           }
         ],
-        "role": "primary"
+        "role": "secondary"
+      },
+      {
+        "id": "D000553",
+        "term": "Assistência Ambulatorial",
+        "name_en": "Ambulatory Care",
+        "scope_note": "Cuidados ou tratamentos prestados a um indivíduo, cujas condições de saúde lhe permitem comparecer à consulta e retornar à casa, dispensando internação hospitalar. (European Commission Glossary)",
+        "tree_ids": [
+          "E02.760.106",
+          "N02.421.585.106",
+          "SP2.840.013",
+          "VS3.003.001.001"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.760.106",
+        "parents": [
+          {
+            "id": "D005791",
+            "term": "Assistência ao Paciente"
+          },
+          {
+            "id": "D006296",
+            "term": "Serviços de Saúde"
+          }
+        ],
+        "children": [
+          {
+            "id": "D010531",
+            "term": "Diálise Peritoneal Ambulatorial Contínua"
+          }
+        ],
+        "role": "secondary"
       }
-    ],
-    "decs_secondary": []
+    ]
   },
   "themes_identified": {
     "primary": [
-      "Enunciado",
-      "Paciente de 35 anos vem à consulta com febre e tosse",
-      "Relata quadro de rinorreia e odinofagia há 5 dias"
+      "Pneumonia"
     ],
-    "secondary": []
+    "secondary": [
+      "Anti-Bacterial Agents",
+      "Ambulatory Care",
+      "Fever",
+      "Cough"
+    ]
   },
   "candidate_groups": [
     {
       "label": "primários",
       "concepts": [
         {
-          "concept": "Enunciado",
+          "concept": "Pneumonia",
           "candidates": [
             {
-              "id": "DDCS032482",
-              "term": "Recursos Renováveis",
-              "term_en": "Renewable Resources",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.606.837.868"
-              ]
-            },
-            {
-              "id": "DDCS051583",
-              "term": "Varredoras",
-              "term_en": "Sweepers",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.895.987.506.871"
-              ]
-            },
-            {
-              "id": "DDCS051857",
-              "term": "Utilização de Recursos Locais",
-              "term_en": "Local Resources Uses",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.303.766"
-              ]
-            },
-            {
-              "id": "DDCS051642",
-              "term": "Leito Fixo",
-              "term_en": "Fixed Bed",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.606.806.945.750.207.899.660"
-              ]
-            },
-            {
-              "id": "DDCS025556",
-              "term": "Tanques de Concreto",
-              "term_en": "Reinforced Concrete Tanks",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.895.141.089.248.433.561"
-              ]
-            }
-          ]
-        },
-        {
-          "concept": "Relata quadro de rinorreia e odinofagia há 5 dias",
-          "candidates": [
-            {
-              "id": "D000086722",
-              "term": "Rinorreia",
-              "term_en": "Rhinorrhea",
-              "scope": "Excesso de drenagem nasal.",
+              "id": "D011014",
+              "term": "Pneumonia",
+              "term_en": "Pneumonia",
+              "scope": "Infecção do pulmão frequentemente acompanhada por inflamação.",
               "categoria": "Doenças",
               "arvore": [
-                "C23.888.852.834"
+                "C01.748.610",
+                "C08.381.677"
               ]
             },
             {
-              "id": "D000096825",
-              "term": "Rinossinusite",
-              "term_en": "Rhinosinusitis",
-              "scope": "Obstrução da drenagem à CAVIDADE NASAL e inflamação da MUCOSA NASAL nos SEIOS PARANASAIS.",
+              "id": "D011001",
+              "term": "Pleuropneumonia",
+              "term_en": "Pleuropneumonia",
+              "scope": "Inflamação do parênquima do pulmão associada com PLEURISIA, inflamação da PLEURA.",
               "categoria": "Doenças",
               "arvore": [
-                "C01.748.674.500",
-                "C01.748.749.703"
+                "C01.748.582.473",
+                "C01.748.610.473"
               ]
             },
             {
-              "id": "D010612",
-              "term": "Faringite",
-              "term_en": "Pharyngitis",
-              "scope": "inflamação da garganta (FARINGE).",
+              "id": "D001996",
+              "term": "Broncopneumonia",
+              "term_en": "Bronchopneumonia",
+              "scope": "Inflamação do parênquima pulmonar associado com BRONQUITE, geralmente envolvendo áreas lobulares desde os BRONQUÍOLOS TERMINAIS até os ALVÉOLOS PULMONARES. As áreas afetadas tornam-se preenchidas com ",
               "categoria": "Doenças",
               "arvore": [
-                "C01.748.561",
-                "C07.550.781"
+                "C01.748.610.127",
+                "C08.127.509"
               ]
             },
             {
-              "id": "D012220",
-              "term": "Rinite",
-              "term_en": "Rhinitis",
-              "scope": "Inflamação da MUCOSA NASAL, a mucosa que recobre as CAVIDADES NASAIS.",
+              "id": "D011019",
+              "term": "Pneumonia por Mycoplasma",
+              "term_en": "Pneumonia, Mycoplasma",
+              "scope": "Pneumonia intersticial causada por extensa infecção dos PULMÕES e BRÔNQUIOS (particularmente dos lobos inferiores dos pulmões) por MYCOPLASMA PNEUMONIAE em humanos. Em OVINOS, é causada por MYCOPLASMA",
               "categoria": "Doenças",
               "arvore": [
-                "C01.748.674",
-                "C08.460.799"
+                "C01.150.252.400.610.610.760",
+                "C01.150.252.620.500"
               ]
             },
             {
-              "id": "D009302",
-              "term": "Doenças Nasofaríngeas",
-              "term_en": "Nasopharyngeal Diseases",
-              "scope": "Processos patológicos envolvendo a NASOFARINGE.",
+              "id": "D018410",
+              "term": "Pneumonia Bacteriana",
+              "term_en": "Pneumonia, Bacterial",
+              "scope": "Inflamação do parênquima pulmonar causada por infecções bacterianas.",
               "categoria": "Doenças",
               "arvore": [
-                "C07.550.350",
-                "C09.775.350"
-              ]
-            }
-          ]
-        },
-        {
-          "concept": "Paciente de 35 anos vem à consulta com febre e tosse",
-          "candidates": [
-            {
-              "id": "D005335",
-              "term": "Febre de Causa Desconhecida",
-              "term_en": "Fever of Unknown Origin",
-              "scope": "Febre em que a etiologia não pode ser estabelecida.",
-              "categoria": "Doenças",
-              "arvore": [
-                "C23.888.119.344.345"
-              ]
-            },
-            {
-              "id": "D056586",
-              "term": "Síndrome Torácica Aguda",
-              "term_en": "Acute Chest Syndrome",
-              "scope": "Síndrome respiratória caracterizada pelo aparecimento de um novo infiltrado pulmonar no raio-X de tórax, acompanhado por sintomas de febre, tosse, dor no peito, taquipneia ou DISPNEIA, frequentemente ",
-              "categoria": "Doenças",
-              "arvore": [
-                "C08.381.074",
-                "C08.618.009"
-              ]
-            },
-            {
-              "id": "D007251",
-              "term": "Influenza Humana",
-              "term_en": "Influenza, Human",
-              "scope": "Infecção viral aguda em humanos envolvendo o trato respiratório. Caracterizada por inflamação da MUCOSA NASAL, FARINGE, conjuntiva, cefaleia e mialgia grave, frequentemente generalizada.",
-              "categoria": "Doenças",
-              "arvore": [
-                "C01.748.310",
-                "C01.925.782.620.365"
-              ]
-            },
-            {
-              "id": "D045169",
-              "term": "Síndrome Respiratória Aguda Grave",
-              "term_en": "Severe Acute Respiratory Syndrome",
-              "scope": "Transtorno viral caracterizado por FEBRE alta, TOSSE seca, falta de ar (DISPNEIA) ou dificuldades para respirar e PNEUMONIA atípica. Um vírus do gênero CORONAVIRUS é o agente suspeito.",
-              "categoria": "Doenças",
-              "arvore": [
-                "C01.748.730",
-                "C01.925.782.600.550.200.750"
-              ]
-            },
-            {
-              "id": "D018549",
-              "term": "Pneumonia em Organização Criptogênica",
-              "term_en": "Cryptogenic Organizing Pneumonia",
-              "scope": "Doença pulmonar intersticial de etiologia desconhecida que ocorre entre os 21 e 80 anos de idade. É caracterizada por um início dramático de doença semelhante à pneumonia com tosse, febre, mal estar, ",
-              "categoria": "Doenças",
-              "arvore": [
-                "C08.127.446.135.140.600.750",
-                "C08.381.483.652.500.750.249"
+                "C01.150.252.620",
+                "C01.748.610.540"
               ]
             }
           ]
@@ -211,186 +237,311 @@
     },
     {
       "label": "secundários",
-      "concepts": []
+      "concepts": [
+        {
+          "concept": "Anti-Bacterial Agents",
+          "candidates": [
+            {
+              "id": "D000900",
+              "term": "Antibacterianos",
+              "term_en": "Anti-Bacterial Agents",
+              "scope": "Substâncias que inibem a proliferação ou a reprodução de BACTÉRIAS.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.954.122.085",
+                "SP4.606.635.823.796.135"
+              ]
+            },
+            {
+              "id": "D000890",
+              "term": "Anti-Infecciosos",
+              "term_en": "Anti-Infective Agents",
+              "scope": "Substâncias que impedem a disseminação de agentes ou organismos infecciosos ou que matam agentes infecciosos para impedir a disseminação da infecção.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.954.122"
+              ]
+            },
+            {
+              "id": "DDCS051507",
+              "term": "Produtos com Ação Antimicrobiana",
+              "term_en": "Products with Antimicrobial Action",
+              "categoria": "Vigilância Sanitária",
+              "arvore": [
+                "VS2.004.001.002"
+              ]
+            },
+            {
+              "id": "D000097902",
+              "term": "Antibióticos beta-Lactâmicos",
+              "term_en": "beta Lactam Antibiotics",
+              "scope": "Agentes bactericidas que contêm um anel beta-lactâmico em sua estrutura química. Inibem a síntese da parede celular bacteriana ligando-se às PROTEÍNAS DE LIGAÇÃO À PENICILINA, impedindo a síntese de p",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.954.122.085.386"
+              ]
+            },
+            {
+              "id": "D000891",
+              "term": "Anti-Infecciosos Locais",
+              "term_en": "Anti-Infective Agents, Local",
+              "scope": "Substâncias, usadas nos seres humanos e em outros animais, que destroem microrganismos prejudiciais ou inibem sua atividade. São diferentes dos DESINFETANTES que são usados em objetos inanimados.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.954.122.187"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Cough",
+          "candidates": [
+            {
+              "id": "D003371",
+              "term": "Tosse",
+              "term_en": "Cough",
+              "scope": "Expulsão súbita e audível de ar dos pulmões através de uma glote parcialmente fechada precedida por inalação. É uma resposta protetora que serve para limpar a traqueia, brônquios e/ou pulmões de irrit",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.618.248",
+                "C23.888.852.293"
+              ]
+            },
+            {
+              "id": "D000096822",
+              "term": "Tosse Crônica",
+              "term_en": "Chronic Cough",
+              "scope": "Tosse com duração superior a 8 semanas em adultos, com impacto potencial na QUALIDADE DE VIDA RELACIONADA À SAÚDE. A tosse crônica geralmente está associada à inflamação eosinofílica das vias aéreas (",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.618.248.500",
+                "C23.888.852.293.500"
+              ]
+            },
+            {
+              "id": "D014917",
+              "term": "Coqueluche",
+              "term_en": "Whooping Cough",
+              "scope": "Infecção respiratória causada pela BORDETELLA PERTUSSIS e caracterizada por tosse paroxística que termina numa inspiração prolongada e estridente (tosse comprida).",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.150.252.400.143.500",
+                "C01.748.969"
+              ]
+            },
+            {
+              "id": "D000096823",
+              "term": "Variante Tussígena da Asma",
+              "term_en": "Cough-Variant Asthma",
+              "scope": "Asma caracterizada por TOSSE CRÔNICA improdutiva, sem outros sintomas asmáticos, como o CHIADO e a DISPNEIA PAROXÍSTICA. A variante tussígena da asma é acompanhada de HIPERSENSIBILIDADE RESPIRATÓRIA e",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.127.108.784",
+                "C08.381.495.108.750"
+              ]
+            },
+            {
+              "id": "D000996",
+              "term": "Antitussígenos",
+              "term_en": "Antitussive Agents",
+              "scope": "Fármacos que suprimem a tosse. Agem centralmente sobre o centro medular da tosse. Os EXPECTORANTES, também usados no tratamento da tosse, agem localmente.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.954.427.153",
+                "D27.505.954.796.090"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Ambulatory Care",
+          "candidates": [
+            {
+              "id": "D000553",
+              "term": "Assistência Ambulatorial",
+              "term_en": "Ambulatory Care",
+              "scope": "Cuidados ou tratamentos prestados a um indivíduo, cujas condições de saúde lhe permitem comparecer à consulta e retornar à casa, dispensando internação hospitalar. (European Commission Glossary)",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.760.106",
+                "N02.421.585.106"
+              ]
+            },
+            {
+              "id": "D000554",
+              "term": "Instituições de Assistência Ambulatorial",
+              "term_en": "Ambulatory Care Facilities",
+              "scope": "Órgãos que prestam serviços ambulatoriais a pacientes institucionalizados ou não.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N02.278.035",
+                "VS3.002.005"
+              ]
+            },
+            {
+              "id": "D000556",
+              "term": "Procedimentos Cirúrgicos Ambulatórios",
+              "term_en": "Ambulatory Surgical Procedures",
+              "scope": "Cirurgia feita em paciente externo. Pode ser feita num hospital, consultório ou centro cirúrgico.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E04.030"
+              ]
+            },
+            {
+              "id": "D010044",
+              "term": "Ambulatório Hospitalar",
+              "term_en": "Outpatient Clinics, Hospital",
+              "scope": "Serviços hospitalares que prestam assistência médica com base ambulatorial.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N02.278.035.380",
+                "N02.278.216.500.968.527"
+              ]
+            },
+            {
+              "id": "D010045",
+              "term": "Pacientes Ambulatoriais",
+              "term_en": "Outpatients",
+              "scope": "Pessoas que recebem cuidados de ambulatório em um departamento de pacientes ambulatoriais ou clínica sem que sejam providos comida e alojamento.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.643.630",
+                "SP3.522.561.200.580.154"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Fever",
+          "candidates": [
+            {
+              "id": "DDCS025893",
+              "term": "Achyranthes calea",
+              "term_en": "Achyranthes calea",
+              "scope": "Medicamento homeopático. Erva da febre. Abrev.: \"achy.\". Origem vegetal. Habitat original: América Central e México. Parte utilizada: planta inteira.",
+              "categoria": "HP",
+              "arvore": [
+                "HP4.018.602.600.012"
+              ]
+            },
+            {
+              "id": "D058633",
+              "term": "Antipiréticos",
+              "term_en": "Antipyretics",
+              "scope": "Medicamentos que são usados para reduzir a temperatura corporal na ocorrência de febre.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.696.068"
+              ]
+            },
+            {
+              "id": "D011749",
+              "term": "Pirogênios",
+              "term_en": "Pyrogens",
+              "scope": "Substâncias capazes de aumentar a TEMPERATURA CORPORAL causando FEBRE e que podem ser usados na TERAPIA POR FEBRE. Podem ser de origem microbiana, frequentemente POLISSACARÍDEOS e podem contaminar a á",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.888.569.673"
+              ]
+            },
+            {
+              "id": "D011298",
+              "term": "Feprazona",
+              "term_en": "Feprazone",
+              "scope": "Pirazol que tem propriedades analgésica, anti-inflamatória e antipirética. Tem sido utilizada na dor leve a moderada, febre e inflamação associada com transtornos da musculatura esquelética e da artic",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D03.383.129.539.850.777.670"
+              ]
+            },
+            {
+              "id": "DDCS027271",
+              "term": "Pyrogenium",
+              "term_en": "Pyrogenium",
+              "scope": "Medicamento homeopático. Abrev.: \"pyrog.\". Origem animal. Substância utilizada: carne de vaca e porco.",
+              "categoria": "HP",
+              "arvore": [
+                "HP4.018.602.100.751"
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "debug_trace": {
     "themes": {
       "primary": [
-        "Enunciado",
-        "Paciente de 35 anos vem à consulta com febre e tosse",
-        "Relata quadro de rinorreia e odinofagia há 5 dias"
+        "Pneumonia"
       ],
-      "secondary": []
+      "secondary": [
+        "Anti-Bacterial Agents",
+        "Ambulatory Care",
+        "Fever",
+        "Cough"
+      ]
     },
     "candidate_groups": [
       {
         "label": "primários",
         "concepts": [
           {
-            "concept": "Enunciado",
+            "concept": "Pneumonia",
             "candidates": [
               {
-                "id": "DDCS032482",
-                "term": "Recursos Renováveis",
-                "term_en": "Renewable Resources",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.606.837.868"
-                ]
-              },
-              {
-                "id": "DDCS051583",
-                "term": "Varredoras",
-                "term_en": "Sweepers",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.895.987.506.871"
-                ]
-              },
-              {
-                "id": "DDCS051857",
-                "term": "Utilização de Recursos Locais",
-                "term_en": "Local Resources Uses",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.303.766"
-                ]
-              },
-              {
-                "id": "DDCS051642",
-                "term": "Leito Fixo",
-                "term_en": "Fixed Bed",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.606.806.945.750.207.899.660"
-                ]
-              },
-              {
-                "id": "DDCS025556",
-                "term": "Tanques de Concreto",
-                "term_en": "Reinforced Concrete Tanks",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.895.141.089.248.433.561"
-                ]
-              }
-            ]
-          },
-          {
-            "concept": "Relata quadro de rinorreia e odinofagia há 5 dias",
-            "candidates": [
-              {
-                "id": "D000086722",
-                "term": "Rinorreia",
-                "term_en": "Rhinorrhea",
-                "scope": "Excesso de drenagem nasal.",
+                "id": "D011014",
+                "term": "Pneumonia",
+                "term_en": "Pneumonia",
+                "scope": "Infecção do pulmão frequentemente acompanhada por inflamação.",
                 "categoria": "Doenças",
                 "arvore": [
-                  "C23.888.852.834"
+                  "C01.748.610",
+                  "C08.381.677"
                 ]
               },
               {
-                "id": "D000096825",
-                "term": "Rinossinusite",
-                "term_en": "Rhinosinusitis",
-                "scope": "Obstrução da drenagem à CAVIDADE NASAL e inflamação da MUCOSA NASAL nos SEIOS PARANASAIS.",
+                "id": "D011001",
+                "term": "Pleuropneumonia",
+                "term_en": "Pleuropneumonia",
+                "scope": "Inflamação do parênquima do pulmão associada com PLEURISIA, inflamação da PLEURA.",
                 "categoria": "Doenças",
                 "arvore": [
-                  "C01.748.674.500",
-                  "C01.748.749.703"
+                  "C01.748.582.473",
+                  "C01.748.610.473"
                 ]
               },
               {
-                "id": "D010612",
-                "term": "Faringite",
-                "term_en": "Pharyngitis",
-                "scope": "inflamação da garganta (FARINGE).",
+                "id": "D001996",
+                "term": "Broncopneumonia",
+                "term_en": "Bronchopneumonia",
+                "scope": "Inflamação do parênquima pulmonar associado com BRONQUITE, geralmente envolvendo áreas lobulares desde os BRONQUÍOLOS TERMINAIS até os ALVÉOLOS PULMONARES. As áreas afetadas tornam-se preenchidas com ",
                 "categoria": "Doenças",
                 "arvore": [
-                  "C01.748.561",
-                  "C07.550.781"
+                  "C01.748.610.127",
+                  "C08.127.509"
                 ]
               },
               {
-                "id": "D012220",
-                "term": "Rinite",
-                "term_en": "Rhinitis",
-                "scope": "Inflamação da MUCOSA NASAL, a mucosa que recobre as CAVIDADES NASAIS.",
+                "id": "D011019",
+                "term": "Pneumonia por Mycoplasma",
+                "term_en": "Pneumonia, Mycoplasma",
+                "scope": "Pneumonia intersticial causada por extensa infecção dos PULMÕES e BRÔNQUIOS (particularmente dos lobos inferiores dos pulmões) por MYCOPLASMA PNEUMONIAE em humanos. Em OVINOS, é causada por MYCOPLASMA",
                 "categoria": "Doenças",
                 "arvore": [
-                  "C01.748.674",
-                  "C08.460.799"
+                  "C01.150.252.400.610.610.760",
+                  "C01.150.252.620.500"
                 ]
               },
               {
-                "id": "D009302",
-                "term": "Doenças Nasofaríngeas",
-                "term_en": "Nasopharyngeal Diseases",
-                "scope": "Processos patológicos envolvendo a NASOFARINGE.",
+                "id": "D018410",
+                "term": "Pneumonia Bacteriana",
+                "term_en": "Pneumonia, Bacterial",
+                "scope": "Inflamação do parênquima pulmonar causada por infecções bacterianas.",
                 "categoria": "Doenças",
                 "arvore": [
-                  "C07.550.350",
-                  "C09.775.350"
-                ]
-              }
-            ]
-          },
-          {
-            "concept": "Paciente de 35 anos vem à consulta com febre e tosse",
-            "candidates": [
-              {
-                "id": "D005335",
-                "term": "Febre de Causa Desconhecida",
-                "term_en": "Fever of Unknown Origin",
-                "scope": "Febre em que a etiologia não pode ser estabelecida.",
-                "categoria": "Doenças",
-                "arvore": [
-                  "C23.888.119.344.345"
-                ]
-              },
-              {
-                "id": "D056586",
-                "term": "Síndrome Torácica Aguda",
-                "term_en": "Acute Chest Syndrome",
-                "scope": "Síndrome respiratória caracterizada pelo aparecimento de um novo infiltrado pulmonar no raio-X de tórax, acompanhado por sintomas de febre, tosse, dor no peito, taquipneia ou DISPNEIA, frequentemente ",
-                "categoria": "Doenças",
-                "arvore": [
-                  "C08.381.074",
-                  "C08.618.009"
-                ]
-              },
-              {
-                "id": "D007251",
-                "term": "Influenza Humana",
-                "term_en": "Influenza, Human",
-                "scope": "Infecção viral aguda em humanos envolvendo o trato respiratório. Caracterizada por inflamação da MUCOSA NASAL, FARINGE, conjuntiva, cefaleia e mialgia grave, frequentemente generalizada.",
-                "categoria": "Doenças",
-                "arvore": [
-                  "C01.748.310",
-                  "C01.925.782.620.365"
-                ]
-              },
-              {
-                "id": "D045169",
-                "term": "Síndrome Respiratória Aguda Grave",
-                "term_en": "Severe Acute Respiratory Syndrome",
-                "scope": "Transtorno viral caracterizado por FEBRE alta, TOSSE seca, falta de ar (DISPNEIA) ou dificuldades para respirar e PNEUMONIA atípica. Um vírus do gênero CORONAVIRUS é o agente suspeito.",
-                "categoria": "Doenças",
-                "arvore": [
-                  "C01.748.730",
-                  "C01.925.782.600.550.200.750"
-                ]
-              },
-              {
-                "id": "D018549",
-                "term": "Pneumonia em Organização Criptogênica",
-                "term_en": "Cryptogenic Organizing Pneumonia",
-                "scope": "Doença pulmonar intersticial de etiologia desconhecida que ocorre entre os 21 e 80 anos de idade. É caracterizada por um início dramático de doença semelhante à pneumonia com tosse, febre, mal estar, ",
-                "categoria": "Doenças",
-                "arvore": [
-                  "C08.127.446.135.140.600.750",
-                  "C08.381.483.652.500.750.249"
+                  "C01.150.252.620",
+                  "C01.748.610.540"
                 ]
               }
             ]
@@ -399,24 +550,267 @@
       },
       {
         "label": "secundários",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Anti-Bacterial Agents",
+            "candidates": [
+              {
+                "id": "D000900",
+                "term": "Antibacterianos",
+                "term_en": "Anti-Bacterial Agents",
+                "scope": "Substâncias que inibem a proliferação ou a reprodução de BACTÉRIAS.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.954.122.085",
+                  "SP4.606.635.823.796.135"
+                ]
+              },
+              {
+                "id": "D000890",
+                "term": "Anti-Infecciosos",
+                "term_en": "Anti-Infective Agents",
+                "scope": "Substâncias que impedem a disseminação de agentes ou organismos infecciosos ou que matam agentes infecciosos para impedir a disseminação da infecção.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.954.122"
+                ]
+              },
+              {
+                "id": "DDCS051507",
+                "term": "Produtos com Ação Antimicrobiana",
+                "term_en": "Products with Antimicrobial Action",
+                "categoria": "Vigilância Sanitária",
+                "arvore": [
+                  "VS2.004.001.002"
+                ]
+              },
+              {
+                "id": "D000097902",
+                "term": "Antibióticos beta-Lactâmicos",
+                "term_en": "beta Lactam Antibiotics",
+                "scope": "Agentes bactericidas que contêm um anel beta-lactâmico em sua estrutura química. Inibem a síntese da parede celular bacteriana ligando-se às PROTEÍNAS DE LIGAÇÃO À PENICILINA, impedindo a síntese de p",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.954.122.085.386"
+                ]
+              },
+              {
+                "id": "D000891",
+                "term": "Anti-Infecciosos Locais",
+                "term_en": "Anti-Infective Agents, Local",
+                "scope": "Substâncias, usadas nos seres humanos e em outros animais, que destroem microrganismos prejudiciais ou inibem sua atividade. São diferentes dos DESINFETANTES que são usados em objetos inanimados.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.954.122.187"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Cough",
+            "candidates": [
+              {
+                "id": "D003371",
+                "term": "Tosse",
+                "term_en": "Cough",
+                "scope": "Expulsão súbita e audível de ar dos pulmões através de uma glote parcialmente fechada precedida por inalação. É uma resposta protetora que serve para limpar a traqueia, brônquios e/ou pulmões de irrit",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.618.248",
+                  "C23.888.852.293"
+                ]
+              },
+              {
+                "id": "D000096822",
+                "term": "Tosse Crônica",
+                "term_en": "Chronic Cough",
+                "scope": "Tosse com duração superior a 8 semanas em adultos, com impacto potencial na QUALIDADE DE VIDA RELACIONADA À SAÚDE. A tosse crônica geralmente está associada à inflamação eosinofílica das vias aéreas (",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.618.248.500",
+                  "C23.888.852.293.500"
+                ]
+              },
+              {
+                "id": "D014917",
+                "term": "Coqueluche",
+                "term_en": "Whooping Cough",
+                "scope": "Infecção respiratória causada pela BORDETELLA PERTUSSIS e caracterizada por tosse paroxística que termina numa inspiração prolongada e estridente (tosse comprida).",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.150.252.400.143.500",
+                  "C01.748.969"
+                ]
+              },
+              {
+                "id": "D000096823",
+                "term": "Variante Tussígena da Asma",
+                "term_en": "Cough-Variant Asthma",
+                "scope": "Asma caracterizada por TOSSE CRÔNICA improdutiva, sem outros sintomas asmáticos, como o CHIADO e a DISPNEIA PAROXÍSTICA. A variante tussígena da asma é acompanhada de HIPERSENSIBILIDADE RESPIRATÓRIA e",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.127.108.784",
+                  "C08.381.495.108.750"
+                ]
+              },
+              {
+                "id": "D000996",
+                "term": "Antitussígenos",
+                "term_en": "Antitussive Agents",
+                "scope": "Fármacos que suprimem a tosse. Agem centralmente sobre o centro medular da tosse. Os EXPECTORANTES, também usados no tratamento da tosse, agem localmente.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.954.427.153",
+                  "D27.505.954.796.090"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Ambulatory Care",
+            "candidates": [
+              {
+                "id": "D000553",
+                "term": "Assistência Ambulatorial",
+                "term_en": "Ambulatory Care",
+                "scope": "Cuidados ou tratamentos prestados a um indivíduo, cujas condições de saúde lhe permitem comparecer à consulta e retornar à casa, dispensando internação hospitalar. (European Commission Glossary)",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.760.106",
+                  "N02.421.585.106"
+                ]
+              },
+              {
+                "id": "D000554",
+                "term": "Instituições de Assistência Ambulatorial",
+                "term_en": "Ambulatory Care Facilities",
+                "scope": "Órgãos que prestam serviços ambulatoriais a pacientes institucionalizados ou não.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N02.278.035",
+                  "VS3.002.005"
+                ]
+              },
+              {
+                "id": "D000556",
+                "term": "Procedimentos Cirúrgicos Ambulatórios",
+                "term_en": "Ambulatory Surgical Procedures",
+                "scope": "Cirurgia feita em paciente externo. Pode ser feita num hospital, consultório ou centro cirúrgico.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E04.030"
+                ]
+              },
+              {
+                "id": "D010044",
+                "term": "Ambulatório Hospitalar",
+                "term_en": "Outpatient Clinics, Hospital",
+                "scope": "Serviços hospitalares que prestam assistência médica com base ambulatorial.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N02.278.035.380",
+                  "N02.278.216.500.968.527"
+                ]
+              },
+              {
+                "id": "D010045",
+                "term": "Pacientes Ambulatoriais",
+                "term_en": "Outpatients",
+                "scope": "Pessoas que recebem cuidados de ambulatório em um departamento de pacientes ambulatoriais ou clínica sem que sejam providos comida e alojamento.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.643.630",
+                  "SP3.522.561.200.580.154"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Fever",
+            "candidates": [
+              {
+                "id": "DDCS025893",
+                "term": "Achyranthes calea",
+                "term_en": "Achyranthes calea",
+                "scope": "Medicamento homeopático. Erva da febre. Abrev.: \"achy.\". Origem vegetal. Habitat original: América Central e México. Parte utilizada: planta inteira.",
+                "categoria": "HP",
+                "arvore": [
+                  "HP4.018.602.600.012"
+                ]
+              },
+              {
+                "id": "D058633",
+                "term": "Antipiréticos",
+                "term_en": "Antipyretics",
+                "scope": "Medicamentos que são usados para reduzir a temperatura corporal na ocorrência de febre.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.696.068"
+                ]
+              },
+              {
+                "id": "D011749",
+                "term": "Pirogênios",
+                "term_en": "Pyrogens",
+                "scope": "Substâncias capazes de aumentar a TEMPERATURA CORPORAL causando FEBRE e que podem ser usados na TERAPIA POR FEBRE. Podem ser de origem microbiana, frequentemente POLISSACARÍDEOS e podem contaminar a á",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.888.569.673"
+                ]
+              },
+              {
+                "id": "D011298",
+                "term": "Feprazona",
+                "term_en": "Feprazone",
+                "scope": "Pirazol que tem propriedades analgésica, anti-inflamatória e antipirética. Tem sido utilizada na dor leve a moderada, febre e inflamação associada com transtornos da musculatura esquelética e da artic",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D03.383.129.539.850.777.670"
+                ]
+              },
+              {
+                "id": "DDCS027271",
+                "term": "Pyrogenium",
+                "term_en": "Pyrogenium",
+                "scope": "Medicamento homeopático. Abrev.: \"pyrog.\". Origem animal. Substância utilizada: carne de vaca e porco.",
+                "categoria": "HP",
+                "arvore": [
+                  "HP4.018.602.100.751"
+                ]
+              }
+            ]
+          }
+        ]
       }
     ],
     "selected_candidates": {
       "primary": [
         {
-          "id": "D000086722",
-          "term": "Rinorreia"
+          "id": "D011014",
+          "term": "Pneumonia"
         }
       ],
-      "secondary": []
+      "secondary": [
+        {
+          "id": "D000900",
+          "term": "Antibacterianos"
+        },
+        {
+          "id": "D003371",
+          "term": "Tosse"
+        },
+        {
+          "id": "D000553",
+          "term": "Assistência Ambulatorial"
+        }
+      ]
     }
   },
   "stats": {
-    "primary_concepts": 3,
-    "secondary_concepts": 0,
-    "total_candidates": 15,
+    "primary_concepts": 1,
+    "secondary_concepts": 4,
+    "total_candidates": 25,
     "final_primary": 1,
-    "final_secondary": 0
+    "final_secondary": 3
   }
 }

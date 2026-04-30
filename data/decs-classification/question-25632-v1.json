@@ -1,0 +1,99 @@
+{
+  "result": [
+    {
+      "term": "Arritmias Cardíacas",
+      "code": "D001145",
+      "tree_ids": [
+        "C14.280.067",
+        "C23.550.073"
+      ],
+      "hierarchy_path": "Doenças › C14.280.067",
+      "scope_note": "Quaisquer distúrbios da pulsação rítmica normal do coração ou CONTRAÇÃO MIOCÁRDICA. As arritmias cardíacas podem ser classificadas pelas anormalidades da FREQUÊNCIA CARDÍACA, transtornos de geração de impulsos elétricos, ou condução de impulso.",
+      "name_en": "Arrhythmias, Cardiac",
+      "role": "primary"
+    },
+    {
+      "term": "Bradicardia",
+      "code": "D001919",
+      "tree_ids": [
+        "C14.280.067.319",
+        "C23.550.073.300"
+      ],
+      "hierarchy_path": "Doenças › C14.280.067.319",
+      "scope_note": "Arritmias cardíacas caracterizadas por FREQUÊNCIA CARDÍACA excessivamente baixa, normalmente abaixo de 50 batimentos por minuto em humanos adultos. Podem ser amplamente classificadas na disfunção do NÓ SINOATRIAL e no BLOQUEIO ATRIOVENTRICULAR.",
+      "name_en": "Bradycardia",
+      "role": "primary"
+    },
+    {
+      "term": "Pneumonia",
+      "code": "D011014",
+      "tree_ids": [
+        "C01.748.610",
+        "C08.381.677",
+        "C08.730.610"
+      ],
+      "hierarchy_path": "Doenças › C01.748.610",
+      "scope_note": "Infecção do pulmão frequentemente acompanhada por inflamação.",
+      "name_en": "Pneumonia",
+      "role": "secondary"
+    },
+    {
+      "term": "Marca-Passo Artificial",
+      "code": "D010138",
+      "tree_ids": [
+        "E07.305.250.750"
+      ],
+      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E07.305.250.750",
+      "scope_note": "Dispositivo desenhado para estimular, por impulsos elétricos, a contração dos músculos cardíacos. Pode ser temporário (externo) ou permanente (interno ou interno-externo).",
+      "name_en": "Pacemaker, Artificial",
+      "role": "secondary"
+    },
+    {
+      "term": "Atropina",
+      "code": "D001285",
+      "tree_ids": [
+        "D02.145.074.722.229.199",
+        "D03.132.760.180.572.199",
+        "D03.132.889.180.648.199",
+        "D03.605.084.500.722.229.199",
+        "D03.605.869.229.199"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D02.145.074.722.229.199",
+      "scope_note": "Alcaloide, originalmente de Atropa belladonna, mas encontradas em outras plantas, principalmente SOLANACEAE. Hiosciamina é o 3(S)-endo-isômero de atropina.",
+      "name_en": "Atropine",
+      "role": "secondary"
+    },
+    {
+      "term": "Eletrocardiografia",
+      "code": "D004562",
+      "tree_ids": [
+        "E01.370.370.380.240",
+        "E01.370.405.240"
+      ],
+      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.370.380.240",
+      "scope_note": "Registro do momento-a-momento das forças eletromotrizes do CORAÇÃO enquanto projetadas a vários locais da superfície corporal delineadas como uma função escalar do tempo. O registro é monitorado por um traçado sobre papel carta em movimento lento ou por observação em um cardioscópio que é um MONITOR DE TUBO DE RAIOS CATÓDICOS.",
+      "name_en": "Electrocardiography",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Bradycardia",
+      "Arrhythmias, Cardiac"
+    ],
+    "secondary": [
+      "Electrocardiography",
+      "Pacemaker, Artificial",
+      "Atropine",
+      "Vertigo",
+      "Pneumonia"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 2,
+    "secondary_terms": 5,
+    "dropped_by_category_filter": 1,
+    "dropped_by_gemini_validation": 0,
+    "final_count": 6
+  }
+}

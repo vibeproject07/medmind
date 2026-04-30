@@ -1,0 +1,79 @@
+{
+  "result": [
+    {
+      "term": "Canal Inguinal",
+      "code": "D007264",
+      "tree_ids": [
+        "A01.923.047.412"
+      ],
+      "hierarchy_path": "Anatomia › A01.923.047.412",
+      "scope_note": "Passagem (na PAREDE ABDOMINAL anterior inferior) pela qual passam o CORDÃO ESPERMÁTICO (no homem), o LIGAMENTO REDONDO (na mulher), os nervos e os vasos. Sua extremidade interna localiza-se no anel inguinal profundo e a extremidade externa está no anel inguinal superficial.",
+      "name_en": "Inguinal Canal",
+      "role": "primary"
+    },
+    {
+      "term": "Virilha",
+      "code": "D006119",
+      "tree_ids": [
+        "A01.923.047.365"
+      ],
+      "hierarchy_path": "Anatomia › A01.923.047.365",
+      "scope_note": "Região juncional externa localizada entre a parte mais baixa do abdome e a coxa.",
+      "name_en": "Groin",
+      "role": "primary"
+    },
+    {
+      "term": "Hérnia Abdominal",
+      "code": "D046449",
+      "tree_ids": [
+        "C23.300.707.374"
+      ],
+      "hierarchy_path": "Doenças › C23.300.707.374",
+      "scope_note": "Protusão de estruturas abdominais através da PAREDE ABDOMINAL. Envolve duas partes: uma abertura na parede abdominal e uma bolsa constituído por PERITÔNIO e conteúdos abdominais. Entre as hérnias abdominais estão hérnias da virilha (HÉRNIA FEMORAL, HÉRNIA INGUINAL) e HÉRNIA VENTRAL.",
+      "name_en": "Hernia, Abdominal",
+      "role": "secondary"
+    },
+    {
+      "term": "Cordão Espermático",
+      "code": "D013085",
+      "tree_ids": [
+        "A05.360.444.777"
+      ],
+      "hierarchy_path": "Anatomia › A05.360.444.777",
+      "scope_note": "Cada um dos pares de estruturas tubulares formado por DUCTOS DEFERENTES, ARTÉRIAS, VEIAS, VASOS LINFÁTICOS e nervos. Estende-se do anel inguinal profundo (através do CANAL INGUINAL) até os TESTÍCULOS (no ESCROTO).",
+      "name_en": "Spermatic Cord",
+      "role": "secondary"
+    },
+    {
+      "term": "Parede Abdominal",
+      "code": "D034861",
+      "tree_ids": [
+        "A01.923.047.050",
+        "A01.923.112.125"
+      ],
+      "hierarchy_path": "Anatomia › A01.923.047.050",
+      "scope_note": "Margem externa do ABDOME que se estende da cavidade torácica osteocartilaginosa até a PELVE. Embora sua maior parte seja muscular, a parede abdominal consiste em pelo menos sete camadas: PELE, gordura subcutânea, FASCIA profunda; MÚSCULOS ABDOMINAIS, fascia transversa, gordura extraperitoneal e o PERITÔNIO parietal.",
+      "name_en": "Abdominal Wall",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Inguinal Canal",
+      "Groin"
+    ],
+    "secondary": [
+      "Hernia, Abdominal",
+      "Abdominal Wall",
+      "Spermatic Cord",
+      "Inguinal Ligament"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 2,
+    "secondary_terms": 4,
+    "dropped_by_category_filter": 1,
+    "dropped_by_gemini_validation": 0,
+    "final_count": 5
+  }
+}

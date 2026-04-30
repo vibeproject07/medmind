@@ -1,0 +1,98 @@
+{
+  "result": [
+    {
+      "term": "Infarto do Miocárdio",
+      "code": "D009203",
+      "tree_ids": [
+        "C14.280.647.500",
+        "C14.907.585.500",
+        "C23.550.513.355.750",
+        "C23.550.717.489.750"
+      ],
+      "hierarchy_path": "Doenças › C14.280.647.500",
+      "scope_note": "NECROSE do MIOCÁRDIO causada por uma obstrução no fornecimento de sangue ao coração (CIRCULAÇÃO CORONÁRIA).",
+      "name_en": "Myocardial Infarction",
+      "role": "primary"
+    },
+    {
+      "term": "Prevenção Secundária",
+      "code": "D055502",
+      "tree_ids": [
+        "E02.897",
+        "N02.421.726.825",
+        "N06.850.780.750",
+        "SP2.840.385.619.561"
+      ],
+      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.897",
+      "scope_note": "Prevenção de recorrências ou exacerbações de uma doença ou de complicações advindas de seu tratamento.",
+      "name_en": "Secondary Prevention",
+      "role": "primary"
+    },
+    {
+      "term": "Antagonistas Adrenérgicos beta",
+      "code": "D000319",
+      "tree_ids": [
+        "D27.505.519.625.050.200.200",
+        "D27.505.696.577.050.200.200"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D27.505.519.625.050.200.200",
+      "scope_note": "Fármacos que se ligam aos receptores beta adrenérgicos sem ativá-los, bloqueando assim as ações de agonistas adrenérgicos beta. Os antagonistas adrenérgicos beta são usados no tratamento da hipertensão, arritmias cardíacas, angina pectoris, glaucoma, enxaquecas e ansiedade.",
+      "name_en": "Adrenergic beta-Antagonists",
+      "role": "secondary"
+    },
+    {
+      "term": "Inibidores da Agregação Plaquetária",
+      "code": "D010975",
+      "tree_ids": [
+        "D27.505.954.502.780"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D27.505.954.502.780",
+      "scope_note": "Drogas ou agentes que antagonizam ou prejudicam qualquer mecanismo que conduz à agregação plaquetária, seja durante as fases de ativação e mudança de forma, seja seguindo a reação de liberação de grânulos densos e estimulação do sistema prostaglandina-tromboxana.",
+      "name_en": "Platelet Aggregation Inhibitors",
+      "role": "secondary"
+    },
+    {
+      "term": "Inibidores da Enzima Conversora de Angiotensina",
+      "code": "D000806",
+      "tree_ids": [
+        "D27.505.519.389.745.085"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D27.505.519.389.745.085",
+      "scope_note": "Classe de drogas cujas principais indicações são o tratamento da hipertensão e da insuficiência cardíaca. Exercem seu efeito hemodinâmico principalmente inibindo o sistema renina-angiotensina. Também modulam a atividade do sistema nervoso simpático e aumentam a síntese de prostaglandinas. Provocam principalmente vasodilatação e natriurese leve, sem afetar a velocidade e a contratibilidade cardíaca.",
+      "name_en": "Angiotensin-Converting Enzyme Inhibitors",
+      "role": "secondary"
+    },
+    {
+      "term": "Inibidores de Hidroximetilglutaril-CoA Redutases",
+      "code": "D019161",
+      "tree_ids": [
+        "D27.505.519.186.071.202.370",
+        "D27.505.519.389.370",
+        "D27.505.954.557.500.202.370"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D27.505.519.186.071.202.370",
+      "scope_note": "Compostos que inibem as HIDROXIMETILGLUTARIL-COA REDUTASES. Foi demonstrado que reduzem diretamente a síntese de COLESTEROL.",
+      "name_en": "Hydroxymethylglutaryl-CoA Reductase Inhibitors",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Myocardial Infarction",
+      "Secondary Prevention"
+    ],
+    "secondary": [
+      "Hydroxymethylglutaryl-CoA Reductase Inhibitors",
+      "Adrenergic beta-Antagonists",
+      "Angiotensin-Converting Enzyme Inhibitors",
+      "Platelet Aggregation Inhibitors"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 2,
+    "secondary_terms": 4,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 0,
+    "final_count": 6
+  }
+}
