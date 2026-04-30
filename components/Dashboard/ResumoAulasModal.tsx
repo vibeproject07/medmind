@@ -210,8 +210,8 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
             return;
           }
           if (resDoc.ok && dataDoc.text) {
-            setSummary(dataDoc.text);
             setResult(dataDoc.originalText ?? NAO_REPRODUZIR_ORIGINAL);
+            setSummary(dataDoc.text);
           } else {
             const errMsg = dataDoc.error;
             const message =
@@ -272,6 +272,8 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
   const hasLink = link.trim().length > 0;
   const canTranscribe = files.length > 0 || hasLink;
   const showOnlyAddButton = showContinueToNote && (result || summary) && onSaveResumo;
+  const originalContent = result ?? '';
+  const transformedContent = summary ?? '';
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -312,8 +314,13 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
           ) : (
           <>
           <p className="text-sm text-gray-600">
+            Selecione a estrela em um dos campos abaixo para tornar o texto exibido como conteúdo de sua nota. Só irá aparecer como um dos textos como conteúdo da nota após a seleção de um deles.
+          </p>
+          {/* Versão obsoleta desta página:
+          <p className="text-sm text-gray-600">
             Envie vídeos, imagens, áudios ou documentos, ou cole o link onde o material está disponível (incluindo links do YouTube). A transcrição é feita para áudio, vídeo e vídeos do YouTube.
           </p>
+          */}
           {!showMoreInfo ? (
             <button
               type="button"
@@ -408,6 +415,17 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
               placeholder="https://..."
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="px-4 py-3 rounded-lg border border-primary-200 bg-primary-50">
+              <div className="font-semibold text-primary-700">Arquivo original</div>
+              <div className="text-sm text-gray-600 whitespace-pre-wrap">{originalContent || '—'}</div>
+            </div>
+            <div className="px-4 py-3 rounded-lg border border-gray-200 bg-white">
+              <div className="font-semibold text-gray-700">Arquivo transformado pela IA</div>
+              <div className="text-sm text-gray-600 whitespace-pre-wrap">{transformedContent || '—'}</div>
+            </div>
           </div>
 
           {showContinueToNote ? (

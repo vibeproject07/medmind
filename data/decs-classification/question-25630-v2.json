@@ -2,48 +2,26 @@
   "result": {
     "decs_primary": [
       {
-        "id": "D011014",
-        "term": "Pneumonia",
-        "name_en": "Pneumonia",
-        "scope_note": "Infecção do pulmão frequentemente acompanhada por inflamação.",
+        "id": "D000098968",
+        "term": "Pneumonia Adquirida na Comunidade",
+        "name_en": "Community-Acquired Pneumonia",
+        "scope_note": "Infecção dos pulmões em um paciente que não está hospitalizado ou que não esteve em uma unidade de cuidados de longo prazo por 14 dias antes do início dos sintomas. Está associada a alguns sinais e sintomas de infecção aguda e é acompanhada pela presença de um infiltrado agudo na radiografia de tórax. (Tradução livre do original: US Pharm. 2007;32(10):44-5 https://www.uspharmacist.com/article/community-acquired-pneumonia).",
         "tree_ids": [
-          "C01.748.610",
-          "C08.381.677",
-          "C08.730.610"
+          "C01.234.500",
+          "C08.730.610.214"
         ],
-        "hierarchy_path": "Doenças › C01.748.610",
+        "hierarchy_path": "Doenças › C01.234.500",
         "parents": [
           {
-            "id": "D012141",
-            "term": "Infecções Respiratórias"
+            "id": "D017714",
+            "term": "Infecções Comunitárias Adquiridas"
           },
           {
-            "id": "D008171",
-            "term": "Pneumopatias"
+            "id": "D011014",
+            "term": "Pneumonia"
           }
         ],
-        "children": [
-          {
-            "id": "D011001",
-            "term": "Pleuropneumonia"
-          },
-          {
-            "id": "D011017",
-            "term": "Pneumonia Lipoide"
-          },
-          {
-            "id": "D011023",
-            "term": "Pneumonia Estafilocócica"
-          },
-          {
-            "id": "D011022",
-            "term": "Pneumonia por Rickettsiaceae"
-          },
-          {
-            "id": "D011024",
-            "term": "Pneumonia Viral"
-          }
-        ],
+        "children": [],
         "role": "primary"
       }
     ],
@@ -160,13 +138,13 @@
   },
   "themes_identified": {
     "primary": [
-      "Pneumonia"
+      "Pneumonia, Community-Acquired"
     ],
     "secondary": [
       "Anti-Bacterial Agents",
-      "Ambulatory Care",
       "Fever",
-      "Cough"
+      "Cough",
+      "Ambulatory Care"
     ]
   },
   "candidate_groups": [
@@ -174,8 +152,19 @@
       "label": "primários",
       "concepts": [
         {
-          "concept": "Pneumonia",
+          "concept": "Pneumonia, Community-Acquired",
           "candidates": [
+            {
+              "id": "D000098968",
+              "term": "Pneumonia Adquirida na Comunidade",
+              "term_en": "Community-Acquired Pneumonia",
+              "scope": "Infecção dos pulmões em um paciente que não está hospitalizado ou que não esteve em uma unidade de cuidados de longo prazo por 14 dias antes do início dos sintomas. Está associada a alguns sinais e si",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.234.500",
+                "C08.730.610.214"
+              ]
+            },
             {
               "id": "D011014",
               "term": "Pneumonia",
@@ -188,36 +177,14 @@
               ]
             },
             {
-              "id": "D011001",
-              "term": "Pleuropneumonia",
-              "term_en": "Pleuropneumonia",
-              "scope": "Inflamação do parênquima do pulmão associada com PLEURISIA, inflamação da PLEURA.",
+              "id": "D011024",
+              "term": "Pneumonia Viral",
+              "term_en": "Pneumonia, Viral",
+              "scope": "Inflamação do parênquima pulmonar causada por uma infecção viral.",
               "categoria": "Doenças",
               "arvore": [
-                "C01.748.582.473",
-                "C01.748.610.473"
-              ]
-            },
-            {
-              "id": "D001996",
-              "term": "Broncopneumonia",
-              "term_en": "Bronchopneumonia",
-              "scope": "Inflamação do parênquima pulmonar associado com BRONQUITE, geralmente envolvendo áreas lobulares desde os BRONQUÍOLOS TERMINAIS até os ALVÉOLOS PULMONARES. As áreas afetadas tornam-se preenchidas com ",
-              "categoria": "Doenças",
-              "arvore": [
-                "C01.748.610.127",
-                "C08.127.509"
-              ]
-            },
-            {
-              "id": "D011019",
-              "term": "Pneumonia por Mycoplasma",
-              "term_en": "Pneumonia, Mycoplasma",
-              "scope": "Pneumonia intersticial causada por extensa infecção dos PULMÕES e BRÔNQUIOS (particularmente dos lobos inferiores dos pulmões) por MYCOPLASMA PNEUMONIAE em humanos. Em OVINOS, é causada por MYCOPLASMA",
-              "categoria": "Doenças",
-              "arvore": [
-                "C01.150.252.400.610.610.760",
-                "C01.150.252.620.500"
+                "C01.748.610.763",
+                "C01.925.705"
               ]
             },
             {
@@ -229,6 +196,16 @@
               "arvore": [
                 "C01.150.252.620",
                 "C01.748.610.540"
+              ]
+            },
+            {
+              "id": "D017714",
+              "term": "Infecções Comunitárias Adquiridas",
+              "term_en": "Community-Acquired Infections",
+              "scope": "Qualquer infecção adquirida na comunidade, isto é, em oposição àquelas adquiridas em instituições de saúde (INFECÇÃO HOSPITAR). Uma infecção seria classificada como adquirida na comunidade se o pacien",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.234"
               ]
             }
           ]
@@ -354,6 +331,61 @@
           ]
         },
         {
+          "concept": "Fever",
+          "candidates": [
+            {
+              "id": "DDCS025893",
+              "term": "Achyranthes calea",
+              "term_en": "Achyranthes calea",
+              "scope": "Medicamento homeopático. Erva da febre. Abrev.: \"achy.\". Origem vegetal. Habitat original: América Central e México. Parte utilizada: planta inteira.",
+              "categoria": "HP",
+              "arvore": [
+                "HP4.018.602.600.012"
+              ]
+            },
+            {
+              "id": "D058633",
+              "term": "Antipiréticos",
+              "term_en": "Antipyretics",
+              "scope": "Medicamentos que são usados para reduzir a temperatura corporal na ocorrência de febre.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.696.068"
+              ]
+            },
+            {
+              "id": "D011749",
+              "term": "Pirogênios",
+              "term_en": "Pyrogens",
+              "scope": "Substâncias capazes de aumentar a TEMPERATURA CORPORAL causando FEBRE e que podem ser usados na TERAPIA POR FEBRE. Podem ser de origem microbiana, frequentemente POLISSACARÍDEOS e podem contaminar a á",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.888.569.673"
+              ]
+            },
+            {
+              "id": "D011298",
+              "term": "Feprazona",
+              "term_en": "Feprazone",
+              "scope": "Pirazol que tem propriedades analgésica, anti-inflamatória e antipirética. Tem sido utilizada na dor leve a moderada, febre e inflamação associada com transtornos da musculatura esquelética e da artic",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D03.383.129.539.850.777.670"
+              ]
+            },
+            {
+              "id": "DDCS027271",
+              "term": "Pyrogenium",
+              "term_en": "Pyrogenium",
+              "scope": "Medicamento homeopático. Abrev.: \"pyrog.\". Origem animal. Substância utilizada: carne de vaca e porco.",
+              "categoria": "HP",
+              "arvore": [
+                "HP4.018.602.100.751"
+              ]
+            }
+          ]
+        },
+        {
           "concept": "Ambulatory Care",
           "candidates": [
             {
@@ -411,61 +443,6 @@
               ]
             }
           ]
-        },
-        {
-          "concept": "Fever",
-          "candidates": [
-            {
-              "id": "DDCS025893",
-              "term": "Achyranthes calea",
-              "term_en": "Achyranthes calea",
-              "scope": "Medicamento homeopático. Erva da febre. Abrev.: \"achy.\". Origem vegetal. Habitat original: América Central e México. Parte utilizada: planta inteira.",
-              "categoria": "HP",
-              "arvore": [
-                "HP4.018.602.600.012"
-              ]
-            },
-            {
-              "id": "D058633",
-              "term": "Antipiréticos",
-              "term_en": "Antipyretics",
-              "scope": "Medicamentos que são usados para reduzir a temperatura corporal na ocorrência de febre.",
-              "categoria": "Compostos Químicos e Drogas",
-              "arvore": [
-                "D27.505.696.068"
-              ]
-            },
-            {
-              "id": "D011749",
-              "term": "Pirogênios",
-              "term_en": "Pyrogens",
-              "scope": "Substâncias capazes de aumentar a TEMPERATURA CORPORAL causando FEBRE e que podem ser usados na TERAPIA POR FEBRE. Podem ser de origem microbiana, frequentemente POLISSACARÍDEOS e podem contaminar a á",
-              "categoria": "Compostos Químicos e Drogas",
-              "arvore": [
-                "D27.888.569.673"
-              ]
-            },
-            {
-              "id": "D011298",
-              "term": "Feprazona",
-              "term_en": "Feprazone",
-              "scope": "Pirazol que tem propriedades analgésica, anti-inflamatória e antipirética. Tem sido utilizada na dor leve a moderada, febre e inflamação associada com transtornos da musculatura esquelética e da artic",
-              "categoria": "Compostos Químicos e Drogas",
-              "arvore": [
-                "D03.383.129.539.850.777.670"
-              ]
-            },
-            {
-              "id": "DDCS027271",
-              "term": "Pyrogenium",
-              "term_en": "Pyrogenium",
-              "scope": "Medicamento homeopático. Abrev.: \"pyrog.\". Origem animal. Substância utilizada: carne de vaca e porco.",
-              "categoria": "HP",
-              "arvore": [
-                "HP4.018.602.100.751"
-              ]
-            }
-          ]
         }
       ]
     }
@@ -473,13 +450,13 @@
   "debug_trace": {
     "themes": {
       "primary": [
-        "Pneumonia"
+        "Pneumonia, Community-Acquired"
       ],
       "secondary": [
         "Anti-Bacterial Agents",
-        "Ambulatory Care",
         "Fever",
-        "Cough"
+        "Cough",
+        "Ambulatory Care"
       ]
     },
     "candidate_groups": [
@@ -487,8 +464,19 @@
         "label": "primários",
         "concepts": [
           {
-            "concept": "Pneumonia",
+            "concept": "Pneumonia, Community-Acquired",
             "candidates": [
+              {
+                "id": "D000098968",
+                "term": "Pneumonia Adquirida na Comunidade",
+                "term_en": "Community-Acquired Pneumonia",
+                "scope": "Infecção dos pulmões em um paciente que não está hospitalizado ou que não esteve em uma unidade de cuidados de longo prazo por 14 dias antes do início dos sintomas. Está associada a alguns sinais e si",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.234.500",
+                  "C08.730.610.214"
+                ]
+              },
               {
                 "id": "D011014",
                 "term": "Pneumonia",
@@ -501,36 +489,14 @@
                 ]
               },
               {
-                "id": "D011001",
-                "term": "Pleuropneumonia",
-                "term_en": "Pleuropneumonia",
-                "scope": "Inflamação do parênquima do pulmão associada com PLEURISIA, inflamação da PLEURA.",
+                "id": "D011024",
+                "term": "Pneumonia Viral",
+                "term_en": "Pneumonia, Viral",
+                "scope": "Inflamação do parênquima pulmonar causada por uma infecção viral.",
                 "categoria": "Doenças",
                 "arvore": [
-                  "C01.748.582.473",
-                  "C01.748.610.473"
-                ]
-              },
-              {
-                "id": "D001996",
-                "term": "Broncopneumonia",
-                "term_en": "Bronchopneumonia",
-                "scope": "Inflamação do parênquima pulmonar associado com BRONQUITE, geralmente envolvendo áreas lobulares desde os BRONQUÍOLOS TERMINAIS até os ALVÉOLOS PULMONARES. As áreas afetadas tornam-se preenchidas com ",
-                "categoria": "Doenças",
-                "arvore": [
-                  "C01.748.610.127",
-                  "C08.127.509"
-                ]
-              },
-              {
-                "id": "D011019",
-                "term": "Pneumonia por Mycoplasma",
-                "term_en": "Pneumonia, Mycoplasma",
-                "scope": "Pneumonia intersticial causada por extensa infecção dos PULMÕES e BRÔNQUIOS (particularmente dos lobos inferiores dos pulmões) por MYCOPLASMA PNEUMONIAE em humanos. Em OVINOS, é causada por MYCOPLASMA",
-                "categoria": "Doenças",
-                "arvore": [
-                  "C01.150.252.400.610.610.760",
-                  "C01.150.252.620.500"
+                  "C01.748.610.763",
+                  "C01.925.705"
                 ]
               },
               {
@@ -542,6 +508,16 @@
                 "arvore": [
                   "C01.150.252.620",
                   "C01.748.610.540"
+                ]
+              },
+              {
+                "id": "D017714",
+                "term": "Infecções Comunitárias Adquiridas",
+                "term_en": "Community-Acquired Infections",
+                "scope": "Qualquer infecção adquirida na comunidade, isto é, em oposição àquelas adquiridas em instituições de saúde (INFECÇÃO HOSPITAR). Uma infecção seria classificada como adquirida na comunidade se o pacien",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.234"
                 ]
               }
             ]
@@ -667,6 +643,61 @@
             ]
           },
           {
+            "concept": "Fever",
+            "candidates": [
+              {
+                "id": "DDCS025893",
+                "term": "Achyranthes calea",
+                "term_en": "Achyranthes calea",
+                "scope": "Medicamento homeopático. Erva da febre. Abrev.: \"achy.\". Origem vegetal. Habitat original: América Central e México. Parte utilizada: planta inteira.",
+                "categoria": "HP",
+                "arvore": [
+                  "HP4.018.602.600.012"
+                ]
+              },
+              {
+                "id": "D058633",
+                "term": "Antipiréticos",
+                "term_en": "Antipyretics",
+                "scope": "Medicamentos que são usados para reduzir a temperatura corporal na ocorrência de febre.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.696.068"
+                ]
+              },
+              {
+                "id": "D011749",
+                "term": "Pirogênios",
+                "term_en": "Pyrogens",
+                "scope": "Substâncias capazes de aumentar a TEMPERATURA CORPORAL causando FEBRE e que podem ser usados na TERAPIA POR FEBRE. Podem ser de origem microbiana, frequentemente POLISSACARÍDEOS e podem contaminar a á",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.888.569.673"
+                ]
+              },
+              {
+                "id": "D011298",
+                "term": "Feprazona",
+                "term_en": "Feprazone",
+                "scope": "Pirazol que tem propriedades analgésica, anti-inflamatória e antipirética. Tem sido utilizada na dor leve a moderada, febre e inflamação associada com transtornos da musculatura esquelética e da artic",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D03.383.129.539.850.777.670"
+                ]
+              },
+              {
+                "id": "DDCS027271",
+                "term": "Pyrogenium",
+                "term_en": "Pyrogenium",
+                "scope": "Medicamento homeopático. Abrev.: \"pyrog.\". Origem animal. Substância utilizada: carne de vaca e porco.",
+                "categoria": "HP",
+                "arvore": [
+                  "HP4.018.602.100.751"
+                ]
+              }
+            ]
+          },
+          {
             "concept": "Ambulatory Care",
             "candidates": [
               {
@@ -724,61 +755,6 @@
                 ]
               }
             ]
-          },
-          {
-            "concept": "Fever",
-            "candidates": [
-              {
-                "id": "DDCS025893",
-                "term": "Achyranthes calea",
-                "term_en": "Achyranthes calea",
-                "scope": "Medicamento homeopático. Erva da febre. Abrev.: \"achy.\". Origem vegetal. Habitat original: América Central e México. Parte utilizada: planta inteira.",
-                "categoria": "HP",
-                "arvore": [
-                  "HP4.018.602.600.012"
-                ]
-              },
-              {
-                "id": "D058633",
-                "term": "Antipiréticos",
-                "term_en": "Antipyretics",
-                "scope": "Medicamentos que são usados para reduzir a temperatura corporal na ocorrência de febre.",
-                "categoria": "Compostos Químicos e Drogas",
-                "arvore": [
-                  "D27.505.696.068"
-                ]
-              },
-              {
-                "id": "D011749",
-                "term": "Pirogênios",
-                "term_en": "Pyrogens",
-                "scope": "Substâncias capazes de aumentar a TEMPERATURA CORPORAL causando FEBRE e que podem ser usados na TERAPIA POR FEBRE. Podem ser de origem microbiana, frequentemente POLISSACARÍDEOS e podem contaminar a á",
-                "categoria": "Compostos Químicos e Drogas",
-                "arvore": [
-                  "D27.888.569.673"
-                ]
-              },
-              {
-                "id": "D011298",
-                "term": "Feprazona",
-                "term_en": "Feprazone",
-                "scope": "Pirazol que tem propriedades analgésica, anti-inflamatória e antipirética. Tem sido utilizada na dor leve a moderada, febre e inflamação associada com transtornos da musculatura esquelética e da artic",
-                "categoria": "Compostos Químicos e Drogas",
-                "arvore": [
-                  "D03.383.129.539.850.777.670"
-                ]
-              },
-              {
-                "id": "DDCS027271",
-                "term": "Pyrogenium",
-                "term_en": "Pyrogenium",
-                "scope": "Medicamento homeopático. Abrev.: \"pyrog.\". Origem animal. Substância utilizada: carne de vaca e porco.",
-                "categoria": "HP",
-                "arvore": [
-                  "HP4.018.602.100.751"
-                ]
-              }
-            ]
           }
         ]
       }
@@ -786,8 +762,8 @@
     "selected_candidates": {
       "primary": [
         {
-          "id": "D011014",
-          "term": "Pneumonia"
+          "id": "D000098968",
+          "term": "Pneumonia Adquirida na Comunidade"
         }
       ],
       "secondary": [
