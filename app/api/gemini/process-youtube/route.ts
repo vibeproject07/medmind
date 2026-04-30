@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
     }
 
     const normalizedUrl = normalizeYouTubeUrl(url);
-    const result = await geminiProcessYouTube({ url: normalizedUrl });
+    const result = await geminiProcessYouTube({ url: normalizedUrl, agentKey: 'youtube_transcript' });
 
     return NextResponse.json({ text: result });
   } catch (error: unknown) {

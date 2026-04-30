@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/jwt';
 import { geminiTransformTranscription } from '@/lib/gemini';
+import { getAgentPrompt } from '@/lib/ai-agents';
+import { getDefault } from '@/lib/ai-agents-defaults';
 
 export const runtime = 'nodejs';
 
@@ -36,7 +38,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Envie a instrução em { instruction: string }.' }, { status: 400 });
     }
 
-    // Guarda simples para evitar payloads absurdos
     if (transcription.length > 2_000_000) {
       return NextResponse.json({ error: 'Transcrição muito grande. Reduza o texto e tente novamente.' }, { status: 400 });
     }
@@ -44,10 +45,18 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Instrução muito grande. Reduza o texto e tente novamente.' }, { status: 400 });
     }
 
+    const systemPrompt = await getAgentPrompt('transform_base').catch(() => '');
+    const def = getDefault('transform_base');
+    const temperature = def?.temperature ?? 0.2;
+    const maxOutputTokens = def?.max_output_tokens ?? 8192;
+
     const result = await geminiTransformTranscription({
       transcription,
       instruction,
       model,
+      systemPrompt: systemPrompt || undefined,
+      temperature,
+      maxOutputTokens,
     });
 
     return NextResponse.json({ text: result });
@@ -56,4 +65,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
-

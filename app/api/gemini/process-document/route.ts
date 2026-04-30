@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/jwt';
 import { geminiProcessDocument, geminiTransformTranscription, EXTRACT_TEXT_INSTRUCTION } from '@/lib/gemini';
 import { extractTextFromDocx, extractTextFromPptx } from '@/lib/document-extract';
+import { getAgentPrompt } from '@/lib/ai-agents';
+import { getDefault } from '@/lib/ai-agents-defaults';
 
 export const runtime = 'nodejs';
 
@@ -29,13 +31,27 @@ function isAllowedMimeType(type: string): boolean {
   return ALLOWED_MIME_TYPES.includes(type) || type.startsWith('image/');
 }
 
-const DOCUMENT_SUMMARIZE_INSTRUCTION = `Leia o texto a seguir extraído de um documento Word e produza um resumo claro e organizado para estudo.
-Preserve termos técnicos e pontos principais. Organize em tópicos e destaque o que for mais relevante.
-Responda em português (pt-BR) e formate a saída em Markdown.`;
+function getAgentKeyByMimeType(mimeType: string): string {
+  const m = (mimeType || '').toLowerCase();
+  if (m.startsWith('image/')) return 'resumo_imagem';
+  if (
+    m === 'application/vnd.ms-powerpoint' ||
+    m === 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+  ) {
+    return 'resumo_slides_pdf';
+  }
+  return 'resumo_documento';
+}
 
-const SLIDES_SUMMARIZE_INSTRUCTION = `Leia o texto a seguir extraído de uma apresentação PowerPoint (os slides estão separados por "--- Slide N ---") e produza um material de estudo.
-Para cada slide, resuma o conteúdo e preserve termos técnicos.
-Organize em tópicos por slide ou por tema. Responda em português (pt-BR) e formate a saída em Markdown.`;
+async function resolveAgent(agentKey: string) {
+  const prompt = await getAgentPrompt(agentKey).catch(() => '');
+  const def = getDefault(agentKey);
+  return {
+    systemPrompt: prompt || def?.system_prompt || '',
+    temperature: def?.temperature ?? 0.2,
+    maxOutputTokens: def?.max_output_tokens ?? 8192,
+  };
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -101,18 +117,29 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: msg }, { status: 422 });
       }
 
-      const summarizeInstruction =
-        extractType === 'pptx' ? SLIDES_SUMMARIZE_INSTRUCTION : DOCUMENT_SUMMARIZE_INSTRUCTION;
+      const agentKey = extractType === 'pptx' ? 'resumo_pptx' : 'resumo_docx';
+      const { systemPrompt, temperature, maxOutputTokens } = await resolveAgent(agentKey);
 
       const summary = await geminiTransformTranscription({
         transcription: extractedText,
-        instruction: summarizeInstruction,
+        instruction: 'Produza o material de estudo conforme as instruções do sistema acima.',
+        systemPrompt,
+        temperature,
+        maxOutputTokens,
       });
 
       return NextResponse.json({ text: summary, originalText: extractedText });
     }
 
-    const result = await geminiProcessDocument({ file: buffer, mimeType });
+    const agentKey = getAgentKeyByMimeType(mimeType);
+    const { temperature, maxOutputTokens } = await resolveAgent(agentKey);
+    const result = await geminiProcessDocument({
+      file: buffer,
+      mimeType,
+      agentKey,
+      temperature,
+      maxOutputTokens,
+    });
 
     const isPdfOrWord =
       mimeType === 'application/pdf' ||
@@ -126,6 +153,8 @@ export async function POST(request: NextRequest) {
           file: buffer,
           mimeType,
           instruction: EXTRACT_TEXT_INSTRUCTION,
+          temperature: 0.0,
+          maxOutputTokens: 16384,
         });
       } catch {
         originalText = undefined;
