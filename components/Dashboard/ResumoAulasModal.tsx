@@ -201,7 +201,7 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
             body: formDataDoc,
           });
           const textDoc = await resDoc.text();
-          const NAO_REPRODUZIR_ORIGINAL = 'Não é possível reproduzir o conteúdo original';
+          const NAO_PROCESSADO_PELA_IA = 'Conteúdo não processado pela IA';
           let dataDoc: { error?: string | { message?: string; code?: number; status?: string }; text?: string; originalText?: string };
           try {
             dataDoc = textDoc ? JSON.parse(textDoc) : {};
@@ -210,7 +210,7 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
             return;
           }
           if (resDoc.ok && dataDoc.text) {
-            setResult(dataDoc.originalText ?? NAO_REPRODUZIR_ORIGINAL);
+            setResult(dataDoc.originalText ?? NAO_PROCESSADO_PELA_IA);
             setSummary(dataDoc.text);
           } else {
             const errMsg = dataDoc.error;
