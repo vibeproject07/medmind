@@ -1,0 +1,77 @@
+{
+  "result": [
+    {
+      "term": "Hepatite C",
+      "code": "D006526",
+      "tree_ids": [
+        "C01.221.250.750",
+        "C01.925.440.440",
+        "C01.925.782.350.350",
+        "C06.552.380.705.440"
+      ],
+      "hierarchy_path": "Doenças › C01.221.250.750",
+      "scope_note": "INFLAMAÇÃO do FÍGADO em humanos causada por VIRUS DA HEPATITE C, um virus com RNA de fita única. Seu período de incubação é de 30 a 90 dias. A hepatite C é principalmente transmitida por sangue contaminado por via parenteral e está, com frequência, associada com transfusões e abuso de drogas. Entretanto, em vários casos a fonte da infecção da hepatite C é desconhecida.",
+      "name_en": "Hepatitis C",
+      "role": "primary"
+    },
+    {
+      "term": "Hepatite B",
+      "code": "D006509",
+      "tree_ids": [
+        "C01.221.250.500",
+        "C01.925.256.430.400",
+        "C01.925.440.435",
+        "C06.552.380.705.437"
+      ],
+      "hierarchy_path": "Doenças › C01.221.250.500",
+      "scope_note": "INFLAMAÇÃO do FÍGADO em humanos causada por um membro do gênero ORTHOHEPADNAVIRUS, o VIRUS DA HEPATITE B. É principalmente transmitida por exposição parenteral, como transfusão do sangue contaminado como de produtos sanguíneos, mas também pode ser transmitida por via sexual ou contato íntimo pessoal.",
+      "name_en": "Hepatitis B",
+      "role": "primary"
+    },
+    {
+      "term": "Anticorpos Anti-Hepatite C",
+      "code": "D018937",
+      "tree_ids": [
+        "D12.776.124.486.485.114.254.450.510",
+        "D12.776.124.790.651.114.254.450.510",
+        "D12.776.377.715.548.114.254.450.510"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D12.776.124.486.485.114.254.450.510",
+      "scope_note": "Anticorpos contra os ANTÍGENOS DA HEPATITE C, inclusive aqueles contra o envelope, o core, e as proteínas não estruturais.",
+      "name_en": "Hepatitis C Antibodies",
+      "role": "secondary"
+    },
+    {
+      "term": "Testes Sorológicos",
+      "code": "D012698",
+      "tree_ids": [
+        "E01.370.225.812.735",
+        "E05.200.812.735",
+        "E05.478.594.760"
+      ],
+      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.225.812.735",
+      "scope_note": "Procedimentos diagnósticos envolvendo reações de imunoglobulina.",
+      "name_en": "Serologic Tests",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Hepatitis C",
+      "Hepatitis B"
+    ],
+    "secondary": [
+      "Serologic Tests",
+      "Hepatitis C Antibodies",
+      "Health Personnel",
+      "Occupational Health"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 2,
+    "secondary_terms": 4,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 2,
+    "final_count": 4
+  }
+}

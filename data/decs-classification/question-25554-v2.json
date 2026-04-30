@@ -1,0 +1,454 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "DDCS032482",
+        "term": "Recursos Renováveis",
+        "name_en": "Renewable Resources",
+        "scope_note": "",
+        "tree_ids": [
+          "SP4.606.837.868"
+        ],
+        "hierarchy_path": "Saúde Pública › SP4.606.837.868",
+        "parents": [
+          {
+            "id": "D000067936",
+            "term": "Recursos Naturais"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      },
+      {
+        "id": "D006943",
+        "term": "Hiperglicemia",
+        "name_en": "Hyperglycemia",
+        "scope_note": "Nível anormalmente alto de GLICEMIA.",
+        "tree_ids": [
+          "C18.452.394.952"
+        ],
+        "hierarchy_path": "Doenças › C18.452.394.952",
+        "parents": [
+          {
+            "id": "D044882",
+            "term": "Transtornos do Metabolismo de Glucose"
+          }
+        ],
+        "children": [
+          {
+            "id": "D018149",
+            "term": "Intolerância à Glucose"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "DDCS051857",
+        "term": "Utilização de Recursos Locais",
+        "name_en": "Local Resources Uses",
+        "scope_note": "",
+        "tree_ids": [
+          "SP4.303.766"
+        ],
+        "hierarchy_path": "Saúde Pública › SP4.303.766",
+        "parents": [
+          {
+            "id": "D000076502",
+            "term": "Desenvolvimento Sustentável"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": []
+  },
+  "themes_identified": {
+    "primary": [
+      "Enunciado",
+      "Em uma manhã de atendimento na UBS você atendeu diversos pacientes com situações de glicemia elevada",
+      "Assinale a alternativa a qual descreve"
+    ],
+    "secondary": []
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Enunciado",
+          "candidates": [
+            {
+              "id": "DDCS032482",
+              "term": "Recursos Renováveis",
+              "term_en": "Renewable Resources",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.837.868"
+              ]
+            },
+            {
+              "id": "DDCS051583",
+              "term": "Varredoras",
+              "term_en": "Sweepers",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.987.506.871"
+              ]
+            },
+            {
+              "id": "DDCS051857",
+              "term": "Utilização de Recursos Locais",
+              "term_en": "Local Resources Uses",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.303.766"
+              ]
+            },
+            {
+              "id": "DDCS051642",
+              "term": "Leito Fixo",
+              "term_en": "Fixed Bed",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.806.945.750.207.899.660"
+              ]
+            },
+            {
+              "id": "DDCS025556",
+              "term": "Tanques de Concreto",
+              "term_en": "Reinforced Concrete Tanks",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.141.089.248.433.561"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Em uma manhã de atendimento na UBS você atendeu diversos pacientes com situações de glicemia elevada",
+          "candidates": [
+            {
+              "id": "D006943",
+              "term": "Hiperglicemia",
+              "term_en": "Hyperglycemia",
+              "scope": "Nível anormalmente alto de GLICEMIA.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C18.452.394.952"
+              ]
+            },
+            {
+              "id": "D001786",
+              "term": "Glicemia",
+              "term_en": "Blood Glucose",
+              "scope": "Glicose no sangue.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D09.947.875.359.448.500"
+              ]
+            },
+            {
+              "id": "D000085002",
+              "term": "Controle Glicêmico",
+              "term_en": "Glycemic Control",
+              "scope": "Estratégias usadas para regular os níveis de glicose no sangue. Essas estratégias incluem administração de INSULINA; MODIFICAÇÃO DIETÉTICA; e EXERCÍCIO.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.491"
+              ]
+            },
+            {
+              "id": "D006029",
+              "term": "Glicosúria",
+              "term_en": "Glycosuria",
+              "scope": "Aparecimento de uma quantidade grande e anormal de GLUCOSE na urina, como maior que 500 mg/dia em adultos. Pode ser devido a HIPERGLICEMIA ou defeitos genéticos na reabsorção renal (GLICOSÚRIA RENAL).",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.934.363",
+                "C12.200.777.934.363"
+              ]
+            },
+            {
+              "id": "D015190",
+              "term": "Automonitorização da Glicemia",
+              "term_en": "Blood Glucose Self-Monitoring",
+              "scope": "Autoavaliação dos níveis totais de glucose sanguínea fora do laboratório clínico. Pode ser usado um medidor de refletância digital ou operado por bateria. Tem ampla aplicação no controle da instabilid",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.225.124.100.105",
+                "E01.370.374.100"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Assinale a alternativa a qual descreve",
+          "candidates": [
+            {
+              "id": "DDCS051857",
+              "term": "Utilização de Recursos Locais",
+              "term_en": "Local Resources Uses",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.303.766"
+              ]
+            },
+            {
+              "id": "DDCS051642",
+              "term": "Leito Fixo",
+              "term_en": "Fixed Bed",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.806.945.750.207.899.660"
+              ]
+            },
+            {
+              "id": "D008283",
+              "term": "Manutenção",
+              "term_en": "Maintenance",
+              "scope": "A conservação da propriedade ou do equipamento.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N02.628"
+              ]
+            },
+            {
+              "id": "D008961",
+              "term": "Modelos Estruturais",
+              "term_en": "Models, Structural",
+              "scope": "Representação, geralmente em escala pequena, para mostrar a estrutura, construção ou aspecto de alguma coisa. (Tradução livre do original: From Random House Unabridged Dictionary, 2d ed)",
+              "categoria": "Tecnologia, Indústria, Agricultura",
+              "arvore": [
+                "J01.897.280.500.545",
+                "L01.462.500.820.090.545"
+              ]
+            },
+            {
+              "id": "D008348",
+              "term": "Manequins",
+              "term_en": "Manikins",
+              "scope": "Modelos físicos inanimados que se assemelham a seres humanos e são usados para várias finalidades no lugar de humanos.",
+              "categoria": "Tecnologia, Indústria, Agricultura",
+              "arvore": [
+                "J01.897.280.500.545.129.400",
+                "L01.462.500.820.090.545.129.400"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": []
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Enunciado",
+        "Em uma manhã de atendimento na UBS você atendeu diversos pacientes com situações de glicemia elevada",
+        "Assinale a alternativa a qual descreve"
+      ],
+      "secondary": []
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Enunciado",
+            "candidates": [
+              {
+                "id": "DDCS032482",
+                "term": "Recursos Renováveis",
+                "term_en": "Renewable Resources",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.837.868"
+                ]
+              },
+              {
+                "id": "DDCS051583",
+                "term": "Varredoras",
+                "term_en": "Sweepers",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.987.506.871"
+                ]
+              },
+              {
+                "id": "DDCS051857",
+                "term": "Utilização de Recursos Locais",
+                "term_en": "Local Resources Uses",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.303.766"
+                ]
+              },
+              {
+                "id": "DDCS051642",
+                "term": "Leito Fixo",
+                "term_en": "Fixed Bed",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.806.945.750.207.899.660"
+                ]
+              },
+              {
+                "id": "DDCS025556",
+                "term": "Tanques de Concreto",
+                "term_en": "Reinforced Concrete Tanks",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.141.089.248.433.561"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Em uma manhã de atendimento na UBS você atendeu diversos pacientes com situações de glicemia elevada",
+            "candidates": [
+              {
+                "id": "D006943",
+                "term": "Hiperglicemia",
+                "term_en": "Hyperglycemia",
+                "scope": "Nível anormalmente alto de GLICEMIA.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C18.452.394.952"
+                ]
+              },
+              {
+                "id": "D001786",
+                "term": "Glicemia",
+                "term_en": "Blood Glucose",
+                "scope": "Glicose no sangue.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D09.947.875.359.448.500"
+                ]
+              },
+              {
+                "id": "D000085002",
+                "term": "Controle Glicêmico",
+                "term_en": "Glycemic Control",
+                "scope": "Estratégias usadas para regular os níveis de glicose no sangue. Essas estratégias incluem administração de INSULINA; MODIFICAÇÃO DIETÉTICA; e EXERCÍCIO.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.491"
+                ]
+              },
+              {
+                "id": "D006029",
+                "term": "Glicosúria",
+                "term_en": "Glycosuria",
+                "scope": "Aparecimento de uma quantidade grande e anormal de GLUCOSE na urina, como maior que 500 mg/dia em adultos. Pode ser devido a HIPERGLICEMIA ou defeitos genéticos na reabsorção renal (GLICOSÚRIA RENAL).",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.934.363",
+                  "C12.200.777.934.363"
+                ]
+              },
+              {
+                "id": "D015190",
+                "term": "Automonitorização da Glicemia",
+                "term_en": "Blood Glucose Self-Monitoring",
+                "scope": "Autoavaliação dos níveis totais de glucose sanguínea fora do laboratório clínico. Pode ser usado um medidor de refletância digital ou operado por bateria. Tem ampla aplicação no controle da instabilid",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.225.124.100.105",
+                  "E01.370.374.100"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Assinale a alternativa a qual descreve",
+            "candidates": [
+              {
+                "id": "DDCS051857",
+                "term": "Utilização de Recursos Locais",
+                "term_en": "Local Resources Uses",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.303.766"
+                ]
+              },
+              {
+                "id": "DDCS051642",
+                "term": "Leito Fixo",
+                "term_en": "Fixed Bed",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.806.945.750.207.899.660"
+                ]
+              },
+              {
+                "id": "D008283",
+                "term": "Manutenção",
+                "term_en": "Maintenance",
+                "scope": "A conservação da propriedade ou do equipamento.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N02.628"
+                ]
+              },
+              {
+                "id": "D008961",
+                "term": "Modelos Estruturais",
+                "term_en": "Models, Structural",
+                "scope": "Representação, geralmente em escala pequena, para mostrar a estrutura, construção ou aspecto de alguma coisa. (Tradução livre do original: From Random House Unabridged Dictionary, 2d ed)",
+                "categoria": "Tecnologia, Indústria, Agricultura",
+                "arvore": [
+                  "J01.897.280.500.545",
+                  "L01.462.500.820.090.545"
+                ]
+              },
+              {
+                "id": "D008348",
+                "term": "Manequins",
+                "term_en": "Manikins",
+                "scope": "Modelos físicos inanimados que se assemelham a seres humanos e são usados para várias finalidades no lugar de humanos.",
+                "categoria": "Tecnologia, Indústria, Agricultura",
+                "arvore": [
+                  "J01.897.280.500.545.129.400",
+                  "L01.462.500.820.090.545.129.400"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": []
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "DDCS032482",
+          "term": "Recursos Renováveis"
+        },
+        {
+          "id": "D006943",
+          "term": "Hiperglicemia"
+        },
+        {
+          "id": "DDCS051857",
+          "term": "Utilização de Recursos Locais"
+        }
+      ],
+      "secondary": []
+    }
+  },
+  "stats": {
+    "primary_concepts": 3,
+    "secondary_concepts": 0,
+    "total_candidates": 15,
+    "final_primary": 3,
+    "final_secondary": 0
+  }
+}

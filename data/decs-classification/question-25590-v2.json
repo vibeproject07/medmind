@@ -1,0 +1,821 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D006042",
+        "term": "Bócio",
+        "name_en": "Goiter",
+        "scope_note": "Aumento na GLÂNDULA TIREOIDE que pode crescer de aproximadamente 20 até centenas de gramas em pessoas adultas. O bócio é observado em indivíduos com função tireóidea normal (eutireoidismo), deficiência tireóidea (HIPOTIREOIDISMO) ou produção excessiva de hormônio (HIPERTIREOIDISMO). O bócio pode ser congênito ou adquirido, esporádico ou endêmico (BÓCIO ENDÊMICO).",
+        "tree_ids": [
+          "C19.874.283"
+        ],
+        "hierarchy_path": "Doenças › C19.874.283",
+        "parents": [
+          {
+            "id": "D013959",
+            "term": "Doenças da Glândula Tireoide"
+          }
+        ],
+        "children": [
+          {
+            "id": "D006044",
+            "term": "Bócio Nodular"
+          },
+          {
+            "id": "D006111",
+            "term": "Doença de Graves"
+          },
+          {
+            "id": "D049970",
+            "term": "Oftalmopatia de Graves"
+          },
+          {
+            "id": "D047268",
+            "term": "Bócio Lingual"
+          },
+          {
+            "id": "D006043",
+            "term": "Bócio Endêmico"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D007037",
+        "term": "Hipotireoidismo",
+        "name_en": "Hypothyroidism",
+        "scope_note": "Síndrome resultante da secreção anormalmente baixa dos HORMÔNIOS TIREÓIDEOS da GLÂNDULA TIREOIDE, levando a uma diminuição do METABOLISMO BASAL. Em sua forma mais grave, ocorre o acúmulo de MUCOPOLISSACARÍDEOS na PELE, causando um EDEMA conhecido como MIXEDEMA. Pode ser primário ou secundário devido a outras doenças da HIPÓFISE ou disfunção do hipotálamo.",
+        "tree_ids": [
+          "C19.874.482"
+        ],
+        "hierarchy_path": "Doenças › C19.874.482",
+        "parents": [
+          {
+            "id": "D013959",
+            "term": "Doenças da Glândula Tireoide"
+          }
+        ],
+        "children": [
+          {
+            "id": "D009230",
+            "term": "Mixedema"
+          },
+          {
+            "id": "D003409",
+            "term": "Hipotireoidismo Congênito"
+          }
+        ],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D013974",
+        "term": "Tiroxina",
+        "name_en": "Thyroxine",
+        "scope_note": "Principal hormônio derivado da glândula tireoide. A tireoxina é sintetizada via iodação das tirosinas (MONOIODOTIROSINA) e união das iodotirosinas (DI-IODOTIROSINA) na TIREOGLOBULINA. A tiroxina é liberada da tireoglobulina por proteólise e secretada no sangue. A tireoxina é desiodada perifericamente para formar a TRIIODOTIRONINA que exerce um amplo espectro de efeitos estimulantes no metabolismo celular.",
+        "tree_ids": [
+          "D06.472.931.812",
+          "D12.125.072.050.767"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D06.472.931.812",
+        "parents": [
+          {
+            "id": "D013963",
+            "term": "Hormônios Tireóideos"
+          },
+          {
+            "id": "D024322",
+            "term": "Aminoácidos Aromáticos"
+          }
+        ],
+        "children": [
+          {
+            "id": "D004104",
+            "term": "Di-Iodotironinas"
+          },
+          {
+            "id": "D014284",
+            "term": "Tri-Iodotironina"
+          },
+          {
+            "id": "D013970",
+            "term": "Tironinas"
+          },
+          {
+            "id": "D014285",
+            "term": "Tri-Iodotironina Reversa"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D013960",
+        "term": "Testes de Função Tireóidea",
+        "name_en": "Thyroid Function Tests",
+        "scope_note": "Exames sanguíneos usados para avaliar o funcionamento da glândula tireoide.",
+        "tree_ids": [
+          "E01.370.374.750"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.374.750",
+        "parents": [
+          {
+            "id": "D003940",
+            "term": "Técnicas de Diagnóstico Endócrino"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D013972",
+        "term": "Tireotropina",
+        "name_en": "Thyrotropin",
+        "scope_note": "Hormônio glicoproteico secretado pela ADENO-HIPÓFISE. A tireotropina estimula a GLÂNDULA TIREOIDE ao aumentar o transporte de iodo, a síntese e liberação de hormônios tireóideos (TIREOXINA e TRI-IODOTIRONINA). A tireotropina consiste em duas subunidades, alfa e beta, ligadas não covalentemente. Dentro de uma espécie, a subunidade alfa é comum nos hormônios glicoproteicos hipofisários (TSH, HORMÔNIO LUTEINIZANTE e FSH), porém a subunidade beta é única e confere sua especificidade biológica.",
+        "tree_ids": [
+          "D06.472.699.631.525.883",
+          "D12.644.548.691.525.883"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D06.472.699.631.525.883",
+        "parents": [
+          {
+            "id": "D010908",
+            "term": "Hormônios Adeno-Hipofisários"
+          }
+        ],
+        "children": [
+          {
+            "id": "D015292",
+            "term": "Subunidade alfa de Hormônios Glicoproteicos"
+          },
+          {
+            "id": "D037322",
+            "term": "Tireotropina Subunidade beta"
+          },
+          {
+            "id": "D057073",
+            "term": "Tirotropina Alfa"
+          }
+        ],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Goiter",
+      "Hypothyroidism"
+    ],
+    "secondary": [
+      "Thyroid Function Tests",
+      "Thyrotropin",
+      "Thyroxine"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Goiter",
+          "candidates": [
+            {
+              "id": "D006042",
+              "term": "Bócio",
+              "term_en": "Goiter",
+              "scope": "Aumento na GLÂNDULA TIREOIDE que pode crescer de aproximadamente 20 até centenas de gramas em pessoas adultas. O bócio é observado em indivíduos com função tireóidea normal (eutireoidismo), deficiênci",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.874.283"
+              ]
+            },
+            {
+              "id": "D006043",
+              "term": "Bócio Endêmico",
+              "term_en": "Goiter, Endemic",
+              "scope": "Forma de transtorno por deficiência de IODO caracterizada pelo aumento da GLÂNDULA TIREOIDE numa fração significantemente grande de um GRUPO POPULACIONAL. O bócio endêmico é comum em áreas montanhosas",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.874.283.300",
+                "SP6.990.625.344.378.176.533.211"
+              ]
+            },
+            {
+              "id": "D006044",
+              "term": "Bócio Nodular",
+              "term_en": "Goiter, Nodular",
+              "scope": "GLÂNDULA TIREOIDE aumentada, com vários nódulos (NÓDULO DA GLÂNDULA TIREOIDE), geralmente resultando de HIPERPLASIA tireóidea recorrente e involução (por muitos anos) que produz o crescimento irregula",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.874.283.501"
+              ]
+            },
+            {
+              "id": "D006045",
+              "term": "Bócio Subesternal",
+              "term_en": "Goiter, Substernal",
+              "scope": "GLÂNDULA TIREOIDE aumentada, com 50 por cento ou mais da glândula atrás do ESTERNO. É uma apresentação não usual de bócio intratorácico. Bócios subesternais frequentemente causam compressão na TRAQUEI",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.874.283.601"
+              ]
+            },
+            {
+              "id": "D047268",
+              "term": "Bócio Lingual",
+              "term_en": "Lingual Goiter",
+              "scope": "Aumento patológico da TIREOIDE LINGUAL, tecido tireoidiano ectópico na base da LÍNGUA. Pode causar OBSTRUÇÃO DAS VIAS AÉREAS superiores, DISFAGIA ou sintomas de HIPOTIREOIDISMO.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C16.131.894.500.500",
+                "C19.874.283.802"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Hypothyroidism",
+          "candidates": [
+            {
+              "id": "D007037",
+              "term": "Hipotireoidismo",
+              "term_en": "Hypothyroidism",
+              "scope": "Síndrome resultante da secreção anormalmente baixa dos HORMÔNIOS TIREÓIDEOS da GLÂNDULA TIREOIDE, levando a uma diminuição do METABOLISMO BASAL. Em sua forma mais grave, ocorre o acúmulo de MUCOPOLISS",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.874.482"
+              ]
+            },
+            {
+              "id": "D003409",
+              "term": "Hipotireoidismo Congênito",
+              "term_en": "Congenital Hypothyroidism",
+              "scope": "Afecção que ocorre na infância ou na lactância devido à deficiência intrauterina de HORMÔNIOS TIREÓIDEOS, que pode ser causada por fatores ambientais ou genéticos, como disgenesia tireoidiana ou HIPOT",
+              "categoria": "Doenças",
+              "arvore": [
+                "C05.116.099.343.347",
+                "C05.116.132.256"
+              ]
+            },
+            {
+              "id": "D050031",
+              "term": "Doença de Hashimoto",
+              "term_en": "Hashimoto Disease",
+              "scope": "Tiroidite autoimune crônica caracterizada pela presença de um nível sérico elevado de AUTOANTICORPOS contra a tireoide, BÓCIO e HIPOTIROIDISMO.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.874.871.102.500",
+                "C20.111.809.500"
+              ]
+            },
+            {
+              "id": "D009230",
+              "term": "Mixedema",
+              "term_en": "Myxedema",
+              "scope": "Afecção causada por deficiência no nível dos HORMÔNIOS TIREÓIDEOS e caracterizada por um tipo ceroso de EDEMA seco, com depósito anormal de MUCOPOLISSACARÍDEOS na PELE e outros tecidos. A pele se torn",
+              "categoria": "Doenças",
+              "arvore": [
+                "C17.300.550.590",
+                "C19.874.482.638"
+              ]
+            },
+            {
+              "id": "D046151",
+              "term": "Tireoide Lingual",
+              "term_en": "Lingual Thyroid",
+              "scope": "Situação caracterizada pela presença de tecido tireóideo na base da LÍNGUA. É devido a uma falha no desenvolvimento embrionário e migração de tecido tireóideo para sua posição normal. A tireoide lingu",
+              "categoria": "Doenças",
+              "arvore": [
+                "C16.131.894.500",
+                "C19.874.689.500"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Thyroxine",
+          "candidates": [
+            {
+              "id": "D013974",
+              "term": "Tiroxina",
+              "term_en": "Thyroxine",
+              "scope": "Principal hormônio derivado da glândula tireoide. A tireoxina é sintetizada via iodação das tirosinas (MONOIODOTIROSINA) e união das iodotirosinas (DI-IODOTIROSINA) na TIREOGLOBULINA. A tiroxina é lib",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D06.472.931.812",
+                "D12.125.072.050.767"
+              ]
+            },
+            {
+              "id": "D014284",
+              "term": "Tri-Iodotironina",
+              "term_en": "Triiodothyronine",
+              "scope": "Hormônio tireóideo T3 normalmente sintetizado e secretado pela glândula tireoide em quantidades menores que a tiroxina (T4). A maior parte do T3 é derivada da monodesiodação periférica do T4 na posiçã",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D06.472.931.740.385",
+                "D12.125.072.050.767.741.894"
+              ]
+            },
+            {
+              "id": "D006981",
+              "term": "Hipertireoxinemia",
+              "term_en": "Hyperthyroxinemia",
+              "scope": "Anormalidade elevada do nível de TIREOXINA no SANGUE.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.874.410"
+              ]
+            },
+            {
+              "id": "D056825",
+              "term": "Globulina de Ligação a Tiroxina",
+              "term_en": "Thyroxine-Binding Globulin",
+              "scope": "Proteína transportadora de hormônio tireóideo encontrada no soro. Liga-se aproximadamente a 75 por cento de TIROXINA circulante e a 70 por cento de TRIIODOTIRONINA circulante.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D09.400.430.955.500",
+                "D12.644.861.847"
+              ]
+            },
+            {
+              "id": "D013962",
+              "term": "Tireoide (USP)",
+              "term_en": "Thyroid (USP)",
+              "scope": "Extrato desidratado de glândulas tireoides de animais domesticados. Após a remoção dos tecidos gordurosos e conjuntivo, o extrato é seco ou liofilizado, originando um pó amorfo de tom amarelado a cor ",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D06.472.931.669"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Thyroid Function Tests",
+          "candidates": [
+            {
+              "id": "D013960",
+              "term": "Testes de Função Tireóidea",
+              "term_en": "Thyroid Function Tests",
+              "scope": "Exames sanguíneos usados para avaliar o funcionamento da glândula tireoide.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.374.750"
+              ]
+            },
+            {
+              "id": "D013959",
+              "term": "Doenças da Glândula Tireoide",
+              "term_en": "Thyroid Diseases",
+              "scope": "Processos patológicos envolvendo a GLÂNDULA TIREOIDE.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.874"
+              ]
+            },
+            {
+              "id": "D013963",
+              "term": "Hormônios Tireóideos",
+              "term_en": "Thyroid Hormones",
+              "scope": "Hormônios naturais secretados pela GLÂNDULA TIREOIDE, como TIROXINA, e seus análogos sintéticos.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D06.472.931"
+              ]
+            },
+            {
+              "id": "D005067",
+              "term": "Síndromes do Eutireóideo Doente",
+              "term_en": "Euthyroid Sick Syndromes",
+              "scope": "Situações em que ocorre liberação anormal dos HORMÔNIOS TIREÓIDEOS em pacientes com GLÂNDULA TIREOIDE aparentemente normal, durante uma doença sistêmica grave, TRAUMA físico e distúrbios psiquiátricos",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.874.255"
+              ]
+            },
+            {
+              "id": "D008111",
+              "term": "Testes de Função Hepática",
+              "term_en": "Liver Function Tests",
+              "scope": "Testes sanguíneos usados para avaliar o quão bem o fígado de um paciente está trabalhando e também para ajudar a diagnosticar doenças hepáticas.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.372.460"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Thyrotropin",
+          "candidates": [
+            {
+              "id": "D013972",
+              "term": "Tireotropina",
+              "term_en": "Thyrotropin",
+              "scope": "Hormônio glicoproteico secretado pela ADENO-HIPÓFISE. A tireotropina estimula a GLÂNDULA TIREOIDE ao aumentar o transporte de iodo, a síntese e liberação de hormônios tireóideos (TIREOXINA e TRI-IODOT",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D06.472.699.631.525.883",
+                "D12.644.548.691.525.883"
+              ]
+            },
+            {
+              "id": "D011989",
+              "term": "Receptores da Tireotropina",
+              "term_en": "Receptors, Thyrotropin",
+              "scope": "Proteínas de superfície celular que ligam a TIREOTROPINA hipofisária (também denominada hormônio estimulante da tireoide ou TSH) e disencadeiam alterações intracelulares das células alvo. Os receptore",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.543.750.720.600.850",
+                "D12.776.543.750.750.555.850"
+              ]
+            },
+            {
+              "id": "D037322",
+              "term": "Tireotropina Subunidade beta",
+              "term_en": "Thyrotropin, beta Subunit",
+              "scope": "Subunidade beta do hormônio estimulante tireoidiano, tireotropina. É um glicopolipeptídeo de 112 aminoácidos de aproximadamente 16kD. A atividade biológica completa do TSH requer heterodímeros formado",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D06.472.699.631.525.883.500",
+                "D12.644.548.691.525.883.500"
+              ]
+            },
+            {
+              "id": "D057073",
+              "term": "Tirotropina Alfa",
+              "term_en": "Thyrotropin Alfa",
+              "scope": "Forma de glicoproteína recombinante altamente purificada da TIREOTROPINA humana, produzida por tecnologia de DNA recombinante que compreende duas subunidades não covalentemente ligadas: uma subunidade",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D06.472.699.631.525.883.374"
+              ]
+            },
+            {
+              "id": "D052684",
+              "term": "Tireotrofos",
+              "term_en": "Thyrotrophs",
+              "scope": "Células da hipófise anterior que produzem o HORMÔNIO ESTIMULANTE DA TIREOIDE.",
+              "categoria": "Anatomia",
+              "arvore": [
+                "A06.300.747.500.968",
+                "A06.688.357.750.500.968"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Goiter",
+        "Hypothyroidism"
+      ],
+      "secondary": [
+        "Thyroid Function Tests",
+        "Thyrotropin",
+        "Thyroxine"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Goiter",
+            "candidates": [
+              {
+                "id": "D006042",
+                "term": "Bócio",
+                "term_en": "Goiter",
+                "scope": "Aumento na GLÂNDULA TIREOIDE que pode crescer de aproximadamente 20 até centenas de gramas em pessoas adultas. O bócio é observado em indivíduos com função tireóidea normal (eutireoidismo), deficiênci",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.874.283"
+                ]
+              },
+              {
+                "id": "D006043",
+                "term": "Bócio Endêmico",
+                "term_en": "Goiter, Endemic",
+                "scope": "Forma de transtorno por deficiência de IODO caracterizada pelo aumento da GLÂNDULA TIREOIDE numa fração significantemente grande de um GRUPO POPULACIONAL. O bócio endêmico é comum em áreas montanhosas",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.874.283.300",
+                  "SP6.990.625.344.378.176.533.211"
+                ]
+              },
+              {
+                "id": "D006044",
+                "term": "Bócio Nodular",
+                "term_en": "Goiter, Nodular",
+                "scope": "GLÂNDULA TIREOIDE aumentada, com vários nódulos (NÓDULO DA GLÂNDULA TIREOIDE), geralmente resultando de HIPERPLASIA tireóidea recorrente e involução (por muitos anos) que produz o crescimento irregula",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.874.283.501"
+                ]
+              },
+              {
+                "id": "D006045",
+                "term": "Bócio Subesternal",
+                "term_en": "Goiter, Substernal",
+                "scope": "GLÂNDULA TIREOIDE aumentada, com 50 por cento ou mais da glândula atrás do ESTERNO. É uma apresentação não usual de bócio intratorácico. Bócios subesternais frequentemente causam compressão na TRAQUEI",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.874.283.601"
+                ]
+              },
+              {
+                "id": "D047268",
+                "term": "Bócio Lingual",
+                "term_en": "Lingual Goiter",
+                "scope": "Aumento patológico da TIREOIDE LINGUAL, tecido tireoidiano ectópico na base da LÍNGUA. Pode causar OBSTRUÇÃO DAS VIAS AÉREAS superiores, DISFAGIA ou sintomas de HIPOTIREOIDISMO.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C16.131.894.500.500",
+                  "C19.874.283.802"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Hypothyroidism",
+            "candidates": [
+              {
+                "id": "D007037",
+                "term": "Hipotireoidismo",
+                "term_en": "Hypothyroidism",
+                "scope": "Síndrome resultante da secreção anormalmente baixa dos HORMÔNIOS TIREÓIDEOS da GLÂNDULA TIREOIDE, levando a uma diminuição do METABOLISMO BASAL. Em sua forma mais grave, ocorre o acúmulo de MUCOPOLISS",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.874.482"
+                ]
+              },
+              {
+                "id": "D003409",
+                "term": "Hipotireoidismo Congênito",
+                "term_en": "Congenital Hypothyroidism",
+                "scope": "Afecção que ocorre na infância ou na lactância devido à deficiência intrauterina de HORMÔNIOS TIREÓIDEOS, que pode ser causada por fatores ambientais ou genéticos, como disgenesia tireoidiana ou HIPOT",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C05.116.099.343.347",
+                  "C05.116.132.256"
+                ]
+              },
+              {
+                "id": "D050031",
+                "term": "Doença de Hashimoto",
+                "term_en": "Hashimoto Disease",
+                "scope": "Tiroidite autoimune crônica caracterizada pela presença de um nível sérico elevado de AUTOANTICORPOS contra a tireoide, BÓCIO e HIPOTIROIDISMO.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.874.871.102.500",
+                  "C20.111.809.500"
+                ]
+              },
+              {
+                "id": "D009230",
+                "term": "Mixedema",
+                "term_en": "Myxedema",
+                "scope": "Afecção causada por deficiência no nível dos HORMÔNIOS TIREÓIDEOS e caracterizada por um tipo ceroso de EDEMA seco, com depósito anormal de MUCOPOLISSACARÍDEOS na PELE e outros tecidos. A pele se torn",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C17.300.550.590",
+                  "C19.874.482.638"
+                ]
+              },
+              {
+                "id": "D046151",
+                "term": "Tireoide Lingual",
+                "term_en": "Lingual Thyroid",
+                "scope": "Situação caracterizada pela presença de tecido tireóideo na base da LÍNGUA. É devido a uma falha no desenvolvimento embrionário e migração de tecido tireóideo para sua posição normal. A tireoide lingu",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C16.131.894.500",
+                  "C19.874.689.500"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Thyroxine",
+            "candidates": [
+              {
+                "id": "D013974",
+                "term": "Tiroxina",
+                "term_en": "Thyroxine",
+                "scope": "Principal hormônio derivado da glândula tireoide. A tireoxina é sintetizada via iodação das tirosinas (MONOIODOTIROSINA) e união das iodotirosinas (DI-IODOTIROSINA) na TIREOGLOBULINA. A tiroxina é lib",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D06.472.931.812",
+                  "D12.125.072.050.767"
+                ]
+              },
+              {
+                "id": "D014284",
+                "term": "Tri-Iodotironina",
+                "term_en": "Triiodothyronine",
+                "scope": "Hormônio tireóideo T3 normalmente sintetizado e secretado pela glândula tireoide em quantidades menores que a tiroxina (T4). A maior parte do T3 é derivada da monodesiodação periférica do T4 na posiçã",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D06.472.931.740.385",
+                  "D12.125.072.050.767.741.894"
+                ]
+              },
+              {
+                "id": "D006981",
+                "term": "Hipertireoxinemia",
+                "term_en": "Hyperthyroxinemia",
+                "scope": "Anormalidade elevada do nível de TIREOXINA no SANGUE.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.874.410"
+                ]
+              },
+              {
+                "id": "D056825",
+                "term": "Globulina de Ligação a Tiroxina",
+                "term_en": "Thyroxine-Binding Globulin",
+                "scope": "Proteína transportadora de hormônio tireóideo encontrada no soro. Liga-se aproximadamente a 75 por cento de TIROXINA circulante e a 70 por cento de TRIIODOTIRONINA circulante.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D09.400.430.955.500",
+                  "D12.644.861.847"
+                ]
+              },
+              {
+                "id": "D013962",
+                "term": "Tireoide (USP)",
+                "term_en": "Thyroid (USP)",
+                "scope": "Extrato desidratado de glândulas tireoides de animais domesticados. Após a remoção dos tecidos gordurosos e conjuntivo, o extrato é seco ou liofilizado, originando um pó amorfo de tom amarelado a cor ",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D06.472.931.669"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Thyroid Function Tests",
+            "candidates": [
+              {
+                "id": "D013960",
+                "term": "Testes de Função Tireóidea",
+                "term_en": "Thyroid Function Tests",
+                "scope": "Exames sanguíneos usados para avaliar o funcionamento da glândula tireoide.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.374.750"
+                ]
+              },
+              {
+                "id": "D013959",
+                "term": "Doenças da Glândula Tireoide",
+                "term_en": "Thyroid Diseases",
+                "scope": "Processos patológicos envolvendo a GLÂNDULA TIREOIDE.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.874"
+                ]
+              },
+              {
+                "id": "D013963",
+                "term": "Hormônios Tireóideos",
+                "term_en": "Thyroid Hormones",
+                "scope": "Hormônios naturais secretados pela GLÂNDULA TIREOIDE, como TIROXINA, e seus análogos sintéticos.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D06.472.931"
+                ]
+              },
+              {
+                "id": "D005067",
+                "term": "Síndromes do Eutireóideo Doente",
+                "term_en": "Euthyroid Sick Syndromes",
+                "scope": "Situações em que ocorre liberação anormal dos HORMÔNIOS TIREÓIDEOS em pacientes com GLÂNDULA TIREOIDE aparentemente normal, durante uma doença sistêmica grave, TRAUMA físico e distúrbios psiquiátricos",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.874.255"
+                ]
+              },
+              {
+                "id": "D008111",
+                "term": "Testes de Função Hepática",
+                "term_en": "Liver Function Tests",
+                "scope": "Testes sanguíneos usados para avaliar o quão bem o fígado de um paciente está trabalhando e também para ajudar a diagnosticar doenças hepáticas.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.372.460"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Thyrotropin",
+            "candidates": [
+              {
+                "id": "D013972",
+                "term": "Tireotropina",
+                "term_en": "Thyrotropin",
+                "scope": "Hormônio glicoproteico secretado pela ADENO-HIPÓFISE. A tireotropina estimula a GLÂNDULA TIREOIDE ao aumentar o transporte de iodo, a síntese e liberação de hormônios tireóideos (TIREOXINA e TRI-IODOT",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D06.472.699.631.525.883",
+                  "D12.644.548.691.525.883"
+                ]
+              },
+              {
+                "id": "D011989",
+                "term": "Receptores da Tireotropina",
+                "term_en": "Receptors, Thyrotropin",
+                "scope": "Proteínas de superfície celular que ligam a TIREOTROPINA hipofisária (também denominada hormônio estimulante da tireoide ou TSH) e disencadeiam alterações intracelulares das células alvo. Os receptore",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.543.750.720.600.850",
+                  "D12.776.543.750.750.555.850"
+                ]
+              },
+              {
+                "id": "D037322",
+                "term": "Tireotropina Subunidade beta",
+                "term_en": "Thyrotropin, beta Subunit",
+                "scope": "Subunidade beta do hormônio estimulante tireoidiano, tireotropina. É um glicopolipeptídeo de 112 aminoácidos de aproximadamente 16kD. A atividade biológica completa do TSH requer heterodímeros formado",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D06.472.699.631.525.883.500",
+                  "D12.644.548.691.525.883.500"
+                ]
+              },
+              {
+                "id": "D057073",
+                "term": "Tirotropina Alfa",
+                "term_en": "Thyrotropin Alfa",
+                "scope": "Forma de glicoproteína recombinante altamente purificada da TIREOTROPINA humana, produzida por tecnologia de DNA recombinante que compreende duas subunidades não covalentemente ligadas: uma subunidade",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D06.472.699.631.525.883.374"
+                ]
+              },
+              {
+                "id": "D052684",
+                "term": "Tireotrofos",
+                "term_en": "Thyrotrophs",
+                "scope": "Células da hipófise anterior que produzem o HORMÔNIO ESTIMULANTE DA TIREOIDE.",
+                "categoria": "Anatomia",
+                "arvore": [
+                  "A06.300.747.500.968",
+                  "A06.688.357.750.500.968"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D006042",
+          "term": "Bócio"
+        },
+        {
+          "id": "D007037",
+          "term": "Hipotireoidismo"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D013974",
+          "term": "Tiroxina"
+        },
+        {
+          "id": "D013960",
+          "term": "Testes de Função Tireóidea"
+        },
+        {
+          "id": "D013972",
+          "term": "Tireotropina"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 3,
+    "total_candidates": 25,
+    "final_primary": 2,
+    "final_secondary": 3
+  }
+}

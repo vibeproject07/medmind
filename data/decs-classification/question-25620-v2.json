@@ -1,0 +1,1113 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D008180",
+        "term": "Lúpus Eritematoso Sistêmico",
+        "name_en": "Lupus Erythematosus, Systemic",
+        "scope_note": "Transtorno multissistêmico, crônico, recidivante, inflamatório e geralmente febril do tecido conjuntivo, caracterizado principalmente pelo envolvimento da pele, articulações, rins e membranas serosas. É de etiologia desconhecida, mas acredita-se que represente uma insuficiência dos mecanismos regulatórios do sistema autoimune. A doença é caracterizada por uma ampla faixa de disfunções sistêmicas, uma taxa de sedimentação de eritrócitos elevada e a formação de células LE no sangue ou na medula óssea.",
+        "tree_ids": [
+          "C17.300.480",
+          "C20.111.590"
+        ],
+        "hierarchy_path": "Doenças › C17.300.480",
+        "parents": [
+          {
+            "id": "D003240",
+            "term": "Doenças do Tecido Conjuntivo"
+          },
+          {
+            "id": "D001327",
+            "term": "Doenças Autoimunes"
+          }
+        ],
+        "children": [
+          {
+            "id": "D020945",
+            "term": "Vasculite Associada ao Lúpus do Sistema Nervoso Central"
+          },
+          {
+            "id": "D008181",
+            "term": "Nefrite Lúpica"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D008181",
+        "term": "Nefrite Lúpica",
+        "name_en": "Lupus Nephritis",
+        "scope_note": "Glomerulonefrite associada com doença autoimune, o LUPUS ERITEMATOSO SISTÊMICO. A nefrite lúpica é classificada histologicamente em 6 classes: classe I - glomérulo normal; classe II - alterações mesangiais puras; classe III - glomerulonefrite segmentar focal; classe IV - glomerulonefrite difusa; classe V - glomerulonefrite membranosa difusa e classe VI - glomerulonefrite esclerosante avançada. (Tradução livre do original: The World Health Organization classification 1982)",
+        "tree_ids": [
+          "C12.050.351.968.419.570.363.680",
+          "C12.200.777.419.570.363.680",
+          "C12.950.419.570.363.680",
+          "C17.300.480.680",
+          "C20.111.590.560"
+        ],
+        "hierarchy_path": "Doenças › C12.050.351.968.419.570.363.680",
+        "parents": [
+          {
+            "id": "D005921",
+            "term": "Glomerulonefrite"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D000974",
+        "term": "Anticorpos Antinucleares",
+        "name_en": "Antibodies, Antinuclear",
+        "scope_note": "Autoanticorpos dirigidos contra vários antígenos nucleares, inclusive DNA, RNA, histonas, proteínas nucleares ácidas ou complexos desses elementos moleculares. Os anticorpos antinucleares são encontrados em doenças autoimunes sistêmicas, como o lúpus eritematoso sistêmico, a síndrome de Sjogren's, o escleroderma, a polimiosite, e a doença mista do tecido conjuntivo.",
+        "tree_ids": [
+          "D12.776.124.486.485.114.323.204",
+          "D12.776.124.790.651.114.323.204",
+          "D12.776.377.715.548.114.323.204"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D12.776.124.486.485.114.323.204",
+        "parents": [
+          {
+            "id": "D001323",
+            "term": "Autoanticorpos"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D016682",
+        "term": "Inibidor de Coagulação do Lúpus",
+        "name_en": "Lupus Coagulation Inhibitor",
+        "scope_note": "Anticorpo antifosfolipídico encontrado em associação com uma variedade de doenças (como por exemplo, o LUPUS ERITEMATOSO SISTÊMICO e a SÍNDROME ANTIFOSFOLIPÍDICA), bem como em indivíduos saudáveis. In vitro, o anticorpo interfere na conversão de protrombina em trombina, prolongando o tempo de tromboplastina parcial. In vivo, exerce um efeito pró-coagulante que resulta em trombose, principalmente nas veias e artérias maiores. Além disso, causa complicações obstétricas, inclusive a morte do feto e o aborto espontâneo, bem como várias complicações hematológicas e neurológicas.",
+        "tree_ids": [
+          "D12.776.124.486.485.114.323.210.600",
+          "D12.776.124.790.651.114.323.210.600",
+          "D12.776.377.715.548.114.323.210.600",
+          "D23.113.475"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D12.776.124.486.485.114.323.210.600",
+        "parents": [
+          {
+            "id": "D017152",
+            "term": "Anticorpos Antifosfolipídeos"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D008231",
+        "term": "Linfopenia",
+        "name_en": "Lymphopenia",
+        "scope_note": "Redução no número de linfócitos.",
+        "tree_ids": [
+          "C15.378.243.750.605",
+          "C15.378.553.546.605",
+          "C20.673.627"
+        ],
+        "hierarchy_path": "Doenças › C15.378.243.750.605",
+        "parents": [
+          {
+            "id": "D007970",
+            "term": "Leucopenia"
+          },
+          {
+            "id": "D007153",
+            "term": "Síndromes de Imunodeficiência"
+          }
+        ],
+        "children": [
+          {
+            "id": "D014923",
+            "term": "Síndrome de Wiskott-Aldrich"
+          },
+          {
+            "id": "D018344",
+            "term": "T-Linfocitopenia Idiopática CD4-Positiva"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D011507",
+        "term": "Proteinúria",
+        "name_en": "Proteinuria",
+        "scope_note": "Presença de proteínas na urina, um indicador de NEFROPATIAS.",
+        "tree_ids": [
+          "C12.050.351.968.934.734",
+          "C12.200.777.934.734",
+          "C12.950.934.734",
+          "C23.888.942.750"
+        ],
+        "hierarchy_path": "Doenças › C12.050.351.968.934.734",
+        "parents": [
+          {
+            "id": "D014555",
+            "term": "Transtornos Urinários"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000419",
+            "term": "Albuminúria"
+          },
+          {
+            "id": "D006456",
+            "term": "Hemoglobinúria"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D008179",
+        "term": "Lúpus Eritematoso Discoide",
+        "name_en": "Lupus Erythematosus, Discoid",
+        "scope_note": "Forma crônica de lúpus eritematoso cutâneo (LÚPUS ERITEMATOSO CUTÂNEO), na qual as lesões cutâneas mimetizam as da forma sistêmica, porém os sinais sistêmicos são raros. É caracterizada pela presença de placas cutâneas discoides mostrando graus variados de edema, eritema, escamações, tapamento folicular e atrofia cutânea. As lesões são rodeadas por uma margem eritematosa elevada. A doença tipicamente afeta a face e o couro cabeludo, podendo ocorrer uma disseminação generalizada.",
+        "tree_ids": [
+          "C17.300.475.479",
+          "C17.800.480.479"
+        ],
+        "hierarchy_path": "Doenças › C17.300.475.479",
+        "parents": [
+          {
+            "id": "D008178",
+            "term": "Lúpus Eritematoso Cutâneo"
+          }
+        ],
+        "children": [
+          {
+            "id": "D015435",
+            "term": "Paniculite de Lúpus Eritematoso"
+          }
+        ],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Lupus Erythematosus, Systemic",
+      "Lupus Nephritis"
+    ],
+    "secondary": [
+      "Antibodies, Antinuclear",
+      "Lupus Erythematosus, Discoid",
+      "Lupus Coagulation Inhibitor",
+      "Lymphopenia",
+      "Proteinuria"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Lupus Erythematosus, Systemic",
+          "candidates": [
+            {
+              "id": "D008180",
+              "term": "Lúpus Eritematoso Sistêmico",
+              "term_en": "Lupus Erythematosus, Systemic",
+              "scope": "Transtorno multissistêmico, crônico, recidivante, inflamatório e geralmente febril do tecido conjuntivo, caracterizado principalmente pelo envolvimento da pele, articulações, rins e membranas serosas.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C17.300.480",
+                "C20.111.590"
+              ]
+            },
+            {
+              "id": "D008181",
+              "term": "Nefrite Lúpica",
+              "term_en": "Lupus Nephritis",
+              "scope": "Glomerulonefrite associada com doença autoimune, o LUPUS ERITEMATOSO SISTÊMICO. A nefrite lúpica é classificada histologicamente em 6 classes: classe I - glomérulo normal; classe II - alterações mesan",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.570.363.680",
+                "C12.200.777.419.570.363.680"
+              ]
+            },
+            {
+              "id": "D020945",
+              "term": "Vasculite Associada ao Lúpus do Sistema Nervoso Central",
+              "term_en": "Lupus Vasculitis, Central Nervous System",
+              "scope": "Vasculite do sistema nervoso central associada ao LUPUS ERITEMATOSO SISTÊMICO. Entre as manifestações clínicas estão DEMÊNCIA, CONVULSÕES, DOENÇAS DOS NERVOS CRANIANOS, HEMIPARESIA, CEGUEIRA, DISFASIA",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.207.245.550.500",
+                "C01.207.570.450"
+              ]
+            },
+            {
+              "id": "D015435",
+              "term": "Paniculite de Lúpus Eritematoso",
+              "term_en": "Panniculitis, Lupus Erythematosus",
+              "scope": "Tipo de lúpus eritematoso caracterizado por nódulos subcutâneos ou dérmicos profundos, geralmente na cabeça, face ou parte superior dos braços. Geralmente é crônico e ocorre com mais frequência em mul",
+              "categoria": "Doenças",
+              "arvore": [
+                "C17.300.475.479.400",
+                "C17.300.710.400"
+              ]
+            },
+            {
+              "id": "D016682",
+              "term": "Inibidor de Coagulação do Lúpus",
+              "term_en": "Lupus Coagulation Inhibitor",
+              "scope": "Anticorpo antifosfolipídico encontrado em associação com uma variedade de doenças (como por exemplo, o LUPUS ERITEMATOSO SISTÊMICO e a SÍNDROME ANTIFOSFOLIPÍDICA), bem como em indivíduos saudáveis. In",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.486.485.114.323.210.600",
+                "D12.776.124.790.651.114.323.210.600"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Lupus Nephritis",
+          "candidates": [
+            {
+              "id": "D008181",
+              "term": "Nefrite Lúpica",
+              "term_en": "Lupus Nephritis",
+              "scope": "Glomerulonefrite associada com doença autoimune, o LUPUS ERITEMATOSO SISTÊMICO. A nefrite lúpica é classificada histologicamente em 6 classes: classe I - glomérulo normal; classe II - alterações mesan",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.570.363.680",
+                "C12.200.777.419.570.363.680"
+              ]
+            },
+            {
+              "id": "D015432",
+              "term": "Glomerulonefrite Membranoproliferativa",
+              "term_en": "Glomerulonephritis, Membranoproliferative",
+              "scope": "Glomerulonefrite crônica caracterizada histologicamente por proliferação das CÉLULAS MESANGIAIS, aumento na matriz mesangial extracelular e um espessamento das paredes dos capilares glomerulares. Isto",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.570.363.615",
+                "C12.200.777.419.570.363.615"
+              ]
+            },
+            {
+              "id": "D008180",
+              "term": "Lúpus Eritematoso Sistêmico",
+              "term_en": "Lupus Erythematosus, Systemic",
+              "scope": "Transtorno multissistêmico, crônico, recidivante, inflamatório e geralmente febril do tecido conjuntivo, caracterizado principalmente pelo envolvimento da pele, articulações, rins e membranas serosas.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C17.300.480",
+                "C20.111.590"
+              ]
+            },
+            {
+              "id": "D020945",
+              "term": "Vasculite Associada ao Lúpus do Sistema Nervoso Central",
+              "term_en": "Lupus Vasculitis, Central Nervous System",
+              "scope": "Vasculite do sistema nervoso central associada ao LUPUS ERITEMATOSO SISTÊMICO. Entre as manifestações clínicas estão DEMÊNCIA, CONVULSÕES, DOENÇAS DOS NERVOS CRANIANOS, HEMIPARESIA, CEGUEIRA, DISFASIA",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.207.245.550.500",
+                "C01.207.570.450"
+              ]
+            },
+            {
+              "id": "D005921",
+              "term": "Glomerulonefrite",
+              "term_en": "Glomerulonephritis",
+              "scope": "Inflamação dos GLOMÉRULOS RENAIS que pode ser classificada pelo tipo de lesões glomerulares, incluindo deposição de anticorpos, ativação do complemento, proliferação celular e glomeruloesclerose. Esta",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.570.363",
+                "C12.200.777.419.570.363"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Antibodies, Antinuclear",
+          "candidates": [
+            {
+              "id": "D000974",
+              "term": "Anticorpos Antinucleares",
+              "term_en": "Antibodies, Antinuclear",
+              "scope": "Autoanticorpos dirigidos contra vários antígenos nucleares, inclusive DNA, RNA, histonas, proteínas nucleares ácidas ou complexos desses elementos moleculares. Os anticorpos antinucleares são encontra",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.486.485.114.323.204",
+                "D12.776.124.790.651.114.323.204"
+              ]
+            },
+            {
+              "id": "D034961",
+              "term": "Antígenos Nucleares",
+              "term_en": "Antigens, Nuclear",
+              "scope": "Substâncias imunologicamente detectáveis encontradas no NÚCLEO CELULAR.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.660.625",
+                "D23.050.290"
+              ]
+            },
+            {
+              "id": "D019268",
+              "term": "Anticorpos Anticitoplasma de Neutrófilos",
+              "term_en": "Antibodies, Antineutrophil Cytoplasmic",
+              "scope": "Autoanticorpos dirigidos contra os constituintes citoplasmáticos de LEUCÓCITOS POLIMORFONUCLEARES e/ou MONÓCITOS. São usados como marcadores específicos para a GRANULOMATOSE COM POLIANGIÍTE e outras d",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.486.485.114.323.190",
+                "D12.776.124.790.651.114.323.190"
+              ]
+            },
+            {
+              "id": "D017153",
+              "term": "Anticorpos Anticardiolipina",
+              "term_en": "Antibodies, Anticardiolipin",
+              "scope": "Anticorpos antifosfolipídeos encontrados em associação com o LUPUS ERITEMATOSO SISTÊMICO, SÍNDROME ANTIFOSFOLIPÍDICA e várias outras doenças, bem como, em indivíduos saudáveis. Os anticorpos são detec",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.486.485.114.323.210.100",
+                "D12.776.124.790.651.114.323.210.100"
+              ]
+            },
+            {
+              "id": "D017152",
+              "term": "Anticorpos Antifosfolipídeos",
+              "term_en": "Antibodies, Antiphospholipid",
+              "scope": "Autoanticorpos direcionados contra fosfolipídeos. Estes anticorpos são caracteristicamente encontrados em pacientes com certas doenças autoimunes (como por exemplo, o LUPUS ERITEMATOSO SISTÊMICO e a S",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.486.485.114.323.210",
+                "D12.776.124.790.651.114.323.210"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Lupus Coagulation Inhibitor",
+          "candidates": [
+            {
+              "id": "D016682",
+              "term": "Inibidor de Coagulação do Lúpus",
+              "term_en": "Lupus Coagulation Inhibitor",
+              "scope": "Anticorpo antifosfolipídico encontrado em associação com uma variedade de doenças (como por exemplo, o LUPUS ERITEMATOSO SISTÊMICO e a SÍNDROME ANTIFOSFOLIPÍDICA), bem como em indivíduos saudáveis. In",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.486.485.114.323.210.600",
+                "D12.776.124.790.651.114.323.210.600"
+              ]
+            },
+            {
+              "id": "D016736",
+              "term": "Síndrome Antifosfolipídica",
+              "term_en": "Antiphospholipid Syndrome",
+              "scope": "Presença de anticorpos dirigidos contra fosfolipídeos (ANTICORPOS ANTIFOSFOLÍPIDES). A afecção está associada com uma variedade de doenças, lúpus eritematoso sistêmico notável e outras doenças de teci",
+              "categoria": "Doenças",
+              "arvore": [
+                "C20.111.197"
+              ]
+            },
+            {
+              "id": "D017153",
+              "term": "Anticorpos Anticardiolipina",
+              "term_en": "Antibodies, Anticardiolipin",
+              "scope": "Anticorpos antifosfolipídeos encontrados em associação com o LUPUS ERITEMATOSO SISTÊMICO, SÍNDROME ANTIFOSFOLIPÍDICA e várias outras doenças, bem como, em indivíduos saudáveis. Os anticorpos são detec",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.486.485.114.323.210.100",
+                "D12.776.124.790.651.114.323.210.100"
+              ]
+            },
+            {
+              "id": "D019774",
+              "term": "Inibidores dos Fatores de Coagulação Sanguínea",
+              "term_en": "Blood Coagulation Factor Inhibitors",
+              "scope": "Substâncias, geralmente endógenas, que agem como inibidores da coagulação sanguínea. Podem afetar uma ou várias enzimas ao longo do processo. Este grupo também inibe enzimas envolvidas em outros proce",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D23.113"
+              ]
+            },
+            {
+              "id": "D017152",
+              "term": "Anticorpos Antifosfolipídeos",
+              "term_en": "Antibodies, Antiphospholipid",
+              "scope": "Autoanticorpos direcionados contra fosfolipídeos. Estes anticorpos são caracteristicamente encontrados em pacientes com certas doenças autoimunes (como por exemplo, o LUPUS ERITEMATOSO SISTÊMICO e a S",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.486.485.114.323.210",
+                "D12.776.124.790.651.114.323.210"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Lymphopenia",
+          "candidates": [
+            {
+              "id": "D008231",
+              "term": "Linfopenia",
+              "term_en": "Lymphopenia",
+              "scope": "Redução no número de linfócitos.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.243.750.605",
+                "C15.378.553.546.605"
+              ]
+            },
+            {
+              "id": "D007970",
+              "term": "Leucopenia",
+              "term_en": "Leukopenia",
+              "scope": "Diminuição no número de LEUCÓCITOS em uma amostra de sangue abaixo dos níveis normais (CONTAGEM DE LEUCÓCITOS menor que 4000).",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.243.750",
+                "C15.378.553.546"
+              ]
+            },
+            {
+              "id": "D018344",
+              "term": "T-Linfocitopenia Idiopática CD4-Positiva",
+              "term_en": "T-Lymphocytopenia, Idiopathic CD4-Positive",
+              "scope": "Depleção reproduzível de linfócitos CD4+ abaixo de 300 células por milímetro cúbico, na ausência de infecção por HIV ou outras causas conhecidas de imunodeficiência. Esta é uma síndrome heterogênea, r",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.243.750.605.800",
+                "C15.378.553.546.605.800"
+              ]
+            },
+            {
+              "id": "D000095542",
+              "term": "Citopenia",
+              "term_en": "Cytopenia",
+              "scope": "Deficiência ou redução no número de células sanguíneas.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.243"
+              ]
+            },
+            {
+              "id": "D008218",
+              "term": "Linfocitose",
+              "term_en": "Lymphocytosis",
+              "scope": "Excesso de linfócitos normais no sangue ou em qualquer derrame.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.553.475.604"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Proteinuria",
+          "candidates": [
+            {
+              "id": "D011507",
+              "term": "Proteinúria",
+              "term_en": "Proteinuria",
+              "scope": "Presença de proteínas na urina, um indicador de NEFROPATIAS.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.934.734",
+                "C12.200.777.934.734"
+              ]
+            },
+            {
+              "id": "D000419",
+              "term": "Albuminúria",
+              "term_en": "Albuminuria",
+              "scope": "Presença de albumina na urina, um indicador de NEFROPATIAS.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.934.734.269",
+                "C12.200.777.934.734.269"
+              ]
+            },
+            {
+              "id": "D003928",
+              "term": "Nefropatias Diabéticas",
+              "term_en": "Diabetic Nephropathies",
+              "scope": "Lesões no RIM associadas com diabetes mellitus que afetam os GLOMÉRULOS RENAIS, ARTERÍOLAS, TÚBULOS RENAIS e o interstício. Os sinais clínicos incluem PROTEINURIA persistente devido a microalbuminuria",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.192",
+                "C12.200.777.419.192"
+              ]
+            },
+            {
+              "id": "D009404",
+              "term": "Síndrome Nefrótica",
+              "term_en": "Nephrotic Syndrome",
+              "scope": "Afecção caracterizada por PROTEINÚRIA grave, maior que 3,5 g/dia em um adulto médio. A perda substancial de proteína na urina resulta em complicações como HIPOPROTEINEMIA, EDEMA generalizado, HIPERTEN",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.630.643",
+                "C12.200.777.419.630.643"
+              ]
+            },
+            {
+              "id": "D007019",
+              "term": "Hipoproteinemia",
+              "term_en": "Hypoproteinemia",
+              "scope": "Afecção na qual o nível total de proteínas séricas está abaixo do normal. Hipoproteinemia pode ser causada por malabsorção proteica no trato gastrointestinal, EDEMA, ou PROTEINÚRIA.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.147.607"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Lupus Erythematosus, Discoid",
+          "candidates": [
+            {
+              "id": "D008179",
+              "term": "Lúpus Eritematoso Discoide",
+              "term_en": "Lupus Erythematosus, Discoid",
+              "scope": "Forma crônica de lúpus eritematoso cutâneo (LÚPUS ERITEMATOSO CUTÂNEO), na qual as lesões cutâneas mimetizam as da forma sistêmica, porém os sinais sistêmicos são raros. É caracterizada pela presença ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C17.300.475.479",
+                "C17.800.480.479"
+              ]
+            },
+            {
+              "id": "D008178",
+              "term": "Lúpus Eritematoso Cutâneo",
+              "term_en": "Lupus Erythematosus, Cutaneous",
+              "scope": "Forma de lúpus eritematoso no qual a pele pode ser o único órgão envolvido ou no qual o envolvimento da pele precede o alastramento para outros sistemas do corpo. Foi classificado em três formas - agu",
+              "categoria": "Doenças",
+              "arvore": [
+                "C17.300.475",
+                "C17.800.480"
+              ]
+            },
+            {
+              "id": "D015435",
+              "term": "Paniculite de Lúpus Eritematoso",
+              "term_en": "Panniculitis, Lupus Erythematosus",
+              "scope": "Tipo de lúpus eritematoso caracterizado por nódulos subcutâneos ou dérmicos profundos, geralmente na cabeça, face ou parte superior dos braços. Geralmente é crônico e ocorre com mais frequência em mul",
+              "categoria": "Doenças",
+              "arvore": [
+                "C17.300.475.479.400",
+                "C17.300.710.400"
+              ]
+            },
+            {
+              "id": "D008180",
+              "term": "Lúpus Eritematoso Sistêmico",
+              "term_en": "Lupus Erythematosus, Systemic",
+              "scope": "Transtorno multissistêmico, crônico, recidivante, inflamatório e geralmente febril do tecido conjuntivo, caracterizado principalmente pelo envolvimento da pele, articulações, rins e membranas serosas.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C17.300.480",
+                "C20.111.590"
+              ]
+            },
+            {
+              "id": "D008177",
+              "term": "Lúpus Vulgar",
+              "term_en": "Lupus Vulgaris",
+              "scope": "Forma de tuberculose cutânea. É vista predominantemente em mulheres e tipicamente envolve MUCOSA NASAL, MUCOSA BUCAL e mucosa da conjuntiva.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.150.252.819.820.470",
+                "C01.800.720.820.470"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Lupus Erythematosus, Systemic",
+        "Lupus Nephritis"
+      ],
+      "secondary": [
+        "Antibodies, Antinuclear",
+        "Lupus Erythematosus, Discoid",
+        "Lupus Coagulation Inhibitor",
+        "Lymphopenia",
+        "Proteinuria"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Lupus Erythematosus, Systemic",
+            "candidates": [
+              {
+                "id": "D008180",
+                "term": "Lúpus Eritematoso Sistêmico",
+                "term_en": "Lupus Erythematosus, Systemic",
+                "scope": "Transtorno multissistêmico, crônico, recidivante, inflamatório e geralmente febril do tecido conjuntivo, caracterizado principalmente pelo envolvimento da pele, articulações, rins e membranas serosas.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C17.300.480",
+                  "C20.111.590"
+                ]
+              },
+              {
+                "id": "D008181",
+                "term": "Nefrite Lúpica",
+                "term_en": "Lupus Nephritis",
+                "scope": "Glomerulonefrite associada com doença autoimune, o LUPUS ERITEMATOSO SISTÊMICO. A nefrite lúpica é classificada histologicamente em 6 classes: classe I - glomérulo normal; classe II - alterações mesan",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.570.363.680",
+                  "C12.200.777.419.570.363.680"
+                ]
+              },
+              {
+                "id": "D020945",
+                "term": "Vasculite Associada ao Lúpus do Sistema Nervoso Central",
+                "term_en": "Lupus Vasculitis, Central Nervous System",
+                "scope": "Vasculite do sistema nervoso central associada ao LUPUS ERITEMATOSO SISTÊMICO. Entre as manifestações clínicas estão DEMÊNCIA, CONVULSÕES, DOENÇAS DOS NERVOS CRANIANOS, HEMIPARESIA, CEGUEIRA, DISFASIA",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.207.245.550.500",
+                  "C01.207.570.450"
+                ]
+              },
+              {
+                "id": "D015435",
+                "term": "Paniculite de Lúpus Eritematoso",
+                "term_en": "Panniculitis, Lupus Erythematosus",
+                "scope": "Tipo de lúpus eritematoso caracterizado por nódulos subcutâneos ou dérmicos profundos, geralmente na cabeça, face ou parte superior dos braços. Geralmente é crônico e ocorre com mais frequência em mul",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C17.300.475.479.400",
+                  "C17.300.710.400"
+                ]
+              },
+              {
+                "id": "D016682",
+                "term": "Inibidor de Coagulação do Lúpus",
+                "term_en": "Lupus Coagulation Inhibitor",
+                "scope": "Anticorpo antifosfolipídico encontrado em associação com uma variedade de doenças (como por exemplo, o LUPUS ERITEMATOSO SISTÊMICO e a SÍNDROME ANTIFOSFOLIPÍDICA), bem como em indivíduos saudáveis. In",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.486.485.114.323.210.600",
+                  "D12.776.124.790.651.114.323.210.600"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Lupus Nephritis",
+            "candidates": [
+              {
+                "id": "D008181",
+                "term": "Nefrite Lúpica",
+                "term_en": "Lupus Nephritis",
+                "scope": "Glomerulonefrite associada com doença autoimune, o LUPUS ERITEMATOSO SISTÊMICO. A nefrite lúpica é classificada histologicamente em 6 classes: classe I - glomérulo normal; classe II - alterações mesan",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.570.363.680",
+                  "C12.200.777.419.570.363.680"
+                ]
+              },
+              {
+                "id": "D015432",
+                "term": "Glomerulonefrite Membranoproliferativa",
+                "term_en": "Glomerulonephritis, Membranoproliferative",
+                "scope": "Glomerulonefrite crônica caracterizada histologicamente por proliferação das CÉLULAS MESANGIAIS, aumento na matriz mesangial extracelular e um espessamento das paredes dos capilares glomerulares. Isto",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.570.363.615",
+                  "C12.200.777.419.570.363.615"
+                ]
+              },
+              {
+                "id": "D008180",
+                "term": "Lúpus Eritematoso Sistêmico",
+                "term_en": "Lupus Erythematosus, Systemic",
+                "scope": "Transtorno multissistêmico, crônico, recidivante, inflamatório e geralmente febril do tecido conjuntivo, caracterizado principalmente pelo envolvimento da pele, articulações, rins e membranas serosas.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C17.300.480",
+                  "C20.111.590"
+                ]
+              },
+              {
+                "id": "D020945",
+                "term": "Vasculite Associada ao Lúpus do Sistema Nervoso Central",
+                "term_en": "Lupus Vasculitis, Central Nervous System",
+                "scope": "Vasculite do sistema nervoso central associada ao LUPUS ERITEMATOSO SISTÊMICO. Entre as manifestações clínicas estão DEMÊNCIA, CONVULSÕES, DOENÇAS DOS NERVOS CRANIANOS, HEMIPARESIA, CEGUEIRA, DISFASIA",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.207.245.550.500",
+                  "C01.207.570.450"
+                ]
+              },
+              {
+                "id": "D005921",
+                "term": "Glomerulonefrite",
+                "term_en": "Glomerulonephritis",
+                "scope": "Inflamação dos GLOMÉRULOS RENAIS que pode ser classificada pelo tipo de lesões glomerulares, incluindo deposição de anticorpos, ativação do complemento, proliferação celular e glomeruloesclerose. Esta",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.570.363",
+                  "C12.200.777.419.570.363"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Antibodies, Antinuclear",
+            "candidates": [
+              {
+                "id": "D000974",
+                "term": "Anticorpos Antinucleares",
+                "term_en": "Antibodies, Antinuclear",
+                "scope": "Autoanticorpos dirigidos contra vários antígenos nucleares, inclusive DNA, RNA, histonas, proteínas nucleares ácidas ou complexos desses elementos moleculares. Os anticorpos antinucleares são encontra",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.486.485.114.323.204",
+                  "D12.776.124.790.651.114.323.204"
+                ]
+              },
+              {
+                "id": "D034961",
+                "term": "Antígenos Nucleares",
+                "term_en": "Antigens, Nuclear",
+                "scope": "Substâncias imunologicamente detectáveis encontradas no NÚCLEO CELULAR.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.660.625",
+                  "D23.050.290"
+                ]
+              },
+              {
+                "id": "D019268",
+                "term": "Anticorpos Anticitoplasma de Neutrófilos",
+                "term_en": "Antibodies, Antineutrophil Cytoplasmic",
+                "scope": "Autoanticorpos dirigidos contra os constituintes citoplasmáticos de LEUCÓCITOS POLIMORFONUCLEARES e/ou MONÓCITOS. São usados como marcadores específicos para a GRANULOMATOSE COM POLIANGIÍTE e outras d",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.486.485.114.323.190",
+                  "D12.776.124.790.651.114.323.190"
+                ]
+              },
+              {
+                "id": "D017153",
+                "term": "Anticorpos Anticardiolipina",
+                "term_en": "Antibodies, Anticardiolipin",
+                "scope": "Anticorpos antifosfolipídeos encontrados em associação com o LUPUS ERITEMATOSO SISTÊMICO, SÍNDROME ANTIFOSFOLIPÍDICA e várias outras doenças, bem como, em indivíduos saudáveis. Os anticorpos são detec",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.486.485.114.323.210.100",
+                  "D12.776.124.790.651.114.323.210.100"
+                ]
+              },
+              {
+                "id": "D017152",
+                "term": "Anticorpos Antifosfolipídeos",
+                "term_en": "Antibodies, Antiphospholipid",
+                "scope": "Autoanticorpos direcionados contra fosfolipídeos. Estes anticorpos são caracteristicamente encontrados em pacientes com certas doenças autoimunes (como por exemplo, o LUPUS ERITEMATOSO SISTÊMICO e a S",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.486.485.114.323.210",
+                  "D12.776.124.790.651.114.323.210"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Lupus Coagulation Inhibitor",
+            "candidates": [
+              {
+                "id": "D016682",
+                "term": "Inibidor de Coagulação do Lúpus",
+                "term_en": "Lupus Coagulation Inhibitor",
+                "scope": "Anticorpo antifosfolipídico encontrado em associação com uma variedade de doenças (como por exemplo, o LUPUS ERITEMATOSO SISTÊMICO e a SÍNDROME ANTIFOSFOLIPÍDICA), bem como em indivíduos saudáveis. In",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.486.485.114.323.210.600",
+                  "D12.776.124.790.651.114.323.210.600"
+                ]
+              },
+              {
+                "id": "D016736",
+                "term": "Síndrome Antifosfolipídica",
+                "term_en": "Antiphospholipid Syndrome",
+                "scope": "Presença de anticorpos dirigidos contra fosfolipídeos (ANTICORPOS ANTIFOSFOLÍPIDES). A afecção está associada com uma variedade de doenças, lúpus eritematoso sistêmico notável e outras doenças de teci",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C20.111.197"
+                ]
+              },
+              {
+                "id": "D017153",
+                "term": "Anticorpos Anticardiolipina",
+                "term_en": "Antibodies, Anticardiolipin",
+                "scope": "Anticorpos antifosfolipídeos encontrados em associação com o LUPUS ERITEMATOSO SISTÊMICO, SÍNDROME ANTIFOSFOLIPÍDICA e várias outras doenças, bem como, em indivíduos saudáveis. Os anticorpos são detec",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.486.485.114.323.210.100",
+                  "D12.776.124.790.651.114.323.210.100"
+                ]
+              },
+              {
+                "id": "D019774",
+                "term": "Inibidores dos Fatores de Coagulação Sanguínea",
+                "term_en": "Blood Coagulation Factor Inhibitors",
+                "scope": "Substâncias, geralmente endógenas, que agem como inibidores da coagulação sanguínea. Podem afetar uma ou várias enzimas ao longo do processo. Este grupo também inibe enzimas envolvidas em outros proce",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D23.113"
+                ]
+              },
+              {
+                "id": "D017152",
+                "term": "Anticorpos Antifosfolipídeos",
+                "term_en": "Antibodies, Antiphospholipid",
+                "scope": "Autoanticorpos direcionados contra fosfolipídeos. Estes anticorpos são caracteristicamente encontrados em pacientes com certas doenças autoimunes (como por exemplo, o LUPUS ERITEMATOSO SISTÊMICO e a S",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.486.485.114.323.210",
+                  "D12.776.124.790.651.114.323.210"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Lymphopenia",
+            "candidates": [
+              {
+                "id": "D008231",
+                "term": "Linfopenia",
+                "term_en": "Lymphopenia",
+                "scope": "Redução no número de linfócitos.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.243.750.605",
+                  "C15.378.553.546.605"
+                ]
+              },
+              {
+                "id": "D007970",
+                "term": "Leucopenia",
+                "term_en": "Leukopenia",
+                "scope": "Diminuição no número de LEUCÓCITOS em uma amostra de sangue abaixo dos níveis normais (CONTAGEM DE LEUCÓCITOS menor que 4000).",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.243.750",
+                  "C15.378.553.546"
+                ]
+              },
+              {
+                "id": "D018344",
+                "term": "T-Linfocitopenia Idiopática CD4-Positiva",
+                "term_en": "T-Lymphocytopenia, Idiopathic CD4-Positive",
+                "scope": "Depleção reproduzível de linfócitos CD4+ abaixo de 300 células por milímetro cúbico, na ausência de infecção por HIV ou outras causas conhecidas de imunodeficiência. Esta é uma síndrome heterogênea, r",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.243.750.605.800",
+                  "C15.378.553.546.605.800"
+                ]
+              },
+              {
+                "id": "D000095542",
+                "term": "Citopenia",
+                "term_en": "Cytopenia",
+                "scope": "Deficiência ou redução no número de células sanguíneas.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.243"
+                ]
+              },
+              {
+                "id": "D008218",
+                "term": "Linfocitose",
+                "term_en": "Lymphocytosis",
+                "scope": "Excesso de linfócitos normais no sangue ou em qualquer derrame.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.553.475.604"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Proteinuria",
+            "candidates": [
+              {
+                "id": "D011507",
+                "term": "Proteinúria",
+                "term_en": "Proteinuria",
+                "scope": "Presença de proteínas na urina, um indicador de NEFROPATIAS.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.934.734",
+                  "C12.200.777.934.734"
+                ]
+              },
+              {
+                "id": "D000419",
+                "term": "Albuminúria",
+                "term_en": "Albuminuria",
+                "scope": "Presença de albumina na urina, um indicador de NEFROPATIAS.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.934.734.269",
+                  "C12.200.777.934.734.269"
+                ]
+              },
+              {
+                "id": "D003928",
+                "term": "Nefropatias Diabéticas",
+                "term_en": "Diabetic Nephropathies",
+                "scope": "Lesões no RIM associadas com diabetes mellitus que afetam os GLOMÉRULOS RENAIS, ARTERÍOLAS, TÚBULOS RENAIS e o interstício. Os sinais clínicos incluem PROTEINURIA persistente devido a microalbuminuria",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.192",
+                  "C12.200.777.419.192"
+                ]
+              },
+              {
+                "id": "D009404",
+                "term": "Síndrome Nefrótica",
+                "term_en": "Nephrotic Syndrome",
+                "scope": "Afecção caracterizada por PROTEINÚRIA grave, maior que 3,5 g/dia em um adulto médio. A perda substancial de proteína na urina resulta em complicações como HIPOPROTEINEMIA, EDEMA generalizado, HIPERTEN",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.630.643",
+                  "C12.200.777.419.630.643"
+                ]
+              },
+              {
+                "id": "D007019",
+                "term": "Hipoproteinemia",
+                "term_en": "Hypoproteinemia",
+                "scope": "Afecção na qual o nível total de proteínas séricas está abaixo do normal. Hipoproteinemia pode ser causada por malabsorção proteica no trato gastrointestinal, EDEMA, ou PROTEINÚRIA.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.147.607"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Lupus Erythematosus, Discoid",
+            "candidates": [
+              {
+                "id": "D008179",
+                "term": "Lúpus Eritematoso Discoide",
+                "term_en": "Lupus Erythematosus, Discoid",
+                "scope": "Forma crônica de lúpus eritematoso cutâneo (LÚPUS ERITEMATOSO CUTÂNEO), na qual as lesões cutâneas mimetizam as da forma sistêmica, porém os sinais sistêmicos são raros. É caracterizada pela presença ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C17.300.475.479",
+                  "C17.800.480.479"
+                ]
+              },
+              {
+                "id": "D008178",
+                "term": "Lúpus Eritematoso Cutâneo",
+                "term_en": "Lupus Erythematosus, Cutaneous",
+                "scope": "Forma de lúpus eritematoso no qual a pele pode ser o único órgão envolvido ou no qual o envolvimento da pele precede o alastramento para outros sistemas do corpo. Foi classificado em três formas - agu",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C17.300.475",
+                  "C17.800.480"
+                ]
+              },
+              {
+                "id": "D015435",
+                "term": "Paniculite de Lúpus Eritematoso",
+                "term_en": "Panniculitis, Lupus Erythematosus",
+                "scope": "Tipo de lúpus eritematoso caracterizado por nódulos subcutâneos ou dérmicos profundos, geralmente na cabeça, face ou parte superior dos braços. Geralmente é crônico e ocorre com mais frequência em mul",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C17.300.475.479.400",
+                  "C17.300.710.400"
+                ]
+              },
+              {
+                "id": "D008180",
+                "term": "Lúpus Eritematoso Sistêmico",
+                "term_en": "Lupus Erythematosus, Systemic",
+                "scope": "Transtorno multissistêmico, crônico, recidivante, inflamatório e geralmente febril do tecido conjuntivo, caracterizado principalmente pelo envolvimento da pele, articulações, rins e membranas serosas.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C17.300.480",
+                  "C20.111.590"
+                ]
+              },
+              {
+                "id": "D008177",
+                "term": "Lúpus Vulgar",
+                "term_en": "Lupus Vulgaris",
+                "scope": "Forma de tuberculose cutânea. É vista predominantemente em mulheres e tipicamente envolve MUCOSA NASAL, MUCOSA BUCAL e mucosa da conjuntiva.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.150.252.819.820.470",
+                  "C01.800.720.820.470"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D008180",
+          "term": "Lúpus Eritematoso Sistêmico"
+        },
+        {
+          "id": "D008181",
+          "term": "Nefrite Lúpica"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D000974",
+          "term": "Anticorpos Antinucleares"
+        },
+        {
+          "id": "D016682",
+          "term": "Inibidor de Coagulação do Lúpus"
+        },
+        {
+          "id": "D008231",
+          "term": "Linfopenia"
+        },
+        {
+          "id": "D011507",
+          "term": "Proteinúria"
+        },
+        {
+          "id": "D008179",
+          "term": "Lúpus Eritematoso Discoide"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 5,
+    "total_candidates": 35,
+    "final_primary": 2,
+    "final_secondary": 5
+  }
+}

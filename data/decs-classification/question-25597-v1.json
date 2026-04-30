@@ -1,0 +1,113 @@
+{
+  "result": [
+    {
+      "term": "Doenças Inflamatórias Intestinais",
+      "code": "D015212",
+      "tree_ids": [
+        "C06.405.205.731",
+        "C06.405.469.432"
+      ],
+      "hierarchy_path": "Doenças › C06.405.205.731",
+      "scope_note": "Inflamações inespecíficas, crônicas do TRATO GASTROINTESTINAL. A etiologia pode ser genética ou ambiental. Este termo inclui a DOENÇA DE CROHN e COLITE ULCERATIVA.",
+      "name_en": "Inflammatory Bowel Diseases",
+      "role": "primary"
+    },
+    {
+      "term": "Diarreia",
+      "code": "D003967",
+      "tree_ids": [
+        "C23.888.821.214"
+      ],
+      "hierarchy_path": "Doenças › C23.888.821.214",
+      "scope_note": "Aumento na liquidez ou diminuição na consistência das FEZES, como evacuação contínua. A consistência fecal está relacionada com a razão entre a capacidade de sólidos insolúveis para reter água e a água total, e não com o total de água presente. Diarreia é diferente de excesso de defecação ou massa fecal aumentada.",
+      "name_en": "Diarrhea",
+      "role": "primary"
+    },
+    {
+      "term": "Hemorragia Gastrointestinal",
+      "code": "D006471",
+      "tree_ids": [
+        "C06.405.227",
+        "C23.550.414.788"
+      ],
+      "hierarchy_path": "Doenças › C06.405.227",
+      "scope_note": "Sangramento em qualquer segmento do TRATO GASTROINTESTINAL do ESÔFAGO até o RETO.",
+      "name_en": "Gastrointestinal Hemorrhage",
+      "role": "secondary"
+    },
+    {
+      "term": "Dor Abdominal",
+      "code": "D015746",
+      "tree_ids": [
+        "C23.888.592.612.054",
+        "C23.888.821.030",
+        "F02.830.816.444.001",
+        "G11.561.790.444.001"
+      ],
+      "hierarchy_path": "Doenças › C23.888.592.612.054",
+      "scope_note": "Sensação de desconforto, mal estar ou agonia na região abdominal.",
+      "name_en": "Abdominal Pain",
+      "role": "secondary"
+    },
+    {
+      "term": "Complexo Antígeno L1 Leucocitário",
+      "code": "D039841",
+      "tree_ids": [
+        "D12.776.157.125.750.500",
+        "D12.776.631.658.750",
+        "D23.050.301.562"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.125.750.500",
+      "scope_note": "Membro da família proteína S-100 presente em altas concentração no sangue e líquido intersticial em vários transtornos infecciosos, inflamatórios e malignos, incluindo a artrite reumatoide, doença inflamatória do intestino e fibrose cística. É um complexo de cadeia leve (CALGRANULINA A) e uma cadeia pesada (CALGRANULINA B). L1 se liga ao cálcio através dos motivos EF hand e mostrou-se possuir atividade antimicrobiana.",
+      "name_en": "Leukocyte L1 Antigen Complex",
+      "role": "secondary"
+    },
+    {
+      "term": "Colonoscopia",
+      "code": "D003113",
+      "tree_ids": [
+        "E01.370.372.250.250.200",
+        "E01.370.388.250.250.250.160",
+        "E04.210.240.250.160",
+        "E04.502.250.250.250.160"
+      ],
+      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.372.250.250.200",
+      "scope_note": "Exame endoscópico, terapia ou cirurgia da superfície luminal do colo.",
+      "name_en": "Colonoscopy",
+      "role": "secondary"
+    },
+    {
+      "term": "Redução de Peso",
+      "code": "D015431",
+      "tree_ids": [
+        "C23.888.144.243.963",
+        "G07.345.249.314.120.200.963",
+        "SP6.270.233.111.756.298"
+      ],
+      "hierarchy_path": "Doenças › C23.888.144.243.963",
+      "scope_note": "Redução do PESO CORPORAL atual.",
+      "name_en": "Weight Loss",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Inflammatory Bowel Diseases",
+      "Diarrhea"
+    ],
+    "secondary": [
+      "Gastrointestinal Hemorrhage",
+      "Leukocyte L1 Antigen Complex",
+      "Colonoscopy",
+      "Weight Loss",
+      "Abdominal Pain"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 2,
+    "secondary_terms": 5,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 0,
+    "final_count": 7
+  }
+}

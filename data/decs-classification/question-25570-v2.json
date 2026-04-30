@@ -1,0 +1,924 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D011247",
+        "term": "Gravidez",
+        "name_en": "Pregnancy",
+        "scope_note": "Estado durante o qual os mamíferos fêmeas carregam seus filhotes em desenvolvimento (EMBRIÃO ou FETO) no útero (antes de nascer) começando da FERTILIZAÇÃO ao NASCIMENTO.",
+        "tree_ids": [
+          "G08.686.784.769"
+        ],
+        "hierarchy_path": "Fenômenos Biológicos › G08.686.784.769",
+        "parents": [
+          {
+            "id": "D012098",
+            "term": "Reprodução"
+          }
+        ],
+        "children": [
+          {
+            "id": "D011256",
+            "term": "Resultado da Gravidez"
+          },
+          {
+            "id": "D011255",
+            "term": "Manutenção da Gravidez"
+          },
+          {
+            "id": "D011272",
+            "term": "Gravidez Múltipla"
+          },
+          {
+            "id": "D011270",
+            "term": "Prenhez"
+          },
+          {
+            "id": "D011555",
+            "term": "Pseudogravidez"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D012532",
+        "term": "Escabiose",
+        "name_en": "Scabies",
+        "scope_note": "Inflamação cutânea contagiosa causada pela picada do piolho SARCOPTES SCABIEI. É caracterizada por erupções papulares com prurido e escavações na pele principalmente nas axilas, cotovelos, punhos e genitália, embora possa se espalhar e cobrir o corpo inteiro.",
+        "tree_ids": [
+          "C01.610.858.211.480.708",
+          "C17.800.838.775.800"
+        ],
+        "hierarchy_path": "Doenças › C01.610.858.211.480.708",
+        "parents": [
+          {
+            "id": "D008924",
+            "term": "Infestações por Ácaros"
+          },
+          {
+            "id": "D012876",
+            "term": "Dermatopatias Parasitárias"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D007223",
+        "term": "Lactente",
+        "name_en": "Infant",
+        "scope_note": "Criança entre 1 e 23 meses de idade.",
+        "tree_ids": [
+          "M01.060.703"
+        ],
+        "hierarchy_path": "Grupos Identificados › M01.060.703",
+        "parents": [
+          {
+            "id": "D009273",
+            "term": "Grupos Etários"
+          }
+        ],
+        "children": [
+          {
+            "id": "D052577",
+            "term": "Recém-Nascido de Peso Extremamente Baixo ao Nascer"
+          },
+          {
+            "id": "D019102",
+            "term": "Recém-Nascido de muito Baixo Peso"
+          },
+          {
+            "id": "D062071",
+            "term": "Lactente Extremamente Prematuro"
+          },
+          {
+            "id": "D000094522",
+            "term": "Recém-Nascido Grande para a Idade Gestacional"
+          },
+          {
+            "id": "D007234",
+            "term": "Recém-Nascido Prematuro"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D026023",
+        "term": "Permetrina",
+        "name_en": "Permethrin",
+        "scope_note": "Inseticida piretroide, geralmente utilizado no tratamento de INFESTAÇÕES POR PIOLHOS e ESCABIOSES.",
+        "tree_ids": [
+          "D02.355.726.713",
+          "D02.455.426.559.389.657.654.713",
+          "D02.455.849.575.188.750.636"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D02.355.726.713",
+        "parents": [
+          {
+            "id": "D010647",
+            "term": "Éteres Fenílicos"
+          },
+          {
+            "id": "D011722",
+            "term": "Piretrinas"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D011537",
+        "term": "Prurido",
+        "name_en": "Pruritus",
+        "scope_note": "Sensação de coceira intensa que produz a necessidade de friccionar ou coçar a pele para obter alívio.",
+        "tree_ids": [
+          "C17.800.685",
+          "C23.888.885.625"
+        ],
+        "hierarchy_path": "Doenças › C17.800.685",
+        "parents": [
+          {
+            "id": "D012871",
+            "term": "Dermatopatias"
+          },
+          {
+            "id": "D012877",
+            "term": "Manifestações Cutâneas"
+          }
+        ],
+        "children": [
+          {
+            "id": "D011539",
+            "term": "Prurido Vulvar"
+          },
+          {
+            "id": "D011538",
+            "term": "Prurido Anal"
+          },
+          {
+            "id": "D014008",
+            "term": "Tinha dos Pés"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D016358",
+        "term": "Busca de Comunicante",
+        "name_en": "Contact Tracing",
+        "scope_note": "Identificação daquelas pessoas (ou animais) que tiveram tal associação [ou contato] com pessoas ou animais infectados ou ambiente contaminado que tiveram a oportunidade de adquirir a infecção.",
+        "tree_ids": [
+          "E05.318.270",
+          "N06.850.520.270",
+          "N06.850.780.200.225"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E05.318.270",
+        "parents": [
+          {
+            "id": "D004812",
+            "term": "Métodos Epidemiológicos"
+          },
+          {
+            "id": "D003140",
+            "term": "Controle de Doenças Transmissíveis"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Scabies",
+      "Pregnancy"
+    ],
+    "secondary": [
+      "Permethrin",
+      "Pruritus",
+      "Infant",
+      "Contact Tracing"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Pregnancy",
+          "candidates": [
+            {
+              "id": "D011247",
+              "term": "Gravidez",
+              "term_en": "Pregnancy",
+              "scope": "Estado durante o qual os mamíferos fêmeas carregam seus filhotes em desenvolvimento (EMBRIÃO ou FETO) no útero (antes de nascer) começando da FERTILIZAÇÃO ao NASCIMENTO.",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G08.686.784.769"
+              ]
+            },
+            {
+              "id": "D011254",
+              "term": "Gravidez em Diabéticas",
+              "term_en": "Pregnancy in Diabetics",
+              "scope": "Estado de GRAVIDEZ em mulheres com DIABETES MELLITUS. Isto não inclui nem o diabetes sintomático e nem a INTOLERÂNCIA À GLUCOSE induzida pela gravidez (DIABETES GESTACIONAL), mas que é dissipada no fi",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.703.726"
+              ]
+            },
+            {
+              "id": "D039401",
+              "term": "Fenômenos Fisiológicos da Nutrição Pré-Natal",
+              "term_en": "Prenatal Nutritional Physiological Phenomena",
+              "scope": "Nutrição durante a GRAVIDEZ.",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G07.203.650.566.624",
+                "G08.686.784.769.600"
+              ]
+            },
+            {
+              "id": "D011264",
+              "term": "Trimestres da Gravidez",
+              "term_en": "Pregnancy Trimesters",
+              "scope": "Três períodos aproximadamente iguais de uma GRAVIDEZ normal em humanos. Cada trimestre dura cerca de três meses ou 13 a 14 semanas dependendo de como é considerado o primeiro dia de gestação.",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G08.686.707"
+              ]
+            },
+            {
+              "id": "D011253",
+              "term": "Gravidez na Adolescência",
+              "term_en": "Pregnancy in Adolescence",
+              "scope": "Gravidez em adolescentes femininas humanas com idade abaixo de 19 anos.",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G08.686.784.769.494",
+                "SP2.770.750.323.238"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Scabies",
+          "candidates": [
+            {
+              "id": "D012532",
+              "term": "Escabiose",
+              "term_en": "Scabies",
+              "scope": "Inflamação cutânea contagiosa causada pela picada do piolho SARCOPTES SCABIEI. É caracterizada por erupções papulares com prurido e escavações na pele principalmente nas axilas, cotovelos, punhos e ge",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.610.858.211.480.708",
+                "C17.800.838.775.800"
+              ]
+            },
+            {
+              "id": "D008924",
+              "term": "Infestações por Ácaros",
+              "term_en": "Mite Infestations",
+              "scope": "Infestações com artrópodes da subclasse ACARI, superordem Acariformes.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.610.858.211.480"
+              ]
+            },
+            {
+              "id": "D010373",
+              "term": "Infestações por Piolhos",
+              "term_en": "Lice Infestations",
+              "scope": "Ataque ou subsistência parasitária na pele por membros da ordem Phthiraptera, principalmente em humanos pela espécie Pediculus humanus da família Pediculidae. Os cabelos da cabeça, das pestanas e do p",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.610.858.211.465",
+                "C17.800.838.775.580"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Infant",
+          "candidates": [
+            {
+              "id": "D007223",
+              "term": "Lactente",
+              "term_en": "Infant",
+              "scope": "Criança entre 1 e 23 meses de idade.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.060.703"
+              ]
+            },
+            {
+              "id": "DDCS052507",
+              "term": "Nutrição do Lactente",
+              "term_en": "Infant Nutrition",
+              "scope": "Nutrição de crianças desde o nascimento até dois anos de idade.",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP6.810.304.526"
+              ]
+            },
+            {
+              "id": "D000068104",
+              "term": "Saúde do Lactente",
+              "term_en": "Infant Health",
+              "scope": "Conceito que cobre as condições físicas e mentais de LACTENTES.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N01.400.388",
+                "SP2.770.750.708"
+              ]
+            },
+            {
+              "id": "D007231",
+              "term": "Recém-Nascido",
+              "term_en": "Infant, Newborn",
+              "scope": "Lactente durante os primeiros 28 dias após o nascimento.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.060.703.520"
+              ]
+            },
+            {
+              "id": "D007224",
+              "term": "Cuidado do Lactente",
+              "term_en": "Infant Care",
+              "scope": "Cuidados prestados a crianças com idade até dois anos em casa ou em instituições. Para crianças com mais de dois anos de idade use CUIDADO DA CRIANÇA.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N02.421.088.120"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Permethrin",
+          "candidates": [
+            {
+              "id": "D026023",
+              "term": "Permetrina",
+              "term_en": "Permethrin",
+              "scope": "Inseticida piretroide, geralmente utilizado no tratamento de INFESTAÇÕES POR PIOLHOS e ESCABIOSES.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.355.726.713",
+                "D02.455.426.559.389.657.654.713"
+              ]
+            },
+            {
+              "id": "D011722",
+              "term": "Piretrinas",
+              "term_en": "Pyrethrins",
+              "scope": "Constituinte inseticida ativo das flores CHRYSANTHEMUM CINERARIIFOLIUM. A piretrina I é o éster piretolônico do ácido crisantemomonocarboxílico e a piretrina II é o éster piretolônico monometílico do ",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.455.849.575.188.750"
+              ]
+            },
+            {
+              "id": "D008726",
+              "term": "Metoprene",
+              "term_en": "Methoprene",
+              "scope": "Análogo do hormônio juvenil e regulador do crescimento de insetos. Usado para controlar insetos através da interrupção da metamorfose. Tem sido eficaz no controle das larvas de mosquito.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D06.472.445.573.666.500"
+              ]
+            },
+            {
+              "id": "D004132",
+              "term": "Diflubenzuron",
+              "term_en": "Diflubenzuron",
+              "scope": "Regulador do crescimento de insetos que interfere com a formação da cutícula dos insetos. É eficaz no controle de moscas e mosquitos.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.065.950.681.280",
+                "D02.455.426.559.389.703.280"
+              ]
+            },
+            {
+              "id": "D011400",
+              "term": "Prometrina",
+              "term_en": "Prometryne",
+              "scope": "Triazina utilizada como herbicida seletivo pré e pós-emergencial.(Tradução livre do original: From Merck Index, 11th ed)",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D03.383.931.674"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Pruritus",
+          "candidates": [
+            {
+              "id": "D011537",
+              "term": "Prurido",
+              "term_en": "Pruritus",
+              "scope": "Sensação de coceira intensa que produz a necessidade de friccionar ou coçar a pele para obter alívio.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C17.800.685",
+                "C23.888.885.625"
+              ]
+            },
+            {
+              "id": "D011538",
+              "term": "Prurido Anal",
+              "term_en": "Pruritus Ani",
+              "scope": "Coceira crônica e intensa na região anal.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C06.405.469.860.101.752",
+                "C17.800.685.544"
+              ]
+            },
+            {
+              "id": "D011539",
+              "term": "Prurido Vulvar",
+              "term_en": "Pruritus Vulvae",
+              "scope": "Coceira intensa dos genitais femininos externos.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.500.944.626",
+                "C12.100.250.944.626"
+              ]
+            },
+            {
+              "id": "D011536",
+              "term": "Prurigo",
+              "term_en": "Prurigo",
+              "scope": "Nome aplicado a várias erupções cutâneas pruriginosas de causa desconhecida, nas quais a lesão característica (pápula de prurigo) é em forma de cúpula com uma pequena vesícula transitória no topo, seg",
+              "categoria": "Doenças",
+              "arvore": [
+                "C17.800.674"
+              ]
+            },
+            {
+              "id": "D009450",
+              "term": "Neurodermatite",
+              "term_en": "Neurodermatitis",
+              "scope": "Doença cutânea eczematosa extremamente variável, presumida em ser uma resposta a uma coceira vigorosa prolongada, fricção, ou apertão, para aliviar um prurido intenso. Varia em intensidade, severidade",
+              "categoria": "Doenças",
+              "arvore": [
+                "C17.800.174.660",
+                "C17.800.815.660"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Contact Tracing",
+          "candidates": [
+            {
+              "id": "D016358",
+              "term": "Busca de Comunicante",
+              "term_en": "Contact Tracing",
+              "scope": "Identificação daquelas pessoas (ou animais) que tiveram tal associação [ou contato] com pessoas ou animais infectados ou ambiente contaminado que tiveram a oportunidade de adquirir a infecção.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.270",
+                "N06.850.520.270"
+              ]
+            },
+            {
+              "id": "D000085762",
+              "term": "Distanciamento Físico",
+              "term_en": "Physical Distancing",
+              "scope": "Mantutenção do espaçamento físico recomendado entre si e os outros.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N06.850.780.200.688"
+              ]
+            },
+            {
+              "id": "DDCS050259",
+              "term": "Serviços de Vigilância Epidemiológica",
+              "term_en": "Epidemiologic Surveillance Services",
+              "scope": "Consiste na obtenção detalhada de dados de cada caso para análise e interpretação das características da doença e o acompanhamento de sua tendência. Os dados são obtidos onde o doente procurou assistê",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP2.840.339"
+              ]
+            },
+            {
+              "id": "DDCS059994",
+              "term": "Investigação Epidemiológica",
+              "term_en": "Epidemiological Investigation",
+              "scope": "Campo de pesquisa que identifica infecções emergentes em populações para descobrir os mecanismos de transmissão, com o objetivo eventual de desenvolver intervenções para a prevenção, detecção, tratame",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP5.312.109.693.495"
+              ]
+            },
+            {
+              "id": "D055877",
+              "term": "Biovigilância",
+              "term_en": "Biosurveillance",
+              "scope": "Monitoramento das fontes de informação de valor potencial para detectar uma epidemia emergente, seja de ocorrência natural ou como resultado de bioterrorismo.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N06.850.780.675.324"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Scabies",
+        "Pregnancy"
+      ],
+      "secondary": [
+        "Permethrin",
+        "Pruritus",
+        "Infant",
+        "Contact Tracing"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Pregnancy",
+            "candidates": [
+              {
+                "id": "D011247",
+                "term": "Gravidez",
+                "term_en": "Pregnancy",
+                "scope": "Estado durante o qual os mamíferos fêmeas carregam seus filhotes em desenvolvimento (EMBRIÃO ou FETO) no útero (antes de nascer) começando da FERTILIZAÇÃO ao NASCIMENTO.",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G08.686.784.769"
+                ]
+              },
+              {
+                "id": "D011254",
+                "term": "Gravidez em Diabéticas",
+                "term_en": "Pregnancy in Diabetics",
+                "scope": "Estado de GRAVIDEZ em mulheres com DIABETES MELLITUS. Isto não inclui nem o diabetes sintomático e nem a INTOLERÂNCIA À GLUCOSE induzida pela gravidez (DIABETES GESTACIONAL), mas que é dissipada no fi",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.703.726"
+                ]
+              },
+              {
+                "id": "D039401",
+                "term": "Fenômenos Fisiológicos da Nutrição Pré-Natal",
+                "term_en": "Prenatal Nutritional Physiological Phenomena",
+                "scope": "Nutrição durante a GRAVIDEZ.",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G07.203.650.566.624",
+                  "G08.686.784.769.600"
+                ]
+              },
+              {
+                "id": "D011264",
+                "term": "Trimestres da Gravidez",
+                "term_en": "Pregnancy Trimesters",
+                "scope": "Três períodos aproximadamente iguais de uma GRAVIDEZ normal em humanos. Cada trimestre dura cerca de três meses ou 13 a 14 semanas dependendo de como é considerado o primeiro dia de gestação.",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G08.686.707"
+                ]
+              },
+              {
+                "id": "D011253",
+                "term": "Gravidez na Adolescência",
+                "term_en": "Pregnancy in Adolescence",
+                "scope": "Gravidez em adolescentes femininas humanas com idade abaixo de 19 anos.",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G08.686.784.769.494",
+                  "SP2.770.750.323.238"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Scabies",
+            "candidates": [
+              {
+                "id": "D012532",
+                "term": "Escabiose",
+                "term_en": "Scabies",
+                "scope": "Inflamação cutânea contagiosa causada pela picada do piolho SARCOPTES SCABIEI. É caracterizada por erupções papulares com prurido e escavações na pele principalmente nas axilas, cotovelos, punhos e ge",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.610.858.211.480.708",
+                  "C17.800.838.775.800"
+                ]
+              },
+              {
+                "id": "D008924",
+                "term": "Infestações por Ácaros",
+                "term_en": "Mite Infestations",
+                "scope": "Infestações com artrópodes da subclasse ACARI, superordem Acariformes.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.610.858.211.480"
+                ]
+              },
+              {
+                "id": "D010373",
+                "term": "Infestações por Piolhos",
+                "term_en": "Lice Infestations",
+                "scope": "Ataque ou subsistência parasitária na pele por membros da ordem Phthiraptera, principalmente em humanos pela espécie Pediculus humanus da família Pediculidae. Os cabelos da cabeça, das pestanas e do p",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.610.858.211.465",
+                  "C17.800.838.775.580"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Infant",
+            "candidates": [
+              {
+                "id": "D007223",
+                "term": "Lactente",
+                "term_en": "Infant",
+                "scope": "Criança entre 1 e 23 meses de idade.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.060.703"
+                ]
+              },
+              {
+                "id": "DDCS052507",
+                "term": "Nutrição do Lactente",
+                "term_en": "Infant Nutrition",
+                "scope": "Nutrição de crianças desde o nascimento até dois anos de idade.",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP6.810.304.526"
+                ]
+              },
+              {
+                "id": "D000068104",
+                "term": "Saúde do Lactente",
+                "term_en": "Infant Health",
+                "scope": "Conceito que cobre as condições físicas e mentais de LACTENTES.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N01.400.388",
+                  "SP2.770.750.708"
+                ]
+              },
+              {
+                "id": "D007231",
+                "term": "Recém-Nascido",
+                "term_en": "Infant, Newborn",
+                "scope": "Lactente durante os primeiros 28 dias após o nascimento.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.060.703.520"
+                ]
+              },
+              {
+                "id": "D007224",
+                "term": "Cuidado do Lactente",
+                "term_en": "Infant Care",
+                "scope": "Cuidados prestados a crianças com idade até dois anos em casa ou em instituições. Para crianças com mais de dois anos de idade use CUIDADO DA CRIANÇA.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N02.421.088.120"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Permethrin",
+            "candidates": [
+              {
+                "id": "D026023",
+                "term": "Permetrina",
+                "term_en": "Permethrin",
+                "scope": "Inseticida piretroide, geralmente utilizado no tratamento de INFESTAÇÕES POR PIOLHOS e ESCABIOSES.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.355.726.713",
+                  "D02.455.426.559.389.657.654.713"
+                ]
+              },
+              {
+                "id": "D011722",
+                "term": "Piretrinas",
+                "term_en": "Pyrethrins",
+                "scope": "Constituinte inseticida ativo das flores CHRYSANTHEMUM CINERARIIFOLIUM. A piretrina I é o éster piretolônico do ácido crisantemomonocarboxílico e a piretrina II é o éster piretolônico monometílico do ",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.455.849.575.188.750"
+                ]
+              },
+              {
+                "id": "D008726",
+                "term": "Metoprene",
+                "term_en": "Methoprene",
+                "scope": "Análogo do hormônio juvenil e regulador do crescimento de insetos. Usado para controlar insetos através da interrupção da metamorfose. Tem sido eficaz no controle das larvas de mosquito.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D06.472.445.573.666.500"
+                ]
+              },
+              {
+                "id": "D004132",
+                "term": "Diflubenzuron",
+                "term_en": "Diflubenzuron",
+                "scope": "Regulador do crescimento de insetos que interfere com a formação da cutícula dos insetos. É eficaz no controle de moscas e mosquitos.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.065.950.681.280",
+                  "D02.455.426.559.389.703.280"
+                ]
+              },
+              {
+                "id": "D011400",
+                "term": "Prometrina",
+                "term_en": "Prometryne",
+                "scope": "Triazina utilizada como herbicida seletivo pré e pós-emergencial.(Tradução livre do original: From Merck Index, 11th ed)",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D03.383.931.674"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Pruritus",
+            "candidates": [
+              {
+                "id": "D011537",
+                "term": "Prurido",
+                "term_en": "Pruritus",
+                "scope": "Sensação de coceira intensa que produz a necessidade de friccionar ou coçar a pele para obter alívio.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C17.800.685",
+                  "C23.888.885.625"
+                ]
+              },
+              {
+                "id": "D011538",
+                "term": "Prurido Anal",
+                "term_en": "Pruritus Ani",
+                "scope": "Coceira crônica e intensa na região anal.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C06.405.469.860.101.752",
+                  "C17.800.685.544"
+                ]
+              },
+              {
+                "id": "D011539",
+                "term": "Prurido Vulvar",
+                "term_en": "Pruritus Vulvae",
+                "scope": "Coceira intensa dos genitais femininos externos.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.500.944.626",
+                  "C12.100.250.944.626"
+                ]
+              },
+              {
+                "id": "D011536",
+                "term": "Prurigo",
+                "term_en": "Prurigo",
+                "scope": "Nome aplicado a várias erupções cutâneas pruriginosas de causa desconhecida, nas quais a lesão característica (pápula de prurigo) é em forma de cúpula com uma pequena vesícula transitória no topo, seg",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C17.800.674"
+                ]
+              },
+              {
+                "id": "D009450",
+                "term": "Neurodermatite",
+                "term_en": "Neurodermatitis",
+                "scope": "Doença cutânea eczematosa extremamente variável, presumida em ser uma resposta a uma coceira vigorosa prolongada, fricção, ou apertão, para aliviar um prurido intenso. Varia em intensidade, severidade",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C17.800.174.660",
+                  "C17.800.815.660"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Contact Tracing",
+            "candidates": [
+              {
+                "id": "D016358",
+                "term": "Busca de Comunicante",
+                "term_en": "Contact Tracing",
+                "scope": "Identificação daquelas pessoas (ou animais) que tiveram tal associação [ou contato] com pessoas ou animais infectados ou ambiente contaminado que tiveram a oportunidade de adquirir a infecção.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.270",
+                  "N06.850.520.270"
+                ]
+              },
+              {
+                "id": "D000085762",
+                "term": "Distanciamento Físico",
+                "term_en": "Physical Distancing",
+                "scope": "Mantutenção do espaçamento físico recomendado entre si e os outros.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N06.850.780.200.688"
+                ]
+              },
+              {
+                "id": "DDCS050259",
+                "term": "Serviços de Vigilância Epidemiológica",
+                "term_en": "Epidemiologic Surveillance Services",
+                "scope": "Consiste na obtenção detalhada de dados de cada caso para análise e interpretação das características da doença e o acompanhamento de sua tendência. Os dados são obtidos onde o doente procurou assistê",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP2.840.339"
+                ]
+              },
+              {
+                "id": "DDCS059994",
+                "term": "Investigação Epidemiológica",
+                "term_en": "Epidemiological Investigation",
+                "scope": "Campo de pesquisa que identifica infecções emergentes em populações para descobrir os mecanismos de transmissão, com o objetivo eventual de desenvolver intervenções para a prevenção, detecção, tratame",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP5.312.109.693.495"
+                ]
+              },
+              {
+                "id": "D055877",
+                "term": "Biovigilância",
+                "term_en": "Biosurveillance",
+                "scope": "Monitoramento das fontes de informação de valor potencial para detectar uma epidemia emergente, seja de ocorrência natural ou como resultado de bioterrorismo.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N06.850.780.675.324"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D011247",
+          "term": "Gravidez"
+        },
+        {
+          "id": "D012532",
+          "term": "Escabiose"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D007223",
+          "term": "Lactente"
+        },
+        {
+          "id": "D026023",
+          "term": "Permetrina"
+        },
+        {
+          "id": "D011537",
+          "term": "Prurido"
+        },
+        {
+          "id": "D016358",
+          "term": "Busca de Comunicante"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 4,
+    "total_candidates": 28,
+    "final_primary": 2,
+    "final_secondary": 4
+  }
+}

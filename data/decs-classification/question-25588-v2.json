@@ -1,0 +1,915 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D009203",
+        "term": "Infarto do Miocárdio",
+        "name_en": "Myocardial Infarction",
+        "scope_note": "NECROSE do MIOCÁRDIO causada por uma obstrução no fornecimento de sangue ao coração (CIRCULAÇÃO CORONÁRIA).",
+        "tree_ids": [
+          "C14.280.647.500",
+          "C14.907.585.500",
+          "C23.550.513.355.750",
+          "C23.550.717.489.750"
+        ],
+        "hierarchy_path": "Doenças › C14.280.647.500",
+        "parents": [
+          {
+            "id": "D017202",
+            "term": "Isquemia Miocárdica"
+          },
+          {
+            "id": "D007238",
+            "term": "Infarto"
+          }
+        ],
+        "children": [
+          {
+            "id": "D056988",
+            "term": "Infarto Miocárdico de Parede Anterior"
+          },
+          {
+            "id": "D000088442",
+            "term": "MINOCA"
+          },
+          {
+            "id": "D056989",
+            "term": "Infarto Miocárdico de Parede Inferior"
+          },
+          {
+            "id": "D000072658",
+            "term": "Infarto do Miocárdio sem Supradesnível do Segmento ST"
+          },
+          {
+            "id": "D000072657",
+            "term": "Infarto do Miocárdio com Supradesnível do Segmento ST"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D054058",
+        "term": "Síndrome Coronariana Aguda",
+        "name_en": "Acute Coronary Syndrome",
+        "scope_note": "Episódio de ISQUEMIA MIOCÁRDICA que geralmente dura mais que um episódio de angina transitório que, em última instância, pode resultar em INFARTO DO MIOCÁRDIO.",
+        "tree_ids": [
+          "C14.280.647.124",
+          "C14.907.585.124"
+        ],
+        "hierarchy_path": "Doenças › C14.280.647.124",
+        "parents": [
+          {
+            "id": "D017202",
+            "term": "Isquemia Miocárdica"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D004562",
+        "term": "Eletrocardiografia",
+        "name_en": "Electrocardiography",
+        "scope_note": "Registro do momento-a-momento das forças eletromotrizes do CORAÇÃO enquanto projetadas a vários locais da superfície corporal delineadas como uma função escalar do tempo. O registro é monitorado por um traçado sobre papel carta em movimento lento ou por observação em um cardioscópio que é um MONITOR DE TUBO DE RAIOS CATÓDICOS.",
+        "tree_ids": [
+          "E01.370.370.380.240",
+          "E01.370.405.240"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.370.380.240",
+        "parents": [
+          {
+            "id": "D006334",
+            "term": "Testes de Função Cardíaca"
+          },
+          {
+            "id": "D004568",
+            "term": "Eletrodiagnóstico"
+          }
+        ],
+        "children": [
+          {
+            "id": "D015716",
+            "term": "Eletrocardiografia Ambulatorial"
+          },
+          {
+            "id": "D014672",
+            "term": "Vetorcardiografia"
+          },
+          {
+            "id": "D018780",
+            "term": "Mapeamento Potencial de Superfície Corporal"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D014336",
+        "term": "Troponina",
+        "name_en": "Troponin",
+        "scope_note": "Um dos menores componentes proteicos dos músculos esquelético e cardíaco. Atua como o componente ligante de cálcio em um complexo com  beta-TROPOMIOSINA, ACTINA e MIOSINA, conferindo aos filamentos reticulados de actina e miosina a sensibilidade ao cálcio. A troponina por si é um complexo de três proteínas reguladoras (TROPONINA C, TROPONINA I e TROPONINA T).",
+        "tree_ids": [
+          "D05.500.945",
+          "D05.750.078.730.825",
+          "D12.776.210.500.910",
+          "D12.776.220.525.825"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D05.500.945",
+        "parents": [
+          {
+            "id": "D046912",
+            "term": "Complexos Multiproteicos"
+          },
+          {
+            "id": "D008840",
+            "term": "Proteínas dos Microfilamentos"
+          },
+          {
+            "id": "D009124",
+            "term": "Proteínas Musculares"
+          }
+        ],
+        "children": [
+          {
+            "id": "D019210",
+            "term": "Troponina I"
+          },
+          {
+            "id": "D020107",
+            "term": "Troponina T"
+          },
+          {
+            "id": "D019209",
+            "term": "Troponina C"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D002637",
+        "term": "Dor no Peito",
+        "name_en": "Chest Pain",
+        "scope_note": "Pressão, queimadura ou entorpecimento no peito.",
+        "tree_ids": [
+          "C23.888.592.612.233",
+          "F02.830.816.444.427",
+          "G11.561.790.444.451"
+        ],
+        "hierarchy_path": "Doenças › C23.888.592.612.233",
+        "parents": [
+          {
+            "id": "D010146",
+            "term": "Dor"
+          }
+        ],
+        "children": [
+          {
+            "id": "D060050",
+            "term": "Angina Estável"
+          },
+          {
+            "id": "D000788",
+            "term": "Angina Pectoris Variante"
+          },
+          {
+            "id": "D000789",
+            "term": "Angina Instável"
+          },
+          {
+            "id": "D000787",
+            "term": "Angina Pectoris"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D003937",
+        "term": "Diagnóstico Diferencial",
+        "name_en": "Diagnosis, Differential",
+        "scope_note": "Determinação de qual entre duas ou mais doenças ou afecções, um paciente está padecendo, sistematicamente comparando e contrastando resultados de medidas diagnósticas.",
+        "tree_ids": [
+          "E01.171"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.171",
+        "parents": [
+          {
+            "id": "D003933",
+            "term": "Diagnóstico"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Myocardial Infarction",
+      "Acute Coronary Syndrome"
+    ],
+    "secondary": [
+      "Chest Pain",
+      "Troponin",
+      "Electrocardiography",
+      "Diagnosis, Differential"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Myocardial Infarction",
+          "candidates": [
+            {
+              "id": "D009203",
+              "term": "Infarto do Miocárdio",
+              "term_en": "Myocardial Infarction",
+              "scope": "NECROSE do MIOCÁRDIO causada por uma obstrução no fornecimento de sangue ao coração (CIRCULAÇÃO CORONÁRIA).",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.280.647.500",
+                "C14.907.585.500"
+              ]
+            },
+            {
+              "id": "D000072657",
+              "term": "Infarto do Miocárdio com Supradesnível do Segmento ST",
+              "term_en": "ST Elevation Myocardial Infarction",
+              "scope": "Síndrome clínica definida por sintomas de ISQUEMIA DO MIOCÁRDIO, pela elevação persistente dos segmentos ST do ELETROCARDIOGRAMA e liberação de BIOMARCADORES de NECROSE do MIOCÁRDIO (como por exemplo,",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.280.647.500.875",
+                "C14.907.585.500.875"
+              ]
+            },
+            {
+              "id": "D056988",
+              "term": "Infarto Miocárdico de Parede Anterior",
+              "term_en": "Anterior Wall Myocardial Infarction",
+              "scope": "INFARTO DO MIOCÁRDIO em que a parede anterior do coração está envolvida. O infarto do miocárdio da parede anterior é frequentemente causado pela oclusão da artéria coronária descendente anterior. Pode",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.280.647.500.093",
+                "C14.907.585.500.093"
+              ]
+            },
+            {
+              "id": "D056989",
+              "term": "Infarto Miocárdico de Parede Inferior",
+              "term_en": "Inferior Wall Myocardial Infarction",
+              "scope": "INFARTO DO MIOCÁRDIO em que a parede inferior do coração está envolvida. É frequentemente causado pela oclusão da artéria coronária direita.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.280.647.500.187",
+                "C14.907.585.500.187"
+              ]
+            },
+            {
+              "id": "D000072658",
+              "term": "Infarto do Miocárdio sem Supradesnível do Segmento ST",
+              "term_en": "Non-ST Elevated Myocardial Infarction",
+              "scope": "Infarto do miocárdio que não produz elevações nos segmentos ST do ELETROCARDIOGRAMA. A elevação do segmento ST no ECG é usada com frequência para determinação do protocolo de tratamento (veja também I",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.280.647.500.469",
+                "C14.907.585.500.656"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Acute Coronary Syndrome",
+          "candidates": [
+            {
+              "id": "D054058",
+              "term": "Síndrome Coronariana Aguda",
+              "term_en": "Acute Coronary Syndrome",
+              "scope": "Episódio de ISQUEMIA MIOCÁRDICA que geralmente dura mais que um episódio de angina transitório que, em última instância, pode resultar em INFARTO DO MIOCÁRDIO.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.280.647.124",
+                "C14.907.585.124"
+              ]
+            },
+            {
+              "id": "D000072657",
+              "term": "Infarto do Miocárdio com Supradesnível do Segmento ST",
+              "term_en": "ST Elevation Myocardial Infarction",
+              "scope": "Síndrome clínica definida por sintomas de ISQUEMIA DO MIOCÁRDIO, pela elevação persistente dos segmentos ST do ELETROCARDIOGRAMA e liberação de BIOMARCADORES de NECROSE do MIOCÁRDIO (como por exemplo,",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.280.647.500.875",
+                "C14.907.585.500.875"
+              ]
+            },
+            {
+              "id": "D000088442",
+              "term": "MINOCA",
+              "term_en": "MINOCA",
+              "scope": "Infarto do miocárdio na ausência de doença coronariana obstrutiva. O rompimento da CIRCULAÇÃO CORONÁRIA é devida a vários outros fatores como PLACA ATEROSCLERÓTICA e o VASOESPASMO CORONÁRIO.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.280.647.500.328",
+                "C14.907.585.500.422"
+              ]
+            },
+            {
+              "id": "D000072658",
+              "term": "Infarto do Miocárdio sem Supradesnível do Segmento ST",
+              "term_en": "Non-ST Elevated Myocardial Infarction",
+              "scope": "Infarto do miocárdio que não produz elevações nos segmentos ST do ELETROCARDIOGRAMA. A elevação do segmento ST no ECG é usada com frequência para determinação do protocolo de tratamento (veja também I",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.280.647.500.469",
+                "C14.907.585.500.656"
+              ]
+            },
+            {
+              "id": "D054059",
+              "term": "Oclusão Coronária",
+              "term_en": "Coronary Occlusion",
+              "scope": "Bloqueio completo de fluxo sanguíneo através de uma das ARTÉRIAS CORONÁRIAS, habitualmente por ATEROSCLEROSE CORONÁRIA.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.280.647.250.272",
+                "C14.907.585.250.272"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Electrocardiography",
+          "candidates": [
+            {
+              "id": "D004562",
+              "term": "Eletrocardiografia",
+              "term_en": "Electrocardiography",
+              "scope": "Registro do momento-a-momento das forças eletromotrizes do CORAÇÃO enquanto projetadas a vários locais da superfície corporal delineadas como uma função escalar do tempo. O registro é monitorado por u",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.370.380.240",
+                "E01.370.405.240"
+              ]
+            },
+            {
+              "id": "D015716",
+              "term": "Eletrocardiografia Ambulatorial",
+              "term_en": "Electrocardiography, Ambulatory",
+              "scope": "Método no qual prolongados registros eletrocardiográficos são feitos em um gravador portátil (sistema do tipo Holter) ou em um dispositivo semicondutor (sistema de tempo real) enquanto o paciente dese",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.370.380.240.230",
+                "E01.370.405.240.230"
+              ]
+            },
+            {
+              "id": "D014672",
+              "term": "Vetorcardiografia",
+              "term_en": "Vectorcardiography",
+              "scope": "Registro momento-a-momento das forças eletromotrizes do coração em um plano da superfície corporal traçado como uma função vetorial de tempo.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.370.380.240.850",
+                "E01.370.405.240.850"
+              ]
+            },
+            {
+              "id": "D022062",
+              "term": "Técnicas Eletrofisiológicas Cardíacas",
+              "term_en": "Electrophysiologic Techniques, Cardiac",
+              "scope": "Métodos para induzir e medir atividades elétricas em sítios específicos no coração a fim de diagnosticar e tratar problemas relacionados com o sistema elétrico do coração.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.370.380.245",
+                "E01.370.405.267"
+              ]
+            },
+            {
+              "id": "D054849",
+              "term": "Eletrofisiologia Cardíaca",
+              "term_en": "Cardiac Electrophysiology",
+              "scope": "Estudo da atividade elétrica e características do CORAÇÃO, MIOCÁRDIO e CARDIOMIÓCITOS.",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H01.158.344.528.500",
+                "H01.158.782.236.500"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Troponin",
+          "candidates": [
+            {
+              "id": "D014336",
+              "term": "Troponina",
+              "term_en": "Troponin",
+              "scope": "Um dos menores componentes proteicos dos músculos esquelético e cardíaco. Atua como o componente ligante de cálcio em um complexo com  beta-TROPOMIOSINA, ACTINA e MIOSINA, conferindo aos filamentos re",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D05.500.945",
+                "D05.750.078.730.825"
+              ]
+            },
+            {
+              "id": "D019210",
+              "term": "Troponina I",
+              "term_en": "Troponin I",
+              "scope": "Subunidade do complexo TROPONINA que inibe a atividade da ATPASE ACTOMIOSINA, de modo a romper as interações entre ACTINA e MIOSINA. Há três subtipos de troponina I: troponina I1, I2 e I3. A troponina",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D05.500.945.925",
+                "D05.750.078.730.825.925"
+              ]
+            },
+            {
+              "id": "D020107",
+              "term": "Troponina T",
+              "term_en": "Troponin T",
+              "scope": "Subunidade do complexo TROPONINA que se liga à TROPOMIOSINA. Há três subtipos de troponina T: troponina T1, T2 e T3. A troponina T2 é específica para o tecido cardíaco, enquanto que as troponinas T2 e",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D05.500.945.962",
+                "D05.750.078.730.825.962"
+              ]
+            },
+            {
+              "id": "D019209",
+              "term": "Troponina C",
+              "term_en": "Troponin C",
+              "scope": "Subunidade do complexo TROPONINA que se liga ao cálcio e ajuda a regular a contração muscular dependente de cálcio. Há dois subtipos de troponina C: C1 e C2. A troponina C1 é típica da musculatura car",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D05.500.945.900",
+                "D05.750.078.730.825.900"
+              ]
+            },
+            {
+              "id": "D014335",
+              "term": "Tropomiosina",
+              "term_en": "Tropomyosin",
+              "scope": "Proteína encontrada nos finos filamentos de fibras musculares. Inibe a contração do músculo, a menos que sua posição seja modificada pela TROPONINA.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D05.750.078.730.800",
+                "D12.776.210.500.895"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Chest Pain",
+          "candidates": [
+            {
+              "id": "D002637",
+              "term": "Dor no Peito",
+              "term_en": "Chest Pain",
+              "scope": "Pressão, queimadura ou entorpecimento no peito.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.888.592.612.233",
+                "F02.830.816.444.427"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Diagnosis, Differential",
+          "candidates": [
+            {
+              "id": "D003937",
+              "term": "Diagnóstico Diferencial",
+              "term_en": "Diagnosis, Differential",
+              "scope": "Determinação de qual entre duas ou mais doenças ou afecções, um paciente está padecendo, sistematicamente comparando e contrastando resultados de medidas diagnósticas.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.171"
+              ]
+            },
+            {
+              "id": "D003933",
+              "term": "Diagnóstico",
+              "term_en": "Diagnosis",
+              "scope": "Determinação da natureza de uma doença ou estado, ou a diferenciação entre elas. A avaliação pode ser feita através de exame físico, exames laboratoriais, ou similares. É possível usar softwares para ",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01"
+              ]
+            },
+            {
+              "id": "DDCS026426",
+              "term": "Diagnóstico Clínico",
+              "term_en": "Clinical Diagnosis",
+              "scope": "Determinação da natureza ou condições de uma doença ou a distinção de uma doença ou condição de outra. Em Homeopatia, além da percepção dos fenômenos biológicos, o médico homeopata busca compreender a",
+              "categoria": "HP",
+              "arvore": [
+                "HP2.050.132"
+              ]
+            },
+            {
+              "id": "DDCS026429",
+              "term": "Diagnóstico Miasmático",
+              "term_en": "Miasmatic Diagnosis",
+              "scope": "Reconhecimento da predisposição e do modo reacional único da pessoa, dependente da fisiopatologia, portadora de características individuais que determinam a maneira e a forma personalizada do adoecer ",
+              "categoria": "HP",
+              "arvore": [
+                "HP2.050.162"
+              ]
+            },
+            {
+              "id": "D042241",
+              "term": "Diagnóstico Precoce",
+              "term_en": "Early Diagnosis",
+              "scope": "Métodos para determinar nos pacientes a natureza de uma doença ou transtorno em suas fases inciais de evolução. Geralmente, o diagnóstico precoce melhora o PROGNÓSTICO e o RESULTADO DO TRATAMENTO.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.390"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Myocardial Infarction",
+        "Acute Coronary Syndrome"
+      ],
+      "secondary": [
+        "Chest Pain",
+        "Troponin",
+        "Electrocardiography",
+        "Diagnosis, Differential"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Myocardial Infarction",
+            "candidates": [
+              {
+                "id": "D009203",
+                "term": "Infarto do Miocárdio",
+                "term_en": "Myocardial Infarction",
+                "scope": "NECROSE do MIOCÁRDIO causada por uma obstrução no fornecimento de sangue ao coração (CIRCULAÇÃO CORONÁRIA).",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.280.647.500",
+                  "C14.907.585.500"
+                ]
+              },
+              {
+                "id": "D000072657",
+                "term": "Infarto do Miocárdio com Supradesnível do Segmento ST",
+                "term_en": "ST Elevation Myocardial Infarction",
+                "scope": "Síndrome clínica definida por sintomas de ISQUEMIA DO MIOCÁRDIO, pela elevação persistente dos segmentos ST do ELETROCARDIOGRAMA e liberação de BIOMARCADORES de NECROSE do MIOCÁRDIO (como por exemplo,",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.280.647.500.875",
+                  "C14.907.585.500.875"
+                ]
+              },
+              {
+                "id": "D056988",
+                "term": "Infarto Miocárdico de Parede Anterior",
+                "term_en": "Anterior Wall Myocardial Infarction",
+                "scope": "INFARTO DO MIOCÁRDIO em que a parede anterior do coração está envolvida. O infarto do miocárdio da parede anterior é frequentemente causado pela oclusão da artéria coronária descendente anterior. Pode",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.280.647.500.093",
+                  "C14.907.585.500.093"
+                ]
+              },
+              {
+                "id": "D056989",
+                "term": "Infarto Miocárdico de Parede Inferior",
+                "term_en": "Inferior Wall Myocardial Infarction",
+                "scope": "INFARTO DO MIOCÁRDIO em que a parede inferior do coração está envolvida. É frequentemente causado pela oclusão da artéria coronária direita.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.280.647.500.187",
+                  "C14.907.585.500.187"
+                ]
+              },
+              {
+                "id": "D000072658",
+                "term": "Infarto do Miocárdio sem Supradesnível do Segmento ST",
+                "term_en": "Non-ST Elevated Myocardial Infarction",
+                "scope": "Infarto do miocárdio que não produz elevações nos segmentos ST do ELETROCARDIOGRAMA. A elevação do segmento ST no ECG é usada com frequência para determinação do protocolo de tratamento (veja também I",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.280.647.500.469",
+                  "C14.907.585.500.656"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Acute Coronary Syndrome",
+            "candidates": [
+              {
+                "id": "D054058",
+                "term": "Síndrome Coronariana Aguda",
+                "term_en": "Acute Coronary Syndrome",
+                "scope": "Episódio de ISQUEMIA MIOCÁRDICA que geralmente dura mais que um episódio de angina transitório que, em última instância, pode resultar em INFARTO DO MIOCÁRDIO.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.280.647.124",
+                  "C14.907.585.124"
+                ]
+              },
+              {
+                "id": "D000072657",
+                "term": "Infarto do Miocárdio com Supradesnível do Segmento ST",
+                "term_en": "ST Elevation Myocardial Infarction",
+                "scope": "Síndrome clínica definida por sintomas de ISQUEMIA DO MIOCÁRDIO, pela elevação persistente dos segmentos ST do ELETROCARDIOGRAMA e liberação de BIOMARCADORES de NECROSE do MIOCÁRDIO (como por exemplo,",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.280.647.500.875",
+                  "C14.907.585.500.875"
+                ]
+              },
+              {
+                "id": "D000088442",
+                "term": "MINOCA",
+                "term_en": "MINOCA",
+                "scope": "Infarto do miocárdio na ausência de doença coronariana obstrutiva. O rompimento da CIRCULAÇÃO CORONÁRIA é devida a vários outros fatores como PLACA ATEROSCLERÓTICA e o VASOESPASMO CORONÁRIO.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.280.647.500.328",
+                  "C14.907.585.500.422"
+                ]
+              },
+              {
+                "id": "D000072658",
+                "term": "Infarto do Miocárdio sem Supradesnível do Segmento ST",
+                "term_en": "Non-ST Elevated Myocardial Infarction",
+                "scope": "Infarto do miocárdio que não produz elevações nos segmentos ST do ELETROCARDIOGRAMA. A elevação do segmento ST no ECG é usada com frequência para determinação do protocolo de tratamento (veja também I",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.280.647.500.469",
+                  "C14.907.585.500.656"
+                ]
+              },
+              {
+                "id": "D054059",
+                "term": "Oclusão Coronária",
+                "term_en": "Coronary Occlusion",
+                "scope": "Bloqueio completo de fluxo sanguíneo através de uma das ARTÉRIAS CORONÁRIAS, habitualmente por ATEROSCLEROSE CORONÁRIA.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.280.647.250.272",
+                  "C14.907.585.250.272"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Electrocardiography",
+            "candidates": [
+              {
+                "id": "D004562",
+                "term": "Eletrocardiografia",
+                "term_en": "Electrocardiography",
+                "scope": "Registro do momento-a-momento das forças eletromotrizes do CORAÇÃO enquanto projetadas a vários locais da superfície corporal delineadas como uma função escalar do tempo. O registro é monitorado por u",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.370.380.240",
+                  "E01.370.405.240"
+                ]
+              },
+              {
+                "id": "D015716",
+                "term": "Eletrocardiografia Ambulatorial",
+                "term_en": "Electrocardiography, Ambulatory",
+                "scope": "Método no qual prolongados registros eletrocardiográficos são feitos em um gravador portátil (sistema do tipo Holter) ou em um dispositivo semicondutor (sistema de tempo real) enquanto o paciente dese",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.370.380.240.230",
+                  "E01.370.405.240.230"
+                ]
+              },
+              {
+                "id": "D014672",
+                "term": "Vetorcardiografia",
+                "term_en": "Vectorcardiography",
+                "scope": "Registro momento-a-momento das forças eletromotrizes do coração em um plano da superfície corporal traçado como uma função vetorial de tempo.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.370.380.240.850",
+                  "E01.370.405.240.850"
+                ]
+              },
+              {
+                "id": "D022062",
+                "term": "Técnicas Eletrofisiológicas Cardíacas",
+                "term_en": "Electrophysiologic Techniques, Cardiac",
+                "scope": "Métodos para induzir e medir atividades elétricas em sítios específicos no coração a fim de diagnosticar e tratar problemas relacionados com o sistema elétrico do coração.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.370.380.245",
+                  "E01.370.405.267"
+                ]
+              },
+              {
+                "id": "D054849",
+                "term": "Eletrofisiologia Cardíaca",
+                "term_en": "Cardiac Electrophysiology",
+                "scope": "Estudo da atividade elétrica e características do CORAÇÃO, MIOCÁRDIO e CARDIOMIÓCITOS.",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H01.158.344.528.500",
+                  "H01.158.782.236.500"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Troponin",
+            "candidates": [
+              {
+                "id": "D014336",
+                "term": "Troponina",
+                "term_en": "Troponin",
+                "scope": "Um dos menores componentes proteicos dos músculos esquelético e cardíaco. Atua como o componente ligante de cálcio em um complexo com  beta-TROPOMIOSINA, ACTINA e MIOSINA, conferindo aos filamentos re",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D05.500.945",
+                  "D05.750.078.730.825"
+                ]
+              },
+              {
+                "id": "D019210",
+                "term": "Troponina I",
+                "term_en": "Troponin I",
+                "scope": "Subunidade do complexo TROPONINA que inibe a atividade da ATPASE ACTOMIOSINA, de modo a romper as interações entre ACTINA e MIOSINA. Há três subtipos de troponina I: troponina I1, I2 e I3. A troponina",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D05.500.945.925",
+                  "D05.750.078.730.825.925"
+                ]
+              },
+              {
+                "id": "D020107",
+                "term": "Troponina T",
+                "term_en": "Troponin T",
+                "scope": "Subunidade do complexo TROPONINA que se liga à TROPOMIOSINA. Há três subtipos de troponina T: troponina T1, T2 e T3. A troponina T2 é específica para o tecido cardíaco, enquanto que as troponinas T2 e",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D05.500.945.962",
+                  "D05.750.078.730.825.962"
+                ]
+              },
+              {
+                "id": "D019209",
+                "term": "Troponina C",
+                "term_en": "Troponin C",
+                "scope": "Subunidade do complexo TROPONINA que se liga ao cálcio e ajuda a regular a contração muscular dependente de cálcio. Há dois subtipos de troponina C: C1 e C2. A troponina C1 é típica da musculatura car",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D05.500.945.900",
+                  "D05.750.078.730.825.900"
+                ]
+              },
+              {
+                "id": "D014335",
+                "term": "Tropomiosina",
+                "term_en": "Tropomyosin",
+                "scope": "Proteína encontrada nos finos filamentos de fibras musculares. Inibe a contração do músculo, a menos que sua posição seja modificada pela TROPONINA.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D05.750.078.730.800",
+                  "D12.776.210.500.895"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Chest Pain",
+            "candidates": [
+              {
+                "id": "D002637",
+                "term": "Dor no Peito",
+                "term_en": "Chest Pain",
+                "scope": "Pressão, queimadura ou entorpecimento no peito.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.888.592.612.233",
+                  "F02.830.816.444.427"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Diagnosis, Differential",
+            "candidates": [
+              {
+                "id": "D003937",
+                "term": "Diagnóstico Diferencial",
+                "term_en": "Diagnosis, Differential",
+                "scope": "Determinação de qual entre duas ou mais doenças ou afecções, um paciente está padecendo, sistematicamente comparando e contrastando resultados de medidas diagnósticas.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.171"
+                ]
+              },
+              {
+                "id": "D003933",
+                "term": "Diagnóstico",
+                "term_en": "Diagnosis",
+                "scope": "Determinação da natureza de uma doença ou estado, ou a diferenciação entre elas. A avaliação pode ser feita através de exame físico, exames laboratoriais, ou similares. É possível usar softwares para ",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01"
+                ]
+              },
+              {
+                "id": "DDCS026426",
+                "term": "Diagnóstico Clínico",
+                "term_en": "Clinical Diagnosis",
+                "scope": "Determinação da natureza ou condições de uma doença ou a distinção de uma doença ou condição de outra. Em Homeopatia, além da percepção dos fenômenos biológicos, o médico homeopata busca compreender a",
+                "categoria": "HP",
+                "arvore": [
+                  "HP2.050.132"
+                ]
+              },
+              {
+                "id": "DDCS026429",
+                "term": "Diagnóstico Miasmático",
+                "term_en": "Miasmatic Diagnosis",
+                "scope": "Reconhecimento da predisposição e do modo reacional único da pessoa, dependente da fisiopatologia, portadora de características individuais que determinam a maneira e a forma personalizada do adoecer ",
+                "categoria": "HP",
+                "arvore": [
+                  "HP2.050.162"
+                ]
+              },
+              {
+                "id": "D042241",
+                "term": "Diagnóstico Precoce",
+                "term_en": "Early Diagnosis",
+                "scope": "Métodos para determinar nos pacientes a natureza de uma doença ou transtorno em suas fases inciais de evolução. Geralmente, o diagnóstico precoce melhora o PROGNÓSTICO e o RESULTADO DO TRATAMENTO.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.390"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D009203",
+          "term": "Infarto do Miocárdio"
+        },
+        {
+          "id": "D054058",
+          "term": "Síndrome Coronariana Aguda"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D004562",
+          "term": "Eletrocardiografia"
+        },
+        {
+          "id": "D014336",
+          "term": "Troponina"
+        },
+        {
+          "id": "D002637",
+          "term": "Dor no Peito"
+        },
+        {
+          "id": "D003937",
+          "term": "Diagnóstico Diferencial"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 4,
+    "total_candidates": 26,
+    "final_primary": 2,
+    "final_secondary": 4
+  }
+}

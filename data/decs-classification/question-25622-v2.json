@@ -1,0 +1,976 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D017116",
+        "term": "Dor Lombar",
+        "name_en": "Low Back Pain",
+        "scope_note": "Dor aguda ou crônica nas regiões lombar ou sacral podendo estar associada com ENTORSES E DISTENSÕES dos ligamentos dos músculos, DESLOCAMENTO DO DISCO INTERVERTEBRAL e outras afecções.",
+        "tree_ids": [
+          "C23.888.592.612.107.400"
+        ],
+        "hierarchy_path": "Doenças › C23.888.592.612.107.400",
+        "parents": [
+          {
+            "id": "D001416",
+            "term": "Dor nas Costas"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      },
+      {
+        "id": "D059350",
+        "term": "Dor Crônica",
+        "name_en": "Chronic Pain",
+        "scope_note": "Sensação de dor que persiste por mais do que poucos meses. Pode ou não estar associada com trauma ou doença e pode persistir depois que a lesão inicial estiver cicatrizada. Sua localização, características e periodicidade são mais imprecisas do que as da dor aguda.",
+        "tree_ids": [
+          "C23.888.592.612.274",
+          "F02.830.816.444.433",
+          "G11.561.790.444.461"
+        ],
+        "hierarchy_path": "Doenças › C23.888.592.612.274",
+        "parents": [
+          {
+            "id": "D010146",
+            "term": "Dor"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D009125",
+        "term": "Relaxantes Musculares Centrais",
+        "name_en": "Muscle Relaxants, Central",
+        "scope_note": "Grupo heterogêneo de fármacos usados para produzir relaxamento muscular, exceto os agentes bloqueadores neuromusculares. São usados na clínica e na terapêutica, basicamente para o tratamento de espasmo muscular e da imobilidade associados com distensões, entorses, lesões das costas e, em menor grau, lesões no pescoço. Também tem sido usado para o tratamento de várias situações clínicas que têm em comum somente a hiperatividade muscular esquelética, por exemplo, os espasmos musculares que podem ocorrer na ESCLEROSE MÚLTIPLA (Tradução livre do original: Smith and Reynard, Textbook of Pharmacology, 1991, p358).",
+        "tree_ids": [
+          "D27.505.696.510",
+          "D27.505.696.663.700.600",
+          "D27.505.954.427.525"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D27.505.696.510",
+        "parents": [
+          {
+            "id": "D045505",
+            "term": "Efeitos Fisiológicos de Drogas"
+          },
+          {
+            "id": "D009465",
+            "term": "Fármacos Neuromusculares"
+          },
+          {
+            "id": "D002491",
+            "term": "Fármacos do Sistema Nervoso Central"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D000894",
+        "term": "Anti-Inflamatórios não Esteroides",
+        "name_en": "Anti-Inflammatory Agents, Non-Steroidal",
+        "scope_note": "Anti-inflamatórios de natureza não esteroidal. Além de ações anti-inflamatórias, têm ações analgésicas, antipiréticas e inibidoras de plaquetas. Atuam bloqueando a síntese de prostaglandinas por meio da inibição da ciclooxigenase, que converte o ácido araquidônico em endoperóxidos cíclicos, precursores das prostaglandinas. A inibição da síntese de prostaglandinas é responsável por suas ações analgésicas, antipiréticas e inibidoras de plaquetas. Outros mecanismos podem contribuir para seus efeitos anti-inflamatórios.",
+        "tree_ids": [
+          "D27.505.696.663.850.014.040.500",
+          "D27.505.954.158.030",
+          "D27.505.954.329.030"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D27.505.696.663.850.014.040.500",
+        "parents": [
+          {
+            "id": "D018712",
+            "term": "Analgésicos não Narcóticos"
+          },
+          {
+            "id": "D000893",
+            "term": "Anti-Inflamatórios"
+          },
+          {
+            "id": "D018501",
+            "term": "Antirreumáticos"
+          }
+        ],
+        "children": [
+          {
+            "id": "D016861",
+            "term": "Inibidores de Ciclo-Oxigenase"
+          },
+          {
+            "id": "D052246",
+            "term": "Inibidores de Ciclo-Oxigenase 2"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D026741",
+        "term": "Modalidades de Fisioterapia",
+        "name_en": "Physical Therapy Modalities",
+        "scope_note": "Modalidades terapêuticas frequentemente utilizadas na ESPECIALIDADE DE FISIOTERAPIA por FISIOTERAPEUTAS para melhorar, manter ou restaurar o bem-estar físico e fisiológico de um indivíduo.",
+        "tree_ids": [
+          "E02.779",
+          "E02.831.535"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.779",
+        "parents": [
+          {
+            "id": "D013812",
+            "term": "Terapêutica"
+          },
+          {
+            "id": "D012046",
+            "term": "Reabilitação"
+          }
+        ],
+        "children": [
+          {
+            "id": "D015671",
+            "term": "Eletroacupuntura"
+          },
+          {
+            "id": "D052580",
+            "term": "Exercícios de Alongamento Muscular"
+          },
+          {
+            "id": "D019050",
+            "term": "Acupressão"
+          },
+          {
+            "id": "D056147",
+            "term": "Terapia Assistida por Cavalos"
+          },
+          {
+            "id": "D056447",
+            "term": "Terapia Assistida com Animais"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D003952",
+        "term": "Diagnóstico por Imagem",
+        "name_en": "Diagnostic Imaging",
+        "scope_note": "Qualquer exibição visual de padrões estruturais ou funcionais de órgãos ou tecidos para avaliação diagnóstica. Inclui medidas fisiológicas e respostas metabólicas a estímulos físicos e químicos, assim como ultramicroscopia.",
+        "tree_ids": [
+          "E01.370.350",
+          "VS3.003.001.006.005.001"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.350",
+        "parents": [
+          {
+            "id": "D019937",
+            "term": "Técnicas e Procedimentos Diagnósticos"
+          }
+        ],
+        "children": [
+          {
+            "id": "D012796",
+            "term": "Sialografia"
+          },
+          {
+            "id": "D019160",
+            "term": "Endossonografia"
+          },
+          {
+            "id": "D019252",
+            "term": "Radiografia Dentária Digital"
+          },
+          {
+            "id": "D019265",
+            "term": "Espectroscopia de Luz Próxima ao Infravermelho"
+          },
+          {
+            "id": "D019560",
+            "term": "Ecocardiografia Tridimensional"
+          }
+        ],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Low Back Pain",
+      "Chronic Pain"
+    ],
+    "secondary": [
+      "Physical Therapy Modalities",
+      "Muscle Relaxants, Central",
+      "Anti-Inflammatory Agents, Non-Steroidal",
+      "Diagnostic Imaging"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Low Back Pain",
+          "candidates": [
+            {
+              "id": "D017116",
+              "term": "Dor Lombar",
+              "term_en": "Low Back Pain",
+              "scope": "Dor aguda ou crônica nas regiões lombar ou sacral podendo estar associada com ENTORSES E DISTENSÕES dos ligamentos dos músculos, DESLOCAMENTO DO DISCO INTERVERTEBRAL e outras afecções.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.888.592.612.107.400"
+              ]
+            },
+            {
+              "id": "D001416",
+              "term": "Dor nas Costas",
+              "term_en": "Back Pain",
+              "scope": "Dor aguda ou crônica localizada nas regiões posteriores do TÓRAX, REGIÃO LOMBOSSACRAL ou regiões adjacentes.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.888.592.612.107",
+                "F02.830.816.444.372"
+              ]
+            },
+            {
+              "id": "D012585",
+              "term": "Ciática",
+              "term_en": "Sciatica",
+              "scope": "Afecção caracterizada por dor radiante na região das costas para dentro das nádegas e aspectos posterior/lateral da perna. A ciática pode ser uma manifestação de NEUROPATIA CIÁTICA, RADICULOPATIA (env",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.668.829.500.675.800",
+                "C10.668.829.600.800"
+              ]
+            },
+            {
+              "id": "D019567",
+              "term": "Lesões nas Costas",
+              "term_en": "Back Injuries",
+              "scope": "Traumatismos gerais ou não específicos da parte posterior do tronco. Incluem traumatismos dos músculos das costas.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C26.117"
+              ]
+            },
+            {
+              "id": "D007405",
+              "term": "Deslocamento do Disco Intervertebral",
+              "term_en": "Intervertebral Disc Displacement",
+              "scope": "DISCO INTERVERTEBRAL em que o NÚCLEO PULPOSO protruiu-se através do ANEL FIBROSO circundante. Isso ocorre com maior frequência na região lombar inferior.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C05.116.900.307",
+                "C23.300.707.952"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Chronic Pain",
+          "candidates": [
+            {
+              "id": "D059350",
+              "term": "Dor Crônica",
+              "term_en": "Chronic Pain",
+              "scope": "Sensação de dor que persiste por mais do que poucos meses. Pode ou não estar associada com trauma ou doença e pode persistir depois que a lesão inicial estiver cicatrizada. Sua localização, caracterís",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.888.592.612.274",
+                "F02.830.816.444.433"
+              ]
+            },
+            {
+              "id": "D010148",
+              "term": "Dor Intratável",
+              "term_en": "Intractable Pain",
+              "scope": "Dor persistente, refratária a algumas ou a todas as formas de tratamento.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.888.592.612.776",
+                "F02.830.816.444.738"
+              ]
+            },
+            {
+              "id": "D005156",
+              "term": "Neuralgia Facial",
+              "term_en": "Facial Neuralgia",
+              "scope": "Síndromes neurálgicas caracterizadas por DOR FACIAL crônica ou recorrente como manifestação primária da doença. Os transtornos dos nervos trigêmeo e facial frequentemente estão associados com essas af",
+              "categoria": "Doenças",
+              "arvore": [
+                "C07.465.299.625",
+                "C10.292.319.625"
+              ]
+            },
+            {
+              "id": "D058748",
+              "term": "Percepção da Dor",
+              "term_en": "Pain Perception",
+              "scope": "Processo pelo qual a DOR é reconhecida e interpretada pelo encéfalo.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F02.463.593.504"
+              ]
+            },
+            {
+              "id": "D050500",
+              "term": "Pancreatite Crônica",
+              "term_en": "Pancreatitis, Chronic",
+              "scope": "INFLAMAÇÃO do PÂNCREAS, caracterizada por DOR ABDOMINAL recorrente ou persistente, com ou sem ESTEATORREIA ou DIABETES MELLITUS. É caracterizada por uma destruição irregular do parênquima pancreático ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C06.689.750.830",
+                "C23.550.291.500.750"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Muscle Relaxants, Central",
+          "candidates": [
+            {
+              "id": "D009125",
+              "term": "Relaxantes Musculares Centrais",
+              "term_en": "Muscle Relaxants, Central",
+              "scope": "Grupo heterogêneo de fármacos usados para produzir relaxamento muscular, exceto os agentes bloqueadores neuromusculares. São usados na clínica e na terapêutica, basicamente para o tratamento de espasm",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.696.510",
+                "D27.505.696.663.700.600"
+              ]
+            },
+            {
+              "id": "D009465",
+              "term": "Fármacos Neuromusculares",
+              "term_en": "Neuromuscular Agents",
+              "scope": "Fármacos usados por suas ações sobre o músculo esquelético. Entre eles estão os fármacos que agem diretamente na musculatura esquelética, os que alteram a transmissão neuromuscular (BLOQUEADORES NEURO",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.696.663.700"
+              ]
+            },
+            {
+              "id": "D002753",
+              "term": "Clorzoxazona",
+              "term_en": "Chlorzoxazone",
+              "scope": "Relaxante muscular de ação central, com propriedades sedativas. É considerado inibidor de espasmo muscular, exercendo efeito primariamente ao nível da medula espinhal e áreas subcorticais do cérebro.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D03.633.100.221.346"
+              ]
+            },
+            {
+              "id": "D014049",
+              "term": "Tolperisona",
+              "term_en": "Tolperisone",
+              "scope": "Relaxante muscular de ação central que foi utilizado no tratamento sintomático da espasticidade e do espasmo muscular. (Tradução livre do original: Martindale, The Extra Pharmacopoeia, 30th ed, p1211)",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.522.818.950",
+                "D03.383.725.877"
+              ]
+            },
+            {
+              "id": "D008615",
+              "term": "Mefenesina",
+              "term_en": "Mephenesin",
+              "scope": "Relaxante muscular de ação central de curta duração.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.033.455.706.517"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Anti-Inflammatory Agents, Non-Steroidal",
+          "candidates": [
+            {
+              "id": "D000894",
+              "term": "Anti-Inflamatórios não Esteroides",
+              "term_en": "Anti-Inflammatory Agents, Non-Steroidal",
+              "scope": "Anti-inflamatórios de natureza não esteroidal. Além de ações anti-inflamatórias, têm ações analgésicas, antipiréticas e inibidoras de plaquetas. Atuam bloqueando a síntese de prostaglandinas por meio ",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.696.663.850.014.040.500",
+                "D27.505.954.158.030"
+              ]
+            },
+            {
+              "id": "D000893",
+              "term": "Anti-Inflamatórios",
+              "term_en": "Anti-Inflammatory Agents",
+              "scope": "Agentes que reduzem ou eliminam a INFLAMAÇÃO.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.954.158"
+              ]
+            },
+            {
+              "id": "D018712",
+              "term": "Analgésicos não Narcóticos",
+              "term_en": "Analgesics, Non-Narcotic",
+              "scope": "Subclasse de agentes analgésicos que tipicamente não se ligam a RECEPTORES OPIOIDES e não são viciogênicos. Muitos analgésicos não narcóticos são oferecidos como MEDICAMENTOS SEM PRESCRIÇÃO.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.696.663.850.014.040",
+                "D27.505.954.427.040.100"
+              ]
+            },
+            {
+              "id": "D007213",
+              "term": "Indometacina",
+              "term_en": "Indomethacin",
+              "scope": "Anti-inflamatório não esteroide (NSAID) que inibe a enzima CICLO-OXIGENASE necessária para a formação de PROSTAGLANDINAS e outros AUTACOIDES. Também inibe a motilidade de LEUCÓCITOS POLIMORFONUCLEARES",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D03.633.100.473.420"
+              ]
+            },
+            {
+              "id": "D017308",
+              "term": "Etodolac",
+              "term_en": "Etodolac",
+              "scope": "Anti-inflamatório não esteroide e inibidor de ciclo-oxigenase-2 (COX-2) com potentes propriedades analgésicas e antiartríticas. Tem demonstrado ser eficaz no tratamento da OSTEOARTRITE, ARTRITE REUMAT",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D03.066.288.200",
+                "D03.633.100.473.404.200"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Physical Therapy Modalities",
+          "candidates": [
+            {
+              "id": "D026741",
+              "term": "Modalidades de Fisioterapia",
+              "term_en": "Physical Therapy Modalities",
+              "scope": "Modalidades terapêuticas frequentemente utilizadas na ESPECIALIDADE DE FISIOTERAPIA por FISIOTERAPEUTAS para melhorar, manter ou restaurar o bem-estar físico e fisiológico de um indivíduo.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.779",
+                "E02.831.535"
+              ]
+            },
+            {
+              "id": "D026761",
+              "term": "Especialidade de Fisioterapia",
+              "term_en": "Physical Therapy Specialty",
+              "scope": "Profissão auxiliar de saúde, por meio da qual os FISIOTERAPEUTAS fazem uso das MODALIDADES DE FISIOTERAPIA para prevenir, corrigir e aliviar as disfunções de origem anatômica ou fisiológica.",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.010.625"
+              ]
+            },
+            {
+              "id": "D059825",
+              "term": "Fisioterapeutas",
+              "term_en": "Physical Therapists",
+              "scope": "Pessoas treinadas em FISIOTERAPIA para fazer uso das MODALIDADES DE FISIOTERAPIA a fim de prevenir, corrigir e aliviar as disfunções de movimento.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.526.485.790",
+                "N02.360.790"
+              ]
+            },
+            {
+              "id": "D063372",
+              "term": "Assistentes de Fisioterapeutas",
+              "term_en": "Physical Therapist Assistants",
+              "scope": "Pessoas que, sob supervisão de FISIOTERAPEUTAS licenciados, fornecem tratamentos usando várias MODALIDADES DE FISIOTERAPIA.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.526.485.067.738",
+                "N02.360.067.732"
+              ]
+            },
+            {
+              "id": "DDCS060738",
+              "term": "Serviços de Fisioterapia",
+              "term_en": "Physical Therapy Services",
+              "scope": "Conjunto de procedimentos realizados por fisioterapeutas com o objetivo de promover a recuperação, prevenção e melhoria da função física, mobilidade e qualidade de vida de indivíduos e populações, sen",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP2.840.087"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Diagnostic Imaging",
+          "candidates": [
+            {
+              "id": "D003952",
+              "term": "Diagnóstico por Imagem",
+              "term_en": "Diagnostic Imaging",
+              "scope": "Qualquer exibição visual de padrões estruturais ou funcionais de órgãos ou tecidos para avaliação diagnóstica. Inclui medidas fisiológicas e respostas metabólicas a estímulos físicos e químicos, assim",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.350",
+                "VS3.003.001.006.005.001"
+              ]
+            },
+            {
+              "id": "D011859",
+              "term": "Radiografia",
+              "term_en": "Radiography",
+              "scope": "Exame de qualquer parte do corpo para propósitos diagnósticos por meios de RAIOS X ou RAIOS GAMA, registrando a imagem em uma superfície sensibilizada (como um filme fotográfico).",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.350.700"
+              ]
+            },
+            {
+              "id": "D011871",
+              "term": "Radiologia",
+              "term_en": "Radiology",
+              "scope": "Especialidade voltada para o uso de raios X e outras formas de energia radiante no diagnóstico e no tratamento de doenças.",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.403.740"
+              ]
+            },
+            {
+              "id": "D000072856",
+              "term": "Enfermagem Radiológica e de Imagem",
+              "term_en": "Radiologic and Imaging Nursing",
+              "scope": "Especialidade de enfermagem que lida especificamente com o cuidado a pacientes que passam por procedimentos diagnósticos, neurológicos, cardiovasculares, intervencionais, de ultrassonografia, tomograf",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.478.676.772"
+              ]
+            },
+            {
+              "id": "D015641",
+              "term": "Radiografia Intervencionista",
+              "term_en": "Radiography, Interventional",
+              "scope": "Procedimentos diagnósticos e terapêuticos que são invasivos ou cirúrgicos, e requerem um radiologista especialmente treinado. Em geral, são mais invasivos do que uma imagem diagnóstica, mas menos inva",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.350.700.725",
+                "E04.502.780"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Low Back Pain",
+        "Chronic Pain"
+      ],
+      "secondary": [
+        "Physical Therapy Modalities",
+        "Muscle Relaxants, Central",
+        "Anti-Inflammatory Agents, Non-Steroidal",
+        "Diagnostic Imaging"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Low Back Pain",
+            "candidates": [
+              {
+                "id": "D017116",
+                "term": "Dor Lombar",
+                "term_en": "Low Back Pain",
+                "scope": "Dor aguda ou crônica nas regiões lombar ou sacral podendo estar associada com ENTORSES E DISTENSÕES dos ligamentos dos músculos, DESLOCAMENTO DO DISCO INTERVERTEBRAL e outras afecções.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.888.592.612.107.400"
+                ]
+              },
+              {
+                "id": "D001416",
+                "term": "Dor nas Costas",
+                "term_en": "Back Pain",
+                "scope": "Dor aguda ou crônica localizada nas regiões posteriores do TÓRAX, REGIÃO LOMBOSSACRAL ou regiões adjacentes.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.888.592.612.107",
+                  "F02.830.816.444.372"
+                ]
+              },
+              {
+                "id": "D012585",
+                "term": "Ciática",
+                "term_en": "Sciatica",
+                "scope": "Afecção caracterizada por dor radiante na região das costas para dentro das nádegas e aspectos posterior/lateral da perna. A ciática pode ser uma manifestação de NEUROPATIA CIÁTICA, RADICULOPATIA (env",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.668.829.500.675.800",
+                  "C10.668.829.600.800"
+                ]
+              },
+              {
+                "id": "D019567",
+                "term": "Lesões nas Costas",
+                "term_en": "Back Injuries",
+                "scope": "Traumatismos gerais ou não específicos da parte posterior do tronco. Incluem traumatismos dos músculos das costas.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C26.117"
+                ]
+              },
+              {
+                "id": "D007405",
+                "term": "Deslocamento do Disco Intervertebral",
+                "term_en": "Intervertebral Disc Displacement",
+                "scope": "DISCO INTERVERTEBRAL em que o NÚCLEO PULPOSO protruiu-se através do ANEL FIBROSO circundante. Isso ocorre com maior frequência na região lombar inferior.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C05.116.900.307",
+                  "C23.300.707.952"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Chronic Pain",
+            "candidates": [
+              {
+                "id": "D059350",
+                "term": "Dor Crônica",
+                "term_en": "Chronic Pain",
+                "scope": "Sensação de dor que persiste por mais do que poucos meses. Pode ou não estar associada com trauma ou doença e pode persistir depois que a lesão inicial estiver cicatrizada. Sua localização, caracterís",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.888.592.612.274",
+                  "F02.830.816.444.433"
+                ]
+              },
+              {
+                "id": "D010148",
+                "term": "Dor Intratável",
+                "term_en": "Intractable Pain",
+                "scope": "Dor persistente, refratária a algumas ou a todas as formas de tratamento.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.888.592.612.776",
+                  "F02.830.816.444.738"
+                ]
+              },
+              {
+                "id": "D005156",
+                "term": "Neuralgia Facial",
+                "term_en": "Facial Neuralgia",
+                "scope": "Síndromes neurálgicas caracterizadas por DOR FACIAL crônica ou recorrente como manifestação primária da doença. Os transtornos dos nervos trigêmeo e facial frequentemente estão associados com essas af",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C07.465.299.625",
+                  "C10.292.319.625"
+                ]
+              },
+              {
+                "id": "D058748",
+                "term": "Percepção da Dor",
+                "term_en": "Pain Perception",
+                "scope": "Processo pelo qual a DOR é reconhecida e interpretada pelo encéfalo.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F02.463.593.504"
+                ]
+              },
+              {
+                "id": "D050500",
+                "term": "Pancreatite Crônica",
+                "term_en": "Pancreatitis, Chronic",
+                "scope": "INFLAMAÇÃO do PÂNCREAS, caracterizada por DOR ABDOMINAL recorrente ou persistente, com ou sem ESTEATORREIA ou DIABETES MELLITUS. É caracterizada por uma destruição irregular do parênquima pancreático ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C06.689.750.830",
+                  "C23.550.291.500.750"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Muscle Relaxants, Central",
+            "candidates": [
+              {
+                "id": "D009125",
+                "term": "Relaxantes Musculares Centrais",
+                "term_en": "Muscle Relaxants, Central",
+                "scope": "Grupo heterogêneo de fármacos usados para produzir relaxamento muscular, exceto os agentes bloqueadores neuromusculares. São usados na clínica e na terapêutica, basicamente para o tratamento de espasm",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.696.510",
+                  "D27.505.696.663.700.600"
+                ]
+              },
+              {
+                "id": "D009465",
+                "term": "Fármacos Neuromusculares",
+                "term_en": "Neuromuscular Agents",
+                "scope": "Fármacos usados por suas ações sobre o músculo esquelético. Entre eles estão os fármacos que agem diretamente na musculatura esquelética, os que alteram a transmissão neuromuscular (BLOQUEADORES NEURO",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.696.663.700"
+                ]
+              },
+              {
+                "id": "D002753",
+                "term": "Clorzoxazona",
+                "term_en": "Chlorzoxazone",
+                "scope": "Relaxante muscular de ação central, com propriedades sedativas. É considerado inibidor de espasmo muscular, exercendo efeito primariamente ao nível da medula espinhal e áreas subcorticais do cérebro.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D03.633.100.221.346"
+                ]
+              },
+              {
+                "id": "D014049",
+                "term": "Tolperisona",
+                "term_en": "Tolperisone",
+                "scope": "Relaxante muscular de ação central que foi utilizado no tratamento sintomático da espasticidade e do espasmo muscular. (Tradução livre do original: Martindale, The Extra Pharmacopoeia, 30th ed, p1211)",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.522.818.950",
+                  "D03.383.725.877"
+                ]
+              },
+              {
+                "id": "D008615",
+                "term": "Mefenesina",
+                "term_en": "Mephenesin",
+                "scope": "Relaxante muscular de ação central de curta duração.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.033.455.706.517"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Anti-Inflammatory Agents, Non-Steroidal",
+            "candidates": [
+              {
+                "id": "D000894",
+                "term": "Anti-Inflamatórios não Esteroides",
+                "term_en": "Anti-Inflammatory Agents, Non-Steroidal",
+                "scope": "Anti-inflamatórios de natureza não esteroidal. Além de ações anti-inflamatórias, têm ações analgésicas, antipiréticas e inibidoras de plaquetas. Atuam bloqueando a síntese de prostaglandinas por meio ",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.696.663.850.014.040.500",
+                  "D27.505.954.158.030"
+                ]
+              },
+              {
+                "id": "D000893",
+                "term": "Anti-Inflamatórios",
+                "term_en": "Anti-Inflammatory Agents",
+                "scope": "Agentes que reduzem ou eliminam a INFLAMAÇÃO.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.954.158"
+                ]
+              },
+              {
+                "id": "D018712",
+                "term": "Analgésicos não Narcóticos",
+                "term_en": "Analgesics, Non-Narcotic",
+                "scope": "Subclasse de agentes analgésicos que tipicamente não se ligam a RECEPTORES OPIOIDES e não são viciogênicos. Muitos analgésicos não narcóticos são oferecidos como MEDICAMENTOS SEM PRESCRIÇÃO.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.696.663.850.014.040",
+                  "D27.505.954.427.040.100"
+                ]
+              },
+              {
+                "id": "D007213",
+                "term": "Indometacina",
+                "term_en": "Indomethacin",
+                "scope": "Anti-inflamatório não esteroide (NSAID) que inibe a enzima CICLO-OXIGENASE necessária para a formação de PROSTAGLANDINAS e outros AUTACOIDES. Também inibe a motilidade de LEUCÓCITOS POLIMORFONUCLEARES",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D03.633.100.473.420"
+                ]
+              },
+              {
+                "id": "D017308",
+                "term": "Etodolac",
+                "term_en": "Etodolac",
+                "scope": "Anti-inflamatório não esteroide e inibidor de ciclo-oxigenase-2 (COX-2) com potentes propriedades analgésicas e antiartríticas. Tem demonstrado ser eficaz no tratamento da OSTEOARTRITE, ARTRITE REUMAT",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D03.066.288.200",
+                  "D03.633.100.473.404.200"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Physical Therapy Modalities",
+            "candidates": [
+              {
+                "id": "D026741",
+                "term": "Modalidades de Fisioterapia",
+                "term_en": "Physical Therapy Modalities",
+                "scope": "Modalidades terapêuticas frequentemente utilizadas na ESPECIALIDADE DE FISIOTERAPIA por FISIOTERAPEUTAS para melhorar, manter ou restaurar o bem-estar físico e fisiológico de um indivíduo.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.779",
+                  "E02.831.535"
+                ]
+              },
+              {
+                "id": "D026761",
+                "term": "Especialidade de Fisioterapia",
+                "term_en": "Physical Therapy Specialty",
+                "scope": "Profissão auxiliar de saúde, por meio da qual os FISIOTERAPEUTAS fazem uso das MODALIDADES DE FISIOTERAPIA para prevenir, corrigir e aliviar as disfunções de origem anatômica ou fisiológica.",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.010.625"
+                ]
+              },
+              {
+                "id": "D059825",
+                "term": "Fisioterapeutas",
+                "term_en": "Physical Therapists",
+                "scope": "Pessoas treinadas em FISIOTERAPIA para fazer uso das MODALIDADES DE FISIOTERAPIA a fim de prevenir, corrigir e aliviar as disfunções de movimento.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.526.485.790",
+                  "N02.360.790"
+                ]
+              },
+              {
+                "id": "D063372",
+                "term": "Assistentes de Fisioterapeutas",
+                "term_en": "Physical Therapist Assistants",
+                "scope": "Pessoas que, sob supervisão de FISIOTERAPEUTAS licenciados, fornecem tratamentos usando várias MODALIDADES DE FISIOTERAPIA.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.526.485.067.738",
+                  "N02.360.067.732"
+                ]
+              },
+              {
+                "id": "DDCS060738",
+                "term": "Serviços de Fisioterapia",
+                "term_en": "Physical Therapy Services",
+                "scope": "Conjunto de procedimentos realizados por fisioterapeutas com o objetivo de promover a recuperação, prevenção e melhoria da função física, mobilidade e qualidade de vida de indivíduos e populações, sen",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP2.840.087"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Diagnostic Imaging",
+            "candidates": [
+              {
+                "id": "D003952",
+                "term": "Diagnóstico por Imagem",
+                "term_en": "Diagnostic Imaging",
+                "scope": "Qualquer exibição visual de padrões estruturais ou funcionais de órgãos ou tecidos para avaliação diagnóstica. Inclui medidas fisiológicas e respostas metabólicas a estímulos físicos e químicos, assim",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.350",
+                  "VS3.003.001.006.005.001"
+                ]
+              },
+              {
+                "id": "D011859",
+                "term": "Radiografia",
+                "term_en": "Radiography",
+                "scope": "Exame de qualquer parte do corpo para propósitos diagnósticos por meios de RAIOS X ou RAIOS GAMA, registrando a imagem em uma superfície sensibilizada (como um filme fotográfico).",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.350.700"
+                ]
+              },
+              {
+                "id": "D011871",
+                "term": "Radiologia",
+                "term_en": "Radiology",
+                "scope": "Especialidade voltada para o uso de raios X e outras formas de energia radiante no diagnóstico e no tratamento de doenças.",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.403.740"
+                ]
+              },
+              {
+                "id": "D000072856",
+                "term": "Enfermagem Radiológica e de Imagem",
+                "term_en": "Radiologic and Imaging Nursing",
+                "scope": "Especialidade de enfermagem que lida especificamente com o cuidado a pacientes que passam por procedimentos diagnósticos, neurológicos, cardiovasculares, intervencionais, de ultrassonografia, tomograf",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.478.676.772"
+                ]
+              },
+              {
+                "id": "D015641",
+                "term": "Radiografia Intervencionista",
+                "term_en": "Radiography, Interventional",
+                "scope": "Procedimentos diagnósticos e terapêuticos que são invasivos ou cirúrgicos, e requerem um radiologista especialmente treinado. Em geral, são mais invasivos do que uma imagem diagnóstica, mas menos inva",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.350.700.725",
+                  "E04.502.780"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D017116",
+          "term": "Dor Lombar"
+        },
+        {
+          "id": "D059350",
+          "term": "Dor Crônica"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D009125",
+          "term": "Relaxantes Musculares Centrais"
+        },
+        {
+          "id": "D000894",
+          "term": "Anti-Inflamatórios não Esteroides"
+        },
+        {
+          "id": "D026741",
+          "term": "Modalidades de Fisioterapia"
+        },
+        {
+          "id": "D003952",
+          "term": "Diagnóstico por Imagem"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 4,
+    "total_candidates": 30,
+    "final_primary": 2,
+    "final_secondary": 4
+  }
+}

@@ -1,0 +1,1077 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D007049",
+        "term": "Doença Iatrogênica",
+        "name_en": "Iatrogenic Disease",
+        "scope_note": "Qualquer situação adversa que ocorra com um paciente como resultado de tratamento por um médico, cirurgião, ou outro profissional da área de saúde, especialmente infecções adquiridas pelo paciente no curso do tratamento.",
+        "tree_ids": [
+          "C23.550.291.875"
+        ],
+        "hierarchy_path": "Doenças › C23.550.291.875",
+        "parents": [
+          {
+            "id": "D020969",
+            "term": "Atributos de Doença"
+          }
+        ],
+        "children": [
+          {
+            "id": "D053717",
+            "term": "Pneumonia Associada à Ventilação Mecânica"
+          },
+          {
+            "id": "D000077299",
+            "term": "Pneumonia Associada a Assistência à Saúde"
+          },
+          {
+            "id": "D003428",
+            "term": "Infecção Hospitalar"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D002405",
+        "term": "Cateterismo Venoso Central",
+        "name_en": "Catheterization, Central Venous",
+        "scope_note": "Colocação de um CATETER intravenoso na veia subclávia, jugular ou outra veia central.",
+        "tree_ids": [
+          "E02.148.167",
+          "E04.100.814.529.875",
+          "E04.502.382.875",
+          "E05.157.313"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.148.167",
+        "parents": [
+          {
+            "id": "D002404",
+            "term": "Cateterismo"
+          },
+          {
+            "id": "D057510",
+            "term": "Procedimentos Endovasculares"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D013902",
+        "term": "Radiografia Torácica",
+        "name_en": "Radiography, Thoracic",
+        "scope_note": "Visualização do peito e órgãos da cavidade torácica por raio x. Não está restrita à visualização dos pulmões.",
+        "tree_ids": [
+          "E01.370.350.700.730"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.350.700.730",
+        "parents": [
+          {
+            "id": "D011859",
+            "term": "Radiografia"
+          }
+        ],
+        "children": [
+          {
+            "id": "D008400",
+            "term": "Radiografia Pulmonar de Massa"
+          },
+          {
+            "id": "D001995",
+            "term": "Broncografia"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D011030",
+        "term": "Pneumotórax",
+        "name_en": "Pneumothorax",
+        "scope_note": "Acúmulo de ar ou gás na CAVIDADE PLEURAL, que pode ocorrer espontaneamente ou como resultado de trauma ou processo patológico. O gás pode ser introduzido deliberadamente durante a PNEUMOTÓRAX ARTIFICIAL.",
+        "tree_ids": [
+          "C08.528.778"
+        ],
+        "hierarchy_path": "Doenças › C08.528.778",
+        "parents": [
+          {
+            "id": "D010995",
+            "term": "Doenças Pleurais"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D012771",
+        "term": "Choque Hemorrágico",
+        "name_en": "Shock, Hemorrhagic",
+        "scope_note": "Hemorragia aguda ou perda excessiva de líquido resultando em HIPOVOLEMIA.",
+        "tree_ids": [
+          "C23.550.414.980",
+          "C23.550.835.650"
+        ],
+        "hierarchy_path": "Doenças › C23.550.414.980",
+        "parents": [
+          {
+            "id": "D006470",
+            "term": "Hemorragia"
+          },
+          {
+            "id": "D012769",
+            "term": "Choque"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D018084",
+        "term": "Ultrassonografia de Intervenção",
+        "name_en": "Ultrasonography, Interventional",
+        "scope_note": "Utilização da ultrassonografia para guiar procedimentos cirúrgicos minimamente invasivos como BIÓPSIA POR PUNÇÃO, DRENAGEM, etc. Sua aplicação mais vasta é em ultrassom intravascular com imagem, mas é útil também em urologia e para detecção de afecções intra-abdominais.",
+        "tree_ids": [
+          "E01.370.350.850.855",
+          "E04.502.890"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.350.850.855",
+        "parents": [
+          {
+            "id": "D014463",
+            "term": "Ultrassonografia"
+          },
+          {
+            "id": "D019060",
+            "term": "Procedimentos Cirúrgicos Minimamente Invasivos"
+          }
+        ],
+        "children": [
+          {
+            "id": "D061765",
+            "term": "Aspiração por Agulha Fina Guiada por Ultrassom Endoscópico"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D015505",
+        "term": "Tubos Torácicos",
+        "name_en": "Chest Tubes",
+        "scope_note": "Tubos plásticos usados para drenagem de ar ou fluido do espaço pleural. Sua inserção cirúrgica é chamada tubo toracostomia.",
+        "tree_ids": [
+          "E07.858.150"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E07.858.150",
+        "parents": [
+          {
+            "id": "D013523",
+            "term": "Equipamentos Cirúrgicos"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Catheterization, Central Venous",
+      "Iatrogenic Disease"
+    ],
+    "secondary": [
+      "Pneumothorax",
+      "Shock, Hemorrhagic",
+      "Ultrasonography, Interventional",
+      "Radiography, Thoracic",
+      "Chest Tubes"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Iatrogenic Disease",
+          "candidates": [
+            {
+              "id": "D007049",
+              "term": "Doença Iatrogênica",
+              "term_en": "Iatrogenic Disease",
+              "scope": "Qualquer situação adversa que ocorra com um paciente como resultado de tratamento por um médico, cirurgião, ou outro profissional da área de saúde, especialmente infecções adquiridas pelo paciente no ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.550.291.875"
+              ]
+            },
+            {
+              "id": "DDCS026475",
+              "term": "Doença Medicamentosa",
+              "term_en": "Medicamentous Disease",
+              "scope": "Doença artificial provocada pelo medicamento dinamizado em virtude da Similitude com o Ser. Essa doença artificial estimulará o organismo a completar o trabalho já por ele iniciado, levando o sistema ",
+              "categoria": "HP",
+              "arvore": [
+                "HP2.450.256"
+              ]
+            },
+            {
+              "id": "D000088522",
+              "term": "Sobrediagnóstico",
+              "term_en": "Overdiagnosis",
+              "scope": "Ato de identificar uma pessoa com uma doença ou condição anormal que, se não descoberta, não causaria dano à pessoa, e que cria novos diagnósticos pela medicalização de experiências comuns da vida ou ",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.505",
+                "N02.421.562"
+              ]
+            },
+            {
+              "id": "D003951",
+              "term": "Erros de Diagnóstico",
+              "term_en": "Diagnostic Errors",
+              "scope": "Diagnósticos incorretos ou incompletos após exame clínico ou procedimentos técnicos diagnósticos.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.354",
+                "N02.421.450.280"
+              ]
+            },
+            {
+              "id": "D064406",
+              "term": "Dano ao Paciente",
+              "term_en": "Patient Harm",
+              "scope": "Medida da SEGURANÇA DO PACIENTE que considera erros ou enganos que resultam em dano ao paciente. Incluem erros na administração de drogas e outros medicamentos (ERROS DE MEDICAÇÃO), erros na execução ",
+              "categoria": "Saúde",
+              "arvore": [
+                "N06.850.135.060.075.349",
+                "N06.850.725"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Catheterization, Central Venous",
+          "candidates": [
+            {
+              "id": "D002405",
+              "term": "Cateterismo Venoso Central",
+              "term_en": "Catheterization, Central Venous",
+              "scope": "Colocação de um CATETER intravenoso na veia subclávia, jugular ou outra veia central.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.148.167",
+                "E04.100.814.529.875"
+              ]
+            },
+            {
+              "id": "D062905",
+              "term": "Cateteres Venosos Centrais",
+              "term_en": "Central Venous Catheters",
+              "scope": "Cateteres inseridos em uma veia central grande como a VEIA SUBCLÁVIA ou a VEIA FEMORAL.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E07.132.750.500"
+              ]
+            },
+            {
+              "id": "D002496",
+              "term": "Pressão Venosa Central",
+              "term_en": "Central Venous Pressure",
+              "scope": "Pressão arterial nas grandes VEIAS centrais do corpo. Diferencia-se da pressão venosa periférica que ocorre em uma extremidade.",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G09.330.380.076.732.336"
+              ]
+            },
+            {
+              "id": "D002407",
+              "term": "Cateterismo de Swan-Ganz",
+              "term_en": "Catheterization, Swan-Ganz",
+              "scope": "Colocação de um cateter com balão na artéria pulmonar através das veias antecubital, subclávia e, algumas vezes, a femoral. É utilizado para medir a pressão da artéria pulmonar e a pressão propulsora ",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.370.380.140.210",
+                "E02.148.224.165"
+              ]
+            },
+            {
+              "id": "D002406",
+              "term": "Cateterismo Periférico",
+              "term_en": "Catheterization, Peripheral",
+              "scope": "Inserção de um cateter numa artéria periférica, veia ou vias aéreas, com fins diagnósticos ou terapêuticos.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.148.224",
+                "E04.100.814.529.937"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Radiography, Thoracic",
+          "candidates": [
+            {
+              "id": "D013902",
+              "term": "Radiografia Torácica",
+              "term_en": "Radiography, Thoracic",
+              "scope": "Visualização do peito e órgãos da cavidade torácica por raio x. Não está restrita à visualização dos pulmões.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.350.700.730"
+              ]
+            },
+            {
+              "id": "D011859",
+              "term": "Radiografia",
+              "term_en": "Radiography",
+              "scope": "Exame de qualquer parte do corpo para propósitos diagnósticos por meios de RAIOS X ou RAIOS GAMA, registrando a imagem em uma superfície sensibilizada (como um filme fotográfico).",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.350.700"
+              ]
+            },
+            {
+              "id": "D001995",
+              "term": "Broncografia",
+              "term_en": "Bronchography",
+              "scope": "Radiografia dos brônquios após injeção de um meio de contraste.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.350.700.730.100",
+                "E01.370.386.100"
+              ]
+            },
+            {
+              "id": "D011860",
+              "term": "Radiografia Abdominal",
+              "term_en": "Radiography, Abdominal",
+              "scope": "Visualização radiográfica do corpo, na região entre o tórax e a pelve, isto é, no interior da cavidade peritoneal.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.350.700.715"
+              ]
+            },
+            {
+              "id": "D014567",
+              "term": "Urografia",
+              "term_en": "Urography",
+              "scope": "Radiografia de qualquer parte do TRATO URINÁRIO.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.350.700.830",
+                "E01.370.390.830"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Pneumothorax",
+          "candidates": [
+            {
+              "id": "D011030",
+              "term": "Pneumotórax",
+              "term_en": "Pneumothorax",
+              "scope": "Acúmulo de ar ou gás na CAVIDADE PLEURAL, que pode ocorrer espontaneamente ou como resultado de trauma ou processo patológico. O gás pode ser introduzido deliberadamente durante a PNEUMOTÓRAX ARTIFICI",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.528.778"
+              ]
+            },
+            {
+              "id": "D006872",
+              "term": "Hidropneumotórax",
+              "term_en": "Hydropneumothorax",
+              "scope": "Acúmulo de líquido e gás dentro da cavidade pleural. (Dorland, 28a ed)",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.528.434"
+              ]
+            },
+            {
+              "id": "D006468",
+              "term": "Hemopneumotórax",
+              "term_en": "Hemopneumothorax",
+              "scope": "Acúmulo de ar e sangue na cavidade pleural.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.528.338",
+                "C23.550.414.904.500"
+              ]
+            },
+            {
+              "id": "D011031",
+              "term": "Pneumotórax Artificial",
+              "term_en": "Pneumothorax, Artificial",
+              "scope": "Injeção de ar ou de um gás de absorção mais lenta, como o nitrogênio, na CAVIDADE PLEURAL, para colabar o pulmão.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E04.928.600.220.620"
+              ]
+            },
+            {
+              "id": "D006491",
+              "term": "Hemotórax",
+              "term_en": "Hemothorax",
+              "scope": "Hemorragia dentro da cavidade pleural.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.528.380",
+                "C23.550.414.904"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Shock, Hemorrhagic",
+          "candidates": [
+            {
+              "id": "D012771",
+              "term": "Choque Hemorrágico",
+              "term_en": "Shock, Hemorrhagic",
+              "scope": "Hemorragia aguda ou perda excessiva de líquido resultando em HIPOVOLEMIA.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.550.414.980",
+                "C23.550.835.650"
+              ]
+            },
+            {
+              "id": "D058734",
+              "term": "Exsanguinação",
+              "term_en": "Exsanguination",
+              "scope": "Perda rápida e extrema de sangue que leva a um CHOQUE HEMORRÁGICO.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.550.414.734"
+              ]
+            },
+            {
+              "id": "D012769",
+              "term": "Choque",
+              "term_en": "Shock",
+              "scope": "Afecção manifestada por falha na perfusão ou oxigenação de órgãos vitais.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.550.835"
+              ]
+            },
+            {
+              "id": "D012774",
+              "term": "Choque Traumático",
+              "term_en": "Shock, Traumatic",
+              "scope": "Choque produzido como resultado de trauma.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.550.835.888",
+                "C26.797"
+              ]
+            },
+            {
+              "id": "D006470",
+              "term": "Hemorragia",
+              "term_en": "Hemorrhage",
+              "scope": "Sangramento ou escape de sangue [a partir] de um vaso.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.550.414"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Ultrasonography, Interventional",
+          "candidates": [
+            {
+              "id": "D018084",
+              "term": "Ultrassonografia de Intervenção",
+              "term_en": "Ultrasonography, Interventional",
+              "scope": "Utilização da ultrassonografia para guiar procedimentos cirúrgicos minimamente invasivos como BIÓPSIA POR PUNÇÃO, DRENAGEM, etc. Sua aplicação mais vasta é em ultrassom intravascular com imagem, mas é",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.350.850.855",
+                "E04.502.890"
+              ]
+            },
+            {
+              "id": "D061765",
+              "term": "Aspiração por Agulha Fina Guiada por Ultrassom Endoscópico",
+              "term_en": "Endoscopic Ultrasound-Guided Fine Needle Aspiration",
+              "scope": "Condução de uma agulha fina de biópsia com o auxílio de ENDOSSONOGRAFIA.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.225.500.384.100.119.500.500",
+                "E01.370.225.500.384.100.370.500"
+              ]
+            },
+            {
+              "id": "D015642",
+              "term": "Radiologia Intervencionista",
+              "term_en": "Radiology, Interventional",
+              "scope": "Subespecialidade da radiologia que combina radiografia de sistemas de órgãos, técnicas de cateterização e imagens transversais.",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.403.740.675"
+              ]
+            },
+            {
+              "id": "D053783",
+              "term": "Imagem por Ressonância Magnética Intervencionista",
+              "term_en": "Magnetic Resonance Imaging, Interventional",
+              "scope": "Procedimentos minimamente invasivos guiados com o auxílio da imagem por ressonância magnética para visualizar estruturas dos tecidos.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E04.502.515"
+              ]
+            },
+            {
+              "id": "D057086",
+              "term": "Ablação por Ultrassom Focalizado de Alta Intensidade",
+              "term_en": "High-Intensity Focused Ultrasound Ablation",
+              "scope": "Uso de ondas sonoras de alta frequência direcionadas para destruir tecidos. Algumas vezes é usada em conjunto com a ULTRASSONOGRAFIA DE INTERVENÇÃO, sendo, porém, distinta desta.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.565.280.945.399",
+                "E04.014.380"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Chest Tubes",
+          "candidates": [
+            {
+              "id": "D015505",
+              "term": "Tubos Torácicos",
+              "term_en": "Chest Tubes",
+              "scope": "Tubos plásticos usados para drenagem de ar ou fluido do espaço pleural. Sua inserção cirúrgica é chamada tubo toracostomia.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E07.858.150"
+              ]
+            },
+            {
+              "id": "D013907",
+              "term": "Toracostomia",
+              "term_en": "Thoracostomy",
+              "scope": "Procedimento cirúrgico que envolve a criação de uma abertura (estoma) na cavidade peitoral para drenagem. Usado no tratamento da DERRAME PLEURAL, PNEUMOTÓRAX, HEMOTÓRAX e EMPIEMA.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E04.579.918",
+                "E04.928.755"
+              ]
+            },
+            {
+              "id": "D000069258",
+              "term": "Toracentese",
+              "term_en": "Thoracentesis",
+              "scope": "Aspiração de líquido ou ar da CAVIDADE TORÁCICA. Algumas vezes, é acoplada à administração de medicamentos na CAVIDADE PLEURAL.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.225.998.329.810",
+                "E02.800.550.810"
+              ]
+            },
+            {
+              "id": "D020708",
+              "term": "Toracoscópios",
+              "term_en": "Thoracoscopes",
+              "scope": "Endoscópios para examinar a cavidade pleural.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E07.230.220.850",
+                "E07.858.240.850"
+              ]
+            },
+            {
+              "id": "D005409",
+              "term": "Tórax Fundido",
+              "term_en": "Flail Chest",
+              "scope": "Complicação de FRATURAS DAS COSTELAS múltiplas, fraturas de ESTERNO e COSTELAS, ou cirurgia torácica. Uma porção da PAREDE TORÁCICA se torna isolada da CAIXA TORÁCICA e exibe respiração paradoxal.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C26.891.315"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Catheterization, Central Venous",
+        "Iatrogenic Disease"
+      ],
+      "secondary": [
+        "Pneumothorax",
+        "Shock, Hemorrhagic",
+        "Ultrasonography, Interventional",
+        "Radiography, Thoracic",
+        "Chest Tubes"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Iatrogenic Disease",
+            "candidates": [
+              {
+                "id": "D007049",
+                "term": "Doença Iatrogênica",
+                "term_en": "Iatrogenic Disease",
+                "scope": "Qualquer situação adversa que ocorra com um paciente como resultado de tratamento por um médico, cirurgião, ou outro profissional da área de saúde, especialmente infecções adquiridas pelo paciente no ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.550.291.875"
+                ]
+              },
+              {
+                "id": "DDCS026475",
+                "term": "Doença Medicamentosa",
+                "term_en": "Medicamentous Disease",
+                "scope": "Doença artificial provocada pelo medicamento dinamizado em virtude da Similitude com o Ser. Essa doença artificial estimulará o organismo a completar o trabalho já por ele iniciado, levando o sistema ",
+                "categoria": "HP",
+                "arvore": [
+                  "HP2.450.256"
+                ]
+              },
+              {
+                "id": "D000088522",
+                "term": "Sobrediagnóstico",
+                "term_en": "Overdiagnosis",
+                "scope": "Ato de identificar uma pessoa com uma doença ou condição anormal que, se não descoberta, não causaria dano à pessoa, e que cria novos diagnósticos pela medicalização de experiências comuns da vida ou ",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.505",
+                  "N02.421.562"
+                ]
+              },
+              {
+                "id": "D003951",
+                "term": "Erros de Diagnóstico",
+                "term_en": "Diagnostic Errors",
+                "scope": "Diagnósticos incorretos ou incompletos após exame clínico ou procedimentos técnicos diagnósticos.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.354",
+                  "N02.421.450.280"
+                ]
+              },
+              {
+                "id": "D064406",
+                "term": "Dano ao Paciente",
+                "term_en": "Patient Harm",
+                "scope": "Medida da SEGURANÇA DO PACIENTE que considera erros ou enganos que resultam em dano ao paciente. Incluem erros na administração de drogas e outros medicamentos (ERROS DE MEDICAÇÃO), erros na execução ",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N06.850.135.060.075.349",
+                  "N06.850.725"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Catheterization, Central Venous",
+            "candidates": [
+              {
+                "id": "D002405",
+                "term": "Cateterismo Venoso Central",
+                "term_en": "Catheterization, Central Venous",
+                "scope": "Colocação de um CATETER intravenoso na veia subclávia, jugular ou outra veia central.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.148.167",
+                  "E04.100.814.529.875"
+                ]
+              },
+              {
+                "id": "D062905",
+                "term": "Cateteres Venosos Centrais",
+                "term_en": "Central Venous Catheters",
+                "scope": "Cateteres inseridos em uma veia central grande como a VEIA SUBCLÁVIA ou a VEIA FEMORAL.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E07.132.750.500"
+                ]
+              },
+              {
+                "id": "D002496",
+                "term": "Pressão Venosa Central",
+                "term_en": "Central Venous Pressure",
+                "scope": "Pressão arterial nas grandes VEIAS centrais do corpo. Diferencia-se da pressão venosa periférica que ocorre em uma extremidade.",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G09.330.380.076.732.336"
+                ]
+              },
+              {
+                "id": "D002407",
+                "term": "Cateterismo de Swan-Ganz",
+                "term_en": "Catheterization, Swan-Ganz",
+                "scope": "Colocação de um cateter com balão na artéria pulmonar através das veias antecubital, subclávia e, algumas vezes, a femoral. É utilizado para medir a pressão da artéria pulmonar e a pressão propulsora ",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.370.380.140.210",
+                  "E02.148.224.165"
+                ]
+              },
+              {
+                "id": "D002406",
+                "term": "Cateterismo Periférico",
+                "term_en": "Catheterization, Peripheral",
+                "scope": "Inserção de um cateter numa artéria periférica, veia ou vias aéreas, com fins diagnósticos ou terapêuticos.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.148.224",
+                  "E04.100.814.529.937"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Radiography, Thoracic",
+            "candidates": [
+              {
+                "id": "D013902",
+                "term": "Radiografia Torácica",
+                "term_en": "Radiography, Thoracic",
+                "scope": "Visualização do peito e órgãos da cavidade torácica por raio x. Não está restrita à visualização dos pulmões.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.350.700.730"
+                ]
+              },
+              {
+                "id": "D011859",
+                "term": "Radiografia",
+                "term_en": "Radiography",
+                "scope": "Exame de qualquer parte do corpo para propósitos diagnósticos por meios de RAIOS X ou RAIOS GAMA, registrando a imagem em uma superfície sensibilizada (como um filme fotográfico).",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.350.700"
+                ]
+              },
+              {
+                "id": "D001995",
+                "term": "Broncografia",
+                "term_en": "Bronchography",
+                "scope": "Radiografia dos brônquios após injeção de um meio de contraste.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.350.700.730.100",
+                  "E01.370.386.100"
+                ]
+              },
+              {
+                "id": "D011860",
+                "term": "Radiografia Abdominal",
+                "term_en": "Radiography, Abdominal",
+                "scope": "Visualização radiográfica do corpo, na região entre o tórax e a pelve, isto é, no interior da cavidade peritoneal.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.350.700.715"
+                ]
+              },
+              {
+                "id": "D014567",
+                "term": "Urografia",
+                "term_en": "Urography",
+                "scope": "Radiografia de qualquer parte do TRATO URINÁRIO.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.350.700.830",
+                  "E01.370.390.830"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Pneumothorax",
+            "candidates": [
+              {
+                "id": "D011030",
+                "term": "Pneumotórax",
+                "term_en": "Pneumothorax",
+                "scope": "Acúmulo de ar ou gás na CAVIDADE PLEURAL, que pode ocorrer espontaneamente ou como resultado de trauma ou processo patológico. O gás pode ser introduzido deliberadamente durante a PNEUMOTÓRAX ARTIFICI",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.528.778"
+                ]
+              },
+              {
+                "id": "D006872",
+                "term": "Hidropneumotórax",
+                "term_en": "Hydropneumothorax",
+                "scope": "Acúmulo de líquido e gás dentro da cavidade pleural. (Dorland, 28a ed)",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.528.434"
+                ]
+              },
+              {
+                "id": "D006468",
+                "term": "Hemopneumotórax",
+                "term_en": "Hemopneumothorax",
+                "scope": "Acúmulo de ar e sangue na cavidade pleural.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.528.338",
+                  "C23.550.414.904.500"
+                ]
+              },
+              {
+                "id": "D011031",
+                "term": "Pneumotórax Artificial",
+                "term_en": "Pneumothorax, Artificial",
+                "scope": "Injeção de ar ou de um gás de absorção mais lenta, como o nitrogênio, na CAVIDADE PLEURAL, para colabar o pulmão.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E04.928.600.220.620"
+                ]
+              },
+              {
+                "id": "D006491",
+                "term": "Hemotórax",
+                "term_en": "Hemothorax",
+                "scope": "Hemorragia dentro da cavidade pleural.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.528.380",
+                  "C23.550.414.904"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Shock, Hemorrhagic",
+            "candidates": [
+              {
+                "id": "D012771",
+                "term": "Choque Hemorrágico",
+                "term_en": "Shock, Hemorrhagic",
+                "scope": "Hemorragia aguda ou perda excessiva de líquido resultando em HIPOVOLEMIA.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.550.414.980",
+                  "C23.550.835.650"
+                ]
+              },
+              {
+                "id": "D058734",
+                "term": "Exsanguinação",
+                "term_en": "Exsanguination",
+                "scope": "Perda rápida e extrema de sangue que leva a um CHOQUE HEMORRÁGICO.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.550.414.734"
+                ]
+              },
+              {
+                "id": "D012769",
+                "term": "Choque",
+                "term_en": "Shock",
+                "scope": "Afecção manifestada por falha na perfusão ou oxigenação de órgãos vitais.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.550.835"
+                ]
+              },
+              {
+                "id": "D012774",
+                "term": "Choque Traumático",
+                "term_en": "Shock, Traumatic",
+                "scope": "Choque produzido como resultado de trauma.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.550.835.888",
+                  "C26.797"
+                ]
+              },
+              {
+                "id": "D006470",
+                "term": "Hemorragia",
+                "term_en": "Hemorrhage",
+                "scope": "Sangramento ou escape de sangue [a partir] de um vaso.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.550.414"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Ultrasonography, Interventional",
+            "candidates": [
+              {
+                "id": "D018084",
+                "term": "Ultrassonografia de Intervenção",
+                "term_en": "Ultrasonography, Interventional",
+                "scope": "Utilização da ultrassonografia para guiar procedimentos cirúrgicos minimamente invasivos como BIÓPSIA POR PUNÇÃO, DRENAGEM, etc. Sua aplicação mais vasta é em ultrassom intravascular com imagem, mas é",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.350.850.855",
+                  "E04.502.890"
+                ]
+              },
+              {
+                "id": "D061765",
+                "term": "Aspiração por Agulha Fina Guiada por Ultrassom Endoscópico",
+                "term_en": "Endoscopic Ultrasound-Guided Fine Needle Aspiration",
+                "scope": "Condução de uma agulha fina de biópsia com o auxílio de ENDOSSONOGRAFIA.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.225.500.384.100.119.500.500",
+                  "E01.370.225.500.384.100.370.500"
+                ]
+              },
+              {
+                "id": "D015642",
+                "term": "Radiologia Intervencionista",
+                "term_en": "Radiology, Interventional",
+                "scope": "Subespecialidade da radiologia que combina radiografia de sistemas de órgãos, técnicas de cateterização e imagens transversais.",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.403.740.675"
+                ]
+              },
+              {
+                "id": "D053783",
+                "term": "Imagem por Ressonância Magnética Intervencionista",
+                "term_en": "Magnetic Resonance Imaging, Interventional",
+                "scope": "Procedimentos minimamente invasivos guiados com o auxílio da imagem por ressonância magnética para visualizar estruturas dos tecidos.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E04.502.515"
+                ]
+              },
+              {
+                "id": "D057086",
+                "term": "Ablação por Ultrassom Focalizado de Alta Intensidade",
+                "term_en": "High-Intensity Focused Ultrasound Ablation",
+                "scope": "Uso de ondas sonoras de alta frequência direcionadas para destruir tecidos. Algumas vezes é usada em conjunto com a ULTRASSONOGRAFIA DE INTERVENÇÃO, sendo, porém, distinta desta.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.565.280.945.399",
+                  "E04.014.380"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Chest Tubes",
+            "candidates": [
+              {
+                "id": "D015505",
+                "term": "Tubos Torácicos",
+                "term_en": "Chest Tubes",
+                "scope": "Tubos plásticos usados para drenagem de ar ou fluido do espaço pleural. Sua inserção cirúrgica é chamada tubo toracostomia.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E07.858.150"
+                ]
+              },
+              {
+                "id": "D013907",
+                "term": "Toracostomia",
+                "term_en": "Thoracostomy",
+                "scope": "Procedimento cirúrgico que envolve a criação de uma abertura (estoma) na cavidade peitoral para drenagem. Usado no tratamento da DERRAME PLEURAL, PNEUMOTÓRAX, HEMOTÓRAX e EMPIEMA.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E04.579.918",
+                  "E04.928.755"
+                ]
+              },
+              {
+                "id": "D000069258",
+                "term": "Toracentese",
+                "term_en": "Thoracentesis",
+                "scope": "Aspiração de líquido ou ar da CAVIDADE TORÁCICA. Algumas vezes, é acoplada à administração de medicamentos na CAVIDADE PLEURAL.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.225.998.329.810",
+                  "E02.800.550.810"
+                ]
+              },
+              {
+                "id": "D020708",
+                "term": "Toracoscópios",
+                "term_en": "Thoracoscopes",
+                "scope": "Endoscópios para examinar a cavidade pleural.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E07.230.220.850",
+                  "E07.858.240.850"
+                ]
+              },
+              {
+                "id": "D005409",
+                "term": "Tórax Fundido",
+                "term_en": "Flail Chest",
+                "scope": "Complicação de FRATURAS DAS COSTELAS múltiplas, fraturas de ESTERNO e COSTELAS, ou cirurgia torácica. Uma porção da PAREDE TORÁCICA se torna isolada da CAIXA TORÁCICA e exibe respiração paradoxal.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C26.891.315"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D007049",
+          "term": "Doença Iatrogênica"
+        },
+        {
+          "id": "D002405",
+          "term": "Cateterismo Venoso Central"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D013902",
+          "term": "Radiografia Torácica"
+        },
+        {
+          "id": "D011030",
+          "term": "Pneumotórax"
+        },
+        {
+          "id": "D012771",
+          "term": "Choque Hemorrágico"
+        },
+        {
+          "id": "D018084",
+          "term": "Ultrassonografia de Intervenção"
+        },
+        {
+          "id": "D015505",
+          "term": "Tubos Torácicos"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 5,
+    "total_candidates": 35,
+    "final_primary": 2,
+    "final_secondary": 5
+  }
+}

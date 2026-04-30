@@ -1,0 +1,915 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D006929",
+        "term": "Hiperaldosteronismo",
+        "name_en": "Hyperaldosteronism",
+        "scope_note": "Afecção causada pela produção elevada de ALDOSTERONA. Caracteriza-se por retenção de sódio e excreção de potássio resultando em HIPERTENSÃO e HIPOCALEMIA.",
+        "tree_ids": [
+          "C19.053.800.604"
+        ],
+        "hierarchy_path": "Doenças › C19.053.800.604",
+        "parents": [
+          {
+            "id": "D000308",
+            "term": "Hiperfunção Adrenocortical"
+          }
+        ],
+        "children": [
+          {
+            "id": "D001477",
+            "term": "Síndrome de Bartter"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D006973",
+        "term": "Hipertensão",
+        "name_en": "Hypertension",
+        "scope_note": "PRESSÃO ARTERIAL sistêmica persistentemente alta. Com base em várias medições (DETERMINAÇÃO DA PRESSÃO ARTERIAL), a hipertensão é atualmente definida como sendo a PRESSÃO SISTÓLICA repetidamente maior que 140 mm Hg ou a PRESSÃO DIASTÓLICA de 90 mm Hg ou superior.",
+        "tree_ids": [
+          "C14.907.489"
+        ],
+        "hierarchy_path": "Doenças › C14.907.489",
+        "parents": [
+          {
+            "id": "D014652",
+            "term": "Doenças Vasculares"
+          }
+        ],
+        "children": [
+          {
+            "id": "D046110",
+            "term": "Hipertensão Induzida pela Gravidez"
+          },
+          {
+            "id": "D058437",
+            "term": "Retinopatia Hipertensiva"
+          },
+          {
+            "id": "D059468",
+            "term": "Hipertensão Mascarada"
+          },
+          {
+            "id": "D059466",
+            "term": "Hipertensão do Jaleco Branco"
+          },
+          {
+            "id": "D000080346",
+            "term": "Macroaneurisma Arterial Retiniano"
+          }
+        ],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D012083",
+        "term": "Renina",
+        "name_en": "Renin",
+        "scope_note": "Endopeptidase altamente específica (Leu-Leu) que produz ANGIOTENSINA I de seu precursor ANGIOTENSINOGÊNIO, levando a uma cascata de reações que elevam a PRESSÃO ARTERIAL e aumentam a retenção de sódio pelo rim no SISTEMA RENINA-ANGIOTENSINA. A enzima fora previamente catalogada como EC 3.4.99.19.",
+        "tree_ids": [
+          "D08.811.277.656.074.500.780",
+          "D08.811.277.656.300.048.780",
+          "D08.811.277.656.837.750"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D08.811.277.656.074.500.780",
+        "parents": [
+          {
+            "id": "D016282",
+            "term": "Ácido Aspártico Endopeptidases"
+          },
+          {
+            "id": "D043484",
+            "term": "Pró-Proteína Convertases"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D018660",
+        "term": "Monitorização Ambulatorial da Pressão Arterial",
+        "name_en": "Blood Pressure Monitoring, Ambulatory",
+        "scope_note": "Método no qual são feitas repetidas leituras da pressão sanguinea enquanto o paciente passa por atividades diárias normais. Permite análise quantitativa da pressão sanguinea elevada ao longo do tempo e que pode auxiliar na distinção entre os tipos de HIPERTENSÃO e pode avaliar a eficácia da terapia anti-hipertensiva.",
+        "tree_ids": [
+          "E01.370.370.140.100",
+          "E01.370.520.500.100"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.370.140.100",
+        "parents": [
+          {
+            "id": "D001795",
+            "term": "Determinação da Pressão Arterial"
+          },
+          {
+            "id": "D018670",
+            "term": "Monitorização Ambulatorial"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D000450",
+        "term": "Aldosterona",
+        "name_en": "Aldosterone",
+        "scope_note": "Hormônio secretado pelo CÓRTEX SUPRARRENAL que regula o equilíbrio de eletrólitos e água aumentando a retenção renal de sódio e a excreção de potássio.",
+        "tree_ids": [
+          "D04.210.500.745.745.654.062",
+          "D06.472.040.585.353.118"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D04.210.500.745.745.654.062",
+        "parents": [
+          {
+            "id": "D011282",
+            "term": "Pregnenodionas"
+          },
+          {
+            "id": "D015062",
+            "term": "11-Hidroxicorticosteroides"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Hypertension",
+      "Hyperaldosteronism"
+    ],
+    "secondary": [
+      "Hypertension, Secondary",
+      "Renin",
+      "Aldosterone",
+      "Blood Pressure Monitoring, Ambulatory"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Hyperaldosteronism",
+          "candidates": [
+            {
+              "id": "D006929",
+              "term": "Hiperaldosteronismo",
+              "term_en": "Hyperaldosteronism",
+              "scope": "Afecção causada pela produção elevada de ALDOSTERONA. Caracteriza-se por retenção de sódio e excreção de potássio resultando em HIPERTENSÃO e HIPOCALEMIA.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.053.800.604"
+              ]
+            },
+            {
+              "id": "D006994",
+              "term": "Hipoaldosteronismo",
+              "term_en": "Hypoaldosteronism",
+              "scope": "Afecção congênita ou adquirida de produção insuficiente de ALDOSTERONA pelo CÓRTEX SUPRARRENAL, que provoca a diminuição da síntese de ATPASE CONVERSORA DE Na(+)-K(+) mediada pela aldosterona nas célu",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.053.500.480"
+              ]
+            },
+            {
+              "id": "D000308",
+              "term": "Hiperfunção Adrenocortical",
+              "term_en": "Adrenocortical Hyperfunction",
+              "scope": "Produção excessiva de CORTICOSTEROIDES como ALDOSTERONA, HIDROCORTISONA, DESIDROEPIANDROSTERONA e/ou ANDROSTENODIONA. Entre as síndromes hiperadrenais estão SÍNDROME DE CUSHING, HIPERALDOSTERONISMO e ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.053.800"
+              ]
+            },
+            {
+              "id": "D011546",
+              "term": "Pseudo-Hipoaldosteronismo",
+              "term_en": "Pseudohypoaldosteronism",
+              "scope": "Grupo de transtornos heterogêneos caracterizado por distúrbios no transporte eletrolítico. As formas congênitas são transtornos autossômicos raros caracterizados por hipertensão neonatal, HIPERPOTASSE",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.815.770",
+                "C12.200.777.419.815.770"
+              ]
+            },
+            {
+              "id": "D043204",
+              "term": "Síndrome de Excesso Aparente de Minerolocorticoides",
+              "term_en": "Mineralocorticoid Excess Syndrome, Apparent",
+              "scope": "Doença hereditária caracterizada por HIPERTENSÃO surgida na infância, alcalose hipocalêmica e baixa secreção de RENINA e ALDOSTERONA. Resulta de um defeito na atividade da enzima 11-BETA-HIDROXIESTERO",
+              "categoria": "Doenças",
+              "arvore": [
+                "C16.320.565.925.500",
+                "C18.452.648.925.500"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Hypertension",
+          "candidates": [
+            {
+              "id": "D006973",
+              "term": "Hipertensão",
+              "term_en": "Hypertension",
+              "scope": "PRESSÃO ARTERIAL sistêmica persistentemente alta. Com base em várias medições (DETERMINAÇÃO DA PRESSÃO ARTERIAL), a hipertensão é atualmente definida como sendo a PRESSÃO SISTÓLICA repetidamente maior",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.907.489"
+              ]
+            },
+            {
+              "id": "D006978",
+              "term": "Hipertensão Renovascular",
+              "term_en": "Hypertension, Renovascular",
+              "scope": "Hipertensão devido à compressão ou OBSTRUÇÃO DA ARTÉRIA RENAL.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.331.490",
+                "C12.200.777.419.331.490"
+              ]
+            },
+            {
+              "id": "D000075222",
+              "term": "Hipertensão Essencial",
+              "term_en": "Essential Hypertension",
+              "scope": "Hipertensão que ocorre sem causa conhecida ou doença renal pre-existente. Foi identificado um certo número de polimorfismos genéticos associados, incluindo nos genes AGT, GNB3 e ECE1. OMIM: 145500",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.907.489.165"
+              ]
+            },
+            {
+              "id": "D006977",
+              "term": "Hipertensão Renal",
+              "term_en": "Hypertension, Renal",
+              "scope": "PRESSÃO SANGUÍNEA elevada e persistente devido a NEFROPATIAS, como aquelas envolvendo o parênquima renal, vasculatura renal ou tumores que secretam RENINA.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.331",
+                "C12.200.777.419.331"
+              ]
+            },
+            {
+              "id": "D046110",
+              "term": "Hipertensão Induzida pela Gravidez",
+              "term_en": "Hypertension, Pregnancy-Induced",
+              "scope": "Afecção em uma PESSOA GRÁVIDA com pressão sanguinea sistólica (maior que 140 mm Hg) e diastólica (maior que 90 mm Hg) registrada em pelo menos dois momentos com 6 h de intervalo entre as medidas. A HI",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.703.395",
+                "C14.907.489.480"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Hypertension, Secondary",
+          "candidates": [
+            {
+              "id": "D000075222",
+              "term": "Hipertensão Essencial",
+              "term_en": "Essential Hypertension",
+              "scope": "Hipertensão que ocorre sem causa conhecida ou doença renal pre-existente. Foi identificado um certo número de polimorfismos genéticos associados, incluindo nos genes AGT, GNB3 e ECE1. OMIM: 145500",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.907.489.165"
+              ]
+            },
+            {
+              "id": "D006978",
+              "term": "Hipertensão Renovascular",
+              "term_en": "Hypertension, Renovascular",
+              "scope": "Hipertensão devido à compressão ou OBSTRUÇÃO DA ARTÉRIA RENAL.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.331.490",
+                "C12.200.777.419.331.490"
+              ]
+            },
+            {
+              "id": "D006977",
+              "term": "Hipertensão Renal",
+              "term_en": "Hypertension, Renal",
+              "scope": "PRESSÃO SANGUÍNEA elevada e persistente devido a NEFROPATIAS, como aquelas envolvendo o parênquima renal, vasculatura renal ou tumores que secretam RENINA.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.331",
+                "C12.200.777.419.331"
+              ]
+            },
+            {
+              "id": "D006962",
+              "term": "Hiperparatireoidismo Secundário",
+              "term_en": "Hyperparathyroidism, Secondary",
+              "scope": "Secreção anormalmente elevada do HORMÔNIO PARATIREÓIDEO, em resposta a HIPOCALCEMIA. Causado por FALÊNCIA RENAL crônica ou outras anormalidades no controle dos metabolismos ósseo e mineral, levando a ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.642.355.480"
+              ]
+            },
+            {
+              "id": "D006929",
+              "term": "Hiperaldosteronismo",
+              "term_en": "Hyperaldosteronism",
+              "scope": "Afecção causada pela produção elevada de ALDOSTERONA. Caracteriza-se por retenção de sódio e excreção de potássio resultando em HIPERTENSÃO e HIPOCALEMIA.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.053.800.604"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Renin",
+          "candidates": [
+            {
+              "id": "D012083",
+              "term": "Renina",
+              "term_en": "Renin",
+              "scope": "Endopeptidase altamente específica (Leu-Leu) que produz ANGIOTENSINA I de seu precursor ANGIOTENSINOGÊNIO, levando a uma cascata de reações que elevam a PRESSÃO ARTERIAL e aumentam a retenção de sódio",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D08.811.277.656.074.500.780",
+                "D08.811.277.656.300.048.780"
+              ]
+            },
+            {
+              "id": "D012084",
+              "term": "Sistema Renina-Angiotensina",
+              "term_en": "Renin-Angiotensin System",
+              "scope": "Sistema que regula a PRESSÃO SANGUÍNEA constituído pela RENINA, ANGIOTENSINOGÊNIO, enzima conversora da angiotensina (ver PEPTIDIL DIPEPTIDASE A), ANGIOTENSINA I e ANGIOTENSINA II e angiotensinase. A ",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G03.820",
+                "G09.330.380.813"
+              ]
+            },
+            {
+              "id": "D000092502",
+              "term": "Inibidores de Renina",
+              "term_en": "Renin Inhibitors",
+              "scope": "Agentes que inibem a atividade da RENINA e causam VASODILAÇÃO.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.519.389.745.753"
+              ]
+            },
+            {
+              "id": "D000808",
+              "term": "Angiotensinogênio",
+              "term_en": "Angiotensinogen",
+              "scope": "Dependendo da espécie é uma alfa-globulina de 453 aminoácidos. É produzido pelo fígado e secretado na circulação sanguínea. O angiotensinogênio é o precursor inativo das angiotensinas naturais. Nas cl",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.644.456.073.070",
+                "D12.644.861.020"
+              ]
+            },
+            {
+              "id": "D000803",
+              "term": "Angiotensina I",
+              "term_en": "Angiotensin I",
+              "scope": "Decapeptídeo clivado do precursor angiotensinogênio pela RENINA. A angiotensina I tem atividade biológica limitada. É convertida em angiotensina II, um potente vasoconstritor, após a remoção de dois a",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D06.472.699.094.075",
+                "D12.644.400.070.075"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Blood Pressure Monitoring, Ambulatory",
+          "candidates": [
+            {
+              "id": "D018660",
+              "term": "Monitorização Ambulatorial da Pressão Arterial",
+              "term_en": "Blood Pressure Monitoring, Ambulatory",
+              "scope": "Método no qual são feitas repetidas leituras da pressão sanguinea enquanto o paciente passa por atividades diárias normais. Permite análise quantitativa da pressão sanguinea elevada ao longo do tempo ",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.370.140.100",
+                "E01.370.520.500.100"
+              ]
+            },
+            {
+              "id": "D018670",
+              "term": "Monitorização Ambulatorial",
+              "term_en": "Monitoring, Ambulatory",
+              "scope": "Utilização de equipamento eletrônico para observar ou registrar processos fisiológicos, enquanto o paciente desenvolve suas atividades diárias normais.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.520.500"
+              ]
+            },
+            {
+              "id": "D015716",
+              "term": "Eletrocardiografia Ambulatorial",
+              "term_en": "Electrocardiography, Ambulatory",
+              "scope": "Método no qual prolongados registros eletrocardiográficos são feitos em um gravador portátil (sistema do tipo Holter) ou em um dispositivo semicondutor (sistema de tempo real) enquanto o paciente dese",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.370.380.240.230",
+                "E01.370.405.240.230"
+              ]
+            },
+            {
+              "id": "D015924",
+              "term": "Monitores de Pressão Arterial",
+              "term_en": "Blood Pressure Monitors",
+              "scope": "Dispositivos para medir e exibir continuamente a pressão sanguínea arterial.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E07.230.740.100",
+                "VS2.006.003.005.001"
+              ]
+            },
+            {
+              "id": "D001795",
+              "term": "Determinação da Pressão Arterial",
+              "term_en": "Blood Pressure Determination",
+              "scope": "Técnica para medida da PRESSÃO SANGUÍNEA.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.370.140",
+                "E01.370.600.100"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Aldosterone",
+          "candidates": [
+            {
+              "id": "D000450",
+              "term": "Aldosterona",
+              "term_en": "Aldosterone",
+              "scope": "Hormônio secretado pelo CÓRTEX SUPRARRENAL que regula o equilíbrio de eletrólitos e água aumentando a retenção renal de sódio e a excreção de potássio.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D04.210.500.745.745.654.062",
+                "D06.472.040.585.353.118"
+              ]
+            },
+            {
+              "id": "D006994",
+              "term": "Hipoaldosteronismo",
+              "term_en": "Hypoaldosteronism",
+              "scope": "Afecção congênita ou adquirida de produção insuficiente de ALDOSTERONA pelo CÓRTEX SUPRARRENAL, que provoca a diminuição da síntese de ATPASE CONVERSORA DE Na(+)-K(+) mediada pela aldosterona nas célu",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.053.500.480"
+              ]
+            },
+            {
+              "id": "D002192",
+              "term": "Canrenona",
+              "term_en": "Canrenone",
+              "scope": "Composto sintético de pregnadieno com atividade antialdosterona.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D04.210.500.745.432.120"
+              ]
+            },
+            {
+              "id": "D006929",
+              "term": "Hiperaldosteronismo",
+              "term_en": "Hyperaldosteronism",
+              "scope": "Afecção causada pela produção elevada de ALDOSTERONA. Caracteriza-se por retenção de sódio e excreção de potássio resultando em HIPERTENSÃO e HIPOCALEMIA.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.053.800.604"
+              ]
+            },
+            {
+              "id": "D008901",
+              "term": "Mineralocorticoides",
+              "term_en": "Mineralocorticoids",
+              "scope": "Grupo de CORTICOSTEROIDES associado principalmente com o equilíbrio da água e eletrólitos. Isto se realiza mediante o efeito sobre o TRANSPORTE DE ÍONS nos túbulos renais, resultando em retenção de só",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.696.399.472.673"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Hypertension",
+        "Hyperaldosteronism"
+      ],
+      "secondary": [
+        "Hypertension, Secondary",
+        "Renin",
+        "Aldosterone",
+        "Blood Pressure Monitoring, Ambulatory"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Hyperaldosteronism",
+            "candidates": [
+              {
+                "id": "D006929",
+                "term": "Hiperaldosteronismo",
+                "term_en": "Hyperaldosteronism",
+                "scope": "Afecção causada pela produção elevada de ALDOSTERONA. Caracteriza-se por retenção de sódio e excreção de potássio resultando em HIPERTENSÃO e HIPOCALEMIA.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.053.800.604"
+                ]
+              },
+              {
+                "id": "D006994",
+                "term": "Hipoaldosteronismo",
+                "term_en": "Hypoaldosteronism",
+                "scope": "Afecção congênita ou adquirida de produção insuficiente de ALDOSTERONA pelo CÓRTEX SUPRARRENAL, que provoca a diminuição da síntese de ATPASE CONVERSORA DE Na(+)-K(+) mediada pela aldosterona nas célu",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.053.500.480"
+                ]
+              },
+              {
+                "id": "D000308",
+                "term": "Hiperfunção Adrenocortical",
+                "term_en": "Adrenocortical Hyperfunction",
+                "scope": "Produção excessiva de CORTICOSTEROIDES como ALDOSTERONA, HIDROCORTISONA, DESIDROEPIANDROSTERONA e/ou ANDROSTENODIONA. Entre as síndromes hiperadrenais estão SÍNDROME DE CUSHING, HIPERALDOSTERONISMO e ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.053.800"
+                ]
+              },
+              {
+                "id": "D011546",
+                "term": "Pseudo-Hipoaldosteronismo",
+                "term_en": "Pseudohypoaldosteronism",
+                "scope": "Grupo de transtornos heterogêneos caracterizado por distúrbios no transporte eletrolítico. As formas congênitas são transtornos autossômicos raros caracterizados por hipertensão neonatal, HIPERPOTASSE",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.815.770",
+                  "C12.200.777.419.815.770"
+                ]
+              },
+              {
+                "id": "D043204",
+                "term": "Síndrome de Excesso Aparente de Minerolocorticoides",
+                "term_en": "Mineralocorticoid Excess Syndrome, Apparent",
+                "scope": "Doença hereditária caracterizada por HIPERTENSÃO surgida na infância, alcalose hipocalêmica e baixa secreção de RENINA e ALDOSTERONA. Resulta de um defeito na atividade da enzima 11-BETA-HIDROXIESTERO",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C16.320.565.925.500",
+                  "C18.452.648.925.500"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Hypertension",
+            "candidates": [
+              {
+                "id": "D006973",
+                "term": "Hipertensão",
+                "term_en": "Hypertension",
+                "scope": "PRESSÃO ARTERIAL sistêmica persistentemente alta. Com base em várias medições (DETERMINAÇÃO DA PRESSÃO ARTERIAL), a hipertensão é atualmente definida como sendo a PRESSÃO SISTÓLICA repetidamente maior",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.907.489"
+                ]
+              },
+              {
+                "id": "D006978",
+                "term": "Hipertensão Renovascular",
+                "term_en": "Hypertension, Renovascular",
+                "scope": "Hipertensão devido à compressão ou OBSTRUÇÃO DA ARTÉRIA RENAL.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.331.490",
+                  "C12.200.777.419.331.490"
+                ]
+              },
+              {
+                "id": "D000075222",
+                "term": "Hipertensão Essencial",
+                "term_en": "Essential Hypertension",
+                "scope": "Hipertensão que ocorre sem causa conhecida ou doença renal pre-existente. Foi identificado um certo número de polimorfismos genéticos associados, incluindo nos genes AGT, GNB3 e ECE1. OMIM: 145500",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.907.489.165"
+                ]
+              },
+              {
+                "id": "D006977",
+                "term": "Hipertensão Renal",
+                "term_en": "Hypertension, Renal",
+                "scope": "PRESSÃO SANGUÍNEA elevada e persistente devido a NEFROPATIAS, como aquelas envolvendo o parênquima renal, vasculatura renal ou tumores que secretam RENINA.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.331",
+                  "C12.200.777.419.331"
+                ]
+              },
+              {
+                "id": "D046110",
+                "term": "Hipertensão Induzida pela Gravidez",
+                "term_en": "Hypertension, Pregnancy-Induced",
+                "scope": "Afecção em uma PESSOA GRÁVIDA com pressão sanguinea sistólica (maior que 140 mm Hg) e diastólica (maior que 90 mm Hg) registrada em pelo menos dois momentos com 6 h de intervalo entre as medidas. A HI",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.703.395",
+                  "C14.907.489.480"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Hypertension, Secondary",
+            "candidates": [
+              {
+                "id": "D000075222",
+                "term": "Hipertensão Essencial",
+                "term_en": "Essential Hypertension",
+                "scope": "Hipertensão que ocorre sem causa conhecida ou doença renal pre-existente. Foi identificado um certo número de polimorfismos genéticos associados, incluindo nos genes AGT, GNB3 e ECE1. OMIM: 145500",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.907.489.165"
+                ]
+              },
+              {
+                "id": "D006978",
+                "term": "Hipertensão Renovascular",
+                "term_en": "Hypertension, Renovascular",
+                "scope": "Hipertensão devido à compressão ou OBSTRUÇÃO DA ARTÉRIA RENAL.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.331.490",
+                  "C12.200.777.419.331.490"
+                ]
+              },
+              {
+                "id": "D006977",
+                "term": "Hipertensão Renal",
+                "term_en": "Hypertension, Renal",
+                "scope": "PRESSÃO SANGUÍNEA elevada e persistente devido a NEFROPATIAS, como aquelas envolvendo o parênquima renal, vasculatura renal ou tumores que secretam RENINA.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.331",
+                  "C12.200.777.419.331"
+                ]
+              },
+              {
+                "id": "D006962",
+                "term": "Hiperparatireoidismo Secundário",
+                "term_en": "Hyperparathyroidism, Secondary",
+                "scope": "Secreção anormalmente elevada do HORMÔNIO PARATIREÓIDEO, em resposta a HIPOCALCEMIA. Causado por FALÊNCIA RENAL crônica ou outras anormalidades no controle dos metabolismos ósseo e mineral, levando a ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.642.355.480"
+                ]
+              },
+              {
+                "id": "D006929",
+                "term": "Hiperaldosteronismo",
+                "term_en": "Hyperaldosteronism",
+                "scope": "Afecção causada pela produção elevada de ALDOSTERONA. Caracteriza-se por retenção de sódio e excreção de potássio resultando em HIPERTENSÃO e HIPOCALEMIA.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.053.800.604"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Renin",
+            "candidates": [
+              {
+                "id": "D012083",
+                "term": "Renina",
+                "term_en": "Renin",
+                "scope": "Endopeptidase altamente específica (Leu-Leu) que produz ANGIOTENSINA I de seu precursor ANGIOTENSINOGÊNIO, levando a uma cascata de reações que elevam a PRESSÃO ARTERIAL e aumentam a retenção de sódio",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D08.811.277.656.074.500.780",
+                  "D08.811.277.656.300.048.780"
+                ]
+              },
+              {
+                "id": "D012084",
+                "term": "Sistema Renina-Angiotensina",
+                "term_en": "Renin-Angiotensin System",
+                "scope": "Sistema que regula a PRESSÃO SANGUÍNEA constituído pela RENINA, ANGIOTENSINOGÊNIO, enzima conversora da angiotensina (ver PEPTIDIL DIPEPTIDASE A), ANGIOTENSINA I e ANGIOTENSINA II e angiotensinase. A ",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G03.820",
+                  "G09.330.380.813"
+                ]
+              },
+              {
+                "id": "D000092502",
+                "term": "Inibidores de Renina",
+                "term_en": "Renin Inhibitors",
+                "scope": "Agentes que inibem a atividade da RENINA e causam VASODILAÇÃO.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.519.389.745.753"
+                ]
+              },
+              {
+                "id": "D000808",
+                "term": "Angiotensinogênio",
+                "term_en": "Angiotensinogen",
+                "scope": "Dependendo da espécie é uma alfa-globulina de 453 aminoácidos. É produzido pelo fígado e secretado na circulação sanguínea. O angiotensinogênio é o precursor inativo das angiotensinas naturais. Nas cl",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.644.456.073.070",
+                  "D12.644.861.020"
+                ]
+              },
+              {
+                "id": "D000803",
+                "term": "Angiotensina I",
+                "term_en": "Angiotensin I",
+                "scope": "Decapeptídeo clivado do precursor angiotensinogênio pela RENINA. A angiotensina I tem atividade biológica limitada. É convertida em angiotensina II, um potente vasoconstritor, após a remoção de dois a",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D06.472.699.094.075",
+                  "D12.644.400.070.075"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Blood Pressure Monitoring, Ambulatory",
+            "candidates": [
+              {
+                "id": "D018660",
+                "term": "Monitorização Ambulatorial da Pressão Arterial",
+                "term_en": "Blood Pressure Monitoring, Ambulatory",
+                "scope": "Método no qual são feitas repetidas leituras da pressão sanguinea enquanto o paciente passa por atividades diárias normais. Permite análise quantitativa da pressão sanguinea elevada ao longo do tempo ",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.370.140.100",
+                  "E01.370.520.500.100"
+                ]
+              },
+              {
+                "id": "D018670",
+                "term": "Monitorização Ambulatorial",
+                "term_en": "Monitoring, Ambulatory",
+                "scope": "Utilização de equipamento eletrônico para observar ou registrar processos fisiológicos, enquanto o paciente desenvolve suas atividades diárias normais.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.520.500"
+                ]
+              },
+              {
+                "id": "D015716",
+                "term": "Eletrocardiografia Ambulatorial",
+                "term_en": "Electrocardiography, Ambulatory",
+                "scope": "Método no qual prolongados registros eletrocardiográficos são feitos em um gravador portátil (sistema do tipo Holter) ou em um dispositivo semicondutor (sistema de tempo real) enquanto o paciente dese",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.370.380.240.230",
+                  "E01.370.405.240.230"
+                ]
+              },
+              {
+                "id": "D015924",
+                "term": "Monitores de Pressão Arterial",
+                "term_en": "Blood Pressure Monitors",
+                "scope": "Dispositivos para medir e exibir continuamente a pressão sanguínea arterial.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E07.230.740.100",
+                  "VS2.006.003.005.001"
+                ]
+              },
+              {
+                "id": "D001795",
+                "term": "Determinação da Pressão Arterial",
+                "term_en": "Blood Pressure Determination",
+                "scope": "Técnica para medida da PRESSÃO SANGUÍNEA.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.370.140",
+                  "E01.370.600.100"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Aldosterone",
+            "candidates": [
+              {
+                "id": "D000450",
+                "term": "Aldosterona",
+                "term_en": "Aldosterone",
+                "scope": "Hormônio secretado pelo CÓRTEX SUPRARRENAL que regula o equilíbrio de eletrólitos e água aumentando a retenção renal de sódio e a excreção de potássio.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D04.210.500.745.745.654.062",
+                  "D06.472.040.585.353.118"
+                ]
+              },
+              {
+                "id": "D006994",
+                "term": "Hipoaldosteronismo",
+                "term_en": "Hypoaldosteronism",
+                "scope": "Afecção congênita ou adquirida de produção insuficiente de ALDOSTERONA pelo CÓRTEX SUPRARRENAL, que provoca a diminuição da síntese de ATPASE CONVERSORA DE Na(+)-K(+) mediada pela aldosterona nas célu",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.053.500.480"
+                ]
+              },
+              {
+                "id": "D002192",
+                "term": "Canrenona",
+                "term_en": "Canrenone",
+                "scope": "Composto sintético de pregnadieno com atividade antialdosterona.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D04.210.500.745.432.120"
+                ]
+              },
+              {
+                "id": "D006929",
+                "term": "Hiperaldosteronismo",
+                "term_en": "Hyperaldosteronism",
+                "scope": "Afecção causada pela produção elevada de ALDOSTERONA. Caracteriza-se por retenção de sódio e excreção de potássio resultando em HIPERTENSÃO e HIPOCALEMIA.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.053.800.604"
+                ]
+              },
+              {
+                "id": "D008901",
+                "term": "Mineralocorticoides",
+                "term_en": "Mineralocorticoids",
+                "scope": "Grupo de CORTICOSTEROIDES associado principalmente com o equilíbrio da água e eletrólitos. Isto se realiza mediante o efeito sobre o TRANSPORTE DE ÍONS nos túbulos renais, resultando em retenção de só",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.696.399.472.673"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D006929",
+          "term": "Hiperaldosteronismo"
+        },
+        {
+          "id": "D006973",
+          "term": "Hipertensão"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D012083",
+          "term": "Renina"
+        },
+        {
+          "id": "D018660",
+          "term": "Monitorização Ambulatorial da Pressão Arterial"
+        },
+        {
+          "id": "D000450",
+          "term": "Aldosterona"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 4,
+    "total_candidates": 30,
+    "final_primary": 2,
+    "final_secondary": 3
+  }
+}

@@ -1,0 +1,481 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "DDCS032482",
+        "term": "Recursos Renováveis",
+        "name_en": "Renewable Resources",
+        "scope_note": "",
+        "tree_ids": [
+          "SP4.606.837.868"
+        ],
+        "hierarchy_path": "Saúde Pública › SP4.606.837.868",
+        "parents": [
+          {
+            "id": "D000067936",
+            "term": "Recursos Naturais"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      },
+      {
+        "id": "D034904",
+        "term": "Lamina Tipo A",
+        "name_en": "Lamin Type A",
+        "scope_note": "Subclasse de lâminas regulada pelo desenvolvimento possuindo um ponto isoelétrico neutro. Dissociam-se das membranas nucleares durante a mitose.",
+        "tree_ids": [
+          "D12.776.660.650.875.500"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D12.776.660.650.875.500",
+        "parents": [
+          {
+            "id": "D034882",
+            "term": "Laminas"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      },
+      {
+        "id": "D011320",
+        "term": "Atenção Primária à Saúde",
+        "name_en": "Primary Health Care",
+        "scope_note": "É a assistência sanitária essencial baseada em métodos e tecnologias práticas, cientificamente fundados e socialmente aceitáveis, postos ao alcance de todos os indivíduos e famílias da comunidade mediante a sua plena participação e a um custo que a comunidade e o país possam suportar, em todas e cada etapa do seu desenvolvimento, com um espírito de autorresponsabilidade e autodeterminação. (Declaração de Alma-Ata - Organização Pan-Americana da Saúde, 2003)",
+        "tree_ids": [
+          "N04.590.233.727",
+          "SP2.630.121"
+        ],
+        "hierarchy_path": "Saúde › N04.590.233.727",
+        "parents": [
+          {
+            "id": "D003191",
+            "term": "Assistência Integral à Saúde"
+          },
+          {
+            "id": "DDCS017209",
+            "term": "Níveis de Atenção à Saúde"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000069341",
+            "term": "Cuidado Transicional"
+          },
+          {
+            "id": "D000073935",
+            "term": "Medicina Narrativa"
+          },
+          {
+            "id": "D010351",
+            "term": "Alta do Paciente"
+          },
+          {
+            "id": "D003266",
+            "term": "Continuidade da Assistência ao Paciente"
+          },
+          {
+            "id": "D010360",
+            "term": "Transferência de Pacientes"
+          }
+        ],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": []
+  },
+  "themes_identified": {
+    "primary": [
+      "Enunciado",
+      "Assinale a alternativa onde estão relacionados somente os Atributos Derivados da Atenção Primária descritos por Bárbara Starfield",
+      "Alternativa A"
+    ],
+    "secondary": []
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Enunciado",
+          "candidates": [
+            {
+              "id": "DDCS032482",
+              "term": "Recursos Renováveis",
+              "term_en": "Renewable Resources",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.837.868"
+              ]
+            },
+            {
+              "id": "DDCS051583",
+              "term": "Varredoras",
+              "term_en": "Sweepers",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.987.506.871"
+              ]
+            },
+            {
+              "id": "DDCS051857",
+              "term": "Utilização de Recursos Locais",
+              "term_en": "Local Resources Uses",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.303.766"
+              ]
+            },
+            {
+              "id": "DDCS051642",
+              "term": "Leito Fixo",
+              "term_en": "Fixed Bed",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.806.945.750.207.899.660"
+              ]
+            },
+            {
+              "id": "DDCS025556",
+              "term": "Tanques de Concreto",
+              "term_en": "Reinforced Concrete Tanks",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.141.089.248.433.561"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Alternativa A",
+          "candidates": [
+            {
+              "id": "D034904",
+              "term": "Lamina Tipo A",
+              "term_en": "Lamin Type A",
+              "scope": "Subclasse de lâminas regulada pelo desenvolvimento possuindo um ponto isoelétrico neutro. Dissociam-se das membranas nucleares durante a mitose.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.660.650.875.500"
+              ]
+            },
+            {
+              "id": "D038202",
+              "term": "Cadeia A de alfa-Cristalina",
+              "term_en": "alpha-Crystallin A Chain",
+              "scope": "Uma das subunidades de alfa-cristalinas. Diferentemente da CADEIA B DE ALFA-CRISTALINA, a expressão da CADEIA A DE ALFA-CRISTALINA está limitada basicamente ao CRISTALINO.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.306.366.100.149",
+                "D12.776.580.157.149"
+              ]
+            },
+            {
+              "id": "D038205",
+              "term": "Cadeia A de beta-Cristalina",
+              "term_en": "beta-Crystallin A Chain",
+              "scope": "Subunidade ácida de beta-cristalina.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.306.366.300.100"
+              ]
+            },
+            {
+              "id": "D019925",
+              "term": "Ciclina A",
+              "term_en": "Cyclin A",
+              "scope": "Subtipo de ciclina que possui especificidade para a PROTEÍNA QUINASE CDC2 e QUINASE 2 DEPENDENTE DE CICLINA. Exerce papel na progressão do CICLO CELULAR nas transições entre as fases G1/S e G2/M.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.644.360.262.100",
+                "D12.776.167.218.100"
+              ]
+            },
+            {
+              "id": "D018514",
+              "term": "Estruturas Vegetais",
+              "term_en": "Plant Structures",
+              "scope": "Partes das plantas, incluindo as SEMENTES.",
+              "categoria": "Anatomia",
+              "arvore": [
+                "A18"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Assinale a alternativa onde estão relacionados somente os Atributos Derivados da Atenção Primária descritos por Bárbara Starfield",
+          "candidates": [
+            {
+              "id": "D011320",
+              "term": "Atenção Primária à Saúde",
+              "term_en": "Primary Health Care",
+              "scope": "É a assistência sanitária essencial baseada em métodos e tecnologias práticas, cientificamente fundados e socialmente aceitáveis, postos ao alcance de todos os indivíduos e famílias da comunidade medi",
+              "categoria": "Saúde",
+              "arvore": [
+                "N04.590.233.727",
+                "SP2.630.121"
+              ]
+            },
+            {
+              "id": "DDCS059590",
+              "term": "Territorialização da Atenção Primária",
+              "term_en": "Territorialization in Primary Health Care",
+              "scope": "Um dos pressupostos da organização do processo de trabalho de atenção básica, que visa definir o território de atuação e a população sob responsabilidade das equipes de saúde. Cada equipe de saúde exe",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP2.630.121.754"
+              ]
+            },
+            {
+              "id": "D000092863",
+              "term": "Acesso à Atenção Primária",
+              "term_en": "Access to Primary Care",
+              "scope": "O grau em que as pessoas são inibidas ou facilitadas em sua capacidade de ter acesso e de receber CUIDADOS PRIMÁRIOS.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N04.590.374.350.250",
+                "N05.300.430.188"
+              ]
+            },
+            {
+              "id": "DDCS058010",
+              "term": "Prática Integral de Cuidados de Saúde",
+              "term_en": "Integral Healthcare Practice",
+              "scope": "Prática de cuidado que abrange cuidados preventivos, curativos e reativos. (Tradução livre do original: https://bit.ly/2KoydWa)",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP2.280.602"
+              ]
+            },
+            {
+              "id": "D000090004",
+              "term": "Condições Sensíveis à Atenção Primária",
+              "term_en": "Ambulatory Care Sensitive Conditions",
+              "scope": "Diversas condições de saúde na Assistência Ambulatorial para as quais a gestão adequada, o tratamento e as intervenções realizadas no ambiente de atenção ambulatorial poderiam potencialmente prevenir ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.550.291.156",
+                "E05.318.308.980.438.475.183"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": []
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Enunciado",
+        "Assinale a alternativa onde estão relacionados somente os Atributos Derivados da Atenção Primária descritos por Bárbara Starfield",
+        "Alternativa A"
+      ],
+      "secondary": []
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Enunciado",
+            "candidates": [
+              {
+                "id": "DDCS032482",
+                "term": "Recursos Renováveis",
+                "term_en": "Renewable Resources",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.837.868"
+                ]
+              },
+              {
+                "id": "DDCS051583",
+                "term": "Varredoras",
+                "term_en": "Sweepers",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.987.506.871"
+                ]
+              },
+              {
+                "id": "DDCS051857",
+                "term": "Utilização de Recursos Locais",
+                "term_en": "Local Resources Uses",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.303.766"
+                ]
+              },
+              {
+                "id": "DDCS051642",
+                "term": "Leito Fixo",
+                "term_en": "Fixed Bed",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.806.945.750.207.899.660"
+                ]
+              },
+              {
+                "id": "DDCS025556",
+                "term": "Tanques de Concreto",
+                "term_en": "Reinforced Concrete Tanks",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.141.089.248.433.561"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Alternativa A",
+            "candidates": [
+              {
+                "id": "D034904",
+                "term": "Lamina Tipo A",
+                "term_en": "Lamin Type A",
+                "scope": "Subclasse de lâminas regulada pelo desenvolvimento possuindo um ponto isoelétrico neutro. Dissociam-se das membranas nucleares durante a mitose.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.660.650.875.500"
+                ]
+              },
+              {
+                "id": "D038202",
+                "term": "Cadeia A de alfa-Cristalina",
+                "term_en": "alpha-Crystallin A Chain",
+                "scope": "Uma das subunidades de alfa-cristalinas. Diferentemente da CADEIA B DE ALFA-CRISTALINA, a expressão da CADEIA A DE ALFA-CRISTALINA está limitada basicamente ao CRISTALINO.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.306.366.100.149",
+                  "D12.776.580.157.149"
+                ]
+              },
+              {
+                "id": "D038205",
+                "term": "Cadeia A de beta-Cristalina",
+                "term_en": "beta-Crystallin A Chain",
+                "scope": "Subunidade ácida de beta-cristalina.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.306.366.300.100"
+                ]
+              },
+              {
+                "id": "D019925",
+                "term": "Ciclina A",
+                "term_en": "Cyclin A",
+                "scope": "Subtipo de ciclina que possui especificidade para a PROTEÍNA QUINASE CDC2 e QUINASE 2 DEPENDENTE DE CICLINA. Exerce papel na progressão do CICLO CELULAR nas transições entre as fases G1/S e G2/M.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.644.360.262.100",
+                  "D12.776.167.218.100"
+                ]
+              },
+              {
+                "id": "D018514",
+                "term": "Estruturas Vegetais",
+                "term_en": "Plant Structures",
+                "scope": "Partes das plantas, incluindo as SEMENTES.",
+                "categoria": "Anatomia",
+                "arvore": [
+                  "A18"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Assinale a alternativa onde estão relacionados somente os Atributos Derivados da Atenção Primária descritos por Bárbara Starfield",
+            "candidates": [
+              {
+                "id": "D011320",
+                "term": "Atenção Primária à Saúde",
+                "term_en": "Primary Health Care",
+                "scope": "É a assistência sanitária essencial baseada em métodos e tecnologias práticas, cientificamente fundados e socialmente aceitáveis, postos ao alcance de todos os indivíduos e famílias da comunidade medi",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N04.590.233.727",
+                  "SP2.630.121"
+                ]
+              },
+              {
+                "id": "DDCS059590",
+                "term": "Territorialização da Atenção Primária",
+                "term_en": "Territorialization in Primary Health Care",
+                "scope": "Um dos pressupostos da organização do processo de trabalho de atenção básica, que visa definir o território de atuação e a população sob responsabilidade das equipes de saúde. Cada equipe de saúde exe",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP2.630.121.754"
+                ]
+              },
+              {
+                "id": "D000092863",
+                "term": "Acesso à Atenção Primária",
+                "term_en": "Access to Primary Care",
+                "scope": "O grau em que as pessoas são inibidas ou facilitadas em sua capacidade de ter acesso e de receber CUIDADOS PRIMÁRIOS.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N04.590.374.350.250",
+                  "N05.300.430.188"
+                ]
+              },
+              {
+                "id": "DDCS058010",
+                "term": "Prática Integral de Cuidados de Saúde",
+                "term_en": "Integral Healthcare Practice",
+                "scope": "Prática de cuidado que abrange cuidados preventivos, curativos e reativos. (Tradução livre do original: https://bit.ly/2KoydWa)",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP2.280.602"
+                ]
+              },
+              {
+                "id": "D000090004",
+                "term": "Condições Sensíveis à Atenção Primária",
+                "term_en": "Ambulatory Care Sensitive Conditions",
+                "scope": "Diversas condições de saúde na Assistência Ambulatorial para as quais a gestão adequada, o tratamento e as intervenções realizadas no ambiente de atenção ambulatorial poderiam potencialmente prevenir ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.550.291.156",
+                  "E05.318.308.980.438.475.183"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": []
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "DDCS032482",
+          "term": "Recursos Renováveis"
+        },
+        {
+          "id": "D034904",
+          "term": "Lamina Tipo A"
+        },
+        {
+          "id": "D011320",
+          "term": "Atenção Primária à Saúde"
+        }
+      ],
+      "secondary": []
+    }
+  },
+  "stats": {
+    "primary_concepts": 3,
+    "secondary_concepts": 0,
+    "total_candidates": 15,
+    "final_primary": 3,
+    "final_secondary": 0
+  }
+}

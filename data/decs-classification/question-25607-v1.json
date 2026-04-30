@@ -1,0 +1,104 @@
+{
+  "result": [
+    {
+      "term": "Mieloma Múltiplo",
+      "code": "D009101",
+      "tree_ids": [
+        "C04.557.595.500",
+        "C14.907.454.460",
+        "C15.378.147.780.650",
+        "C15.378.463.515.460",
+        "C20.683.515.845",
+        "C20.683.780.650"
+      ],
+      "hierarchy_path": "Doenças › C04.557.595.500",
+      "scope_note": "Tumor clonal de plasmócitos maduros responsáveis pela produção de imunoglobulina monoclonal. Caracteriza-se por hiperglobulinemia, proteinuria de Bence-Jones (CADEIAS LEVES DE IMUNOGLOBULINAS monoclonais livres) na urina, destruição esquelética, dor óssea e fraturas. Outras características incluem ANEMIA, HIPERCALCEMIA e INSUFICIÊNCIA RENAL.",
+      "name_en": "Multiple Myeloma",
+      "role": "primary"
+    },
+    {
+      "term": "Compressão da Medula Espinal",
+      "code": "D013117",
+      "tree_ids": [
+        "C10.228.854.761",
+        "C26.819.678"
+      ],
+      "hierarchy_path": "Doenças › C10.228.854.761",
+      "scope_note": "Afecções agudas e crônicas caracterizadas por compressão mecânica externa da MEDULA ESPINAL devido à neoplasia extramedular, ABSCESSO EPIDURAL, FRATURAS DA COLUNA VERTEBRAL, deformidades ósseas dos corpos vertebrais e outras afecções. As manifestações clínicas variam de acordo com o local anatômico da lesão e podem incluir dor localizada, fraqueza, perda sensorial, incontinência e impotência.",
+      "name_en": "Spinal Cord Compression",
+      "role": "secondary"
+    },
+    {
+      "term": "Injúria Renal Aguda",
+      "code": "D058186",
+      "tree_ids": [
+        "C12.050.351.968.419.780.050",
+        "C12.200.777.419.780.050",
+        "C12.950.419.780.050"
+      ],
+      "hierarchy_path": "Doenças › C12.050.351.968.419.780.050",
+      "scope_note": "Redução abrupta da função renal. A lesão renal aguda abrange o espectro inteiro da síndrome, incluindo a falência renal aguda, NECROSE TUBULAR AGUDA e outras afecções menos graves.",
+      "name_en": "Acute Kidney Injury",
+      "role": "secondary"
+    },
+    {
+      "term": "Hipercalcemia",
+      "code": "D006934",
+      "tree_ids": [
+        "C18.452.174.451",
+        "C18.452.950.340"
+      ],
+      "hierarchy_path": "Doenças › C18.452.174.451",
+      "scope_note": "Nível anormalmente elevado de cálcio no sangue.",
+      "name_en": "Hypercalcemia",
+      "role": "secondary"
+    },
+    {
+      "term": "Paraproteínas",
+      "code": "D010266",
+      "tree_ids": [
+        "D12.776.124.486.485.900",
+        "D12.776.124.790.651.900",
+        "D12.776.377.715.548.900"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D12.776.124.486.485.900",
+      "scope_note": "Imunoglobulinas anormais sintetizadas por células atípicas do SISTEMA FAGOCITÁRIO MONONUCLEAR. As paraproteínas que contêm apenas cadeias leves levam à paraproteinemia de Bence Jones, enquanto a presença de apenas cadeias pesadas atípicas leva à doença da cadeia pesada. Na eletroforese, a maioria das paraproteínas mostra-se como um componente M (gamopatia monoclonal). As paraproteínas diclonais e policlonais são encontradas com menor frequência.",
+      "name_en": "Paraproteins",
+      "role": "secondary"
+    },
+    {
+      "term": "Plasmócitos",
+      "code": "D010950",
+      "tree_ids": [
+        "A11.063.438.725",
+        "A11.118.637.555.567.562.725",
+        "A15.145.229.637.555.567.562.725",
+        "A15.382.032.438.725",
+        "A15.382.490.555.567.562.725"
+      ],
+      "hierarchy_path": "Anatomia › A11.063.438.725",
+      "scope_note": "Formas especializadas de LINFÓCITOS B produtores de anticorpos. Sintetizam e secretam imunoglobulina. São encontrados somente em órgãos linfoides e em regiões de respostas imunes e normalmente não circulam no sangue ou linfa.",
+      "name_en": "Plasma Cells",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Multiple Myeloma"
+    ],
+    "secondary": [
+      "Hypercalcemia",
+      "Acute Kidney Injury",
+      "Spinal Cord Compression",
+      "Plasma Cells",
+      "Paraproteins"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 1,
+    "secondary_terms": 5,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 0,
+    "final_count": 6
+  }
+}

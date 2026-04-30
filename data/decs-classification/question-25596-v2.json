@@ -1,0 +1,1084 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D004932",
+        "term": "Varizes Esofágicas e Gástricas",
+        "name_en": "Esophageal and Gastric Varices",
+        "scope_note": "Vasos sanguíneos dilatados no ESÔFAGO ou FUNDO DO ESTÔMAGO que desviam o sangue da circulação portal (SISTEMA PORTA) para a circulação venosa sistêmica. São observadas com frequência em indivíduos com HIPERTENSÃO PORTAL.",
+        "tree_ids": [
+          "C06.405.117.240",
+          "C06.552.494.414"
+        ],
+        "hierarchy_path": "Doenças › C06.405.117.240",
+        "parents": [
+          {
+            "id": "D004935",
+            "term": "Doenças do Esôfago"
+          },
+          {
+            "id": "D006975",
+            "term": "Hipertensão Portal"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      },
+      {
+        "id": "D006471",
+        "term": "Hemorragia Gastrointestinal",
+        "name_en": "Gastrointestinal Hemorrhage",
+        "scope_note": "Sangramento em qualquer segmento do TRATO GASTROINTESTINAL do ESÔFAGO até o RETO.",
+        "tree_ids": [
+          "C06.405.227",
+          "C23.550.414.788"
+        ],
+        "hierarchy_path": "Doenças › C06.405.227",
+        "parents": [
+          {
+            "id": "D005767",
+            "term": "Gastroenteropatias"
+          },
+          {
+            "id": "D006470",
+            "term": "Hemorragia"
+          }
+        ],
+        "children": [
+          {
+            "id": "D006396",
+            "term": "Hematemese"
+          },
+          {
+            "id": "D008551",
+            "term": "Melena"
+          },
+          {
+            "id": "D010438",
+            "term": "Úlcera Péptica Hemorrágica"
+          }
+        ],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D055502",
+        "term": "Prevenção Secundária",
+        "name_en": "Secondary Prevention",
+        "scope_note": "Prevenção de recorrências ou exacerbações de uma doença ou de complicações advindas de seu tratamento.",
+        "tree_ids": [
+          "E02.897",
+          "N02.421.726.825",
+          "N06.850.780.750",
+          "SP2.840.385.619.561"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.897",
+        "parents": [
+          {
+            "id": "D013812",
+            "term": "Terapêutica"
+          },
+          {
+            "id": "D011314",
+            "term": "Serviços Preventivos de Saúde"
+          },
+          {
+            "id": "D015980",
+            "term": "Prática de Saúde Pública"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D016099",
+        "term": "Endoscopia Gastrointestinal",
+        "name_en": "Endoscopy, Gastrointestinal",
+        "scope_note": "Exame endoscópico, terapia ou cirurgia do trato gastrointestinal.",
+        "tree_ids": [
+          "E01.370.372.250.250",
+          "E01.370.388.250.250.250",
+          "E04.210.240.250",
+          "E04.502.250.250.250"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.372.250.250",
+        "parents": [
+          {
+            "id": "D016145",
+            "term": "Endoscopia do Sistema Digestório"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000069916",
+            "term": "Ressecção Endoscópica de Mucosa"
+          },
+          {
+            "id": "D000071085",
+            "term": "Enteroscopia de Balão Único"
+          },
+          {
+            "id": "D000071087",
+            "term": "Enteroscopia de Balão"
+          },
+          {
+            "id": "D012812",
+            "term": "Sigmoidoscopia"
+          },
+          {
+            "id": "D003113",
+            "term": "Colonoscopia"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D001201",
+        "term": "Ascite",
+        "name_en": "Ascites",
+        "scope_note": "Acúmulo ou retenção de líquido livre dentro da cavidade peritoneal.",
+        "tree_ids": [
+          "C23.550.081"
+        ],
+        "hierarchy_path": "Doenças › C23.550.081",
+        "parents": [
+          {
+            "id": "D010335",
+            "term": "Processos Patológicos"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D019698",
+        "term": "Hepatite C Crônica",
+        "name_en": "Hepatitis C, Chronic",
+        "scope_note": "INFLAMAÇÃO de FÍGADO em humanos, causada por Vírus da Hepatite C durando seis meses ou mais. A hepatite crônica C pode levar à CIRROSE HEPÁTICA.",
+        "tree_ids": [
+          "C01.221.250.750.120",
+          "C01.925.440.440.120",
+          "C01.925.782.350.350.120",
+          "C06.552.380.350.120",
+          "C06.552.380.705.440.120",
+          "C23.550.291.500.477.750"
+        ],
+        "hierarchy_path": "Doenças › C01.221.250.750.120",
+        "parents": [
+          {
+            "id": "D006526",
+            "term": "Hepatite C"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Esophageal and Gastric Varices",
+      "Gastrointestinal Hemorrhage"
+    ],
+    "secondary": [
+      "Secondary Prevention",
+      "Ligation",
+      "Endoscopy, Gastrointestinal",
+      "Hepatitis C, Chronic",
+      "Ascites"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Esophageal and Gastric Varices",
+          "candidates": [
+            {
+              "id": "D004932",
+              "term": "Varizes Esofágicas e Gástricas",
+              "term_en": "Esophageal and Gastric Varices",
+              "scope": "Vasos sanguíneos dilatados no ESÔFAGO ou FUNDO DO ESTÔMAGO que desviam o sangue da circulação portal (SISTEMA PORTA) para a circulação venosa sistêmica. São observadas com frequência em indivíduos com",
+              "categoria": "Doenças",
+              "arvore": [
+                "C06.405.117.240",
+                "C06.552.494.414"
+              ]
+            },
+            {
+              "id": "D016558",
+              "term": "Hemostase Endoscópica",
+              "term_en": "Hemostasis, Endoscopic",
+              "scope": "Controle do sangramento feito através do canal do endoscópio. A técnica inclui a utilização de lasers, sondas aquecidas, eletrocoagulação bipolar e injeção local. A hemostase endoscópica é geralmente ",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.520.425"
+              ]
+            },
+            {
+              "id": "D019168",
+              "term": "Derivação Portossistêmica Transjugular Intra-Hepática",
+              "term_en": "Portasystemic Shunt, Transjugular Intrahepatic",
+              "scope": "Tipo de derivação cirúrgica no sistema porta para reduzir hipertensão portal com complicações associadas de varizes esofágicas e ascites. É feita por via percutânea através da veia jugular e envolve a",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E04.035.760.795",
+                "E04.100.814.868.937.830"
+              ]
+            },
+            {
+              "id": "D015911",
+              "term": "Escleroterapia",
+              "term_en": "Sclerotherapy",
+              "scope": "Tratamento das veias varicosas, hemorroidas, varizes gástricas e esofágicas, e úlceras pépticas hemorrágicas, por injeção ou infusão de agentes químicos que causam trombose localizada e eventual fibro",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.319.805"
+              ]
+            },
+            {
+              "id": "D020252",
+              "term": "Ectasia Vascular Gástrica Antral",
+              "term_en": "Gastric Antral Vascular Ectasia",
+              "scope": "Lesão vascular distinta no ANTRO PILÓRICO, caracterizada por vasos sanguíneos dilatados e tortuosos (ectasia) espalhando-se para fora do PILORO. O padrão vascular é semelhante as faixas da superfície ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C06.405.748.280",
+                "C14.907.075.280"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Gastrointestinal Hemorrhage",
+          "candidates": [
+            {
+              "id": "D006471",
+              "term": "Hemorragia Gastrointestinal",
+              "term_en": "Gastrointestinal Hemorrhage",
+              "scope": "Sangramento em qualquer segmento do TRATO GASTROINTESTINAL do ESÔFAGO até o RETO.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C06.405.227",
+                "C23.550.414.788"
+              ]
+            },
+            {
+              "id": "D010438",
+              "term": "Úlcera Péptica Hemorrágica",
+              "term_en": "Peptic Ulcer Hemorrhage",
+              "scope": "Sangramento proveniente de ÚLCERA PÉPTICA que pode estar localizada em qualquer segmento do TRATO GASTROINTESTINAL.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C06.405.227.700",
+                "C23.550.414.788.700"
+              ]
+            },
+            {
+              "id": "D016558",
+              "term": "Hemostase Endoscópica",
+              "term_en": "Hemostasis, Endoscopic",
+              "scope": "Controle do sangramento feito através do canal do endoscópio. A técnica inclui a utilização de lasers, sondas aquecidas, eletrocoagulação bipolar e injeção local. A hemostase endoscópica é geralmente ",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.520.425"
+              ]
+            },
+            {
+              "id": "D006470",
+              "term": "Hemorragia",
+              "term_en": "Hemorrhage",
+              "scope": "Sangramento ou escape de sangue [a partir] de um vaso.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.550.414"
+              ]
+            },
+            {
+              "id": "D020252",
+              "term": "Ectasia Vascular Gástrica Antral",
+              "term_en": "Gastric Antral Vascular Ectasia",
+              "scope": "Lesão vascular distinta no ANTRO PILÓRICO, caracterizada por vasos sanguíneos dilatados e tortuosos (ectasia) espalhando-se para fora do PILORO. O padrão vascular é semelhante as faixas da superfície ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C06.405.748.280",
+                "C14.907.075.280"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Secondary Prevention",
+          "candidates": [
+            {
+              "id": "D055502",
+              "term": "Prevenção Secundária",
+              "term_en": "Secondary Prevention",
+              "scope": "Prevenção de recorrências ou exacerbações de uma doença ou de complicações advindas de seu tratamento.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.897",
+                "N02.421.726.825"
+              ]
+            },
+            {
+              "id": "D055512",
+              "term": "Prevenção Terciária",
+              "term_en": "Tertiary Prevention",
+              "scope": "Medidas que visam fornecer serviços de apoio e reabilitação para minimizar a morbidade e maximizar a qualidade de vida depois de uma doença ou lesão de longa duração.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.919",
+                "N02.421.726.860"
+              ]
+            },
+            {
+              "id": "D063127",
+              "term": "Atenção Secundária à Saúde",
+              "term_en": "Secondary Health Care",
+              "scope": "Nível de atenção representado por programas, sistemas e serviços de tratamento ambulatorial e pequenos hospitais de tecnologia intermediária, que incorpora funções do nível primário e acrescenta as de",
+              "categoria": "Saúde",
+              "arvore": [
+                "N04.452.758.849.775",
+                "N05.300.745"
+              ]
+            },
+            {
+              "id": "D011322",
+              "term": "Prevenção Primária",
+              "term_en": "Primary Prevention",
+              "scope": "Práticas específicas para a prevenção de doenças ou distúrbios mentais em indivíduos ou populações suscetíveis. Incluem a PROMOÇÃO DA SAÚDE, incluindo a saúde mental, procedimentos preventivos, como C",
+              "categoria": "Saúde",
+              "arvore": [
+                "N02.421.726.758",
+                "N06.850.780.680"
+              ]
+            },
+            {
+              "id": "D000081404",
+              "term": "Prevenção Quaternária",
+              "term_en": "Quaternary Prevention",
+              "scope": "Ação para identificar pacientes ou populações em risco de sobremedicalização, a fim de protegê-los de intervenções médicas invasivas e lhe fornecer procedimentos de atenção à saúde eticamente aceitáve",
+              "categoria": "Saúde",
+              "arvore": [
+                "N02.421.726.784",
+                "N04.590.374.675"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Endoscopy, Gastrointestinal",
+          "candidates": [
+            {
+              "id": "D016099",
+              "term": "Endoscopia Gastrointestinal",
+              "term_en": "Endoscopy, Gastrointestinal",
+              "scope": "Exame endoscópico, terapia ou cirurgia do trato gastrointestinal.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.372.250.250",
+                "E01.370.388.250.250.250"
+              ]
+            },
+            {
+              "id": "D020776",
+              "term": "Endoscópios Gastrointestinais",
+              "term_en": "Endoscopes, Gastrointestinal",
+              "scope": "Instrumentos para o exame visual do interior do trato gastrointestinal.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E07.230.220.260",
+                "E07.858.240.260"
+              ]
+            },
+            {
+              "id": "D016145",
+              "term": "Endoscopia do Sistema Digestório",
+              "term_en": "Endoscopy, Digestive System",
+              "scope": "Exame endoscópico, terapia ou cirurgia do trato digestório.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.372.250",
+                "E01.370.388.250.250"
+              ]
+            },
+            {
+              "id": "D004724",
+              "term": "Endoscopia",
+              "term_en": "Endoscopy",
+              "scope": "Procedimentos em que se empregam ENDOSCÓPIOS para diagnóstico e tratamento de doenças. A endoscopia envolve a passagem de um instrumento óptico através de pequena incisão na pele, isto é, percutânea; ",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.388.250",
+                "E04.502.250"
+              ]
+            },
+            {
+              "id": "D005762",
+              "term": "Gastroenterologia",
+              "term_en": "Gastroenterology",
+              "scope": "Subespecialidade da medicina interna voltada para o estudo da fisiologia e das doenças do sistema digestório e de estruturas relacionadas (esôfago, fígado, vesícula biliar e pâncreas).",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.403.429.405"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Ascites",
+          "candidates": [
+            {
+              "id": "D001202",
+              "term": "Líquido Ascítico",
+              "term_en": "Ascitic Fluid",
+              "scope": "Líquido seroso das ASCITES que se acumula na cavidade peritoneal.",
+              "categoria": "Anatomia",
+              "arvore": [
+                "A12.207.119"
+              ]
+            },
+            {
+              "id": "D001201",
+              "term": "Ascite",
+              "term_en": "Ascites",
+              "scope": "Acúmulo ou retenção de líquido livre dentro da cavidade peritoneal.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.550.081"
+              ]
+            },
+            {
+              "id": "D002915",
+              "term": "Ascite Quilosa",
+              "term_en": "Chylous Ascites",
+              "scope": "Presença de linfa leitosa (QUILO) na CAVIDADE PERITONEAL, com ou sem infecção.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C06.844.200"
+              ]
+            },
+            {
+              "id": "D010536",
+              "term": "Derivação Peritoneovenosa",
+              "term_en": "Peritoneovenous Shunt",
+              "scope": "Operação para esvaziamento contínuo do líquido ascítico do sistema venoso. A remoção do líquido é baseada no diferencial de pressão intraperitoneal e intratorácica da veia cava e é feita por uma válvu",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E04.035.735",
+                "E04.100.814.750"
+              ]
+            },
+            {
+              "id": "D006876",
+              "term": "Hidrotórax",
+              "term_en": "Hydrothorax",
+              "scope": "Acúmulo de fluido aquoso na cavidade pleural; derrame pleural com transudato. (Dorland, 28a ed)",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.528.476"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Ligation",
+          "candidates": [
+            {
+              "id": "D008025",
+              "term": "Ligases",
+              "term_en": "Ligases",
+              "scope": "Classe de enzimas que catalisam a formação de uma ligação entre duas moléculas de um substrato, acoplada com a hidrólise de uma ligação pirofosfato no ATP ou um doador semelhante de energia. (Dorland,",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D08.811.464"
+              ]
+            },
+            {
+              "id": "D011088",
+              "term": "DNA Ligases",
+              "term_en": "DNA Ligases",
+              "scope": "Poli(desoxirribonucleotídeo): poli(desoxirribonucleotídeo)ligases. Enzimas que catalisam a união de desoxirribonucleotídeos pré-formados em ligação fosfodiéster durante o reparo de uma quebra de fita ",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D08.811.074.500",
+                "D08.811.464.754.600"
+              ]
+            },
+            {
+              "id": "D011118",
+              "term": "Polinucleotídeo Ligases",
+              "term_en": "Polynucleotide Ligases",
+              "scope": "Catalisam a união de ribonucleotídeos ou desoxirribonucleotídeos pré-formados, em ligação fosfodiéster, durante os processos genéticos. EC 6.5.1.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D08.811.464.754"
+              ]
+            },
+            {
+              "id": "D022521",
+              "term": "Reação em Cadeia da Ligase",
+              "term_en": "Ligase Chain Reaction",
+              "scope": "Técnica de amplificação de DNA baseada na ligação de SONDAS DE OLIGONUCLEOTÍDEOS. As sondas são projetadas para compatibilizar exatamente duas sequências adjacentes de uma molécula específica de DNA. ",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.393.620.311"
+              ]
+            },
+            {
+              "id": "D000072481",
+              "term": "DNA Ligase Dependente de ATP",
+              "term_en": "DNA Ligase ATP",
+              "scope": "Enzima celular dependente de ATP que catalisa a replicação, o reparo e a recombinação do DNA, por meio da formação de ligações éster dentro dos nucleotídeos entre as concentrações de fosfato e desoxir",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D08.811.074.500.500",
+                "D08.811.464.754.600.500"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Hepatitis C, Chronic",
+          "candidates": [
+            {
+              "id": "D019698",
+              "term": "Hepatite C Crônica",
+              "term_en": "Hepatitis C, Chronic",
+              "scope": "INFLAMAÇÃO de FÍGADO em humanos, causada por Vírus da Hepatite C durando seis meses ou mais. A hepatite crônica C pode levar à CIRROSE HEPÁTICA.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.221.250.750.120",
+                "C01.925.440.440.120"
+              ]
+            },
+            {
+              "id": "D006526",
+              "term": "Hepatite C",
+              "term_en": "Hepatitis C",
+              "scope": "INFLAMAÇÃO do FÍGADO em humanos causada por VIRUS DA HEPATITE C, um virus com RNA de fita única. Seu período de incubação é de 30 a 90 dias. A hepatite C é principalmente transmitida por sangue contam",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.221.250.750",
+                "C01.925.440.440"
+              ]
+            },
+            {
+              "id": "D018936",
+              "term": "Antígenos da Hepatite C",
+              "term_en": "Hepatitis C Antigens",
+              "scope": "Antígenos dos virions de HEPACIVIRUS, sua superfície, núcleo, ou outros antígenos associados.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.964.350.495.505",
+                "D23.050.327.495.505"
+              ]
+            },
+            {
+              "id": "D019701",
+              "term": "Hepatite D Crônica",
+              "term_en": "Hepatitis D, Chronic",
+              "scope": "INFLAMAÇÃO de FÍGADO em humanos, causada por VÍRUS DELTA DA HEPATITE conjuntamente com o VÍRUS DA HEPATITE B durando seis meses ou mais.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.925.440.450.100",
+                "C01.925.782.450.100"
+              ]
+            },
+            {
+              "id": "D019694",
+              "term": "Hepatite B Crônica",
+              "term_en": "Hepatitis B, Chronic",
+              "scope": "INFLAMAÇÃO do FÍGADO em humanos causada pelo VIRUS DA HEPATITE B durando seis meses ou mais. É principalmente transmitida por exposição parenteral, como transfusão de sangue contaminado ou produtos sa",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.221.250.500.100",
+                "C01.925.256.430.400.100"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Esophageal and Gastric Varices",
+        "Gastrointestinal Hemorrhage"
+      ],
+      "secondary": [
+        "Secondary Prevention",
+        "Ligation",
+        "Endoscopy, Gastrointestinal",
+        "Hepatitis C, Chronic",
+        "Ascites"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Esophageal and Gastric Varices",
+            "candidates": [
+              {
+                "id": "D004932",
+                "term": "Varizes Esofágicas e Gástricas",
+                "term_en": "Esophageal and Gastric Varices",
+                "scope": "Vasos sanguíneos dilatados no ESÔFAGO ou FUNDO DO ESTÔMAGO que desviam o sangue da circulação portal (SISTEMA PORTA) para a circulação venosa sistêmica. São observadas com frequência em indivíduos com",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C06.405.117.240",
+                  "C06.552.494.414"
+                ]
+              },
+              {
+                "id": "D016558",
+                "term": "Hemostase Endoscópica",
+                "term_en": "Hemostasis, Endoscopic",
+                "scope": "Controle do sangramento feito através do canal do endoscópio. A técnica inclui a utilização de lasers, sondas aquecidas, eletrocoagulação bipolar e injeção local. A hemostase endoscópica é geralmente ",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.520.425"
+                ]
+              },
+              {
+                "id": "D019168",
+                "term": "Derivação Portossistêmica Transjugular Intra-Hepática",
+                "term_en": "Portasystemic Shunt, Transjugular Intrahepatic",
+                "scope": "Tipo de derivação cirúrgica no sistema porta para reduzir hipertensão portal com complicações associadas de varizes esofágicas e ascites. É feita por via percutânea através da veia jugular e envolve a",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E04.035.760.795",
+                  "E04.100.814.868.937.830"
+                ]
+              },
+              {
+                "id": "D015911",
+                "term": "Escleroterapia",
+                "term_en": "Sclerotherapy",
+                "scope": "Tratamento das veias varicosas, hemorroidas, varizes gástricas e esofágicas, e úlceras pépticas hemorrágicas, por injeção ou infusão de agentes químicos que causam trombose localizada e eventual fibro",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.319.805"
+                ]
+              },
+              {
+                "id": "D020252",
+                "term": "Ectasia Vascular Gástrica Antral",
+                "term_en": "Gastric Antral Vascular Ectasia",
+                "scope": "Lesão vascular distinta no ANTRO PILÓRICO, caracterizada por vasos sanguíneos dilatados e tortuosos (ectasia) espalhando-se para fora do PILORO. O padrão vascular é semelhante as faixas da superfície ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C06.405.748.280",
+                  "C14.907.075.280"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Gastrointestinal Hemorrhage",
+            "candidates": [
+              {
+                "id": "D006471",
+                "term": "Hemorragia Gastrointestinal",
+                "term_en": "Gastrointestinal Hemorrhage",
+                "scope": "Sangramento em qualquer segmento do TRATO GASTROINTESTINAL do ESÔFAGO até o RETO.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C06.405.227",
+                  "C23.550.414.788"
+                ]
+              },
+              {
+                "id": "D010438",
+                "term": "Úlcera Péptica Hemorrágica",
+                "term_en": "Peptic Ulcer Hemorrhage",
+                "scope": "Sangramento proveniente de ÚLCERA PÉPTICA que pode estar localizada em qualquer segmento do TRATO GASTROINTESTINAL.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C06.405.227.700",
+                  "C23.550.414.788.700"
+                ]
+              },
+              {
+                "id": "D016558",
+                "term": "Hemostase Endoscópica",
+                "term_en": "Hemostasis, Endoscopic",
+                "scope": "Controle do sangramento feito através do canal do endoscópio. A técnica inclui a utilização de lasers, sondas aquecidas, eletrocoagulação bipolar e injeção local. A hemostase endoscópica é geralmente ",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.520.425"
+                ]
+              },
+              {
+                "id": "D006470",
+                "term": "Hemorragia",
+                "term_en": "Hemorrhage",
+                "scope": "Sangramento ou escape de sangue [a partir] de um vaso.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.550.414"
+                ]
+              },
+              {
+                "id": "D020252",
+                "term": "Ectasia Vascular Gástrica Antral",
+                "term_en": "Gastric Antral Vascular Ectasia",
+                "scope": "Lesão vascular distinta no ANTRO PILÓRICO, caracterizada por vasos sanguíneos dilatados e tortuosos (ectasia) espalhando-se para fora do PILORO. O padrão vascular é semelhante as faixas da superfície ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C06.405.748.280",
+                  "C14.907.075.280"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Secondary Prevention",
+            "candidates": [
+              {
+                "id": "D055502",
+                "term": "Prevenção Secundária",
+                "term_en": "Secondary Prevention",
+                "scope": "Prevenção de recorrências ou exacerbações de uma doença ou de complicações advindas de seu tratamento.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.897",
+                  "N02.421.726.825"
+                ]
+              },
+              {
+                "id": "D055512",
+                "term": "Prevenção Terciária",
+                "term_en": "Tertiary Prevention",
+                "scope": "Medidas que visam fornecer serviços de apoio e reabilitação para minimizar a morbidade e maximizar a qualidade de vida depois de uma doença ou lesão de longa duração.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.919",
+                  "N02.421.726.860"
+                ]
+              },
+              {
+                "id": "D063127",
+                "term": "Atenção Secundária à Saúde",
+                "term_en": "Secondary Health Care",
+                "scope": "Nível de atenção representado por programas, sistemas e serviços de tratamento ambulatorial e pequenos hospitais de tecnologia intermediária, que incorpora funções do nível primário e acrescenta as de",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N04.452.758.849.775",
+                  "N05.300.745"
+                ]
+              },
+              {
+                "id": "D011322",
+                "term": "Prevenção Primária",
+                "term_en": "Primary Prevention",
+                "scope": "Práticas específicas para a prevenção de doenças ou distúrbios mentais em indivíduos ou populações suscetíveis. Incluem a PROMOÇÃO DA SAÚDE, incluindo a saúde mental, procedimentos preventivos, como C",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N02.421.726.758",
+                  "N06.850.780.680"
+                ]
+              },
+              {
+                "id": "D000081404",
+                "term": "Prevenção Quaternária",
+                "term_en": "Quaternary Prevention",
+                "scope": "Ação para identificar pacientes ou populações em risco de sobremedicalização, a fim de protegê-los de intervenções médicas invasivas e lhe fornecer procedimentos de atenção à saúde eticamente aceitáve",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N02.421.726.784",
+                  "N04.590.374.675"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Endoscopy, Gastrointestinal",
+            "candidates": [
+              {
+                "id": "D016099",
+                "term": "Endoscopia Gastrointestinal",
+                "term_en": "Endoscopy, Gastrointestinal",
+                "scope": "Exame endoscópico, terapia ou cirurgia do trato gastrointestinal.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.372.250.250",
+                  "E01.370.388.250.250.250"
+                ]
+              },
+              {
+                "id": "D020776",
+                "term": "Endoscópios Gastrointestinais",
+                "term_en": "Endoscopes, Gastrointestinal",
+                "scope": "Instrumentos para o exame visual do interior do trato gastrointestinal.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E07.230.220.260",
+                  "E07.858.240.260"
+                ]
+              },
+              {
+                "id": "D016145",
+                "term": "Endoscopia do Sistema Digestório",
+                "term_en": "Endoscopy, Digestive System",
+                "scope": "Exame endoscópico, terapia ou cirurgia do trato digestório.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.372.250",
+                  "E01.370.388.250.250"
+                ]
+              },
+              {
+                "id": "D004724",
+                "term": "Endoscopia",
+                "term_en": "Endoscopy",
+                "scope": "Procedimentos em que se empregam ENDOSCÓPIOS para diagnóstico e tratamento de doenças. A endoscopia envolve a passagem de um instrumento óptico através de pequena incisão na pele, isto é, percutânea; ",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.388.250",
+                  "E04.502.250"
+                ]
+              },
+              {
+                "id": "D005762",
+                "term": "Gastroenterologia",
+                "term_en": "Gastroenterology",
+                "scope": "Subespecialidade da medicina interna voltada para o estudo da fisiologia e das doenças do sistema digestório e de estruturas relacionadas (esôfago, fígado, vesícula biliar e pâncreas).",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.403.429.405"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Ascites",
+            "candidates": [
+              {
+                "id": "D001202",
+                "term": "Líquido Ascítico",
+                "term_en": "Ascitic Fluid",
+                "scope": "Líquido seroso das ASCITES que se acumula na cavidade peritoneal.",
+                "categoria": "Anatomia",
+                "arvore": [
+                  "A12.207.119"
+                ]
+              },
+              {
+                "id": "D001201",
+                "term": "Ascite",
+                "term_en": "Ascites",
+                "scope": "Acúmulo ou retenção de líquido livre dentro da cavidade peritoneal.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.550.081"
+                ]
+              },
+              {
+                "id": "D002915",
+                "term": "Ascite Quilosa",
+                "term_en": "Chylous Ascites",
+                "scope": "Presença de linfa leitosa (QUILO) na CAVIDADE PERITONEAL, com ou sem infecção.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C06.844.200"
+                ]
+              },
+              {
+                "id": "D010536",
+                "term": "Derivação Peritoneovenosa",
+                "term_en": "Peritoneovenous Shunt",
+                "scope": "Operação para esvaziamento contínuo do líquido ascítico do sistema venoso. A remoção do líquido é baseada no diferencial de pressão intraperitoneal e intratorácica da veia cava e é feita por uma válvu",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E04.035.735",
+                  "E04.100.814.750"
+                ]
+              },
+              {
+                "id": "D006876",
+                "term": "Hidrotórax",
+                "term_en": "Hydrothorax",
+                "scope": "Acúmulo de fluido aquoso na cavidade pleural; derrame pleural com transudato. (Dorland, 28a ed)",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.528.476"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Ligation",
+            "candidates": [
+              {
+                "id": "D008025",
+                "term": "Ligases",
+                "term_en": "Ligases",
+                "scope": "Classe de enzimas que catalisam a formação de uma ligação entre duas moléculas de um substrato, acoplada com a hidrólise de uma ligação pirofosfato no ATP ou um doador semelhante de energia. (Dorland,",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D08.811.464"
+                ]
+              },
+              {
+                "id": "D011088",
+                "term": "DNA Ligases",
+                "term_en": "DNA Ligases",
+                "scope": "Poli(desoxirribonucleotídeo): poli(desoxirribonucleotídeo)ligases. Enzimas que catalisam a união de desoxirribonucleotídeos pré-formados em ligação fosfodiéster durante o reparo de uma quebra de fita ",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D08.811.074.500",
+                  "D08.811.464.754.600"
+                ]
+              },
+              {
+                "id": "D011118",
+                "term": "Polinucleotídeo Ligases",
+                "term_en": "Polynucleotide Ligases",
+                "scope": "Catalisam a união de ribonucleotídeos ou desoxirribonucleotídeos pré-formados, em ligação fosfodiéster, durante os processos genéticos. EC 6.5.1.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D08.811.464.754"
+                ]
+              },
+              {
+                "id": "D022521",
+                "term": "Reação em Cadeia da Ligase",
+                "term_en": "Ligase Chain Reaction",
+                "scope": "Técnica de amplificação de DNA baseada na ligação de SONDAS DE OLIGONUCLEOTÍDEOS. As sondas são projetadas para compatibilizar exatamente duas sequências adjacentes de uma molécula específica de DNA. ",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.393.620.311"
+                ]
+              },
+              {
+                "id": "D000072481",
+                "term": "DNA Ligase Dependente de ATP",
+                "term_en": "DNA Ligase ATP",
+                "scope": "Enzima celular dependente de ATP que catalisa a replicação, o reparo e a recombinação do DNA, por meio da formação de ligações éster dentro dos nucleotídeos entre as concentrações de fosfato e desoxir",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D08.811.074.500.500",
+                  "D08.811.464.754.600.500"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Hepatitis C, Chronic",
+            "candidates": [
+              {
+                "id": "D019698",
+                "term": "Hepatite C Crônica",
+                "term_en": "Hepatitis C, Chronic",
+                "scope": "INFLAMAÇÃO de FÍGADO em humanos, causada por Vírus da Hepatite C durando seis meses ou mais. A hepatite crônica C pode levar à CIRROSE HEPÁTICA.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.221.250.750.120",
+                  "C01.925.440.440.120"
+                ]
+              },
+              {
+                "id": "D006526",
+                "term": "Hepatite C",
+                "term_en": "Hepatitis C",
+                "scope": "INFLAMAÇÃO do FÍGADO em humanos causada por VIRUS DA HEPATITE C, um virus com RNA de fita única. Seu período de incubação é de 30 a 90 dias. A hepatite C é principalmente transmitida por sangue contam",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.221.250.750",
+                  "C01.925.440.440"
+                ]
+              },
+              {
+                "id": "D018936",
+                "term": "Antígenos da Hepatite C",
+                "term_en": "Hepatitis C Antigens",
+                "scope": "Antígenos dos virions de HEPACIVIRUS, sua superfície, núcleo, ou outros antígenos associados.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.964.350.495.505",
+                  "D23.050.327.495.505"
+                ]
+              },
+              {
+                "id": "D019701",
+                "term": "Hepatite D Crônica",
+                "term_en": "Hepatitis D, Chronic",
+                "scope": "INFLAMAÇÃO de FÍGADO em humanos, causada por VÍRUS DELTA DA HEPATITE conjuntamente com o VÍRUS DA HEPATITE B durando seis meses ou mais.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.925.440.450.100",
+                  "C01.925.782.450.100"
+                ]
+              },
+              {
+                "id": "D019694",
+                "term": "Hepatite B Crônica",
+                "term_en": "Hepatitis B, Chronic",
+                "scope": "INFLAMAÇÃO do FÍGADO em humanos causada pelo VIRUS DA HEPATITE B durando seis meses ou mais. É principalmente transmitida por exposição parenteral, como transfusão de sangue contaminado ou produtos sa",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.221.250.500.100",
+                  "C01.925.256.430.400.100"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D004932",
+          "term": "Varizes Esofágicas e Gástricas"
+        },
+        {
+          "id": "D006471",
+          "term": "Hemorragia Gastrointestinal"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D055502",
+          "term": "Prevenção Secundária"
+        },
+        {
+          "id": "D016099",
+          "term": "Endoscopia Gastrointestinal"
+        },
+        {
+          "id": "D001201",
+          "term": "Ascite"
+        },
+        {
+          "id": "D019698",
+          "term": "Hepatite C Crônica"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 5,
+    "total_candidates": 35,
+    "final_primary": 2,
+    "final_secondary": 4
+  }
+}

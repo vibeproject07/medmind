@@ -1,0 +1,950 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D003924",
+        "term": "Diabetes Mellitus Tipo 2",
+        "name_en": "Diabetes Mellitus, Type 2",
+        "scope_note": "Subclasse de DIABETES MELLITUS que não é responsiva ou dependente de INSULINA (DMNID). Inicialmente, caracteriza-se por RESISTÊNCIA À INSULINA e HIPERINSULINEMIA e finalmente, por INTOLERÂNCIA À GLUCOSE, HIPERGLICEMIA e obviamente diabetes. O diabetes mellitus tipo 2 não é mais considerado uma doença encontrada exclusivamente em adultos. Os pacientes, raramente desenvolvem CETOSE, porém com frequência exibem OBESIDADE.",
+        "tree_ids": [
+          "C18.452.394.750.149",
+          "C19.246.300"
+        ],
+        "hierarchy_path": "Doenças › C18.452.394.750.149",
+        "parents": [
+          {
+            "id": "D003920",
+            "term": "Diabetes Mellitus"
+          }
+        ],
+        "children": [
+          {
+            "id": "D003923",
+            "term": "Diabetes Mellitus Lipoatrófica"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D007004",
+        "term": "Hipoglicemiantes",
+        "name_en": "Hypoglycemic Agents",
+        "scope_note": "Substâncias que reduzem a glicemia.",
+        "tree_ids": [
+          "D27.505.696.422"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D27.505.696.422",
+        "parents": [
+          {
+            "id": "D045505",
+            "term": "Efeitos Fisiológicos de Drogas"
+          }
+        ],
+        "children": [
+          {
+            "id": "D065091",
+            "term": "Agonistas dos Receptores da Amilina"
+          },
+          {
+            "id": "D065089",
+            "term": "Inibidores de Glicosídeo Hidrolases"
+          },
+          {
+            "id": "D000097789",
+            "term": "Agonistas do Receptor do Peptídeo 1 Semelhante ao Glucagon"
+          },
+          {
+            "id": "D054873",
+            "term": "Inibidores da Dipeptidil Peptidase IV"
+          },
+          {
+            "id": "D000092005",
+            "term": "Secretagogos de Insulina"
+          }
+        ],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D000419",
+        "term": "Albuminúria",
+        "name_en": "Albuminuria",
+        "scope_note": "Presença de albumina na urina, um indicador de NEFROPATIAS.",
+        "tree_ids": [
+          "C12.050.351.968.934.734.269",
+          "C12.200.777.934.734.269",
+          "C12.950.934.734.269",
+          "C23.888.942.750.269"
+        ],
+        "hierarchy_path": "Doenças › C12.050.351.968.934.734.269",
+        "parents": [
+          {
+            "id": "D011507",
+            "term": "Proteinúria"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D000077203",
+        "term": "Inibidores do Transportador 2 de Sódio-Glicose",
+        "name_en": "Sodium-Glucose Transporter 2 Inhibitors",
+        "scope_note": "Compostos que inibem TRANSPORTADOR 2 DE GLICOSE-SÓDIO. Eles abaixam a glicemia por meio do impedimento da reabsorção de glicose pelo rim e são usados no tratamento de DIABETES MELLITUS TIPO 2.",
+        "tree_ids": [
+          "D27.505.519.936",
+          "D27.505.696.422.750"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D27.505.519.936",
+        "parents": [
+          {
+            "id": "D045504",
+            "term": "Mecanismos Moleculares de Ação Farmacológica"
+          },
+          {
+            "id": "D007004",
+            "term": "Hipoglicemiantes"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D006442",
+        "term": "Hemoglobinas Glicadas",
+        "name_en": "Glycated Hemoglobin",
+        "scope_note": "Produtos de reações não enzimáticas entre a GLICOSE e a HEMOGLOBINA (que ocorre como uma fração menor da hemoglobina dos ERITRÓCITOS). Geralmente, se refere à HEMOGLOBINA A glicada. A hemoglobina A1c (Hb A1c) é a hemoglobina A com GLICAÇÃO em uma VALINA terminal da cadeia beta. A hemoglobina glicada A é usada como um índice do nível médio de açúcar no sangue ao longo da vida dos eritrócitos.",
+        "tree_ids": [
+          "D09.400.205.625.500.250",
+          "D09.400.430.825.500.250",
+          "D12.776.124.400.354",
+          "D12.776.395.351.500.250",
+          "D12.776.422.316.762.350",
+          "D23.946.381.625.500.250"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D09.400.205.625.500.250",
+        "parents": [
+          {
+            "id": "D000093422",
+            "term": "Proteínas Séricas Glicadas"
+          },
+          {
+            "id": "D006454",
+            "term": "Hemoglobinas"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D008687",
+        "term": "Metformina",
+        "name_en": "Metformin",
+        "scope_note": "Hipoglicêmico biguanida utilizada no tratamento da diabetes mellitus não dependente de insulina que não responde às modificações na dieta. Metformina melhora o controle glicêmico aumentando a sensibilidade à insulina e diminuindo a absorção intestinal de glucose. (Tradução livre do original: Martindale, The Extra Pharmacopoeia, 30th ed, p289)",
+        "tree_ids": [
+          "D02.078.370.141.450"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D02.078.370.141.450",
+        "parents": [
+          {
+            "id": "D001645",
+            "term": "Biguanidas"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000068899",
+            "term": "Combinação Fosfato de Sitagliptina e Cloridrato de Metformina"
+          }
+        ],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Diabetes Mellitus, Type 2",
+      "Hypoglycemic Agents"
+    ],
+    "secondary": [
+      "Metformin",
+      "Sodium-Glucose Transporter 2 Inhibitors",
+      "Albuminuria",
+      "Glycated Hemoglobin A"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Diabetes Mellitus, Type 2",
+          "candidates": [
+            {
+              "id": "D003924",
+              "term": "Diabetes Mellitus Tipo 2",
+              "term_en": "Diabetes Mellitus, Type 2",
+              "scope": "Subclasse de DIABETES MELLITUS que não é responsiva ou dependente de INSULINA (DMNID). Inicialmente, caracteriza-se por RESISTÊNCIA À INSULINA e HIPERINSULINEMIA e finalmente, por INTOLERÂNCIA À GLUCO",
+              "categoria": "Doenças",
+              "arvore": [
+                "C18.452.394.750.149",
+                "C19.246.300"
+              ]
+            },
+            {
+              "id": "D003920",
+              "term": "Diabetes Mellitus",
+              "term_en": "Diabetes Mellitus",
+              "scope": "Grupo de transtornos heterogêneos caracterizados por HIPERGLICEMIA e INTOLERÂNCIA À GLUCOSE.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C18.452.394.750",
+                "C19.246"
+              ]
+            },
+            {
+              "id": "D048909",
+              "term": "Complicações do Diabetes",
+              "term_en": "Diabetes Complications",
+              "scope": "Afecções ou processos mórbidos associados com diabetes melito. Devido ao controle deficiente do nível de GLICEMIA em pacientes diabéticos, desenvolvem-se processos doentios em vários tecidos e órgãos,",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.246.099"
+              ]
+            },
+            {
+              "id": "D006944",
+              "term": "Coma Hiperglicêmico Hiperosmolar não Cetótico",
+              "term_en": "Hyperglycemic Hyperosmolar Nonketotic Coma",
+              "scope": "Complicação grave de DIABETES MELLITUS TIPO 2. Caracteriza-se por HIPERGLICEMIA extrema, DESIDRATAÇÃO, hiperosmolaridade sérica e consciência deprimida levando ao COMA na ausência de CETOSE e ACIDOSE.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.246.099.750.490"
+              ]
+            },
+            {
+              "id": "D051273",
+              "term": "Transportador de Glucose Tipo 2",
+              "term_en": "Glucose Transporter Type 2",
+              "scope": "Facilitador do transporte de glucose expresso principalmente nas células beta pancreáticas, FÍGADO e rins. Pode atuar como um sensor de GLUCOSE para regular a liberação de INSULINA e a HOMEOSTASE da g",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.157.530.500.500.750",
+                "D12.776.157.530.937.563.750"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Hypoglycemic Agents",
+          "candidates": [
+            {
+              "id": "D007004",
+              "term": "Hipoglicemiantes",
+              "term_en": "Hypoglycemic Agents",
+              "scope": "Substâncias que reduzem a glicemia.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.696.422"
+              ]
+            },
+            {
+              "id": "D000092005",
+              "term": "Secretagogos de Insulina",
+              "term_en": "Insulin Secretagogues",
+              "scope": "Agentes hipoglicemiantes que estimulam a SECREÇÃO DE INSULINA das CÉLULAS BETA PANCREÁTICAS, diminuindo a glicemia pós-prandial.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.696.422.625"
+              ]
+            },
+            {
+              "id": "D000085002",
+              "term": "Controle Glicêmico",
+              "term_en": "Glycemic Control",
+              "scope": "Estratégias usadas para regular os níveis de glicose no sangue. Essas estratégias incluem administração de INSULINA; MODIFICAÇÃO DIETÉTICA; e EXERCÍCIO.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.491"
+              ]
+            },
+            {
+              "id": "D005913",
+              "term": "Glipizida",
+              "term_en": "Glipizide",
+              "scope": "Hipoglicêmico oral que é prontamente absorvido e completamente metabolizado.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.886.590.795.500"
+              ]
+            },
+            {
+              "id": "D002747",
+              "term": "Clorpropamida",
+              "term_en": "Chlorpropamide",
+              "scope": "Hipoglicêmico sulfonilureia utilizado no tratamento da diabetes mellitus independente de insulina que não responde à modificação da dieta.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.065.884.060.040",
+                "D02.065.950.828.283"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Albuminuria",
+          "candidates": [
+            {
+              "id": "D000419",
+              "term": "Albuminúria",
+              "term_en": "Albuminuria",
+              "scope": "Presença de albumina na urina, um indicador de NEFROPATIAS.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.934.734.269",
+                "C12.200.777.934.734.269"
+              ]
+            },
+            {
+              "id": "D011507",
+              "term": "Proteinúria",
+              "term_en": "Proteinuria",
+              "scope": "Presença de proteínas na urina, um indicador de NEFROPATIAS.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.934.734",
+                "C12.200.777.934.734"
+              ]
+            },
+            {
+              "id": "D003928",
+              "term": "Nefropatias Diabéticas",
+              "term_en": "Diabetic Nephropathies",
+              "scope": "Lesões no RIM associadas com diabetes mellitus que afetam os GLOMÉRULOS RENAIS, ARTERÍOLAS, TÚBULOS RENAIS e o interstício. Os sinais clínicos incluem PROTEINURIA persistente devido a microalbuminuria",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.192",
+                "C12.200.777.419.192"
+              ]
+            },
+            {
+              "id": "D034141",
+              "term": "Hipoalbuminemia",
+              "term_en": "Hypoalbuminemia",
+              "scope": "Afecção cujo nível de ALBUMINA SÉRICA está abaixo da faixa normal. A hipoalbuminemia pode ser devida à menor síntese de albumina hepática, aumento do catabolismo da albumina, alteração da distribuição",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.147.607.500"
+              ]
+            },
+            {
+              "id": "D006029",
+              "term": "Glicosúria",
+              "term_en": "Glycosuria",
+              "scope": "Aparecimento de uma quantidade grande e anormal de GLUCOSE na urina, como maior que 500 mg/dia em adultos. Pode ser devido a HIPERGLICEMIA ou defeitos genéticos na reabsorção renal (GLICOSÚRIA RENAL).",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.934.363",
+                "C12.200.777.934.363"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Sodium-Glucose Transporter 2 Inhibitors",
+          "candidates": [
+            {
+              "id": "D000077203",
+              "term": "Inibidores do Transportador 2 de Sódio-Glicose",
+              "term_en": "Sodium-Glucose Transporter 2 Inhibitors",
+              "scope": "Compostos que inibem TRANSPORTADOR 2 DE GLICOSE-SÓDIO. Eles abaixam a glicemia por meio do impedimento da reabsorção de glicose pelo rim e são usados no tratamento de DIABETES MELLITUS TIPO 2.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.519.936",
+                "D27.505.696.422.750"
+              ]
+            },
+            {
+              "id": "D051297",
+              "term": "Transportador 2 de Glucose-Sódio",
+              "term_en": "Sodium-Glucose Transporter 2",
+              "scope": "Transportador de glucose-sódio que é expressado no lúmen da membrana dos TÚBULOS RENAIS PROXIMAIS.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.157.530.450.625.437.750",
+                "D12.776.157.530.500.750.750"
+              ]
+            },
+            {
+              "id": "D000068896",
+              "term": "Canagliflozina",
+              "term_en": "Canagliflozin",
+              "scope": "Inibidor do TRANSPORTADOR 2 DE GLUCOSE-SÓDIO derivado de glucosídeo que estimula a secreção urinária de glicose por meio da supressão da reabsorção da glicose pelos rins. É usada para coontrolar a GLI",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.886.778.075",
+                "D03.383.903.075"
+              ]
+            },
+            {
+              "id": "D051247",
+              "term": "Proteínas de Transporte de Sódio-Glucose",
+              "term_en": "Sodium-Glucose Transport Proteins",
+              "scope": "Proteínas de transporte de monossacarídeos que atuam como simportadores ativos. Utilizam o SÓDIO ou os íons de hidrogênio para transportar a GLUCOSE através das MEMBRANAS CELULARES.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.157.530.450.625.437",
+                "D12.776.157.530.500.750"
+              ]
+            },
+            {
+              "id": "D051269",
+              "term": "Transportador 1 de Glucose-Sódio",
+              "term_en": "Sodium-Glucose Transporter 1",
+              "scope": "Membro principal do transportador de proteinas glucose-sódio. É predominantemente expresso na MUCOSA INTESTINAL do intestino delgado.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.157.530.450.625.437.500",
+                "D12.776.157.530.500.750.500"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Glycated Hemoglobin A",
+          "candidates": [
+            {
+              "id": "D006442",
+              "term": "Hemoglobinas Glicadas",
+              "term_en": "Glycated Hemoglobin",
+              "scope": "Produtos de reações não enzimáticas entre a GLICOSE e a HEMOGLOBINA (que ocorre como uma fração menor da hemoglobina dos ERITRÓCITOS). Geralmente, se refere à HEMOGLOBINA A glicada. A hemoglobina A1c ",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D09.400.205.625.500.250",
+                "D09.400.430.825.500.250"
+              ]
+            },
+            {
+              "id": "D000093423",
+              "term": "Albumina Sérica Glicada",
+              "term_en": "Glycated Serum Albumin",
+              "scope": "Albumina sérica que, in vivo, tenha sofrido modificação espontânea não enzimática com açúcares redutores via REAÇÃO DE MAILLARD. Sua medição é usada no controle da HIPERGLICEMIA.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D09.400.205.625.500.500",
+                "D09.400.430.825.500.500"
+              ]
+            },
+            {
+              "id": "D000093422",
+              "term": "Proteínas Séricas Glicadas",
+              "term_en": "Glycated Serum Proteins",
+              "scope": "Proteínas séricas que, in vivo, tenham sofrido alguma modificação não enzimática com açúcares redutores via REAÇÃO DE MAILLARD. Sua medição têm sido usada como controle da HIPERGLICEMIA.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D09.400.205.625.500",
+                "D09.400.430.825.500"
+              ]
+            },
+            {
+              "id": "D000093844",
+              "term": "Proteínas Glicadas",
+              "term_en": "Glycated Proteins",
+              "scope": "Produtos finais da glicação avançada formados a partir de reação não enzimática espontânea de açúcares com grupamentos amina livres em proteínas. Anteriormente, uma proteína glicosilada era considerad",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D09.400.205.625",
+                "D09.400.430.825"
+              ]
+            },
+            {
+              "id": "D006443",
+              "term": "Hemoglobina A2",
+              "term_en": "Hemoglobin A2",
+              "scope": "Componente da hemoglobina adulta presente em hemolisados de eritrócitos humanos em concentrações de aproximadamente 3 por cento. A hemoglobina é composta por duas cadeias alfa e duas delta. A porcenta",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.400.405.450",
+                "D12.776.422.316.762.380.450"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Metformin",
+          "candidates": [
+            {
+              "id": "D008687",
+              "term": "Metformina",
+              "term_en": "Metformin",
+              "scope": "Hipoglicêmico biguanida utilizada no tratamento da diabetes mellitus não dependente de insulina que não responde às modificações na dieta. Metformina melhora o controle glicêmico aumentando a sensibil",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.078.370.141.450"
+              ]
+            },
+            {
+              "id": "D010629",
+              "term": "Fenformin",
+              "term_en": "Phenformin",
+              "scope": "Agente hipoglicêmico biguanida com ações e usos similares à METFORMINA. Apesar de estar normalmente associado a uma incidência inaceitável alta de acidose láctica, muitas vezes fatal, está ainda dispo",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.078.370.141.700"
+              ]
+            },
+            {
+              "id": "D002026",
+              "term": "Buformina",
+              "term_en": "Buformin",
+              "scope": "Hipoglicêmico oral que inibe a gliconeogênese, aumenta a glicólise e diminui a oxidação da glicose.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.078.370.141.075"
+              ]
+            },
+            {
+              "id": "D000068899",
+              "term": "Combinação Fosfato de Sitagliptina e Cloridrato de Metformina",
+              "term_en": "Sitagliptin Phosphate, Metformin Hydrochloride Drug Combination",
+              "scope": "Preparação farmacêutica de fosfato de sitagliptina e cloridrato de metformina usada para tratar DIABETES MELLITUS TIPO 2.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.078.370.141.450.500",
+                "D03.383.129.799.725.500"
+              ]
+            },
+            {
+              "id": "D001645",
+              "term": "Biguanidas",
+              "term_en": "Biguanides",
+              "scope": "Derivados de biguanida (fórmula estrutural: HN(C(NH)NH2)2) que são usados principalmente como HIPOGLICEMIANTES para o tratamento de DIABETES MELLITUS DO TIPO 2 e de PRÉ-DIABETES.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.078.370.141"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Diabetes Mellitus, Type 2",
+        "Hypoglycemic Agents"
+      ],
+      "secondary": [
+        "Metformin",
+        "Sodium-Glucose Transporter 2 Inhibitors",
+        "Albuminuria",
+        "Glycated Hemoglobin A"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Diabetes Mellitus, Type 2",
+            "candidates": [
+              {
+                "id": "D003924",
+                "term": "Diabetes Mellitus Tipo 2",
+                "term_en": "Diabetes Mellitus, Type 2",
+                "scope": "Subclasse de DIABETES MELLITUS que não é responsiva ou dependente de INSULINA (DMNID). Inicialmente, caracteriza-se por RESISTÊNCIA À INSULINA e HIPERINSULINEMIA e finalmente, por INTOLERÂNCIA À GLUCO",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C18.452.394.750.149",
+                  "C19.246.300"
+                ]
+              },
+              {
+                "id": "D003920",
+                "term": "Diabetes Mellitus",
+                "term_en": "Diabetes Mellitus",
+                "scope": "Grupo de transtornos heterogêneos caracterizados por HIPERGLICEMIA e INTOLERÂNCIA À GLUCOSE.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C18.452.394.750",
+                  "C19.246"
+                ]
+              },
+              {
+                "id": "D048909",
+                "term": "Complicações do Diabetes",
+                "term_en": "Diabetes Complications",
+                "scope": "Afecções ou processos mórbidos associados com diabetes melito. Devido ao controle deficiente do nível de GLICEMIA em pacientes diabéticos, desenvolvem-se processos doentios em vários tecidos e órgãos,",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.246.099"
+                ]
+              },
+              {
+                "id": "D006944",
+                "term": "Coma Hiperglicêmico Hiperosmolar não Cetótico",
+                "term_en": "Hyperglycemic Hyperosmolar Nonketotic Coma",
+                "scope": "Complicação grave de DIABETES MELLITUS TIPO 2. Caracteriza-se por HIPERGLICEMIA extrema, DESIDRATAÇÃO, hiperosmolaridade sérica e consciência deprimida levando ao COMA na ausência de CETOSE e ACIDOSE.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.246.099.750.490"
+                ]
+              },
+              {
+                "id": "D051273",
+                "term": "Transportador de Glucose Tipo 2",
+                "term_en": "Glucose Transporter Type 2",
+                "scope": "Facilitador do transporte de glucose expresso principalmente nas células beta pancreáticas, FÍGADO e rins. Pode atuar como um sensor de GLUCOSE para regular a liberação de INSULINA e a HOMEOSTASE da g",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.157.530.500.500.750",
+                  "D12.776.157.530.937.563.750"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Hypoglycemic Agents",
+            "candidates": [
+              {
+                "id": "D007004",
+                "term": "Hipoglicemiantes",
+                "term_en": "Hypoglycemic Agents",
+                "scope": "Substâncias que reduzem a glicemia.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.696.422"
+                ]
+              },
+              {
+                "id": "D000092005",
+                "term": "Secretagogos de Insulina",
+                "term_en": "Insulin Secretagogues",
+                "scope": "Agentes hipoglicemiantes que estimulam a SECREÇÃO DE INSULINA das CÉLULAS BETA PANCREÁTICAS, diminuindo a glicemia pós-prandial.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.696.422.625"
+                ]
+              },
+              {
+                "id": "D000085002",
+                "term": "Controle Glicêmico",
+                "term_en": "Glycemic Control",
+                "scope": "Estratégias usadas para regular os níveis de glicose no sangue. Essas estratégias incluem administração de INSULINA; MODIFICAÇÃO DIETÉTICA; e EXERCÍCIO.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.491"
+                ]
+              },
+              {
+                "id": "D005913",
+                "term": "Glipizida",
+                "term_en": "Glipizide",
+                "scope": "Hipoglicêmico oral que é prontamente absorvido e completamente metabolizado.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.886.590.795.500"
+                ]
+              },
+              {
+                "id": "D002747",
+                "term": "Clorpropamida",
+                "term_en": "Chlorpropamide",
+                "scope": "Hipoglicêmico sulfonilureia utilizado no tratamento da diabetes mellitus independente de insulina que não responde à modificação da dieta.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.065.884.060.040",
+                  "D02.065.950.828.283"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Albuminuria",
+            "candidates": [
+              {
+                "id": "D000419",
+                "term": "Albuminúria",
+                "term_en": "Albuminuria",
+                "scope": "Presença de albumina na urina, um indicador de NEFROPATIAS.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.934.734.269",
+                  "C12.200.777.934.734.269"
+                ]
+              },
+              {
+                "id": "D011507",
+                "term": "Proteinúria",
+                "term_en": "Proteinuria",
+                "scope": "Presença de proteínas na urina, um indicador de NEFROPATIAS.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.934.734",
+                  "C12.200.777.934.734"
+                ]
+              },
+              {
+                "id": "D003928",
+                "term": "Nefropatias Diabéticas",
+                "term_en": "Diabetic Nephropathies",
+                "scope": "Lesões no RIM associadas com diabetes mellitus que afetam os GLOMÉRULOS RENAIS, ARTERÍOLAS, TÚBULOS RENAIS e o interstício. Os sinais clínicos incluem PROTEINURIA persistente devido a microalbuminuria",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.192",
+                  "C12.200.777.419.192"
+                ]
+              },
+              {
+                "id": "D034141",
+                "term": "Hipoalbuminemia",
+                "term_en": "Hypoalbuminemia",
+                "scope": "Afecção cujo nível de ALBUMINA SÉRICA está abaixo da faixa normal. A hipoalbuminemia pode ser devida à menor síntese de albumina hepática, aumento do catabolismo da albumina, alteração da distribuição",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.147.607.500"
+                ]
+              },
+              {
+                "id": "D006029",
+                "term": "Glicosúria",
+                "term_en": "Glycosuria",
+                "scope": "Aparecimento de uma quantidade grande e anormal de GLUCOSE na urina, como maior que 500 mg/dia em adultos. Pode ser devido a HIPERGLICEMIA ou defeitos genéticos na reabsorção renal (GLICOSÚRIA RENAL).",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.934.363",
+                  "C12.200.777.934.363"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Sodium-Glucose Transporter 2 Inhibitors",
+            "candidates": [
+              {
+                "id": "D000077203",
+                "term": "Inibidores do Transportador 2 de Sódio-Glicose",
+                "term_en": "Sodium-Glucose Transporter 2 Inhibitors",
+                "scope": "Compostos que inibem TRANSPORTADOR 2 DE GLICOSE-SÓDIO. Eles abaixam a glicemia por meio do impedimento da reabsorção de glicose pelo rim e são usados no tratamento de DIABETES MELLITUS TIPO 2.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.519.936",
+                  "D27.505.696.422.750"
+                ]
+              },
+              {
+                "id": "D051297",
+                "term": "Transportador 2 de Glucose-Sódio",
+                "term_en": "Sodium-Glucose Transporter 2",
+                "scope": "Transportador de glucose-sódio que é expressado no lúmen da membrana dos TÚBULOS RENAIS PROXIMAIS.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.157.530.450.625.437.750",
+                  "D12.776.157.530.500.750.750"
+                ]
+              },
+              {
+                "id": "D000068896",
+                "term": "Canagliflozina",
+                "term_en": "Canagliflozin",
+                "scope": "Inibidor do TRANSPORTADOR 2 DE GLUCOSE-SÓDIO derivado de glucosídeo que estimula a secreção urinária de glicose por meio da supressão da reabsorção da glicose pelos rins. É usada para coontrolar a GLI",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.886.778.075",
+                  "D03.383.903.075"
+                ]
+              },
+              {
+                "id": "D051247",
+                "term": "Proteínas de Transporte de Sódio-Glucose",
+                "term_en": "Sodium-Glucose Transport Proteins",
+                "scope": "Proteínas de transporte de monossacarídeos que atuam como simportadores ativos. Utilizam o SÓDIO ou os íons de hidrogênio para transportar a GLUCOSE através das MEMBRANAS CELULARES.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.157.530.450.625.437",
+                  "D12.776.157.530.500.750"
+                ]
+              },
+              {
+                "id": "D051269",
+                "term": "Transportador 1 de Glucose-Sódio",
+                "term_en": "Sodium-Glucose Transporter 1",
+                "scope": "Membro principal do transportador de proteinas glucose-sódio. É predominantemente expresso na MUCOSA INTESTINAL do intestino delgado.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.157.530.450.625.437.500",
+                  "D12.776.157.530.500.750.500"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Glycated Hemoglobin A",
+            "candidates": [
+              {
+                "id": "D006442",
+                "term": "Hemoglobinas Glicadas",
+                "term_en": "Glycated Hemoglobin",
+                "scope": "Produtos de reações não enzimáticas entre a GLICOSE e a HEMOGLOBINA (que ocorre como uma fração menor da hemoglobina dos ERITRÓCITOS). Geralmente, se refere à HEMOGLOBINA A glicada. A hemoglobina A1c ",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D09.400.205.625.500.250",
+                  "D09.400.430.825.500.250"
+                ]
+              },
+              {
+                "id": "D000093423",
+                "term": "Albumina Sérica Glicada",
+                "term_en": "Glycated Serum Albumin",
+                "scope": "Albumina sérica que, in vivo, tenha sofrido modificação espontânea não enzimática com açúcares redutores via REAÇÃO DE MAILLARD. Sua medição é usada no controle da HIPERGLICEMIA.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D09.400.205.625.500.500",
+                  "D09.400.430.825.500.500"
+                ]
+              },
+              {
+                "id": "D000093422",
+                "term": "Proteínas Séricas Glicadas",
+                "term_en": "Glycated Serum Proteins",
+                "scope": "Proteínas séricas que, in vivo, tenham sofrido alguma modificação não enzimática com açúcares redutores via REAÇÃO DE MAILLARD. Sua medição têm sido usada como controle da HIPERGLICEMIA.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D09.400.205.625.500",
+                  "D09.400.430.825.500"
+                ]
+              },
+              {
+                "id": "D000093844",
+                "term": "Proteínas Glicadas",
+                "term_en": "Glycated Proteins",
+                "scope": "Produtos finais da glicação avançada formados a partir de reação não enzimática espontânea de açúcares com grupamentos amina livres em proteínas. Anteriormente, uma proteína glicosilada era considerad",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D09.400.205.625",
+                  "D09.400.430.825"
+                ]
+              },
+              {
+                "id": "D006443",
+                "term": "Hemoglobina A2",
+                "term_en": "Hemoglobin A2",
+                "scope": "Componente da hemoglobina adulta presente em hemolisados de eritrócitos humanos em concentrações de aproximadamente 3 por cento. A hemoglobina é composta por duas cadeias alfa e duas delta. A porcenta",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.400.405.450",
+                  "D12.776.422.316.762.380.450"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Metformin",
+            "candidates": [
+              {
+                "id": "D008687",
+                "term": "Metformina",
+                "term_en": "Metformin",
+                "scope": "Hipoglicêmico biguanida utilizada no tratamento da diabetes mellitus não dependente de insulina que não responde às modificações na dieta. Metformina melhora o controle glicêmico aumentando a sensibil",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.078.370.141.450"
+                ]
+              },
+              {
+                "id": "D010629",
+                "term": "Fenformin",
+                "term_en": "Phenformin",
+                "scope": "Agente hipoglicêmico biguanida com ações e usos similares à METFORMINA. Apesar de estar normalmente associado a uma incidência inaceitável alta de acidose láctica, muitas vezes fatal, está ainda dispo",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.078.370.141.700"
+                ]
+              },
+              {
+                "id": "D002026",
+                "term": "Buformina",
+                "term_en": "Buformin",
+                "scope": "Hipoglicêmico oral que inibe a gliconeogênese, aumenta a glicólise e diminui a oxidação da glicose.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.078.370.141.075"
+                ]
+              },
+              {
+                "id": "D000068899",
+                "term": "Combinação Fosfato de Sitagliptina e Cloridrato de Metformina",
+                "term_en": "Sitagliptin Phosphate, Metformin Hydrochloride Drug Combination",
+                "scope": "Preparação farmacêutica de fosfato de sitagliptina e cloridrato de metformina usada para tratar DIABETES MELLITUS TIPO 2.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.078.370.141.450.500",
+                  "D03.383.129.799.725.500"
+                ]
+              },
+              {
+                "id": "D001645",
+                "term": "Biguanidas",
+                "term_en": "Biguanides",
+                "scope": "Derivados de biguanida (fórmula estrutural: HN(C(NH)NH2)2) que são usados principalmente como HIPOGLICEMIANTES para o tratamento de DIABETES MELLITUS DO TIPO 2 e de PRÉ-DIABETES.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.078.370.141"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D003924",
+          "term": "Diabetes Mellitus Tipo 2"
+        },
+        {
+          "id": "D007004",
+          "term": "Hipoglicemiantes"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D000419",
+          "term": "Albuminúria"
+        },
+        {
+          "id": "D000077203",
+          "term": "Inibidores do Transportador 2 de Sódio-Glicose"
+        },
+        {
+          "id": "D006442",
+          "term": "Hemoglobinas Glicadas"
+        },
+        {
+          "id": "D008687",
+          "term": "Metformina"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 4,
+    "total_candidates": 30,
+    "final_primary": 2,
+    "final_secondary": 4
+  }
+}

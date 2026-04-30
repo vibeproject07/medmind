@@ -1,0 +1,963 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D019851",
+        "term": "Trombofilia",
+        "name_en": "Thrombophilia",
+        "scope_note": "Transtorno de HEMOSTASIA em que há uma tendência à TROMBOSE.",
+        "tree_ids": [
+          "C15.378.925"
+        ],
+        "hierarchy_path": "Doenças › C15.378.925",
+        "parents": [
+          {
+            "id": "D006402",
+            "term": "Doenças Hematológicas"
+          }
+        ],
+        "children": [
+          {
+            "id": "D018455",
+            "term": "Deficiência de Proteína S"
+          },
+          {
+            "id": "D020016",
+            "term": "Resistência à Proteína C Ativada"
+          },
+          {
+            "id": "D020151",
+            "term": "Deficiência de Proteína C"
+          },
+          {
+            "id": "D020152",
+            "term": "Deficiência de Antitrombina III"
+          },
+          {
+            "id": "D004211",
+            "term": "Coagulação Intravascular Disseminada"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D054556",
+        "term": "Tromboembolia Venosa",
+        "name_en": "Venous Thromboembolism",
+        "scope_note": "Obstrução de uma veia ou VEIAS (embolia) por um coágulo de sangue (TROMBO) na corrente sanguínea.",
+        "tree_ids": [
+          "C14.907.355.590.700"
+        ],
+        "hierarchy_path": "Doenças › C14.907.355.590.700",
+        "parents": [
+          {
+            "id": "D013923",
+            "term": "Tromboembolia"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D016736",
+        "term": "Síndrome Antifosfolipídica",
+        "name_en": "Antiphospholipid Syndrome",
+        "scope_note": "Presença de anticorpos dirigidos contra fosfolipídeos (ANTICORPOS ANTIFOSFOLÍPIDES). A afecção está associada com uma variedade de doenças, lúpus eritematoso sistêmico notável e outras doenças de tecido conjuntivo, trombopenia e tromboses arteriais ou venosas. Na gravidez, pode causar aborto. Dos fosfolipídeos, as cardiolipinas demonstram níveis proeminentemente elevados de ANTICORPOS ANTICARDIOLIPINAS. Níveis altos de anticoagulante de lúpus também estão presentes (INIBIDOR DE COAGULAÇÃO DO LÚPUS).",
+        "tree_ids": [
+          "C20.111.197"
+        ],
+        "hierarchy_path": "Doenças › C20.111.197",
+        "parents": [
+          {
+            "id": "D001327",
+            "term": "Doenças Autoimunes"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D005165",
+        "term": "Fator V",
+        "name_en": "Factor V",
+        "scope_note": "Glicoproteína plasmática termolábil e vulnerável ao armazenamento que acelera a conversão de protrombina em trombina na coagulação sanguínea. O fator V propicia isto através da formação de um complexo com o fator Xa, fosfolípide e cálcio (complexo protrombinase). A deficiência do fator V leva à doença de Owren.",
+        "tree_ids": [
+          "D12.776.124.125.300",
+          "D12.776.811.272",
+          "D23.119.300"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D12.776.124.125.300",
+        "parents": [
+          {
+            "id": "D001779",
+            "term": "Fatores de Coagulação Sanguínea"
+          },
+          {
+            "id": "D011498",
+            "term": "Precursores de Proteínas"
+          }
+        ],
+        "children": [
+          {
+            "id": "D015943",
+            "term": "Fator Va"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D011516",
+        "term": "Protrombina",
+        "name_en": "Prothrombin",
+        "scope_note": "Proteína plasmática que é o precursor inativo da trombina. É convertida a trombina pelo complexo ativador da protrombina, consistindo de fator Xa, fator V, fosfolipídeo e íons cálcio. A deficiência da protrombina leva à hipoprotrombinemia.",
+        "tree_ids": [
+          "D08.622.709",
+          "D12.776.124.125.800",
+          "D12.776.811.243.709",
+          "D23.119.945"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D08.622.709",
+        "parents": [
+          {
+            "id": "D004792",
+            "term": "Precursores Enzimáticos"
+          },
+          {
+            "id": "D001779",
+            "term": "Fatores de Coagulação Sanguínea"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D009154",
+        "term": "Mutação",
+        "name_en": "Mutation",
+        "scope_note": "Qualquer mudança detectável e hereditária que ocorre no material genético causando uma alteração no GENÓTIPO e transmitida às células filhas e às gerações sucessivas.",
+        "tree_ids": [
+          "G05.365.590"
+        ],
+        "hierarchy_path": "Fenômenos Biológicos › G05.365.590",
+        "parents": [
+          {
+            "id": "D014644",
+            "term": "Variação Genética"
+          }
+        ],
+        "children": [
+          {
+            "id": "D019656",
+            "term": "Perda de Heterozigosidade"
+          },
+          {
+            "id": "D014997",
+            "term": "Cariótipo XYY"
+          },
+          {
+            "id": "D016254",
+            "term": "Mutagênese Insercional"
+          },
+          {
+            "id": "D017354",
+            "term": "Mutação Puntual"
+          },
+          {
+            "id": "D017353",
+            "term": "Deleção de Genes"
+          }
+        ],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Thrombophilia",
+      "Venous Thromboembolism"
+    ],
+    "secondary": [
+      "Antiphospholipid Syndrome",
+      "Factor V",
+      "Prothrombin",
+      "Mutation"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Thrombophilia",
+          "candidates": [
+            {
+              "id": "D019851",
+              "term": "Trombofilia",
+              "term_en": "Thrombophilia",
+              "scope": "Transtorno de HEMOSTASIA em que há uma tendência à TROMBOSE.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.925"
+              ]
+            },
+            {
+              "id": "D018455",
+              "term": "Deficiência de Proteína S",
+              "term_en": "Protein S Deficiency",
+              "scope": "Transtorno autossômico dominante demonstrando diminuição nos níveis de antígenos ou atividade de proteína S plasmática, associado com trombose venosa e embolia pulmonar. A PROTEÍNA S é uma proteína pl",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.100.800",
+                "C15.378.147.890"
+              ]
+            },
+            {
+              "id": "D020016",
+              "term": "Resistência à Proteína C Ativada",
+              "term_en": "Activated Protein C Resistance",
+              "scope": "Transtorno hemostático caracterizado por uma fraca resposta anticoagulante à proteína C ativada (PCA). A forma ativada do Fator V (Fator Va) é mais lentamente degradada pela proteína C ativada. O muta",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.100.100.037",
+                "C15.378.100.141.036"
+              ]
+            },
+            {
+              "id": "D020151",
+              "term": "Deficiência de Proteína C",
+              "term_en": "Protein C Deficiency",
+              "scope": "Uma ausência ou deficiência em PROTEÍNA C que conduz à regulação defeituosa da coagulação sanguínea. É associada a um aumento de risco de trombose prematura ou grave.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.100.100.690",
+                "C15.378.147.880"
+              ]
+            },
+            {
+              "id": "D020152",
+              "term": "Deficiência de Antitrombina III",
+              "term_en": "Antithrombin III Deficiency",
+              "scope": "Ausência ou redução no nível de Antitrombina III, levando a um aumento no risco de trombose.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.100.100.075",
+                "C15.378.147.150"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Venous Thromboembolism",
+          "candidates": [
+            {
+              "id": "D054556",
+              "term": "Tromboembolia Venosa",
+              "term_en": "Venous Thromboembolism",
+              "scope": "Obstrução de uma veia ou VEIAS (embolia) por um coágulo de sangue (TROMBO) na corrente sanguínea.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.907.355.590.700"
+              ]
+            },
+            {
+              "id": "D020246",
+              "term": "Trombose Venosa",
+              "term_en": "Venous Thrombosis",
+              "scope": "Formação ou presença de um coágulo sanguíneo (TROMBO) dentro de uma veia.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.907.355.830.925"
+              ]
+            },
+            {
+              "id": "D013923",
+              "term": "Tromboembolia",
+              "term_en": "Thromboembolism",
+              "scope": "Obstrução de um vaso sanguíneo (embolia) por um coágulo de sangue (TROMBO) na corrente sanguínea.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.907.355.590"
+              ]
+            },
+            {
+              "id": "D016769",
+              "term": "Embolia e Trombose",
+              "term_en": "Embolism and Thrombosis",
+              "scope": "Termo coletivo para afecções causadas pela formação de um coágulo de sangue (TROMBO) em um vaso sanguíneo, ou pelo bloqueio de um vaso sanguíneo (ÊMBOLO) com material indissolúvel no fluxo de sangue.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.907.355"
+              ]
+            },
+            {
+              "id": "D013924",
+              "term": "Tromboflebite",
+              "term_en": "Thrombophlebitis",
+              "scope": "Inflamação de uma veia associada com um coágulo sanguíneo (TROMBO).",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.907.355.830.925.770",
+                "C14.907.617.718.788"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Antiphospholipid Syndrome",
+          "candidates": [
+            {
+              "id": "D016736",
+              "term": "Síndrome Antifosfolipídica",
+              "term_en": "Antiphospholipid Syndrome",
+              "scope": "Presença de anticorpos dirigidos contra fosfolipídeos (ANTICORPOS ANTIFOSFOLÍPIDES). A afecção está associada com uma variedade de doenças, lúpus eritematoso sistêmico notável e outras doenças de teci",
+              "categoria": "Doenças",
+              "arvore": [
+                "C20.111.197"
+              ]
+            },
+            {
+              "id": "D017152",
+              "term": "Anticorpos Antifosfolipídeos",
+              "term_en": "Antibodies, Antiphospholipid",
+              "scope": "Autoanticorpos direcionados contra fosfolipídeos. Estes anticorpos são caracteristicamente encontrados em pacientes com certas doenças autoimunes (como por exemplo, o LUPUS ERITEMATOSO SISTÊMICO e a S",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.486.485.114.323.210",
+                "D12.776.124.790.651.114.323.210"
+              ]
+            },
+            {
+              "id": "D016682",
+              "term": "Inibidor de Coagulação do Lúpus",
+              "term_en": "Lupus Coagulation Inhibitor",
+              "scope": "Anticorpo antifosfolipídico encontrado em associação com uma variedade de doenças (como por exemplo, o LUPUS ERITEMATOSO SISTÊMICO e a SÍNDROME ANTIFOSFOLIPÍDICA), bem como em indivíduos saudáveis. In",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.486.485.114.323.210.600",
+                "D12.776.124.790.651.114.323.210.600"
+              ]
+            },
+            {
+              "id": "D017153",
+              "term": "Anticorpos Anticardiolipina",
+              "term_en": "Antibodies, Anticardiolipin",
+              "scope": "Anticorpos antifosfolipídeos encontrados em associação com o LUPUS ERITEMATOSO SISTÊMICO, SÍNDROME ANTIFOSFOLIPÍDICA e várias outras doenças, bem como, em indivíduos saudáveis. Os anticorpos são detec",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.486.485.114.323.210.100",
+                "D12.776.124.790.651.114.323.210.100"
+              ]
+            },
+            {
+              "id": "D018860",
+              "term": "Síndrome de Sneddon",
+              "term_en": "Sneddon Syndrome",
+              "scope": "Arteriopatia não inflamatória sistêmica que ocorre principalmente em mulheres de meia-idade, caracterizada pela associação do LIVEDO RETICULAR, INFARTO CEREBRAL trombótico múltiplo, CORONARIOPATIA e H",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.228.140.300.750",
+                "C14.907.253.774"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Factor V",
+          "candidates": [
+            {
+              "id": "D005165",
+              "term": "Fator V",
+              "term_en": "Factor V",
+              "scope": "Glicoproteína plasmática termolábil e vulnerável ao armazenamento que acelera a conversão de protrombina em trombina na coagulação sanguínea. O fator V propicia isto através da formação de um complexo",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.125.300",
+                "D12.776.811.272"
+              ]
+            },
+            {
+              "id": "D005166",
+              "term": "Deficiência do Fator V",
+              "term_en": "Factor V Deficiency",
+              "scope": "Proacelarina: um material lábil ao calor e ao armazenamento, presente no plasma, porém não no soro, que funciona tanto na via intrínseca quanto na extrínseca da coagulação sanguínea. Deficiência deste",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.100.100.300",
+                "C15.378.100.141.300"
+              ]
+            },
+            {
+              "id": "D015943",
+              "term": "Fator Va",
+              "term_en": "Factor Va",
+              "scope": "Forma ativada do fator V. É um cofator essencial para a ativação da protrombina catalisada pelo fator Xa.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.125.300.300",
+                "D23.119.300.300"
+              ]
+            },
+            {
+              "id": "D005169",
+              "term": "Fator VIII",
+              "term_en": "Factor VIII",
+              "scope": "Fator VIII da coagulação sanguínea. Fator anti-hemofílico que é parte do complexo fator VIII/fator de von Willebrand. O fator VIII é produzido no fígado e age na via intrínseca da coagulação sanguínea",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.125.350",
+                "D12.776.811.286"
+              ]
+            },
+            {
+              "id": "D005167",
+              "term": "Fator VII",
+              "term_en": "Factor VII",
+              "scope": "Proteína plasmática termolábil e vulnerável ao armazenamento que é ativada pela tromboplastina tecidual para formar o fator VIIa na via extrínseca da coagulação sanguínea. A forma ativada então catali",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D08.622.432",
+                "D12.776.124.125.325"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Prothrombin",
+          "candidates": [
+            {
+              "id": "D011516",
+              "term": "Protrombina",
+              "term_en": "Prothrombin",
+              "scope": "Proteína plasmática que é o precursor inativo da trombina. É convertida a trombina pelo complexo ativador da protrombina, consistindo de fator Xa, fator V, fosfolipídeo e íons cálcio. A deficiência da",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D08.622.709",
+                "D12.776.124.125.800"
+              ]
+            },
+            {
+              "id": "D007020",
+              "term": "Hipoprotrombinemias",
+              "term_en": "Hypoprothrombinemias",
+              "scope": "Ausência ou níveis reduzidos de PROTROMBINA no sangue.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.100.100.550",
+                "C15.378.100.141.550"
+              ]
+            },
+            {
+              "id": "D011517",
+              "term": "Tempo de Protrombina",
+              "term_en": "Prothrombin Time",
+              "scope": "Tempo de coagulação do PLASMA recalcificado na presença de excesso de TROMBOPLASTINA TECIDUAL. Os fatores medidos são FIBRINOGÊNIO, PROTROMBINA, FATOR V, FATOR VII e FATOR X. É utilizado para monitora",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.225.625.115.610",
+                "E05.200.625.115.610"
+              ]
+            },
+            {
+              "id": "D005165",
+              "term": "Fator V",
+              "term_en": "Factor V",
+              "scope": "Glicoproteína plasmática termolábil e vulnerável ao armazenamento que acelera a conversão de protrombina em trombina na coagulação sanguínea. O fator V propicia isto através da formação de um complexo",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.125.300",
+                "D12.776.811.272"
+              ]
+            },
+            {
+              "id": "D011486",
+              "term": "Proteína C",
+              "term_en": "Protein C",
+              "scope": "Zimógeno dependente de vitamina K, presente no sangue, quando ativado pela trombina e trombomodulina apresenta propriedades anticoagulantes, inativando os fatores Va e VIIIa nos passos limitantes da v",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D08.622.705",
+                "D09.400.430.915"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Mutation",
+          "candidates": [
+            {
+              "id": "D009154",
+              "term": "Mutação",
+              "term_en": "Mutation",
+              "scope": "Qualquer mudança detectável e hereditária que ocorre no material genético causando uma alteração no GENÓTIPO e transmitida às células filhas e às gerações sucessivas.",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G05.365.590"
+              ]
+            },
+            {
+              "id": "D017354",
+              "term": "Mutação Puntual",
+              "term_en": "Point Mutation",
+              "scope": "Mutação causada pela substituição de um nucleotídeo por outro. O resultado é uma molécula de DNA com troca de um único par de bases.",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G05.365.590.675"
+              ]
+            },
+            {
+              "id": "D000067552",
+              "term": "Acúmulo de Mutações",
+              "term_en": "Mutation Accumulation",
+              "scope": "Conceito que descreve os efeitos cumulativos da MUTAÇÃO em organismos vivos.",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G05.365.590.594"
+              ]
+            },
+            {
+              "id": "D059645",
+              "term": "Taxa de Mutação",
+              "term_en": "Mutation Rate",
+              "scope": "Número de mutações que ocorrem uma sequência específica, GENE ou GENOMA sobre um período específico de tempo como anos, DIVISÃO CELULAR ou gerações.",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G05.045.250.750",
+                "G05.365.590.612"
+              ]
+            },
+            {
+              "id": "D018095",
+              "term": "Mutação em Linhagem Germinativa",
+              "term_en": "Germ-Line Mutation",
+              "scope": "Qualquer alteração detectável e herdável na linhagem das células germinativas. Mutações que ocorrem nestas células (ou seja, nas células ancestrais dos gametas) são transmitidas à progênie enquanto qu",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G05.365.590.350"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Thrombophilia",
+        "Venous Thromboembolism"
+      ],
+      "secondary": [
+        "Antiphospholipid Syndrome",
+        "Factor V",
+        "Prothrombin",
+        "Mutation"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Thrombophilia",
+            "candidates": [
+              {
+                "id": "D019851",
+                "term": "Trombofilia",
+                "term_en": "Thrombophilia",
+                "scope": "Transtorno de HEMOSTASIA em que há uma tendência à TROMBOSE.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.925"
+                ]
+              },
+              {
+                "id": "D018455",
+                "term": "Deficiência de Proteína S",
+                "term_en": "Protein S Deficiency",
+                "scope": "Transtorno autossômico dominante demonstrando diminuição nos níveis de antígenos ou atividade de proteína S plasmática, associado com trombose venosa e embolia pulmonar. A PROTEÍNA S é uma proteína pl",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.100.800",
+                  "C15.378.147.890"
+                ]
+              },
+              {
+                "id": "D020016",
+                "term": "Resistência à Proteína C Ativada",
+                "term_en": "Activated Protein C Resistance",
+                "scope": "Transtorno hemostático caracterizado por uma fraca resposta anticoagulante à proteína C ativada (PCA). A forma ativada do Fator V (Fator Va) é mais lentamente degradada pela proteína C ativada. O muta",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.100.100.037",
+                  "C15.378.100.141.036"
+                ]
+              },
+              {
+                "id": "D020151",
+                "term": "Deficiência de Proteína C",
+                "term_en": "Protein C Deficiency",
+                "scope": "Uma ausência ou deficiência em PROTEÍNA C que conduz à regulação defeituosa da coagulação sanguínea. É associada a um aumento de risco de trombose prematura ou grave.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.100.100.690",
+                  "C15.378.147.880"
+                ]
+              },
+              {
+                "id": "D020152",
+                "term": "Deficiência de Antitrombina III",
+                "term_en": "Antithrombin III Deficiency",
+                "scope": "Ausência ou redução no nível de Antitrombina III, levando a um aumento no risco de trombose.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.100.100.075",
+                  "C15.378.147.150"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Venous Thromboembolism",
+            "candidates": [
+              {
+                "id": "D054556",
+                "term": "Tromboembolia Venosa",
+                "term_en": "Venous Thromboembolism",
+                "scope": "Obstrução de uma veia ou VEIAS (embolia) por um coágulo de sangue (TROMBO) na corrente sanguínea.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.907.355.590.700"
+                ]
+              },
+              {
+                "id": "D020246",
+                "term": "Trombose Venosa",
+                "term_en": "Venous Thrombosis",
+                "scope": "Formação ou presença de um coágulo sanguíneo (TROMBO) dentro de uma veia.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.907.355.830.925"
+                ]
+              },
+              {
+                "id": "D013923",
+                "term": "Tromboembolia",
+                "term_en": "Thromboembolism",
+                "scope": "Obstrução de um vaso sanguíneo (embolia) por um coágulo de sangue (TROMBO) na corrente sanguínea.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.907.355.590"
+                ]
+              },
+              {
+                "id": "D016769",
+                "term": "Embolia e Trombose",
+                "term_en": "Embolism and Thrombosis",
+                "scope": "Termo coletivo para afecções causadas pela formação de um coágulo de sangue (TROMBO) em um vaso sanguíneo, ou pelo bloqueio de um vaso sanguíneo (ÊMBOLO) com material indissolúvel no fluxo de sangue.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.907.355"
+                ]
+              },
+              {
+                "id": "D013924",
+                "term": "Tromboflebite",
+                "term_en": "Thrombophlebitis",
+                "scope": "Inflamação de uma veia associada com um coágulo sanguíneo (TROMBO).",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.907.355.830.925.770",
+                  "C14.907.617.718.788"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Antiphospholipid Syndrome",
+            "candidates": [
+              {
+                "id": "D016736",
+                "term": "Síndrome Antifosfolipídica",
+                "term_en": "Antiphospholipid Syndrome",
+                "scope": "Presença de anticorpos dirigidos contra fosfolipídeos (ANTICORPOS ANTIFOSFOLÍPIDES). A afecção está associada com uma variedade de doenças, lúpus eritematoso sistêmico notável e outras doenças de teci",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C20.111.197"
+                ]
+              },
+              {
+                "id": "D017152",
+                "term": "Anticorpos Antifosfolipídeos",
+                "term_en": "Antibodies, Antiphospholipid",
+                "scope": "Autoanticorpos direcionados contra fosfolipídeos. Estes anticorpos são caracteristicamente encontrados em pacientes com certas doenças autoimunes (como por exemplo, o LUPUS ERITEMATOSO SISTÊMICO e a S",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.486.485.114.323.210",
+                  "D12.776.124.790.651.114.323.210"
+                ]
+              },
+              {
+                "id": "D016682",
+                "term": "Inibidor de Coagulação do Lúpus",
+                "term_en": "Lupus Coagulation Inhibitor",
+                "scope": "Anticorpo antifosfolipídico encontrado em associação com uma variedade de doenças (como por exemplo, o LUPUS ERITEMATOSO SISTÊMICO e a SÍNDROME ANTIFOSFOLIPÍDICA), bem como em indivíduos saudáveis. In",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.486.485.114.323.210.600",
+                  "D12.776.124.790.651.114.323.210.600"
+                ]
+              },
+              {
+                "id": "D017153",
+                "term": "Anticorpos Anticardiolipina",
+                "term_en": "Antibodies, Anticardiolipin",
+                "scope": "Anticorpos antifosfolipídeos encontrados em associação com o LUPUS ERITEMATOSO SISTÊMICO, SÍNDROME ANTIFOSFOLIPÍDICA e várias outras doenças, bem como, em indivíduos saudáveis. Os anticorpos são detec",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.486.485.114.323.210.100",
+                  "D12.776.124.790.651.114.323.210.100"
+                ]
+              },
+              {
+                "id": "D018860",
+                "term": "Síndrome de Sneddon",
+                "term_en": "Sneddon Syndrome",
+                "scope": "Arteriopatia não inflamatória sistêmica que ocorre principalmente em mulheres de meia-idade, caracterizada pela associação do LIVEDO RETICULAR, INFARTO CEREBRAL trombótico múltiplo, CORONARIOPATIA e H",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.228.140.300.750",
+                  "C14.907.253.774"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Factor V",
+            "candidates": [
+              {
+                "id": "D005165",
+                "term": "Fator V",
+                "term_en": "Factor V",
+                "scope": "Glicoproteína plasmática termolábil e vulnerável ao armazenamento que acelera a conversão de protrombina em trombina na coagulação sanguínea. O fator V propicia isto através da formação de um complexo",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.125.300",
+                  "D12.776.811.272"
+                ]
+              },
+              {
+                "id": "D005166",
+                "term": "Deficiência do Fator V",
+                "term_en": "Factor V Deficiency",
+                "scope": "Proacelarina: um material lábil ao calor e ao armazenamento, presente no plasma, porém não no soro, que funciona tanto na via intrínseca quanto na extrínseca da coagulação sanguínea. Deficiência deste",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.100.100.300",
+                  "C15.378.100.141.300"
+                ]
+              },
+              {
+                "id": "D015943",
+                "term": "Fator Va",
+                "term_en": "Factor Va",
+                "scope": "Forma ativada do fator V. É um cofator essencial para a ativação da protrombina catalisada pelo fator Xa.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.125.300.300",
+                  "D23.119.300.300"
+                ]
+              },
+              {
+                "id": "D005169",
+                "term": "Fator VIII",
+                "term_en": "Factor VIII",
+                "scope": "Fator VIII da coagulação sanguínea. Fator anti-hemofílico que é parte do complexo fator VIII/fator de von Willebrand. O fator VIII é produzido no fígado e age na via intrínseca da coagulação sanguínea",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.125.350",
+                  "D12.776.811.286"
+                ]
+              },
+              {
+                "id": "D005167",
+                "term": "Fator VII",
+                "term_en": "Factor VII",
+                "scope": "Proteína plasmática termolábil e vulnerável ao armazenamento que é ativada pela tromboplastina tecidual para formar o fator VIIa na via extrínseca da coagulação sanguínea. A forma ativada então catali",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D08.622.432",
+                  "D12.776.124.125.325"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Prothrombin",
+            "candidates": [
+              {
+                "id": "D011516",
+                "term": "Protrombina",
+                "term_en": "Prothrombin",
+                "scope": "Proteína plasmática que é o precursor inativo da trombina. É convertida a trombina pelo complexo ativador da protrombina, consistindo de fator Xa, fator V, fosfolipídeo e íons cálcio. A deficiência da",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D08.622.709",
+                  "D12.776.124.125.800"
+                ]
+              },
+              {
+                "id": "D007020",
+                "term": "Hipoprotrombinemias",
+                "term_en": "Hypoprothrombinemias",
+                "scope": "Ausência ou níveis reduzidos de PROTROMBINA no sangue.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.100.100.550",
+                  "C15.378.100.141.550"
+                ]
+              },
+              {
+                "id": "D011517",
+                "term": "Tempo de Protrombina",
+                "term_en": "Prothrombin Time",
+                "scope": "Tempo de coagulação do PLASMA recalcificado na presença de excesso de TROMBOPLASTINA TECIDUAL. Os fatores medidos são FIBRINOGÊNIO, PROTROMBINA, FATOR V, FATOR VII e FATOR X. É utilizado para monitora",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.225.625.115.610",
+                  "E05.200.625.115.610"
+                ]
+              },
+              {
+                "id": "D005165",
+                "term": "Fator V",
+                "term_en": "Factor V",
+                "scope": "Glicoproteína plasmática termolábil e vulnerável ao armazenamento que acelera a conversão de protrombina em trombina na coagulação sanguínea. O fator V propicia isto através da formação de um complexo",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.125.300",
+                  "D12.776.811.272"
+                ]
+              },
+              {
+                "id": "D011486",
+                "term": "Proteína C",
+                "term_en": "Protein C",
+                "scope": "Zimógeno dependente de vitamina K, presente no sangue, quando ativado pela trombina e trombomodulina apresenta propriedades anticoagulantes, inativando os fatores Va e VIIIa nos passos limitantes da v",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D08.622.705",
+                  "D09.400.430.915"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Mutation",
+            "candidates": [
+              {
+                "id": "D009154",
+                "term": "Mutação",
+                "term_en": "Mutation",
+                "scope": "Qualquer mudança detectável e hereditária que ocorre no material genético causando uma alteração no GENÓTIPO e transmitida às células filhas e às gerações sucessivas.",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G05.365.590"
+                ]
+              },
+              {
+                "id": "D017354",
+                "term": "Mutação Puntual",
+                "term_en": "Point Mutation",
+                "scope": "Mutação causada pela substituição de um nucleotídeo por outro. O resultado é uma molécula de DNA com troca de um único par de bases.",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G05.365.590.675"
+                ]
+              },
+              {
+                "id": "D000067552",
+                "term": "Acúmulo de Mutações",
+                "term_en": "Mutation Accumulation",
+                "scope": "Conceito que descreve os efeitos cumulativos da MUTAÇÃO em organismos vivos.",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G05.365.590.594"
+                ]
+              },
+              {
+                "id": "D059645",
+                "term": "Taxa de Mutação",
+                "term_en": "Mutation Rate",
+                "scope": "Número de mutações que ocorrem uma sequência específica, GENE ou GENOMA sobre um período específico de tempo como anos, DIVISÃO CELULAR ou gerações.",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G05.045.250.750",
+                  "G05.365.590.612"
+                ]
+              },
+              {
+                "id": "D018095",
+                "term": "Mutação em Linhagem Germinativa",
+                "term_en": "Germ-Line Mutation",
+                "scope": "Qualquer alteração detectável e herdável na linhagem das células germinativas. Mutações que ocorrem nestas células (ou seja, nas células ancestrais dos gametas) são transmitidas à progênie enquanto qu",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G05.365.590.350"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D019851",
+          "term": "Trombofilia"
+        },
+        {
+          "id": "D054556",
+          "term": "Tromboembolia Venosa"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D016736",
+          "term": "Síndrome Antifosfolipídica"
+        },
+        {
+          "id": "D005165",
+          "term": "Fator V"
+        },
+        {
+          "id": "D011516",
+          "term": "Protrombina"
+        },
+        {
+          "id": "D009154",
+          "term": "Mutação"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 4,
+    "total_candidates": 30,
+    "final_primary": 2,
+    "final_secondary": 4
+  }
+}

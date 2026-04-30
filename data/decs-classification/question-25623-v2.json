@@ -1,0 +1,685 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D012595",
+        "term": "Escleroderma Sistêmico",
+        "name_en": "Scleroderma, Systemic",
+        "scope_note": "Transtorno crônico multissistêmico do TECIDO CONJUNTIVO. É caracterizado por ESCLEROSE na PELE, PULMÕES, CORAÇÃO, TRATO GASTROINTESTINAL, RINS, e SISTEMA MUSCULOSQUELÉTICO. Outras características importantes incluem VASOS SANGUÍNEOS e AUTOANTICORPOS anormais. O transtorno recebe este nome por sua característica mais proeminente (pele dura), e se classifica em subgrupos pela extensão do engrossamento da pele: ESCLERODERMIA LIMITADA e ESCLERODERMIA DIFUSA.",
+        "tree_ids": [
+          "C17.300.799",
+          "C17.800.784"
+        ],
+        "hierarchy_path": "Doenças › C17.300.799",
+        "parents": [
+          {
+            "id": "D003240",
+            "term": "Doenças do Tecido Conjuntivo"
+          },
+          {
+            "id": "D012871",
+            "term": "Dermatopatias"
+          }
+        ],
+        "children": [
+          {
+            "id": "D017675",
+            "term": "Síndrome CREST"
+          },
+          {
+            "id": "D045745",
+            "term": "Esclerodermia Limitada"
+          },
+          {
+            "id": "D045743",
+            "term": "Esclerodermia Difusa"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D017563",
+        "term": "Doenças Pulmonares Intersticiais",
+        "name_en": "Lung Diseases, Interstitial",
+        "scope_note": "Grupo diverso de doenças pulmonares que afetam o parênquima pulmonar. São caracterizadas por uma inflamação inicial dos ALVÉOLOS PULMONARES que se estende ao interstício e além dele, levando a uma FIBROSE PULMONAR. Doenças do interstício pulmonar são classificadas por sua etiologia (causas conhecidas ou desconhecidas), e características radiopatológicas.",
+        "tree_ids": [
+          "C08.381.483"
+        ],
+        "hierarchy_path": "Doenças › C08.381.483",
+        "parents": [
+          {
+            "id": "D008171",
+            "term": "Pneumopatias"
+          }
+        ],
+        "children": [
+          {
+            "id": "D002095",
+            "term": "Bissinose"
+          },
+          {
+            "id": "D012830",
+            "term": "Silicotuberculose"
+          },
+          {
+            "id": "D011009",
+            "term": "Pneumoconiose"
+          },
+          {
+            "id": "D014890",
+            "term": "Granulomatose com Poliangiite"
+          },
+          {
+            "id": "D017565",
+            "term": "Sarcoidose Pulmonar"
+          }
+        ],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D012216",
+        "term": "Doenças Reumáticas",
+        "name_en": "Rheumatic Diseases",
+        "scope_note": "Transtornos do tecido conjuntivo, especialmente articulações e estruturas relacionadas, caracterizados por inflamação, degeneração e alteração metabólica.",
+        "tree_ids": [
+          "C05.799",
+          "C17.300.775"
+        ],
+        "hierarchy_path": "Doenças › C05.799",
+        "parents": [
+          {
+            "id": "D009140",
+            "term": "Doenças Musculoesqueléticas"
+          },
+          {
+            "id": "D003240",
+            "term": "Doenças do Tecido Conjuntivo"
+          }
+        ],
+        "children": [
+          {
+            "id": "D012215",
+            "term": "Nódulo Reumático"
+          },
+          {
+            "id": "D012218",
+            "term": "Nódulo Reumatoide"
+          },
+          {
+            "id": "D015210",
+            "term": "Artrite Gotosa"
+          },
+          {
+            "id": "D016706",
+            "term": "Doença de Still de Início Tardio"
+          },
+          {
+            "id": "D055013",
+            "term": "Osteoartrite da Coluna Vertebral"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D054988",
+        "term": "Pneumonias Intersticiais Idiopáticas",
+        "name_en": "Idiopathic Interstitial Pneumonias",
+        "scope_note": "Grupo de doenças intersticiais do pulmão sem etiologia conhecida. Há várias entidades com padrões variáveis de inflamação e fibrose. São classificadas por suas diferentes características clínico-radiológico-patológicas e prognóstico. Incluem FIBROSE PULMONAR IDIOPÁTICA, PNEUMONIA EM ORGANIZAÇÃO CRIPTOGÊNICA e outras.",
+        "tree_ids": [
+          "C08.381.483.652.500.750"
+        ],
+        "hierarchy_path": "Doenças › C08.381.483.652.500.750",
+        "parents": [
+          {
+            "id": "D054990",
+            "term": "Fibrose Pulmonar Idiopática"
+          }
+        ],
+        "children": [
+          {
+            "id": "D018549",
+            "term": "Pneumonia em Organização Criptogênica"
+          }
+        ],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Scleroderma, Systemic",
+      "Lung Diseases, Interstitial"
+    ],
+    "secondary": [
+      "Rheumatic Diseases",
+      "Idiopathic Interstitial Pneumonias"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Scleroderma, Systemic",
+          "candidates": [
+            {
+              "id": "D012595",
+              "term": "Escleroderma Sistêmico",
+              "term_en": "Scleroderma, Systemic",
+              "scope": "Transtorno crônico multissistêmico do TECIDO CONJUNTIVO. É caracterizado por ESCLEROSE na PELE, PULMÕES, CORAÇÃO, TRATO GASTROINTESTINAL, RINS, e SISTEMA MUSCULOSQUELÉTICO. Outras características impo",
+              "categoria": "Doenças",
+              "arvore": [
+                "C17.300.799",
+                "C17.800.784"
+              ]
+            },
+            {
+              "id": "D045743",
+              "term": "Esclerodermia Difusa",
+              "term_en": "Scleroderma, Diffuse",
+              "scope": "Forma de início rápido de ESCLERODERMA SISTÊMICO com disseminação progressiva de espessamento da PELE sobre os braços, pernas e tronco resultando em rigidez e incapacidade.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C17.300.799.602",
+                "C17.800.784.602"
+              ]
+            },
+            {
+              "id": "D045745",
+              "term": "Esclerodermia Limitada",
+              "term_en": "Scleroderma, Limited",
+              "scope": "Forma menos progressiva de ESCLERODERMA SISTÊMICO com espessamento da pele restrito à face, pescoço e áreas distais dos cotovelos e/ou joelhos, poupando o tronco. A SÍNDROME CREST é uma forma de escle",
+              "categoria": "Doenças",
+              "arvore": [
+                "C17.300.799.801",
+                "C17.800.784.801"
+              ]
+            },
+            {
+              "id": "D017675",
+              "term": "Síndrome CREST",
+              "term_en": "CREST Syndrome",
+              "scope": "Forma menos grave de ESCLERODERMIA LIMITADA, um transtorno multissistêmico. Suas características incluem sintomas de CALCINOSE, DOENÇA DE RAYNAUD, TRANSTORNOS DA MOTILIDADE ESOFÁGICA, esclerodactilia ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C06.405.117.119.500.204",
+                "C14.907.355.830.573.750.500"
+              ]
+            },
+            {
+              "id": "D012594",
+              "term": "Esclerodermia Localizada",
+              "term_en": "Scleroderma, Localized",
+              "scope": "Termo utilizado para descrever vários espessamentos assimétricos e localizados na PELE, semelhantes aos do ESCLERODERMA SISTÊMICO, porém sem as características da doença nos diversos órgãos internos e",
+              "categoria": "Doenças",
+              "arvore": [
+                "C17.300.787",
+                "C17.800.767"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Lung Diseases, Interstitial",
+          "candidates": [
+            {
+              "id": "D017563",
+              "term": "Doenças Pulmonares Intersticiais",
+              "term_en": "Lung Diseases, Interstitial",
+              "scope": "Grupo diverso de doenças pulmonares que afetam o parênquima pulmonar. São caracterizadas por uma inflamação inicial dos ALVÉOLOS PULMONARES que se estende ao interstício e além dele, levando a uma FIB",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.381.483"
+              ]
+            },
+            {
+              "id": "D054988",
+              "term": "Pneumonias Intersticiais Idiopáticas",
+              "term_en": "Idiopathic Interstitial Pneumonias",
+              "scope": "Grupo de doenças intersticiais do pulmão sem etiologia conhecida. Há várias entidades com padrões variáveis de inflamação e fibrose. São classificadas por suas diferentes características clínico-radio",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.381.483.652.500.750"
+              ]
+            },
+            {
+              "id": "D008171",
+              "term": "Pneumopatias",
+              "term_en": "Lung Diseases",
+              "scope": "Processos patológicos que envolvem qualquer parte do PULMÃO.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.381"
+              ]
+            },
+            {
+              "id": "D054990",
+              "term": "Fibrose Pulmonar Idiopática",
+              "term_en": "Idiopathic Pulmonary Fibrosis",
+              "scope": "Doença pulmonar intersticial de etiologia desconhecida que ocorre geralmente entre 50 e 70 anos de idade. Clinicamente é caracterizada por um início insidioso caracterizado por respiração com esforço ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.381.483.652.500"
+              ]
+            },
+            {
+              "id": "D018549",
+              "term": "Pneumonia em Organização Criptogênica",
+              "term_en": "Cryptogenic Organizing Pneumonia",
+              "scope": "Doença pulmonar intersticial de etiologia desconhecida que ocorre entre os 21 e 80 anos de idade. É caracterizada por um início dramático de doença semelhante à pneumonia com tosse, febre, mal estar, ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.127.446.135.140.600.750",
+                "C08.381.483.652.500.750.249"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Rheumatic Diseases",
+          "candidates": [
+            {
+              "id": "D012216",
+              "term": "Doenças Reumáticas",
+              "term_en": "Rheumatic Diseases",
+              "scope": "Transtornos do tecido conjuntivo, especialmente articulações e estruturas relacionadas, caracterizados por inflamação, degeneração e alteração metabólica.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C05.799",
+                "C17.300.775"
+              ]
+            },
+            {
+              "id": "D012219",
+              "term": "Reumatologia",
+              "term_en": "Rheumatology",
+              "scope": "Subespecialidade da medicina interna voltada para o estudo de processos inflamatórios ou degenerativos, e distúrbios metabólicos das estruturas dos tecidos conjuntivos que pertencem a vários distúrbio",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.403.429.730"
+              ]
+            },
+            {
+              "id": "D001172",
+              "term": "Artrite Reumatoide",
+              "term_en": "Arthritis, Rheumatoid",
+              "scope": "Doença sistêmica crônica, principalmente das articulações, marcada por mudanças inflamatórias nas membranas sinoviais e estruturas articulares, degeneração fibrinoide ampla das fibras do colágeno em t",
+              "categoria": "Doenças",
+              "arvore": [
+                "C05.550.114.154",
+                "C05.799.114"
+              ]
+            },
+            {
+              "id": "D000072140",
+              "term": "Reumatologistas",
+              "term_en": "Rheumatologists",
+              "scope": "Médicos que se especializam no tratamento de DOENÇAS REUMÁTICAS.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.526.485.810.888",
+                "N02.360.810.888"
+              ]
+            },
+            {
+              "id": "D007592",
+              "term": "Artropatias",
+              "term_en": "Joint Diseases",
+              "scope": "Doenças que envolvem as ARTICULAÇÕES.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C05.550"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Idiopathic Interstitial Pneumonias",
+          "candidates": [
+            {
+              "id": "D054988",
+              "term": "Pneumonias Intersticiais Idiopáticas",
+              "term_en": "Idiopathic Interstitial Pneumonias",
+              "scope": "Grupo de doenças intersticiais do pulmão sem etiologia conhecida. Há várias entidades com padrões variáveis de inflamação e fibrose. São classificadas por suas diferentes características clínico-radio",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.381.483.652.500.750"
+              ]
+            },
+            {
+              "id": "D017563",
+              "term": "Doenças Pulmonares Intersticiais",
+              "term_en": "Lung Diseases, Interstitial",
+              "scope": "Grupo diverso de doenças pulmonares que afetam o parênquima pulmonar. São caracterizadas por uma inflamação inicial dos ALVÉOLOS PULMONARES que se estende ao interstício e além dele, levando a uma FIB",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.381.483"
+              ]
+            },
+            {
+              "id": "D000080203",
+              "term": "Síndrome de Hamman-Rich",
+              "term_en": "Hamman-Rich Syndrome",
+              "scope": "Pneumonite idiopática intersticial aguda caracterizada por danos nos ALVÉOLOS PULMONARES com proliferação de tecido conjuntiva uniforme e edematosa. Está frequentemente associada com extensa  distorçã",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.381.483.652.500.500"
+              ]
+            },
+            {
+              "id": "D054990",
+              "term": "Fibrose Pulmonar Idiopática",
+              "term_en": "Idiopathic Pulmonary Fibrosis",
+              "scope": "Doença pulmonar intersticial de etiologia desconhecida que ocorre geralmente entre 50 e 70 anos de idade. Clinicamente é caracterizada por um início insidioso caracterizado por respiração com esforço ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.381.483.652.500"
+              ]
+            },
+            {
+              "id": "D018549",
+              "term": "Pneumonia em Organização Criptogênica",
+              "term_en": "Cryptogenic Organizing Pneumonia",
+              "scope": "Doença pulmonar intersticial de etiologia desconhecida que ocorre entre os 21 e 80 anos de idade. É caracterizada por um início dramático de doença semelhante à pneumonia com tosse, febre, mal estar, ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.127.446.135.140.600.750",
+                "C08.381.483.652.500.750.249"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Scleroderma, Systemic",
+        "Lung Diseases, Interstitial"
+      ],
+      "secondary": [
+        "Rheumatic Diseases",
+        "Idiopathic Interstitial Pneumonias"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Scleroderma, Systemic",
+            "candidates": [
+              {
+                "id": "D012595",
+                "term": "Escleroderma Sistêmico",
+                "term_en": "Scleroderma, Systemic",
+                "scope": "Transtorno crônico multissistêmico do TECIDO CONJUNTIVO. É caracterizado por ESCLEROSE na PELE, PULMÕES, CORAÇÃO, TRATO GASTROINTESTINAL, RINS, e SISTEMA MUSCULOSQUELÉTICO. Outras características impo",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C17.300.799",
+                  "C17.800.784"
+                ]
+              },
+              {
+                "id": "D045743",
+                "term": "Esclerodermia Difusa",
+                "term_en": "Scleroderma, Diffuse",
+                "scope": "Forma de início rápido de ESCLERODERMA SISTÊMICO com disseminação progressiva de espessamento da PELE sobre os braços, pernas e tronco resultando em rigidez e incapacidade.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C17.300.799.602",
+                  "C17.800.784.602"
+                ]
+              },
+              {
+                "id": "D045745",
+                "term": "Esclerodermia Limitada",
+                "term_en": "Scleroderma, Limited",
+                "scope": "Forma menos progressiva de ESCLERODERMA SISTÊMICO com espessamento da pele restrito à face, pescoço e áreas distais dos cotovelos e/ou joelhos, poupando o tronco. A SÍNDROME CREST é uma forma de escle",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C17.300.799.801",
+                  "C17.800.784.801"
+                ]
+              },
+              {
+                "id": "D017675",
+                "term": "Síndrome CREST",
+                "term_en": "CREST Syndrome",
+                "scope": "Forma menos grave de ESCLERODERMIA LIMITADA, um transtorno multissistêmico. Suas características incluem sintomas de CALCINOSE, DOENÇA DE RAYNAUD, TRANSTORNOS DA MOTILIDADE ESOFÁGICA, esclerodactilia ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C06.405.117.119.500.204",
+                  "C14.907.355.830.573.750.500"
+                ]
+              },
+              {
+                "id": "D012594",
+                "term": "Esclerodermia Localizada",
+                "term_en": "Scleroderma, Localized",
+                "scope": "Termo utilizado para descrever vários espessamentos assimétricos e localizados na PELE, semelhantes aos do ESCLERODERMA SISTÊMICO, porém sem as características da doença nos diversos órgãos internos e",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C17.300.787",
+                  "C17.800.767"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Lung Diseases, Interstitial",
+            "candidates": [
+              {
+                "id": "D017563",
+                "term": "Doenças Pulmonares Intersticiais",
+                "term_en": "Lung Diseases, Interstitial",
+                "scope": "Grupo diverso de doenças pulmonares que afetam o parênquima pulmonar. São caracterizadas por uma inflamação inicial dos ALVÉOLOS PULMONARES que se estende ao interstício e além dele, levando a uma FIB",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.381.483"
+                ]
+              },
+              {
+                "id": "D054988",
+                "term": "Pneumonias Intersticiais Idiopáticas",
+                "term_en": "Idiopathic Interstitial Pneumonias",
+                "scope": "Grupo de doenças intersticiais do pulmão sem etiologia conhecida. Há várias entidades com padrões variáveis de inflamação e fibrose. São classificadas por suas diferentes características clínico-radio",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.381.483.652.500.750"
+                ]
+              },
+              {
+                "id": "D008171",
+                "term": "Pneumopatias",
+                "term_en": "Lung Diseases",
+                "scope": "Processos patológicos que envolvem qualquer parte do PULMÃO.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.381"
+                ]
+              },
+              {
+                "id": "D054990",
+                "term": "Fibrose Pulmonar Idiopática",
+                "term_en": "Idiopathic Pulmonary Fibrosis",
+                "scope": "Doença pulmonar intersticial de etiologia desconhecida que ocorre geralmente entre 50 e 70 anos de idade. Clinicamente é caracterizada por um início insidioso caracterizado por respiração com esforço ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.381.483.652.500"
+                ]
+              },
+              {
+                "id": "D018549",
+                "term": "Pneumonia em Organização Criptogênica",
+                "term_en": "Cryptogenic Organizing Pneumonia",
+                "scope": "Doença pulmonar intersticial de etiologia desconhecida que ocorre entre os 21 e 80 anos de idade. É caracterizada por um início dramático de doença semelhante à pneumonia com tosse, febre, mal estar, ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.127.446.135.140.600.750",
+                  "C08.381.483.652.500.750.249"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Rheumatic Diseases",
+            "candidates": [
+              {
+                "id": "D012216",
+                "term": "Doenças Reumáticas",
+                "term_en": "Rheumatic Diseases",
+                "scope": "Transtornos do tecido conjuntivo, especialmente articulações e estruturas relacionadas, caracterizados por inflamação, degeneração e alteração metabólica.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C05.799",
+                  "C17.300.775"
+                ]
+              },
+              {
+                "id": "D012219",
+                "term": "Reumatologia",
+                "term_en": "Rheumatology",
+                "scope": "Subespecialidade da medicina interna voltada para o estudo de processos inflamatórios ou degenerativos, e distúrbios metabólicos das estruturas dos tecidos conjuntivos que pertencem a vários distúrbio",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.403.429.730"
+                ]
+              },
+              {
+                "id": "D001172",
+                "term": "Artrite Reumatoide",
+                "term_en": "Arthritis, Rheumatoid",
+                "scope": "Doença sistêmica crônica, principalmente das articulações, marcada por mudanças inflamatórias nas membranas sinoviais e estruturas articulares, degeneração fibrinoide ampla das fibras do colágeno em t",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C05.550.114.154",
+                  "C05.799.114"
+                ]
+              },
+              {
+                "id": "D000072140",
+                "term": "Reumatologistas",
+                "term_en": "Rheumatologists",
+                "scope": "Médicos que se especializam no tratamento de DOENÇAS REUMÁTICAS.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.526.485.810.888",
+                  "N02.360.810.888"
+                ]
+              },
+              {
+                "id": "D007592",
+                "term": "Artropatias",
+                "term_en": "Joint Diseases",
+                "scope": "Doenças que envolvem as ARTICULAÇÕES.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C05.550"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Idiopathic Interstitial Pneumonias",
+            "candidates": [
+              {
+                "id": "D054988",
+                "term": "Pneumonias Intersticiais Idiopáticas",
+                "term_en": "Idiopathic Interstitial Pneumonias",
+                "scope": "Grupo de doenças intersticiais do pulmão sem etiologia conhecida. Há várias entidades com padrões variáveis de inflamação e fibrose. São classificadas por suas diferentes características clínico-radio",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.381.483.652.500.750"
+                ]
+              },
+              {
+                "id": "D017563",
+                "term": "Doenças Pulmonares Intersticiais",
+                "term_en": "Lung Diseases, Interstitial",
+                "scope": "Grupo diverso de doenças pulmonares que afetam o parênquima pulmonar. São caracterizadas por uma inflamação inicial dos ALVÉOLOS PULMONARES que se estende ao interstício e além dele, levando a uma FIB",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.381.483"
+                ]
+              },
+              {
+                "id": "D000080203",
+                "term": "Síndrome de Hamman-Rich",
+                "term_en": "Hamman-Rich Syndrome",
+                "scope": "Pneumonite idiopática intersticial aguda caracterizada por danos nos ALVÉOLOS PULMONARES com proliferação de tecido conjuntiva uniforme e edematosa. Está frequentemente associada com extensa  distorçã",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.381.483.652.500.500"
+                ]
+              },
+              {
+                "id": "D054990",
+                "term": "Fibrose Pulmonar Idiopática",
+                "term_en": "Idiopathic Pulmonary Fibrosis",
+                "scope": "Doença pulmonar intersticial de etiologia desconhecida que ocorre geralmente entre 50 e 70 anos de idade. Clinicamente é caracterizada por um início insidioso caracterizado por respiração com esforço ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.381.483.652.500"
+                ]
+              },
+              {
+                "id": "D018549",
+                "term": "Pneumonia em Organização Criptogênica",
+                "term_en": "Cryptogenic Organizing Pneumonia",
+                "scope": "Doença pulmonar intersticial de etiologia desconhecida que ocorre entre os 21 e 80 anos de idade. É caracterizada por um início dramático de doença semelhante à pneumonia com tosse, febre, mal estar, ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.127.446.135.140.600.750",
+                  "C08.381.483.652.500.750.249"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D012595",
+          "term": "Escleroderma Sistêmico"
+        },
+        {
+          "id": "D017563",
+          "term": "Doenças Pulmonares Intersticiais"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D012216",
+          "term": "Doenças Reumáticas"
+        },
+        {
+          "id": "D054988",
+          "term": "Pneumonias Intersticiais Idiopáticas"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 2,
+    "total_candidates": 20,
+    "final_primary": 2,
+    "final_secondary": 2
+  }
+}

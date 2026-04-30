@@ -1,0 +1,774 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D000744",
+        "term": "Anemia Hemolítica Autoimune",
+        "name_en": "Anemia, Hemolytic, Autoimmune",
+        "scope_note": "Anemia hemolítica adquirida devido à presença de AUTOANTICORPOS que aglutinam ou lisam os GLÓBULOS VERMELHOS do próprio paciente.",
+        "tree_ids": [
+          "C15.378.050.141.125",
+          "C20.111.175"
+        ],
+        "hierarchy_path": "Doenças › C15.378.050.141.125",
+        "parents": [
+          {
+            "id": "D000743",
+            "term": "Anemia Hemolítica"
+          },
+          {
+            "id": "D001327",
+            "term": "Doenças Autoimunes"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D005938",
+        "term": "Glucocorticoides",
+        "name_en": "Glucocorticoids",
+        "scope_note": "Grupo de CORTICOSTEROIDES que afetam o metabolismo de carboidratos (GLUCONEOGÊNESE, depósito de glicogênio hepático, elevação da GLICEMIA), inibem a secreção de CORTICOTROPINA e possuem atividade anti-inflamatória pronunciada. Também desempenham um papel no metabolismo de gorduras e proteínas, manutenção da pressão arterial, alteração da resposta do tecido conjuntivo a lesão, redução no número de linfócitos circulantes e no funcionamento do sistema nervoso central.",
+        "tree_ids": [
+          "D06.472.040.543",
+          "D27.505.696.399.472.488"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D06.472.040.543",
+        "parents": [
+          {
+            "id": "D000305",
+            "term": "Corticosteroides"
+          },
+          {
+            "id": "D006728",
+            "term": "Hormônios"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D017707",
+        "term": "Transfusão de Eritrócitos",
+        "name_en": "Erythrocyte Transfusion",
+        "scope_note": "Transferência de eritrócitos de um doador a um receptor, ou a reinfusão ao doador.",
+        "tree_ids": [
+          "E02.095.135.140.275"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.095.135.140.275",
+        "parents": [
+          {
+            "id": "D016913",
+            "term": "Transfusão de Componentes Sanguíneos"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D003298",
+        "term": "Teste de Coombs",
+        "name_en": "Coombs Test",
+        "scope_note": "Teste para detectar ANTICORPOS não aglutinantes contra ERITRÓCITOS por meio do uso de antianticorpos (o reagente de Coombs). O teste direto é aplicado ao sangue recém-coletado para detectar anticorpo ligado a hemácias. O teste indireto é aplicado ao soro para detectar a presença de anticorpos que podem se ligar a hemácias.",
+        "tree_ids": [
+          "E01.370.225.812.735.050.375.150",
+          "E05.200.812.735.050.375.150",
+          "E05.478.594.760.050.375.150"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.225.812.735.050.375.150",
+        "parents": [
+          {
+            "id": "D006386",
+            "term": "Testes de Hemaglutinação"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D006461",
+        "term": "Hemólise",
+        "name_en": "Hemolysis",
+        "scope_note": "Destruição de ERITRÓCITOS por muitos agentes causais diferentes, como anticorpos, bactérias, químicos, temperatura e alterações na tonicidade.",
+        "tree_ids": [
+          "C23.550.403",
+          "G12.122.545"
+        ],
+        "hierarchy_path": "Doenças › C23.550.403",
+        "parents": [
+          {
+            "id": "D010335",
+            "term": "Processos Patológicos"
+          },
+          {
+            "id": "D000937",
+            "term": "Reações Antígeno-Anticorpo"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Anemia, Hemolytic, Autoimmune"
+    ],
+    "secondary": [
+      "Coombs Test",
+      "Blood Transfusion",
+      "Glucocorticoids",
+      "Hemolysis"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Anemia, Hemolytic, Autoimmune",
+          "candidates": [
+            {
+              "id": "D000744",
+              "term": "Anemia Hemolítica Autoimune",
+              "term_en": "Anemia, Hemolytic, Autoimmune",
+              "scope": "Anemia hemolítica adquirida devido à presença de AUTOANTICORPOS que aglutinam ou lisam os GLÓBULOS VERMELHOS do próprio paciente.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.141.125",
+                "C20.111.175"
+              ]
+            },
+            {
+              "id": "D000743",
+              "term": "Anemia Hemolítica",
+              "term_en": "Anemia, Hemolytic",
+              "scope": "Estado de glóbulos vermelhos inadequados (qualitativa ou quantitativamente) em circulação (ANEMIA) ou de HEMOGLOBINAS insuficiente devido à destruição prematura de glóbulos vermelhos (ERITRÓCITOS).",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.141"
+              ]
+            },
+            {
+              "id": "D000745",
+              "term": "Anemia Hemolítica Congênita",
+              "term_en": "Anemia, Hemolytic, Congenital",
+              "scope": "Anemia hemolítica devido a vários defeitos intrínsecos do eritrócito.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.141.150",
+                "C16.320.070"
+              ]
+            },
+            {
+              "id": "D013103",
+              "term": "Esferocitose Hereditária",
+              "term_en": "Spherocytosis, Hereditary",
+              "scope": "Grupo de anemias hemolíticas congênitas familiares, caracterizadas por numerosos eritrócitos de formato anormal, sendo geralmente esferoidais. Os eritrócitos aumentam a fragilidade osmótica e são anor",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.141.150.785",
+                "C16.320.070.785"
+              ]
+            },
+            {
+              "id": "D006457",
+              "term": "Hemoglobinúria Paroxística",
+              "term_en": "Hemoglobinuria, Paroxysmal",
+              "scope": "Afecção caracterizada pela recorrência de HEMOGLOBINÚRIA causada por HEMÓLISE intravascular. Nos casos gerados por exposição ao frio (hemoglobinuria paroxística pelo frio), geralmente após infecções, ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.141.560",
+                "C15.378.190.625.460"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Glucocorticoids",
+          "candidates": [
+            {
+              "id": "D005938",
+              "term": "Glucocorticoides",
+              "term_en": "Glucocorticoids",
+              "scope": "Grupo de CORTICOSTEROIDES que afetam o metabolismo de carboidratos (GLUCONEOGÊNESE, depósito de glicogênio hepático, elevação da GLICEMIA), inibem a secreção de CORTICOTROPINA e possuem atividade anti",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D06.472.040.543",
+                "D27.505.696.399.472.488"
+              ]
+            },
+            {
+              "id": "D011965",
+              "term": "Receptores de Glucocorticoides",
+              "term_en": "Receptors, Glucocorticoid",
+              "scope": "Proteínas citoplasmáticas que ligam especificamente glucocorticoides e medeiam seus efeitos celulares. O complexo receptor glucocorticoide-glucocorticoide atua no núcleo induzindo a transcrição do DNA",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.826.750.430"
+              ]
+            },
+            {
+              "id": "D006889",
+              "term": "Hidroxicorticosteroides",
+              "term_en": "Hydroxycorticosteroids",
+              "scope": "Grupo de corticosteroides com grupos hidroxila, geralmente nas posições 11 e 17. Compreendem a maioria dos corticosteroides usados sistemicamente. Como são relativamente insolúveis em água, sais de vá",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D06.472.040.585"
+              ]
+            },
+            {
+              "id": "D000305",
+              "term": "Corticosteroides",
+              "term_en": "Adrenal Cortex Hormones",
+              "scope": "HORMÔNIOS produzidos pelo CÓRTEX SUPRARRENAL, incluindo tanto os hormônios esteroides como os peptídicos. Os principais hormônios produzidos são HIDROCORTISONA e ALDOSTERONA.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D06.472.040"
+              ]
+            },
+            {
+              "id": "D003345",
+              "term": "Corticosterona",
+              "term_en": "Corticosterone",
+              "scope": "Esteroide adrenocortical que tem modesta, mas significante atividade como mineralocorticoide e glucocorticoide.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D04.210.500.745.745.654.237",
+                "D06.472.040.585.353.237"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Blood Transfusion",
+          "candidates": [
+            {
+              "id": "D001803",
+              "term": "Transfusão de Sangue",
+              "term_en": "Blood Transfusion",
+              "scope": "A introdução de sangue total ou componente de sangue diretamente dentro da corrente sanguínea. (Dorland, 28a ed)",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.095.135"
+              ]
+            },
+            {
+              "id": "D016913",
+              "term": "Transfusão de Componentes Sanguíneos",
+              "term_en": "Blood Component Transfusion",
+              "scope": "Transferência dos componentes sanguíneos (como eritrócitos, leucócitos, plaquetas e plasma) de um doador para um receptor (ou de volta ao próprio doador). Difere dos procedimentos realizados na PLASMA",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.095.135.140"
+              ]
+            },
+            {
+              "id": "D017707",
+              "term": "Transfusão de Eritrócitos",
+              "term_en": "Erythrocyte Transfusion",
+              "scope": "Transferência de eritrócitos de um doador a um receptor, ou a reinfusão ao doador.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.095.135.140.275"
+              ]
+            },
+            {
+              "id": "D017713",
+              "term": "Transfusão de Plaquetas",
+              "term_en": "Platelet Transfusion",
+              "scope": "Transferência de plaquetas sanguíneas de um doador a um receptor, ou a reinfusão ao doador.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.095.135.140.650"
+              ]
+            },
+            {
+              "id": "D064826",
+              "term": "Medicina Transfusional",
+              "term_en": "Transfusion Medicine",
+              "scope": "Área da hematologia que se ocupa da transfusão de sangue de componentes do sangue e na prevenção e tratamento de efeitos adversos causados por erros em TRANSFUSÃO DE SANGUE.",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.403.429.445.500"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Coombs Test",
+          "candidates": [
+            {
+              "id": "D003298",
+              "term": "Teste de Coombs",
+              "term_en": "Coombs Test",
+              "scope": "Teste para detectar ANTICORPOS não aglutinantes contra ERITRÓCITOS por meio do uso de antianticorpos (o reagente de Coombs). O teste direto é aplicado ao sangue recém-coletado para detectar anticorpo ",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.225.812.735.050.375.150",
+                "E05.200.812.735.050.375.150"
+              ]
+            },
+            {
+              "id": "D001788",
+              "term": "Tipagem e Reações Cruzadas Sanguíneas",
+              "term_en": "Blood Grouping and Crossmatching",
+              "scope": "Teste de eritrócitos para determinar a presença ou ausência de antígenos de grupo sanguíneo, teste de soro para determinar a presença ou ausência de anticorpos a esses antígenos e selecionar a biocomp",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.225.625.120",
+                "E01.370.225.812.385.120"
+              ]
+            },
+            {
+              "id": "D007104",
+              "term": "Reação de Imunoaderência",
+              "term_en": "Immune Adherence Reaction",
+              "scope": "Método para detecção de quantidades muito pequenas de anticorpo nas quais o complexo antígeno-anticorpo-complemento se adere a células indicadoras, geralmente eritrócitos de primatas ou plaquetas sang",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.225.812.400",
+                "E05.200.812.400"
+              ]
+            },
+            {
+              "id": "D012204",
+              "term": "Sistema do Grupo Sanguíneo Rh-Hr",
+              "term_en": "Rh-Hr Blood-Group System",
+              "scope": "Isoantígenos eritrocitários do sistema de grupo sanguíneos Rh (Rhesus), o mais complexo de todos os grupos sanguíneos humanos. O principal antígeno Rh ou D é a causa mais comum de ERITROBLASTOSE FETAL",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D23.050.301.290.775",
+                "D23.050.705.230.775"
+              ]
+            },
+            {
+              "id": "D012203",
+              "term": "Isoimunização Rh",
+              "term_en": "Rh Isoimmunization",
+              "scope": "Processo pelo qual os eritrócitos Rh+ fetais entram na circulação de uma mãe Rh-, durante o parto, fazendo com esta seja sensibilizada para produzir IMUNOGLOBULINA G antifator Rh, que podem atravessar",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G09.188.114.750",
+                "G12.122.780"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Hemolysis",
+          "candidates": [
+            {
+              "id": "D006461",
+              "term": "Hemólise",
+              "term_en": "Hemolysis",
+              "scope": "Destruição de ERITRÓCITOS por muitos agentes causais diferentes, como anticorpos, bactérias, químicos, temperatura e alterações na tonicidade.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.550.403",
+                "G12.122.545"
+              ]
+            },
+            {
+              "id": "D000743",
+              "term": "Anemia Hemolítica",
+              "term_en": "Anemia, Hemolytic",
+              "scope": "Estado de glóbulos vermelhos inadequados (qualitativa ou quantitativamente) em circulação (ANEMIA) ou de HEMOGLOBINAS insuficiente devido à destruição prematura de glóbulos vermelhos (ERITRÓCITOS).",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.141"
+              ]
+            },
+            {
+              "id": "D053878",
+              "term": "Hemolíticos",
+              "term_en": "Hemolytic Agents",
+              "scope": "Substâncias que em geral são tóxicas para o sangue, incluindo o mecanismo de coagulação. As hemotoxinas podem atuar no sistema hematopoiético.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.888.569.213.444"
+              ]
+            },
+            {
+              "id": "D006456",
+              "term": "Hemoglobinúria",
+              "term_en": "Hemoglobinuria",
+              "scope": "Presença de HEMOGLOBINA livre na URINA, indicando lise de ERITRÓCITOS no sistema vascular. A hemoglobina livre começa aparecer na urina após a saturação das proteínas ligantes de hemoglobina (HAPTOGLO",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.934.734.634",
+                "C12.200.777.934.734.634"
+              ]
+            },
+            {
+              "id": "D013103",
+              "term": "Esferocitose Hereditária",
+              "term_en": "Spherocytosis, Hereditary",
+              "scope": "Grupo de anemias hemolíticas congênitas familiares, caracterizadas por numerosos eritrócitos de formato anormal, sendo geralmente esferoidais. Os eritrócitos aumentam a fragilidade osmótica e são anor",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.141.150.785",
+                "C16.320.070.785"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Anemia, Hemolytic, Autoimmune"
+      ],
+      "secondary": [
+        "Coombs Test",
+        "Blood Transfusion",
+        "Glucocorticoids",
+        "Hemolysis"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Anemia, Hemolytic, Autoimmune",
+            "candidates": [
+              {
+                "id": "D000744",
+                "term": "Anemia Hemolítica Autoimune",
+                "term_en": "Anemia, Hemolytic, Autoimmune",
+                "scope": "Anemia hemolítica adquirida devido à presença de AUTOANTICORPOS que aglutinam ou lisam os GLÓBULOS VERMELHOS do próprio paciente.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.141.125",
+                  "C20.111.175"
+                ]
+              },
+              {
+                "id": "D000743",
+                "term": "Anemia Hemolítica",
+                "term_en": "Anemia, Hemolytic",
+                "scope": "Estado de glóbulos vermelhos inadequados (qualitativa ou quantitativamente) em circulação (ANEMIA) ou de HEMOGLOBINAS insuficiente devido à destruição prematura de glóbulos vermelhos (ERITRÓCITOS).",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.141"
+                ]
+              },
+              {
+                "id": "D000745",
+                "term": "Anemia Hemolítica Congênita",
+                "term_en": "Anemia, Hemolytic, Congenital",
+                "scope": "Anemia hemolítica devido a vários defeitos intrínsecos do eritrócito.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.141.150",
+                  "C16.320.070"
+                ]
+              },
+              {
+                "id": "D013103",
+                "term": "Esferocitose Hereditária",
+                "term_en": "Spherocytosis, Hereditary",
+                "scope": "Grupo de anemias hemolíticas congênitas familiares, caracterizadas por numerosos eritrócitos de formato anormal, sendo geralmente esferoidais. Os eritrócitos aumentam a fragilidade osmótica e são anor",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.141.150.785",
+                  "C16.320.070.785"
+                ]
+              },
+              {
+                "id": "D006457",
+                "term": "Hemoglobinúria Paroxística",
+                "term_en": "Hemoglobinuria, Paroxysmal",
+                "scope": "Afecção caracterizada pela recorrência de HEMOGLOBINÚRIA causada por HEMÓLISE intravascular. Nos casos gerados por exposição ao frio (hemoglobinuria paroxística pelo frio), geralmente após infecções, ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.141.560",
+                  "C15.378.190.625.460"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Glucocorticoids",
+            "candidates": [
+              {
+                "id": "D005938",
+                "term": "Glucocorticoides",
+                "term_en": "Glucocorticoids",
+                "scope": "Grupo de CORTICOSTEROIDES que afetam o metabolismo de carboidratos (GLUCONEOGÊNESE, depósito de glicogênio hepático, elevação da GLICEMIA), inibem a secreção de CORTICOTROPINA e possuem atividade anti",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D06.472.040.543",
+                  "D27.505.696.399.472.488"
+                ]
+              },
+              {
+                "id": "D011965",
+                "term": "Receptores de Glucocorticoides",
+                "term_en": "Receptors, Glucocorticoid",
+                "scope": "Proteínas citoplasmáticas que ligam especificamente glucocorticoides e medeiam seus efeitos celulares. O complexo receptor glucocorticoide-glucocorticoide atua no núcleo induzindo a transcrição do DNA",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.826.750.430"
+                ]
+              },
+              {
+                "id": "D006889",
+                "term": "Hidroxicorticosteroides",
+                "term_en": "Hydroxycorticosteroids",
+                "scope": "Grupo de corticosteroides com grupos hidroxila, geralmente nas posições 11 e 17. Compreendem a maioria dos corticosteroides usados sistemicamente. Como são relativamente insolúveis em água, sais de vá",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D06.472.040.585"
+                ]
+              },
+              {
+                "id": "D000305",
+                "term": "Corticosteroides",
+                "term_en": "Adrenal Cortex Hormones",
+                "scope": "HORMÔNIOS produzidos pelo CÓRTEX SUPRARRENAL, incluindo tanto os hormônios esteroides como os peptídicos. Os principais hormônios produzidos são HIDROCORTISONA e ALDOSTERONA.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D06.472.040"
+                ]
+              },
+              {
+                "id": "D003345",
+                "term": "Corticosterona",
+                "term_en": "Corticosterone",
+                "scope": "Esteroide adrenocortical que tem modesta, mas significante atividade como mineralocorticoide e glucocorticoide.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D04.210.500.745.745.654.237",
+                  "D06.472.040.585.353.237"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Blood Transfusion",
+            "candidates": [
+              {
+                "id": "D001803",
+                "term": "Transfusão de Sangue",
+                "term_en": "Blood Transfusion",
+                "scope": "A introdução de sangue total ou componente de sangue diretamente dentro da corrente sanguínea. (Dorland, 28a ed)",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.095.135"
+                ]
+              },
+              {
+                "id": "D016913",
+                "term": "Transfusão de Componentes Sanguíneos",
+                "term_en": "Blood Component Transfusion",
+                "scope": "Transferência dos componentes sanguíneos (como eritrócitos, leucócitos, plaquetas e plasma) de um doador para um receptor (ou de volta ao próprio doador). Difere dos procedimentos realizados na PLASMA",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.095.135.140"
+                ]
+              },
+              {
+                "id": "D017707",
+                "term": "Transfusão de Eritrócitos",
+                "term_en": "Erythrocyte Transfusion",
+                "scope": "Transferência de eritrócitos de um doador a um receptor, ou a reinfusão ao doador.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.095.135.140.275"
+                ]
+              },
+              {
+                "id": "D017713",
+                "term": "Transfusão de Plaquetas",
+                "term_en": "Platelet Transfusion",
+                "scope": "Transferência de plaquetas sanguíneas de um doador a um receptor, ou a reinfusão ao doador.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.095.135.140.650"
+                ]
+              },
+              {
+                "id": "D064826",
+                "term": "Medicina Transfusional",
+                "term_en": "Transfusion Medicine",
+                "scope": "Área da hematologia que se ocupa da transfusão de sangue de componentes do sangue e na prevenção e tratamento de efeitos adversos causados por erros em TRANSFUSÃO DE SANGUE.",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.403.429.445.500"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Coombs Test",
+            "candidates": [
+              {
+                "id": "D003298",
+                "term": "Teste de Coombs",
+                "term_en": "Coombs Test",
+                "scope": "Teste para detectar ANTICORPOS não aglutinantes contra ERITRÓCITOS por meio do uso de antianticorpos (o reagente de Coombs). O teste direto é aplicado ao sangue recém-coletado para detectar anticorpo ",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.225.812.735.050.375.150",
+                  "E05.200.812.735.050.375.150"
+                ]
+              },
+              {
+                "id": "D001788",
+                "term": "Tipagem e Reações Cruzadas Sanguíneas",
+                "term_en": "Blood Grouping and Crossmatching",
+                "scope": "Teste de eritrócitos para determinar a presença ou ausência de antígenos de grupo sanguíneo, teste de soro para determinar a presença ou ausência de anticorpos a esses antígenos e selecionar a biocomp",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.225.625.120",
+                  "E01.370.225.812.385.120"
+                ]
+              },
+              {
+                "id": "D007104",
+                "term": "Reação de Imunoaderência",
+                "term_en": "Immune Adherence Reaction",
+                "scope": "Método para detecção de quantidades muito pequenas de anticorpo nas quais o complexo antígeno-anticorpo-complemento se adere a células indicadoras, geralmente eritrócitos de primatas ou plaquetas sang",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.225.812.400",
+                  "E05.200.812.400"
+                ]
+              },
+              {
+                "id": "D012204",
+                "term": "Sistema do Grupo Sanguíneo Rh-Hr",
+                "term_en": "Rh-Hr Blood-Group System",
+                "scope": "Isoantígenos eritrocitários do sistema de grupo sanguíneos Rh (Rhesus), o mais complexo de todos os grupos sanguíneos humanos. O principal antígeno Rh ou D é a causa mais comum de ERITROBLASTOSE FETAL",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D23.050.301.290.775",
+                  "D23.050.705.230.775"
+                ]
+              },
+              {
+                "id": "D012203",
+                "term": "Isoimunização Rh",
+                "term_en": "Rh Isoimmunization",
+                "scope": "Processo pelo qual os eritrócitos Rh+ fetais entram na circulação de uma mãe Rh-, durante o parto, fazendo com esta seja sensibilizada para produzir IMUNOGLOBULINA G antifator Rh, que podem atravessar",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G09.188.114.750",
+                  "G12.122.780"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Hemolysis",
+            "candidates": [
+              {
+                "id": "D006461",
+                "term": "Hemólise",
+                "term_en": "Hemolysis",
+                "scope": "Destruição de ERITRÓCITOS por muitos agentes causais diferentes, como anticorpos, bactérias, químicos, temperatura e alterações na tonicidade.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.550.403",
+                  "G12.122.545"
+                ]
+              },
+              {
+                "id": "D000743",
+                "term": "Anemia Hemolítica",
+                "term_en": "Anemia, Hemolytic",
+                "scope": "Estado de glóbulos vermelhos inadequados (qualitativa ou quantitativamente) em circulação (ANEMIA) ou de HEMOGLOBINAS insuficiente devido à destruição prematura de glóbulos vermelhos (ERITRÓCITOS).",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.141"
+                ]
+              },
+              {
+                "id": "D053878",
+                "term": "Hemolíticos",
+                "term_en": "Hemolytic Agents",
+                "scope": "Substâncias que em geral são tóxicas para o sangue, incluindo o mecanismo de coagulação. As hemotoxinas podem atuar no sistema hematopoiético.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.888.569.213.444"
+                ]
+              },
+              {
+                "id": "D006456",
+                "term": "Hemoglobinúria",
+                "term_en": "Hemoglobinuria",
+                "scope": "Presença de HEMOGLOBINA livre na URINA, indicando lise de ERITRÓCITOS no sistema vascular. A hemoglobina livre começa aparecer na urina após a saturação das proteínas ligantes de hemoglobina (HAPTOGLO",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.934.734.634",
+                  "C12.200.777.934.734.634"
+                ]
+              },
+              {
+                "id": "D013103",
+                "term": "Esferocitose Hereditária",
+                "term_en": "Spherocytosis, Hereditary",
+                "scope": "Grupo de anemias hemolíticas congênitas familiares, caracterizadas por numerosos eritrócitos de formato anormal, sendo geralmente esferoidais. Os eritrócitos aumentam a fragilidade osmótica e são anor",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.141.150.785",
+                  "C16.320.070.785"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D000744",
+          "term": "Anemia Hemolítica Autoimune"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D005938",
+          "term": "Glucocorticoides"
+        },
+        {
+          "id": "D017707",
+          "term": "Transfusão de Eritrócitos"
+        },
+        {
+          "id": "D003298",
+          "term": "Teste de Coombs"
+        },
+        {
+          "id": "D006461",
+          "term": "Hemólise"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 1,
+    "secondary_concepts": 4,
+    "total_candidates": 25,
+    "final_primary": 1,
+    "final_secondary": 4
+  }
+}

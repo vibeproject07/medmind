@@ -1,0 +1,97 @@
+{
+  "result": [
+    {
+      "term": "Saúde da Família",
+      "code": "D005192",
+      "tree_ids": [
+        "N01.400.300",
+        "SP2.770.750.103"
+      ],
+      "hierarchy_path": "Saúde › N01.400.300",
+      "scope_note": "Estado de saúde de uma família como unidade incluindo o impacto causado pela saúde de um membro sobre a unidade e sobre cada um dos membros; inclui o impacto causado pela alteração ou não do estado de saúde de seus membros.",
+      "name_en": "Family Health",
+      "role": "primary"
+    },
+    {
+      "term": "Equipe de Assistência ao Paciente",
+      "code": "D010348",
+      "tree_ids": [
+        "N04.590.715"
+      ],
+      "hierarchy_path": "Saúde › N04.590.715",
+      "scope_note": "Cuidados prestados a pacientes por uma equipe multidisciplinar comumente organizada sob a direção de um médico; cada membro da equipe tem responsabilidades específicas e toda a equipe contribui para a assistência ao paciente.",
+      "name_en": "Patient Care Team",
+      "role": "primary"
+    },
+    {
+      "term": "Enfermeiras e Enfermeiros",
+      "code": "D009726",
+      "tree_ids": [
+        "M01.526.485.650",
+        "N02.360.650",
+        "SP8.571.810.231.581.372.224"
+      ],
+      "hierarchy_path": "Grupos Identificados › M01.526.485.650",
+      "scope_note": "Profissionais graduados em uma escola acreditada de enfermagem e que passaram pelo exame de licenciamento nacional para praticar enfermagem. Eles prestam serviços a pacientes que requerem assistência para recuperar ou manter sua saúde física ou mental.",
+      "name_en": "Nurses",
+      "role": "secondary"
+    },
+    {
+      "term": "Médicos",
+      "code": "D010820",
+      "tree_ids": [
+        "M01.526.485.810",
+        "N02.360.810",
+        "SP1.101.750.121.475",
+        "SP8.571.810.231.581.372.558"
+      ],
+      "hierarchy_path": "Grupos Identificados › M01.526.485.810",
+      "scope_note": "Indivíduos autorizados a praticar medicina.",
+      "name_en": "Physicians",
+      "role": "secondary"
+    },
+    {
+      "term": "Agentes Comunitários de Saúde",
+      "code": "D003150",
+      "tree_ids": [
+        "M01.526.485.067.080",
+        "N02.360.067.080"
+      ],
+      "hierarchy_path": "Grupos Identificados › M01.526.485.067.080",
+      "scope_note": "Pessoas treinadas para auxiliar os profissionais de saúde no contato com a comunidade para avaliação das necessidades de serviços de saúde.",
+      "name_en": "Community Health Workers",
+      "role": "secondary"
+    },
+    {
+      "term": "Atenção Primária à Saúde",
+      "code": "D011320",
+      "tree_ids": [
+        "N04.590.233.727",
+        "SP2.630.121"
+      ],
+      "hierarchy_path": "Saúde › N04.590.233.727",
+      "scope_note": "É a assistência sanitária essencial baseada em métodos e tecnologias práticas, cientificamente fundados e socialmente aceitáveis, postos ao alcance de todos os indivíduos e famílias da comunidade mediante a sua plena participação e a um custo que a comunidade e o país possam suportar, em todas e cada etapa do seu desenvolvimento, com um espírito de autorresponsabilidade e autodeterminação. (Declaração de Alma-Ata - Organização Pan-Americana da Saúde, 2003)",
+      "name_en": "Primary Health Care",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Family Health Strategy",
+      "Patient Care Team"
+    ],
+    "secondary": [
+      "Primary Health Care",
+      "Community Health Workers",
+      "Physicians",
+      "Nurses"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 2,
+    "secondary_terms": 4,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 0,
+    "final_count": 6
+  }
+}

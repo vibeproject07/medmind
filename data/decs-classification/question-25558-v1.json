@@ -1,0 +1,66 @@
+{
+  "result": [
+    {
+      "term": "Família",
+      "code": "D005190",
+      "tree_ids": [
+        "F01.829.263",
+        "I01.880.853.150",
+        "SP3.311.750.302",
+        "SP3.311.900.898.478"
+      ],
+      "hierarchy_path": "Psiquiatria e Psicologia › F01.829.263",
+      "scope_note": "Grupo social que consiste de pais ou pais substitutos e crianças.",
+      "name_en": "Family",
+      "role": "primary"
+    },
+    {
+      "term": "Classe Social",
+      "code": "D012923",
+      "tree_ids": [
+        "I01.880.853.996.755",
+        "N01.824.782",
+        "SP2.070.315.420.211",
+        "SP3.522.233.178"
+      ],
+      "hierarchy_path": "Antropologia, Educação, Sociologia › I01.880.853.996.755",
+      "scope_note": "Estrato da população com mesma posição e prestígio, inclui estratificação social. Classe social é definida por critérios tais como educação, ocupação, renda.",
+      "name_en": "Social Class",
+      "role": "secondary"
+    },
+    {
+      "term": "Características da Família",
+      "code": "D005191",
+      "tree_ids": [
+        "F01.829.263.315",
+        "I01.240.361",
+        "I01.880.853.150.423",
+        "N01.224.361",
+        "N01.824.308",
+        "N06.850.505.400.400",
+        "SP3.311.900.898.478.156"
+      ],
+      "hierarchy_path": "Psiquiatria e Psicologia › F01.829.263.315",
+      "scope_note": "Composição e tamanho da família.",
+      "name_en": "Family Characteristics",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Family",
+      "Life Cycle Stages"
+    ],
+    "secondary": [
+      "Social Class",
+      "Family Characteristics"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 2,
+    "secondary_terms": 2,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 1,
+    "final_count": 3
+  }
+}

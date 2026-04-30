@@ -1,0 +1,492 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "DDCS032482",
+        "term": "Recursos Renováveis",
+        "name_en": "Renewable Resources",
+        "scope_note": "",
+        "tree_ids": [
+          "SP4.606.837.868"
+        ],
+        "hierarchy_path": "Saúde Pública › SP4.606.837.868",
+        "parents": [
+          {
+            "id": "D000067936",
+            "term": "Recursos Naturais"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      },
+      {
+        "id": "D005190",
+        "term": "Família",
+        "name_en": "Family",
+        "scope_note": "Grupo social que consiste de pais ou pais substitutos e crianças.",
+        "tree_ids": [
+          "F01.829.263",
+          "I01.880.853.150",
+          "SP3.311.750.302",
+          "SP3.311.900.898.478"
+        ],
+        "hierarchy_path": "Psiquiatria e Psicologia › F01.829.263",
+        "parents": [
+          {
+            "id": "D011593",
+            "term": "Psicologia Social"
+          },
+          {
+            "id": "D066252",
+            "term": "Fatores Sociológicos"
+          }
+        ],
+        "children": [
+          {
+            "id": "D008393",
+            "term": "Casamento"
+          },
+          {
+            "id": "D008426",
+            "term": "Privação Materna"
+          },
+          {
+            "id": "D008425",
+            "term": "Comportamento Materno"
+          },
+          {
+            "id": "D001722",
+            "term": "Ordem de Nascimento"
+          },
+          {
+            "id": "D010287",
+            "term": "Relações Pais-Filho"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D001385",
+        "term": "Azetinas",
+        "name_en": "Azetines",
+        "scope_note": "",
+        "tree_ids": [
+          "D03.383.082"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D03.383.082",
+        "parents": [
+          {
+            "id": "D006573",
+            "term": "Compostos Heterocíclicos com 1 Anel"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000069438",
+            "term": "Ezetimiba"
+          },
+          {
+            "id": "D000069499",
+            "term": "Combinação Ezetimiba e Simvastatina"
+          },
+          {
+            "id": "D001384",
+            "term": "Azetidinas"
+          },
+          {
+            "id": "D001383",
+            "term": "Ácido Azetidinocarboxílico"
+          }
+        ],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": []
+  },
+  "themes_identified": {
+    "primary": [
+      "Enunciado",
+      "As crises do ciclo de vida familiar podem ser previsíveis",
+      "esperadas"
+    ],
+    "secondary": []
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Enunciado",
+          "candidates": [
+            {
+              "id": "DDCS032482",
+              "term": "Recursos Renováveis",
+              "term_en": "Renewable Resources",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.837.868"
+              ]
+            },
+            {
+              "id": "DDCS051583",
+              "term": "Varredoras",
+              "term_en": "Sweepers",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.987.506.871"
+              ]
+            },
+            {
+              "id": "DDCS051857",
+              "term": "Utilização de Recursos Locais",
+              "term_en": "Local Resources Uses",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.303.766"
+              ]
+            },
+            {
+              "id": "DDCS051642",
+              "term": "Leito Fixo",
+              "term_en": "Fixed Bed",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.806.945.750.207.899.660"
+              ]
+            },
+            {
+              "id": "DDCS025556",
+              "term": "Tanques de Concreto",
+              "term_en": "Reinforced Concrete Tanks",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.141.089.248.433.561"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "As crises do ciclo de vida familiar podem ser previsíveis",
+          "candidates": [
+            {
+              "id": "D005190",
+              "term": "Família",
+              "term_en": "Family",
+              "scope": "Grupo social que consiste de pais ou pais substitutos e crianças.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.829.263",
+                "I01.880.853.150"
+              ]
+            },
+            {
+              "id": "D054541",
+              "term": "Conflito Familiar",
+              "term_en": "Family Conflict",
+              "scope": "Conflitos e desavenças entre os pais, pais e filhos ou entre outros membros de uma família.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.829.263.370.054",
+                "F01.829.401.094.500"
+              ]
+            },
+            {
+              "id": "D008016",
+              "term": "Acontecimentos que Mudam a Vida",
+              "term_en": "Life Change Events",
+              "scope": "Os eventos, incluindo os sociais, os psicológicos e os ambientais, que exigem um ajustamento do indivíduo ou causam uma mudança no seu padrão de vida.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.829.458.410"
+              ]
+            },
+            {
+              "id": "D007063",
+              "term": "Crise de Identidade",
+              "term_en": "Identity Crisis",
+              "scope": "Conceito caótico de si mesmo, no qual o papel do indivíduo na vida parece ser um dilema insolúvel expresso, frequentemente, por isolamento, introversão e extremismo.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.752.747.423"
+              ]
+            },
+            {
+              "id": "D005195",
+              "term": "Relações Familiares",
+              "term_en": "Family Relations",
+              "scope": "Relações comportamentais, psicológicas e sociais entre os vários membros da família nuclear e da família estendida.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.829.263.370",
+                "I01.880.853.150.439"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "esperadas",
+          "candidates": [
+            {
+              "id": "D001385",
+              "term": "Azetinas",
+              "term_en": "Azetines",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D03.383.082"
+              ]
+            },
+            {
+              "id": "D008360",
+              "term": "Manosefosfatos",
+              "term_en": "Mannosephosphates",
+              "scope": "Ésteres ácidos de manose.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D09.894.417.650"
+              ]
+            },
+            {
+              "id": "D010075",
+              "term": "Oxati-Inas",
+              "term_en": "Oxathiins",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D03.383.517"
+              ]
+            },
+            {
+              "id": "D011458",
+              "term": "Prostaglandinas E",
+              "term_en": "Prostaglandins E",
+              "scope": "Ácido (11 alfa,13E,15S)-11,15-di-hidroxi-9-oxoprost-13-en-1-oico (PGE(1)); ácido (5Z,11 alfa,13E,15S)-11,15-di-hidroxi-9-oxoprosta-5,13-dien-1-oico )PGE(2)); ácido (5Z,11 alfa,13E,17Z)-11,15-di-hidrox",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D10.251.355.255.550.250",
+                "D23.469.050.175.725.250"
+              ]
+            },
+            {
+              "id": "D001392",
+              "term": "Azocinas",
+              "term_en": "Azocines",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D03.383.113"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": []
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Enunciado",
+        "As crises do ciclo de vida familiar podem ser previsíveis",
+        "esperadas"
+      ],
+      "secondary": []
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Enunciado",
+            "candidates": [
+              {
+                "id": "DDCS032482",
+                "term": "Recursos Renováveis",
+                "term_en": "Renewable Resources",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.837.868"
+                ]
+              },
+              {
+                "id": "DDCS051583",
+                "term": "Varredoras",
+                "term_en": "Sweepers",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.987.506.871"
+                ]
+              },
+              {
+                "id": "DDCS051857",
+                "term": "Utilização de Recursos Locais",
+                "term_en": "Local Resources Uses",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.303.766"
+                ]
+              },
+              {
+                "id": "DDCS051642",
+                "term": "Leito Fixo",
+                "term_en": "Fixed Bed",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.806.945.750.207.899.660"
+                ]
+              },
+              {
+                "id": "DDCS025556",
+                "term": "Tanques de Concreto",
+                "term_en": "Reinforced Concrete Tanks",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.141.089.248.433.561"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "As crises do ciclo de vida familiar podem ser previsíveis",
+            "candidates": [
+              {
+                "id": "D005190",
+                "term": "Família",
+                "term_en": "Family",
+                "scope": "Grupo social que consiste de pais ou pais substitutos e crianças.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.829.263",
+                  "I01.880.853.150"
+                ]
+              },
+              {
+                "id": "D054541",
+                "term": "Conflito Familiar",
+                "term_en": "Family Conflict",
+                "scope": "Conflitos e desavenças entre os pais, pais e filhos ou entre outros membros de uma família.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.829.263.370.054",
+                  "F01.829.401.094.500"
+                ]
+              },
+              {
+                "id": "D008016",
+                "term": "Acontecimentos que Mudam a Vida",
+                "term_en": "Life Change Events",
+                "scope": "Os eventos, incluindo os sociais, os psicológicos e os ambientais, que exigem um ajustamento do indivíduo ou causam uma mudança no seu padrão de vida.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.829.458.410"
+                ]
+              },
+              {
+                "id": "D007063",
+                "term": "Crise de Identidade",
+                "term_en": "Identity Crisis",
+                "scope": "Conceito caótico de si mesmo, no qual o papel do indivíduo na vida parece ser um dilema insolúvel expresso, frequentemente, por isolamento, introversão e extremismo.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.752.747.423"
+                ]
+              },
+              {
+                "id": "D005195",
+                "term": "Relações Familiares",
+                "term_en": "Family Relations",
+                "scope": "Relações comportamentais, psicológicas e sociais entre os vários membros da família nuclear e da família estendida.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.829.263.370",
+                  "I01.880.853.150.439"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "esperadas",
+            "candidates": [
+              {
+                "id": "D001385",
+                "term": "Azetinas",
+                "term_en": "Azetines",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D03.383.082"
+                ]
+              },
+              {
+                "id": "D008360",
+                "term": "Manosefosfatos",
+                "term_en": "Mannosephosphates",
+                "scope": "Ésteres ácidos de manose.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D09.894.417.650"
+                ]
+              },
+              {
+                "id": "D010075",
+                "term": "Oxati-Inas",
+                "term_en": "Oxathiins",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D03.383.517"
+                ]
+              },
+              {
+                "id": "D011458",
+                "term": "Prostaglandinas E",
+                "term_en": "Prostaglandins E",
+                "scope": "Ácido (11 alfa,13E,15S)-11,15-di-hidroxi-9-oxoprost-13-en-1-oico (PGE(1)); ácido (5Z,11 alfa,13E,15S)-11,15-di-hidroxi-9-oxoprosta-5,13-dien-1-oico )PGE(2)); ácido (5Z,11 alfa,13E,17Z)-11,15-di-hidrox",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D10.251.355.255.550.250",
+                  "D23.469.050.175.725.250"
+                ]
+              },
+              {
+                "id": "D001392",
+                "term": "Azocinas",
+                "term_en": "Azocines",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D03.383.113"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": []
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "DDCS032482",
+          "term": "Recursos Renováveis"
+        },
+        {
+          "id": "D005190",
+          "term": "Família"
+        },
+        {
+          "id": "D001385",
+          "term": "Azetinas"
+        }
+      ],
+      "secondary": []
+    }
+  },
+  "stats": {
+    "primary_concepts": 3,
+    "secondary_concepts": 0,
+    "total_candidates": 15,
+    "final_primary": 3,
+    "final_secondary": 0
+  }
+}

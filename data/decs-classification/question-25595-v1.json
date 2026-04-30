@@ -1,0 +1,112 @@
+{
+  "result": [
+    {
+      "term": "Peritonite",
+      "code": "D010538",
+      "tree_ids": [
+        "C01.463.600",
+        "C06.844.640"
+      ],
+      "hierarchy_path": "Doenças › C01.463.600",
+      "scope_note": "INFLAMAÇÃO do PERITÔNIO, que reveste a CAVIDADE ABDOMINAL, em consequência de processos infecciosos, autoimunes ou químicos. A peritonite primária é decorrente da infecção na CAVIDADE PERITONEAL através da disseminação sanguínea ou linfática sem uma origem intra-abdominal. A peritonite secundária se origina na própria CAVIDADE ABDOMINAL através de RUPTURAS ou ABSCESSO de órgãos intra-abdominais.",
+      "name_en": "Peritonitis",
+      "role": "primary"
+    },
+    {
+      "term": "Cirrose Hepática",
+      "code": "D008103",
+      "tree_ids": [
+        "C06.552.630",
+        "C23.550.355.412"
+      ],
+      "hierarchy_path": "Doenças › C06.552.630",
+      "scope_note": "A doença hepática na qual a microcirculação normal, a anatomia vascular no geral, e a arquitetura hepática têm sido destruídas e alteradas de modo variado por septos fibrosos ao redor de nódulos parenquimatosos regenerados ou em regeneração.",
+      "name_en": "Liver Cirrhosis",
+      "role": "primary"
+    },
+    {
+      "term": "Hemorragia Gastrointestinal",
+      "code": "D006471",
+      "tree_ids": [
+        "C06.405.227",
+        "C23.550.414.788"
+      ],
+      "hierarchy_path": "Doenças › C06.405.227",
+      "scope_note": "Sangramento em qualquer segmento do TRATO GASTROINTESTINAL do ESÔFAGO até o RETO.",
+      "name_en": "Gastrointestinal Hemorrhage",
+      "role": "primary"
+    },
+    {
+      "term": "Antibioticoprofilaxia",
+      "code": "D019072",
+      "tree_ids": [
+        "E02.319.162.150",
+        "E02.319.703.150"
+      ],
+      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.319.162.150",
+      "scope_note": "Utilização de antibióticos antes, durante ou após um procedimento diagnóstico, terapêutico ou cirúrgico para prevenir complicações infecciosas.",
+      "name_en": "Antibiotic Prophylaxis",
+      "role": "secondary"
+    },
+    {
+      "term": "Hepatite C Crônica",
+      "code": "D019698",
+      "tree_ids": [
+        "C01.221.250.750.120",
+        "C01.925.440.440.120",
+        "C01.925.782.350.350.120",
+        "C06.552.380.350.120",
+        "C06.552.380.705.440.120",
+        "C23.550.291.500.477.750"
+      ],
+      "hierarchy_path": "Doenças › C01.221.250.750.120",
+      "scope_note": "INFLAMAÇÃO de FÍGADO em humanos, causada por Vírus da Hepatite C durando seis meses ou mais. A hepatite crônica C pode levar à CIRROSE HEPÁTICA.",
+      "name_en": "Hepatitis C, Chronic",
+      "role": "secondary"
+    },
+    {
+      "term": "Ceftriaxona",
+      "code": "D002443",
+      "tree_ids": [
+        "D02.065.589.099.249.190.190.155",
+        "D02.886.665.074.190.190.155",
+        "D03.633.100.300.249.190.190.155"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D02.065.589.099.249.190.190.155",
+      "scope_note": "Antibiótico cefalosporina de amplo espectro e derivado de cefotaxima com uma longa meia-vida e alta penetrabilidade em meninges, olhos e orelhas internas.",
+      "name_en": "Ceftriaxone",
+      "role": "secondary"
+    },
+    {
+      "term": "Líquido Ascítico",
+      "code": "D001202",
+      "tree_ids": [
+        "A12.207.119"
+      ],
+      "hierarchy_path": "Anatomia › A12.207.119",
+      "scope_note": "Líquido seroso das ASCITES que se acumula na cavidade peritoneal.",
+      "name_en": "Ascitic Fluid",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Liver Cirrhosis",
+      "Peritonitis",
+      "Gastrointestinal Hemorrhage"
+    ],
+    "secondary": [
+      "Ascites",
+      "Hepatitis C, Chronic",
+      "Antibiotic Prophylaxis",
+      "Ceftriaxone"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 3,
+    "secondary_terms": 4,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 0,
+    "final_count": 7
+  }
+}

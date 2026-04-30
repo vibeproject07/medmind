@@ -1,0 +1,979 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D005356",
+        "term": "Fibromialgia",
+        "name_en": "Fibromyalgia",
+        "scope_note": "Síndrome reumática comum, não articular, caracterizada por mialgia e pontos múltiplos de dor muscular focal à palpação (pontos desencadeantes). A dor muscular é tipicamente agravada por inatividade ou exposição ao frio. Este estado é frequentemente associado com sintomas gerais, como distúrbios do sono, fadiga, rigidez, CEFALEIAS e, ocasionalmente, DEPRESSÃO. Há uma sobreposição significativa entre fibromialgia e SÍNDROME DE FADIGA CRÔNICA. A fibromialgia pode surgir como um processo de doença primário ou secundário. É mais frequente em mulheres de 20 a 50 anos de idade. (Tradução livre do original: Adams et al., Principles of Neurology, 6a ed, p1494-95)",
+        "tree_ids": [
+          "C05.651.324",
+          "C05.799.321",
+          "C10.668.491.425"
+        ],
+        "hierarchy_path": "Doenças › C05.651.324",
+        "parents": [
+          {
+            "id": "D009135",
+            "term": "Doenças Musculares"
+          },
+          {
+            "id": "D012216",
+            "term": "Doenças Reumáticas"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      },
+      {
+        "id": "D010003",
+        "term": "Osteoartrite",
+        "name_en": "Osteoarthritis",
+        "scope_note": "Doença articular degenerativa e progressiva que é a forma mais comum de artrite, especialmente em pessoas idosas. Acredita-se que a doença não resulta do processo de envelhecimento, mas de mudanças bioquímicas e estresses biomecânicos que afetam a cartilagem articular. Na literatura estrangeira, é frequentemente chamada de osteoartrose deformante.",
+        "tree_ids": [
+          "C05.550.114.606",
+          "C05.799.613"
+        ],
+        "hierarchy_path": "Doenças › C05.550.114.606",
+        "parents": [
+          {
+            "id": "D001168",
+            "term": "Artrite"
+          },
+          {
+            "id": "D012216",
+            "term": "Doenças Reumáticas"
+          }
+        ],
+        "children": [
+          {
+            "id": "D015207",
+            "term": "Osteoartrite do Quadril"
+          },
+          {
+            "id": "D055013",
+            "term": "Osteoartrite da Coluna Vertebral"
+          },
+          {
+            "id": "D020370",
+            "term": "Osteoartrite do Joelho"
+          }
+        ],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D007719",
+        "term": "Articulação do Joelho",
+        "name_en": "Knee Joint",
+        "scope_note": "Conexão articular sinovial formada entre os ossos do FÊMUR, TÍBIA e PATELA.",
+        "tree_ids": [
+          "A02.835.583.475"
+        ],
+        "hierarchy_path": "Anatomia › A02.835.583.475",
+        "parents": [
+          {
+            "id": "D007596",
+            "term": "Articulações"
+          }
+        ],
+        "children": [
+          {
+            "id": "D008592",
+            "term": "Meniscos Tibiais"
+          },
+          {
+            "id": "D000097547",
+            "term": "Articulação Tibiofemoral"
+          },
+          {
+            "id": "D057071",
+            "term": "Articulação Patelofemoral"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D018771",
+        "term": "Artralgia",
+        "name_en": "Arthralgia",
+        "scope_note": "Dor na articulação.",
+        "tree_ids": [
+          "C05.550.091",
+          "C23.888.592.612.094",
+          "F02.830.816.444.350",
+          "G11.561.790.444.350"
+        ],
+        "hierarchy_path": "Doenças › C05.550.091",
+        "parents": [
+          {
+            "id": "D007592",
+            "term": "Artropatias"
+          },
+          {
+            "id": "D010146",
+            "term": "Dor"
+          }
+        ],
+        "children": [
+          {
+            "id": "D020069",
+            "term": "Dor de Ombro"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D008875",
+        "term": "Pessoa de Meia-Idade",
+        "name_en": "Middle Aged",
+        "scope_note": "Adulto com idade entre 45 e 64 anos.",
+        "tree_ids": [
+          "M01.060.116.630"
+        ],
+        "hierarchy_path": "Grupos Identificados › M01.060.116.630",
+        "parents": [
+          {
+            "id": "D000328",
+            "term": "Adulto"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D012893",
+        "term": "Transtornos do Sono-Vigília",
+        "name_en": "Sleep Wake Disorders",
+        "scope_note": "Esquema ou padrão vigíla-sono associados com o RITMO CIRCADIANO, que afeta a duração, o horário e/ou a rigidez do ciclo sono-vigília relativos ao ciclo dia/noite.",
+        "tree_ids": [
+          "C10.886",
+          "C23.888.592.796",
+          "F03.870"
+        ],
+        "hierarchy_path": "Doenças › C10.886",
+        "parents": [
+          {
+            "id": "D009422",
+            "term": "Doenças do Sistema Nervoso"
+          },
+          {
+            "id": "D009461",
+            "term": "Manifestações Neurológicas"
+          },
+          {
+            "id": "D001523",
+            "term": "Transtornos Mentais"
+          }
+        ],
+        "children": [
+          {
+            "id": "D010845",
+            "term": "Síndrome de Hipoventilação por Obesidade"
+          },
+          {
+            "id": "D012148",
+            "term": "Síndrome das Pernas Inquietas"
+          },
+          {
+            "id": "D007319",
+            "term": "Distúrbios do Início e da Manutenção do Sono"
+          },
+          {
+            "id": "D017593",
+            "term": "Síndrome de Kleine-Levin"
+          },
+          {
+            "id": "D012892",
+            "term": "Privação do Sono"
+          }
+        ],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Osteoarthritis",
+      "Fibromyalgia"
+    ],
+    "secondary": [
+      "Arthralgia",
+      "Knee Joint",
+      "Sleep Wake Disorders",
+      "Middle Aged"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Fibromyalgia",
+          "candidates": [
+            {
+              "id": "D005356",
+              "term": "Fibromialgia",
+              "term_en": "Fibromyalgia",
+              "scope": "Síndrome reumática comum, não articular, caracterizada por mialgia e pontos múltiplos de dor muscular focal à palpação (pontos desencadeantes). A dor muscular é tipicamente agravada por inatividade ou",
+              "categoria": "Doenças",
+              "arvore": [
+                "C05.651.324",
+                "C05.799.321"
+              ]
+            },
+            {
+              "id": "D015673",
+              "term": "Síndrome de Fadiga Crônica",
+              "term_en": "Fatigue Syndrome, Chronic",
+              "scope": "Síndrome caracterizada por fadiga persistente ou recorrente, dor musculoesquelética difusa, transtornos do sono e comprometimento cognitivo subjetivo que dura 6 meses ou mais. Os sintomas não são caus",
+              "categoria": "Doenças",
+              "arvore": [
+                "C05.651.310",
+                "C10.586.500.600"
+              ]
+            },
+            {
+              "id": "D009209",
+              "term": "Síndromes da Dor Miofascial",
+              "term_en": "Myofascial Pain Syndromes",
+              "scope": "Dor muscular em várias regiões do corpo que pode ser reproduzida por pressão em PONTOS-GATILHO, endurecimentos localizados no tecido muscular esquelético. A dor é referida em um local distante dos pon",
+              "categoria": "Doenças",
+              "arvore": [
+                "C05.651.550"
+              ]
+            },
+            {
+              "id": "D016603",
+              "term": "Síndrome de Eosinofilia-Mialgia",
+              "term_en": "Eosinophilia-Myalgia Syndrome",
+              "scope": "Síndrome sistêmica complexa com componentes inflamatórios e autoimunes que afetam a pele, fáscia, músculo, nervo, vasos sanguíneos, pulmão e coração. As características diagnósticas geralmente incluem",
+              "categoria": "Doenças",
+              "arvore": [
+                "C05.651.290",
+                "C10.668.491.050"
+              ]
+            },
+            {
+              "id": "D018908",
+              "term": "Debilidade Muscular",
+              "term_en": "Muscle Weakness",
+              "scope": "Queixa vaga de debilidade, fadiga e exaustão que é atribuída à fraqueza de vários músculos. A fraqueza pode ser caracterizada como subaguda ou crônica, frequentemente progressiva, e é a manifestação d",
+              "categoria": "Doenças",
+              "arvore": [
+                "C05.651.515",
+                "C10.597.613.593"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Osteoarthritis",
+          "candidates": [
+            {
+              "id": "D010003",
+              "term": "Osteoartrite",
+              "term_en": "Osteoarthritis",
+              "scope": "Doença articular degenerativa e progressiva que é a forma mais comum de artrite, especialmente em pessoas idosas. Acredita-se que a doença não resulta do processo de envelhecimento, mas de mudanças bi",
+              "categoria": "Doenças",
+              "arvore": [
+                "C05.550.114.606",
+                "C05.799.613"
+              ]
+            },
+            {
+              "id": "D020370",
+              "term": "Osteoartrite do Joelho",
+              "term_en": "Osteoarthritis, Knee",
+              "scope": "Doença degenerativa não inflamatória da articulação do joelho que consiste de três grandes categorias: afecções que bloqueiam o movimento sincrônico normal, afecções que produzem vias anormais de movi",
+              "categoria": "Doenças",
+              "arvore": [
+                "C05.550.114.606.500",
+                "C05.799.613.500"
+              ]
+            },
+            {
+              "id": "D055013",
+              "term": "Osteoartrite da Coluna Vertebral",
+              "term_en": "Osteoarthritis, Spine",
+              "scope": "Doença articular degenerativa envolvendo a COLUNA VERTEBRAL. É caracterizada por deterioração progressiva da CARTILAGEM ARTICULAR espinhal, geralmente com espessamento do osso subcondral e crescimento",
+              "categoria": "Doenças",
+              "arvore": [
+                "C05.116.900.853.625.399",
+                "C05.550.114.606.750"
+              ]
+            },
+            {
+              "id": "D015207",
+              "term": "Osteoartrite do Quadril",
+              "term_en": "Osteoarthritis, Hip",
+              "scope": "A doença degenerativa não inflamatória da articulação do quadril que normalmente aparece em pessoas de meia idade ou em idosos. Ela é caracterizada por distúrbios do crescimento ou da maturação na cab",
+              "categoria": "Doenças",
+              "arvore": [
+                "C05.550.114.606.400",
+                "C05.799.613.400"
+              ]
+            },
+            {
+              "id": "D055676",
+              "term": "Viscossuplementação",
+              "term_en": "Viscosupplementation",
+              "scope": "Tratamento terapêutico que envolve tipicamente INJEÇÕES INTRA-ARTICULARES de ÁCIDO HIALURÔNICO e compostos relacionados. Este procedimento é usado comumente para o tratamento de OSTEOARTRITE, sendo o ",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.319.267.530.380.500",
+                "E02.718.875"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Knee Joint",
+          "candidates": [
+            {
+              "id": "D007719",
+              "term": "Articulação do Joelho",
+              "term_en": "Knee Joint",
+              "scope": "Conexão articular sinovial formada entre os ossos do FÊMUR, TÍBIA e PATELA.",
+              "categoria": "Anatomia",
+              "arvore": [
+                "A02.835.583.475"
+              ]
+            },
+            {
+              "id": "D007717",
+              "term": "Joelho",
+              "term_en": "Knee",
+              "scope": "Região na extremidade inferior que envolve imediatamente e inclui a ARTICULAÇÃO DO JOELHO.",
+              "categoria": "Anatomia",
+              "arvore": [
+                "A01.378.610.450"
+              ]
+            },
+            {
+              "id": "D013264",
+              "term": "Joelho de Quadrúpedes",
+              "term_en": "Stifle",
+              "scope": "Em cavalos, gados e outros quadrúpedes, é a articulação entre o fêmur e a tíbia, correspondendo ao joelho humano.",
+              "categoria": "Anatomia",
+              "arvore": [
+                "A13.473.683"
+              ]
+            },
+            {
+              "id": "D057071",
+              "term": "Articulação Patelofemoral",
+              "term_en": "Patellofemoral Joint",
+              "scope": "Articulação entre a superfície articular da PATELA e a superfície patelar do FÊMUR.",
+              "categoria": "Anatomia",
+              "arvore": [
+                "A02.835.583.475.650"
+              ]
+            },
+            {
+              "id": "D007718",
+              "term": "Traumatismos do Joelho",
+              "term_en": "Knee Injuries",
+              "scope": "Traumatismos do joelho ou junção do joelho.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C26.558.554"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Arthralgia",
+          "candidates": [
+            {
+              "id": "D018771",
+              "term": "Artralgia",
+              "term_en": "Arthralgia",
+              "scope": "Dor na articulação.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C05.550.091",
+                "C23.888.592.612.094"
+              ]
+            },
+            {
+              "id": "D001168",
+              "term": "Artrite",
+              "term_en": "Arthritis",
+              "scope": "Inflamação aguda ou crônica das ARTICULAÇÕES.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C05.550.114"
+              ]
+            },
+            {
+              "id": "D063806",
+              "term": "Mialgia",
+              "term_en": "Myalgia",
+              "scope": "Sensação dolorosa nos músculos.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C05.651.542",
+                "C10.668.491.525"
+              ]
+            },
+            {
+              "id": "D005356",
+              "term": "Fibromialgia",
+              "term_en": "Fibromyalgia",
+              "scope": "Síndrome reumática comum, não articular, caracterizada por mialgia e pontos múltiplos de dor muscular focal à palpação (pontos desencadeantes). A dor muscular é tipicamente agravada por inatividade ou",
+              "categoria": "Doenças",
+              "arvore": [
+                "C05.651.324",
+                "C05.799.321"
+              ]
+            },
+            {
+              "id": "D001170",
+              "term": "Artrite Infecciosa",
+              "term_en": "Arthritis, Infectious",
+              "scope": "Artrite causada por BACTÉRIA, RICKETTSIA, MYCOPLASMA, VÍRUS, FUNGOS ou PARASITAS.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.100",
+                "C05.550.114.099"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Middle Aged",
+          "candidates": [
+            {
+              "id": "D008875",
+              "term": "Pessoa de Meia-Idade",
+              "term_en": "Middle Aged",
+              "scope": "Adulto com idade entre 45 e 64 anos.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.060.116.630"
+              ]
+            },
+            {
+              "id": "D000087742",
+              "term": "Octogenários",
+              "term_en": "Octogenarians",
+              "scope": "Pessoas entre 80 e 89 anos de idade.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.060.116.100.080.750"
+              ]
+            },
+            {
+              "id": "D000368",
+              "term": "Idoso",
+              "term_en": "Aged",
+              "scope": "Pessoa de 65 anos de idade ou mais. Para uma pessoa com mais de 79 anos, IDOSO DE 80 ANOS OU MAIS está disponível.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.060.116.100"
+              ]
+            },
+            {
+              "id": "D000328",
+              "term": "Adulto",
+              "term_en": "Adult",
+              "scope": "Pessoa que atingiu crescimento total ou maturidade. Adultos vão dos 19 até 44 anos de idade. Para uma pessoa entre 19 e 24 anos, está disponível o termo ADULTO JOVEM.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.060.116"
+              ]
+            },
+            {
+              "id": "D000067562",
+              "term": "Transtornos de Início Tardio",
+              "term_en": "Late Onset Disorders",
+              "scope": "Condições patológicas (distúrbios, SÍNDROMES ou DOENÇAS) cujos SINAIS E SINTOMAS se manifestam tardiamente na vida de um indivíduo.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.550.291.883"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Sleep Wake Disorders",
+          "candidates": [
+            {
+              "id": "D012893",
+              "term": "Transtornos do Sono-Vigília",
+              "term_en": "Sleep Wake Disorders",
+              "scope": "Esquema ou padrão vigíla-sono associados com o RITMO CIRCADIANO, que afeta a duração, o horário e/ou a rigidez do ciclo sono-vigília relativos ao ciclo dia/noite.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.886",
+                "C23.888.592.796"
+              ]
+            },
+            {
+              "id": "D020922",
+              "term": "Transtornos da Transição Sono-Vigília",
+              "term_en": "Sleep-Wake Transition Disorders",
+              "scope": "Parassonias caracterizadas por anormalidades comportamentais que ocorrem durante a transição entre a vigília e o sono (ou entre o sono e a vigília).",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.886.659.700",
+                "F03.870.664.700"
+              ]
+            },
+            {
+              "id": "D020921",
+              "term": "Transtornos do Despertar do Sono",
+              "term_en": "Sleep Arousal Disorders",
+              "scope": "Transtornos do sono caracterizados por despertar deficiente dos estágios mais profundos de sono (geralmente os estágios III ou IV do sono).",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.886.659.635",
+                "F03.870.664.635"
+              ]
+            },
+            {
+              "id": "D020178",
+              "term": "Transtornos do Sono do Ritmo Circadiano",
+              "term_en": "Sleep Disorders, Circadian Rhythm",
+              "scope": "Dissonias associadas com interrupção do ciclo normal de sono-vigília de 24 horas, secundárias a viagens (ex., SÍNDROME DE JET LAG), trabalho pesado ou outras causas.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.281.800",
+                "C10.886.425.200"
+              ]
+            },
+            {
+              "id": "D006970",
+              "term": "Distúrbios do Sono por Sonolência Excessiva",
+              "term_en": "Disorders of Excessive Somnolence",
+              "scope": "Transtornos caracterizados por hipersonolência durante o horário normal de despertar, podendo prejudicar o funcionamento cognitivo. Os subtipos incluem transtornos de hipersonia primária (ex., HIPERSO",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.886.425.800.200",
+                "F03.870.400.800.200"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Osteoarthritis",
+        "Fibromyalgia"
+      ],
+      "secondary": [
+        "Arthralgia",
+        "Knee Joint",
+        "Sleep Wake Disorders",
+        "Middle Aged"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Fibromyalgia",
+            "candidates": [
+              {
+                "id": "D005356",
+                "term": "Fibromialgia",
+                "term_en": "Fibromyalgia",
+                "scope": "Síndrome reumática comum, não articular, caracterizada por mialgia e pontos múltiplos de dor muscular focal à palpação (pontos desencadeantes). A dor muscular é tipicamente agravada por inatividade ou",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C05.651.324",
+                  "C05.799.321"
+                ]
+              },
+              {
+                "id": "D015673",
+                "term": "Síndrome de Fadiga Crônica",
+                "term_en": "Fatigue Syndrome, Chronic",
+                "scope": "Síndrome caracterizada por fadiga persistente ou recorrente, dor musculoesquelética difusa, transtornos do sono e comprometimento cognitivo subjetivo que dura 6 meses ou mais. Os sintomas não são caus",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C05.651.310",
+                  "C10.586.500.600"
+                ]
+              },
+              {
+                "id": "D009209",
+                "term": "Síndromes da Dor Miofascial",
+                "term_en": "Myofascial Pain Syndromes",
+                "scope": "Dor muscular em várias regiões do corpo que pode ser reproduzida por pressão em PONTOS-GATILHO, endurecimentos localizados no tecido muscular esquelético. A dor é referida em um local distante dos pon",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C05.651.550"
+                ]
+              },
+              {
+                "id": "D016603",
+                "term": "Síndrome de Eosinofilia-Mialgia",
+                "term_en": "Eosinophilia-Myalgia Syndrome",
+                "scope": "Síndrome sistêmica complexa com componentes inflamatórios e autoimunes que afetam a pele, fáscia, músculo, nervo, vasos sanguíneos, pulmão e coração. As características diagnósticas geralmente incluem",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C05.651.290",
+                  "C10.668.491.050"
+                ]
+              },
+              {
+                "id": "D018908",
+                "term": "Debilidade Muscular",
+                "term_en": "Muscle Weakness",
+                "scope": "Queixa vaga de debilidade, fadiga e exaustão que é atribuída à fraqueza de vários músculos. A fraqueza pode ser caracterizada como subaguda ou crônica, frequentemente progressiva, e é a manifestação d",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C05.651.515",
+                  "C10.597.613.593"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Osteoarthritis",
+            "candidates": [
+              {
+                "id": "D010003",
+                "term": "Osteoartrite",
+                "term_en": "Osteoarthritis",
+                "scope": "Doença articular degenerativa e progressiva que é a forma mais comum de artrite, especialmente em pessoas idosas. Acredita-se que a doença não resulta do processo de envelhecimento, mas de mudanças bi",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C05.550.114.606",
+                  "C05.799.613"
+                ]
+              },
+              {
+                "id": "D020370",
+                "term": "Osteoartrite do Joelho",
+                "term_en": "Osteoarthritis, Knee",
+                "scope": "Doença degenerativa não inflamatória da articulação do joelho que consiste de três grandes categorias: afecções que bloqueiam o movimento sincrônico normal, afecções que produzem vias anormais de movi",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C05.550.114.606.500",
+                  "C05.799.613.500"
+                ]
+              },
+              {
+                "id": "D055013",
+                "term": "Osteoartrite da Coluna Vertebral",
+                "term_en": "Osteoarthritis, Spine",
+                "scope": "Doença articular degenerativa envolvendo a COLUNA VERTEBRAL. É caracterizada por deterioração progressiva da CARTILAGEM ARTICULAR espinhal, geralmente com espessamento do osso subcondral e crescimento",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C05.116.900.853.625.399",
+                  "C05.550.114.606.750"
+                ]
+              },
+              {
+                "id": "D015207",
+                "term": "Osteoartrite do Quadril",
+                "term_en": "Osteoarthritis, Hip",
+                "scope": "A doença degenerativa não inflamatória da articulação do quadril que normalmente aparece em pessoas de meia idade ou em idosos. Ela é caracterizada por distúrbios do crescimento ou da maturação na cab",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C05.550.114.606.400",
+                  "C05.799.613.400"
+                ]
+              },
+              {
+                "id": "D055676",
+                "term": "Viscossuplementação",
+                "term_en": "Viscosupplementation",
+                "scope": "Tratamento terapêutico que envolve tipicamente INJEÇÕES INTRA-ARTICULARES de ÁCIDO HIALURÔNICO e compostos relacionados. Este procedimento é usado comumente para o tratamento de OSTEOARTRITE, sendo o ",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.319.267.530.380.500",
+                  "E02.718.875"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Knee Joint",
+            "candidates": [
+              {
+                "id": "D007719",
+                "term": "Articulação do Joelho",
+                "term_en": "Knee Joint",
+                "scope": "Conexão articular sinovial formada entre os ossos do FÊMUR, TÍBIA e PATELA.",
+                "categoria": "Anatomia",
+                "arvore": [
+                  "A02.835.583.475"
+                ]
+              },
+              {
+                "id": "D007717",
+                "term": "Joelho",
+                "term_en": "Knee",
+                "scope": "Região na extremidade inferior que envolve imediatamente e inclui a ARTICULAÇÃO DO JOELHO.",
+                "categoria": "Anatomia",
+                "arvore": [
+                  "A01.378.610.450"
+                ]
+              },
+              {
+                "id": "D013264",
+                "term": "Joelho de Quadrúpedes",
+                "term_en": "Stifle",
+                "scope": "Em cavalos, gados e outros quadrúpedes, é a articulação entre o fêmur e a tíbia, correspondendo ao joelho humano.",
+                "categoria": "Anatomia",
+                "arvore": [
+                  "A13.473.683"
+                ]
+              },
+              {
+                "id": "D057071",
+                "term": "Articulação Patelofemoral",
+                "term_en": "Patellofemoral Joint",
+                "scope": "Articulação entre a superfície articular da PATELA e a superfície patelar do FÊMUR.",
+                "categoria": "Anatomia",
+                "arvore": [
+                  "A02.835.583.475.650"
+                ]
+              },
+              {
+                "id": "D007718",
+                "term": "Traumatismos do Joelho",
+                "term_en": "Knee Injuries",
+                "scope": "Traumatismos do joelho ou junção do joelho.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C26.558.554"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Arthralgia",
+            "candidates": [
+              {
+                "id": "D018771",
+                "term": "Artralgia",
+                "term_en": "Arthralgia",
+                "scope": "Dor na articulação.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C05.550.091",
+                  "C23.888.592.612.094"
+                ]
+              },
+              {
+                "id": "D001168",
+                "term": "Artrite",
+                "term_en": "Arthritis",
+                "scope": "Inflamação aguda ou crônica das ARTICULAÇÕES.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C05.550.114"
+                ]
+              },
+              {
+                "id": "D063806",
+                "term": "Mialgia",
+                "term_en": "Myalgia",
+                "scope": "Sensação dolorosa nos músculos.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C05.651.542",
+                  "C10.668.491.525"
+                ]
+              },
+              {
+                "id": "D005356",
+                "term": "Fibromialgia",
+                "term_en": "Fibromyalgia",
+                "scope": "Síndrome reumática comum, não articular, caracterizada por mialgia e pontos múltiplos de dor muscular focal à palpação (pontos desencadeantes). A dor muscular é tipicamente agravada por inatividade ou",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C05.651.324",
+                  "C05.799.321"
+                ]
+              },
+              {
+                "id": "D001170",
+                "term": "Artrite Infecciosa",
+                "term_en": "Arthritis, Infectious",
+                "scope": "Artrite causada por BACTÉRIA, RICKETTSIA, MYCOPLASMA, VÍRUS, FUNGOS ou PARASITAS.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.100",
+                  "C05.550.114.099"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Middle Aged",
+            "candidates": [
+              {
+                "id": "D008875",
+                "term": "Pessoa de Meia-Idade",
+                "term_en": "Middle Aged",
+                "scope": "Adulto com idade entre 45 e 64 anos.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.060.116.630"
+                ]
+              },
+              {
+                "id": "D000087742",
+                "term": "Octogenários",
+                "term_en": "Octogenarians",
+                "scope": "Pessoas entre 80 e 89 anos de idade.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.060.116.100.080.750"
+                ]
+              },
+              {
+                "id": "D000368",
+                "term": "Idoso",
+                "term_en": "Aged",
+                "scope": "Pessoa de 65 anos de idade ou mais. Para uma pessoa com mais de 79 anos, IDOSO DE 80 ANOS OU MAIS está disponível.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.060.116.100"
+                ]
+              },
+              {
+                "id": "D000328",
+                "term": "Adulto",
+                "term_en": "Adult",
+                "scope": "Pessoa que atingiu crescimento total ou maturidade. Adultos vão dos 19 até 44 anos de idade. Para uma pessoa entre 19 e 24 anos, está disponível o termo ADULTO JOVEM.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.060.116"
+                ]
+              },
+              {
+                "id": "D000067562",
+                "term": "Transtornos de Início Tardio",
+                "term_en": "Late Onset Disorders",
+                "scope": "Condições patológicas (distúrbios, SÍNDROMES ou DOENÇAS) cujos SINAIS E SINTOMAS se manifestam tardiamente na vida de um indivíduo.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.550.291.883"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Sleep Wake Disorders",
+            "candidates": [
+              {
+                "id": "D012893",
+                "term": "Transtornos do Sono-Vigília",
+                "term_en": "Sleep Wake Disorders",
+                "scope": "Esquema ou padrão vigíla-sono associados com o RITMO CIRCADIANO, que afeta a duração, o horário e/ou a rigidez do ciclo sono-vigília relativos ao ciclo dia/noite.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.886",
+                  "C23.888.592.796"
+                ]
+              },
+              {
+                "id": "D020922",
+                "term": "Transtornos da Transição Sono-Vigília",
+                "term_en": "Sleep-Wake Transition Disorders",
+                "scope": "Parassonias caracterizadas por anormalidades comportamentais que ocorrem durante a transição entre a vigília e o sono (ou entre o sono e a vigília).",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.886.659.700",
+                  "F03.870.664.700"
+                ]
+              },
+              {
+                "id": "D020921",
+                "term": "Transtornos do Despertar do Sono",
+                "term_en": "Sleep Arousal Disorders",
+                "scope": "Transtornos do sono caracterizados por despertar deficiente dos estágios mais profundos de sono (geralmente os estágios III ou IV do sono).",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.886.659.635",
+                  "F03.870.664.635"
+                ]
+              },
+              {
+                "id": "D020178",
+                "term": "Transtornos do Sono do Ritmo Circadiano",
+                "term_en": "Sleep Disorders, Circadian Rhythm",
+                "scope": "Dissonias associadas com interrupção do ciclo normal de sono-vigília de 24 horas, secundárias a viagens (ex., SÍNDROME DE JET LAG), trabalho pesado ou outras causas.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.281.800",
+                  "C10.886.425.200"
+                ]
+              },
+              {
+                "id": "D006970",
+                "term": "Distúrbios do Sono por Sonolência Excessiva",
+                "term_en": "Disorders of Excessive Somnolence",
+                "scope": "Transtornos caracterizados por hipersonolência durante o horário normal de despertar, podendo prejudicar o funcionamento cognitivo. Os subtipos incluem transtornos de hipersonia primária (ex., HIPERSO",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.886.425.800.200",
+                  "F03.870.400.800.200"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D005356",
+          "term": "Fibromialgia"
+        },
+        {
+          "id": "D010003",
+          "term": "Osteoartrite"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D007719",
+          "term": "Articulação do Joelho"
+        },
+        {
+          "id": "D018771",
+          "term": "Artralgia"
+        },
+        {
+          "id": "D008875",
+          "term": "Pessoa de Meia-Idade"
+        },
+        {
+          "id": "D012893",
+          "term": "Transtornos do Sono-Vigília"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 4,
+    "total_candidates": 30,
+    "final_primary": 2,
+    "final_secondary": 4
+  }
+}

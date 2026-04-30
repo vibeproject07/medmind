@@ -1,0 +1,800 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D004417",
+        "term": "Dispneia",
+        "name_en": "Dyspnea",
+        "scope_note": "A respiração com dificuldade ou com esforço.",
+        "tree_ids": [
+          "C08.618.326",
+          "C23.888.852.371"
+        ],
+        "hierarchy_path": "Doenças › C08.618.326",
+        "parents": [
+          {
+            "id": "D012120",
+            "term": "Transtornos Respiratórios"
+          },
+          {
+            "id": "D012818",
+            "term": "Sinais e Sintomas Respiratórios"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000092129",
+            "term": "Síndrome de Platipneia Ortodeoxia"
+          },
+          {
+            "id": "D004418",
+            "term": "Dispneia Paroxística"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D029424",
+        "term": "Doença Pulmonar Obstrutiva Crônica",
+        "name_en": "Pulmonary Disease, Chronic Obstructive",
+        "scope_note": "Doença obstrutiva crônica de fluxo difuso e irreversível. Entre as subcategorias da DPOC estão BRONQUITE CRÔNICA e ENFISEMA PULMONAR.",
+        "tree_ids": [
+          "C08.381.495.389",
+          "C23.550.291.500.875"
+        ],
+        "hierarchy_path": "Doenças › C08.381.495.389",
+        "parents": [
+          {
+            "id": "D008173",
+            "term": "Pneumopatias Obstrutivas"
+          },
+          {
+            "id": "D002908",
+            "term": "Doença Crônica"
+          }
+        ],
+        "children": [
+          {
+            "id": "D011656",
+            "term": "Enfisema Pulmonar"
+          },
+          {
+            "id": "D000080445",
+            "term": "Síndrome de Sobreposição da Doença Pulmonar Obstrutiva Crônica e Asma"
+          },
+          {
+            "id": "D029481",
+            "term": "Bronquite Crônica"
+          }
+        ],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D016902",
+        "term": "Poluição do Ar em Ambientes Fechados",
+        "name_en": "Air Pollution, Indoor",
+        "scope_note": "Contaminação de ar em recinto fechado.",
+        "tree_ids": [
+          "N06.850.460.100.080",
+          "SP4.606.806.385.614"
+        ],
+        "hierarchy_path": "Saúde › N06.850.460.100.080",
+        "parents": [
+          {
+            "id": "D000397",
+            "term": "Poluição do Ar"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D001993",
+        "term": "Broncodilatadores",
+        "name_en": "Bronchodilator Agents",
+        "scope_note": "Substâncias que causam um aumento na expansão dos brônquios ou tubos brônquicos.",
+        "tree_ids": [
+          "D27.505.696.663.050.110",
+          "D27.505.954.796.050.100"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D27.505.696.663.050.110",
+        "parents": [
+          {
+            "id": "D001337",
+            "term": "Fármacos do Sistema Nervoso Autônomo"
+          },
+          {
+            "id": "D018927",
+            "term": "Antiasmáticos"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D013147",
+        "term": "Espirometria",
+        "name_en": "Spirometry",
+        "scope_note": "Medida do volume de ar inspirado ou expirado pelo pulmão.",
+        "tree_ids": [
+          "E01.370.386.700.750"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.386.700.750",
+        "parents": [
+          {
+            "id": "D012129",
+            "term": "Testes de Função Respiratória"
+          }
+        ],
+        "children": [
+          {
+            "id": "D002000",
+            "term": "Broncospirometria"
+          }
+        ],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Pulmonary Disease, Chronic Obstructive",
+      "Dyspnea"
+    ],
+    "secondary": [
+      "Spirometry",
+      "Bronchodilator Agents",
+      "Air Pollution, Indoor"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Dyspnea",
+          "candidates": [
+            {
+              "id": "D004417",
+              "term": "Dispneia",
+              "term_en": "Dyspnea",
+              "scope": "A respiração com dificuldade ou com esforço.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.618.326",
+                "C23.888.852.371"
+              ]
+            },
+            {
+              "id": "D004418",
+              "term": "Dispneia Paroxística",
+              "term_en": "Dyspnea, Paroxysmal",
+              "scope": "Transtorno caracterizado por súbitos ataques de desconforto respiratório, em pacientes em repouso com INSUFICIÊNCIA CARDÍACA e EDEMA PULMONAR. Geralmente ocorre a noite após várias horas de sono em po",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.618.326.396",
+                "C14.280.434.313"
+              ]
+            },
+            {
+              "id": "D059246",
+              "term": "Taquipneia",
+              "term_en": "Tachypnea",
+              "scope": "TAXA RESPIRATÓRIA aumentada.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.618.961",
+                "C23.888.852.944"
+              ]
+            },
+            {
+              "id": "D000092129",
+              "term": "Síndrome de Platipneia Ortodeoxia",
+              "term_en": "Platypnea Orthodeoxia Syndrome",
+              "scope": "Dispnéia ortostática e queda da saturação sanguínea de oxigênio ao se levantar que regride ao assumir a posição deitada.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.618.326.698",
+                "C23.888.852.079.898"
+              ]
+            },
+            {
+              "id": "D002639",
+              "term": "Respiração de Cheyne-Stokes",
+              "term_en": "Cheyne-Stokes Respiration",
+              "scope": "Padrão anormal de respiração, caracterizado por períodos alternados de apneia e respiração rápida e profunda. O ciclo começa com respirações lentas e superficiais que gradualmente aumentam em amplitud",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.618.182",
+                "C23.888.852.227"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Pulmonary Disease, Chronic Obstructive",
+          "candidates": [
+            {
+              "id": "D029424",
+              "term": "Doença Pulmonar Obstrutiva Crônica",
+              "term_en": "Pulmonary Disease, Chronic Obstructive",
+              "scope": "Doença obstrutiva crônica de fluxo difuso e irreversível. Entre as subcategorias da DPOC estão BRONQUITE CRÔNICA e ENFISEMA PULMONAR.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.381.495.389",
+                "C23.550.291.500.875"
+              ]
+            },
+            {
+              "id": "D008173",
+              "term": "Pneumopatias Obstrutivas",
+              "term_en": "Lung Diseases, Obstructive",
+              "scope": "Qualquer transtorno caracterizado pela obstrução das vias aéreas nos pulmões. A OBSTRUÇÃO DAS VIAS RESPIRATÓRIAS pode ser crônica, intermitente ou persistente.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.381.495"
+              ]
+            },
+            {
+              "id": "D011660",
+              "term": "Doença Cardiopulmonar",
+              "term_en": "Pulmonary Heart Disease",
+              "scope": "Hipertrofia e dilatação do VENTRÍCULO DIREITO do coração causada por HIPERTENSÃO PULMONAR. Esta afecção está frequentemente associada com parênquima pulmonar ou doenças vasculares, como DOENÇA PULMONA",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.280.832"
+              ]
+            },
+            {
+              "id": "D000080445",
+              "term": "Síndrome de Sobreposição da Doença Pulmonar Obstrutiva Crônica e Asma",
+              "term_en": "Asthma-Chronic Obstructive Pulmonary Disease Overlap Syndrome",
+              "scope": "Síndrome com características clínicas tanto da ASMA como da COPD.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.127.108.688",
+                "C08.381.495.108.500"
+              ]
+            },
+            {
+              "id": "D011656",
+              "term": "Enfisema Pulmonar",
+              "term_en": "Pulmonary Emphysema",
+              "scope": "Alargamento dos espaços aéreos distais aos BRONQUÍOLOS TERMINAIS, onde normalmente ocorre a troca de gás. Isto geralmente é devido à destruição da parede alveolar. O enfisema pulmonar pode ser classif",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.381.495.389.750",
+                "C23.550.291.500.875.875"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Air Pollution, Indoor",
+          "candidates": [
+            {
+              "id": "D016902",
+              "term": "Poluição do Ar em Ambientes Fechados",
+              "term_en": "Air Pollution, Indoor",
+              "scope": "Contaminação de ar em recinto fechado.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N06.850.460.100.080",
+                "SP4.606.806.385.614"
+              ]
+            },
+            {
+              "id": "DDCS051863",
+              "term": "Efeitos da Contaminação do Ar",
+              "term_en": "Air Contamination Effects",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.806.385.436"
+              ]
+            },
+            {
+              "id": "D000397",
+              "term": "Poluição do Ar",
+              "term_en": "Air Pollution",
+              "scope": "Presença de contaminantes ou substâncias poluidoras no ar (POLUENTES DO AR) que interferem com a saúde e o bem-estar humano, ou causam efeitos danosos no meio ambiente. Entre estas substâncias podem e",
+              "categoria": "Saúde",
+              "arvore": [
+                "N06.850.460.100",
+                "SP4.606.806.385"
+              ]
+            },
+            {
+              "id": "D000395",
+              "term": "Poluentes Ocupacionais do Ar",
+              "term_en": "Air Pollutants, Occupational",
+              "scope": "Matéria tóxica no ar relacionada ao trabalho. São geralmente produzidos pela natureza específica da ocupação.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.888.284.101.268",
+                "SP4.606.806.945.200.505"
+              ]
+            },
+            {
+              "id": "D014028",
+              "term": "Poluição por Fumaça de Tabaco",
+              "term_en": "Tobacco Smoke Pollution",
+              "scope": "Contaminação do ar por fumaça de tabaco.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D20.633.937.680",
+                "N06.850.460.100.555"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Bronchodilator Agents",
+          "candidates": [
+            {
+              "id": "D001993",
+              "term": "Broncodilatadores",
+              "term_en": "Bronchodilator Agents",
+              "scope": "Substâncias que causam um aumento na expansão dos brônquios ou tubos brônquicos.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.696.663.050.110",
+                "D27.505.954.796.050.100"
+              ]
+            },
+            {
+              "id": "D018927",
+              "term": "Antiasmáticos",
+              "term_en": "Anti-Asthmatic Agents",
+              "scope": "Drogas usadas para tratar a asma.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.954.796.050"
+              ]
+            },
+            {
+              "id": "D016085",
+              "term": "Broncoconstritores",
+              "term_en": "Bronchoconstrictor Agents",
+              "scope": "Agentes que causam o estreitamento da luz de um brônquio ou bronquíolo.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.696.663.050.100",
+                "D27.505.954.796.170"
+              ]
+            },
+            {
+              "id": "D058666",
+              "term": "Agonistas de Receptores Adrenérgicos beta 2",
+              "term_en": "Adrenergic beta-2 Receptor Agonists",
+              "scope": "Compostos que se ligam a RECEPTORES ADRENÉRGICOS BETA 2 e os ativam.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.519.625.050.100.200.200",
+                "D27.505.696.577.050.100.200.200"
+              ]
+            },
+            {
+              "id": "D014213",
+              "term": "Tretoquinol",
+              "term_en": "Tretoquinol",
+              "scope": "Agonista beta-adrenérgico usado como agente broncodilatador na terapia da asma.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D03.633.100.531.085.888"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Spirometry",
+          "candidates": [
+            {
+              "id": "D013147",
+              "term": "Espirometria",
+              "term_en": "Spirometry",
+              "scope": "Medida do volume de ar inspirado ou expirado pelo pulmão.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.386.700.750"
+              ]
+            },
+            {
+              "id": "DDCS057953",
+              "term": "Tele-Espirometria",
+              "term_en": "Telespirometry",
+              "scope": "A telespirometria utiliza um pequeno dispositivo portátil que fornece testes para espirometria e oximetria. A oximetria mede a saturação de oxigênio, uma medida da porcentagem de células vermelhas do ",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP2.840.566.330"
+              ]
+            },
+            {
+              "id": "D002000",
+              "term": "Broncospirometria",
+              "term_en": "Bronchospirometry",
+              "scope": "Técnica espirométrica na qual o volume de ar respirado nos pulmões direito e esquerdo é registrado separadamente.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.386.700.750.100"
+              ]
+            },
+            {
+              "id": "D000072277",
+              "term": "Pressões Respiratórias Máximas",
+              "term_en": "Maximal Respiratory Pressures",
+              "scope": "Teste de função respiratória que inclui a pressão inspiratória máxima e a pressão expiratória máxima. É determinado por ESPIROMETRIA que mede o VOLUME RESIDUAL do paciente e a CAPACIDADE PULMONAR TOTA",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.386.700.550"
+              ]
+            },
+            {
+              "id": "D008176",
+              "term": "Medidas de Volume Pulmonar",
+              "term_en": "Lung Volume Measurements",
+              "scope": "Medida da quantidade de ar que os pulmões podem conter em vários pontos no ciclo respiratório.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.386.700.485"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Pulmonary Disease, Chronic Obstructive",
+        "Dyspnea"
+      ],
+      "secondary": [
+        "Spirometry",
+        "Bronchodilator Agents",
+        "Air Pollution, Indoor"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Dyspnea",
+            "candidates": [
+              {
+                "id": "D004417",
+                "term": "Dispneia",
+                "term_en": "Dyspnea",
+                "scope": "A respiração com dificuldade ou com esforço.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.618.326",
+                  "C23.888.852.371"
+                ]
+              },
+              {
+                "id": "D004418",
+                "term": "Dispneia Paroxística",
+                "term_en": "Dyspnea, Paroxysmal",
+                "scope": "Transtorno caracterizado por súbitos ataques de desconforto respiratório, em pacientes em repouso com INSUFICIÊNCIA CARDÍACA e EDEMA PULMONAR. Geralmente ocorre a noite após várias horas de sono em po",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.618.326.396",
+                  "C14.280.434.313"
+                ]
+              },
+              {
+                "id": "D059246",
+                "term": "Taquipneia",
+                "term_en": "Tachypnea",
+                "scope": "TAXA RESPIRATÓRIA aumentada.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.618.961",
+                  "C23.888.852.944"
+                ]
+              },
+              {
+                "id": "D000092129",
+                "term": "Síndrome de Platipneia Ortodeoxia",
+                "term_en": "Platypnea Orthodeoxia Syndrome",
+                "scope": "Dispnéia ortostática e queda da saturação sanguínea de oxigênio ao se levantar que regride ao assumir a posição deitada.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.618.326.698",
+                  "C23.888.852.079.898"
+                ]
+              },
+              {
+                "id": "D002639",
+                "term": "Respiração de Cheyne-Stokes",
+                "term_en": "Cheyne-Stokes Respiration",
+                "scope": "Padrão anormal de respiração, caracterizado por períodos alternados de apneia e respiração rápida e profunda. O ciclo começa com respirações lentas e superficiais que gradualmente aumentam em amplitud",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.618.182",
+                  "C23.888.852.227"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Pulmonary Disease, Chronic Obstructive",
+            "candidates": [
+              {
+                "id": "D029424",
+                "term": "Doença Pulmonar Obstrutiva Crônica",
+                "term_en": "Pulmonary Disease, Chronic Obstructive",
+                "scope": "Doença obstrutiva crônica de fluxo difuso e irreversível. Entre as subcategorias da DPOC estão BRONQUITE CRÔNICA e ENFISEMA PULMONAR.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.381.495.389",
+                  "C23.550.291.500.875"
+                ]
+              },
+              {
+                "id": "D008173",
+                "term": "Pneumopatias Obstrutivas",
+                "term_en": "Lung Diseases, Obstructive",
+                "scope": "Qualquer transtorno caracterizado pela obstrução das vias aéreas nos pulmões. A OBSTRUÇÃO DAS VIAS RESPIRATÓRIAS pode ser crônica, intermitente ou persistente.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.381.495"
+                ]
+              },
+              {
+                "id": "D011660",
+                "term": "Doença Cardiopulmonar",
+                "term_en": "Pulmonary Heart Disease",
+                "scope": "Hipertrofia e dilatação do VENTRÍCULO DIREITO do coração causada por HIPERTENSÃO PULMONAR. Esta afecção está frequentemente associada com parênquima pulmonar ou doenças vasculares, como DOENÇA PULMONA",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.280.832"
+                ]
+              },
+              {
+                "id": "D000080445",
+                "term": "Síndrome de Sobreposição da Doença Pulmonar Obstrutiva Crônica e Asma",
+                "term_en": "Asthma-Chronic Obstructive Pulmonary Disease Overlap Syndrome",
+                "scope": "Síndrome com características clínicas tanto da ASMA como da COPD.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.127.108.688",
+                  "C08.381.495.108.500"
+                ]
+              },
+              {
+                "id": "D011656",
+                "term": "Enfisema Pulmonar",
+                "term_en": "Pulmonary Emphysema",
+                "scope": "Alargamento dos espaços aéreos distais aos BRONQUÍOLOS TERMINAIS, onde normalmente ocorre a troca de gás. Isto geralmente é devido à destruição da parede alveolar. O enfisema pulmonar pode ser classif",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.381.495.389.750",
+                  "C23.550.291.500.875.875"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Air Pollution, Indoor",
+            "candidates": [
+              {
+                "id": "D016902",
+                "term": "Poluição do Ar em Ambientes Fechados",
+                "term_en": "Air Pollution, Indoor",
+                "scope": "Contaminação de ar em recinto fechado.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N06.850.460.100.080",
+                  "SP4.606.806.385.614"
+                ]
+              },
+              {
+                "id": "DDCS051863",
+                "term": "Efeitos da Contaminação do Ar",
+                "term_en": "Air Contamination Effects",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.806.385.436"
+                ]
+              },
+              {
+                "id": "D000397",
+                "term": "Poluição do Ar",
+                "term_en": "Air Pollution",
+                "scope": "Presença de contaminantes ou substâncias poluidoras no ar (POLUENTES DO AR) que interferem com a saúde e o bem-estar humano, ou causam efeitos danosos no meio ambiente. Entre estas substâncias podem e",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N06.850.460.100",
+                  "SP4.606.806.385"
+                ]
+              },
+              {
+                "id": "D000395",
+                "term": "Poluentes Ocupacionais do Ar",
+                "term_en": "Air Pollutants, Occupational",
+                "scope": "Matéria tóxica no ar relacionada ao trabalho. São geralmente produzidos pela natureza específica da ocupação.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.888.284.101.268",
+                  "SP4.606.806.945.200.505"
+                ]
+              },
+              {
+                "id": "D014028",
+                "term": "Poluição por Fumaça de Tabaco",
+                "term_en": "Tobacco Smoke Pollution",
+                "scope": "Contaminação do ar por fumaça de tabaco.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D20.633.937.680",
+                  "N06.850.460.100.555"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Bronchodilator Agents",
+            "candidates": [
+              {
+                "id": "D001993",
+                "term": "Broncodilatadores",
+                "term_en": "Bronchodilator Agents",
+                "scope": "Substâncias que causam um aumento na expansão dos brônquios ou tubos brônquicos.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.696.663.050.110",
+                  "D27.505.954.796.050.100"
+                ]
+              },
+              {
+                "id": "D018927",
+                "term": "Antiasmáticos",
+                "term_en": "Anti-Asthmatic Agents",
+                "scope": "Drogas usadas para tratar a asma.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.954.796.050"
+                ]
+              },
+              {
+                "id": "D016085",
+                "term": "Broncoconstritores",
+                "term_en": "Bronchoconstrictor Agents",
+                "scope": "Agentes que causam o estreitamento da luz de um brônquio ou bronquíolo.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.696.663.050.100",
+                  "D27.505.954.796.170"
+                ]
+              },
+              {
+                "id": "D058666",
+                "term": "Agonistas de Receptores Adrenérgicos beta 2",
+                "term_en": "Adrenergic beta-2 Receptor Agonists",
+                "scope": "Compostos que se ligam a RECEPTORES ADRENÉRGICOS BETA 2 e os ativam.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.519.625.050.100.200.200",
+                  "D27.505.696.577.050.100.200.200"
+                ]
+              },
+              {
+                "id": "D014213",
+                "term": "Tretoquinol",
+                "term_en": "Tretoquinol",
+                "scope": "Agonista beta-adrenérgico usado como agente broncodilatador na terapia da asma.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D03.633.100.531.085.888"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Spirometry",
+            "candidates": [
+              {
+                "id": "D013147",
+                "term": "Espirometria",
+                "term_en": "Spirometry",
+                "scope": "Medida do volume de ar inspirado ou expirado pelo pulmão.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.386.700.750"
+                ]
+              },
+              {
+                "id": "DDCS057953",
+                "term": "Tele-Espirometria",
+                "term_en": "Telespirometry",
+                "scope": "A telespirometria utiliza um pequeno dispositivo portátil que fornece testes para espirometria e oximetria. A oximetria mede a saturação de oxigênio, uma medida da porcentagem de células vermelhas do ",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP2.840.566.330"
+                ]
+              },
+              {
+                "id": "D002000",
+                "term": "Broncospirometria",
+                "term_en": "Bronchospirometry",
+                "scope": "Técnica espirométrica na qual o volume de ar respirado nos pulmões direito e esquerdo é registrado separadamente.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.386.700.750.100"
+                ]
+              },
+              {
+                "id": "D000072277",
+                "term": "Pressões Respiratórias Máximas",
+                "term_en": "Maximal Respiratory Pressures",
+                "scope": "Teste de função respiratória que inclui a pressão inspiratória máxima e a pressão expiratória máxima. É determinado por ESPIROMETRIA que mede o VOLUME RESIDUAL do paciente e a CAPACIDADE PULMONAR TOTA",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.386.700.550"
+                ]
+              },
+              {
+                "id": "D008176",
+                "term": "Medidas de Volume Pulmonar",
+                "term_en": "Lung Volume Measurements",
+                "scope": "Medida da quantidade de ar que os pulmões podem conter em vários pontos no ciclo respiratório.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.386.700.485"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D004417",
+          "term": "Dispneia"
+        },
+        {
+          "id": "D029424",
+          "term": "Doença Pulmonar Obstrutiva Crônica"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D016902",
+          "term": "Poluição do Ar em Ambientes Fechados"
+        },
+        {
+          "id": "D001993",
+          "term": "Broncodilatadores"
+        },
+        {
+          "id": "D013147",
+          "term": "Espirometria"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 3,
+    "total_candidates": 25,
+    "final_primary": 2,
+    "final_secondary": 3
+  }
+}

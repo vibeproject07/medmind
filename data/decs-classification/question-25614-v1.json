@@ -1,0 +1,83 @@
+{
+  "result": [
+    {
+      "term": "Bloqueio Atrioventricular",
+      "code": "D054537",
+      "tree_ids": [
+        "C14.280.067.558.230",
+        "C14.280.123.500.230",
+        "C23.550.073.425.062"
+      ],
+      "hierarchy_path": "Doenças › C14.280.067.558.230",
+      "scope_note": "Bloqueio na condução do impulso dos ÁTRIOS DO CORAÇÃO para os VENTRÍCULOS DO CORAÇÃO. O bloqueio AV pode significar retardo na condução do impulso ou bloqueio total.",
+      "name_en": "Atrioventricular Block",
+      "role": "primary"
+    },
+    {
+      "term": "Bradicardia",
+      "code": "D001919",
+      "tree_ids": [
+        "C14.280.067.319",
+        "C23.550.073.300"
+      ],
+      "hierarchy_path": "Doenças › C14.280.067.319",
+      "scope_note": "Arritmias cardíacas caracterizadas por FREQUÊNCIA CARDÍACA excessivamente baixa, normalmente abaixo de 50 batimentos por minuto em humanos adultos. Podem ser amplamente classificadas na disfunção do NÓ SINOATRIAL e no BLOQUEIO ATRIOVENTRICULAR.",
+      "name_en": "Bradycardia",
+      "role": "primary"
+    },
+    {
+      "term": "Marca-Passo Artificial",
+      "code": "D010138",
+      "tree_ids": [
+        "E07.305.250.750"
+      ],
+      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E07.305.250.750",
+      "scope_note": "Dispositivo desenhado para estimular, por impulsos elétricos, a contração dos músculos cardíacos. Pode ser temporário (externo) ou permanente (interno ou interno-externo).",
+      "name_en": "Pacemaker, Artificial",
+      "role": "secondary"
+    },
+    {
+      "term": "Eletrocardiografia",
+      "code": "D004562",
+      "tree_ids": [
+        "E01.370.370.380.240",
+        "E01.370.405.240"
+      ],
+      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.370.380.240",
+      "scope_note": "Registro do momento-a-momento das forças eletromotrizes do CORAÇÃO enquanto projetadas a vários locais da superfície corporal delineadas como uma função escalar do tempo. O registro é monitorado por um traçado sobre papel carta em movimento lento ou por observação em um cardioscópio que é um MONITOR DE TUBO DE RAIOS CATÓDICOS.",
+      "name_en": "Electrocardiography",
+      "role": "secondary"
+    },
+    {
+      "term": "Síncope",
+      "code": "D013575",
+      "tree_ids": [
+        "C10.597.606.358.800.600",
+        "C23.888.592.604.359.800.600"
+      ],
+      "hierarchy_path": "Doenças › C10.597.606.358.800.600",
+      "scope_note": "Perda transitória da consciência e do tônus postural, causada por diminuição do fluxo sanguíneo ao cérebro (i. é, ISQUEMIA CEREBRAL). A pré-síncope refere-se à sensação de cabeça leve e perda da força que precede um evento de síncope, ou acompanha uma síncope incompleta. (Tradução livre do original: Adams et al., Principles of Neurology, 6th ed, pp367-9).",
+      "name_en": "Syncope",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Atrioventricular Block",
+      "Bradycardia"
+    ],
+    "secondary": [
+      "Syncope",
+      "Pacemaker, Artificial",
+      "Hemodynamic Instability",
+      "Electrocardiography"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 2,
+    "secondary_terms": 4,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 1,
+    "final_count": 5
+  }
+}

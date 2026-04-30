@@ -1,0 +1,952 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D006261",
+        "term": "Cefaleia",
+        "name_en": "Headache",
+        "scope_note": "Sintoma de DOR na região craniana. Pode ser uma ocorrência ou manifestação benigna isolada de uma ampla variedade de TRANSTORNOS DA CEFALEIA.",
+        "tree_ids": [
+          "C23.888.592.612.441",
+          "F02.830.816.444.441",
+          "G11.561.790.444.473"
+        ],
+        "hierarchy_path": "Doenças › C23.888.592.612.441",
+        "parents": [
+          {
+            "id": "D010146",
+            "term": "Dor"
+          }
+        ],
+        "children": [
+          {
+            "id": "D056124",
+            "term": "Síndrome do Ventrículo Colabado"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D012851",
+        "term": "Trombose dos Seios Intracranianos",
+        "name_en": "Sinus Thrombosis, Intracranial",
+        "scope_note": "Formação ou presença de um coágulo sanguíneo (TROMBO) nos SEIOS CRANIANOS, canais venosos revestidos por um grande endotélio, situados dentro do CRÂNIO. Os seios intracranianos, também chamados de seios venosos cranianos, incluem os seios sagital superior, cavernoso, lateral, petroso e muitos outros. A trombose do seio craniano pode levar a graves CEFALEIAS, CONVULSÕES e outras deficiências neurológicas.",
+        "tree_ids": [
+          "C10.228.140.300.525.425.500",
+          "C14.907.253.566.350.500",
+          "C14.907.355.590.213.350.500"
+        ],
+        "hierarchy_path": "Doenças › C10.228.140.300.525.425.500",
+        "parents": [
+          {
+            "id": "D020767",
+            "term": "Trombose Intracraniana"
+          }
+        ],
+        "children": [
+          {
+            "id": "D020226",
+            "term": "Trombose do Corpo Cavernoso"
+          },
+          {
+            "id": "D020225",
+            "term": "Trombose do Seio Sagital"
+          },
+          {
+            "id": "D020227",
+            "term": "Trombose do Seio Lateral"
+          }
+        ],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D000073869",
+        "term": "Fumar Tabaco",
+        "name_en": "Tobacco Smoking",
+        "scope_note": "Processo de FUMAR específico do TABACO.",
+        "tree_ids": [
+          "F01.145.805.375",
+          "F01.145.958.875"
+        ],
+        "hierarchy_path": "Psiquiatria e Psicologia › F01.145.805.375",
+        "parents": [
+          {
+            "id": "D012907",
+            "term": "Fumar"
+          },
+          {
+            "id": "D064424",
+            "term": "Uso de Tabaco"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000073865",
+            "term": "Fumar Cigarros"
+          },
+          {
+            "id": "D000073863",
+            "term": "Fumar Charutos"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D003277",
+        "term": "Anticoncepcionais Orais Combinados",
+        "name_en": "Contraceptives, Oral, Combined",
+        "scope_note": "Combinações fixas de drogas administradas oralmente com propósitos anticoncepcionais.",
+        "tree_ids": [
+          "D26.310.360",
+          "D27.505.696.875.360.276.210.100",
+          "D27.505.954.705.360.276.210.100"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D26.310.360",
+        "parents": [
+          {
+            "id": "D004338",
+            "term": "Combinação de Medicamentos"
+          },
+          {
+            "id": "D003276",
+            "term": "Anticoncepcionais Orais"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D020326",
+        "term": "Enxaqueca sem Aura",
+        "name_en": "Migraine without Aura",
+        "scope_note": "Cefaleias recorrentes unilaterais pulsáteis, não precedidas ou acompanhadas de aura, em episódios que duram de 4-72 horas. São caracterizadas por DOR de intensidade moderada a severa, agravadas por atividade física e associadas a NÁUSEA e /ou FOTOFOBIA ou FONOFOBIA.",
+        "tree_ids": [
+          "C10.228.140.546.399.750.450"
+        ],
+        "hierarchy_path": "Doenças › C10.228.140.546.399.750.450",
+        "parents": [
+          {
+            "id": "D008881",
+            "term": "Transtornos de Enxaqueca"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D002533",
+        "term": "Angiografia Cerebral",
+        "name_en": "Cerebral Angiography",
+        "scope_note": "Radiografia do sistema vascular do cérebro, após injeção de um meio de contraste.",
+        "tree_ids": [
+          "E01.370.350.578.937.180",
+          "E01.370.350.700.060.180",
+          "E01.370.350.700.560.180",
+          "E01.370.370.050.180",
+          "E01.370.376.537.750.180",
+          "E05.629.937.180"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.350.578.937.180",
+        "parents": [
+          {
+            "id": "D009485",
+            "term": "Neurorradiografia"
+          },
+          {
+            "id": "D000792",
+            "term": "Angiografia"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Sinus Thrombosis, Intracranial",
+      "Headache"
+    ],
+    "secondary": [
+      "Contraceptives, Oral, Combined",
+      "Smoking",
+      "Migraine without Aura",
+      "Cerebral Angiography"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Headache",
+          "candidates": [
+            {
+              "id": "D006261",
+              "term": "Cefaleia",
+              "term_en": "Headache",
+              "scope": "Sintoma de DOR na região craniana. Pode ser uma ocorrência ou manifestação benigna isolada de uma ampla variedade de TRANSTORNOS DA CEFALEIA.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.888.592.612.441",
+                "F02.830.816.444.441"
+              ]
+            },
+            {
+              "id": "D020773",
+              "term": "Transtornos da Cefaleia",
+              "term_en": "Headache Disorders",
+              "scope": "Várias afecções com sintoma de CEFALEIA. Transtornos de cefaleia são classificados em dois grupos principais, tais como TRANSTORNOS PRIMÁRIOS DA CEFALEIA (baseados nas características dos sintomas da ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.228.140.546"
+              ]
+            },
+            {
+              "id": "D003027",
+              "term": "Cefaleia Histamínica",
+              "term_en": "Cluster Headache",
+              "scope": "Transtorno primário de cefaleia caracterizado por forte DOR, estritamente unilateral, nas regiões orbital, supraorbital e temporal (ou em qualquer combinação destes) com duração de 15 min a 3 h, ocorr",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.228.140.546.399.937.500"
+              ]
+            },
+            {
+              "id": "D051270",
+              "term": "Transtornos da Cefaleia Primários",
+              "term_en": "Headache Disorders, Primary",
+              "scope": "Afecções em que o sintoma primário é a CEFALEIA e esta não pode ser atribuída a quaisquer causas conhecidas.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.228.140.546.399"
+              ]
+            },
+            {
+              "id": "D020326",
+              "term": "Enxaqueca sem Aura",
+              "term_en": "Migraine without Aura",
+              "scope": "Cefaleias recorrentes unilaterais pulsáteis, não precedidas ou acompanhadas de aura, em episódios que duram de 4-72 horas. São caracterizadas por DOR de intensidade moderada a severa, agravadas por at",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.228.140.546.399.750.450"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Sinus Thrombosis, Intracranial",
+          "candidates": [
+            {
+              "id": "D012851",
+              "term": "Trombose dos Seios Intracranianos",
+              "term_en": "Sinus Thrombosis, Intracranial",
+              "scope": "Formação ou presença de um coágulo sanguíneo (TROMBO) nos SEIOS CRANIANOS, canais venosos revestidos por um grande endotélio, situados dentro do CRÂNIO. Os seios intracranianos, também chamados de sei",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.228.140.300.525.425.500",
+                "C14.907.253.566.350.500"
+              ]
+            },
+            {
+              "id": "D020767",
+              "term": "Trombose Intracraniana",
+              "term_en": "Intracranial Thrombosis",
+              "scope": "Formação ou presença de um coágulo (TROMBO) em um vaso sanguíneo dentro do CRÂNIO. A trombose intracraniana pode levar a oclusões trombóticas e INFARTO ENCEFÁLICO. A maioria das oclusões trombóticas e",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.228.140.300.525.425",
+                "C14.907.253.566.350"
+              ]
+            },
+            {
+              "id": "D020227",
+              "term": "Trombose do Seio Lateral",
+              "term_en": "Lateral Sinus Thrombosis",
+              "scope": "Formação ou presença de um coágulo sanguíneo (TROMBO) nos SEIOS LATERAIS. Esta afecção frequentemente está associada com infecções auditivas (OTITE MÉDIA ou MASTOIDITE) sem tratamento antibiótico. Em ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.228.140.300.525.425.500.562",
+                "C14.907.253.566.350.500.562"
+              ]
+            },
+            {
+              "id": "D020225",
+              "term": "Trombose do Seio Sagital",
+              "term_en": "Sagittal Sinus Thrombosis",
+              "scope": "Formação ou presença de um coágulo sanguíneo (TROMBO) no SEIO SAGITAL SUPERIOR ou seio sagital inferior. A trombose do seio sagital pode resultar de infecções, transtornos hematológicos, TRAUMA CRANIO",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.228.140.300.525.425.500.750",
+                "C14.907.253.566.350.500.750"
+              ]
+            },
+            {
+              "id": "D020226",
+              "term": "Trombose do Corpo Cavernoso",
+              "term_en": "Cavernous Sinus Thrombosis",
+              "scope": "Formação ou presença de um coágulo sanguíneo (TROMBO) no SEIO CAVERNOSO do encéfalo. Estão associadas com este estado as infecções dos seios paranasais e estruturas adjacentes, TRAUMA CRANIOCEREBRAL e",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.228.140.232.500",
+                "C10.228.140.300.525.425.500.375"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Smoking",
+          "candidates": [
+            {
+              "id": "D012907",
+              "term": "Fumar",
+              "term_en": "Smoking",
+              "scope": "Ato intencional ou deliberado de inalação e exalação de FUMAÇA de substâncias ou agentes queimados e segurados pela mão.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.145.805"
+              ]
+            },
+            {
+              "id": "D008385",
+              "term": "Fumar Maconha",
+              "term_en": "Marijuana Smoking",
+              "scope": "Ato de inalar e exalar a FUMAÇA da CANNABIS.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.145.610.875",
+                "F01.145.805.250.500"
+              ]
+            },
+            {
+              "id": "D000073869",
+              "term": "Fumar Tabaco",
+              "term_en": "Tobacco Smoking",
+              "scope": "Processo de FUMAR específico do TABACO.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.145.805.375",
+                "F01.145.958.875"
+              ]
+            },
+            {
+              "id": "D000073863",
+              "term": "Fumar Charutos",
+              "term_en": "Cigar Smoking",
+              "scope": "Hábito de FUMAR CHARUTOS.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.145.805.375.500",
+                "F01.145.958.875.500"
+              ]
+            },
+            {
+              "id": "D000074101",
+              "term": "Fumar Cocaína",
+              "term_en": "Cocaine Smoking",
+              "scope": "Hábito do fumo de COCAÍNA.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.145.805.250.250"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Contraceptives, Oral, Combined",
+          "candidates": [
+            {
+              "id": "D003277",
+              "term": "Anticoncepcionais Orais Combinados",
+              "term_en": "Contraceptives, Oral, Combined",
+              "scope": "Combinações fixas de drogas administradas oralmente com propósitos anticoncepcionais.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D26.310.360",
+                "D27.505.696.875.360.276.210.100"
+              ]
+            },
+            {
+              "id": "D003276",
+              "term": "Anticoncepcionais Orais",
+              "term_en": "Contraceptives, Oral",
+              "scope": "Compostos, geralmente hormonais, tomados oralmente, a fim de bloquear a ovulação e prevenir a ocorrência de gravidez. Os hormônios são geralmente estrógeno ou progesterona, ou ambos.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.696.875.360.276.210",
+                "D27.505.954.705.360.276.210"
+              ]
+            },
+            {
+              "id": "D003278",
+              "term": "Anticoncepcionais Orais Hormonais",
+              "term_en": "Contraceptives, Oral, Hormonal",
+              "scope": "Anticoncepcionais orais que devem sua eficácia às preparações hormonais.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.696.875.360.276.210.277",
+                "D27.505.696.875.360.360.500"
+              ]
+            },
+            {
+              "id": "D003280",
+              "term": "Anticoncepcionais Orais Sintéticos",
+              "term_en": "Contraceptives, Oral, Synthetic",
+              "scope": "Anticoncepcionais orais que devem a sua eficácia às preparações sintéticas.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.696.875.360.276.210.443",
+                "D27.505.954.705.360.276.210.443"
+              ]
+            },
+            {
+              "id": "D003279",
+              "term": "Anticoncepcionais Orais Sequenciais",
+              "term_en": "Contraceptives, Oral, Sequential",
+              "scope": "Drogas administradas por via oral e sequencialmente com propósitos anticoncepcionais.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.696.875.360.276.210.400",
+                "D27.505.954.705.360.276.210.400"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Migraine without Aura",
+          "candidates": [
+            {
+              "id": "D020326",
+              "term": "Enxaqueca sem Aura",
+              "term_en": "Migraine without Aura",
+              "scope": "Cefaleias recorrentes unilaterais pulsáteis, não precedidas ou acompanhadas de aura, em episódios que duram de 4-72 horas. São caracterizadas por DOR de intensidade moderada a severa, agravadas por at",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.228.140.546.399.750.450"
+              ]
+            },
+            {
+              "id": "D020325",
+              "term": "Enxaqueca com Aura",
+              "term_en": "Migraine with Aura",
+              "scope": "Subtipo de enxaqueca caracterizada por ataques recorrentes de sintomas neurológicos reversíveis (aura) que precedem ou acompanham a cefaleia. A aura também inclue uma combinação de distúrbios sensoria",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.228.140.546.399.750.250"
+              ]
+            },
+            {
+              "id": "D008881",
+              "term": "Transtornos de Enxaqueca",
+              "term_en": "Migraine Disorders",
+              "scope": "Classe de transtornos cefaleicos primários e incapacitantes caracterizados por cefaleias pulsáteis, unilaterais e recorrentes. Os dois subtipos principais são a enxaqueca comum (sem aura) e a clássica",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.228.140.546.399.750"
+              ]
+            },
+            {
+              "id": "D003027",
+              "term": "Cefaleia Histamínica",
+              "term_en": "Cluster Headache",
+              "scope": "Transtorno primário de cefaleia caracterizado por forte DOR, estritamente unilateral, nas regiões orbital, supraorbital e temporal (ou em qualquer combinação destes) com duração de 15 min a 3 h, ocorr",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.228.140.546.399.937.500"
+              ]
+            },
+            {
+              "id": "D000099099",
+              "term": "Enxaqueca Vestibular",
+              "term_en": "Vestibular Migraine",
+              "scope": "Vertigem ou tontura grave que afeta o SISTEMA VESTIBULAR e está associada à atividade cerebral anormal durante a enxaqueca.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C09.218.568.900.883.501",
+                "C10.228.140.546.399.750.726"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Cerebral Angiography",
+          "candidates": [
+            {
+              "id": "D002533",
+              "term": "Angiografia Cerebral",
+              "term_en": "Cerebral Angiography",
+              "scope": "Radiografia do sistema vascular do cérebro, após injeção de um meio de contraste.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.350.578.937.180",
+                "E01.370.350.700.060.180"
+              ]
+            },
+            {
+              "id": "D014695",
+              "term": "Ventriculografia Cerebral",
+              "term_en": "Cerebral Ventriculography",
+              "scope": "Radiografia do sistema ventricular do cérebro, após injeção de ar ou outro meio de contraste diretamente nos ventrículos cerebrais. Também é utilizada para tomografia computadorizada dos ventrículos c",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.350.578.937.190",
+                "E01.370.350.700.560.190"
+              ]
+            },
+            {
+              "id": "D000792",
+              "term": "Angiografia",
+              "term_en": "Angiography",
+              "scope": "Radiografia dos vasos sanguíneos após injeção de um meio de contraste.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.350.700.060",
+                "E01.370.370.050"
+              ]
+            },
+            {
+              "id": "D002536",
+              "term": "Artérias Cerebrais",
+              "term_en": "Cerebral Arteries",
+              "scope": "Vasos sanguíneos arteriais que suprem o CÉREBRO.",
+              "categoria": "Anatomia",
+              "arvore": [
+                "A07.015.114.228"
+              ]
+            },
+            {
+              "id": "D018810",
+              "term": "Angiografia por Ressonância Magnética",
+              "term_en": "Magnetic Resonance Angiography",
+              "scope": "Método não invasivo de imagem e determinação da anatomia vascular interna sem injeção de um meio de contraste ou exposição à radiação. A técnica é utilizada especialmente em ANGIOGRAFIA CEREBRAL assim",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.350.825.500.500",
+                "E01.370.370.050.500"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Sinus Thrombosis, Intracranial",
+        "Headache"
+      ],
+      "secondary": [
+        "Contraceptives, Oral, Combined",
+        "Smoking",
+        "Migraine without Aura",
+        "Cerebral Angiography"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Headache",
+            "candidates": [
+              {
+                "id": "D006261",
+                "term": "Cefaleia",
+                "term_en": "Headache",
+                "scope": "Sintoma de DOR na região craniana. Pode ser uma ocorrência ou manifestação benigna isolada de uma ampla variedade de TRANSTORNOS DA CEFALEIA.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.888.592.612.441",
+                  "F02.830.816.444.441"
+                ]
+              },
+              {
+                "id": "D020773",
+                "term": "Transtornos da Cefaleia",
+                "term_en": "Headache Disorders",
+                "scope": "Várias afecções com sintoma de CEFALEIA. Transtornos de cefaleia são classificados em dois grupos principais, tais como TRANSTORNOS PRIMÁRIOS DA CEFALEIA (baseados nas características dos sintomas da ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.228.140.546"
+                ]
+              },
+              {
+                "id": "D003027",
+                "term": "Cefaleia Histamínica",
+                "term_en": "Cluster Headache",
+                "scope": "Transtorno primário de cefaleia caracterizado por forte DOR, estritamente unilateral, nas regiões orbital, supraorbital e temporal (ou em qualquer combinação destes) com duração de 15 min a 3 h, ocorr",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.228.140.546.399.937.500"
+                ]
+              },
+              {
+                "id": "D051270",
+                "term": "Transtornos da Cefaleia Primários",
+                "term_en": "Headache Disorders, Primary",
+                "scope": "Afecções em que o sintoma primário é a CEFALEIA e esta não pode ser atribuída a quaisquer causas conhecidas.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.228.140.546.399"
+                ]
+              },
+              {
+                "id": "D020326",
+                "term": "Enxaqueca sem Aura",
+                "term_en": "Migraine without Aura",
+                "scope": "Cefaleias recorrentes unilaterais pulsáteis, não precedidas ou acompanhadas de aura, em episódios que duram de 4-72 horas. São caracterizadas por DOR de intensidade moderada a severa, agravadas por at",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.228.140.546.399.750.450"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Sinus Thrombosis, Intracranial",
+            "candidates": [
+              {
+                "id": "D012851",
+                "term": "Trombose dos Seios Intracranianos",
+                "term_en": "Sinus Thrombosis, Intracranial",
+                "scope": "Formação ou presença de um coágulo sanguíneo (TROMBO) nos SEIOS CRANIANOS, canais venosos revestidos por um grande endotélio, situados dentro do CRÂNIO. Os seios intracranianos, também chamados de sei",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.228.140.300.525.425.500",
+                  "C14.907.253.566.350.500"
+                ]
+              },
+              {
+                "id": "D020767",
+                "term": "Trombose Intracraniana",
+                "term_en": "Intracranial Thrombosis",
+                "scope": "Formação ou presença de um coágulo (TROMBO) em um vaso sanguíneo dentro do CRÂNIO. A trombose intracraniana pode levar a oclusões trombóticas e INFARTO ENCEFÁLICO. A maioria das oclusões trombóticas e",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.228.140.300.525.425",
+                  "C14.907.253.566.350"
+                ]
+              },
+              {
+                "id": "D020227",
+                "term": "Trombose do Seio Lateral",
+                "term_en": "Lateral Sinus Thrombosis",
+                "scope": "Formação ou presença de um coágulo sanguíneo (TROMBO) nos SEIOS LATERAIS. Esta afecção frequentemente está associada com infecções auditivas (OTITE MÉDIA ou MASTOIDITE) sem tratamento antibiótico. Em ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.228.140.300.525.425.500.562",
+                  "C14.907.253.566.350.500.562"
+                ]
+              },
+              {
+                "id": "D020225",
+                "term": "Trombose do Seio Sagital",
+                "term_en": "Sagittal Sinus Thrombosis",
+                "scope": "Formação ou presença de um coágulo sanguíneo (TROMBO) no SEIO SAGITAL SUPERIOR ou seio sagital inferior. A trombose do seio sagital pode resultar de infecções, transtornos hematológicos, TRAUMA CRANIO",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.228.140.300.525.425.500.750",
+                  "C14.907.253.566.350.500.750"
+                ]
+              },
+              {
+                "id": "D020226",
+                "term": "Trombose do Corpo Cavernoso",
+                "term_en": "Cavernous Sinus Thrombosis",
+                "scope": "Formação ou presença de um coágulo sanguíneo (TROMBO) no SEIO CAVERNOSO do encéfalo. Estão associadas com este estado as infecções dos seios paranasais e estruturas adjacentes, TRAUMA CRANIOCEREBRAL e",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.228.140.232.500",
+                  "C10.228.140.300.525.425.500.375"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Smoking",
+            "candidates": [
+              {
+                "id": "D012907",
+                "term": "Fumar",
+                "term_en": "Smoking",
+                "scope": "Ato intencional ou deliberado de inalação e exalação de FUMAÇA de substâncias ou agentes queimados e segurados pela mão.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.145.805"
+                ]
+              },
+              {
+                "id": "D008385",
+                "term": "Fumar Maconha",
+                "term_en": "Marijuana Smoking",
+                "scope": "Ato de inalar e exalar a FUMAÇA da CANNABIS.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.145.610.875",
+                  "F01.145.805.250.500"
+                ]
+              },
+              {
+                "id": "D000073869",
+                "term": "Fumar Tabaco",
+                "term_en": "Tobacco Smoking",
+                "scope": "Processo de FUMAR específico do TABACO.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.145.805.375",
+                  "F01.145.958.875"
+                ]
+              },
+              {
+                "id": "D000073863",
+                "term": "Fumar Charutos",
+                "term_en": "Cigar Smoking",
+                "scope": "Hábito de FUMAR CHARUTOS.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.145.805.375.500",
+                  "F01.145.958.875.500"
+                ]
+              },
+              {
+                "id": "D000074101",
+                "term": "Fumar Cocaína",
+                "term_en": "Cocaine Smoking",
+                "scope": "Hábito do fumo de COCAÍNA.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.145.805.250.250"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Contraceptives, Oral, Combined",
+            "candidates": [
+              {
+                "id": "D003277",
+                "term": "Anticoncepcionais Orais Combinados",
+                "term_en": "Contraceptives, Oral, Combined",
+                "scope": "Combinações fixas de drogas administradas oralmente com propósitos anticoncepcionais.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D26.310.360",
+                  "D27.505.696.875.360.276.210.100"
+                ]
+              },
+              {
+                "id": "D003276",
+                "term": "Anticoncepcionais Orais",
+                "term_en": "Contraceptives, Oral",
+                "scope": "Compostos, geralmente hormonais, tomados oralmente, a fim de bloquear a ovulação e prevenir a ocorrência de gravidez. Os hormônios são geralmente estrógeno ou progesterona, ou ambos.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.696.875.360.276.210",
+                  "D27.505.954.705.360.276.210"
+                ]
+              },
+              {
+                "id": "D003278",
+                "term": "Anticoncepcionais Orais Hormonais",
+                "term_en": "Contraceptives, Oral, Hormonal",
+                "scope": "Anticoncepcionais orais que devem sua eficácia às preparações hormonais.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.696.875.360.276.210.277",
+                  "D27.505.696.875.360.360.500"
+                ]
+              },
+              {
+                "id": "D003280",
+                "term": "Anticoncepcionais Orais Sintéticos",
+                "term_en": "Contraceptives, Oral, Synthetic",
+                "scope": "Anticoncepcionais orais que devem a sua eficácia às preparações sintéticas.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.696.875.360.276.210.443",
+                  "D27.505.954.705.360.276.210.443"
+                ]
+              },
+              {
+                "id": "D003279",
+                "term": "Anticoncepcionais Orais Sequenciais",
+                "term_en": "Contraceptives, Oral, Sequential",
+                "scope": "Drogas administradas por via oral e sequencialmente com propósitos anticoncepcionais.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.696.875.360.276.210.400",
+                  "D27.505.954.705.360.276.210.400"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Migraine without Aura",
+            "candidates": [
+              {
+                "id": "D020326",
+                "term": "Enxaqueca sem Aura",
+                "term_en": "Migraine without Aura",
+                "scope": "Cefaleias recorrentes unilaterais pulsáteis, não precedidas ou acompanhadas de aura, em episódios que duram de 4-72 horas. São caracterizadas por DOR de intensidade moderada a severa, agravadas por at",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.228.140.546.399.750.450"
+                ]
+              },
+              {
+                "id": "D020325",
+                "term": "Enxaqueca com Aura",
+                "term_en": "Migraine with Aura",
+                "scope": "Subtipo de enxaqueca caracterizada por ataques recorrentes de sintomas neurológicos reversíveis (aura) que precedem ou acompanham a cefaleia. A aura também inclue uma combinação de distúrbios sensoria",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.228.140.546.399.750.250"
+                ]
+              },
+              {
+                "id": "D008881",
+                "term": "Transtornos de Enxaqueca",
+                "term_en": "Migraine Disorders",
+                "scope": "Classe de transtornos cefaleicos primários e incapacitantes caracterizados por cefaleias pulsáteis, unilaterais e recorrentes. Os dois subtipos principais são a enxaqueca comum (sem aura) e a clássica",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.228.140.546.399.750"
+                ]
+              },
+              {
+                "id": "D003027",
+                "term": "Cefaleia Histamínica",
+                "term_en": "Cluster Headache",
+                "scope": "Transtorno primário de cefaleia caracterizado por forte DOR, estritamente unilateral, nas regiões orbital, supraorbital e temporal (ou em qualquer combinação destes) com duração de 15 min a 3 h, ocorr",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.228.140.546.399.937.500"
+                ]
+              },
+              {
+                "id": "D000099099",
+                "term": "Enxaqueca Vestibular",
+                "term_en": "Vestibular Migraine",
+                "scope": "Vertigem ou tontura grave que afeta o SISTEMA VESTIBULAR e está associada à atividade cerebral anormal durante a enxaqueca.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C09.218.568.900.883.501",
+                  "C10.228.140.546.399.750.726"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Cerebral Angiography",
+            "candidates": [
+              {
+                "id": "D002533",
+                "term": "Angiografia Cerebral",
+                "term_en": "Cerebral Angiography",
+                "scope": "Radiografia do sistema vascular do cérebro, após injeção de um meio de contraste.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.350.578.937.180",
+                  "E01.370.350.700.060.180"
+                ]
+              },
+              {
+                "id": "D014695",
+                "term": "Ventriculografia Cerebral",
+                "term_en": "Cerebral Ventriculography",
+                "scope": "Radiografia do sistema ventricular do cérebro, após injeção de ar ou outro meio de contraste diretamente nos ventrículos cerebrais. Também é utilizada para tomografia computadorizada dos ventrículos c",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.350.578.937.190",
+                  "E01.370.350.700.560.190"
+                ]
+              },
+              {
+                "id": "D000792",
+                "term": "Angiografia",
+                "term_en": "Angiography",
+                "scope": "Radiografia dos vasos sanguíneos após injeção de um meio de contraste.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.350.700.060",
+                  "E01.370.370.050"
+                ]
+              },
+              {
+                "id": "D002536",
+                "term": "Artérias Cerebrais",
+                "term_en": "Cerebral Arteries",
+                "scope": "Vasos sanguíneos arteriais que suprem o CÉREBRO.",
+                "categoria": "Anatomia",
+                "arvore": [
+                  "A07.015.114.228"
+                ]
+              },
+              {
+                "id": "D018810",
+                "term": "Angiografia por Ressonância Magnética",
+                "term_en": "Magnetic Resonance Angiography",
+                "scope": "Método não invasivo de imagem e determinação da anatomia vascular interna sem injeção de um meio de contraste ou exposição à radiação. A técnica é utilizada especialmente em ANGIOGRAFIA CEREBRAL assim",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.350.825.500.500",
+                  "E01.370.370.050.500"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D006261",
+          "term": "Cefaleia"
+        },
+        {
+          "id": "D012851",
+          "term": "Trombose dos Seios Intracranianos"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D000073869",
+          "term": "Fumar Tabaco"
+        },
+        {
+          "id": "D003277",
+          "term": "Anticoncepcionais Orais Combinados"
+        },
+        {
+          "id": "D020326",
+          "term": "Enxaqueca sem Aura"
+        },
+        {
+          "id": "D002533",
+          "term": "Angiografia Cerebral"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 4,
+    "total_candidates": 30,
+    "final_primary": 2,
+    "final_secondary": 4
+  }
+}

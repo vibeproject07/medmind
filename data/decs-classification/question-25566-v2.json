@@ -1,0 +1,603 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D005194",
+        "term": "Medicina de Família e Comunidade",
+        "name_en": "Family Practice",
+        "scope_note": "Especialidade médica voltada para a provisão contínua e integrada de cuidados primários de saúde para toda a família.",
+        "tree_ids": [
+          "H02.403.340.500"
+        ],
+        "hierarchy_path": "Disciplinas e Ocupações › H02.403.340.500",
+        "parents": [
+          {
+            "id": "D058006",
+            "term": "Medicina Geral"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D011320",
+        "term": "Atenção Primária à Saúde",
+        "name_en": "Primary Health Care",
+        "scope_note": "É a assistência sanitária essencial baseada em métodos e tecnologias práticas, cientificamente fundados e socialmente aceitáveis, postos ao alcance de todos os indivíduos e famílias da comunidade mediante a sua plena participação e a um custo que a comunidade e o país possam suportar, em todas e cada etapa do seu desenvolvimento, com um espírito de autorresponsabilidade e autodeterminação. (Declaração de Alma-Ata - Organização Pan-Americana da Saúde, 2003)",
+        "tree_ids": [
+          "N04.590.233.727",
+          "SP2.630.121"
+        ],
+        "hierarchy_path": "Saúde › N04.590.233.727",
+        "parents": [
+          {
+            "id": "D003191",
+            "term": "Assistência Integral à Saúde"
+          },
+          {
+            "id": "DDCS017209",
+            "term": "Níveis de Atenção à Saúde"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000069341",
+            "term": "Cuidado Transicional"
+          },
+          {
+            "id": "D000073935",
+            "term": "Medicina Narrativa"
+          },
+          {
+            "id": "D010351",
+            "term": "Alta do Paciente"
+          },
+          {
+            "id": "D003266",
+            "term": "Continuidade da Assistência ao Paciente"
+          },
+          {
+            "id": "D010360",
+            "term": "Transferência de Pacientes"
+          }
+        ],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Family Practice",
+      "Pedigree"
+    ],
+    "secondary": [
+      "Family Relations",
+      "Primary Health Care"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Family Practice",
+          "candidates": [
+            {
+              "id": "D005194",
+              "term": "Medicina de Família e Comunidade",
+              "term_en": "Family Practice",
+              "scope": "Especialidade médica voltada para a provisão contínua e integrada de cuidados primários de saúde para toda a família.",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.403.340.500"
+              ]
+            },
+            {
+              "id": "D010821",
+              "term": "Médicos de Família",
+              "term_en": "Physicians, Family",
+              "scope": "Médicos com atividade voltada para indivíduos, famílias e comunidade e que, independentemente de idade, sexo ou patologia do paciente, propõe-se a prestar-lhe uma assistência integral, contínua e pers",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.526.485.810.770",
+                "N02.360.810.770"
+              ]
+            },
+            {
+              "id": "D058005",
+              "term": "Clínicos Gerais",
+              "term_en": "General Practitioners",
+              "scope": "Médicos cuja prática não é restrita a uma área específica da MEDICINA.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.526.485.810.485",
+                "N02.360.810.485"
+              ]
+            },
+            {
+              "id": "D064703",
+              "term": "Enfermeiros de Saúde da Família",
+              "term_en": "Family Nurse Practitioners",
+              "scope": "Enfermeiros registrados com graduação em enfermagem que fornecem assistência a pacientes de todas as idades, e que focam seus esforços nas necessidades de saúde de toda a família.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.526.485.650.640.249",
+                "N02.360.650.640.249"
+              ]
+            },
+            {
+              "id": "D058006",
+              "term": "Medicina Geral",
+              "term_en": "General Practice",
+              "scope": "Cuidados médicos baseados no paciente prestados transversalmente aos limites de idade, gênero ou especialidade.",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.403.340"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Pedigree",
+          "candidates": [
+            {
+              "id": "D002609",
+              "term": "Síndrome de Chediak-Higashi",
+              "term_en": "Chediak-Higashi Syndrome",
+              "scope": "Forma de disfunção bactericida fagocitária, caracterizada por albinismo oculocutâneo incomum, alta incidência de neoplasias linforreticulares, e infecções piogênicas recidivantes. Em vários tipos celu",
+              "categoria": "Doenças",
+              "arvore": [
+                "C11.270.040.772",
+                "C15.378.553.774.257"
+              ]
+            },
+            {
+              "id": "D019717",
+              "term": "Inibidor Tecidual de Metaloproteinase-3",
+              "term_en": "Tissue Inhibitor of Metalloproteinase-3",
+              "scope": "Membro da família de inibidores teciduais de metaloproteinases. As mutações do gene da PROTEÍNA TIMP3 provoca a distrofia do fundo de Sorsby.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.815.875.550"
+              ]
+            },
+            {
+              "id": "D005166",
+              "term": "Deficiência do Fator V",
+              "term_en": "Factor V Deficiency",
+              "scope": "Proacelarina: um material lábil ao calor e ao armazenamento, presente no plasma, porém não no soro, que funciona tanto na via intrínseca quanto na extrínseca da coagulação sanguínea. Deficiência deste",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.100.100.300",
+                "C15.378.100.141.300"
+              ]
+            },
+            {
+              "id": "D015325",
+              "term": "Doença da Deficiência do Complexo de Piruvato Desidrogenase",
+              "term_en": "Pyruvate Dehydrogenase Complex Deficiency Disease",
+              "scope": "Transtorno metabólico hereditário, causado por atividade enzimática deficiente no COMPLEXO PIRUVATO DESIDROGENASE, resultando na deficiência de acetil CoA e redução na síntese de acetilcolina. Duas fo",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.228.140.163.100.750",
+                "C10.597.606.360.455.875"
+              ]
+            },
+            {
+              "id": "D012805",
+              "term": "Traço Falciforme",
+              "term_en": "Sickle Cell Trait",
+              "scope": "Estado de heterozigose para o gene da hemoglobina S.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.141.150.150.670",
+                "C15.378.420.155.668"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Primary Health Care",
+          "candidates": [
+            {
+              "id": "D011320",
+              "term": "Atenção Primária à Saúde",
+              "term_en": "Primary Health Care",
+              "scope": "É a assistência sanitária essencial baseada em métodos e tecnologias práticas, cientificamente fundados e socialmente aceitáveis, postos ao alcance de todos os indivíduos e famílias da comunidade medi",
+              "categoria": "Saúde",
+              "arvore": [
+                "N04.590.233.727",
+                "SP2.630.121"
+              ]
+            },
+            {
+              "id": "D000092863",
+              "term": "Acesso à Atenção Primária",
+              "term_en": "Access to Primary Care",
+              "scope": "O grau em que as pessoas são inibidas ou facilitadas em sua capacidade de ter acesso e de receber CUIDADOS PRIMÁRIOS.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N04.590.374.350.250",
+                "N05.300.430.188"
+              ]
+            },
+            {
+              "id": "DDCS059590",
+              "term": "Territorialização da Atenção Primária",
+              "term_en": "Territorialization in Primary Health Care",
+              "scope": "Um dos pressupostos da organização do processo de trabalho de atenção básica, que visa definir o território de atuação e a população sob responsabilidade das equipes de saúde. Cada equipe de saúde exe",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP2.630.121.754"
+              ]
+            },
+            {
+              "id": "D000076602",
+              "term": "Gestão da Saúde da População",
+              "term_en": "Population Health Management",
+              "scope": "Engajamento da comunidade, monitoramento de instalações e acesso a cuidados financeiramente e temporalmente acessíveis, disponibilidade dos serviços efetivos e a alta qualidade da assistência à saúde ",
+              "categoria": "Saúde",
+              "arvore": [
+                "N05.300.570"
+              ]
+            },
+            {
+              "id": "D059017",
+              "term": "Enfermagem de Atenção Primária",
+              "term_en": "Primary Care Nursing",
+              "scope": "Técnicas ou métodos de assistência ao paciente usados por enfermeiros enquanto cuidadores primários.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.760.611.735"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Family Relations",
+          "candidates": [
+            {
+              "id": "D000071797",
+              "term": "Butirofilinas",
+              "term_en": "Butyrophilins",
+              "scope": "Família de glicoproteínas de membrana presente em mamíferos caracterizada por DOMÍNIOS DE IMUNOGLOBULINA. Alguns membros também possuem um DOMÍNIO B30.2-SPRY ou DOMÍNIO SPRY. A proteína butirofilina (",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D09.400.430.890.114",
+                "D12.776.395.550.114"
+              ]
+            },
+            {
+              "id": "D000075983",
+              "term": "Nectinas",
+              "term_en": "Nectins",
+              "scope": "Família de moléculas de adesão celular independente de cálcio da superfamília das imunoglobulinas. São expressos pela maioria das células e medeiam as adesões celulares homotípicas e heterotípicas. As",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D09.400.430.890.200.123",
+                "D12.776.395.550.200.123"
+              ]
+            },
+            {
+              "id": "D026502",
+              "term": "Proteínas Relacionadas a Receptor de LDL",
+              "term_en": "LDL-Receptor Related Proteins",
+              "scope": "Família de proteínas que compartilha a semelhança da sequência com o receptor de lipoproteína de baixa densidade (RECEPTORES DE LDL).",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.526",
+                "D12.776.543.750.710.450.500"
+              ]
+            },
+            {
+              "id": "D055655",
+              "term": "Subfamília K de Receptores Semelhantes a Lectina de Células NK",
+              "term_en": "NK Cell Lectin-Like Receptor Subfamily K",
+              "scope": "Subfamília de receptores semelhantes a lectina de células NK ativadores que regula as respostas imunes à INFECÇÃO e às NEOPLASIAS. Membros desta subfamília geralmente ocorrem como homodímeros.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.543.750.705.895.800.910"
+              ]
+            },
+            {
+              "id": "D055412",
+              "term": "Fatores de Diferenciação de Crescimento",
+              "term_en": "Growth Differentiation Factors",
+              "scope": "Família de proteínas relacionadas à PROTEÍNAS MORFOGENÉTICAS ÓSSEAS envolvidas primariamente na regulação da DIFERENCIAÇÃO CELULAR.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.644.276.954.300",
+                "D12.776.467.942.300"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Family Practice",
+        "Pedigree"
+      ],
+      "secondary": [
+        "Family Relations",
+        "Primary Health Care"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Family Practice",
+            "candidates": [
+              {
+                "id": "D005194",
+                "term": "Medicina de Família e Comunidade",
+                "term_en": "Family Practice",
+                "scope": "Especialidade médica voltada para a provisão contínua e integrada de cuidados primários de saúde para toda a família.",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.403.340.500"
+                ]
+              },
+              {
+                "id": "D010821",
+                "term": "Médicos de Família",
+                "term_en": "Physicians, Family",
+                "scope": "Médicos com atividade voltada para indivíduos, famílias e comunidade e que, independentemente de idade, sexo ou patologia do paciente, propõe-se a prestar-lhe uma assistência integral, contínua e pers",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.526.485.810.770",
+                  "N02.360.810.770"
+                ]
+              },
+              {
+                "id": "D058005",
+                "term": "Clínicos Gerais",
+                "term_en": "General Practitioners",
+                "scope": "Médicos cuja prática não é restrita a uma área específica da MEDICINA.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.526.485.810.485",
+                  "N02.360.810.485"
+                ]
+              },
+              {
+                "id": "D064703",
+                "term": "Enfermeiros de Saúde da Família",
+                "term_en": "Family Nurse Practitioners",
+                "scope": "Enfermeiros registrados com graduação em enfermagem que fornecem assistência a pacientes de todas as idades, e que focam seus esforços nas necessidades de saúde de toda a família.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.526.485.650.640.249",
+                  "N02.360.650.640.249"
+                ]
+              },
+              {
+                "id": "D058006",
+                "term": "Medicina Geral",
+                "term_en": "General Practice",
+                "scope": "Cuidados médicos baseados no paciente prestados transversalmente aos limites de idade, gênero ou especialidade.",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.403.340"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Pedigree",
+            "candidates": [
+              {
+                "id": "D002609",
+                "term": "Síndrome de Chediak-Higashi",
+                "term_en": "Chediak-Higashi Syndrome",
+                "scope": "Forma de disfunção bactericida fagocitária, caracterizada por albinismo oculocutâneo incomum, alta incidência de neoplasias linforreticulares, e infecções piogênicas recidivantes. Em vários tipos celu",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C11.270.040.772",
+                  "C15.378.553.774.257"
+                ]
+              },
+              {
+                "id": "D019717",
+                "term": "Inibidor Tecidual de Metaloproteinase-3",
+                "term_en": "Tissue Inhibitor of Metalloproteinase-3",
+                "scope": "Membro da família de inibidores teciduais de metaloproteinases. As mutações do gene da PROTEÍNA TIMP3 provoca a distrofia do fundo de Sorsby.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.815.875.550"
+                ]
+              },
+              {
+                "id": "D005166",
+                "term": "Deficiência do Fator V",
+                "term_en": "Factor V Deficiency",
+                "scope": "Proacelarina: um material lábil ao calor e ao armazenamento, presente no plasma, porém não no soro, que funciona tanto na via intrínseca quanto na extrínseca da coagulação sanguínea. Deficiência deste",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.100.100.300",
+                  "C15.378.100.141.300"
+                ]
+              },
+              {
+                "id": "D015325",
+                "term": "Doença da Deficiência do Complexo de Piruvato Desidrogenase",
+                "term_en": "Pyruvate Dehydrogenase Complex Deficiency Disease",
+                "scope": "Transtorno metabólico hereditário, causado por atividade enzimática deficiente no COMPLEXO PIRUVATO DESIDROGENASE, resultando na deficiência de acetil CoA e redução na síntese de acetilcolina. Duas fo",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.228.140.163.100.750",
+                  "C10.597.606.360.455.875"
+                ]
+              },
+              {
+                "id": "D012805",
+                "term": "Traço Falciforme",
+                "term_en": "Sickle Cell Trait",
+                "scope": "Estado de heterozigose para o gene da hemoglobina S.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.141.150.150.670",
+                  "C15.378.420.155.668"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Primary Health Care",
+            "candidates": [
+              {
+                "id": "D011320",
+                "term": "Atenção Primária à Saúde",
+                "term_en": "Primary Health Care",
+                "scope": "É a assistência sanitária essencial baseada em métodos e tecnologias práticas, cientificamente fundados e socialmente aceitáveis, postos ao alcance de todos os indivíduos e famílias da comunidade medi",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N04.590.233.727",
+                  "SP2.630.121"
+                ]
+              },
+              {
+                "id": "D000092863",
+                "term": "Acesso à Atenção Primária",
+                "term_en": "Access to Primary Care",
+                "scope": "O grau em que as pessoas são inibidas ou facilitadas em sua capacidade de ter acesso e de receber CUIDADOS PRIMÁRIOS.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N04.590.374.350.250",
+                  "N05.300.430.188"
+                ]
+              },
+              {
+                "id": "DDCS059590",
+                "term": "Territorialização da Atenção Primária",
+                "term_en": "Territorialization in Primary Health Care",
+                "scope": "Um dos pressupostos da organização do processo de trabalho de atenção básica, que visa definir o território de atuação e a população sob responsabilidade das equipes de saúde. Cada equipe de saúde exe",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP2.630.121.754"
+                ]
+              },
+              {
+                "id": "D000076602",
+                "term": "Gestão da Saúde da População",
+                "term_en": "Population Health Management",
+                "scope": "Engajamento da comunidade, monitoramento de instalações e acesso a cuidados financeiramente e temporalmente acessíveis, disponibilidade dos serviços efetivos e a alta qualidade da assistência à saúde ",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N05.300.570"
+                ]
+              },
+              {
+                "id": "D059017",
+                "term": "Enfermagem de Atenção Primária",
+                "term_en": "Primary Care Nursing",
+                "scope": "Técnicas ou métodos de assistência ao paciente usados por enfermeiros enquanto cuidadores primários.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.760.611.735"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Family Relations",
+            "candidates": [
+              {
+                "id": "D000071797",
+                "term": "Butirofilinas",
+                "term_en": "Butyrophilins",
+                "scope": "Família de glicoproteínas de membrana presente em mamíferos caracterizada por DOMÍNIOS DE IMUNOGLOBULINA. Alguns membros também possuem um DOMÍNIO B30.2-SPRY ou DOMÍNIO SPRY. A proteína butirofilina (",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D09.400.430.890.114",
+                  "D12.776.395.550.114"
+                ]
+              },
+              {
+                "id": "D000075983",
+                "term": "Nectinas",
+                "term_en": "Nectins",
+                "scope": "Família de moléculas de adesão celular independente de cálcio da superfamília das imunoglobulinas. São expressos pela maioria das células e medeiam as adesões celulares homotípicas e heterotípicas. As",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D09.400.430.890.200.123",
+                  "D12.776.395.550.200.123"
+                ]
+              },
+              {
+                "id": "D026502",
+                "term": "Proteínas Relacionadas a Receptor de LDL",
+                "term_en": "LDL-Receptor Related Proteins",
+                "scope": "Família de proteínas que compartilha a semelhança da sequência com o receptor de lipoproteína de baixa densidade (RECEPTORES DE LDL).",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.526",
+                  "D12.776.543.750.710.450.500"
+                ]
+              },
+              {
+                "id": "D055655",
+                "term": "Subfamília K de Receptores Semelhantes a Lectina de Células NK",
+                "term_en": "NK Cell Lectin-Like Receptor Subfamily K",
+                "scope": "Subfamília de receptores semelhantes a lectina de células NK ativadores que regula as respostas imunes à INFECÇÃO e às NEOPLASIAS. Membros desta subfamília geralmente ocorrem como homodímeros.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.543.750.705.895.800.910"
+                ]
+              },
+              {
+                "id": "D055412",
+                "term": "Fatores de Diferenciação de Crescimento",
+                "term_en": "Growth Differentiation Factors",
+                "scope": "Família de proteínas relacionadas à PROTEÍNAS MORFOGENÉTICAS ÓSSEAS envolvidas primariamente na regulação da DIFERENCIAÇÃO CELULAR.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.644.276.954.300",
+                  "D12.776.467.942.300"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D005194",
+          "term": "Medicina de Família e Comunidade"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D011320",
+          "term": "Atenção Primária à Saúde"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 2,
+    "total_candidates": 20,
+    "final_primary": 1,
+    "final_secondary": 1
+  }
+}

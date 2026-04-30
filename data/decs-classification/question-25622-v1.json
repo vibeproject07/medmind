@@ -1,0 +1,85 @@
+{
+  "result": [
+    {
+      "term": "Dor Crônica",
+      "code": "D059350",
+      "tree_ids": [
+        "C23.888.592.612.274",
+        "F02.830.816.444.433",
+        "G11.561.790.444.461"
+      ],
+      "hierarchy_path": "Doenças › C23.888.592.612.274",
+      "scope_note": "Sensação de dor que persiste por mais do que poucos meses. Pode ou não estar associada com trauma ou doença e pode persistir depois que a lesão inicial estiver cicatrizada. Sua localização, características e periodicidade são mais imprecisas do que as da dor aguda.",
+      "name_en": "Chronic Pain",
+      "role": "primary"
+    },
+    {
+      "term": "Dor Lombar",
+      "code": "D017116",
+      "tree_ids": [
+        "C23.888.592.612.107.400"
+      ],
+      "hierarchy_path": "Doenças › C23.888.592.612.107.400",
+      "scope_note": "Dor aguda ou crônica nas regiões lombar ou sacral podendo estar associada com ENTORSES E DISTENSÕES dos ligamentos dos músculos, DESLOCAMENTO DO DISCO INTERVERTEBRAL e outras afecções.",
+      "name_en": "Low Back Pain",
+      "role": "primary"
+    },
+    {
+      "term": "Anti-Inflamatórios não Esteroides",
+      "code": "D000894",
+      "tree_ids": [
+        "D27.505.696.663.850.014.040.500",
+        "D27.505.954.158.030",
+        "D27.505.954.329.030"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D27.505.696.663.850.014.040.500",
+      "scope_note": "Anti-inflamatórios de natureza não esteroidal. Além de ações anti-inflamatórias, têm ações analgésicas, antipiréticas e inibidoras de plaquetas. Atuam bloqueando a síntese de prostaglandinas por meio da inibição da ciclooxigenase, que converte o ácido araquidônico em endoperóxidos cíclicos, precursores das prostaglandinas. A inibição da síntese de prostaglandinas é responsável por suas ações analgésicas, antipiréticas e inibidoras de plaquetas. Outros mecanismos podem contribuir para seus efeitos anti-inflamatórios.",
+      "name_en": "Anti-Inflammatory Agents, Non-Steroidal",
+      "role": "secondary"
+    },
+    {
+      "term": "Relaxantes Musculares Centrais",
+      "code": "D009125",
+      "tree_ids": [
+        "D27.505.696.510",
+        "D27.505.696.663.700.600",
+        "D27.505.954.427.525"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D27.505.696.510",
+      "scope_note": "Grupo heterogêneo de fármacos usados para produzir relaxamento muscular, exceto os agentes bloqueadores neuromusculares. São usados na clínica e na terapêutica, basicamente para o tratamento de espasmo muscular e da imobilidade associados com distensões, entorses, lesões das costas e, em menor grau, lesões no pescoço. Também tem sido usado para o tratamento de várias situações clínicas que têm em comum somente a hiperatividade muscular esquelética, por exemplo, os espasmos musculares que podem ocorrer na ESCLEROSE MÚLTIPLA (Tradução livre do original: Smith and Reynard, Textbook of Pharmacology, 1991, p358).",
+      "name_en": "Muscle Relaxants, Central",
+      "role": "secondary"
+    },
+    {
+      "term": "Modalidades de Fisioterapia",
+      "code": "D026741",
+      "tree_ids": [
+        "E02.779",
+        "E02.831.535"
+      ],
+      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.779",
+      "scope_note": "Modalidades terapêuticas frequentemente utilizadas na ESPECIALIDADE DE FISIOTERAPIA por FISIOTERAPEUTAS para melhorar, manter ou restaurar o bem-estar físico e fisiológico de um indivíduo.",
+      "name_en": "Physical Therapy Modalities",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Low Back Pain",
+      "Chronic Pain"
+    ],
+    "secondary": [
+      "Physical Therapy Modalities",
+      "Muscle Relaxants, Central",
+      "Anti-Inflammatory Agents, Non-Steroidal",
+      "Conservative Treatment"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 2,
+    "secondary_terms": 4,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 1,
+    "final_count": 5
+  }
+}

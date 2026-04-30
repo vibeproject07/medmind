@@ -1,0 +1,81 @@
+{
+  "result": [
+    {
+      "term": "Complicações Pós-Operatórias",
+      "code": "D011183",
+      "tree_ids": [
+        "C23.550.767"
+      ],
+      "hierarchy_path": "Doenças › C23.550.767",
+      "scope_note": "Processos patológicos que afetam pacientes após um procedimento cirúrgico. Podem ou não estar relacionados à doença pela qual a cirurgia foi realizada, podendo ser ou não resultado direto da cirurgia.",
+      "name_en": "Postoperative Complications",
+      "role": "primary"
+    },
+    {
+      "term": "Deiscência da Ferida Operatória",
+      "code": "D013529",
+      "tree_ids": [
+        "C23.550.767.887"
+      ],
+      "hierarchy_path": "Doenças › C23.550.767.887",
+      "scope_note": "Processo patológico constituído por ruptura completa ou parcial das camadas de uma ferida cirúrgica.",
+      "name_en": "Surgical Wound Dehiscence",
+      "role": "primary"
+    },
+    {
+      "term": "Queloide",
+      "code": "D007627",
+      "tree_ids": [
+        "A10.165.450.300.425",
+        "C17.300.200.425",
+        "C23.550.355.274.510"
+      ],
+      "hierarchy_path": "Anatomia › A10.165.450.300.425",
+      "scope_note": "Cicatriz agudamente elevada, de formato irregular, que se amplia progressivamente, resultante da formação de quantidades excessivas de colágeno na derme durante o reparo do tecido conjuntivo. É diferente de uma CICATRIZ HIPERTRÓFICA, que não se alastra para tecidos subjacentes.",
+      "name_en": "Keloid",
+      "role": "secondary"
+    },
+    {
+      "term": "Cicatriz Hipertrófica",
+      "code": "D017439",
+      "tree_ids": [
+        "A10.165.450.300.125",
+        "C23.550.355.274.505"
+      ],
+      "hierarchy_path": "Anatomia › A10.165.450.300.125",
+      "scope_note": "Cicatriz elevada, semelhante a um QUELOIDE, mas que não se alastra para tecidos subjacentes. É formada pela ampliação e supercrescimento de tecido cicatricial e regride espontaneamente.",
+      "name_en": "Cicatrix, Hypertrophic",
+      "role": "secondary"
+    },
+    {
+      "term": "Infecção do Sítio Cirúrgico",
+      "code": "D013530",
+      "tree_ids": [
+        "C01.947.692",
+        "C23.550.767.925"
+      ],
+      "hierarchy_path": "Doenças › C01.947.692",
+      "scope_note": "As infecções que ocorrem no local da incisão cirúrgica.",
+      "name_en": "Surgical Wound Infection",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Postoperative Complications",
+      "Surgical Wound Dehiscence"
+    ],
+    "secondary": [
+      "Surgical Wound Infection",
+      "Keloid",
+      "Cicatrix, Hypertrophic"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 2,
+    "secondary_terms": 3,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 0,
+    "final_count": 5
+  }
+}

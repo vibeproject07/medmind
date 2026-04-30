@@ -1,0 +1,1121 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D051436",
+        "term": "Insuficiência Renal Crônica",
+        "name_en": "Renal Insufficiency, Chronic",
+        "scope_note": "Afecções nas quais os RINS apresentam uma atividade abaixo do nível normal por mais de três meses. A insuficiência renal crônica é classificada em cinco estágios de acordo com o declínio da TAXA DE FILTRAÇÃO GLOMERULAR e o grau de lesão ao rim (como medido pelo nível de PROTEINURIA). A forma mais grave é a doença renal terminal (FALÊNCIA RENAL CRÔNICA). (Tradução livre do original: Kidney Foundation: Kidney Disease Outcome Quality Initiative, 2002)",
+        "tree_ids": [
+          "C12.050.351.968.419.780.750",
+          "C12.200.777.419.780.750",
+          "C12.950.419.780.750",
+          "C23.550.291.500.906"
+        ],
+        "hierarchy_path": "Doenças › C12.050.351.968.419.780.750",
+        "parents": [
+          {
+            "id": "D051437",
+            "term": "Insuficiência Renal"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000092702",
+            "term": "Doenças Renais Crônicas Idiopáticas"
+          },
+          {
+            "id": "D007676",
+            "term": "Falência Renal Crônica"
+          },
+          {
+            "id": "D052159",
+            "term": "Síndrome de Frasier"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D003924",
+        "term": "Diabetes Mellitus Tipo 2",
+        "name_en": "Diabetes Mellitus, Type 2",
+        "scope_note": "Subclasse de DIABETES MELLITUS que não é responsiva ou dependente de INSULINA (DMNID). Inicialmente, caracteriza-se por RESISTÊNCIA À INSULINA e HIPERINSULINEMIA e finalmente, por INTOLERÂNCIA À GLUCOSE, HIPERGLICEMIA e obviamente diabetes. O diabetes mellitus tipo 2 não é mais considerado uma doença encontrada exclusivamente em adultos. Os pacientes, raramente desenvolvem CETOSE, porém com frequência exibem OBESIDADE.",
+        "tree_ids": [
+          "C18.452.394.750.149",
+          "C19.246.300"
+        ],
+        "hierarchy_path": "Doenças › C18.452.394.750.149",
+        "parents": [
+          {
+            "id": "D003920",
+            "term": "Diabetes Mellitus"
+          }
+        ],
+        "children": [
+          {
+            "id": "D003923",
+            "term": "Diabetes Mellitus Lipoatrófica"
+          }
+        ],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D000077203",
+        "term": "Inibidores do Transportador 2 de Sódio-Glicose",
+        "name_en": "Sodium-Glucose Transporter 2 Inhibitors",
+        "scope_note": "Compostos que inibem TRANSPORTADOR 2 DE GLICOSE-SÓDIO. Eles abaixam a glicemia por meio do impedimento da reabsorção de glicose pelo rim e são usados no tratamento de DIABETES MELLITUS TIPO 2.",
+        "tree_ids": [
+          "D27.505.519.936",
+          "D27.505.696.422.750"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D27.505.519.936",
+        "parents": [
+          {
+            "id": "D045504",
+            "term": "Mecanismos Moleculares de Ação Farmacológica"
+          },
+          {
+            "id": "D007004",
+            "term": "Hipoglicemiantes"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D019808",
+        "term": "Losartan",
+        "name_en": "Losartan",
+        "scope_note": "Antagonista do RECEPTOR TIPO I DE ANGIOTENSINA com atividade anti-hipertensiva, devido à redução do efeito pressor da ANGIOTENSINA II.",
+        "tree_ids": [
+          "D02.455.426.559.389.185.475",
+          "D03.383.129.308.507",
+          "D03.383.129.617.467"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D02.455.426.559.389.185.475",
+        "parents": [
+          {
+            "id": "D001713",
+            "term": "Compostos de Bifenilo"
+          },
+          {
+            "id": "D007093",
+            "term": "Imidazóis"
+          },
+          {
+            "id": "D013777",
+            "term": "Tetrazóis"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D006973",
+        "term": "Hipertensão",
+        "name_en": "Hypertension",
+        "scope_note": "PRESSÃO ARTERIAL sistêmica persistentemente alta. Com base em várias medições (DETERMINAÇÃO DA PRESSÃO ARTERIAL), a hipertensão é atualmente definida como sendo a PRESSÃO SISTÓLICA repetidamente maior que 140 mm Hg ou a PRESSÃO DIASTÓLICA de 90 mm Hg ou superior.",
+        "tree_ids": [
+          "C14.907.489"
+        ],
+        "hierarchy_path": "Doenças › C14.907.489",
+        "parents": [
+          {
+            "id": "D014652",
+            "term": "Doenças Vasculares"
+          }
+        ],
+        "children": [
+          {
+            "id": "D058437",
+            "term": "Retinopatia Hipertensiva"
+          },
+          {
+            "id": "D059468",
+            "term": "Hipertensão Mascarada"
+          },
+          {
+            "id": "D059466",
+            "term": "Hipertensão do Jaleco Branco"
+          },
+          {
+            "id": "D000080346",
+            "term": "Macroaneurisma Arterial Retiniano"
+          },
+          {
+            "id": "D000092244",
+            "term": "Hipertensão Sistólica Isolada"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D000419",
+        "term": "Albuminúria",
+        "name_en": "Albuminuria",
+        "scope_note": "Presença de albumina na urina, um indicador de NEFROPATIAS.",
+        "tree_ids": [
+          "C12.050.351.968.934.734.269",
+          "C12.200.777.934.734.269",
+          "C12.950.934.734.269",
+          "C23.888.942.750.269"
+        ],
+        "hierarchy_path": "Doenças › C12.050.351.968.934.734.269",
+        "parents": [
+          {
+            "id": "D011507",
+            "term": "Proteinúria"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D005919",
+        "term": "Taxa de Filtração Glomerular",
+        "name_en": "Glomerular Filtration Rate",
+        "scope_note": "Volume de água filtrada do plasma através das paredes capilares glomerular nas cápsulas de Bowman (CÁPSULA GLOMERULAR), por unidade de tempo. É considerada equivalente à depuração da INULINA.",
+        "tree_ids": [
+          "E01.370.390.400.300",
+          "G08.852.357"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.390.400.300",
+        "parents": [
+          {
+            "id": "D007677",
+            "term": "Testes de Função Renal"
+          },
+          {
+            "id": "D014553",
+            "term": "Fenômenos Fisiológicos do Sistema Urinário"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Renal Insufficiency, Chronic",
+      "Diabetes Mellitus, Type 2"
+    ],
+    "secondary": [
+      "Hypertension",
+      "Sodium-Glucose Transporter 2 Inhibitors",
+      "Albuminuria",
+      "Glomerular Filtration Rate",
+      "Losartan"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Renal Insufficiency, Chronic",
+          "candidates": [
+            {
+              "id": "D051436",
+              "term": "Insuficiência Renal Crônica",
+              "term_en": "Renal Insufficiency, Chronic",
+              "scope": "Afecções nas quais os RINS apresentam uma atividade abaixo do nível normal por mais de três meses. A insuficiência renal crônica é classificada em cinco estágios de acordo com o declínio da TAXA DE FI",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.780.750",
+                "C12.200.777.419.780.750"
+              ]
+            },
+            {
+              "id": "D051437",
+              "term": "Insuficiência Renal",
+              "term_en": "Renal Insufficiency",
+              "scope": "Afecções nas quais os rins (RIM) apresentam atividade abaixo do nível normal em excretar resíduos, concentrar URINA e manter o EQUILÍBRIO HIDROELETROLÍTICO, PRESSÃO ARTERIAL e o metabolismo de CÁLCIO.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.780",
+                "C12.200.777.419.780"
+              ]
+            },
+            {
+              "id": "D007676",
+              "term": "Falência Renal Crônica",
+              "term_en": "Kidney Failure, Chronic",
+              "scope": "Estágio final da INSUFICIÊNCIA RENAL CRÔNICA. Caracterizada por danos renais graves e irreversíveis (segundo os dados de PROTEINURIA) e pela redução na TAXA DE FILTRAÇÃO GLOMERULAR para menos que 15 m",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.780.750.500",
+                "C12.200.777.419.780.750.500"
+              ]
+            },
+            {
+              "id": "D000092702",
+              "term": "Doenças Renais Crônicas Idiopáticas",
+              "term_en": "Chronic Kidney Diseases of Uncertain Etiology",
+              "scope": "Insuficiências renais crônicas que não estão associadas a FATORES DE RISCO tradicionais, como por exemplo, DIABETES MELLITUS TIPO 2 e HIPERTENSÃO, mas, sim, a doenças infecciosas, exposição a toxinas ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.780.750.250",
+                "C12.200.777.419.780.750.250"
+              ]
+            },
+            {
+              "id": "D014511",
+              "term": "Uremia",
+              "term_en": "Uremia",
+              "scope": "Síndrome clínica associada com a retenção renal de produtos residuais renais ou toxinas urêmicas no sangue. Geralmente é o resultado da INSUFICIÊNCIA RENAL. A maioria das toxinas urêmicas é produto fi",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.936",
+                "C12.200.777.419.936"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Diabetes Mellitus, Type 2",
+          "candidates": [
+            {
+              "id": "D003924",
+              "term": "Diabetes Mellitus Tipo 2",
+              "term_en": "Diabetes Mellitus, Type 2",
+              "scope": "Subclasse de DIABETES MELLITUS que não é responsiva ou dependente de INSULINA (DMNID). Inicialmente, caracteriza-se por RESISTÊNCIA À INSULINA e HIPERINSULINEMIA e finalmente, por INTOLERÂNCIA À GLUCO",
+              "categoria": "Doenças",
+              "arvore": [
+                "C18.452.394.750.149",
+                "C19.246.300"
+              ]
+            },
+            {
+              "id": "D003920",
+              "term": "Diabetes Mellitus",
+              "term_en": "Diabetes Mellitus",
+              "scope": "Grupo de transtornos heterogêneos caracterizados por HIPERGLICEMIA e INTOLERÂNCIA À GLUCOSE.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C18.452.394.750",
+                "C19.246"
+              ]
+            },
+            {
+              "id": "D048909",
+              "term": "Complicações do Diabetes",
+              "term_en": "Diabetes Complications",
+              "scope": "Afecções ou processos mórbidos associados com diabetes melito. Devido ao controle deficiente do nível de GLICEMIA em pacientes diabéticos, desenvolvem-se processos doentios em vários tecidos e órgãos,",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.246.099"
+              ]
+            },
+            {
+              "id": "D006944",
+              "term": "Coma Hiperglicêmico Hiperosmolar não Cetótico",
+              "term_en": "Hyperglycemic Hyperosmolar Nonketotic Coma",
+              "scope": "Complicação grave de DIABETES MELLITUS TIPO 2. Caracteriza-se por HIPERGLICEMIA extrema, DESIDRATAÇÃO, hiperosmolaridade sérica e consciência deprimida levando ao COMA na ausência de CETOSE e ACIDOSE.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.246.099.750.490"
+              ]
+            },
+            {
+              "id": "D051273",
+              "term": "Transportador de Glucose Tipo 2",
+              "term_en": "Glucose Transporter Type 2",
+              "scope": "Facilitador do transporte de glucose expresso principalmente nas células beta pancreáticas, FÍGADO e rins. Pode atuar como um sensor de GLUCOSE para regular a liberação de INSULINA e a HOMEOSTASE da g",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.157.530.500.500.750",
+                "D12.776.157.530.937.563.750"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Sodium-Glucose Transporter 2 Inhibitors",
+          "candidates": [
+            {
+              "id": "D000077203",
+              "term": "Inibidores do Transportador 2 de Sódio-Glicose",
+              "term_en": "Sodium-Glucose Transporter 2 Inhibitors",
+              "scope": "Compostos que inibem TRANSPORTADOR 2 DE GLICOSE-SÓDIO. Eles abaixam a glicemia por meio do impedimento da reabsorção de glicose pelo rim e são usados no tratamento de DIABETES MELLITUS TIPO 2.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.519.936",
+                "D27.505.696.422.750"
+              ]
+            },
+            {
+              "id": "D051297",
+              "term": "Transportador 2 de Glucose-Sódio",
+              "term_en": "Sodium-Glucose Transporter 2",
+              "scope": "Transportador de glucose-sódio que é expressado no lúmen da membrana dos TÚBULOS RENAIS PROXIMAIS.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.157.530.450.625.437.750",
+                "D12.776.157.530.500.750.750"
+              ]
+            },
+            {
+              "id": "D000068896",
+              "term": "Canagliflozina",
+              "term_en": "Canagliflozin",
+              "scope": "Inibidor do TRANSPORTADOR 2 DE GLUCOSE-SÓDIO derivado de glucosídeo que estimula a secreção urinária de glicose por meio da supressão da reabsorção da glicose pelos rins. É usada para coontrolar a GLI",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.886.778.075",
+                "D03.383.903.075"
+              ]
+            },
+            {
+              "id": "D051247",
+              "term": "Proteínas de Transporte de Sódio-Glucose",
+              "term_en": "Sodium-Glucose Transport Proteins",
+              "scope": "Proteínas de transporte de monossacarídeos que atuam como simportadores ativos. Utilizam o SÓDIO ou os íons de hidrogênio para transportar a GLUCOSE através das MEMBRANAS CELULARES.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.157.530.450.625.437",
+                "D12.776.157.530.500.750"
+              ]
+            },
+            {
+              "id": "D051269",
+              "term": "Transportador 1 de Glucose-Sódio",
+              "term_en": "Sodium-Glucose Transporter 1",
+              "scope": "Membro principal do transportador de proteinas glucose-sódio. É predominantemente expresso na MUCOSA INTESTINAL do intestino delgado.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.157.530.450.625.437.500",
+                "D12.776.157.530.500.750.500"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Losartan",
+          "candidates": [
+            {
+              "id": "D019808",
+              "term": "Losartan",
+              "term_en": "Losartan",
+              "scope": "Antagonista do RECEPTOR TIPO I DE ANGIOTENSINA com atividade anti-hipertensiva, devido à redução do efeito pressor da ANGIOTENSINA II.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.455.426.559.389.185.475",
+                "D03.383.129.308.507"
+              ]
+            },
+            {
+              "id": "D000068557",
+              "term": "Olmesartana Medoxomila",
+              "term_en": "Olmesartan Medoxomil",
+              "scope": "BLOQUEADOR DO RECEPTOR TIPO 1 DE ANGIOTENSINA II usado para controlar a HIPERTENSÃO.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D03.383.129.308.674",
+                "D03.383.129.617.584"
+              ]
+            },
+            {
+              "id": "D047228",
+              "term": "Bloqueadores do Receptor Tipo 1 de Angiotensina II",
+              "term_en": "Angiotensin II Type 1 Receptor Blockers",
+              "scope": "Agentes que antagonizam o RECEPTOR TIPO 1 DE ANGIOTENSINA II. Estão incluídos os análogos da ANGIOTENSINA II, como a SARALASINA e bifenilimidazóis, como LOSARTAN. Alguns são usados como ANTI-HIPERTENS",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.519.162.500"
+              ]
+            },
+            {
+              "id": "D000068756",
+              "term": "Valsartana",
+              "term_en": "Valsartan",
+              "scope": "Derivado de tetrazol e BLOQUEADOR DO RECEPTOR TIPO 1 DE ANGIOTENSINA II usado para tratar a HIPERTENSÃO.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D03.383.129.617.850",
+                "D12.125.070.950.550"
+              ]
+            },
+            {
+              "id": "D000077405",
+              "term": "Irbesartana",
+              "term_en": "Irbesartan",
+              "scope": "Derivado de composto espiro, bifenil e tetrazol que atua como um antagonista do receptor tipo 1 de angiotensina II. É usado no controle da HIPERTENSÃO e no tratamento de doença renal.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.455.426.559.389.185.413",
+                "D02.455.426.779.431"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Hypertension",
+          "candidates": [
+            {
+              "id": "D006973",
+              "term": "Hipertensão",
+              "term_en": "Hypertension",
+              "scope": "PRESSÃO ARTERIAL sistêmica persistentemente alta. Com base em várias medições (DETERMINAÇÃO DA PRESSÃO ARTERIAL), a hipertensão é atualmente definida como sendo a PRESSÃO SISTÓLICA repetidamente maior",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.907.489"
+              ]
+            },
+            {
+              "id": "D006978",
+              "term": "Hipertensão Renovascular",
+              "term_en": "Hypertension, Renovascular",
+              "scope": "Hipertensão devido à compressão ou OBSTRUÇÃO DA ARTÉRIA RENAL.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.331.490",
+                "C12.200.777.419.331.490"
+              ]
+            },
+            {
+              "id": "D000075222",
+              "term": "Hipertensão Essencial",
+              "term_en": "Essential Hypertension",
+              "scope": "Hipertensão que ocorre sem causa conhecida ou doença renal pre-existente. Foi identificado um certo número de polimorfismos genéticos associados, incluindo nos genes AGT, GNB3 e ECE1. OMIM: 145500",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.907.489.165"
+              ]
+            },
+            {
+              "id": "D006977",
+              "term": "Hipertensão Renal",
+              "term_en": "Hypertension, Renal",
+              "scope": "PRESSÃO SANGUÍNEA elevada e persistente devido a NEFROPATIAS, como aquelas envolvendo o parênquima renal, vasculatura renal ou tumores que secretam RENINA.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.331",
+                "C12.200.777.419.331"
+              ]
+            },
+            {
+              "id": "D046110",
+              "term": "Hipertensão Induzida pela Gravidez",
+              "term_en": "Hypertension, Pregnancy-Induced",
+              "scope": "Afecção em uma PESSOA GRÁVIDA com pressão sanguinea sistólica (maior que 140 mm Hg) e diastólica (maior que 90 mm Hg) registrada em pelo menos dois momentos com 6 h de intervalo entre as medidas. A HI",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.703.395",
+                "C14.907.489.480"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Albuminuria",
+          "candidates": [
+            {
+              "id": "D000419",
+              "term": "Albuminúria",
+              "term_en": "Albuminuria",
+              "scope": "Presença de albumina na urina, um indicador de NEFROPATIAS.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.934.734.269",
+                "C12.200.777.934.734.269"
+              ]
+            },
+            {
+              "id": "D011507",
+              "term": "Proteinúria",
+              "term_en": "Proteinuria",
+              "scope": "Presença de proteínas na urina, um indicador de NEFROPATIAS.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.934.734",
+                "C12.200.777.934.734"
+              ]
+            },
+            {
+              "id": "D003928",
+              "term": "Nefropatias Diabéticas",
+              "term_en": "Diabetic Nephropathies",
+              "scope": "Lesões no RIM associadas com diabetes mellitus que afetam os GLOMÉRULOS RENAIS, ARTERÍOLAS, TÚBULOS RENAIS e o interstício. Os sinais clínicos incluem PROTEINURIA persistente devido a microalbuminuria",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.192",
+                "C12.200.777.419.192"
+              ]
+            },
+            {
+              "id": "D034141",
+              "term": "Hipoalbuminemia",
+              "term_en": "Hypoalbuminemia",
+              "scope": "Afecção cujo nível de ALBUMINA SÉRICA está abaixo da faixa normal. A hipoalbuminemia pode ser devida à menor síntese de albumina hepática, aumento do catabolismo da albumina, alteração da distribuição",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.147.607.500"
+              ]
+            },
+            {
+              "id": "D006029",
+              "term": "Glicosúria",
+              "term_en": "Glycosuria",
+              "scope": "Aparecimento de uma quantidade grande e anormal de GLUCOSE na urina, como maior que 500 mg/dia em adultos. Pode ser devido a HIPERGLICEMIA ou defeitos genéticos na reabsorção renal (GLICOSÚRIA RENAL).",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.934.363",
+                "C12.200.777.934.363"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Glomerular Filtration Rate",
+          "candidates": [
+            {
+              "id": "D005919",
+              "term": "Taxa de Filtração Glomerular",
+              "term_en": "Glomerular Filtration Rate",
+              "scope": "Volume de água filtrada do plasma através das paredes capilares glomerular nas cápsulas de Bowman (CÁPSULA GLOMERULAR), por unidade de tempo. É considerada equivalente à depuração da INULINA.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.390.400.300",
+                "G08.852.357"
+              ]
+            },
+            {
+              "id": "D017596",
+              "term": "Fluxo Plasmático Renal Efetivo",
+              "term_en": "Renal Plasma Flow, Effective",
+              "scope": "Quantidade do fluxo de PLASMA para as partes do RIM que funcionam na produção de urina. É a quantidade de plasma que perfunde os TÚBULOS RENAIS por unidade de tempo, geralmente medida pela depuração d",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G08.852.725.750",
+                "G09.330.100.812.750"
+              ]
+            },
+            {
+              "id": "D017595",
+              "term": "Fluxo Plasmático Renal",
+              "term_en": "Renal Plasma Flow",
+              "scope": "Quantidade de PLASMA que perfunde o RIM por unidade de tempo, aproximadamente 10 por cento maior que o FLUXO PLASMÁTICO RENAL EFETIVO. Deve ser diferente do FLUXO SANGUÍNEO RENAL (RBF) que se refere a",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G08.852.725.740",
+                "G09.330.100.812.740"
+              ]
+            },
+            {
+              "id": "D017597",
+              "term": "Fluxo Sanguíneo Renal Efetivo",
+              "term_en": "Renal Blood Flow, Effective",
+              "scope": "Quantidade de FLUXO SANGUÍNEO RENAL que vai para o tecido renal funcional, isto é, partes do RIM que estão envolvidas com a produção de URINA.",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G08.852.725.700",
+                "G09.330.100.812.700"
+              ]
+            },
+            {
+              "id": "D060730",
+              "term": "Barreira de Filtração Glomerular",
+              "term_en": "Glomerular Filtration Barrier",
+              "scope": "Barreira especializada nos rins que consiste de ENDOTÉLIO CAPILAR fenestrado, MEMBRANA BASAL GLOMERULAR e epitélio glomerular (PODÓCITOS). A barreira impede a filtração de proteínas plasmáticas.",
+              "categoria": "Anatomia",
+              "arvore": [
+                "A05.810.453.324.359.372",
+                "A05.810.453.736.520.372"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Renal Insufficiency, Chronic",
+        "Diabetes Mellitus, Type 2"
+      ],
+      "secondary": [
+        "Hypertension",
+        "Sodium-Glucose Transporter 2 Inhibitors",
+        "Albuminuria",
+        "Glomerular Filtration Rate",
+        "Losartan"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Renal Insufficiency, Chronic",
+            "candidates": [
+              {
+                "id": "D051436",
+                "term": "Insuficiência Renal Crônica",
+                "term_en": "Renal Insufficiency, Chronic",
+                "scope": "Afecções nas quais os RINS apresentam uma atividade abaixo do nível normal por mais de três meses. A insuficiência renal crônica é classificada em cinco estágios de acordo com o declínio da TAXA DE FI",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.780.750",
+                  "C12.200.777.419.780.750"
+                ]
+              },
+              {
+                "id": "D051437",
+                "term": "Insuficiência Renal",
+                "term_en": "Renal Insufficiency",
+                "scope": "Afecções nas quais os rins (RIM) apresentam atividade abaixo do nível normal em excretar resíduos, concentrar URINA e manter o EQUILÍBRIO HIDROELETROLÍTICO, PRESSÃO ARTERIAL e o metabolismo de CÁLCIO.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.780",
+                  "C12.200.777.419.780"
+                ]
+              },
+              {
+                "id": "D007676",
+                "term": "Falência Renal Crônica",
+                "term_en": "Kidney Failure, Chronic",
+                "scope": "Estágio final da INSUFICIÊNCIA RENAL CRÔNICA. Caracterizada por danos renais graves e irreversíveis (segundo os dados de PROTEINURIA) e pela redução na TAXA DE FILTRAÇÃO GLOMERULAR para menos que 15 m",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.780.750.500",
+                  "C12.200.777.419.780.750.500"
+                ]
+              },
+              {
+                "id": "D000092702",
+                "term": "Doenças Renais Crônicas Idiopáticas",
+                "term_en": "Chronic Kidney Diseases of Uncertain Etiology",
+                "scope": "Insuficiências renais crônicas que não estão associadas a FATORES DE RISCO tradicionais, como por exemplo, DIABETES MELLITUS TIPO 2 e HIPERTENSÃO, mas, sim, a doenças infecciosas, exposição a toxinas ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.780.750.250",
+                  "C12.200.777.419.780.750.250"
+                ]
+              },
+              {
+                "id": "D014511",
+                "term": "Uremia",
+                "term_en": "Uremia",
+                "scope": "Síndrome clínica associada com a retenção renal de produtos residuais renais ou toxinas urêmicas no sangue. Geralmente é o resultado da INSUFICIÊNCIA RENAL. A maioria das toxinas urêmicas é produto fi",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.936",
+                  "C12.200.777.419.936"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Diabetes Mellitus, Type 2",
+            "candidates": [
+              {
+                "id": "D003924",
+                "term": "Diabetes Mellitus Tipo 2",
+                "term_en": "Diabetes Mellitus, Type 2",
+                "scope": "Subclasse de DIABETES MELLITUS que não é responsiva ou dependente de INSULINA (DMNID). Inicialmente, caracteriza-se por RESISTÊNCIA À INSULINA e HIPERINSULINEMIA e finalmente, por INTOLERÂNCIA À GLUCO",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C18.452.394.750.149",
+                  "C19.246.300"
+                ]
+              },
+              {
+                "id": "D003920",
+                "term": "Diabetes Mellitus",
+                "term_en": "Diabetes Mellitus",
+                "scope": "Grupo de transtornos heterogêneos caracterizados por HIPERGLICEMIA e INTOLERÂNCIA À GLUCOSE.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C18.452.394.750",
+                  "C19.246"
+                ]
+              },
+              {
+                "id": "D048909",
+                "term": "Complicações do Diabetes",
+                "term_en": "Diabetes Complications",
+                "scope": "Afecções ou processos mórbidos associados com diabetes melito. Devido ao controle deficiente do nível de GLICEMIA em pacientes diabéticos, desenvolvem-se processos doentios em vários tecidos e órgãos,",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.246.099"
+                ]
+              },
+              {
+                "id": "D006944",
+                "term": "Coma Hiperglicêmico Hiperosmolar não Cetótico",
+                "term_en": "Hyperglycemic Hyperosmolar Nonketotic Coma",
+                "scope": "Complicação grave de DIABETES MELLITUS TIPO 2. Caracteriza-se por HIPERGLICEMIA extrema, DESIDRATAÇÃO, hiperosmolaridade sérica e consciência deprimida levando ao COMA na ausência de CETOSE e ACIDOSE.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.246.099.750.490"
+                ]
+              },
+              {
+                "id": "D051273",
+                "term": "Transportador de Glucose Tipo 2",
+                "term_en": "Glucose Transporter Type 2",
+                "scope": "Facilitador do transporte de glucose expresso principalmente nas células beta pancreáticas, FÍGADO e rins. Pode atuar como um sensor de GLUCOSE para regular a liberação de INSULINA e a HOMEOSTASE da g",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.157.530.500.500.750",
+                  "D12.776.157.530.937.563.750"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Sodium-Glucose Transporter 2 Inhibitors",
+            "candidates": [
+              {
+                "id": "D000077203",
+                "term": "Inibidores do Transportador 2 de Sódio-Glicose",
+                "term_en": "Sodium-Glucose Transporter 2 Inhibitors",
+                "scope": "Compostos que inibem TRANSPORTADOR 2 DE GLICOSE-SÓDIO. Eles abaixam a glicemia por meio do impedimento da reabsorção de glicose pelo rim e são usados no tratamento de DIABETES MELLITUS TIPO 2.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.519.936",
+                  "D27.505.696.422.750"
+                ]
+              },
+              {
+                "id": "D051297",
+                "term": "Transportador 2 de Glucose-Sódio",
+                "term_en": "Sodium-Glucose Transporter 2",
+                "scope": "Transportador de glucose-sódio que é expressado no lúmen da membrana dos TÚBULOS RENAIS PROXIMAIS.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.157.530.450.625.437.750",
+                  "D12.776.157.530.500.750.750"
+                ]
+              },
+              {
+                "id": "D000068896",
+                "term": "Canagliflozina",
+                "term_en": "Canagliflozin",
+                "scope": "Inibidor do TRANSPORTADOR 2 DE GLUCOSE-SÓDIO derivado de glucosídeo que estimula a secreção urinária de glicose por meio da supressão da reabsorção da glicose pelos rins. É usada para coontrolar a GLI",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.886.778.075",
+                  "D03.383.903.075"
+                ]
+              },
+              {
+                "id": "D051247",
+                "term": "Proteínas de Transporte de Sódio-Glucose",
+                "term_en": "Sodium-Glucose Transport Proteins",
+                "scope": "Proteínas de transporte de monossacarídeos que atuam como simportadores ativos. Utilizam o SÓDIO ou os íons de hidrogênio para transportar a GLUCOSE através das MEMBRANAS CELULARES.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.157.530.450.625.437",
+                  "D12.776.157.530.500.750"
+                ]
+              },
+              {
+                "id": "D051269",
+                "term": "Transportador 1 de Glucose-Sódio",
+                "term_en": "Sodium-Glucose Transporter 1",
+                "scope": "Membro principal do transportador de proteinas glucose-sódio. É predominantemente expresso na MUCOSA INTESTINAL do intestino delgado.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.157.530.450.625.437.500",
+                  "D12.776.157.530.500.750.500"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Losartan",
+            "candidates": [
+              {
+                "id": "D019808",
+                "term": "Losartan",
+                "term_en": "Losartan",
+                "scope": "Antagonista do RECEPTOR TIPO I DE ANGIOTENSINA com atividade anti-hipertensiva, devido à redução do efeito pressor da ANGIOTENSINA II.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.455.426.559.389.185.475",
+                  "D03.383.129.308.507"
+                ]
+              },
+              {
+                "id": "D000068557",
+                "term": "Olmesartana Medoxomila",
+                "term_en": "Olmesartan Medoxomil",
+                "scope": "BLOQUEADOR DO RECEPTOR TIPO 1 DE ANGIOTENSINA II usado para controlar a HIPERTENSÃO.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D03.383.129.308.674",
+                  "D03.383.129.617.584"
+                ]
+              },
+              {
+                "id": "D047228",
+                "term": "Bloqueadores do Receptor Tipo 1 de Angiotensina II",
+                "term_en": "Angiotensin II Type 1 Receptor Blockers",
+                "scope": "Agentes que antagonizam o RECEPTOR TIPO 1 DE ANGIOTENSINA II. Estão incluídos os análogos da ANGIOTENSINA II, como a SARALASINA e bifenilimidazóis, como LOSARTAN. Alguns são usados como ANTI-HIPERTENS",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.519.162.500"
+                ]
+              },
+              {
+                "id": "D000068756",
+                "term": "Valsartana",
+                "term_en": "Valsartan",
+                "scope": "Derivado de tetrazol e BLOQUEADOR DO RECEPTOR TIPO 1 DE ANGIOTENSINA II usado para tratar a HIPERTENSÃO.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D03.383.129.617.850",
+                  "D12.125.070.950.550"
+                ]
+              },
+              {
+                "id": "D000077405",
+                "term": "Irbesartana",
+                "term_en": "Irbesartan",
+                "scope": "Derivado de composto espiro, bifenil e tetrazol que atua como um antagonista do receptor tipo 1 de angiotensina II. É usado no controle da HIPERTENSÃO e no tratamento de doença renal.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.455.426.559.389.185.413",
+                  "D02.455.426.779.431"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Hypertension",
+            "candidates": [
+              {
+                "id": "D006973",
+                "term": "Hipertensão",
+                "term_en": "Hypertension",
+                "scope": "PRESSÃO ARTERIAL sistêmica persistentemente alta. Com base em várias medições (DETERMINAÇÃO DA PRESSÃO ARTERIAL), a hipertensão é atualmente definida como sendo a PRESSÃO SISTÓLICA repetidamente maior",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.907.489"
+                ]
+              },
+              {
+                "id": "D006978",
+                "term": "Hipertensão Renovascular",
+                "term_en": "Hypertension, Renovascular",
+                "scope": "Hipertensão devido à compressão ou OBSTRUÇÃO DA ARTÉRIA RENAL.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.331.490",
+                  "C12.200.777.419.331.490"
+                ]
+              },
+              {
+                "id": "D000075222",
+                "term": "Hipertensão Essencial",
+                "term_en": "Essential Hypertension",
+                "scope": "Hipertensão que ocorre sem causa conhecida ou doença renal pre-existente. Foi identificado um certo número de polimorfismos genéticos associados, incluindo nos genes AGT, GNB3 e ECE1. OMIM: 145500",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.907.489.165"
+                ]
+              },
+              {
+                "id": "D006977",
+                "term": "Hipertensão Renal",
+                "term_en": "Hypertension, Renal",
+                "scope": "PRESSÃO SANGUÍNEA elevada e persistente devido a NEFROPATIAS, como aquelas envolvendo o parênquima renal, vasculatura renal ou tumores que secretam RENINA.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.331",
+                  "C12.200.777.419.331"
+                ]
+              },
+              {
+                "id": "D046110",
+                "term": "Hipertensão Induzida pela Gravidez",
+                "term_en": "Hypertension, Pregnancy-Induced",
+                "scope": "Afecção em uma PESSOA GRÁVIDA com pressão sanguinea sistólica (maior que 140 mm Hg) e diastólica (maior que 90 mm Hg) registrada em pelo menos dois momentos com 6 h de intervalo entre as medidas. A HI",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.703.395",
+                  "C14.907.489.480"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Albuminuria",
+            "candidates": [
+              {
+                "id": "D000419",
+                "term": "Albuminúria",
+                "term_en": "Albuminuria",
+                "scope": "Presença de albumina na urina, um indicador de NEFROPATIAS.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.934.734.269",
+                  "C12.200.777.934.734.269"
+                ]
+              },
+              {
+                "id": "D011507",
+                "term": "Proteinúria",
+                "term_en": "Proteinuria",
+                "scope": "Presença de proteínas na urina, um indicador de NEFROPATIAS.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.934.734",
+                  "C12.200.777.934.734"
+                ]
+              },
+              {
+                "id": "D003928",
+                "term": "Nefropatias Diabéticas",
+                "term_en": "Diabetic Nephropathies",
+                "scope": "Lesões no RIM associadas com diabetes mellitus que afetam os GLOMÉRULOS RENAIS, ARTERÍOLAS, TÚBULOS RENAIS e o interstício. Os sinais clínicos incluem PROTEINURIA persistente devido a microalbuminuria",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.192",
+                  "C12.200.777.419.192"
+                ]
+              },
+              {
+                "id": "D034141",
+                "term": "Hipoalbuminemia",
+                "term_en": "Hypoalbuminemia",
+                "scope": "Afecção cujo nível de ALBUMINA SÉRICA está abaixo da faixa normal. A hipoalbuminemia pode ser devida à menor síntese de albumina hepática, aumento do catabolismo da albumina, alteração da distribuição",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.147.607.500"
+                ]
+              },
+              {
+                "id": "D006029",
+                "term": "Glicosúria",
+                "term_en": "Glycosuria",
+                "scope": "Aparecimento de uma quantidade grande e anormal de GLUCOSE na urina, como maior que 500 mg/dia em adultos. Pode ser devido a HIPERGLICEMIA ou defeitos genéticos na reabsorção renal (GLICOSÚRIA RENAL).",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.934.363",
+                  "C12.200.777.934.363"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Glomerular Filtration Rate",
+            "candidates": [
+              {
+                "id": "D005919",
+                "term": "Taxa de Filtração Glomerular",
+                "term_en": "Glomerular Filtration Rate",
+                "scope": "Volume de água filtrada do plasma através das paredes capilares glomerular nas cápsulas de Bowman (CÁPSULA GLOMERULAR), por unidade de tempo. É considerada equivalente à depuração da INULINA.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.390.400.300",
+                  "G08.852.357"
+                ]
+              },
+              {
+                "id": "D017596",
+                "term": "Fluxo Plasmático Renal Efetivo",
+                "term_en": "Renal Plasma Flow, Effective",
+                "scope": "Quantidade do fluxo de PLASMA para as partes do RIM que funcionam na produção de urina. É a quantidade de plasma que perfunde os TÚBULOS RENAIS por unidade de tempo, geralmente medida pela depuração d",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G08.852.725.750",
+                  "G09.330.100.812.750"
+                ]
+              },
+              {
+                "id": "D017595",
+                "term": "Fluxo Plasmático Renal",
+                "term_en": "Renal Plasma Flow",
+                "scope": "Quantidade de PLASMA que perfunde o RIM por unidade de tempo, aproximadamente 10 por cento maior que o FLUXO PLASMÁTICO RENAL EFETIVO. Deve ser diferente do FLUXO SANGUÍNEO RENAL (RBF) que se refere a",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G08.852.725.740",
+                  "G09.330.100.812.740"
+                ]
+              },
+              {
+                "id": "D017597",
+                "term": "Fluxo Sanguíneo Renal Efetivo",
+                "term_en": "Renal Blood Flow, Effective",
+                "scope": "Quantidade de FLUXO SANGUÍNEO RENAL que vai para o tecido renal funcional, isto é, partes do RIM que estão envolvidas com a produção de URINA.",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G08.852.725.700",
+                  "G09.330.100.812.700"
+                ]
+              },
+              {
+                "id": "D060730",
+                "term": "Barreira de Filtração Glomerular",
+                "term_en": "Glomerular Filtration Barrier",
+                "scope": "Barreira especializada nos rins que consiste de ENDOTÉLIO CAPILAR fenestrado, MEMBRANA BASAL GLOMERULAR e epitélio glomerular (PODÓCITOS). A barreira impede a filtração de proteínas plasmáticas.",
+                "categoria": "Anatomia",
+                "arvore": [
+                  "A05.810.453.324.359.372",
+                  "A05.810.453.736.520.372"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D051436",
+          "term": "Insuficiência Renal Crônica"
+        },
+        {
+          "id": "D003924",
+          "term": "Diabetes Mellitus Tipo 2"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D000077203",
+          "term": "Inibidores do Transportador 2 de Sódio-Glicose"
+        },
+        {
+          "id": "D019808",
+          "term": "Losartan"
+        },
+        {
+          "id": "D006973",
+          "term": "Hipertensão"
+        },
+        {
+          "id": "D000419",
+          "term": "Albuminúria"
+        },
+        {
+          "id": "D005919",
+          "term": "Taxa de Filtração Glomerular"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 5,
+    "total_candidates": 35,
+    "final_primary": 2,
+    "final_secondary": 5
+  }
+}

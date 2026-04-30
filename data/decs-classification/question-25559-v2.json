@@ -1,0 +1,465 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "DDCS032482",
+        "term": "Recursos Renováveis",
+        "name_en": "Renewable Resources",
+        "scope_note": "",
+        "tree_ids": [
+          "SP4.606.837.868"
+        ],
+        "hierarchy_path": "Saúde Pública › SP4.606.837.868",
+        "parents": [
+          {
+            "id": "D000067936",
+            "term": "Recursos Naturais"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      },
+      {
+        "id": "D034904",
+        "term": "Lamina Tipo A",
+        "name_en": "Lamin Type A",
+        "scope_note": "Subclasse de lâminas regulada pelo desenvolvimento possuindo um ponto isoelétrico neutro. Dissociam-se das membranas nucleares durante a mitose.",
+        "tree_ids": [
+          "D12.776.660.650.875.500"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D12.776.660.650.875.500",
+        "parents": [
+          {
+            "id": "D034882",
+            "term": "Laminas"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      },
+      {
+        "id": "D000081404",
+        "term": "Prevenção Quaternária",
+        "name_en": "Quaternary Prevention",
+        "scope_note": "Ação para identificar pacientes ou populações em risco de sobremedicalização, a fim de protegê-los de intervenções médicas invasivas e lhe fornecer procedimentos de atenção à saúde eticamente aceitáveis. (Adaptado de: http://www.ph3c.org/4daction/w3_CatVisu/en/quaternary-prevention.html?wCatIDAdmin=1128)",
+        "tree_ids": [
+          "N02.421.726.784",
+          "N04.590.374.675",
+          "N05.300.703",
+          "N06.850.780.715",
+          "SP2.840.385.619.715"
+        ],
+        "hierarchy_path": "Saúde › N02.421.726.784",
+        "parents": [
+          {
+            "id": "D011314",
+            "term": "Serviços Preventivos de Saúde"
+          },
+          {
+            "id": "D003695",
+            "term": "Atenção à Saúde"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": []
+  },
+  "themes_identified": {
+    "primary": [
+      "Enunciado",
+      "Assinale a alternativa que traz a definição de Prevenção Quaternária",
+      "Alternativa A"
+    ],
+    "secondary": []
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Enunciado",
+          "candidates": [
+            {
+              "id": "DDCS032482",
+              "term": "Recursos Renováveis",
+              "term_en": "Renewable Resources",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.837.868"
+              ]
+            },
+            {
+              "id": "DDCS051583",
+              "term": "Varredoras",
+              "term_en": "Sweepers",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.987.506.871"
+              ]
+            },
+            {
+              "id": "DDCS051857",
+              "term": "Utilização de Recursos Locais",
+              "term_en": "Local Resources Uses",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.303.766"
+              ]
+            },
+            {
+              "id": "DDCS051642",
+              "term": "Leito Fixo",
+              "term_en": "Fixed Bed",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.806.945.750.207.899.660"
+              ]
+            },
+            {
+              "id": "DDCS025556",
+              "term": "Tanques de Concreto",
+              "term_en": "Reinforced Concrete Tanks",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.141.089.248.433.561"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Alternativa A",
+          "candidates": [
+            {
+              "id": "D034904",
+              "term": "Lamina Tipo A",
+              "term_en": "Lamin Type A",
+              "scope": "Subclasse de lâminas regulada pelo desenvolvimento possuindo um ponto isoelétrico neutro. Dissociam-se das membranas nucleares durante a mitose.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.660.650.875.500"
+              ]
+            },
+            {
+              "id": "D038202",
+              "term": "Cadeia A de alfa-Cristalina",
+              "term_en": "alpha-Crystallin A Chain",
+              "scope": "Uma das subunidades de alfa-cristalinas. Diferentemente da CADEIA B DE ALFA-CRISTALINA, a expressão da CADEIA A DE ALFA-CRISTALINA está limitada basicamente ao CRISTALINO.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.306.366.100.149",
+                "D12.776.580.157.149"
+              ]
+            },
+            {
+              "id": "D038205",
+              "term": "Cadeia A de beta-Cristalina",
+              "term_en": "beta-Crystallin A Chain",
+              "scope": "Subunidade ácida de beta-cristalina.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.306.366.300.100"
+              ]
+            },
+            {
+              "id": "D019925",
+              "term": "Ciclina A",
+              "term_en": "Cyclin A",
+              "scope": "Subtipo de ciclina que possui especificidade para a PROTEÍNA QUINASE CDC2 e QUINASE 2 DEPENDENTE DE CICLINA. Exerce papel na progressão do CICLO CELULAR nas transições entre as fases G1/S e G2/M.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.644.360.262.100",
+                "D12.776.167.218.100"
+              ]
+            },
+            {
+              "id": "D018514",
+              "term": "Estruturas Vegetais",
+              "term_en": "Plant Structures",
+              "scope": "Partes das plantas, incluindo as SEMENTES.",
+              "categoria": "Anatomia",
+              "arvore": [
+                "A18"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Assinale a alternativa que traz a definição de Prevenção Quaternária",
+          "candidates": [
+            {
+              "id": "D000081404",
+              "term": "Prevenção Quaternária",
+              "term_en": "Quaternary Prevention",
+              "scope": "Ação para identificar pacientes ou populações em risco de sobremedicalização, a fim de protegê-los de intervenções médicas invasivas e lhe fornecer procedimentos de atenção à saúde eticamente aceitáve",
+              "categoria": "Saúde",
+              "arvore": [
+                "N02.421.726.784",
+                "N04.590.374.675"
+              ]
+            },
+            {
+              "id": "D055512",
+              "term": "Prevenção Terciária",
+              "term_en": "Tertiary Prevention",
+              "scope": "Medidas que visam fornecer serviços de apoio e reabilitação para minimizar a morbidade e maximizar a qualidade de vida depois de uma doença ou lesão de longa duração.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.919",
+                "N02.421.726.860"
+              ]
+            },
+            {
+              "id": "DDCS050219",
+              "term": "Prevenção de Doenças",
+              "term_en": "Disease Prevention",
+              "scope": "Conjunto de ações que visa erradicar, eliminar ou reduzir o impacto de determinada doença ou deficiência, ou ainda, conter sua dispersão. (Tradução livre do original: Last, 2001)",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP2.840.385.619"
+              ]
+            },
+            {
+              "id": "D055502",
+              "term": "Prevenção Secundária",
+              "term_en": "Secondary Prevention",
+              "scope": "Prevenção de recorrências ou exacerbações de uma doença ou de complicações advindas de seu tratamento.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.897",
+                "N02.421.726.825"
+              ]
+            },
+            {
+              "id": "D011322",
+              "term": "Prevenção Primária",
+              "term_en": "Primary Prevention",
+              "scope": "Práticas específicas para a prevenção de doenças ou distúrbios mentais em indivíduos ou populações suscetíveis. Incluem a PROMOÇÃO DA SAÚDE, incluindo a saúde mental, procedimentos preventivos, como C",
+              "categoria": "Saúde",
+              "arvore": [
+                "N02.421.726.758",
+                "N06.850.780.680"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": []
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Enunciado",
+        "Assinale a alternativa que traz a definição de Prevenção Quaternária",
+        "Alternativa A"
+      ],
+      "secondary": []
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Enunciado",
+            "candidates": [
+              {
+                "id": "DDCS032482",
+                "term": "Recursos Renováveis",
+                "term_en": "Renewable Resources",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.837.868"
+                ]
+              },
+              {
+                "id": "DDCS051583",
+                "term": "Varredoras",
+                "term_en": "Sweepers",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.987.506.871"
+                ]
+              },
+              {
+                "id": "DDCS051857",
+                "term": "Utilização de Recursos Locais",
+                "term_en": "Local Resources Uses",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.303.766"
+                ]
+              },
+              {
+                "id": "DDCS051642",
+                "term": "Leito Fixo",
+                "term_en": "Fixed Bed",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.806.945.750.207.899.660"
+                ]
+              },
+              {
+                "id": "DDCS025556",
+                "term": "Tanques de Concreto",
+                "term_en": "Reinforced Concrete Tanks",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.141.089.248.433.561"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Alternativa A",
+            "candidates": [
+              {
+                "id": "D034904",
+                "term": "Lamina Tipo A",
+                "term_en": "Lamin Type A",
+                "scope": "Subclasse de lâminas regulada pelo desenvolvimento possuindo um ponto isoelétrico neutro. Dissociam-se das membranas nucleares durante a mitose.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.660.650.875.500"
+                ]
+              },
+              {
+                "id": "D038202",
+                "term": "Cadeia A de alfa-Cristalina",
+                "term_en": "alpha-Crystallin A Chain",
+                "scope": "Uma das subunidades de alfa-cristalinas. Diferentemente da CADEIA B DE ALFA-CRISTALINA, a expressão da CADEIA A DE ALFA-CRISTALINA está limitada basicamente ao CRISTALINO.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.306.366.100.149",
+                  "D12.776.580.157.149"
+                ]
+              },
+              {
+                "id": "D038205",
+                "term": "Cadeia A de beta-Cristalina",
+                "term_en": "beta-Crystallin A Chain",
+                "scope": "Subunidade ácida de beta-cristalina.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.306.366.300.100"
+                ]
+              },
+              {
+                "id": "D019925",
+                "term": "Ciclina A",
+                "term_en": "Cyclin A",
+                "scope": "Subtipo de ciclina que possui especificidade para a PROTEÍNA QUINASE CDC2 e QUINASE 2 DEPENDENTE DE CICLINA. Exerce papel na progressão do CICLO CELULAR nas transições entre as fases G1/S e G2/M.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.644.360.262.100",
+                  "D12.776.167.218.100"
+                ]
+              },
+              {
+                "id": "D018514",
+                "term": "Estruturas Vegetais",
+                "term_en": "Plant Structures",
+                "scope": "Partes das plantas, incluindo as SEMENTES.",
+                "categoria": "Anatomia",
+                "arvore": [
+                  "A18"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Assinale a alternativa que traz a definição de Prevenção Quaternária",
+            "candidates": [
+              {
+                "id": "D000081404",
+                "term": "Prevenção Quaternária",
+                "term_en": "Quaternary Prevention",
+                "scope": "Ação para identificar pacientes ou populações em risco de sobremedicalização, a fim de protegê-los de intervenções médicas invasivas e lhe fornecer procedimentos de atenção à saúde eticamente aceitáve",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N02.421.726.784",
+                  "N04.590.374.675"
+                ]
+              },
+              {
+                "id": "D055512",
+                "term": "Prevenção Terciária",
+                "term_en": "Tertiary Prevention",
+                "scope": "Medidas que visam fornecer serviços de apoio e reabilitação para minimizar a morbidade e maximizar a qualidade de vida depois de uma doença ou lesão de longa duração.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.919",
+                  "N02.421.726.860"
+                ]
+              },
+              {
+                "id": "DDCS050219",
+                "term": "Prevenção de Doenças",
+                "term_en": "Disease Prevention",
+                "scope": "Conjunto de ações que visa erradicar, eliminar ou reduzir o impacto de determinada doença ou deficiência, ou ainda, conter sua dispersão. (Tradução livre do original: Last, 2001)",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP2.840.385.619"
+                ]
+              },
+              {
+                "id": "D055502",
+                "term": "Prevenção Secundária",
+                "term_en": "Secondary Prevention",
+                "scope": "Prevenção de recorrências ou exacerbações de uma doença ou de complicações advindas de seu tratamento.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.897",
+                  "N02.421.726.825"
+                ]
+              },
+              {
+                "id": "D011322",
+                "term": "Prevenção Primária",
+                "term_en": "Primary Prevention",
+                "scope": "Práticas específicas para a prevenção de doenças ou distúrbios mentais em indivíduos ou populações suscetíveis. Incluem a PROMOÇÃO DA SAÚDE, incluindo a saúde mental, procedimentos preventivos, como C",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N02.421.726.758",
+                  "N06.850.780.680"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": []
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "DDCS032482",
+          "term": "Recursos Renováveis"
+        },
+        {
+          "id": "D034904",
+          "term": "Lamina Tipo A"
+        },
+        {
+          "id": "D000081404",
+          "term": "Prevenção Quaternária"
+        }
+      ],
+      "secondary": []
+    }
+  },
+  "stats": {
+    "primary_concepts": 3,
+    "secondary_concepts": 0,
+    "total_candidates": 15,
+    "final_primary": 3,
+    "final_secondary": 0
+  }
+}

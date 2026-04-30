@@ -1,0 +1,1311 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D000900",
+        "term": "Antibacterianos",
+        "name_en": "Anti-Bacterial Agents",
+        "scope_note": "Substâncias que inibem a proliferação ou a reprodução de BACTÉRIAS.",
+        "tree_ids": [
+          "D27.505.954.122.085",
+          "SP4.606.635.823.796.135",
+          "VS2.002.001.012",
+          "VS2.004.001.002.006"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D27.505.954.122.085",
+        "parents": [
+          {
+            "id": "D000890",
+            "term": "Anti-Infecciosos"
+          },
+          {
+            "id": "D020313",
+            "term": "Usos Especializados de Substâncias Químicas"
+          },
+          {
+            "id": "D004364",
+            "term": "Preparações Farmacêuticas"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000097909",
+            "term": "Cefalosporinas de Segunda Geração"
+          },
+          {
+            "id": "D000097904",
+            "term": "Cefalosporinas de Primeira Geração"
+          },
+          {
+            "id": "D000097902",
+            "term": "Antibióticos beta-Lactâmicos"
+          },
+          {
+            "id": "D065093",
+            "term": "Inibidores de beta-Lactamases"
+          },
+          {
+            "id": "D000097911",
+            "term": "Cefalosporinas de Terceira Geração"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D016920",
+        "term": "Meningites Bacterianas",
+        "name_en": "Meningitis, Bacterial",
+        "scope_note": "Infecções bacterianas das leptomeninges e do espaço subaracnoide, frequentemente acometendo o córtex cerebral, nervos cranianos, vasos sanguíneos cerebrais, medula espinhal e raizes nervosas.",
+        "tree_ids": [
+          "C01.150.252.223.500",
+          "C01.207.180.500",
+          "C10.228.228.180.500",
+          "C10.586.625.280"
+        ],
+        "hierarchy_path": "Doenças › C01.150.252.223.500",
+        "parents": [
+          {
+            "id": "D020806",
+            "term": "Infecções Bacterianas do Sistema Nervoso Central"
+          }
+        ],
+        "children": [
+          {
+            "id": "D008584",
+            "term": "Meningite por Listeria"
+          },
+          {
+            "id": "D008583",
+            "term": "Meningite por Haemophilus"
+          },
+          {
+            "id": "D008585",
+            "term": "Meningite Meningocócica"
+          },
+          {
+            "id": "D014884",
+            "term": "Síndrome de Waterhouse-Friderichsen"
+          },
+          {
+            "id": "D008586",
+            "term": "Meningite Pneumocócica"
+          }
+        ],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D000667",
+        "term": "Ampicilina",
+        "name_en": "Ampicillin",
+        "scope_note": "Derivado semissintético da penicilina que funciona como antibiótico de amplo espectro, ativo quando administrado oralmente.",
+        "tree_ids": [
+          "D02.065.589.099.750.750.050",
+          "D02.886.108.750.750.050",
+          "D03.633.100.300.750.750.050"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D02.065.589.099.750.750.050",
+        "parents": [
+          {
+            "id": "D010400",
+            "term": "Penicilina G"
+          }
+        ],
+        "children": [
+          {
+            "id": "D013626",
+            "term": "Talampicilina"
+          },
+          {
+            "id": "D010878",
+            "term": "Piperacilina"
+          },
+          {
+            "id": "D010917",
+            "term": "Pivampicilina"
+          },
+          {
+            "id": "D000077725",
+            "term": "Combinação Piperacilina e Tazobactam"
+          },
+          {
+            "id": "D000658",
+            "term": "Amoxicilina"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D002555",
+        "term": "Líquido Cefalorraquidiano",
+        "name_en": "Cerebrospinal Fluid",
+        "scope_note": "Líquido aquoso continuamente produzido no PLEXO CORÓIDEO e circulam ao redor da superfície do ENCÉFALO, MEDULA ESPINAL e nos VENTRÍCULOS CEREBRAIS.",
+        "tree_ids": [
+          "A12.207.270.210"
+        ],
+        "hierarchy_path": "Anatomia › A12.207.270.210",
+        "parents": [
+          {
+            "id": "D045604",
+            "term": "Líquido Extracelular"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D002443",
+        "term": "Ceftriaxona",
+        "name_en": "Ceftriaxone",
+        "scope_note": "Antibiótico cefalosporina de amplo espectro e derivado de cefotaxima com uma longa meia-vida e alta penetrabilidade em meninges, olhos e orelhas internas.",
+        "tree_ids": [
+          "D02.065.589.099.249.190.190.155",
+          "D02.886.665.074.190.190.155",
+          "D03.633.100.300.249.190.190.155"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D02.065.589.099.249.190.190.155",
+        "parents": [
+          {
+            "id": "D002439",
+            "term": "Cefotaxima"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D003920",
+        "term": "Diabetes Mellitus",
+        "name_en": "Diabetes Mellitus",
+        "scope_note": "Grupo de transtornos heterogêneos caracterizados por HIPERGLICEMIA e INTOLERÂNCIA À GLUCOSE.",
+        "tree_ids": [
+          "C18.452.394.750",
+          "C19.246"
+        ],
+        "hierarchy_path": "Doenças › C18.452.394.750",
+        "parents": [
+          {
+            "id": "D044882",
+            "term": "Transtornos do Metabolismo de Glucose"
+          },
+          {
+            "id": "D004700",
+            "term": "Doenças do Sistema Endócrino"
+          }
+        ],
+        "children": [
+          {
+            "id": "D056731",
+            "term": "Síndrome de Donohue"
+          },
+          {
+            "id": "D000071698",
+            "term": "Diabetes Autoimune Latente em Adultos"
+          },
+          {
+            "id": "D003922",
+            "term": "Diabetes Mellitus Tipo 1"
+          },
+          {
+            "id": "D003924",
+            "term": "Diabetes Mellitus Tipo 2"
+          },
+          {
+            "id": "D003921",
+            "term": "Diabetes Mellitus Experimental"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D003907",
+        "term": "Dexametasona",
+        "name_en": "Dexamethasone",
+        "scope_note": "Anti-inflamatório 9-fluor-glucocorticoide.",
+        "tree_ids": [
+          "D04.210.500.745.432.769.344",
+          "D04.210.500.908.238"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D04.210.500.745.432.769.344",
+        "parents": [
+          {
+            "id": "D011246",
+            "term": "Pregnadienotrióis"
+          },
+          {
+            "id": "D013259",
+            "term": "Esteroides Fluorados"
+          }
+        ],
+        "children": [
+          {
+            "id": "D003908",
+            "term": "Isonicotinato de Dexametasona"
+          },
+          {
+            "id": "D000078162",
+            "term": "Combinação Tobramicina e Dexametasona"
+          },
+          {
+            "id": "D003899",
+            "term": "Desoximetasona"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D000437",
+        "term": "Alcoolismo",
+        "name_en": "Alcoholism",
+        "scope_note": "Doença crônica, primária, com fatores genéticos, psicossociais e ambientais influenciando seu desenvolvimento e manifestações. A doença é geralmente progressiva e fatal. É caracterizada pela falta de controle sobre a bebida, pré-ocupação com a droga álcool, uso de álcool apesar das consequências adversas, e distorções no pensamento, negação notável. Cada um destes sintomas pode ser contínuo ou periódico.",
+        "tree_ids": [
+          "C25.775.100.250",
+          "F03.900.100.350"
+        ],
+        "hierarchy_path": "Doenças › C25.775.100.250",
+        "parents": [
+          {
+            "id": "D019973",
+            "term": "Transtornos Relacionados ao Uso de Álcool"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Meningitis, Bacterial",
+      "Anti-Bacterial Agents"
+    ],
+    "secondary": [
+      "Cerebrospinal Fluid",
+      "Dexamethasone",
+      "Alcoholism",
+      "Diabetes Mellitus",
+      "Ceftriaxone",
+      "Ampicillin"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Anti-Bacterial Agents",
+          "candidates": [
+            {
+              "id": "D000900",
+              "term": "Antibacterianos",
+              "term_en": "Anti-Bacterial Agents",
+              "scope": "Substâncias que inibem a proliferação ou a reprodução de BACTÉRIAS.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.954.122.085",
+                "SP4.606.635.823.796.135"
+              ]
+            },
+            {
+              "id": "D000890",
+              "term": "Anti-Infecciosos",
+              "term_en": "Anti-Infective Agents",
+              "scope": "Substâncias que impedem a disseminação de agentes ou organismos infecciosos ou que matam agentes infecciosos para impedir a disseminação da infecção.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.954.122"
+              ]
+            },
+            {
+              "id": "DDCS051507",
+              "term": "Produtos com Ação Antimicrobiana",
+              "term_en": "Products with Antimicrobial Action",
+              "categoria": "Vigilância Sanitária",
+              "arvore": [
+                "VS2.004.001.002"
+              ]
+            },
+            {
+              "id": "D000097902",
+              "term": "Antibióticos beta-Lactâmicos",
+              "term_en": "beta Lactam Antibiotics",
+              "scope": "Agentes bactericidas que contêm um anel beta-lactâmico em sua estrutura química. Inibem a síntese da parede celular bacteriana ligando-se às PROTEÍNAS DE LIGAÇÃO À PENICILINA, impedindo a síntese de p",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.954.122.085.386"
+              ]
+            },
+            {
+              "id": "D000891",
+              "term": "Anti-Infecciosos Locais",
+              "term_en": "Anti-Infective Agents, Local",
+              "scope": "Substâncias, usadas nos seres humanos e em outros animais, que destroem microrganismos prejudiciais ou inibem sua atividade. São diferentes dos DESINFETANTES que são usados em objetos inanimados.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.954.122.187"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Meningitis, Bacterial",
+          "candidates": [
+            {
+              "id": "D016920",
+              "term": "Meningites Bacterianas",
+              "term_en": "Meningitis, Bacterial",
+              "scope": "Infecções bacterianas das leptomeninges e do espaço subaracnoide, frequentemente acometendo o córtex cerebral, nervos cranianos, vasos sanguíneos cerebrais, medula espinhal e raizes nervosas.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.150.252.223.500",
+                "C01.207.180.500"
+              ]
+            },
+            {
+              "id": "D008585",
+              "term": "Meningite Meningocócica",
+              "term_en": "Meningitis, Meningococcal",
+              "scope": "Infecção fulminante das meninges e do líquido subaracnóideo por bactéria NEISSERIA MENINGITIDIS produzindo inflamação difusa e tromboses venosas perimeningeais. Manifestações clínicas incluem FEBRE, r",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.150.252.223.500.750",
+                "C01.150.252.400.625.549.449"
+              ]
+            },
+            {
+              "id": "D008586",
+              "term": "Meningite Pneumocócica",
+              "term_en": "Meningitis, Pneumococcal",
+              "scope": "Infecção purulenta aguda das meninges e do espaço subaracnoide causada por Streptococcus pneumoniae, mais prevalente em crianças e em adultos acima de 60 anos. Essa doença pode estar associada com OTI",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.150.252.223.500.875",
+                "C01.150.252.410.890.670.595"
+              ]
+            },
+            {
+              "id": "D020806",
+              "term": "Infecções Bacterianas do Sistema Nervoso Central",
+              "term_en": "Central Nervous System Bacterial Infections",
+              "scope": "Infecções bacterianas no cérebro, na medula espinhal e nas meninges, incluindo infecções acometendo os espaços perimeníngeos.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.150.252.223",
+                "C01.207.180"
+              ]
+            },
+            {
+              "id": "D008581",
+              "term": "Meningite",
+              "term_en": "Meningitis",
+              "scope": "Inflamação das membranas de recobrimento do encéfalo e/ou medula espinal constituída por PIA MATER, ARACNOIDE e DURA MATER. Infecções virais, bacterianas e fúngicas são as causas mais comuns desta afe",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.586.625"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Ampicillin",
+          "candidates": [
+            {
+              "id": "D000667",
+              "term": "Ampicilina",
+              "term_en": "Ampicillin",
+              "scope": "Derivado semissintético da penicilina que funciona como antibiótico de amplo espectro, ativo quando administrado oralmente.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.065.589.099.750.750.050",
+                "D02.886.108.750.750.050"
+              ]
+            },
+            {
+              "id": "D000668",
+              "term": "Resistência a Ampicilina",
+              "term_en": "Ampicillin Resistance",
+              "scope": "Não suscetibilidade de um micróbio à ação da ampicilina, um derivado da penicilina que interfere na síntese da parede celular.",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G06.099.225.500.600.050",
+                "G06.225.347.500.600.050"
+              ]
+            },
+            {
+              "id": "D013626",
+              "term": "Talampicilina",
+              "term_en": "Talampicillin",
+              "scope": "Éster de AMPICILINA rapidamente hidrolisada na absorção para liberar a ampilicina. É bem absorvida no trato gastrointestinal levando a uma grande biodisponibilidade da ampicilina e que pode ser comple",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.065.589.099.750.750.050.900",
+                "D02.886.108.750.750.050.900"
+              ]
+            },
+            {
+              "id": "D000658",
+              "term": "Amoxicilina",
+              "term_en": "Amoxicillin",
+              "scope": "Antibiótico semissintético de amplo espectro semelhante à AMPICILINA, exceto por sua resistência ao ácido gástrico que permite níveis séricos mais altos quando administrado oralmente.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.065.589.099.750.750.050.050",
+                "D02.886.108.750.750.050.050"
+              ]
+            },
+            {
+              "id": "D010917",
+              "term": "Pivampicilina",
+              "term_en": "Pivampicillin",
+              "scope": "Éster pivalato análogo da AMPICILINA.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.065.589.099.750.750.050.700",
+                "D02.886.108.750.750.050.700"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Cerebrospinal Fluid",
+          "candidates": [
+            {
+              "id": "D002555",
+              "term": "Líquido Cefalorraquidiano",
+              "term_en": "Cerebrospinal Fluid",
+              "scope": "Líquido aquoso continuamente produzido no PLEXO CORÓIDEO e circulam ao redor da superfície do ENCÉFALO, MEDULA ESPINAL e nos VENTRÍCULOS CEREBRAIS.",
+              "categoria": "Anatomia",
+              "arvore": [
+                "A12.207.270.210"
+              ]
+            },
+            {
+              "id": "D002556",
+              "term": "Proteínas do Líquido Cefalorraquidiano",
+              "term_en": "Cerebrospinal Fluid Proteins",
+              "scope": "Proteínas do líquido cefalorraquidiano, normalmente albumina e globulina presentes na razão 8 para 1. O aumento dos níveis de proteína são de valor diagnóstico em doenças neurológicas.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.178"
+              ]
+            },
+            {
+              "id": "D015170",
+              "term": "Pressão do Líquido Cefalorraquidiano",
+              "term_en": "Cerebrospinal Fluid Pressure",
+              "scope": "Pressão manométrica do LÍQUIDO CEFALORRAQUIDIANO medida através de punção lombar, cerebroventricular ou cisternal. Dentro da cavidade craniana é chamada PRESSÃO INTRACRANIANA.",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G11.561.170"
+              ]
+            },
+            {
+              "id": "D065634",
+              "term": "Vazamento de Líquido Cefalorraquidiano",
+              "term_en": "Cerebrospinal Fluid Leak",
+              "scope": "Descarga de líquido cefalorraquidiano por um orifício do crânio que drena, mais comumente, o nariz (RINORREIA DE LÍQUIDO CEFALORRAQUIDIANO) ou o ouvido (OTORREIA DE LÍQUIDO CEFALORRAQUIDIANO).",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.597.114",
+                "C10.900.300.109"
+              ]
+            },
+            {
+              "id": "D013129",
+              "term": "Punção Espinal",
+              "term_en": "Spinal Puncture",
+              "scope": "Drenagem do líquido do espaço subaracnoídeo na região lombar, geralmente entre a terceira e a quarta vértebras lombares.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.225.998.054.790",
+                "E01.370.376.700"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Ceftriaxone",
+          "candidates": [
+            {
+              "id": "D002443",
+              "term": "Ceftriaxona",
+              "term_en": "Ceftriaxone",
+              "scope": "Antibiótico cefalosporina de amplo espectro e derivado de cefotaxima com uma longa meia-vida e alta penetrabilidade em meninges, olhos e orelhas internas.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.065.589.099.249.190.190.155",
+                "D02.886.665.074.190.190.155"
+              ]
+            },
+            {
+              "id": "D015281",
+              "term": "Cefmenoxima",
+              "term_en": "Cefmenoxime",
+              "scope": "Antibiótico cefalosporina que é administrado por via intravenosa ou intramuscular. É ativo contra a maioria de micro-organismos Gram-positivos e Gram-negativos, é um potente inibidor das Enterobacteri",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.065.589.099.249.190.190.125",
+                "D02.886.665.074.190.190.125"
+              ]
+            },
+            {
+              "id": "D002444",
+              "term": "Cefuroxima",
+              "term_en": "Cefuroxime",
+              "scope": "Antibiótico cefalosporina de amplo espectro resistente à beta-lactamase. Tem sido proposto para infecções de organismos Gram-negativos e Gram-positivos, GONORREIA e HAEMOPHILUS.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.065.589.099.249.188",
+                "D02.886.665.074.188"
+              ]
+            },
+            {
+              "id": "D002436",
+              "term": "Cefatrizina",
+              "term_en": "Cefatrizine",
+              "scope": "Antibiótico cefalosporina semissintético ativo oralmente com amplo espectro de atividade.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.065.589.099.249.200.165.125",
+                "D02.886.665.074.200.165.125"
+              ]
+            },
+            {
+              "id": "D015296",
+              "term": "Ceftizoxima",
+              "term_en": "Ceftizoxime",
+              "scope": "Antibiótico cefalosporina semissintético que pode ser administrado por via intravenosa ou através de supositórios. A droga é altamente resistente a um amplo espectro de beta-lactamases e é ativa contr",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.065.589.099.249.190.190.145",
+                "D02.886.665.074.190.190.145"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Diabetes Mellitus",
+          "candidates": [
+            {
+              "id": "D003920",
+              "term": "Diabetes Mellitus",
+              "term_en": "Diabetes Mellitus",
+              "scope": "Grupo de transtornos heterogêneos caracterizados por HIPERGLICEMIA e INTOLERÂNCIA À GLUCOSE.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C18.452.394.750",
+                "C19.246"
+              ]
+            },
+            {
+              "id": "D048909",
+              "term": "Complicações do Diabetes",
+              "term_en": "Diabetes Complications",
+              "scope": "Afecções ou processos mórbidos associados com diabetes melito. Devido ao controle deficiente do nível de GLICEMIA em pacientes diabéticos, desenvolvem-se processos doentios em vários tecidos e órgãos,",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.246.099"
+              ]
+            },
+            {
+              "id": "D003922",
+              "term": "Diabetes Mellitus Tipo 1",
+              "term_en": "Diabetes Mellitus, Type 1",
+              "scope": "Subtipo de DIABETES MELLITUS caracterizada por deficiência de INSULINA. Manifesta-se por um início repentino de intensa HIPERGLICEMIA, progressão rápida a CETOACIDOSE DIABÉTICA e MORTE, a menos que tr",
+              "categoria": "Doenças",
+              "arvore": [
+                "C18.452.394.750.124",
+                "C19.246.267"
+              ]
+            },
+            {
+              "id": "D003924",
+              "term": "Diabetes Mellitus Tipo 2",
+              "term_en": "Diabetes Mellitus, Type 2",
+              "scope": "Subclasse de DIABETES MELLITUS que não é responsiva ou dependente de INSULINA (DMNID). Inicialmente, caracteriza-se por RESISTÊNCIA À INSULINA e HIPERINSULINEMIA e finalmente, por INTOLERÂNCIA À GLUCO",
+              "categoria": "Doenças",
+              "arvore": [
+                "C18.452.394.750.149",
+                "C19.246.300"
+              ]
+            },
+            {
+              "id": "D003923",
+              "term": "Diabetes Mellitus Lipoatrófica",
+              "term_en": "Diabetes Mellitus, Lipoatrophic",
+              "scope": "Tipo de diabetes mellitus caracterizado pela grave RESISTÊNCIA À INSULINA e LIPODISTROFIA. A lipodistrofia pode ser generalizada, parcial adquirida ou congênita (LIPODISTROFIA GENERALIZADA CONGÊNITA.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C18.452.394.750.149.500",
+                "C19.246.300.500"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Dexamethasone",
+          "candidates": [
+            {
+              "id": "D003907",
+              "term": "Dexametasona",
+              "term_en": "Dexamethasone",
+              "scope": "Anti-inflamatório 9-fluor-glucocorticoide.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D04.210.500.745.432.769.344",
+                "D04.210.500.908.238"
+              ]
+            },
+            {
+              "id": "D003908",
+              "term": "Isonicotinato de Dexametasona",
+              "term_en": "Dexamethasone Isonicotinate",
+              "scope": "Glucocorticoide anti-inflamatório e antialérgico que pode ser administrado oralmente, por inalação, local e parenteralmente. Pode causar retenção de água e sal.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D04.210.500.745.432.769.344.300",
+                "D04.210.500.908.238.300"
+              ]
+            },
+            {
+              "id": "D003899",
+              "term": "Desoximetasona",
+              "term_en": "Desoximetasone",
+              "scope": "Glicocorticoide anti-inflamatório tópico utilizada em DERMATOSES, alergias de pele e PSORÍASE, etc.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D04.210.500.745.432.719.260",
+                "D04.210.500.908.238.250"
+              ]
+            },
+            {
+              "id": "D010248",
+              "term": "Parametasona",
+              "term_en": "Paramethasone",
+              "scope": "Glucocorticoide com as propriedades gerais dos corticosteroides. Tem sido usado oralmente no tratamento de todas as afecções nas quais a terapia com corticosteroide é indicada, exceto nos estados de d",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D04.210.500.745.432.769.692",
+                "D04.210.500.908.727"
+              ]
+            },
+            {
+              "id": "D005443",
+              "term": "Flumetasona",
+              "term_en": "Flumethasone",
+              "scope": "Glicocorticoide anti-inflamatório usado na prática veterinária.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D04.210.500.745.432.769.465",
+                "D04.210.500.908.359"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Alcoholism",
+          "candidates": [
+            {
+              "id": "D000437",
+              "term": "Alcoolismo",
+              "term_en": "Alcoholism",
+              "scope": "Doença crônica, primária, com fatores genéticos, psicossociais e ambientais influenciando seu desenvolvimento e manifestações. A doença é geralmente progressiva e fatal. É caracterizada pela falta de ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C25.775.100.250",
+                "F03.900.100.350"
+              ]
+            },
+            {
+              "id": "D057229",
+              "term": "Alcoólicos",
+              "term_en": "Alcoholics",
+              "scope": "Pessoas que têm história de dependência física ou psicológica de ETANOL.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.066"
+              ]
+            },
+            {
+              "id": "D020751",
+              "term": "Transtornos Induzidos por Álcool",
+              "term_en": "Alcohol-Induced Disorders",
+              "scope": "Transtornos resultantes do mal uso e abuso de álcool.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C25.775.100.087"
+              ]
+            },
+            {
+              "id": "D019973",
+              "term": "Transtornos Relacionados ao Uso de Álcool",
+              "term_en": "Alcohol-Related Disorders",
+              "scope": "Transtornos relacionados ou resultado por abuso ou mau uso de álcool.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C25.775.100",
+                "F03.900.100"
+              ]
+            },
+            {
+              "id": "D000427",
+              "term": "Dissuasores de Álcool",
+              "term_en": "Alcohol Deterrents",
+              "scope": "Substâncias que interferem no metabolismo do álcool etílico, causando efeitos colaterais desagradáveis. Acredita-se que estes efeitos desagradáveis desencorajam a ingestão de bebidas alcoólicas. Os di",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.954.427.020"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Meningitis, Bacterial",
+        "Anti-Bacterial Agents"
+      ],
+      "secondary": [
+        "Cerebrospinal Fluid",
+        "Dexamethasone",
+        "Alcoholism",
+        "Diabetes Mellitus",
+        "Ceftriaxone",
+        "Ampicillin"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Anti-Bacterial Agents",
+            "candidates": [
+              {
+                "id": "D000900",
+                "term": "Antibacterianos",
+                "term_en": "Anti-Bacterial Agents",
+                "scope": "Substâncias que inibem a proliferação ou a reprodução de BACTÉRIAS.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.954.122.085",
+                  "SP4.606.635.823.796.135"
+                ]
+              },
+              {
+                "id": "D000890",
+                "term": "Anti-Infecciosos",
+                "term_en": "Anti-Infective Agents",
+                "scope": "Substâncias que impedem a disseminação de agentes ou organismos infecciosos ou que matam agentes infecciosos para impedir a disseminação da infecção.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.954.122"
+                ]
+              },
+              {
+                "id": "DDCS051507",
+                "term": "Produtos com Ação Antimicrobiana",
+                "term_en": "Products with Antimicrobial Action",
+                "categoria": "Vigilância Sanitária",
+                "arvore": [
+                  "VS2.004.001.002"
+                ]
+              },
+              {
+                "id": "D000097902",
+                "term": "Antibióticos beta-Lactâmicos",
+                "term_en": "beta Lactam Antibiotics",
+                "scope": "Agentes bactericidas que contêm um anel beta-lactâmico em sua estrutura química. Inibem a síntese da parede celular bacteriana ligando-se às PROTEÍNAS DE LIGAÇÃO À PENICILINA, impedindo a síntese de p",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.954.122.085.386"
+                ]
+              },
+              {
+                "id": "D000891",
+                "term": "Anti-Infecciosos Locais",
+                "term_en": "Anti-Infective Agents, Local",
+                "scope": "Substâncias, usadas nos seres humanos e em outros animais, que destroem microrganismos prejudiciais ou inibem sua atividade. São diferentes dos DESINFETANTES que são usados em objetos inanimados.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.954.122.187"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Meningitis, Bacterial",
+            "candidates": [
+              {
+                "id": "D016920",
+                "term": "Meningites Bacterianas",
+                "term_en": "Meningitis, Bacterial",
+                "scope": "Infecções bacterianas das leptomeninges e do espaço subaracnoide, frequentemente acometendo o córtex cerebral, nervos cranianos, vasos sanguíneos cerebrais, medula espinhal e raizes nervosas.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.150.252.223.500",
+                  "C01.207.180.500"
+                ]
+              },
+              {
+                "id": "D008585",
+                "term": "Meningite Meningocócica",
+                "term_en": "Meningitis, Meningococcal",
+                "scope": "Infecção fulminante das meninges e do líquido subaracnóideo por bactéria NEISSERIA MENINGITIDIS produzindo inflamação difusa e tromboses venosas perimeningeais. Manifestações clínicas incluem FEBRE, r",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.150.252.223.500.750",
+                  "C01.150.252.400.625.549.449"
+                ]
+              },
+              {
+                "id": "D008586",
+                "term": "Meningite Pneumocócica",
+                "term_en": "Meningitis, Pneumococcal",
+                "scope": "Infecção purulenta aguda das meninges e do espaço subaracnoide causada por Streptococcus pneumoniae, mais prevalente em crianças e em adultos acima de 60 anos. Essa doença pode estar associada com OTI",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.150.252.223.500.875",
+                  "C01.150.252.410.890.670.595"
+                ]
+              },
+              {
+                "id": "D020806",
+                "term": "Infecções Bacterianas do Sistema Nervoso Central",
+                "term_en": "Central Nervous System Bacterial Infections",
+                "scope": "Infecções bacterianas no cérebro, na medula espinhal e nas meninges, incluindo infecções acometendo os espaços perimeníngeos.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.150.252.223",
+                  "C01.207.180"
+                ]
+              },
+              {
+                "id": "D008581",
+                "term": "Meningite",
+                "term_en": "Meningitis",
+                "scope": "Inflamação das membranas de recobrimento do encéfalo e/ou medula espinal constituída por PIA MATER, ARACNOIDE e DURA MATER. Infecções virais, bacterianas e fúngicas são as causas mais comuns desta afe",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.586.625"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Ampicillin",
+            "candidates": [
+              {
+                "id": "D000667",
+                "term": "Ampicilina",
+                "term_en": "Ampicillin",
+                "scope": "Derivado semissintético da penicilina que funciona como antibiótico de amplo espectro, ativo quando administrado oralmente.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.065.589.099.750.750.050",
+                  "D02.886.108.750.750.050"
+                ]
+              },
+              {
+                "id": "D000668",
+                "term": "Resistência a Ampicilina",
+                "term_en": "Ampicillin Resistance",
+                "scope": "Não suscetibilidade de um micróbio à ação da ampicilina, um derivado da penicilina que interfere na síntese da parede celular.",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G06.099.225.500.600.050",
+                  "G06.225.347.500.600.050"
+                ]
+              },
+              {
+                "id": "D013626",
+                "term": "Talampicilina",
+                "term_en": "Talampicillin",
+                "scope": "Éster de AMPICILINA rapidamente hidrolisada na absorção para liberar a ampilicina. É bem absorvida no trato gastrointestinal levando a uma grande biodisponibilidade da ampicilina e que pode ser comple",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.065.589.099.750.750.050.900",
+                  "D02.886.108.750.750.050.900"
+                ]
+              },
+              {
+                "id": "D000658",
+                "term": "Amoxicilina",
+                "term_en": "Amoxicillin",
+                "scope": "Antibiótico semissintético de amplo espectro semelhante à AMPICILINA, exceto por sua resistência ao ácido gástrico que permite níveis séricos mais altos quando administrado oralmente.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.065.589.099.750.750.050.050",
+                  "D02.886.108.750.750.050.050"
+                ]
+              },
+              {
+                "id": "D010917",
+                "term": "Pivampicilina",
+                "term_en": "Pivampicillin",
+                "scope": "Éster pivalato análogo da AMPICILINA.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.065.589.099.750.750.050.700",
+                  "D02.886.108.750.750.050.700"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Cerebrospinal Fluid",
+            "candidates": [
+              {
+                "id": "D002555",
+                "term": "Líquido Cefalorraquidiano",
+                "term_en": "Cerebrospinal Fluid",
+                "scope": "Líquido aquoso continuamente produzido no PLEXO CORÓIDEO e circulam ao redor da superfície do ENCÉFALO, MEDULA ESPINAL e nos VENTRÍCULOS CEREBRAIS.",
+                "categoria": "Anatomia",
+                "arvore": [
+                  "A12.207.270.210"
+                ]
+              },
+              {
+                "id": "D002556",
+                "term": "Proteínas do Líquido Cefalorraquidiano",
+                "term_en": "Cerebrospinal Fluid Proteins",
+                "scope": "Proteínas do líquido cefalorraquidiano, normalmente albumina e globulina presentes na razão 8 para 1. O aumento dos níveis de proteína são de valor diagnóstico em doenças neurológicas.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.178"
+                ]
+              },
+              {
+                "id": "D015170",
+                "term": "Pressão do Líquido Cefalorraquidiano",
+                "term_en": "Cerebrospinal Fluid Pressure",
+                "scope": "Pressão manométrica do LÍQUIDO CEFALORRAQUIDIANO medida através de punção lombar, cerebroventricular ou cisternal. Dentro da cavidade craniana é chamada PRESSÃO INTRACRANIANA.",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G11.561.170"
+                ]
+              },
+              {
+                "id": "D065634",
+                "term": "Vazamento de Líquido Cefalorraquidiano",
+                "term_en": "Cerebrospinal Fluid Leak",
+                "scope": "Descarga de líquido cefalorraquidiano por um orifício do crânio que drena, mais comumente, o nariz (RINORREIA DE LÍQUIDO CEFALORRAQUIDIANO) ou o ouvido (OTORREIA DE LÍQUIDO CEFALORRAQUIDIANO).",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.597.114",
+                  "C10.900.300.109"
+                ]
+              },
+              {
+                "id": "D013129",
+                "term": "Punção Espinal",
+                "term_en": "Spinal Puncture",
+                "scope": "Drenagem do líquido do espaço subaracnoídeo na região lombar, geralmente entre a terceira e a quarta vértebras lombares.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.225.998.054.790",
+                  "E01.370.376.700"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Ceftriaxone",
+            "candidates": [
+              {
+                "id": "D002443",
+                "term": "Ceftriaxona",
+                "term_en": "Ceftriaxone",
+                "scope": "Antibiótico cefalosporina de amplo espectro e derivado de cefotaxima com uma longa meia-vida e alta penetrabilidade em meninges, olhos e orelhas internas.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.065.589.099.249.190.190.155",
+                  "D02.886.665.074.190.190.155"
+                ]
+              },
+              {
+                "id": "D015281",
+                "term": "Cefmenoxima",
+                "term_en": "Cefmenoxime",
+                "scope": "Antibiótico cefalosporina que é administrado por via intravenosa ou intramuscular. É ativo contra a maioria de micro-organismos Gram-positivos e Gram-negativos, é um potente inibidor das Enterobacteri",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.065.589.099.249.190.190.125",
+                  "D02.886.665.074.190.190.125"
+                ]
+              },
+              {
+                "id": "D002444",
+                "term": "Cefuroxima",
+                "term_en": "Cefuroxime",
+                "scope": "Antibiótico cefalosporina de amplo espectro resistente à beta-lactamase. Tem sido proposto para infecções de organismos Gram-negativos e Gram-positivos, GONORREIA e HAEMOPHILUS.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.065.589.099.249.188",
+                  "D02.886.665.074.188"
+                ]
+              },
+              {
+                "id": "D002436",
+                "term": "Cefatrizina",
+                "term_en": "Cefatrizine",
+                "scope": "Antibiótico cefalosporina semissintético ativo oralmente com amplo espectro de atividade.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.065.589.099.249.200.165.125",
+                  "D02.886.665.074.200.165.125"
+                ]
+              },
+              {
+                "id": "D015296",
+                "term": "Ceftizoxima",
+                "term_en": "Ceftizoxime",
+                "scope": "Antibiótico cefalosporina semissintético que pode ser administrado por via intravenosa ou através de supositórios. A droga é altamente resistente a um amplo espectro de beta-lactamases e é ativa contr",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.065.589.099.249.190.190.145",
+                  "D02.886.665.074.190.190.145"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Diabetes Mellitus",
+            "candidates": [
+              {
+                "id": "D003920",
+                "term": "Diabetes Mellitus",
+                "term_en": "Diabetes Mellitus",
+                "scope": "Grupo de transtornos heterogêneos caracterizados por HIPERGLICEMIA e INTOLERÂNCIA À GLUCOSE.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C18.452.394.750",
+                  "C19.246"
+                ]
+              },
+              {
+                "id": "D048909",
+                "term": "Complicações do Diabetes",
+                "term_en": "Diabetes Complications",
+                "scope": "Afecções ou processos mórbidos associados com diabetes melito. Devido ao controle deficiente do nível de GLICEMIA em pacientes diabéticos, desenvolvem-se processos doentios em vários tecidos e órgãos,",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.246.099"
+                ]
+              },
+              {
+                "id": "D003922",
+                "term": "Diabetes Mellitus Tipo 1",
+                "term_en": "Diabetes Mellitus, Type 1",
+                "scope": "Subtipo de DIABETES MELLITUS caracterizada por deficiência de INSULINA. Manifesta-se por um início repentino de intensa HIPERGLICEMIA, progressão rápida a CETOACIDOSE DIABÉTICA e MORTE, a menos que tr",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C18.452.394.750.124",
+                  "C19.246.267"
+                ]
+              },
+              {
+                "id": "D003924",
+                "term": "Diabetes Mellitus Tipo 2",
+                "term_en": "Diabetes Mellitus, Type 2",
+                "scope": "Subclasse de DIABETES MELLITUS que não é responsiva ou dependente de INSULINA (DMNID). Inicialmente, caracteriza-se por RESISTÊNCIA À INSULINA e HIPERINSULINEMIA e finalmente, por INTOLERÂNCIA À GLUCO",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C18.452.394.750.149",
+                  "C19.246.300"
+                ]
+              },
+              {
+                "id": "D003923",
+                "term": "Diabetes Mellitus Lipoatrófica",
+                "term_en": "Diabetes Mellitus, Lipoatrophic",
+                "scope": "Tipo de diabetes mellitus caracterizado pela grave RESISTÊNCIA À INSULINA e LIPODISTROFIA. A lipodistrofia pode ser generalizada, parcial adquirida ou congênita (LIPODISTROFIA GENERALIZADA CONGÊNITA.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C18.452.394.750.149.500",
+                  "C19.246.300.500"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Dexamethasone",
+            "candidates": [
+              {
+                "id": "D003907",
+                "term": "Dexametasona",
+                "term_en": "Dexamethasone",
+                "scope": "Anti-inflamatório 9-fluor-glucocorticoide.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D04.210.500.745.432.769.344",
+                  "D04.210.500.908.238"
+                ]
+              },
+              {
+                "id": "D003908",
+                "term": "Isonicotinato de Dexametasona",
+                "term_en": "Dexamethasone Isonicotinate",
+                "scope": "Glucocorticoide anti-inflamatório e antialérgico que pode ser administrado oralmente, por inalação, local e parenteralmente. Pode causar retenção de água e sal.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D04.210.500.745.432.769.344.300",
+                  "D04.210.500.908.238.300"
+                ]
+              },
+              {
+                "id": "D003899",
+                "term": "Desoximetasona",
+                "term_en": "Desoximetasone",
+                "scope": "Glicocorticoide anti-inflamatório tópico utilizada em DERMATOSES, alergias de pele e PSORÍASE, etc.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D04.210.500.745.432.719.260",
+                  "D04.210.500.908.238.250"
+                ]
+              },
+              {
+                "id": "D010248",
+                "term": "Parametasona",
+                "term_en": "Paramethasone",
+                "scope": "Glucocorticoide com as propriedades gerais dos corticosteroides. Tem sido usado oralmente no tratamento de todas as afecções nas quais a terapia com corticosteroide é indicada, exceto nos estados de d",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D04.210.500.745.432.769.692",
+                  "D04.210.500.908.727"
+                ]
+              },
+              {
+                "id": "D005443",
+                "term": "Flumetasona",
+                "term_en": "Flumethasone",
+                "scope": "Glicocorticoide anti-inflamatório usado na prática veterinária.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D04.210.500.745.432.769.465",
+                  "D04.210.500.908.359"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Alcoholism",
+            "candidates": [
+              {
+                "id": "D000437",
+                "term": "Alcoolismo",
+                "term_en": "Alcoholism",
+                "scope": "Doença crônica, primária, com fatores genéticos, psicossociais e ambientais influenciando seu desenvolvimento e manifestações. A doença é geralmente progressiva e fatal. É caracterizada pela falta de ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C25.775.100.250",
+                  "F03.900.100.350"
+                ]
+              },
+              {
+                "id": "D057229",
+                "term": "Alcoólicos",
+                "term_en": "Alcoholics",
+                "scope": "Pessoas que têm história de dependência física ou psicológica de ETANOL.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.066"
+                ]
+              },
+              {
+                "id": "D020751",
+                "term": "Transtornos Induzidos por Álcool",
+                "term_en": "Alcohol-Induced Disorders",
+                "scope": "Transtornos resultantes do mal uso e abuso de álcool.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C25.775.100.087"
+                ]
+              },
+              {
+                "id": "D019973",
+                "term": "Transtornos Relacionados ao Uso de Álcool",
+                "term_en": "Alcohol-Related Disorders",
+                "scope": "Transtornos relacionados ou resultado por abuso ou mau uso de álcool.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C25.775.100",
+                  "F03.900.100"
+                ]
+              },
+              {
+                "id": "D000427",
+                "term": "Dissuasores de Álcool",
+                "term_en": "Alcohol Deterrents",
+                "scope": "Substâncias que interferem no metabolismo do álcool etílico, causando efeitos colaterais desagradáveis. Acredita-se que estes efeitos desagradáveis desencorajam a ingestão de bebidas alcoólicas. Os di",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.954.427.020"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D000900",
+          "term": "Antibacterianos"
+        },
+        {
+          "id": "D016920",
+          "term": "Meningites Bacterianas"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D000667",
+          "term": "Ampicilina"
+        },
+        {
+          "id": "D002555",
+          "term": "Líquido Cefalorraquidiano"
+        },
+        {
+          "id": "D002443",
+          "term": "Ceftriaxona"
+        },
+        {
+          "id": "D003920",
+          "term": "Diabetes Mellitus"
+        },
+        {
+          "id": "D003907",
+          "term": "Dexametasona"
+        },
+        {
+          "id": "D000437",
+          "term": "Alcoolismo"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 6,
+    "total_candidates": 40,
+    "final_primary": 2,
+    "final_secondary": 6
+  }
+}

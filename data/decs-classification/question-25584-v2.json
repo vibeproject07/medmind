@@ -1,0 +1,1121 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D015658",
+        "term": "Infecções por HIV",
+        "name_en": "HIV Infections",
+        "scope_note": "Incluem o espectro das infecções pelo vírus da imunodeficiência humana que vão desde o estado soropositivo assintomático, passando pelo complexo relação-AIDS até a síndrome de imunodeficiência adquirida (AIDS).",
+        "tree_ids": [
+          "C01.221.250.875",
+          "C01.221.812.640.400",
+          "C01.778.640.400",
+          "C01.925.782.815.616.400",
+          "C01.925.813.400",
+          "C12.100.937.640.400",
+          "C20.673.480"
+        ],
+        "hierarchy_path": "Doenças › C01.221.250.875",
+        "parents": [
+          {
+            "id": "D000086982",
+            "term": "Infecções Transmitidas por Sangue"
+          },
+          {
+            "id": "D015229",
+            "term": "Doenças Virais Sexualmente Transmissíveis"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000071297",
+            "term": "Síndrome Retroviral Aguda"
+          },
+          {
+            "id": "D006679",
+            "term": "Soropositividade para HIV"
+          },
+          {
+            "id": "D000163",
+            "term": "Síndrome da Imunodeficiência Adquirida"
+          },
+          {
+            "id": "D016263",
+            "term": "Nefropatia Associada a AIDS"
+          },
+          {
+            "id": "D019053",
+            "term": "Enteropatia por HIV"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D065129",
+        "term": "Profilaxia Pré-Exposição",
+        "name_en": "Pre-Exposure Prophylaxis",
+        "scope_note": "Método de prevenção de doença (abreviado por PrEP) que envolve a administração de drogas a pessoas do grupo de risco que não foram expostas ao agente causador da doença.",
+        "tree_ids": [
+          "N02.421.726.758.655",
+          "N06.850.780.680.655"
+        ],
+        "hierarchy_path": "Saúde › N02.421.726.758.655",
+        "parents": [
+          {
+            "id": "D011322",
+            "term": "Prevenção Primária"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D018445",
+        "term": "Transmissão Vertical de Doenças Infecciosas",
+        "name_en": "Infectious Disease Transmission, Vertical",
+        "scope_note": "Transmissão de doenças ou patógenos infecciosos de uma geração a outra. Inclui a transmissão in útero ou durante o parto, pela exposição ao sangue e às secreções, e exposição pós-parto via amamentação.",
+        "tree_ids": [
+          "N06.850.335.875"
+        ],
+        "hierarchy_path": "Saúde › N06.850.335.875",
+        "parents": [
+          {
+            "id": "D018562",
+            "term": "Transmissão de Doença Infecciosa"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D011322",
+        "term": "Prevenção Primária",
+        "name_en": "Primary Prevention",
+        "scope_note": "Práticas específicas para a prevenção de doenças ou distúrbios mentais em indivíduos ou populações suscetíveis. Incluem a PROMOÇÃO DA SAÚDE, incluindo a saúde mental, procedimentos preventivos, como CONTROLE DE DOENÇAS TRANSMISSÍVEIS, e monitoramento e regulação de POLUENTES AMBIENTAIS. A prevenção primária deve ser distinguida da PREVENÇÃO SECUNDÁRIA e da PREVENÇÃO TERCIÁRIA.",
+        "tree_ids": [
+          "N02.421.726.758",
+          "N06.850.780.680",
+          "SP2.840.385.619.355"
+        ],
+        "hierarchy_path": "Saúde › N02.421.726.758",
+        "parents": [
+          {
+            "id": "D011314",
+            "term": "Serviços Preventivos de Saúde"
+          },
+          {
+            "id": "D015980",
+            "term": "Prática de Saúde Pública"
+          },
+          {
+            "id": "DDCS050219",
+            "term": "Prevenção de Doenças"
+          }
+        ],
+        "children": [
+          {
+            "id": "D032541",
+            "term": "Vacinação em Massa"
+          },
+          {
+            "id": "D014611",
+            "term": "Vacinação"
+          },
+          {
+            "id": "D065129",
+            "term": "Profilaxia Pré-Exposição"
+          },
+          {
+            "id": "D000073887",
+            "term": "Cobertura Vacinal"
+          },
+          {
+            "id": "D007114",
+            "term": "Imunização"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D012749",
+        "term": "Infecções Sexualmente Transmissíveis",
+        "name_en": "Sexually Transmitted Diseases",
+        "scope_note": "As doenças devido a ou propagadas por contato sexual.",
+        "tree_ids": [
+          "C01.221.812",
+          "C01.778",
+          "C12.100.937",
+          "C23.550.291.531.937"
+        ],
+        "hierarchy_path": "Doenças › C01.221.812",
+        "parents": [
+          {
+            "id": "D003141",
+            "term": "Doenças Transmissíveis"
+          },
+          {
+            "id": "D007239",
+            "term": "Infecções"
+          },
+          {
+            "id": "D000091662",
+            "term": "Doenças Genitais"
+          }
+        ],
+        "children": [
+          {
+            "id": "D030361",
+            "term": "Infecções por Papillomavirus"
+          },
+          {
+            "id": "D000071297",
+            "term": "Síndrome Retroviral Aguda"
+          },
+          {
+            "id": "D006679",
+            "term": "Soropositividade para HIV"
+          },
+          {
+            "id": "D000163",
+            "term": "Síndrome da Imunodeficiência Adquirida"
+          },
+          {
+            "id": "D002602",
+            "term": "Cancroide"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D023241",
+        "term": "Terapia Antirretroviral de Alta Atividade",
+        "name_en": "Antiretroviral Therapy, Highly Active",
+        "scope_note": "Protocolo de medicação para pacientes com INFECÇÕES POR HIV que suprimem agressivamente a replicação do HIV. Estes protocolos geralmente envolvem a administração de três ou mais medicamentos diferentes, incluindo um inibidor de protease.",
+        "tree_ids": [
+          "E02.319.310.075"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.319.310.075",
+        "parents": [
+          {
+            "id": "D004359",
+            "term": "Quimioterapia Combinada"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D012747",
+        "term": "Parceiros Sexuais",
+        "name_en": "Sexual Partners",
+        "scope_note": "Indivíduos casados ou solteiros que compartilham relações sexuais.",
+        "tree_ids": [
+          "M01.778",
+          "SP3.311.750.536.100.655"
+        ],
+        "hierarchy_path": "Grupos Identificados › M01.778",
+        "parents": [
+          {
+            "id": "D009272",
+            "term": "Pessoas"
+          },
+          {
+            "id": "D012725",
+            "term": "Comportamento Sexual"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "HIV Infections",
+      "Pre-Exposure Prophylaxis"
+    ],
+    "secondary": [
+      "Sexually Transmitted Diseases",
+      "Antiretroviral Therapy, Highly Active",
+      "Primary Prevention",
+      "Infectious Disease Transmission, Vertical",
+      "Sexual Partners"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "HIV Infections",
+          "candidates": [
+            {
+              "id": "D015658",
+              "term": "Infecções por HIV",
+              "term_en": "HIV Infections",
+              "scope": "Incluem o espectro das infecções pelo vírus da imunodeficiência humana que vão desde o estado soropositivo assintomático, passando pelo complexo relação-AIDS até a síndrome de imunodeficiência adquiri",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.221.250.875",
+                "C01.221.812.640.400"
+              ]
+            },
+            {
+              "id": "D006679",
+              "term": "Soropositividade para HIV",
+              "term_en": "HIV Seropositivity",
+              "scope": "O desenvolvimento de anticorpos neutralizantes em indivíduos que tenham sido expostos ao vírus da imunodeficiência humana (HIV/HTLV-III/LAV).",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.221.250.875.500",
+                "C01.221.812.640.400.500"
+              ]
+            },
+            {
+              "id": "D000088302",
+              "term": "Paciente HIV Positivo não Progressor",
+              "term_en": "HIV Non-Progressors",
+              "scope": "Indivíduos HIV-positivos com baixa CARGA VIRAL de HIV que nunca desenvolvem AIDS mesmo sem tratamento antiviral.",
+              "categoria": "",
+              "arvore": []
+            },
+            {
+              "id": "D015528",
+              "term": "Soroprevalência de HIV",
+              "term_en": "HIV Seroprevalence",
+              "scope": "Estudos do número de casos onde o vírus da imunodeficiência humana (HIV) está presente em uma população específica em um tempo designado. A presença em um dado indivíduo está determinada pela descober",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.372.500.950.375",
+                "N05.715.360.330.500.950.375"
+              ]
+            },
+            {
+              "id": "D000082922",
+              "term": "Teste de HIV",
+              "term_en": "HIV Testing",
+              "scope": "Diagnóstico de INFECÇÕES POR HIV por análise de fluidos corporais ou tecidos para a presença de ANTICORPOS HIV; ANTÍGENOS DE HIV; ou o RNA VIRAL do HIV.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.225.875.408",
+                "E05.200.875.408"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Pre-Exposure Prophylaxis",
+          "candidates": [
+            {
+              "id": "D065129",
+              "term": "Profilaxia Pré-Exposição",
+              "term_en": "Pre-Exposure Prophylaxis",
+              "scope": "Método de prevenção de doença (abreviado por PrEP) que envolve a administração de drogas a pessoas do grupo de risco que não foram expostas ao agente causador da doença.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N02.421.726.758.655",
+                "N06.850.780.680.655"
+              ]
+            },
+            {
+              "id": "D056990",
+              "term": "Profilaxia Pós-Exposição",
+              "term_en": "Post-Exposure Prophylaxis",
+              "scope": "Prevenção de infecção ou doença após a exposição a um patógeno.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N02.421.726.755"
+              ]
+            },
+            {
+              "id": "D018890",
+              "term": "Quimioprevenção",
+              "term_en": "Chemoprevention",
+              "scope": "Uso de compostos químicos para impedir o desenvolvimento de uma doença específica.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.319.162"
+              ]
+            },
+            {
+              "id": "D023241",
+              "term": "Terapia Antirretroviral de Alta Atividade",
+              "term_en": "Antiretroviral Therapy, Highly Active",
+              "scope": "Protocolo de medicação para pacientes com INFECÇÕES POR HIV que suprimem agressivamente a replicação do HIV. Estes protocolos geralmente envolvem a administração de três ou mais medicamentos diferente",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.319.310.075"
+              ]
+            },
+            {
+              "id": "D000088302",
+              "term": "Paciente HIV Positivo não Progressor",
+              "term_en": "HIV Non-Progressors",
+              "scope": "Indivíduos HIV-positivos com baixa CARGA VIRAL de HIV que nunca desenvolvem AIDS mesmo sem tratamento antiviral.",
+              "categoria": "",
+              "arvore": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Infectious Disease Transmission, Vertical",
+          "candidates": [
+            {
+              "id": "D018445",
+              "term": "Transmissão Vertical de Doenças Infecciosas",
+              "term_en": "Infectious Disease Transmission, Vertical",
+              "scope": "Transmissão de doenças ou patógenos infecciosos de uma geração a outra. Inclui a transmissão in útero ou durante o parto, pela exposição ao sangue e às secreções, e exposição pós-parto via amamentação",
+              "categoria": "Saúde",
+              "arvore": [
+                "N06.850.335.875"
+              ]
+            },
+            {
+              "id": "D018562",
+              "term": "Transmissão de Doença Infecciosa",
+              "term_en": "Disease Transmission, Infectious",
+              "scope": "Transmissão de doença ou patógenos infecciosos. Quando a transmissão for dentro da mesma espécie, o modo pode ser [chamado] horizontal ou vertical (TRANSMISSÃO VERTICAL DE DOENÇA INFECCIOSA).",
+              "categoria": "Saúde",
+              "arvore": [
+                "N06.850.335"
+              ]
+            },
+            {
+              "id": "D017757",
+              "term": "Transmissão de Doença Infecciosa do Profissional para o Paciente",
+              "term_en": "Infectious Disease Transmission, Professional-to-Patient",
+              "scope": "A transmissão de doenças infecciosas ou de patógenos do profissional da saúde ou do pessoal técnico aos pacientes. Inclui transmissão por exposição direta ou indireta a bactérias, fungos, parasitas ou",
+              "categoria": "Saúde",
+              "arvore": [
+                "N06.850.335.750"
+              ]
+            },
+            {
+              "id": "D017758",
+              "term": "Transmissão de Doença Infecciosa do Paciente para o Profissional",
+              "term_en": "Infectious Disease Transmission, Patient-to-Professional",
+              "scope": "Transmissão de doenças infecciosas ou de patógenos do paciente para os profissionais ou pessoal técnico de saúde. Inclui transmissão via exposição direta ou indireta às bactérias, fungos, parasitas ou",
+              "categoria": "Saúde",
+              "arvore": [
+                "N06.850.335.500"
+              ]
+            },
+            {
+              "id": "D011251",
+              "term": "Complicações Infecciosas na Gravidez",
+              "term_en": "Pregnancy Complications, Infectious",
+              "scope": "Ocorrências da gravidez e INFECÇÃO. A infecção pode preceder ou seguir a FERTILIZAÇÃO.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.674",
+                "C12.050.703.700"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Primary Prevention",
+          "candidates": [
+            {
+              "id": "D011322",
+              "term": "Prevenção Primária",
+              "term_en": "Primary Prevention",
+              "scope": "Práticas específicas para a prevenção de doenças ou distúrbios mentais em indivíduos ou populações suscetíveis. Incluem a PROMOÇÃO DA SAÚDE, incluindo a saúde mental, procedimentos preventivos, como C",
+              "categoria": "Saúde",
+              "arvore": [
+                "N02.421.726.758",
+                "N06.850.780.680"
+              ]
+            },
+            {
+              "id": "DDCS050219",
+              "term": "Prevenção de Doenças",
+              "term_en": "Disease Prevention",
+              "scope": "Conjunto de ações que visa erradicar, eliminar ou reduzir o impacto de determinada doença ou deficiência, ou ainda, conter sua dispersão. (Tradução livre do original: Last, 2001)",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP2.840.385.619"
+              ]
+            },
+            {
+              "id": "D055502",
+              "term": "Prevenção Secundária",
+              "term_en": "Secondary Prevention",
+              "scope": "Prevenção de recorrências ou exacerbações de uma doença ou de complicações advindas de seu tratamento.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.897",
+                "N02.421.726.825"
+              ]
+            },
+            {
+              "id": "D000074606",
+              "term": "Prevenção do Hábito de Fumar",
+              "term_en": "Smoking Prevention",
+              "scope": "Esforços dirigidos a prevenir o HÁBITO DE FUMAR TABACO de produtos sem tabaco.",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.403.720.750.380.840",
+                "I01.655.500.608.400.825.750"
+              ]
+            },
+            {
+              "id": "D011315",
+              "term": "Medicina Preventiva",
+              "term_en": "Preventive Medicine",
+              "scope": "Especialidade médica que lida principalmente com a prevenção da doença (PREVENÇÃO PRIMÁRIA) e promoção e preservação da saúde do indivíduo.",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.403.720.750"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Sexually Transmitted Diseases",
+          "candidates": [
+            {
+              "id": "D012749",
+              "term": "Infecções Sexualmente Transmissíveis",
+              "term_en": "Sexually Transmitted Diseases",
+              "scope": "As doenças devido a ou propagadas por contato sexual.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.221.812",
+                "C01.778"
+              ]
+            },
+            {
+              "id": "D015231",
+              "term": "Doenças Bacterianas Sexualmente Transmissíveis",
+              "term_en": "Sexually Transmitted Diseases, Bacterial",
+              "scope": "As doenças bacterianas transmitidas ou propagadas pela atividade sexual.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.150.252.734",
+                "C01.221.812.281"
+              ]
+            },
+            {
+              "id": "D015229",
+              "term": "Doenças Virais Sexualmente Transmissíveis",
+              "term_en": "Sexually Transmitted Diseases, Viral",
+              "scope": "As doenças virais que são transmitidas ou propagadas pelo contato sexual.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.221.812.640",
+                "C01.778.640"
+              ]
+            },
+            {
+              "id": "D014686",
+              "term": "Venereologia",
+              "term_en": "Venereology",
+              "scope": "Ramo da medicina que lida com doenças transmitidas sexualmente.",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.403.909"
+              ]
+            },
+            {
+              "id": "D000091662",
+              "term": "Doenças Genitais",
+              "term_en": "Genital Diseases",
+              "scope": "Processos patológicos que envolvem o trato reprodutivo (GENITÁLIA).",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.100"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Antiretroviral Therapy, Highly Active",
+          "candidates": [
+            {
+              "id": "D023241",
+              "term": "Terapia Antirretroviral de Alta Atividade",
+              "term_en": "Antiretroviral Therapy, Highly Active",
+              "scope": "Protocolo de medicação para pacientes com INFECÇÕES POR HIV que suprimem agressivamente a replicação do HIV. Estes protocolos geralmente envolvem a administração de três ou mais medicamentos diferente",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E02.319.310.075"
+              ]
+            },
+            {
+              "id": "D000088302",
+              "term": "Paciente HIV Positivo não Progressor",
+              "term_en": "HIV Non-Progressors",
+              "scope": "Indivíduos HIV-positivos com baixa CARGA VIRAL de HIV que nunca desenvolvem AIDS mesmo sem tratamento antiviral.",
+              "categoria": "",
+              "arvore": []
+            },
+            {
+              "id": "D044966",
+              "term": "Antirretrovirais",
+              "term_en": "Anti-Retroviral Agents",
+              "scope": "Fármacos utilizados para tratar INFECÇÕES POR RETROVIRIDAE.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.954.122.388.077"
+              ]
+            },
+            {
+              "id": "D019380",
+              "term": "Fármacos Anti-HIV",
+              "term_en": "Anti-HIV Agents",
+              "scope": "Usados para tratar a AIDS e/ou para deter a disseminação da infecção pelo HIV. Essa classificação não inclui os fármacos usados para tratar os sintomas da AIDS ou as infecções oportunistas a ela assoc",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.954.122.388.077.088"
+              ]
+            },
+            {
+              "id": "D000072230",
+              "term": "Resposta Viral Sustentada",
+              "term_en": "Sustained Virologic Response",
+              "scope": "Supressão da CARGA VIRAL de forma contínua, a longo prazo, geralmente a níveis indetectáveis, resultante do tratamento com ANTIVIRAIS.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.789.800.570",
+                "N04.761.559.590.800.665"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Sexual Partners",
+          "candidates": [
+            {
+              "id": "D012747",
+              "term": "Parceiros Sexuais",
+              "term_en": "Sexual Partners",
+              "scope": "Indivíduos casados ou solteiros que compartilham relações sexuais.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.778",
+                "SP3.311.750.536.100.655"
+              ]
+            },
+            {
+              "id": "D012725",
+              "term": "Comportamento Sexual",
+              "term_en": "Sexual Behavior",
+              "scope": "Atividades sexuais dos humanos.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.145.802",
+                "SP3.311.750.536.100"
+              ]
+            },
+            {
+              "id": "D001727",
+              "term": "Bissexualidade",
+              "term_en": "Bisexuality",
+              "scope": "Atração ou relação sexual entre membros, tanto do mesmo sexo como do SEXO oposto.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.145.802.975.200",
+                "G08.686.867.200"
+              ]
+            },
+            {
+              "id": "D020010",
+              "term": "Heterossexualidade",
+              "term_en": "Heterosexuality",
+              "scope": "Atração ou relação sexual entre membros do SEXO oposto.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.145.802.975.400",
+                "G08.686.867.400"
+              ]
+            },
+            {
+              "id": "D003075",
+              "term": "Coito",
+              "term_en": "Coitus",
+              "scope": "União sexual entre duas pessoas, termo usado apenas para humanos.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.145.802.188",
+                "G08.686.784.041"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "HIV Infections",
+        "Pre-Exposure Prophylaxis"
+      ],
+      "secondary": [
+        "Sexually Transmitted Diseases",
+        "Antiretroviral Therapy, Highly Active",
+        "Primary Prevention",
+        "Infectious Disease Transmission, Vertical",
+        "Sexual Partners"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "HIV Infections",
+            "candidates": [
+              {
+                "id": "D015658",
+                "term": "Infecções por HIV",
+                "term_en": "HIV Infections",
+                "scope": "Incluem o espectro das infecções pelo vírus da imunodeficiência humana que vão desde o estado soropositivo assintomático, passando pelo complexo relação-AIDS até a síndrome de imunodeficiência adquiri",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.221.250.875",
+                  "C01.221.812.640.400"
+                ]
+              },
+              {
+                "id": "D006679",
+                "term": "Soropositividade para HIV",
+                "term_en": "HIV Seropositivity",
+                "scope": "O desenvolvimento de anticorpos neutralizantes em indivíduos que tenham sido expostos ao vírus da imunodeficiência humana (HIV/HTLV-III/LAV).",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.221.250.875.500",
+                  "C01.221.812.640.400.500"
+                ]
+              },
+              {
+                "id": "D000088302",
+                "term": "Paciente HIV Positivo não Progressor",
+                "term_en": "HIV Non-Progressors",
+                "scope": "Indivíduos HIV-positivos com baixa CARGA VIRAL de HIV que nunca desenvolvem AIDS mesmo sem tratamento antiviral.",
+                "categoria": "",
+                "arvore": []
+              },
+              {
+                "id": "D015528",
+                "term": "Soroprevalência de HIV",
+                "term_en": "HIV Seroprevalence",
+                "scope": "Estudos do número de casos onde o vírus da imunodeficiência humana (HIV) está presente em uma população específica em um tempo designado. A presença em um dado indivíduo está determinada pela descober",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.372.500.950.375",
+                  "N05.715.360.330.500.950.375"
+                ]
+              },
+              {
+                "id": "D000082922",
+                "term": "Teste de HIV",
+                "term_en": "HIV Testing",
+                "scope": "Diagnóstico de INFECÇÕES POR HIV por análise de fluidos corporais ou tecidos para a presença de ANTICORPOS HIV; ANTÍGENOS DE HIV; ou o RNA VIRAL do HIV.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.225.875.408",
+                  "E05.200.875.408"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Pre-Exposure Prophylaxis",
+            "candidates": [
+              {
+                "id": "D065129",
+                "term": "Profilaxia Pré-Exposição",
+                "term_en": "Pre-Exposure Prophylaxis",
+                "scope": "Método de prevenção de doença (abreviado por PrEP) que envolve a administração de drogas a pessoas do grupo de risco que não foram expostas ao agente causador da doença.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N02.421.726.758.655",
+                  "N06.850.780.680.655"
+                ]
+              },
+              {
+                "id": "D056990",
+                "term": "Profilaxia Pós-Exposição",
+                "term_en": "Post-Exposure Prophylaxis",
+                "scope": "Prevenção de infecção ou doença após a exposição a um patógeno.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N02.421.726.755"
+                ]
+              },
+              {
+                "id": "D018890",
+                "term": "Quimioprevenção",
+                "term_en": "Chemoprevention",
+                "scope": "Uso de compostos químicos para impedir o desenvolvimento de uma doença específica.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.319.162"
+                ]
+              },
+              {
+                "id": "D023241",
+                "term": "Terapia Antirretroviral de Alta Atividade",
+                "term_en": "Antiretroviral Therapy, Highly Active",
+                "scope": "Protocolo de medicação para pacientes com INFECÇÕES POR HIV que suprimem agressivamente a replicação do HIV. Estes protocolos geralmente envolvem a administração de três ou mais medicamentos diferente",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.319.310.075"
+                ]
+              },
+              {
+                "id": "D000088302",
+                "term": "Paciente HIV Positivo não Progressor",
+                "term_en": "HIV Non-Progressors",
+                "scope": "Indivíduos HIV-positivos com baixa CARGA VIRAL de HIV que nunca desenvolvem AIDS mesmo sem tratamento antiviral.",
+                "categoria": "",
+                "arvore": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Infectious Disease Transmission, Vertical",
+            "candidates": [
+              {
+                "id": "D018445",
+                "term": "Transmissão Vertical de Doenças Infecciosas",
+                "term_en": "Infectious Disease Transmission, Vertical",
+                "scope": "Transmissão de doenças ou patógenos infecciosos de uma geração a outra. Inclui a transmissão in útero ou durante o parto, pela exposição ao sangue e às secreções, e exposição pós-parto via amamentação",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N06.850.335.875"
+                ]
+              },
+              {
+                "id": "D018562",
+                "term": "Transmissão de Doença Infecciosa",
+                "term_en": "Disease Transmission, Infectious",
+                "scope": "Transmissão de doença ou patógenos infecciosos. Quando a transmissão for dentro da mesma espécie, o modo pode ser [chamado] horizontal ou vertical (TRANSMISSÃO VERTICAL DE DOENÇA INFECCIOSA).",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N06.850.335"
+                ]
+              },
+              {
+                "id": "D017757",
+                "term": "Transmissão de Doença Infecciosa do Profissional para o Paciente",
+                "term_en": "Infectious Disease Transmission, Professional-to-Patient",
+                "scope": "A transmissão de doenças infecciosas ou de patógenos do profissional da saúde ou do pessoal técnico aos pacientes. Inclui transmissão por exposição direta ou indireta a bactérias, fungos, parasitas ou",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N06.850.335.750"
+                ]
+              },
+              {
+                "id": "D017758",
+                "term": "Transmissão de Doença Infecciosa do Paciente para o Profissional",
+                "term_en": "Infectious Disease Transmission, Patient-to-Professional",
+                "scope": "Transmissão de doenças infecciosas ou de patógenos do paciente para os profissionais ou pessoal técnico de saúde. Inclui transmissão via exposição direta ou indireta às bactérias, fungos, parasitas ou",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N06.850.335.500"
+                ]
+              },
+              {
+                "id": "D011251",
+                "term": "Complicações Infecciosas na Gravidez",
+                "term_en": "Pregnancy Complications, Infectious",
+                "scope": "Ocorrências da gravidez e INFECÇÃO. A infecção pode preceder ou seguir a FERTILIZAÇÃO.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.674",
+                  "C12.050.703.700"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Primary Prevention",
+            "candidates": [
+              {
+                "id": "D011322",
+                "term": "Prevenção Primária",
+                "term_en": "Primary Prevention",
+                "scope": "Práticas específicas para a prevenção de doenças ou distúrbios mentais em indivíduos ou populações suscetíveis. Incluem a PROMOÇÃO DA SAÚDE, incluindo a saúde mental, procedimentos preventivos, como C",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N02.421.726.758",
+                  "N06.850.780.680"
+                ]
+              },
+              {
+                "id": "DDCS050219",
+                "term": "Prevenção de Doenças",
+                "term_en": "Disease Prevention",
+                "scope": "Conjunto de ações que visa erradicar, eliminar ou reduzir o impacto de determinada doença ou deficiência, ou ainda, conter sua dispersão. (Tradução livre do original: Last, 2001)",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP2.840.385.619"
+                ]
+              },
+              {
+                "id": "D055502",
+                "term": "Prevenção Secundária",
+                "term_en": "Secondary Prevention",
+                "scope": "Prevenção de recorrências ou exacerbações de uma doença ou de complicações advindas de seu tratamento.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.897",
+                  "N02.421.726.825"
+                ]
+              },
+              {
+                "id": "D000074606",
+                "term": "Prevenção do Hábito de Fumar",
+                "term_en": "Smoking Prevention",
+                "scope": "Esforços dirigidos a prevenir o HÁBITO DE FUMAR TABACO de produtos sem tabaco.",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.403.720.750.380.840",
+                  "I01.655.500.608.400.825.750"
+                ]
+              },
+              {
+                "id": "D011315",
+                "term": "Medicina Preventiva",
+                "term_en": "Preventive Medicine",
+                "scope": "Especialidade médica que lida principalmente com a prevenção da doença (PREVENÇÃO PRIMÁRIA) e promoção e preservação da saúde do indivíduo.",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.403.720.750"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Sexually Transmitted Diseases",
+            "candidates": [
+              {
+                "id": "D012749",
+                "term": "Infecções Sexualmente Transmissíveis",
+                "term_en": "Sexually Transmitted Diseases",
+                "scope": "As doenças devido a ou propagadas por contato sexual.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.221.812",
+                  "C01.778"
+                ]
+              },
+              {
+                "id": "D015231",
+                "term": "Doenças Bacterianas Sexualmente Transmissíveis",
+                "term_en": "Sexually Transmitted Diseases, Bacterial",
+                "scope": "As doenças bacterianas transmitidas ou propagadas pela atividade sexual.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.150.252.734",
+                  "C01.221.812.281"
+                ]
+              },
+              {
+                "id": "D015229",
+                "term": "Doenças Virais Sexualmente Transmissíveis",
+                "term_en": "Sexually Transmitted Diseases, Viral",
+                "scope": "As doenças virais que são transmitidas ou propagadas pelo contato sexual.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.221.812.640",
+                  "C01.778.640"
+                ]
+              },
+              {
+                "id": "D014686",
+                "term": "Venereologia",
+                "term_en": "Venereology",
+                "scope": "Ramo da medicina que lida com doenças transmitidas sexualmente.",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.403.909"
+                ]
+              },
+              {
+                "id": "D000091662",
+                "term": "Doenças Genitais",
+                "term_en": "Genital Diseases",
+                "scope": "Processos patológicos que envolvem o trato reprodutivo (GENITÁLIA).",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.100"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Antiretroviral Therapy, Highly Active",
+            "candidates": [
+              {
+                "id": "D023241",
+                "term": "Terapia Antirretroviral de Alta Atividade",
+                "term_en": "Antiretroviral Therapy, Highly Active",
+                "scope": "Protocolo de medicação para pacientes com INFECÇÕES POR HIV que suprimem agressivamente a replicação do HIV. Estes protocolos geralmente envolvem a administração de três ou mais medicamentos diferente",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E02.319.310.075"
+                ]
+              },
+              {
+                "id": "D000088302",
+                "term": "Paciente HIV Positivo não Progressor",
+                "term_en": "HIV Non-Progressors",
+                "scope": "Indivíduos HIV-positivos com baixa CARGA VIRAL de HIV que nunca desenvolvem AIDS mesmo sem tratamento antiviral.",
+                "categoria": "",
+                "arvore": []
+              },
+              {
+                "id": "D044966",
+                "term": "Antirretrovirais",
+                "term_en": "Anti-Retroviral Agents",
+                "scope": "Fármacos utilizados para tratar INFECÇÕES POR RETROVIRIDAE.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.954.122.388.077"
+                ]
+              },
+              {
+                "id": "D019380",
+                "term": "Fármacos Anti-HIV",
+                "term_en": "Anti-HIV Agents",
+                "scope": "Usados para tratar a AIDS e/ou para deter a disseminação da infecção pelo HIV. Essa classificação não inclui os fármacos usados para tratar os sintomas da AIDS ou as infecções oportunistas a ela assoc",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.954.122.388.077.088"
+                ]
+              },
+              {
+                "id": "D000072230",
+                "term": "Resposta Viral Sustentada",
+                "term_en": "Sustained Virologic Response",
+                "scope": "Supressão da CARGA VIRAL de forma contínua, a longo prazo, geralmente a níveis indetectáveis, resultante do tratamento com ANTIVIRAIS.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.789.800.570",
+                  "N04.761.559.590.800.665"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Sexual Partners",
+            "candidates": [
+              {
+                "id": "D012747",
+                "term": "Parceiros Sexuais",
+                "term_en": "Sexual Partners",
+                "scope": "Indivíduos casados ou solteiros que compartilham relações sexuais.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.778",
+                  "SP3.311.750.536.100.655"
+                ]
+              },
+              {
+                "id": "D012725",
+                "term": "Comportamento Sexual",
+                "term_en": "Sexual Behavior",
+                "scope": "Atividades sexuais dos humanos.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.145.802",
+                  "SP3.311.750.536.100"
+                ]
+              },
+              {
+                "id": "D001727",
+                "term": "Bissexualidade",
+                "term_en": "Bisexuality",
+                "scope": "Atração ou relação sexual entre membros, tanto do mesmo sexo como do SEXO oposto.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.145.802.975.200",
+                  "G08.686.867.200"
+                ]
+              },
+              {
+                "id": "D020010",
+                "term": "Heterossexualidade",
+                "term_en": "Heterosexuality",
+                "scope": "Atração ou relação sexual entre membros do SEXO oposto.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.145.802.975.400",
+                  "G08.686.867.400"
+                ]
+              },
+              {
+                "id": "D003075",
+                "term": "Coito",
+                "term_en": "Coitus",
+                "scope": "União sexual entre duas pessoas, termo usado apenas para humanos.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.145.802.188",
+                  "G08.686.784.041"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D015658",
+          "term": "Infecções por HIV"
+        },
+        {
+          "id": "D065129",
+          "term": "Profilaxia Pré-Exposição"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D018445",
+          "term": "Transmissão Vertical de Doenças Infecciosas"
+        },
+        {
+          "id": "D011322",
+          "term": "Prevenção Primária"
+        },
+        {
+          "id": "D012749",
+          "term": "Infecções Sexualmente Transmissíveis"
+        },
+        {
+          "id": "D023241",
+          "term": "Terapia Antirretroviral de Alta Atividade"
+        },
+        {
+          "id": "D012747",
+          "term": "Parceiros Sexuais"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 5,
+    "total_candidates": 35,
+    "final_primary": 2,
+    "final_secondary": 5
+  }
+}

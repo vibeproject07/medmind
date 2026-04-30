@@ -1,0 +1,112 @@
+{
+  "result": [
+    {
+      "term": "Fibrose Cística",
+      "code": "D003550",
+      "tree_ids": [
+        "C06.689.202",
+        "C08.381.187",
+        "C16.320.190",
+        "C16.614.213"
+      ],
+      "hierarchy_path": "Doenças › C06.689.202",
+      "scope_note": "Doença genética, autossômica e recessiva das GLÂNDULAS EXÓCRINAS. Causadora por mutações no gene que codifica o REGULADOR DE CONDUTÂNCIA TRANSMEMBRANA EM FIBROSE CÍSTICA, expresso em vários órgãos, inclusive PULMÃO, PÂNCREAS, Sistema Biliar e GLÂNDULAS SUDORÍPARAS. A fibrose cística é caracterizada por disfunção secretória epitelial associada com obstrução ductal, resultando em OBSTRUÇÃO DAS VIAS RESPIRATÓRIAS, INFECÇÕES RESPIRATÓRIAS crônicas, Insuficiência Pancreática, má digestão, depleção de sal e EXAUSTÃO POR CALOR.",
+      "name_en": "Cystic Fibrosis",
+      "role": "primary"
+    },
+    {
+      "term": "Desidratação",
+      "code": "D003681",
+      "tree_ids": [
+        "C18.452.950.179",
+        "C23.550.274"
+      ],
+      "hierarchy_path": "Doenças › C18.452.950.179",
+      "scope_note": "Afecção resultante de perda excessiva de água pelo organismo vivo.",
+      "name_en": "Dehydration",
+      "role": "secondary"
+    },
+    {
+      "term": "Sons Respiratórios",
+      "code": "D012135",
+      "tree_ids": [
+        "C23.888.852.779",
+        "E01.370.386.720",
+        "G09.772.775"
+      ],
+      "hierarchy_path": "Doenças › C23.888.852.779",
+      "scope_note": "Ruídos, normais e anormais, ouvidos na auscultação em qualquer parte do SISTEMA RESPIRATÓRIO.",
+      "name_en": "Respiratory Sounds",
+      "role": "secondary"
+    },
+    {
+      "term": "Tosse",
+      "code": "D003371",
+      "tree_ids": [
+        "C08.618.248",
+        "C23.888.852.293"
+      ],
+      "hierarchy_path": "Doenças › C08.618.248",
+      "scope_note": "Expulsão súbita e audível de ar dos pulmões através de uma glote parcialmente fechada precedida por inalação. É uma resposta protetora que serve para limpar a traqueia, brônquios e/ou pulmões de irritantes e secreções ou para prevenir a aspiração de materiais estranhos para dentro dos pulmões.",
+      "name_en": "Cough",
+      "role": "secondary"
+    },
+    {
+      "term": "Lactente",
+      "code": "D007223",
+      "tree_ids": [
+        "M01.060.703"
+      ],
+      "hierarchy_path": "Grupos Identificados › M01.060.703",
+      "scope_note": "Criança entre 1 e 23 meses de idade.",
+      "name_en": "Infant",
+      "role": "secondary"
+    },
+    {
+      "term": "Hiponatremia",
+      "code": "D007010",
+      "tree_ids": [
+        "C18.452.950.620"
+      ],
+      "hierarchy_path": "Doenças › C18.452.950.620",
+      "scope_note": "Deficiência de sódio no sangue; depleção de sal. (Dorland, 28a ed)",
+      "name_en": "Hyponatremia",
+      "role": "secondary"
+    },
+    {
+      "term": "Bronquiolite Viral",
+      "code": "D001990",
+      "tree_ids": [
+        "C01.748.099.135.321",
+        "C01.925.109",
+        "C08.127.446.135.321",
+        "C08.381.495.146.135.321",
+        "C08.730.099.135.321"
+      ],
+      "hierarchy_path": "Doenças › C01.748.099.135.321",
+      "scope_note": "Doença inflamatória aguda do TRATO RESPIRATÓRIO superior, causada por paramyxovirus, que ocorre principalmente em lactentes e crianças jovens; os vírus mais comumente implicados são VÍRUS DA PARAINFLUENZA 3 HUMANA, VÍRUS SINCICIAL RESPIRATÓRIO HUMANO e METAPNEUMOVIRUS.",
+      "name_en": "Bronchiolitis, Viral",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Cystic Fibrosis"
+    ],
+    "secondary": [
+      "Infant",
+      "Hyponatremia",
+      "Dehydration",
+      "Bronchiolitis, Viral",
+      "Cough",
+      "Respiratory Sounds"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 1,
+    "secondary_terms": 6,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 0,
+    "final_count": 7
+  }
+}

@@ -1,0 +1,876 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D012306",
+        "term": "Risco",
+        "name_en": "Risk",
+        "scope_note": "Probabilidade de que um evento ocorra, que abrange várias medidas de probabilidade de um desfecho geralmente desfavorável.",
+        "tree_ids": [
+          "E05.318.740.600.800",
+          "G17.680.750",
+          "N05.715.360.750.625.700",
+          "N06.850.520.830.600.800"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E05.318.740.600.800",
+        "parents": [
+          {
+            "id": "D011336",
+            "term": "Probabilidade"
+          }
+        ],
+        "children": [
+          {
+            "id": "D018570",
+            "term": "Medição de Risco"
+          },
+          {
+            "id": "D012307",
+            "term": "Fatores de Risco"
+          },
+          {
+            "id": "D000082742",
+            "term": "Fatores de Risco de Doenças Cardíacas"
+          },
+          {
+            "id": "D000096442",
+            "term": "Estratificação de Risco Genético"
+          },
+          {
+            "id": "D000083202",
+            "term": "Fatores de Risco Cardiometabólico"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D015991",
+        "term": "Medidas em Epidemiologia",
+        "name_en": "Epidemiologic Measurements",
+        "scope_note": "Cálculos estatísticos sobre a ocorrência de doenças ou outras condições relacionadas com a saúde em populações definidas.",
+        "tree_ids": [
+          "N06.850.505"
+        ],
+        "hierarchy_path": "Saúde › N06.850.505",
+        "parents": [
+          {
+            "id": "D011634",
+            "term": "Saúde Pública"
+          }
+        ],
+        "children": [
+          {
+            "id": "D006304",
+            "term": "Nível de Saúde"
+          },
+          {
+            "id": "D006798",
+            "term": "Habitação"
+          },
+          {
+            "id": "D015577",
+            "term": "Avaliação Geriátrica"
+          },
+          {
+            "id": "D015596",
+            "term": "Avaliação Nutricional"
+          },
+          {
+            "id": "D008428",
+            "term": "Mortalidade Materna"
+          }
+        ],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D012907",
+        "term": "Fumar",
+        "name_en": "Smoking",
+        "scope_note": "Ato intencional ou deliberado de inalação e exalação de FUMAÇA de substâncias ou agentes queimados e segurados pela mão.",
+        "tree_ids": [
+          "F01.145.805"
+        ],
+        "hierarchy_path": "Psiquiatria e Psicologia › F01.145.805",
+        "parents": [
+          {
+            "id": "D001519",
+            "term": "Comportamento"
+          }
+        ],
+        "children": [
+          {
+            "id": "D008385",
+            "term": "Fumar Maconha"
+          },
+          {
+            "id": "D000072137",
+            "term": "Vaping"
+          },
+          {
+            "id": "D000073869",
+            "term": "Fumar Tabaco"
+          },
+          {
+            "id": "D000073868",
+            "term": "Fumar Cachimbo"
+          },
+          {
+            "id": "D000073847",
+            "term": "Fumar Produtos sem Tabaco"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D008175",
+        "term": "Neoplasias Pulmonares",
+        "name_en": "Lung Neoplasms",
+        "scope_note": "Tumores ou câncer do PULMÃO.",
+        "tree_ids": [
+          "C04.588.894.797.520",
+          "C08.381.540",
+          "C08.785.520"
+        ],
+        "hierarchy_path": "Doenças › C04.588.894.797.520",
+        "parents": [
+          {
+            "id": "D012142",
+            "term": "Neoplasias do Sistema Respiratório"
+          },
+          {
+            "id": "D008171",
+            "term": "Pneumopatias"
+          }
+        ],
+        "children": [
+          {
+            "id": "D047868",
+            "term": "Hemangioma Esclerosante Pulmonar"
+          },
+          {
+            "id": "D018202",
+            "term": "Blastoma Pulmonar"
+          },
+          {
+            "id": "D055613",
+            "term": "Nódulos Pulmonares Múltiplos"
+          },
+          {
+            "id": "D000086002",
+            "term": "Mesotelioma Maligno"
+          },
+          {
+            "id": "D055752",
+            "term": "Carcinoma de Pequenas Células do Pulmão"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D009026",
+        "term": "Mortalidade",
+        "name_en": "Mortality",
+        "scope_note": "Todas as mortes notificadas em uma população.",
+        "tree_ids": [
+          "E05.318.308.985.550",
+          "N01.224.935.698",
+          "N06.850.505.400.975.550",
+          "N06.850.520.308.985.550",
+          "SP3.311.300.392.432",
+          "SP5.467.413.330.903"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E05.318.308.985.550",
+        "parents": [
+          {
+            "id": "D014798",
+            "term": "Estatísticas Vitais"
+          }
+        ],
+        "children": [
+          {
+            "id": "D046689",
+            "term": "Mortalidade Fetal"
+          },
+          {
+            "id": "D046688",
+            "term": "Mortalidade da Criança"
+          },
+          {
+            "id": "D015996",
+            "term": "Taxa de Sobrevida"
+          },
+          {
+            "id": "D017052",
+            "term": "Mortalidade Hospitalar"
+          },
+          {
+            "id": "D017809",
+            "term": "Evolução Fatal"
+          }
+        ],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Risk",
+      "Epidemiologic Methods"
+    ],
+    "secondary": [
+      "Lung Neoplasms",
+      "Smoking",
+      "Mortality"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Risk",
+          "candidates": [
+            {
+              "id": "D012306",
+              "term": "Risco",
+              "term_en": "Risk",
+              "scope": "Probabilidade de que um evento ocorra, que abrange várias medidas de probabilidade de um desfecho geralmente desfavorável.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.740.600.800",
+                "G17.680.750"
+              ]
+            },
+            {
+              "id": "DDCS058018",
+              "term": "Risco Financeiro",
+              "term_en": "Financial Risk",
+              "scope": "Risco financeiro é qualquer risco associado a finanças, em particular, em transações financeiras de empréstimo em que há risco de inadimplência. (De: https://bit.ly/2NtEemC)",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP9.242.315.475.156.404.991"
+              ]
+            },
+            {
+              "id": "D012309",
+              "term": "Assunção de Riscos",
+              "term_en": "Risk-Taking",
+              "scope": "Desempenho de uma tarefa cuja realização envolve desafios ou de um objetivo desejável em que há falta de certeza ou medo do fracasso. Pode envolver certos comportamentos cujos resultados podem represe",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.145.722"
+              ]
+            },
+            {
+              "id": "DDCS051311",
+              "term": "Grau de Risco",
+              "term_en": "Risk Grade",
+              "scope": "Nível de efeitos adversos que cada tipo de produto pode ou não oferecer considerando sua formulação, finalidade e modo de uso.",
+              "categoria": "Vigilância Sanitária",
+              "arvore": [
+                "VS1.001.003.001.001.002.001.005.001"
+              ]
+            },
+            {
+              "id": "DDCS034868",
+              "term": "Mapa de Risco",
+              "term_en": "Risk Map",
+              "scope": "Mapa topográfico, de escala variável, no qual se grava sinalização sobre riscos específicos, definindo os níveis alto, médio ou baixo de probabilidade de ocorrência. (Material III - Ministério da Ação",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP8.665.152.379.461"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Epidemiologic Methods",
+          "candidates": [
+            {
+              "id": "D004812",
+              "term": "Métodos Epidemiológicos",
+              "term_en": "Epidemiologic Methods",
+              "scope": "Técnicas de pesquisa focalizadas em desenhos de estudo e dados que reúnem métodos em populações humanas e animais.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318",
+                "N06.850.520"
+              ]
+            },
+            {
+              "id": "D015991",
+              "term": "Medidas em Epidemiologia",
+              "term_en": "Epidemiologic Measurements",
+              "scope": "Cálculos estatísticos sobre a ocorrência de doenças ou outras condições relacionadas com a saúde em populações definidas.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N06.850.505"
+              ]
+            },
+            {
+              "id": "D016021",
+              "term": "Estudos Epidemiológicos",
+              "term_en": "Epidemiologic Studies",
+              "scope": "Estudos elaborados para examinar associações, geralmente relações de causas hipotéticas. De modo geral, o objetivo é identificar ou medir os efeitos dos fatores de riscos ou das exposições. Os tipos d",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.372.500",
+                "N05.715.360.330.500"
+              ]
+            },
+            {
+              "id": "DDCS028639",
+              "term": "Epidemiologia e Bioestatística",
+              "term_en": "Epidemiology and Biostatistics",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP5"
+              ]
+            },
+            {
+              "id": "D016020",
+              "term": "Características de Estudos Epidemiológicos",
+              "term_en": "Epidemiologic Study Characteristics",
+              "scope": "Trabalhos sobre tipos e formulações de estudos usados em pesquisa epidemiológica.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.372",
+                "N05.715.360.330"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Smoking",
+          "candidates": [
+            {
+              "id": "D012907",
+              "term": "Fumar",
+              "term_en": "Smoking",
+              "scope": "Ato intencional ou deliberado de inalação e exalação de FUMAÇA de substâncias ou agentes queimados e segurados pela mão.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.145.805"
+              ]
+            },
+            {
+              "id": "D008385",
+              "term": "Fumar Maconha",
+              "term_en": "Marijuana Smoking",
+              "scope": "Ato de inalar e exalar a FUMAÇA da CANNABIS.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.145.610.875",
+                "F01.145.805.250.500"
+              ]
+            },
+            {
+              "id": "D000073869",
+              "term": "Fumar Tabaco",
+              "term_en": "Tobacco Smoking",
+              "scope": "Processo de FUMAR específico do TABACO.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.145.805.375",
+                "F01.145.958.875"
+              ]
+            },
+            {
+              "id": "D000073863",
+              "term": "Fumar Charutos",
+              "term_en": "Cigar Smoking",
+              "scope": "Hábito de FUMAR CHARUTOS.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.145.805.375.500",
+                "F01.145.958.875.500"
+              ]
+            },
+            {
+              "id": "D000074101",
+              "term": "Fumar Cocaína",
+              "term_en": "Cocaine Smoking",
+              "scope": "Hábito do fumo de COCAÍNA.",
+              "categoria": "Psiquiatria e Psicologia",
+              "arvore": [
+                "F01.145.805.250.250"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Lung Neoplasms",
+          "candidates": [
+            {
+              "id": "D008175",
+              "term": "Neoplasias Pulmonares",
+              "term_en": "Lung Neoplasms",
+              "scope": "Tumores ou câncer do PULMÃO.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C04.588.894.797.520",
+                "C08.381.540"
+              ]
+            },
+            {
+              "id": "D001984",
+              "term": "Neoplasias Brônquicas",
+              "term_en": "Bronchial Neoplasms",
+              "scope": "Tumores ou câncer dos BRÔNQUIOS.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C04.588.894.797.520.109",
+                "C08.127.265"
+              ]
+            },
+            {
+              "id": "D013899",
+              "term": "Neoplasias Torácicas",
+              "term_en": "Thoracic Neoplasms",
+              "scope": "Novo crescimento anormal de tecido no TÓRAX.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C04.588.894"
+              ]
+            },
+            {
+              "id": "D002283",
+              "term": "Carcinoma Broncogênico",
+              "term_en": "Carcinoma, Bronchogenic",
+              "scope": "Neoplasia maligna que surge do epitélio dos BRÔNQUIOS. Representa um grande grupo de doenças epiteliais pulmonares malignas que pode ser dividido em dois grupos clínicos: CARCINOMA DE PEQUENAS CÉLULAS",
+              "categoria": "Doenças",
+              "arvore": [
+                "C04.588.894.797.520.109.220",
+                "C08.381.540.140"
+              ]
+            },
+            {
+              "id": "D002289",
+              "term": "Carcinoma Pulmonar de Células não Pequenas",
+              "term_en": "Carcinoma, Non-Small-Cell Lung",
+              "scope": "Agregado heterogêneo de pelo menos três tipos histológicos distintos de câncer pulmonar, incluindo CARCINOMA DE CÉLULAS ESCAMOSAS, ADENOCARCINOMA e CARCINOMA DE CÉLULAS GRANDES. São considerados colet",
+              "categoria": "Doenças",
+              "arvore": [
+                "C04.588.894.797.520.109.220.249",
+                "C08.381.540.140.500"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Mortality",
+          "candidates": [
+            {
+              "id": "D009026",
+              "term": "Mortalidade",
+              "term_en": "Mortality",
+              "scope": "Todas as mortes notificadas em uma população.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.308.985.550",
+                "N01.224.935.698"
+              ]
+            },
+            {
+              "id": "DDCS028403",
+              "term": "Registros de Mortalidade",
+              "term_en": "Mortality Registries",
+              "scope": "Sistema de registro baseado em documentos como atestado e declaração de óbito.",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP5.467.733"
+              ]
+            },
+            {
+              "id": "D061213",
+              "term": "Mortalidade Prematura",
+              "term_en": "Mortality, Premature",
+              "scope": "Mortes que ocorrem antes que a EXPECTATIVA DE VIDA seja alcançada em uma determinada população.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.308.985.550.550",
+                "N01.224.935.698.700"
+              ]
+            },
+            {
+              "id": "D017052",
+              "term": "Mortalidade Hospitalar",
+              "term_en": "Hospital Mortality",
+              "scope": "Registro ou coleta de dados referentes à mortalidade por quaisquer causas em grupos de indivíduos hospitalizados.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.308.985.550.400",
+                "N01.224.935.698.400"
+              ]
+            },
+            {
+              "id": "D007226",
+              "term": "Mortalidade Infantil",
+              "term_en": "Infant Mortality",
+              "scope": "Óbitos ocorridos desde o NASCIMENTO até 365 dias após o nascimento em uma dada população. Mortalidade pós-neonatal representa as mortes ocorridas entre 28 e 365 dias após o nascimento (conforme defini",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.308.985.550.475",
+                "N01.224.935.698.489"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Risk",
+        "Epidemiologic Methods"
+      ],
+      "secondary": [
+        "Lung Neoplasms",
+        "Smoking",
+        "Mortality"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Risk",
+            "candidates": [
+              {
+                "id": "D012306",
+                "term": "Risco",
+                "term_en": "Risk",
+                "scope": "Probabilidade de que um evento ocorra, que abrange várias medidas de probabilidade de um desfecho geralmente desfavorável.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.740.600.800",
+                  "G17.680.750"
+                ]
+              },
+              {
+                "id": "DDCS058018",
+                "term": "Risco Financeiro",
+                "term_en": "Financial Risk",
+                "scope": "Risco financeiro é qualquer risco associado a finanças, em particular, em transações financeiras de empréstimo em que há risco de inadimplência. (De: https://bit.ly/2NtEemC)",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP9.242.315.475.156.404.991"
+                ]
+              },
+              {
+                "id": "D012309",
+                "term": "Assunção de Riscos",
+                "term_en": "Risk-Taking",
+                "scope": "Desempenho de uma tarefa cuja realização envolve desafios ou de um objetivo desejável em que há falta de certeza ou medo do fracasso. Pode envolver certos comportamentos cujos resultados podem represe",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.145.722"
+                ]
+              },
+              {
+                "id": "DDCS051311",
+                "term": "Grau de Risco",
+                "term_en": "Risk Grade",
+                "scope": "Nível de efeitos adversos que cada tipo de produto pode ou não oferecer considerando sua formulação, finalidade e modo de uso.",
+                "categoria": "Vigilância Sanitária",
+                "arvore": [
+                  "VS1.001.003.001.001.002.001.005.001"
+                ]
+              },
+              {
+                "id": "DDCS034868",
+                "term": "Mapa de Risco",
+                "term_en": "Risk Map",
+                "scope": "Mapa topográfico, de escala variável, no qual se grava sinalização sobre riscos específicos, definindo os níveis alto, médio ou baixo de probabilidade de ocorrência. (Material III - Ministério da Ação",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP8.665.152.379.461"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Epidemiologic Methods",
+            "candidates": [
+              {
+                "id": "D004812",
+                "term": "Métodos Epidemiológicos",
+                "term_en": "Epidemiologic Methods",
+                "scope": "Técnicas de pesquisa focalizadas em desenhos de estudo e dados que reúnem métodos em populações humanas e animais.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318",
+                  "N06.850.520"
+                ]
+              },
+              {
+                "id": "D015991",
+                "term": "Medidas em Epidemiologia",
+                "term_en": "Epidemiologic Measurements",
+                "scope": "Cálculos estatísticos sobre a ocorrência de doenças ou outras condições relacionadas com a saúde em populações definidas.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N06.850.505"
+                ]
+              },
+              {
+                "id": "D016021",
+                "term": "Estudos Epidemiológicos",
+                "term_en": "Epidemiologic Studies",
+                "scope": "Estudos elaborados para examinar associações, geralmente relações de causas hipotéticas. De modo geral, o objetivo é identificar ou medir os efeitos dos fatores de riscos ou das exposições. Os tipos d",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.372.500",
+                  "N05.715.360.330.500"
+                ]
+              },
+              {
+                "id": "DDCS028639",
+                "term": "Epidemiologia e Bioestatística",
+                "term_en": "Epidemiology and Biostatistics",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP5"
+                ]
+              },
+              {
+                "id": "D016020",
+                "term": "Características de Estudos Epidemiológicos",
+                "term_en": "Epidemiologic Study Characteristics",
+                "scope": "Trabalhos sobre tipos e formulações de estudos usados em pesquisa epidemiológica.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.372",
+                  "N05.715.360.330"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Smoking",
+            "candidates": [
+              {
+                "id": "D012907",
+                "term": "Fumar",
+                "term_en": "Smoking",
+                "scope": "Ato intencional ou deliberado de inalação e exalação de FUMAÇA de substâncias ou agentes queimados e segurados pela mão.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.145.805"
+                ]
+              },
+              {
+                "id": "D008385",
+                "term": "Fumar Maconha",
+                "term_en": "Marijuana Smoking",
+                "scope": "Ato de inalar e exalar a FUMAÇA da CANNABIS.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.145.610.875",
+                  "F01.145.805.250.500"
+                ]
+              },
+              {
+                "id": "D000073869",
+                "term": "Fumar Tabaco",
+                "term_en": "Tobacco Smoking",
+                "scope": "Processo de FUMAR específico do TABACO.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.145.805.375",
+                  "F01.145.958.875"
+                ]
+              },
+              {
+                "id": "D000073863",
+                "term": "Fumar Charutos",
+                "term_en": "Cigar Smoking",
+                "scope": "Hábito de FUMAR CHARUTOS.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.145.805.375.500",
+                  "F01.145.958.875.500"
+                ]
+              },
+              {
+                "id": "D000074101",
+                "term": "Fumar Cocaína",
+                "term_en": "Cocaine Smoking",
+                "scope": "Hábito do fumo de COCAÍNA.",
+                "categoria": "Psiquiatria e Psicologia",
+                "arvore": [
+                  "F01.145.805.250.250"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Lung Neoplasms",
+            "candidates": [
+              {
+                "id": "D008175",
+                "term": "Neoplasias Pulmonares",
+                "term_en": "Lung Neoplasms",
+                "scope": "Tumores ou câncer do PULMÃO.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C04.588.894.797.520",
+                  "C08.381.540"
+                ]
+              },
+              {
+                "id": "D001984",
+                "term": "Neoplasias Brônquicas",
+                "term_en": "Bronchial Neoplasms",
+                "scope": "Tumores ou câncer dos BRÔNQUIOS.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C04.588.894.797.520.109",
+                  "C08.127.265"
+                ]
+              },
+              {
+                "id": "D013899",
+                "term": "Neoplasias Torácicas",
+                "term_en": "Thoracic Neoplasms",
+                "scope": "Novo crescimento anormal de tecido no TÓRAX.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C04.588.894"
+                ]
+              },
+              {
+                "id": "D002283",
+                "term": "Carcinoma Broncogênico",
+                "term_en": "Carcinoma, Bronchogenic",
+                "scope": "Neoplasia maligna que surge do epitélio dos BRÔNQUIOS. Representa um grande grupo de doenças epiteliais pulmonares malignas que pode ser dividido em dois grupos clínicos: CARCINOMA DE PEQUENAS CÉLULAS",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C04.588.894.797.520.109.220",
+                  "C08.381.540.140"
+                ]
+              },
+              {
+                "id": "D002289",
+                "term": "Carcinoma Pulmonar de Células não Pequenas",
+                "term_en": "Carcinoma, Non-Small-Cell Lung",
+                "scope": "Agregado heterogêneo de pelo menos três tipos histológicos distintos de câncer pulmonar, incluindo CARCINOMA DE CÉLULAS ESCAMOSAS, ADENOCARCINOMA e CARCINOMA DE CÉLULAS GRANDES. São considerados colet",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C04.588.894.797.520.109.220.249",
+                  "C08.381.540.140.500"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Mortality",
+            "candidates": [
+              {
+                "id": "D009026",
+                "term": "Mortalidade",
+                "term_en": "Mortality",
+                "scope": "Todas as mortes notificadas em uma população.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.308.985.550",
+                  "N01.224.935.698"
+                ]
+              },
+              {
+                "id": "DDCS028403",
+                "term": "Registros de Mortalidade",
+                "term_en": "Mortality Registries",
+                "scope": "Sistema de registro baseado em documentos como atestado e declaração de óbito.",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP5.467.733"
+                ]
+              },
+              {
+                "id": "D061213",
+                "term": "Mortalidade Prematura",
+                "term_en": "Mortality, Premature",
+                "scope": "Mortes que ocorrem antes que a EXPECTATIVA DE VIDA seja alcançada em uma determinada população.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.308.985.550.550",
+                  "N01.224.935.698.700"
+                ]
+              },
+              {
+                "id": "D017052",
+                "term": "Mortalidade Hospitalar",
+                "term_en": "Hospital Mortality",
+                "scope": "Registro ou coleta de dados referentes à mortalidade por quaisquer causas em grupos de indivíduos hospitalizados.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.308.985.550.400",
+                  "N01.224.935.698.400"
+                ]
+              },
+              {
+                "id": "D007226",
+                "term": "Mortalidade Infantil",
+                "term_en": "Infant Mortality",
+                "scope": "Óbitos ocorridos desde o NASCIMENTO até 365 dias após o nascimento em uma dada população. Mortalidade pós-neonatal representa as mortes ocorridas entre 28 e 365 dias após o nascimento (conforme defini",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.308.985.550.475",
+                  "N01.224.935.698.489"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D012306",
+          "term": "Risco"
+        },
+        {
+          "id": "D015991",
+          "term": "Medidas em Epidemiologia"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D012907",
+          "term": "Fumar"
+        },
+        {
+          "id": "D008175",
+          "term": "Neoplasias Pulmonares"
+        },
+        {
+          "id": "D009026",
+          "term": "Mortalidade"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 3,
+    "total_candidates": 25,
+    "final_primary": 2,
+    "final_secondary": 3
+  }
+}

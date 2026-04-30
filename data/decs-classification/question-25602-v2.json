@@ -1,0 +1,925 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D020338",
+        "term": "Neuronite Vestibular",
+        "name_en": "Vestibular Neuronitis",
+        "scope_note": "Inflamação idiopática do NERVO VESTIBULAR, caracterizada clinicamente por início agudo ou subagudo de VERTIGEM, NÁUSEA e desequilíbrio. O NERVO COCLEAR é tipicamente poupado e a PERDA DE AUDIÇÃO e ZUMBIDO geralmente não acontecem. Os sintomas geralmente são solucionados num período acima de dias a semanas (Tradução livre do original: Adams et al., Principles of Neurology, 6th ed, p304).",
+        "tree_ids": [
+          "C09.218.807.800.837",
+          "C10.292.910.850"
+        ],
+        "hierarchy_path": "Doenças › C09.218.807.800.837",
+        "parents": [
+          {
+            "id": "D000160",
+            "term": "Doenças do Nervo Vestibulococlear"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D005938",
+        "term": "Glucocorticoides",
+        "name_en": "Glucocorticoids",
+        "scope_note": "Grupo de CORTICOSTEROIDES que afetam o metabolismo de carboidratos (GLUCONEOGÊNESE, depósito de glicogênio hepático, elevação da GLICEMIA), inibem a secreção de CORTICOTROPINA e possuem atividade anti-inflamatória pronunciada. Também desempenham um papel no metabolismo de gorduras e proteínas, manutenção da pressão arterial, alteração da resposta do tecido conjuntivo a lesão, redução no número de linfócitos circulantes e no funcionamento do sistema nervoso central.",
+        "tree_ids": [
+          "D06.472.040.543",
+          "D27.505.696.399.472.488"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D06.472.040.543",
+        "parents": [
+          {
+            "id": "D000305",
+            "term": "Corticosteroides"
+          },
+          {
+            "id": "D006728",
+            "term": "Hormônios"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D000932",
+        "term": "Antieméticos",
+        "name_en": "Antiemetics",
+        "scope_note": "Medicamentos usados para impedir NÁUSEA ou VÔMITO.",
+        "tree_ids": [
+          "D27.505.696.663.050.030",
+          "D27.505.954.427.095",
+          "D27.505.954.483.200"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D27.505.696.663.050.030",
+        "parents": [
+          {
+            "id": "D001337",
+            "term": "Fármacos do Sistema Nervoso Autônomo"
+          },
+          {
+            "id": "D002491",
+            "term": "Fármacos do Sistema Nervoso Central"
+          },
+          {
+            "id": "D005765",
+            "term": "Fármacos Gastrointestinais"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D006633",
+        "term": "Antagonistas dos Receptores Histamínicos",
+        "name_en": "Histamine Antagonists",
+        "scope_note": "Fármacos que se ligam a receptores da histamina, bloqueando assim a ação da histamina ou de agonistas histamínicos, sem ativação dos referidos receptores. Os anti-histamínicos clássicos bloqueiam somente os receptores H1 da histamina.",
+        "tree_ids": [
+          "D27.505.519.625.375.425",
+          "D27.505.696.577.375.425"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D27.505.519.625.375.425",
+        "parents": [
+          {
+            "id": "D018494",
+            "term": "Histamínicos"
+          }
+        ],
+        "children": [
+          {
+            "id": "D054828",
+            "term": "Antagonistas dos Receptores Histamínicos H3"
+          },
+          {
+            "id": "D006635",
+            "term": "Antagonistas dos Receptores H2 da Histamina"
+          },
+          {
+            "id": "D039563",
+            "term": "Antagonistas não Sedativos dos Receptores H1 da Histamina"
+          },
+          {
+            "id": "D006634",
+            "term": "Antagonistas dos Receptores Histamínicos H1"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D009759",
+        "term": "Nistagmo Patológico",
+        "name_en": "Nystagmus, Pathologic",
+        "scope_note": "Movimentos involuntários do olho que são divididos em dois tipos: puxão e pendular. O nistagmo tipo puxão tem uma fase lenta em uma direção, seguida de uma fase rápida corretiva na direção oposta e é normalmente causado por disfunção vestibular central ou periférica. O nistagmo pendular caracteriza-se por oscilações de velocidade igual em ambas as direções, sendo esta afecção geralmente associada com perda visual precoce na vida.",
+        "tree_ids": [
+          "C10.292.562.675",
+          "C11.590.400"
+        ],
+        "hierarchy_path": "Doenças › C10.292.562.675",
+        "parents": [
+          {
+            "id": "D015835",
+            "term": "Transtornos da Motilidade Ocular"
+          }
+        ],
+        "children": [
+          {
+            "id": "D020417",
+            "term": "Nistagmo Congênito"
+          }
+        ],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Vestibular Neuronitis",
+      "Vertigo"
+    ],
+    "secondary": [
+      "Nystagmus, Pathologic",
+      "Glucocorticoids",
+      "Antiemetics",
+      "Histamine Antagonists"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Vertigo",
+          "candidates": [
+            {
+              "id": "D008468",
+              "term": "Meclizina",
+              "term_en": "Meclizine",
+              "scope": "Antagonista histaminérgico H1 utilizado no tratamento do enjoo, vertigem e náuseas durante a gravidez e o enjoo devido à radiação.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.455.426.559.389.115.475",
+                "D03.383.606.650"
+              ]
+            },
+            {
+              "id": "D011346",
+              "term": "Proclorperazina",
+              "term_en": "Prochlorperazine",
+              "scope": "Antipsicótico fenotiazínico utilizado principalmente no tratamento da NÁUSEA, VÔMITO e VERTIGEM. É mais provável que cause Transtornos Extrapiramidais do que a CLORPROMAZINA. (Tradução livre do origin",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.886.369.639",
+                "D03.633.300.783.639"
+              ]
+            },
+            {
+              "id": "D004111",
+              "term": "Dimenidrinato",
+              "term_en": "Dimenhydrinate",
+              "scope": "Combinação de drogas que contêm DIDIFRENIDRAMINA e TEOFILINA. É utilizada para tratar VERTIGEM, ENJÔO DEVIDO AO MOVIMENTO e NÁUSEA associada à GRAVIDEZ.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.092.471.320.250",
+                "D02.455.426.559.389.115.250.250"
+              ]
+            },
+            {
+              "id": "D014702",
+              "term": "Veratrina",
+              "term_en": "Veratrine",
+              "scope": "Ativador de canal de sódio disparado por voltagem.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D03.132.920.256.815",
+                "D03.633.400.256.815"
+              ]
+            },
+            {
+              "id": "DDCS027657",
+              "term": "Veratrinum",
+              "term_en": "Veratrinum",
+              "scope": "Medicamento homeopático. Abrev.: \"verin.\". Origem química. Substância utilizada: veratrina.",
+              "categoria": "HP",
+              "arvore": [
+                "HP4.018.602.500.948"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Vestibular Neuronitis",
+          "candidates": [
+            {
+              "id": "D020338",
+              "term": "Neuronite Vestibular",
+              "term_en": "Vestibular Neuronitis",
+              "scope": "Inflamação idiopática do NERVO VESTIBULAR, caracterizada clinicamente por início agudo ou subagudo de VERTIGEM, NÁUSEA e desequilíbrio. O NERVO COCLEAR é tipicamente poupado e a PERDA DE AUDIÇÃO e ZUM",
+              "categoria": "Doenças",
+              "arvore": [
+                "C09.218.807.800.837",
+                "C10.292.910.850"
+              ]
+            },
+            {
+              "id": "D065635",
+              "term": "Vertigem Posicional Paroxística Benigna",
+              "term_en": "Benign Paroxysmal Positional Vertigo",
+              "scope": "VERTIGEM idiopática recorrente associada a NISTAGMO POSICIONAL. Está associada a perda vestibular, mais frequentemente com deslocamento de OTÓLITOS, mas sem outros sinais neurológicos ou auditivos. Nã",
+              "categoria": "Doenças",
+              "arvore": [
+                "C09.218.568.900.883.500",
+                "C10.597.951.500"
+              ]
+            },
+            {
+              "id": "D000091282",
+              "term": "Sistema Vestibular",
+              "term_en": "Vestibular System",
+              "scope": "APARELHO VESTIBULAR na orelha interna, no olho, SISTEMA NERVOSO CENTRAL e vários nervos, tratos e núcleos que os conectam à medida que eles se relacionam à PROPIOCEPÇÃO e ORIENTAÇÃO ESPACIAL. A disfun",
+              "categoria": "Anatomia",
+              "arvore": [
+                "A09.923"
+              ]
+            },
+            {
+              "id": "D000160",
+              "term": "Doenças do Nervo Vestibulococlear",
+              "term_en": "Vestibulocochlear Nerve Diseases",
+              "scope": "Processos patológicos do NERVO VESTIBULOCOCLEAR, inclusive os ramos do NERVO COCLEAR e NERVO VESTIBULAR. Os exemplos comuns são: NEURONITE VESTIBULAR, neurite coclear, e NEUROMA ACÚSTICO. Entre os sin",
+              "categoria": "Doenças",
+              "arvore": [
+                "C09.218.807.800",
+                "C10.292.910"
+              ]
+            },
+            {
+              "id": "D014725",
+              "term": "Nervo Vestibular",
+              "term_en": "Vestibular Nerve",
+              "scope": "Parte vestibular do VIII par de nervos cranianos (NERVO VESTIBULOCOCLEAR). As fibras nervosas vestibulares nascem de neurônios provenientes do gânglio de Scarpa, projetando-se perifericamente para as ",
+              "categoria": "Anatomia",
+              "arvore": [
+                "A08.800.800.120.910.900",
+                "A09.923.250"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Glucocorticoids",
+          "candidates": [
+            {
+              "id": "D005938",
+              "term": "Glucocorticoides",
+              "term_en": "Glucocorticoids",
+              "scope": "Grupo de CORTICOSTEROIDES que afetam o metabolismo de carboidratos (GLUCONEOGÊNESE, depósito de glicogênio hepático, elevação da GLICEMIA), inibem a secreção de CORTICOTROPINA e possuem atividade anti",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D06.472.040.543",
+                "D27.505.696.399.472.488"
+              ]
+            },
+            {
+              "id": "D011965",
+              "term": "Receptores de Glucocorticoides",
+              "term_en": "Receptors, Glucocorticoid",
+              "scope": "Proteínas citoplasmáticas que ligam especificamente glucocorticoides e medeiam seus efeitos celulares. O complexo receptor glucocorticoide-glucocorticoide atua no núcleo induzindo a transcrição do DNA",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.826.750.430"
+              ]
+            },
+            {
+              "id": "D006889",
+              "term": "Hidroxicorticosteroides",
+              "term_en": "Hydroxycorticosteroids",
+              "scope": "Grupo de corticosteroides com grupos hidroxila, geralmente nas posições 11 e 17. Compreendem a maioria dos corticosteroides usados sistemicamente. Como são relativamente insolúveis em água, sais de vá",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D06.472.040.585"
+              ]
+            },
+            {
+              "id": "D000305",
+              "term": "Corticosteroides",
+              "term_en": "Adrenal Cortex Hormones",
+              "scope": "HORMÔNIOS produzidos pelo CÓRTEX SUPRARRENAL, incluindo tanto os hormônios esteroides como os peptídicos. Os principais hormônios produzidos são HIDROCORTISONA e ALDOSTERONA.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D06.472.040"
+              ]
+            },
+            {
+              "id": "D003345",
+              "term": "Corticosterona",
+              "term_en": "Corticosterone",
+              "scope": "Esteroide adrenocortical que tem modesta, mas significante atividade como mineralocorticoide e glucocorticoide.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D04.210.500.745.745.654.237",
+                "D06.472.040.585.353.237"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Antiemetics",
+          "candidates": [
+            {
+              "id": "D000932",
+              "term": "Antieméticos",
+              "term_en": "Antiemetics",
+              "scope": "Medicamentos usados para impedir NÁUSEA ou VÔMITO.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.696.663.050.030",
+                "D27.505.954.427.095"
+              ]
+            },
+            {
+              "id": "D004639",
+              "term": "Eméticos",
+              "term_en": "Emetics",
+              "scope": "Agentes que provocam vômito. Podem agir diretamente no trato gastrointestinal provocando êmese através de um efeito irritante local ou, indiretamente, atuando sobre a zona de disparo do quimioreceptor",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.696.329",
+                "D27.505.696.663.050.225"
+              ]
+            },
+            {
+              "id": "D003501",
+              "term": "Ciclizina",
+              "term_en": "Cyclizine",
+              "scope": "Antagonista H1 da histamina dado por boca ou parenteralmente para o controle do vômito pós-operatório e induzido por droga, e no enjôo.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D03.383.606.320"
+              ]
+            },
+            {
+              "id": "D018492",
+              "term": "Antagonistas de Dopamina",
+              "term_en": "Dopamine Antagonists",
+              "scope": "Drogas que se ligam, mas não ativam os RECEPTORES DA DOPAMINA, bloqueando assim as ações da dopamina ou de agonistas exógenos. Muitas drogas usadas no tratamento de transtornos psicóticos (AGENTES ANT",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.519.625.150.175",
+                "D27.505.696.577.150.175"
+              ]
+            },
+            {
+              "id": "D013847",
+              "term": "Tietilperazina",
+              "term_en": "Thiethylperazine",
+              "scope": "Antagonista da dopamina que é usado particularmente no tratamento da náusea e vômito associados com anestesia, agentes quimioterapêuticos de câncer moderadamente eméticos, radioterapia e toxinas. Esta",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D02.886.369.780",
+                "D03.383.606.880"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Histamine Antagonists",
+          "candidates": [
+            {
+              "id": "D006633",
+              "term": "Antagonistas dos Receptores Histamínicos",
+              "term_en": "Histamine Antagonists",
+              "scope": "Fármacos que se ligam a receptores da histamina, bloqueando assim a ação da histamina ou de agonistas histamínicos, sem ativação dos referidos receptores. Os anti-histamínicos clássicos bloqueiam some",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.519.625.375.425",
+                "D27.505.696.577.375.425"
+              ]
+            },
+            {
+              "id": "D006634",
+              "term": "Antagonistas dos Receptores Histamínicos H1",
+              "term_en": "Histamine H1 Antagonists",
+              "scope": "Fármacos que se ligam seletivamente aos receptores H1 da histamina, bloqueando assim a ação da histamina endógena, mas sem ativar os receptores H1. Estão incluídos aqui os anti-histamínicos clássicos ",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.519.625.375.425.400",
+                "D27.505.696.577.375.425.400"
+              ]
+            },
+            {
+              "id": "D006635",
+              "term": "Antagonistas dos Receptores H2 da Histamina",
+              "term_en": "Histamine H2 Antagonists",
+              "scope": "Fármacos que se ligam seletivamente aos receptores H2 da histamina, porém sem ativá-los, bloqueando assim a ação da histamina. Sua ação clínica mais importante é a inibição da secreção de ácido no tra",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.519.625.375.425.425",
+                "D27.505.696.577.375.425.425"
+              ]
+            },
+            {
+              "id": "D039563",
+              "term": "Antagonistas não Sedativos dos Receptores H1 da Histamina",
+              "term_en": "Histamine H1 Antagonists, Non-Sedating",
+              "scope": "Classe de fármacos não sedativos que se ligam aos receptores de histamina (AGONISMO INVERSO), mas não os ativa e, desta maneira, bloqueia as ações da histamina ou dos agonistas da histamina. Estes ant",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.519.625.375.425.400.500",
+                "D27.505.696.577.375.425.400.500"
+              ]
+            },
+            {
+              "id": "D054828",
+              "term": "Antagonistas dos Receptores Histamínicos H3",
+              "term_en": "Histamine H3 Antagonists",
+              "scope": "Medicamentos que seletivamente se ligam, mas não ativam os RECEPTORES HISTAMÍNICOS H3. Têm sido utilizados para corrigir os TRANSTORNOS DO SONO-VIGÍLIA e TRANSTORNOS DA MEMÓRIA.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D27.505.519.625.375.425.712",
+                "D27.505.696.577.375.425.712"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Nystagmus, Pathologic",
+          "candidates": [
+            {
+              "id": "D009759",
+              "term": "Nistagmo Patológico",
+              "term_en": "Nystagmus, Pathologic",
+              "scope": "Movimentos involuntários do olho que são divididos em dois tipos: puxão e pendular. O nistagmo tipo puxão tem uma fase lenta em uma direção, seguida de uma fase rápida corretiva na direção oposta e é ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.292.562.675",
+                "C11.590.400"
+              ]
+            },
+            {
+              "id": "D009760",
+              "term": "Nistagmo Fisiológico",
+              "term_en": "Nystagmus, Physiologic",
+              "scope": "Movimentos rítmicos involuntários dos olhos na pessoa normal. Podem ocorrer naturalmente como no nistagmo de posição extrema (end-position) (ponto final, estágio final, ou de desvio) ou [ainda] induzi",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G14.350.378"
+              ]
+            },
+            {
+              "id": "D020417",
+              "term": "Nistagmo Congênito",
+              "term_en": "Nystagmus, Congenital",
+              "scope": "Nistagmo presente no nascimento ou causado por lesões prolongadas no útero ou no momento do nascimento. É normalmente pendular e está associado com ALBINISMO e afecções caracterizadas por perda precoc",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.292.562.675.300",
+                "C11.590.400.300"
+              ]
+            },
+            {
+              "id": "D017120",
+              "term": "Nistagmo Optocinético",
+              "term_en": "Nystagmus, Optokinetic",
+              "scope": "Nistagmo normal produzido ao olhar os objetos em movimento através do campo visual.",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G14.350.378.500"
+              ]
+            },
+            {
+              "id": "D015835",
+              "term": "Transtornos da Motilidade Ocular",
+              "term_en": "Ocular Motility Disorders",
+              "scope": "Transtornos caracterizados por deficiência dos movimentos oculares como manifestação primária da doença. Estas doenças podem dividir-se em transtornos infranucleares, nucleares e supranucleares. As do",
+              "categoria": "Doenças",
+              "arvore": [
+                "C10.228.758",
+                "C10.292.562"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Vestibular Neuronitis",
+        "Vertigo"
+      ],
+      "secondary": [
+        "Nystagmus, Pathologic",
+        "Glucocorticoids",
+        "Antiemetics",
+        "Histamine Antagonists"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Vertigo",
+            "candidates": [
+              {
+                "id": "D008468",
+                "term": "Meclizina",
+                "term_en": "Meclizine",
+                "scope": "Antagonista histaminérgico H1 utilizado no tratamento do enjoo, vertigem e náuseas durante a gravidez e o enjoo devido à radiação.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.455.426.559.389.115.475",
+                  "D03.383.606.650"
+                ]
+              },
+              {
+                "id": "D011346",
+                "term": "Proclorperazina",
+                "term_en": "Prochlorperazine",
+                "scope": "Antipsicótico fenotiazínico utilizado principalmente no tratamento da NÁUSEA, VÔMITO e VERTIGEM. É mais provável que cause Transtornos Extrapiramidais do que a CLORPROMAZINA. (Tradução livre do origin",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.886.369.639",
+                  "D03.633.300.783.639"
+                ]
+              },
+              {
+                "id": "D004111",
+                "term": "Dimenidrinato",
+                "term_en": "Dimenhydrinate",
+                "scope": "Combinação de drogas que contêm DIDIFRENIDRAMINA e TEOFILINA. É utilizada para tratar VERTIGEM, ENJÔO DEVIDO AO MOVIMENTO e NÁUSEA associada à GRAVIDEZ.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.092.471.320.250",
+                  "D02.455.426.559.389.115.250.250"
+                ]
+              },
+              {
+                "id": "D014702",
+                "term": "Veratrina",
+                "term_en": "Veratrine",
+                "scope": "Ativador de canal de sódio disparado por voltagem.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D03.132.920.256.815",
+                  "D03.633.400.256.815"
+                ]
+              },
+              {
+                "id": "DDCS027657",
+                "term": "Veratrinum",
+                "term_en": "Veratrinum",
+                "scope": "Medicamento homeopático. Abrev.: \"verin.\". Origem química. Substância utilizada: veratrina.",
+                "categoria": "HP",
+                "arvore": [
+                  "HP4.018.602.500.948"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Vestibular Neuronitis",
+            "candidates": [
+              {
+                "id": "D020338",
+                "term": "Neuronite Vestibular",
+                "term_en": "Vestibular Neuronitis",
+                "scope": "Inflamação idiopática do NERVO VESTIBULAR, caracterizada clinicamente por início agudo ou subagudo de VERTIGEM, NÁUSEA e desequilíbrio. O NERVO COCLEAR é tipicamente poupado e a PERDA DE AUDIÇÃO e ZUM",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C09.218.807.800.837",
+                  "C10.292.910.850"
+                ]
+              },
+              {
+                "id": "D065635",
+                "term": "Vertigem Posicional Paroxística Benigna",
+                "term_en": "Benign Paroxysmal Positional Vertigo",
+                "scope": "VERTIGEM idiopática recorrente associada a NISTAGMO POSICIONAL. Está associada a perda vestibular, mais frequentemente com deslocamento de OTÓLITOS, mas sem outros sinais neurológicos ou auditivos. Nã",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C09.218.568.900.883.500",
+                  "C10.597.951.500"
+                ]
+              },
+              {
+                "id": "D000091282",
+                "term": "Sistema Vestibular",
+                "term_en": "Vestibular System",
+                "scope": "APARELHO VESTIBULAR na orelha interna, no olho, SISTEMA NERVOSO CENTRAL e vários nervos, tratos e núcleos que os conectam à medida que eles se relacionam à PROPIOCEPÇÃO e ORIENTAÇÃO ESPACIAL. A disfun",
+                "categoria": "Anatomia",
+                "arvore": [
+                  "A09.923"
+                ]
+              },
+              {
+                "id": "D000160",
+                "term": "Doenças do Nervo Vestibulococlear",
+                "term_en": "Vestibulocochlear Nerve Diseases",
+                "scope": "Processos patológicos do NERVO VESTIBULOCOCLEAR, inclusive os ramos do NERVO COCLEAR e NERVO VESTIBULAR. Os exemplos comuns são: NEURONITE VESTIBULAR, neurite coclear, e NEUROMA ACÚSTICO. Entre os sin",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C09.218.807.800",
+                  "C10.292.910"
+                ]
+              },
+              {
+                "id": "D014725",
+                "term": "Nervo Vestibular",
+                "term_en": "Vestibular Nerve",
+                "scope": "Parte vestibular do VIII par de nervos cranianos (NERVO VESTIBULOCOCLEAR). As fibras nervosas vestibulares nascem de neurônios provenientes do gânglio de Scarpa, projetando-se perifericamente para as ",
+                "categoria": "Anatomia",
+                "arvore": [
+                  "A08.800.800.120.910.900",
+                  "A09.923.250"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Glucocorticoids",
+            "candidates": [
+              {
+                "id": "D005938",
+                "term": "Glucocorticoides",
+                "term_en": "Glucocorticoids",
+                "scope": "Grupo de CORTICOSTEROIDES que afetam o metabolismo de carboidratos (GLUCONEOGÊNESE, depósito de glicogênio hepático, elevação da GLICEMIA), inibem a secreção de CORTICOTROPINA e possuem atividade anti",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D06.472.040.543",
+                  "D27.505.696.399.472.488"
+                ]
+              },
+              {
+                "id": "D011965",
+                "term": "Receptores de Glucocorticoides",
+                "term_en": "Receptors, Glucocorticoid",
+                "scope": "Proteínas citoplasmáticas que ligam especificamente glucocorticoides e medeiam seus efeitos celulares. O complexo receptor glucocorticoide-glucocorticoide atua no núcleo induzindo a transcrição do DNA",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.826.750.430"
+                ]
+              },
+              {
+                "id": "D006889",
+                "term": "Hidroxicorticosteroides",
+                "term_en": "Hydroxycorticosteroids",
+                "scope": "Grupo de corticosteroides com grupos hidroxila, geralmente nas posições 11 e 17. Compreendem a maioria dos corticosteroides usados sistemicamente. Como são relativamente insolúveis em água, sais de vá",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D06.472.040.585"
+                ]
+              },
+              {
+                "id": "D000305",
+                "term": "Corticosteroides",
+                "term_en": "Adrenal Cortex Hormones",
+                "scope": "HORMÔNIOS produzidos pelo CÓRTEX SUPRARRENAL, incluindo tanto os hormônios esteroides como os peptídicos. Os principais hormônios produzidos são HIDROCORTISONA e ALDOSTERONA.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D06.472.040"
+                ]
+              },
+              {
+                "id": "D003345",
+                "term": "Corticosterona",
+                "term_en": "Corticosterone",
+                "scope": "Esteroide adrenocortical que tem modesta, mas significante atividade como mineralocorticoide e glucocorticoide.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D04.210.500.745.745.654.237",
+                  "D06.472.040.585.353.237"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Antiemetics",
+            "candidates": [
+              {
+                "id": "D000932",
+                "term": "Antieméticos",
+                "term_en": "Antiemetics",
+                "scope": "Medicamentos usados para impedir NÁUSEA ou VÔMITO.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.696.663.050.030",
+                  "D27.505.954.427.095"
+                ]
+              },
+              {
+                "id": "D004639",
+                "term": "Eméticos",
+                "term_en": "Emetics",
+                "scope": "Agentes que provocam vômito. Podem agir diretamente no trato gastrointestinal provocando êmese através de um efeito irritante local ou, indiretamente, atuando sobre a zona de disparo do quimioreceptor",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.696.329",
+                  "D27.505.696.663.050.225"
+                ]
+              },
+              {
+                "id": "D003501",
+                "term": "Ciclizina",
+                "term_en": "Cyclizine",
+                "scope": "Antagonista H1 da histamina dado por boca ou parenteralmente para o controle do vômito pós-operatório e induzido por droga, e no enjôo.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D03.383.606.320"
+                ]
+              },
+              {
+                "id": "D018492",
+                "term": "Antagonistas de Dopamina",
+                "term_en": "Dopamine Antagonists",
+                "scope": "Drogas que se ligam, mas não ativam os RECEPTORES DA DOPAMINA, bloqueando assim as ações da dopamina ou de agonistas exógenos. Muitas drogas usadas no tratamento de transtornos psicóticos (AGENTES ANT",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.519.625.150.175",
+                  "D27.505.696.577.150.175"
+                ]
+              },
+              {
+                "id": "D013847",
+                "term": "Tietilperazina",
+                "term_en": "Thiethylperazine",
+                "scope": "Antagonista da dopamina que é usado particularmente no tratamento da náusea e vômito associados com anestesia, agentes quimioterapêuticos de câncer moderadamente eméticos, radioterapia e toxinas. Esta",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D02.886.369.780",
+                  "D03.383.606.880"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Histamine Antagonists",
+            "candidates": [
+              {
+                "id": "D006633",
+                "term": "Antagonistas dos Receptores Histamínicos",
+                "term_en": "Histamine Antagonists",
+                "scope": "Fármacos que se ligam a receptores da histamina, bloqueando assim a ação da histamina ou de agonistas histamínicos, sem ativação dos referidos receptores. Os anti-histamínicos clássicos bloqueiam some",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.519.625.375.425",
+                  "D27.505.696.577.375.425"
+                ]
+              },
+              {
+                "id": "D006634",
+                "term": "Antagonistas dos Receptores Histamínicos H1",
+                "term_en": "Histamine H1 Antagonists",
+                "scope": "Fármacos que se ligam seletivamente aos receptores H1 da histamina, bloqueando assim a ação da histamina endógena, mas sem ativar os receptores H1. Estão incluídos aqui os anti-histamínicos clássicos ",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.519.625.375.425.400",
+                  "D27.505.696.577.375.425.400"
+                ]
+              },
+              {
+                "id": "D006635",
+                "term": "Antagonistas dos Receptores H2 da Histamina",
+                "term_en": "Histamine H2 Antagonists",
+                "scope": "Fármacos que se ligam seletivamente aos receptores H2 da histamina, porém sem ativá-los, bloqueando assim a ação da histamina. Sua ação clínica mais importante é a inibição da secreção de ácido no tra",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.519.625.375.425.425",
+                  "D27.505.696.577.375.425.425"
+                ]
+              },
+              {
+                "id": "D039563",
+                "term": "Antagonistas não Sedativos dos Receptores H1 da Histamina",
+                "term_en": "Histamine H1 Antagonists, Non-Sedating",
+                "scope": "Classe de fármacos não sedativos que se ligam aos receptores de histamina (AGONISMO INVERSO), mas não os ativa e, desta maneira, bloqueia as ações da histamina ou dos agonistas da histamina. Estes ant",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.519.625.375.425.400.500",
+                  "D27.505.696.577.375.425.400.500"
+                ]
+              },
+              {
+                "id": "D054828",
+                "term": "Antagonistas dos Receptores Histamínicos H3",
+                "term_en": "Histamine H3 Antagonists",
+                "scope": "Medicamentos que seletivamente se ligam, mas não ativam os RECEPTORES HISTAMÍNICOS H3. Têm sido utilizados para corrigir os TRANSTORNOS DO SONO-VIGÍLIA e TRANSTORNOS DA MEMÓRIA.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D27.505.519.625.375.425.712",
+                  "D27.505.696.577.375.425.712"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Nystagmus, Pathologic",
+            "candidates": [
+              {
+                "id": "D009759",
+                "term": "Nistagmo Patológico",
+                "term_en": "Nystagmus, Pathologic",
+                "scope": "Movimentos involuntários do olho que são divididos em dois tipos: puxão e pendular. O nistagmo tipo puxão tem uma fase lenta em uma direção, seguida de uma fase rápida corretiva na direção oposta e é ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.292.562.675",
+                  "C11.590.400"
+                ]
+              },
+              {
+                "id": "D009760",
+                "term": "Nistagmo Fisiológico",
+                "term_en": "Nystagmus, Physiologic",
+                "scope": "Movimentos rítmicos involuntários dos olhos na pessoa normal. Podem ocorrer naturalmente como no nistagmo de posição extrema (end-position) (ponto final, estágio final, ou de desvio) ou [ainda] induzi",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G14.350.378"
+                ]
+              },
+              {
+                "id": "D020417",
+                "term": "Nistagmo Congênito",
+                "term_en": "Nystagmus, Congenital",
+                "scope": "Nistagmo presente no nascimento ou causado por lesões prolongadas no útero ou no momento do nascimento. É normalmente pendular e está associado com ALBINISMO e afecções caracterizadas por perda precoc",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.292.562.675.300",
+                  "C11.590.400.300"
+                ]
+              },
+              {
+                "id": "D017120",
+                "term": "Nistagmo Optocinético",
+                "term_en": "Nystagmus, Optokinetic",
+                "scope": "Nistagmo normal produzido ao olhar os objetos em movimento através do campo visual.",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G14.350.378.500"
+                ]
+              },
+              {
+                "id": "D015835",
+                "term": "Transtornos da Motilidade Ocular",
+                "term_en": "Ocular Motility Disorders",
+                "scope": "Transtornos caracterizados por deficiência dos movimentos oculares como manifestação primária da doença. Estas doenças podem dividir-se em transtornos infranucleares, nucleares e supranucleares. As do",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C10.228.758",
+                  "C10.292.562"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D020338",
+          "term": "Neuronite Vestibular"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D005938",
+          "term": "Glucocorticoides"
+        },
+        {
+          "id": "D000932",
+          "term": "Antieméticos"
+        },
+        {
+          "id": "D006633",
+          "term": "Antagonistas dos Receptores Histamínicos"
+        },
+        {
+          "id": "D009759",
+          "term": "Nistagmo Patológico"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 4,
+    "total_candidates": 30,
+    "final_primary": 1,
+    "final_secondary": 4
+  }
+}

@@ -1,0 +1,1291 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D012698",
+        "term": "Testes Sorológicos",
+        "name_en": "Serologic Tests",
+        "scope_note": "Procedimentos diagnósticos envolvendo reações de imunoglobulina.",
+        "tree_ids": [
+          "E01.370.225.812.735",
+          "E05.200.812.735",
+          "E05.478.594.760"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.225.812.735",
+        "parents": [
+          {
+            "id": "D007159",
+            "term": "Testes Imunológicos"
+          }
+        ],
+        "children": [
+          {
+            "id": "D015941",
+            "term": "Ensaio de Atividade Hemolítica de Complemento"
+          },
+          {
+            "id": "D016508",
+            "term": "Teste de Absorção do Anticorpo Treponêmico Fluorescente"
+          },
+          {
+            "id": "D009500",
+            "term": "Testes de Neutralização"
+          },
+          {
+            "id": "D011233",
+            "term": "Testes de Precipitina"
+          },
+          {
+            "id": "D011852",
+            "term": "Teste de Radioalergoadsorção"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D006526",
+        "term": "Hepatite C",
+        "name_en": "Hepatitis C",
+        "scope_note": "INFLAMAÇÃO do FÍGADO em humanos causada por VIRUS DA HEPATITE C, um virus com RNA de fita única. Seu período de incubação é de 30 a 90 dias. A hepatite C é principalmente transmitida por sangue contaminado por via parenteral e está, com frequência, associada com transfusões e abuso de drogas. Entretanto, em vários casos a fonte da infecção da hepatite C é desconhecida.",
+        "tree_ids": [
+          "C01.221.250.750",
+          "C01.925.440.440",
+          "C01.925.782.350.350",
+          "C06.552.380.705.440"
+        ],
+        "hierarchy_path": "Doenças › C01.221.250.750",
+        "parents": [
+          {
+            "id": "D000086982",
+            "term": "Infecções Transmitidas por Sangue"
+          },
+          {
+            "id": "D006525",
+            "term": "Hepatite Viral Humana"
+          },
+          {
+            "id": "D018178",
+            "term": "Infecções por Flaviviridae"
+          }
+        ],
+        "children": [
+          {
+            "id": "D019698",
+            "term": "Hepatite C Crônica"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D006509",
+        "term": "Hepatite B",
+        "name_en": "Hepatitis B",
+        "scope_note": "INFLAMAÇÃO do FÍGADO em humanos causada por um membro do gênero ORTHOHEPADNAVIRUS, o VIRUS DA HEPATITE B. É principalmente transmitida por exposição parenteral, como transfusão do sangue contaminado como de produtos sanguíneos, mas também pode ser transmitida por via sexual ou contato íntimo pessoal.",
+        "tree_ids": [
+          "C01.221.250.500",
+          "C01.925.256.430.400",
+          "C01.925.440.435",
+          "C06.552.380.705.437"
+        ],
+        "hierarchy_path": "Doenças › C01.221.250.500",
+        "parents": [
+          {
+            "id": "D000086982",
+            "term": "Infecções Transmitidas por Sangue"
+          },
+          {
+            "id": "D018347",
+            "term": "Infecções por Hepadnaviridae"
+          },
+          {
+            "id": "D006525",
+            "term": "Hepatite Viral Humana"
+          }
+        ],
+        "children": [
+          {
+            "id": "D019694",
+            "term": "Hepatite B Crônica"
+          }
+        ],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D006514",
+        "term": "Antígenos de Superfície da Hepatite B",
+        "name_en": "Hepatitis B Surface Antigens",
+        "scope_note": "Os antígenos da hepatite B encontrados na superfície da partícula de Dane e nas partículas esféricas e tubulares de 20 nm. Várias subespecificidades do antígeno de superfície já são conhecidas. Estes antígenos foram anteriormente denominados antígenos Austrália.",
+        "tree_ids": [
+          "D12.776.964.350.495.500.475",
+          "D23.050.327.495.500.475"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D12.776.964.350.495.500.475",
+        "parents": [
+          {
+            "id": "D006511",
+            "term": "Antígenos da Hepatite B"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D018937",
+        "term": "Anticorpos Anti-Hepatite C",
+        "name_en": "Hepatitis C Antibodies",
+        "scope_note": "Anticorpos contra os ANTÍGENOS DA HEPATITE C, inclusive aqueles contra o envelope, o core, e as proteínas não estruturais.",
+        "tree_ids": [
+          "D12.776.124.486.485.114.254.450.510",
+          "D12.776.124.790.651.114.254.450.510",
+          "D12.776.377.715.548.114.254.450.510"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D12.776.124.486.485.114.254.450.510",
+        "parents": [
+          {
+            "id": "D006508",
+            "term": "Anticorpos Anti-Hepatite"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D006510",
+        "term": "Anticorpos Anti-Hepatite B",
+        "name_en": "Hepatitis B Antibodies",
+        "scope_note": "Anticorpos contra os ANTÍGENOS DA HEPATITE B, inclusive os anticorpos contra a superfície (Austrália) e o núcleo (core) da partícula de Dane e aqueles contra os antígenos E.",
+        "tree_ids": [
+          "D12.776.124.486.485.114.254.450.504",
+          "D12.776.124.790.651.114.254.450.504",
+          "D12.776.377.715.548.114.254.450.504"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D12.776.124.486.485.114.254.450.504",
+        "parents": [
+          {
+            "id": "D006508",
+            "term": "Anticorpos Anti-Hepatite"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D016272",
+        "term": "Saúde Ocupacional",
+        "name_en": "Occupational Health",
+        "scope_note": "Promoção e manutenção no mais alto grau do bem-estar físico, mental e social dos trabalhadores em todas as ocupações.",
+        "tree_ids": [
+          "N01.400.525",
+          "SP2.770.750.763",
+          "VS4.002.001"
+        ],
+        "hierarchy_path": "Saúde › N01.400.525",
+        "parents": [
+          {
+            "id": "D006262",
+            "term": "Saúde"
+          },
+          {
+            "id": "DDCS050232",
+            "term": "Saúde de Grupos Específicos"
+          },
+          {
+            "id": "DDCS051559",
+            "term": "Vigilância em Saúde do Trabalhador"
+          }
+        ],
+        "children": [
+          {
+            "id": "D011835",
+            "term": "Proteção Radiológica"
+          },
+          {
+            "id": "DDCS051665",
+            "term": "Segurança Industrial"
+          },
+          {
+            "id": "DDCS051759",
+            "term": "OHSAS 18000"
+          },
+          {
+            "id": "DDCS032480",
+            "term": "Proteção Pessoal"
+          },
+          {
+            "id": "D000062",
+            "term": "Acidentes de Trabalho"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D012367",
+        "term": "RNA Viral",
+        "name_en": "RNA, Viral",
+        "scope_note": "Ácido ribonucleico que constitui o material genético de vírus.",
+        "tree_ids": [
+          "D13.444.735.828"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D13.444.735.828",
+        "parents": [
+          {
+            "id": "D012313",
+            "term": "RNA"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000094762",
+            "term": "RNA Subgenômico"
+          }
+        ],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Hepatitis C",
+      "Hepatitis B",
+      "Serologic Tests"
+    ],
+    "secondary": [
+      "Hepatitis C Antibodies",
+      "Hepatitis B Antibodies",
+      "Hepatitis B Surface Antigens",
+      "Occupational Health",
+      "RNA, Viral"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Serologic Tests",
+          "candidates": [
+            {
+              "id": "D012698",
+              "term": "Testes Sorológicos",
+              "term_en": "Serologic Tests",
+              "scope": "Procedimentos diagnósticos envolvendo reações de imunoglobulina.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.225.812.735",
+                "E05.200.812.735"
+              ]
+            },
+            {
+              "id": "D012699",
+              "term": "Sorologia",
+              "term_en": "Serology",
+              "scope": "Estudo do soro, especialmente das reações antígeno-anticorpo in vitro.",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.781"
+              ]
+            },
+            {
+              "id": "D016036",
+              "term": "Estudos Soroepidemiológicos",
+              "term_en": "Seroepidemiologic Studies",
+              "scope": "ESTUDOS EPIDEMIOLÓGICOS baseados na detecção, por meio de testes sorológicos, de alterações típicas no nível sérico de ANTICORPOS específicos. Além de casos clinicamente manifestos, infecções subclíni",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.372.500.950",
+                "N05.715.360.330.500.950"
+              ]
+            },
+            {
+              "id": "D000087124",
+              "term": "Teste Sorológico para COVID-19",
+              "term_en": "COVID-19 Serological Testing",
+              "scope": "Diagnóstico de COVID-19 por meio da análise de fluidos ou tecidos corporais para a presença de anticorpos específicos para SARS-COV-2 ou seus antígenos.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.225.312.250",
+                "E01.370.225.812.735.258"
+              ]
+            },
+            {
+              "id": "D007159",
+              "term": "Testes Imunológicos",
+              "term_en": "Immunologic Tests",
+              "scope": "Técnicas imunológicas envolvidas em diagnósticos.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.225.812",
+                "E05.200.812"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Hepatitis C",
+          "candidates": [
+            {
+              "id": "D006526",
+              "term": "Hepatite C",
+              "term_en": "Hepatitis C",
+              "scope": "INFLAMAÇÃO do FÍGADO em humanos causada por VIRUS DA HEPATITE C, um virus com RNA de fita única. Seu período de incubação é de 30 a 90 dias. A hepatite C é principalmente transmitida por sangue contam",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.221.250.750",
+                "C01.925.440.440"
+              ]
+            },
+            {
+              "id": "D019698",
+              "term": "Hepatite C Crônica",
+              "term_en": "Hepatitis C, Chronic",
+              "scope": "INFLAMAÇÃO de FÍGADO em humanos, causada por Vírus da Hepatite C durando seis meses ou mais. A hepatite crônica C pode levar à CIRROSE HEPÁTICA.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.221.250.750.120",
+                "C01.925.440.440.120"
+              ]
+            },
+            {
+              "id": "D018936",
+              "term": "Antígenos da Hepatite C",
+              "term_en": "Hepatitis C Antigens",
+              "scope": "Antígenos dos virions de HEPACIVIRUS, sua superfície, núcleo, ou outros antígenos associados.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.964.350.495.505",
+                "D23.050.327.495.505"
+              ]
+            },
+            {
+              "id": "D016174",
+              "term": "Hepacivirus",
+              "term_en": "Hepacivirus",
+              "scope": "Gênero de FLAVIVIRIDAE que causa a HEPATITE C, transmitida parenteralmente e associada com transfusões e abuso de drogas. A espécie-tipo é o vírus da hepatite C.",
+              "categoria": "Organismos",
+              "arvore": [
+                "B04.450.380",
+                "B04.820.578.344.475"
+              ]
+            },
+            {
+              "id": "D018937",
+              "term": "Anticorpos Anti-Hepatite C",
+              "term_en": "Hepatitis C Antibodies",
+              "scope": "Anticorpos contra os ANTÍGENOS DA HEPATITE C, inclusive aqueles contra o envelope, o core, e as proteínas não estruturais.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.486.485.114.254.450.510",
+                "D12.776.124.790.651.114.254.450.510"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Hepatitis B",
+          "candidates": [
+            {
+              "id": "D006509",
+              "term": "Hepatite B",
+              "term_en": "Hepatitis B",
+              "scope": "INFLAMAÇÃO do FÍGADO em humanos causada por um membro do gênero ORTHOHEPADNAVIRUS, o VIRUS DA HEPATITE B. É principalmente transmitida por exposição parenteral, como transfusão do sangue contaminado c",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.221.250.500",
+                "C01.925.256.430.400"
+              ]
+            },
+            {
+              "id": "D006515",
+              "term": "Vírus da Hepatite B",
+              "term_en": "Hepatitis B virus",
+              "scope": "Espécie-tipo do gênero ORTHOHEPADNAVIRUS, causador da hepatite B em humanos, sendo, aparentemente, causador também do CARCINOMA HEPATOCELULAR humano. A partícula de Dane é um virion de hepatite intact",
+              "categoria": "Organismos",
+              "arvore": [
+                "B04.280.375.650.425",
+                "B04.450.390.650.425"
+              ]
+            },
+            {
+              "id": "D019694",
+              "term": "Hepatite B Crônica",
+              "term_en": "Hepatitis B, Chronic",
+              "scope": "INFLAMAÇÃO do FÍGADO em humanos causada pelo VIRUS DA HEPATITE B durando seis meses ou mais. É principalmente transmitida por exposição parenteral, como transfusão de sangue contaminado ou produtos sa",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.221.250.500.100",
+                "C01.925.256.430.400.100"
+              ]
+            },
+            {
+              "id": "D006513",
+              "term": "Antígenos E da Hepatite B",
+              "term_en": "Hepatitis B e Antigens",
+              "scope": "Grupo de antígenos intimamente relacionados encontrado no plasma apenas durante a fase infecciosa da hepatite B (ou na hepatite B crônica virulenta) provavelmente indicando replicação viral ativa. Há ",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.964.350.495.500.469",
+                "D23.050.327.495.500.469"
+              ]
+            },
+            {
+              "id": "D006511",
+              "term": "Antígenos da Hepatite B",
+              "term_en": "Hepatitis B Antigens",
+              "scope": "Antígenos do virion do VÍRUS DA HEPATITE B ou da partícula de Dane, sua superfície (ANTÍGENOS DE SUPERFÍCIE DA HEPATITE B), núcleo (ANTÍGENOS DO NÚCLEO DO VÍRUS DA HEPATITE B), e outros antígenos asso",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.964.350.495.500",
+                "D23.050.327.495.500"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Hepatitis B Surface Antigens",
+          "candidates": [
+            {
+              "id": "D006514",
+              "term": "Antígenos de Superfície da Hepatite B",
+              "term_en": "Hepatitis B Surface Antigens",
+              "scope": "Os antígenos da hepatite B encontrados na superfície da partícula de Dane e nas partículas esféricas e tubulares de 20 nm. Várias subespecificidades do antígeno de superfície já são conhecidas. Estes ",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.964.350.495.500.475",
+                "D23.050.327.495.500.475"
+              ]
+            },
+            {
+              "id": "D006511",
+              "term": "Antígenos da Hepatite B",
+              "term_en": "Hepatitis B Antigens",
+              "scope": "Antígenos do virion do VÍRUS DA HEPATITE B ou da partícula de Dane, sua superfície (ANTÍGENOS DE SUPERFÍCIE DA HEPATITE B), núcleo (ANTÍGENOS DO NÚCLEO DO VÍRUS DA HEPATITE B), e outros antígenos asso",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.964.350.495.500",
+                "D23.050.327.495.500"
+              ]
+            },
+            {
+              "id": "D006513",
+              "term": "Antígenos E da Hepatite B",
+              "term_en": "Hepatitis B e Antigens",
+              "scope": "Grupo de antígenos intimamente relacionados encontrado no plasma apenas durante a fase infecciosa da hepatite B (ou na hepatite B crônica virulenta) provavelmente indicando replicação viral ativa. Há ",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.964.350.495.500.469",
+                "D23.050.327.495.500.469"
+              ]
+            },
+            {
+              "id": "D006512",
+              "term": "Antígenos do Núcleo do Vírus da Hepatite B",
+              "term_en": "Hepatitis B Core Antigens",
+              "scope": "Antígeno da hepatite B dentro do core da partícula de Dane, o virion da hepatite infecciosa.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.964.350.495.500.450",
+                "D23.050.327.495.500.450"
+              ]
+            },
+            {
+              "id": "D006510",
+              "term": "Anticorpos Anti-Hepatite B",
+              "term_en": "Hepatitis B Antibodies",
+              "scope": "Anticorpos contra os ANTÍGENOS DA HEPATITE B, inclusive os anticorpos contra a superfície (Austrália) e o núcleo (core) da partícula de Dane e aqueles contra os antígenos E.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.486.485.114.254.450.504",
+                "D12.776.124.790.651.114.254.450.504"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Hepatitis C Antibodies",
+          "candidates": [
+            {
+              "id": "D018937",
+              "term": "Anticorpos Anti-Hepatite C",
+              "term_en": "Hepatitis C Antibodies",
+              "scope": "Anticorpos contra os ANTÍGENOS DA HEPATITE C, inclusive aqueles contra o envelope, o core, e as proteínas não estruturais.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.486.485.114.254.450.510",
+                "D12.776.124.790.651.114.254.450.510"
+              ]
+            },
+            {
+              "id": "D006508",
+              "term": "Anticorpos Anti-Hepatite",
+              "term_en": "Hepatitis Antibodies",
+              "scope": "Imunoglobulinas produzidas por qualquer forma de hepatite viral; alguns desses anticorpos são usados para diagnosticar o tipo específico de hepatite.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.486.485.114.254.450",
+                "D12.776.124.790.651.114.254.450"
+              ]
+            },
+            {
+              "id": "D035922",
+              "term": "Anticorpos Anti-Hepatite A",
+              "term_en": "Hepatitis A Antibodies",
+              "scope": "Anticorpos para os ANTÍGENOS DA HEPATITE A, incluindo anticorpos envelope, core e proteínas não estruturais.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.486.485.114.254.450.251",
+                "D12.776.124.790.651.114.254.450.251"
+              ]
+            },
+            {
+              "id": "D018936",
+              "term": "Antígenos da Hepatite C",
+              "term_en": "Hepatitis C Antigens",
+              "scope": "Antígenos dos virions de HEPACIVIRUS, sua superfície, núcleo, ou outros antígenos associados.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.964.350.495.505",
+                "D23.050.327.495.505"
+              ]
+            },
+            {
+              "id": "D006510",
+              "term": "Anticorpos Anti-Hepatite B",
+              "term_en": "Hepatitis B Antibodies",
+              "scope": "Anticorpos contra os ANTÍGENOS DA HEPATITE B, inclusive os anticorpos contra a superfície (Austrália) e o núcleo (core) da partícula de Dane e aqueles contra os antígenos E.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.486.485.114.254.450.504",
+                "D12.776.124.790.651.114.254.450.504"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Hepatitis B Antibodies",
+          "candidates": [
+            {
+              "id": "D006510",
+              "term": "Anticorpos Anti-Hepatite B",
+              "term_en": "Hepatitis B Antibodies",
+              "scope": "Anticorpos contra os ANTÍGENOS DA HEPATITE B, inclusive os anticorpos contra a superfície (Austrália) e o núcleo (core) da partícula de Dane e aqueles contra os antígenos E.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.486.485.114.254.450.504",
+                "D12.776.124.790.651.114.254.450.504"
+              ]
+            },
+            {
+              "id": "D006508",
+              "term": "Anticorpos Anti-Hepatite",
+              "term_en": "Hepatitis Antibodies",
+              "scope": "Imunoglobulinas produzidas por qualquer forma de hepatite viral; alguns desses anticorpos são usados para diagnosticar o tipo específico de hepatite.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.124.486.485.114.254.450",
+                "D12.776.124.790.651.114.254.450"
+              ]
+            },
+            {
+              "id": "D006513",
+              "term": "Antígenos E da Hepatite B",
+              "term_en": "Hepatitis B e Antigens",
+              "scope": "Grupo de antígenos intimamente relacionados encontrado no plasma apenas durante a fase infecciosa da hepatite B (ou na hepatite B crônica virulenta) provavelmente indicando replicação viral ativa. Há ",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.964.350.495.500.469",
+                "D23.050.327.495.500.469"
+              ]
+            },
+            {
+              "id": "D006514",
+              "term": "Antígenos de Superfície da Hepatite B",
+              "term_en": "Hepatitis B Surface Antigens",
+              "scope": "Os antígenos da hepatite B encontrados na superfície da partícula de Dane e nas partículas esféricas e tubulares de 20 nm. Várias subespecificidades do antígeno de superfície já são conhecidas. Estes ",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.964.350.495.500.475",
+                "D23.050.327.495.500.475"
+              ]
+            },
+            {
+              "id": "D006511",
+              "term": "Antígenos da Hepatite B",
+              "term_en": "Hepatitis B Antigens",
+              "scope": "Antígenos do virion do VÍRUS DA HEPATITE B ou da partícula de Dane, sua superfície (ANTÍGENOS DE SUPERFÍCIE DA HEPATITE B), núcleo (ANTÍGENOS DO NÚCLEO DO VÍRUS DA HEPATITE B), e outros antígenos asso",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D12.776.964.350.495.500",
+                "D23.050.327.495.500"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Occupational Health",
+          "candidates": [
+            {
+              "id": "D016272",
+              "term": "Saúde Ocupacional",
+              "term_en": "Occupational Health",
+              "scope": "Promoção e manutenção no mais alto grau do bem-estar físico, mental e social dos trabalhadores em todas as ocupações.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N01.400.525",
+                "SP2.770.750.763"
+              ]
+            },
+            {
+              "id": "D009785",
+              "term": "Enfermagem do Trabalho",
+              "term_en": "Occupational Health Nursing",
+              "scope": "Prática da enfermagem no ambiente de trabalho.",
+              "categoria": "Disciplinas e Ocupações",
+              "arvore": [
+                "H02.478.676.590",
+                "N02.421.533.585"
+              ]
+            },
+            {
+              "id": "DDCS051561",
+              "term": "Política de Saúde do Trabalhador",
+              "term_en": "Occupational Health Policy",
+              "categoria": "Vigilância Sanitária",
+              "arvore": [
+                "VS4.002.002"
+              ]
+            },
+            {
+              "id": "D054538",
+              "term": "Médicos do Trabalho",
+              "term_en": "Occupational Health Physicians",
+              "scope": "Médicos empregados em uma companhia ou corporação que geralmente não faz parte da indústria da saúde.",
+              "categoria": "Grupos Identificados",
+              "arvore": [
+                "M01.526.485.810.675",
+                "N02.360.810.675"
+              ]
+            },
+            {
+              "id": "DDCS016379",
+              "term": "Programa de Saúde Ocupacional",
+              "term_en": "Occupational Health Program",
+              "scope": "Abordagem sistemática adotadas por organizações para proteger e promover a saúde e o bem-estar de seus empregados. Tais programas objetivam prevenir acidentes de trabalho, reduzir os dannos ocupaciona",
+              "categoria": "Vigilância Sanitária",
+              "arvore": [
+                "VS4.002.002.001"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "RNA, Viral",
+          "candidates": [
+            {
+              "id": "D012367",
+              "term": "RNA Viral",
+              "term_en": "RNA, Viral",
+              "scope": "Ácido ribonucleico que constitui o material genético de vírus.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D13.444.735.828"
+              ]
+            },
+            {
+              "id": "D012328",
+              "term": "Vírus de RNA",
+              "term_en": "RNA Viruses",
+              "scope": "Vírus cujo material genético é RNA.",
+              "categoria": "Organismos",
+              "arvore": [
+                "B04.820"
+              ]
+            },
+            {
+              "id": "D012327",
+              "term": "Infecções por Vírus de RNA",
+              "term_en": "RNA Virus Infections",
+              "scope": "Doenças causadas por VÍRUS DE RNA.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.925.782"
+              ]
+            },
+            {
+              "id": "D000094762",
+              "term": "RNA Subgenômico",
+              "term_en": "Subgenomic RNA",
+              "scope": "RNA resultante da REPLICAÇÃO VIRAL de partes de regiões do genoma. O processo pode envolver sítios específicos internos de iniciação e terminação transcricionais.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D13.444.735.544.713",
+                "D13.444.735.828.500"
+              ]
+            },
+            {
+              "id": "D000087002",
+              "term": "Transcrição Viral",
+              "term_en": "Viral Transcription",
+              "scope": "Biossíntese de RNAs virais subgenômicos, transcritos a partir do GENOMA VIRAL.",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G02.111.873.875"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Hepatitis C",
+        "Hepatitis B",
+        "Serologic Tests"
+      ],
+      "secondary": [
+        "Hepatitis C Antibodies",
+        "Hepatitis B Antibodies",
+        "Hepatitis B Surface Antigens",
+        "Occupational Health",
+        "RNA, Viral"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Serologic Tests",
+            "candidates": [
+              {
+                "id": "D012698",
+                "term": "Testes Sorológicos",
+                "term_en": "Serologic Tests",
+                "scope": "Procedimentos diagnósticos envolvendo reações de imunoglobulina.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.225.812.735",
+                  "E05.200.812.735"
+                ]
+              },
+              {
+                "id": "D012699",
+                "term": "Sorologia",
+                "term_en": "Serology",
+                "scope": "Estudo do soro, especialmente das reações antígeno-anticorpo in vitro.",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.781"
+                ]
+              },
+              {
+                "id": "D016036",
+                "term": "Estudos Soroepidemiológicos",
+                "term_en": "Seroepidemiologic Studies",
+                "scope": "ESTUDOS EPIDEMIOLÓGICOS baseados na detecção, por meio de testes sorológicos, de alterações típicas no nível sérico de ANTICORPOS específicos. Além de casos clinicamente manifestos, infecções subclíni",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.372.500.950",
+                  "N05.715.360.330.500.950"
+                ]
+              },
+              {
+                "id": "D000087124",
+                "term": "Teste Sorológico para COVID-19",
+                "term_en": "COVID-19 Serological Testing",
+                "scope": "Diagnóstico de COVID-19 por meio da análise de fluidos ou tecidos corporais para a presença de anticorpos específicos para SARS-COV-2 ou seus antígenos.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.225.312.250",
+                  "E01.370.225.812.735.258"
+                ]
+              },
+              {
+                "id": "D007159",
+                "term": "Testes Imunológicos",
+                "term_en": "Immunologic Tests",
+                "scope": "Técnicas imunológicas envolvidas em diagnósticos.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.225.812",
+                  "E05.200.812"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Hepatitis C",
+            "candidates": [
+              {
+                "id": "D006526",
+                "term": "Hepatite C",
+                "term_en": "Hepatitis C",
+                "scope": "INFLAMAÇÃO do FÍGADO em humanos causada por VIRUS DA HEPATITE C, um virus com RNA de fita única. Seu período de incubação é de 30 a 90 dias. A hepatite C é principalmente transmitida por sangue contam",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.221.250.750",
+                  "C01.925.440.440"
+                ]
+              },
+              {
+                "id": "D019698",
+                "term": "Hepatite C Crônica",
+                "term_en": "Hepatitis C, Chronic",
+                "scope": "INFLAMAÇÃO de FÍGADO em humanos, causada por Vírus da Hepatite C durando seis meses ou mais. A hepatite crônica C pode levar à CIRROSE HEPÁTICA.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.221.250.750.120",
+                  "C01.925.440.440.120"
+                ]
+              },
+              {
+                "id": "D018936",
+                "term": "Antígenos da Hepatite C",
+                "term_en": "Hepatitis C Antigens",
+                "scope": "Antígenos dos virions de HEPACIVIRUS, sua superfície, núcleo, ou outros antígenos associados.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.964.350.495.505",
+                  "D23.050.327.495.505"
+                ]
+              },
+              {
+                "id": "D016174",
+                "term": "Hepacivirus",
+                "term_en": "Hepacivirus",
+                "scope": "Gênero de FLAVIVIRIDAE que causa a HEPATITE C, transmitida parenteralmente e associada com transfusões e abuso de drogas. A espécie-tipo é o vírus da hepatite C.",
+                "categoria": "Organismos",
+                "arvore": [
+                  "B04.450.380",
+                  "B04.820.578.344.475"
+                ]
+              },
+              {
+                "id": "D018937",
+                "term": "Anticorpos Anti-Hepatite C",
+                "term_en": "Hepatitis C Antibodies",
+                "scope": "Anticorpos contra os ANTÍGENOS DA HEPATITE C, inclusive aqueles contra o envelope, o core, e as proteínas não estruturais.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.486.485.114.254.450.510",
+                  "D12.776.124.790.651.114.254.450.510"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Hepatitis B",
+            "candidates": [
+              {
+                "id": "D006509",
+                "term": "Hepatite B",
+                "term_en": "Hepatitis B",
+                "scope": "INFLAMAÇÃO do FÍGADO em humanos causada por um membro do gênero ORTHOHEPADNAVIRUS, o VIRUS DA HEPATITE B. É principalmente transmitida por exposição parenteral, como transfusão do sangue contaminado c",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.221.250.500",
+                  "C01.925.256.430.400"
+                ]
+              },
+              {
+                "id": "D006515",
+                "term": "Vírus da Hepatite B",
+                "term_en": "Hepatitis B virus",
+                "scope": "Espécie-tipo do gênero ORTHOHEPADNAVIRUS, causador da hepatite B em humanos, sendo, aparentemente, causador também do CARCINOMA HEPATOCELULAR humano. A partícula de Dane é um virion de hepatite intact",
+                "categoria": "Organismos",
+                "arvore": [
+                  "B04.280.375.650.425",
+                  "B04.450.390.650.425"
+                ]
+              },
+              {
+                "id": "D019694",
+                "term": "Hepatite B Crônica",
+                "term_en": "Hepatitis B, Chronic",
+                "scope": "INFLAMAÇÃO do FÍGADO em humanos causada pelo VIRUS DA HEPATITE B durando seis meses ou mais. É principalmente transmitida por exposição parenteral, como transfusão de sangue contaminado ou produtos sa",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.221.250.500.100",
+                  "C01.925.256.430.400.100"
+                ]
+              },
+              {
+                "id": "D006513",
+                "term": "Antígenos E da Hepatite B",
+                "term_en": "Hepatitis B e Antigens",
+                "scope": "Grupo de antígenos intimamente relacionados encontrado no plasma apenas durante a fase infecciosa da hepatite B (ou na hepatite B crônica virulenta) provavelmente indicando replicação viral ativa. Há ",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.964.350.495.500.469",
+                  "D23.050.327.495.500.469"
+                ]
+              },
+              {
+                "id": "D006511",
+                "term": "Antígenos da Hepatite B",
+                "term_en": "Hepatitis B Antigens",
+                "scope": "Antígenos do virion do VÍRUS DA HEPATITE B ou da partícula de Dane, sua superfície (ANTÍGENOS DE SUPERFÍCIE DA HEPATITE B), núcleo (ANTÍGENOS DO NÚCLEO DO VÍRUS DA HEPATITE B), e outros antígenos asso",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.964.350.495.500",
+                  "D23.050.327.495.500"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Hepatitis B Surface Antigens",
+            "candidates": [
+              {
+                "id": "D006514",
+                "term": "Antígenos de Superfície da Hepatite B",
+                "term_en": "Hepatitis B Surface Antigens",
+                "scope": "Os antígenos da hepatite B encontrados na superfície da partícula de Dane e nas partículas esféricas e tubulares de 20 nm. Várias subespecificidades do antígeno de superfície já são conhecidas. Estes ",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.964.350.495.500.475",
+                  "D23.050.327.495.500.475"
+                ]
+              },
+              {
+                "id": "D006511",
+                "term": "Antígenos da Hepatite B",
+                "term_en": "Hepatitis B Antigens",
+                "scope": "Antígenos do virion do VÍRUS DA HEPATITE B ou da partícula de Dane, sua superfície (ANTÍGENOS DE SUPERFÍCIE DA HEPATITE B), núcleo (ANTÍGENOS DO NÚCLEO DO VÍRUS DA HEPATITE B), e outros antígenos asso",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.964.350.495.500",
+                  "D23.050.327.495.500"
+                ]
+              },
+              {
+                "id": "D006513",
+                "term": "Antígenos E da Hepatite B",
+                "term_en": "Hepatitis B e Antigens",
+                "scope": "Grupo de antígenos intimamente relacionados encontrado no plasma apenas durante a fase infecciosa da hepatite B (ou na hepatite B crônica virulenta) provavelmente indicando replicação viral ativa. Há ",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.964.350.495.500.469",
+                  "D23.050.327.495.500.469"
+                ]
+              },
+              {
+                "id": "D006512",
+                "term": "Antígenos do Núcleo do Vírus da Hepatite B",
+                "term_en": "Hepatitis B Core Antigens",
+                "scope": "Antígeno da hepatite B dentro do core da partícula de Dane, o virion da hepatite infecciosa.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.964.350.495.500.450",
+                  "D23.050.327.495.500.450"
+                ]
+              },
+              {
+                "id": "D006510",
+                "term": "Anticorpos Anti-Hepatite B",
+                "term_en": "Hepatitis B Antibodies",
+                "scope": "Anticorpos contra os ANTÍGENOS DA HEPATITE B, inclusive os anticorpos contra a superfície (Austrália) e o núcleo (core) da partícula de Dane e aqueles contra os antígenos E.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.486.485.114.254.450.504",
+                  "D12.776.124.790.651.114.254.450.504"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Hepatitis C Antibodies",
+            "candidates": [
+              {
+                "id": "D018937",
+                "term": "Anticorpos Anti-Hepatite C",
+                "term_en": "Hepatitis C Antibodies",
+                "scope": "Anticorpos contra os ANTÍGENOS DA HEPATITE C, inclusive aqueles contra o envelope, o core, e as proteínas não estruturais.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.486.485.114.254.450.510",
+                  "D12.776.124.790.651.114.254.450.510"
+                ]
+              },
+              {
+                "id": "D006508",
+                "term": "Anticorpos Anti-Hepatite",
+                "term_en": "Hepatitis Antibodies",
+                "scope": "Imunoglobulinas produzidas por qualquer forma de hepatite viral; alguns desses anticorpos são usados para diagnosticar o tipo específico de hepatite.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.486.485.114.254.450",
+                  "D12.776.124.790.651.114.254.450"
+                ]
+              },
+              {
+                "id": "D035922",
+                "term": "Anticorpos Anti-Hepatite A",
+                "term_en": "Hepatitis A Antibodies",
+                "scope": "Anticorpos para os ANTÍGENOS DA HEPATITE A, incluindo anticorpos envelope, core e proteínas não estruturais.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.486.485.114.254.450.251",
+                  "D12.776.124.790.651.114.254.450.251"
+                ]
+              },
+              {
+                "id": "D018936",
+                "term": "Antígenos da Hepatite C",
+                "term_en": "Hepatitis C Antigens",
+                "scope": "Antígenos dos virions de HEPACIVIRUS, sua superfície, núcleo, ou outros antígenos associados.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.964.350.495.505",
+                  "D23.050.327.495.505"
+                ]
+              },
+              {
+                "id": "D006510",
+                "term": "Anticorpos Anti-Hepatite B",
+                "term_en": "Hepatitis B Antibodies",
+                "scope": "Anticorpos contra os ANTÍGENOS DA HEPATITE B, inclusive os anticorpos contra a superfície (Austrália) e o núcleo (core) da partícula de Dane e aqueles contra os antígenos E.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.486.485.114.254.450.504",
+                  "D12.776.124.790.651.114.254.450.504"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Hepatitis B Antibodies",
+            "candidates": [
+              {
+                "id": "D006510",
+                "term": "Anticorpos Anti-Hepatite B",
+                "term_en": "Hepatitis B Antibodies",
+                "scope": "Anticorpos contra os ANTÍGENOS DA HEPATITE B, inclusive os anticorpos contra a superfície (Austrália) e o núcleo (core) da partícula de Dane e aqueles contra os antígenos E.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.486.485.114.254.450.504",
+                  "D12.776.124.790.651.114.254.450.504"
+                ]
+              },
+              {
+                "id": "D006508",
+                "term": "Anticorpos Anti-Hepatite",
+                "term_en": "Hepatitis Antibodies",
+                "scope": "Imunoglobulinas produzidas por qualquer forma de hepatite viral; alguns desses anticorpos são usados para diagnosticar o tipo específico de hepatite.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.124.486.485.114.254.450",
+                  "D12.776.124.790.651.114.254.450"
+                ]
+              },
+              {
+                "id": "D006513",
+                "term": "Antígenos E da Hepatite B",
+                "term_en": "Hepatitis B e Antigens",
+                "scope": "Grupo de antígenos intimamente relacionados encontrado no plasma apenas durante a fase infecciosa da hepatite B (ou na hepatite B crônica virulenta) provavelmente indicando replicação viral ativa. Há ",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.964.350.495.500.469",
+                  "D23.050.327.495.500.469"
+                ]
+              },
+              {
+                "id": "D006514",
+                "term": "Antígenos de Superfície da Hepatite B",
+                "term_en": "Hepatitis B Surface Antigens",
+                "scope": "Os antígenos da hepatite B encontrados na superfície da partícula de Dane e nas partículas esféricas e tubulares de 20 nm. Várias subespecificidades do antígeno de superfície já são conhecidas. Estes ",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.964.350.495.500.475",
+                  "D23.050.327.495.500.475"
+                ]
+              },
+              {
+                "id": "D006511",
+                "term": "Antígenos da Hepatite B",
+                "term_en": "Hepatitis B Antigens",
+                "scope": "Antígenos do virion do VÍRUS DA HEPATITE B ou da partícula de Dane, sua superfície (ANTÍGENOS DE SUPERFÍCIE DA HEPATITE B), núcleo (ANTÍGENOS DO NÚCLEO DO VÍRUS DA HEPATITE B), e outros antígenos asso",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D12.776.964.350.495.500",
+                  "D23.050.327.495.500"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Occupational Health",
+            "candidates": [
+              {
+                "id": "D016272",
+                "term": "Saúde Ocupacional",
+                "term_en": "Occupational Health",
+                "scope": "Promoção e manutenção no mais alto grau do bem-estar físico, mental e social dos trabalhadores em todas as ocupações.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N01.400.525",
+                  "SP2.770.750.763"
+                ]
+              },
+              {
+                "id": "D009785",
+                "term": "Enfermagem do Trabalho",
+                "term_en": "Occupational Health Nursing",
+                "scope": "Prática da enfermagem no ambiente de trabalho.",
+                "categoria": "Disciplinas e Ocupações",
+                "arvore": [
+                  "H02.478.676.590",
+                  "N02.421.533.585"
+                ]
+              },
+              {
+                "id": "DDCS051561",
+                "term": "Política de Saúde do Trabalhador",
+                "term_en": "Occupational Health Policy",
+                "categoria": "Vigilância Sanitária",
+                "arvore": [
+                  "VS4.002.002"
+                ]
+              },
+              {
+                "id": "D054538",
+                "term": "Médicos do Trabalho",
+                "term_en": "Occupational Health Physicians",
+                "scope": "Médicos empregados em uma companhia ou corporação que geralmente não faz parte da indústria da saúde.",
+                "categoria": "Grupos Identificados",
+                "arvore": [
+                  "M01.526.485.810.675",
+                  "N02.360.810.675"
+                ]
+              },
+              {
+                "id": "DDCS016379",
+                "term": "Programa de Saúde Ocupacional",
+                "term_en": "Occupational Health Program",
+                "scope": "Abordagem sistemática adotadas por organizações para proteger e promover a saúde e o bem-estar de seus empregados. Tais programas objetivam prevenir acidentes de trabalho, reduzir os dannos ocupaciona",
+                "categoria": "Vigilância Sanitária",
+                "arvore": [
+                  "VS4.002.002.001"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "RNA, Viral",
+            "candidates": [
+              {
+                "id": "D012367",
+                "term": "RNA Viral",
+                "term_en": "RNA, Viral",
+                "scope": "Ácido ribonucleico que constitui o material genético de vírus.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D13.444.735.828"
+                ]
+              },
+              {
+                "id": "D012328",
+                "term": "Vírus de RNA",
+                "term_en": "RNA Viruses",
+                "scope": "Vírus cujo material genético é RNA.",
+                "categoria": "Organismos",
+                "arvore": [
+                  "B04.820"
+                ]
+              },
+              {
+                "id": "D012327",
+                "term": "Infecções por Vírus de RNA",
+                "term_en": "RNA Virus Infections",
+                "scope": "Doenças causadas por VÍRUS DE RNA.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.925.782"
+                ]
+              },
+              {
+                "id": "D000094762",
+                "term": "RNA Subgenômico",
+                "term_en": "Subgenomic RNA",
+                "scope": "RNA resultante da REPLICAÇÃO VIRAL de partes de regiões do genoma. O processo pode envolver sítios específicos internos de iniciação e terminação transcricionais.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D13.444.735.544.713",
+                  "D13.444.735.828.500"
+                ]
+              },
+              {
+                "id": "D000087002",
+                "term": "Transcrição Viral",
+                "term_en": "Viral Transcription",
+                "scope": "Biossíntese de RNAs virais subgenômicos, transcritos a partir do GENOMA VIRAL.",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G02.111.873.875"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D012698",
+          "term": "Testes Sorológicos"
+        },
+        {
+          "id": "D006526",
+          "term": "Hepatite C"
+        },
+        {
+          "id": "D006509",
+          "term": "Hepatite B"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D006514",
+          "term": "Antígenos de Superfície da Hepatite B"
+        },
+        {
+          "id": "D018937",
+          "term": "Anticorpos Anti-Hepatite C"
+        },
+        {
+          "id": "D006510",
+          "term": "Anticorpos Anti-Hepatite B"
+        },
+        {
+          "id": "D016272",
+          "term": "Saúde Ocupacional"
+        },
+        {
+          "id": "D012367",
+          "term": "RNA Viral"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 3,
+    "secondary_concepts": 5,
+    "total_candidates": 40,
+    "final_primary": 3,
+    "final_secondary": 5
+  }
+}

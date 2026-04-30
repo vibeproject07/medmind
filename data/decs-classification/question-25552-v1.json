@@ -1,0 +1,95 @@
+{
+  "result": [
+    {
+      "term": "Síndrome de Turner",
+      "code": "D014424",
+      "tree_ids": [
+        "C12.050.351.875.253.309.872",
+        "C12.050.351.875.253.795.750",
+        "C12.200.706.316.309.872",
+        "C12.200.706.316.795.750",
+        "C12.800.316.309.872",
+        "C12.800.316.795.750",
+        "C14.240.400.980",
+        "C14.280.400.980",
+        "C16.131.240.400.970",
+        "C16.131.260.830.835.750",
+        "C16.131.939.316.309.872",
+        "C16.131.939.316.795.750",
+        "C16.320.180.830.835.750",
+        "C19.391.119.309.872",
+        "C19.391.119.795.750"
+      ],
+      "hierarchy_path": "Doenças › C12.050.351.875.253.309.872",
+      "scope_note": "Síndrome de desenvolvimento gonadal defeituoso em indivíduos fenotipicamente femininos associados com um cariótipo 45,X (ou 45,XO). Os pacientes geralmente são de baixa estatura com GÔNADAS indiferenciadas (gônadas estriadas), INFANTILISMO SEXUAL, HIPOGONADISMO, pescoço alado, valgo cúbito, níveis elevados de GONADOTROPINAS, níveis reduzidos de ESTRADIOL no sangue e CARDIOPATIAS CONGÊNITAS. A SÍNDROME DE NOONAN (também chamada de Síndrome Pseudo-Turner e de Síndrome de Turner Masculina) assemelha-se a este transtorno. Entretanto, ocorre em homens e mulheres com cariótipo normal e é herdada como uma característica autossômica dominante.",
+      "name_en": "Turner Syndrome",
+      "role": "primary"
+    },
+    {
+      "term": "Coartação Aórtica",
+      "code": "D001017",
+      "tree_ids": [
+        "C14.240.400.090",
+        "C14.280.400.090",
+        "C16.131.240.400.090"
+      ],
+      "hierarchy_path": "Doenças › C14.240.400.090",
+      "scope_note": "Defeito de nascimento caracterizado por estreitamento da AORTA que pode ser de grau variado, e que em qualquer ponto do arco transverso em direção à bifurcação ilíaca. A coartação aórtica causa HIPERTENSÃO arterial antes do ponto de estreitamento e HIPOTENSÃO arterial após a porção estreitada.",
+      "name_en": "Aortic Coarctation",
+      "role": "secondary"
+    },
+    {
+      "term": "Linfedema",
+      "code": "D008209",
+      "tree_ids": [
+        "C15.604.496"
+      ],
+      "hierarchy_path": "Doenças › C15.604.496",
+      "scope_note": "Edema devido à obstrução dos vasos linfáticos ou transtornos dos nódulos linfáticos.",
+      "name_en": "Lymphedema",
+      "role": "secondary"
+    },
+    {
+      "term": "Recém-Nascido",
+      "code": "D007231",
+      "tree_ids": [
+        "M01.060.703.520"
+      ],
+      "hierarchy_path": "Grupos Identificados › M01.060.703.520",
+      "scope_note": "Lactente durante os primeiros 28 dias após o nascimento.",
+      "name_en": "Infant, Newborn",
+      "role": "secondary"
+    },
+    {
+      "term": "Monossomia",
+      "code": "D009006",
+      "tree_ids": [
+        "C23.550.210.050.500",
+        "G05.365.590.175.050.500",
+        "G05.700.131.500"
+      ],
+      "hierarchy_path": "Doenças › C23.550.210.050.500",
+      "scope_note": "Situação em que um cromossomo (de um par) está faltando. Em uma célula diploide normal é representado simbolicamente como 2n-1.",
+      "name_en": "Monosomy",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Turner Syndrome"
+    ],
+    "secondary": [
+      "Aortic Coarctation",
+      "Lymphedema",
+      "Monosomy",
+      "Infant, Newborn"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 1,
+    "secondary_terms": 4,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 0,
+    "final_count": 5
+  }
+}

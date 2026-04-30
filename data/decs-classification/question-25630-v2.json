@@ -1,0 +1,422 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D000086722",
+        "term": "Rinorreia",
+        "name_en": "Rhinorrhea",
+        "scope_note": "Excesso de drenagem nasal.",
+        "tree_ids": [
+          "C23.888.852.834"
+        ],
+        "hierarchy_path": "Doenças › C23.888.852.834",
+        "parents": [
+          {
+            "id": "D012818",
+            "term": "Sinais e Sintomas Respiratórios"
+          }
+        ],
+        "children": [
+          {
+            "id": "D002559",
+            "term": "Rinorreia de Líquido Cefalorraquidiano"
+          }
+        ],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": []
+  },
+  "themes_identified": {
+    "primary": [
+      "Enunciado",
+      "Paciente de 35 anos vem à consulta com febre e tosse",
+      "Relata quadro de rinorreia e odinofagia há 5 dias"
+    ],
+    "secondary": []
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Enunciado",
+          "candidates": [
+            {
+              "id": "DDCS032482",
+              "term": "Recursos Renováveis",
+              "term_en": "Renewable Resources",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.837.868"
+              ]
+            },
+            {
+              "id": "DDCS051583",
+              "term": "Varredoras",
+              "term_en": "Sweepers",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.987.506.871"
+              ]
+            },
+            {
+              "id": "DDCS051857",
+              "term": "Utilização de Recursos Locais",
+              "term_en": "Local Resources Uses",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.303.766"
+              ]
+            },
+            {
+              "id": "DDCS051642",
+              "term": "Leito Fixo",
+              "term_en": "Fixed Bed",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.806.945.750.207.899.660"
+              ]
+            },
+            {
+              "id": "DDCS025556",
+              "term": "Tanques de Concreto",
+              "term_en": "Reinforced Concrete Tanks",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.141.089.248.433.561"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Relata quadro de rinorreia e odinofagia há 5 dias",
+          "candidates": [
+            {
+              "id": "D000086722",
+              "term": "Rinorreia",
+              "term_en": "Rhinorrhea",
+              "scope": "Excesso de drenagem nasal.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.888.852.834"
+              ]
+            },
+            {
+              "id": "D000096825",
+              "term": "Rinossinusite",
+              "term_en": "Rhinosinusitis",
+              "scope": "Obstrução da drenagem à CAVIDADE NASAL e inflamação da MUCOSA NASAL nos SEIOS PARANASAIS.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.748.674.500",
+                "C01.748.749.703"
+              ]
+            },
+            {
+              "id": "D010612",
+              "term": "Faringite",
+              "term_en": "Pharyngitis",
+              "scope": "inflamação da garganta (FARINGE).",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.748.561",
+                "C07.550.781"
+              ]
+            },
+            {
+              "id": "D012220",
+              "term": "Rinite",
+              "term_en": "Rhinitis",
+              "scope": "Inflamação da MUCOSA NASAL, a mucosa que recobre as CAVIDADES NASAIS.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.748.674",
+                "C08.460.799"
+              ]
+            },
+            {
+              "id": "D009302",
+              "term": "Doenças Nasofaríngeas",
+              "term_en": "Nasopharyngeal Diseases",
+              "scope": "Processos patológicos envolvendo a NASOFARINGE.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C07.550.350",
+                "C09.775.350"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Paciente de 35 anos vem à consulta com febre e tosse",
+          "candidates": [
+            {
+              "id": "D005335",
+              "term": "Febre de Causa Desconhecida",
+              "term_en": "Fever of Unknown Origin",
+              "scope": "Febre em que a etiologia não pode ser estabelecida.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C23.888.119.344.345"
+              ]
+            },
+            {
+              "id": "D056586",
+              "term": "Síndrome Torácica Aguda",
+              "term_en": "Acute Chest Syndrome",
+              "scope": "Síndrome respiratória caracterizada pelo aparecimento de um novo infiltrado pulmonar no raio-X de tórax, acompanhado por sintomas de febre, tosse, dor no peito, taquipneia ou DISPNEIA, frequentemente ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.381.074",
+                "C08.618.009"
+              ]
+            },
+            {
+              "id": "D007251",
+              "term": "Influenza Humana",
+              "term_en": "Influenza, Human",
+              "scope": "Infecção viral aguda em humanos envolvendo o trato respiratório. Caracterizada por inflamação da MUCOSA NASAL, FARINGE, conjuntiva, cefaleia e mialgia grave, frequentemente generalizada.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.748.310",
+                "C01.925.782.620.365"
+              ]
+            },
+            {
+              "id": "D045169",
+              "term": "Síndrome Respiratória Aguda Grave",
+              "term_en": "Severe Acute Respiratory Syndrome",
+              "scope": "Transtorno viral caracterizado por FEBRE alta, TOSSE seca, falta de ar (DISPNEIA) ou dificuldades para respirar e PNEUMONIA atípica. Um vírus do gênero CORONAVIRUS é o agente suspeito.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.748.730",
+                "C01.925.782.600.550.200.750"
+              ]
+            },
+            {
+              "id": "D018549",
+              "term": "Pneumonia em Organização Criptogênica",
+              "term_en": "Cryptogenic Organizing Pneumonia",
+              "scope": "Doença pulmonar intersticial de etiologia desconhecida que ocorre entre os 21 e 80 anos de idade. É caracterizada por um início dramático de doença semelhante à pneumonia com tosse, febre, mal estar, ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C08.127.446.135.140.600.750",
+                "C08.381.483.652.500.750.249"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": []
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Enunciado",
+        "Paciente de 35 anos vem à consulta com febre e tosse",
+        "Relata quadro de rinorreia e odinofagia há 5 dias"
+      ],
+      "secondary": []
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Enunciado",
+            "candidates": [
+              {
+                "id": "DDCS032482",
+                "term": "Recursos Renováveis",
+                "term_en": "Renewable Resources",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.837.868"
+                ]
+              },
+              {
+                "id": "DDCS051583",
+                "term": "Varredoras",
+                "term_en": "Sweepers",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.987.506.871"
+                ]
+              },
+              {
+                "id": "DDCS051857",
+                "term": "Utilização de Recursos Locais",
+                "term_en": "Local Resources Uses",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.303.766"
+                ]
+              },
+              {
+                "id": "DDCS051642",
+                "term": "Leito Fixo",
+                "term_en": "Fixed Bed",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.806.945.750.207.899.660"
+                ]
+              },
+              {
+                "id": "DDCS025556",
+                "term": "Tanques de Concreto",
+                "term_en": "Reinforced Concrete Tanks",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.141.089.248.433.561"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Relata quadro de rinorreia e odinofagia há 5 dias",
+            "candidates": [
+              {
+                "id": "D000086722",
+                "term": "Rinorreia",
+                "term_en": "Rhinorrhea",
+                "scope": "Excesso de drenagem nasal.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.888.852.834"
+                ]
+              },
+              {
+                "id": "D000096825",
+                "term": "Rinossinusite",
+                "term_en": "Rhinosinusitis",
+                "scope": "Obstrução da drenagem à CAVIDADE NASAL e inflamação da MUCOSA NASAL nos SEIOS PARANASAIS.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.748.674.500",
+                  "C01.748.749.703"
+                ]
+              },
+              {
+                "id": "D010612",
+                "term": "Faringite",
+                "term_en": "Pharyngitis",
+                "scope": "inflamação da garganta (FARINGE).",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.748.561",
+                  "C07.550.781"
+                ]
+              },
+              {
+                "id": "D012220",
+                "term": "Rinite",
+                "term_en": "Rhinitis",
+                "scope": "Inflamação da MUCOSA NASAL, a mucosa que recobre as CAVIDADES NASAIS.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.748.674",
+                  "C08.460.799"
+                ]
+              },
+              {
+                "id": "D009302",
+                "term": "Doenças Nasofaríngeas",
+                "term_en": "Nasopharyngeal Diseases",
+                "scope": "Processos patológicos envolvendo a NASOFARINGE.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C07.550.350",
+                  "C09.775.350"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Paciente de 35 anos vem à consulta com febre e tosse",
+            "candidates": [
+              {
+                "id": "D005335",
+                "term": "Febre de Causa Desconhecida",
+                "term_en": "Fever of Unknown Origin",
+                "scope": "Febre em que a etiologia não pode ser estabelecida.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C23.888.119.344.345"
+                ]
+              },
+              {
+                "id": "D056586",
+                "term": "Síndrome Torácica Aguda",
+                "term_en": "Acute Chest Syndrome",
+                "scope": "Síndrome respiratória caracterizada pelo aparecimento de um novo infiltrado pulmonar no raio-X de tórax, acompanhado por sintomas de febre, tosse, dor no peito, taquipneia ou DISPNEIA, frequentemente ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.381.074",
+                  "C08.618.009"
+                ]
+              },
+              {
+                "id": "D007251",
+                "term": "Influenza Humana",
+                "term_en": "Influenza, Human",
+                "scope": "Infecção viral aguda em humanos envolvendo o trato respiratório. Caracterizada por inflamação da MUCOSA NASAL, FARINGE, conjuntiva, cefaleia e mialgia grave, frequentemente generalizada.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.748.310",
+                  "C01.925.782.620.365"
+                ]
+              },
+              {
+                "id": "D045169",
+                "term": "Síndrome Respiratória Aguda Grave",
+                "term_en": "Severe Acute Respiratory Syndrome",
+                "scope": "Transtorno viral caracterizado por FEBRE alta, TOSSE seca, falta de ar (DISPNEIA) ou dificuldades para respirar e PNEUMONIA atípica. Um vírus do gênero CORONAVIRUS é o agente suspeito.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.748.730",
+                  "C01.925.782.600.550.200.750"
+                ]
+              },
+              {
+                "id": "D018549",
+                "term": "Pneumonia em Organização Criptogênica",
+                "term_en": "Cryptogenic Organizing Pneumonia",
+                "scope": "Doença pulmonar intersticial de etiologia desconhecida que ocorre entre os 21 e 80 anos de idade. É caracterizada por um início dramático de doença semelhante à pneumonia com tosse, febre, mal estar, ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C08.127.446.135.140.600.750",
+                  "C08.381.483.652.500.750.249"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": []
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D000086722",
+          "term": "Rinorreia"
+        }
+      ],
+      "secondary": []
+    }
+  },
+  "stats": {
+    "primary_concepts": 3,
+    "secondary_concepts": 0,
+    "total_candidates": 15,
+    "final_primary": 1,
+    "final_secondary": 0
+  }
+}

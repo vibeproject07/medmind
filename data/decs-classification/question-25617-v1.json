@@ -1,0 +1,93 @@
+{
+  "result": [
+    {
+      "term": "Anafilaxia",
+      "code": "D000707",
+      "tree_ids": [
+        "C20.543.480.099"
+      ],
+      "hierarchy_path": "Doenças › C20.543.480.099",
+      "scope_note": "Reação de hipersensibilidade aguda devido à exposição a antígeno (ver ANTÍGENOS) previamente encontrado. A reação pode incluir URTICÁRIA rapidamente progressiva, sofrimento respiratório, colapso vascular, CHOQUE sistêmico e morte.",
+      "name_en": "Anaphylaxis",
+      "role": "primary"
+    },
+    {
+      "term": "Intubação Intratraqueal",
+      "code": "D007442",
+      "tree_ids": [
+        "E02.041.500",
+        "E02.585.578",
+        "E05.497.578"
+      ],
+      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.041.500",
+      "scope_note": "Procedimento que envolve a colocação de um tubo na traqueia através da boca ou do nariz a fim de proporcionar oxigénio e anestesia ao paciente.",
+      "name_en": "Intubation, Intratracheal",
+      "role": "primary"
+    },
+    {
+      "term": "Insuficiência Respiratória",
+      "code": "D012131",
+      "tree_ids": [
+        "C08.618.846"
+      ],
+      "hierarchy_path": "Doenças › C08.618.846",
+      "scope_note": "Incapacidade para proporcionar oxigênio adequado às células do organismo e para remover o excesso de dióxido de carbono. (Stedman, 25a ed)",
+      "name_en": "Respiratory Insufficiency",
+      "role": "secondary"
+    },
+    {
+      "term": "Succinilcolina",
+      "code": "D013390",
+      "tree_ids": [
+        "D02.092.877.883.333.780",
+        "D02.241.081.337.759.875",
+        "D02.675.276.232.780"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D02.092.877.883.333.780",
+      "scope_note": "Relaxante da musculatura esquelética quaternário geralmente utilizado na forma de brometos, cloretos e iodetos. É um relaxante despolarizante, atuando em aproximadamente 30 segundos e com uma duração de seus efeitos de 3 a minutos. Succinilcolina é utilizada em procedimentos cirúrgicos, anestésicos, entre outros, onde um curto período de relaxamento muscular se faz necessário.",
+      "name_en": "Succinylcholine",
+      "role": "secondary"
+    },
+    {
+      "term": "Ketamina",
+      "code": "D007649",
+      "tree_ids": [
+        "D02.455.426.392.368.367.652"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D02.455.426.392.368.367.652",
+      "scope_note": "Derivado cicloexanona utilizado para a indução de anestesia. Seu mecanismo de ação não foi completamente elucidado, porém a ketamina pode bloquear os receptores NMDA (RECEPTORES DE N-METIL-D-ASPARTATO) e pode interagir com os receptores sigma.",
+      "name_en": "Ketamine",
+      "role": "secondary"
+    },
+    {
+      "term": "Fentanila",
+      "code": "D005283",
+      "tree_ids": [
+        "D03.383.621.265"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D03.383.621.265",
+      "scope_note": "Potente analgésico narcótico que leva ao hábito ou vício. É principalmente um agonista do receptor opioide mu. A fentanila é também usada como adjunto na anestesia geral e como anestésico para indução e manutenção. (Tradução livre do original: Martindale, The Extra Pharmacopoeia, 30th ed, p1078)",
+      "name_en": "Fentanyl",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Anaphylaxis",
+      "Intubation, Intratracheal"
+    ],
+    "secondary": [
+      "Ketamine",
+      "Fentanyl",
+      "Succinylcholine",
+      "Respiratory Insufficiency"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 2,
+    "secondary_terms": 4,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 0,
+    "final_count": 6
+  }
+}

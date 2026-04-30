@@ -1,0 +1,73 @@
+{
+  "result": [
+    {
+      "term": "Asma",
+      "code": "D001249",
+      "tree_ids": [
+        "C08.127.108",
+        "C08.381.495.108",
+        "C08.674.095",
+        "C20.543.480.680.095"
+      ],
+      "hierarchy_path": "Doenças › C08.127.108",
+      "scope_note": "Forma de transtorno brônquico com três componentes distintos: hiper-responsividade das vias aéreas (HIPERSENSIBILIDADE RESPIRATÓRIA), INFLAMAÇÃO das vias aéreas e intermitente OBSTRUÇÃO DAS VIAS RESPIRATÓRIAS. É caracterizado por contração espasmódica do músculo liso das vias aéreas, RUÍDOS RESPIRATÓRIOS, e dispneia (DISPNEIA PAROXÍSTICA).",
+      "name_en": "Asthma",
+      "role": "primary"
+    },
+    {
+      "term": "Dispneia",
+      "code": "D004417",
+      "tree_ids": [
+        "C08.618.326",
+        "C23.888.852.371"
+      ],
+      "hierarchy_path": "Doenças › C08.618.326",
+      "scope_note": "A respiração com dificuldade ou com esforço.",
+      "name_en": "Dyspnea",
+      "role": "secondary"
+    },
+    {
+      "term": "Fumarato de Formoterol",
+      "code": "D000068759",
+      "tree_ids": [
+        "D02.033.100.291.425",
+        "D02.092.063.291.425"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D02.033.100.291.425",
+      "scope_note": "AGONISTA DE RECEPTORES ADRENÉRGICOS BETA 2 com ação de duração prolongada. É usado para controlar a ASMA no tratamento da DOENÇA PULMONAR OBSTRUTIVA CRÔNICA.",
+      "name_en": "Formoterol Fumarate",
+      "role": "secondary"
+    },
+    {
+      "term": "Beclometasona",
+      "code": "D001507",
+      "tree_ids": [
+        "D04.210.500.745.432.769.125",
+        "D04.210.500.883.154"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D04.210.500.745.432.769.125",
+      "scope_note": "Glicocorticoide anti-inflamatório sintético. É usada topicamente como agente anti-inflamatório e na forma de aerossol para o tratamento da ASMA.",
+      "name_en": "Beclomethasone",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Asthma",
+      "Disease Management"
+    ],
+    "secondary": [
+      "Beclomethasone",
+      "Formoterol Fumarate",
+      "Anti-Asthmatic Agents",
+      "Dyspnea"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 2,
+    "secondary_terms": 4,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 2,
+    "final_count": 4
+  }
+}

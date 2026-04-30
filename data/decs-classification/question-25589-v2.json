@@ -1,0 +1,954 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D024821",
+        "term": "Síndrome Metabólica",
+        "name_en": "Metabolic Syndrome",
+        "scope_note": "Grupo de sintomas que são fatores de risco para as DOENÇAS CARDIOVASCULARES e o DIABETES MELLITUS TIPO 2. Os principais componentes da síndrome metabólica incluem excesso de OBESIDADE ABDOMINAL, DISLIPIDEMIA aterogênica, HIPERTENSÃO, HIPERGLICEMIA, RESISTÊNCIA À INSULINA, um estado pró-inflamatório e pró-trombótico (TROMBOSE).",
+        "tree_ids": [
+          "C18.452.394.968.500.570",
+          "C18.452.625"
+        ],
+        "hierarchy_path": "Doenças › C18.452.394.968.500.570",
+        "parents": [
+          {
+            "id": "D007333",
+            "term": "Resistência à Insulina"
+          },
+          {
+            "id": "D008659",
+            "term": "Doenças Metabólicas"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D055105",
+        "term": "Circunferência da Cintura",
+        "name_en": "Waist Circumference",
+        "scope_note": "Medida feita ao redor do corpo, na altura do ABDOME e acima do osso do quadril. Geralmente a medida é feita imediatamente depois da exalação.",
+        "tree_ids": [
+          "E01.370.600.115.100.160.560",
+          "E05.041.124.160.875",
+          "G07.100.100.160.560"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.600.115.100.160.560",
+        "parents": [
+          {
+            "id": "D049628",
+            "term": "Tamanho Corporal"
+          }
+        ],
+        "children": [
+          {
+            "id": "D064237",
+            "term": "Produto da Acumulação Lipídica"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D014280",
+        "term": "Triglicerídeos",
+        "name_en": "Triglycerides",
+        "scope_note": "Éster formado de GLICEROL e três grupos de ácidos graxos.",
+        "tree_ids": [
+          "D10.351.801"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D10.351.801",
+        "parents": [
+          {
+            "id": "D005989",
+            "term": "Glicerídeos"
+          }
+        ],
+        "children": [
+          {
+            "id": "D014304",
+            "term": "Trioleína"
+          },
+          {
+            "id": "D014215",
+            "term": "Triacetina"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D008076",
+        "term": "HDL-Colesterol",
+        "name_en": "Cholesterol, HDL",
+        "scope_note": "Colesterol que está contido em ou ligado a lipoproteínas de densidade alta (HDL), incluindo os ÉSTERES DO COLESTEROL e colesterol livre.",
+        "tree_ids": [
+          "D04.210.500.247.808.197.238",
+          "D10.532.432.400",
+          "D10.570.938.208.270",
+          "D12.776.521.479.470"
+        ],
+        "hierarchy_path": "Compostos Químicos e Drogas › D04.210.500.247.808.197.238",
+        "parents": [
+          {
+            "id": "D002784",
+            "term": "Colesterol"
+          },
+          {
+            "id": "D008075",
+            "term": "Lipoproteínas HDL"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D007333",
+        "term": "Resistência à Insulina",
+        "name_en": "Insulin Resistance",
+        "scope_note": "Redução da efetividade da INSULINA em diminuir a glicemia: há a necessidade do uso de 200 unidades ou mais de insulina por dia para impedir a HIPERGLICEMIA ou a CETOSE.",
+        "tree_ids": [
+          "C18.452.394.968.500",
+          "G07.690.773.984.617"
+        ],
+        "hierarchy_path": "Doenças › C18.452.394.968.500",
+        "parents": [
+          {
+            "id": "D006946",
+            "term": "Hiperinsulinismo"
+          },
+          {
+            "id": "D004351",
+            "term": "Resistência a Medicamentos"
+          }
+        ],
+        "children": [
+          {
+            "id": "D024821",
+            "term": "Síndrome Metabólica"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D014944",
+        "term": "Organização Mundial da Saúde",
+        "name_en": "World Health Organization",
+        "scope_note": "Agência especializada das Nações Unidas, designada como uma autoridade coordenadora no trabalho internacional de saúde. Sua intenção é promover o nível mais alto possível de saúde para todos os povos.",
+        "tree_ids": [
+          "N03.540.514.718.800",
+          "SH1.010.020.020.070",
+          "SP1.620.711"
+        ],
+        "hierarchy_path": "Saúde › N03.540.514.718.800",
+        "parents": [
+          {
+            "id": "D014480",
+            "term": "Nações Unidas"
+          },
+          {
+            "id": "D007390",
+            "term": "Agências Internacionais"
+          },
+          {
+            "id": "DDCS050217",
+            "term": "Organizações em Saúde"
+          }
+        ],
+        "children": [
+          {
+            "id": "D010175",
+            "term": "Organização Pan-Americana da Saúde"
+          }
+        ],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Metabolic Syndrome"
+    ],
+    "secondary": [
+      "Insulin Resistance",
+      "Waist Circumference",
+      "Triglycerides",
+      "Cholesterol, HDL",
+      "World Health Organization"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Metabolic Syndrome",
+          "candidates": [
+            {
+              "id": "D024821",
+              "term": "Síndrome Metabólica",
+              "term_en": "Metabolic Syndrome",
+              "scope": "Grupo de sintomas que são fatores de risco para as DOENÇAS CARDIOVASCULARES e o DIABETES MELLITUS TIPO 2. Os principais componentes da síndrome metabólica incluem excesso de OBESIDADE ABDOMINAL, DISLI",
+              "categoria": "Doenças",
+              "arvore": [
+                "C18.452.394.968.500.570",
+                "C18.452.625"
+              ]
+            },
+            {
+              "id": "D000099074",
+              "term": "Diabesidade",
+              "term_en": "Diabesity",
+              "scope": "Co-ocorrência de DIABETES MELLITUS e OBESIDADE em grande parte devido à HIPERGLICEMIA como complicação diabética. A diabesidade também está associada à deterioração mais rápida pelos sintomas e compli",
+              "categoria": "Doenças",
+              "arvore": [
+                "C19.246.099.001",
+                "C23.888.144.699.500.001"
+              ]
+            },
+            {
+              "id": "D017566",
+              "term": "Angina Microvascular",
+              "term_en": "Microvascular Angina",
+              "scope": "ANGINA PECTORIS ou dor torácica tipo angina, com um arteriograma coronariano normal e TESTE DE ESFORÇO positivo. A causa da síndrome é desconhecida. Enquanto seu reconhecimento é de importância clínic",
+              "categoria": "Doenças",
+              "arvore": [
+                "C14.280.647.187.575",
+                "C14.907.585.187.575"
+              ]
+            },
+            {
+              "id": "D000083202",
+              "term": "Fatores de Risco Cardiometabólico",
+              "term_en": "Cardiometabolic Risk Factors",
+              "scope": "Conjunto de comportamento ou estilo de vida pessoal, exposição ambiental, condições e características inatas ou hereditárias que, com base em evidências epidemiológicas, estão associadas a DOENÇAS CAR",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.740.600.800.725.500.500",
+                "N05.715.350.200.700.500.500"
+              ]
+            },
+            {
+              "id": "D008659",
+              "term": "Doenças Metabólicas",
+              "term_en": "Metabolic Diseases",
+              "scope": "Termo genérico para doenças causadas por um processo metabólico anormal. Pode ser congênito devido à anormalidade enzimática herdada (ERROS INATOS DO METABOLISMO) ou adquirido devido à doença de um ór",
+              "categoria": "Doenças",
+              "arvore": [
+                "C18.452"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Waist Circumference",
+          "candidates": [
+            {
+              "id": "D055105",
+              "term": "Circunferência da Cintura",
+              "term_en": "Waist Circumference",
+              "scope": "Medida feita ao redor do corpo, na altura do ABDOME e acima do osso do quadril. Geralmente a medida é feita imediatamente depois da exalação.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.600.115.100.160.560",
+                "E05.041.124.160.875"
+              ]
+            },
+            {
+              "id": "DDCS050314",
+              "term": "Circunferência Abdominal",
+              "term_en": "Abdominal Circumference",
+              "scope": "Medida da circunferência do abdômen, correlacionada positivamente à gordura acumulada nessa região do corpo. É um preditor independente de risco de diabetes tipo II, doença arterial coronariana e hipe",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP6.270.233.111.178"
+              ]
+            },
+            {
+              "id": "D049629",
+              "term": "Relação Cintura-Quadril",
+              "term_en": "Waist-Hip Ratio",
+              "scope": "Medida da circunferência da cintura dividida pela medida da circunferência do quadril. Tanto para homens como mulheres, a relação cintura-quadril (RCQ) de 1,0 ou superior é considerada de risco de con",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.600.115.100.960",
+                "E05.041.124.946"
+              ]
+            },
+            {
+              "id": "D065927",
+              "term": "Razão Cintura-Estatura",
+              "term_en": "Waist-Height Ratio",
+              "scope": "Razão entre a CIRCUNFERÊNCIA DA CINTURA e a ESTATURA.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.600.115.100.160.780",
+                "E05.041.124.160.937"
+              ]
+            },
+            {
+              "id": "D056128",
+              "term": "Obesidade Abdominal",
+              "term_en": "Obesity, Abdominal",
+              "scope": "Afecção caracterizada pelo excesso de gordura no abdome. A obesidade abdominal é tipicamente definida como a circunferência na cintura de 95 cm ou mais em homens e 85 cm ou mais em mulheres. A obesida",
+              "categoria": "Doenças",
+              "arvore": [
+                "C18.654.726.750.500.615",
+                "C23.888.144.699.500.063"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Triglycerides",
+          "candidates": [
+            {
+              "id": "D014280",
+              "term": "Triglicerídeos",
+              "term_en": "Triglycerides",
+              "scope": "Éster formado de GLICEROL e três grupos de ácidos graxos.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D10.351.801"
+              ]
+            },
+            {
+              "id": "D015228",
+              "term": "Hipertrigliceridemia",
+              "term_en": "Hypertriglyceridemia",
+              "scope": "Situação de níveis elevados de TRIGLICERÍDEOS no sangue.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C18.452.584.500.500.851"
+              ]
+            },
+            {
+              "id": "D005989",
+              "term": "Glicerídeos",
+              "term_en": "Glycerides",
+              "scope": "GLICEROL esterificado com ÁCIDOS GRAXOS.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D10.351"
+              ]
+            },
+            {
+              "id": "D004041",
+              "term": "Gorduras na Dieta",
+              "term_en": "Dietary Fats",
+              "scope": "Gorduras contidas nos alimentos, principalmente nas carnes, óleos vegetais, manteiga e margarina. (MAHAN & ESCOTT-STUMP 2002). Mais de 95 por cento da ingestão total de gorduras é composta por triacil",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D10.212.302",
+                "G07.203.300.375"
+              ]
+            },
+            {
+              "id": "D004075",
+              "term": "Diglicerídeos",
+              "term_en": "Diglycerides",
+              "scope": "Glicerídeos compostos por dois ácidos graxos esterificados ao álcool GLICEROL tri-hídrico. Existem duas formas possíveis: 1,2-diacilgliceróis e 1,3-diacilgliceróis.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D10.351.303"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Cholesterol, HDL",
+          "candidates": [
+            {
+              "id": "D008076",
+              "term": "HDL-Colesterol",
+              "term_en": "Cholesterol, HDL",
+              "scope": "Colesterol que está contido em ou ligado a lipoproteínas de densidade alta (HDL), incluindo os ÉSTERES DO COLESTEROL e colesterol livre.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D04.210.500.247.808.197.238",
+                "D10.532.432.400"
+              ]
+            },
+            {
+              "id": "D008078",
+              "term": "LDL-Colesterol",
+              "term_en": "Cholesterol, LDL",
+              "scope": "Colesterol que está contido em ou ligado a lipoproteínas de baixa densidade (LDL), incluindo os ÉSTERES DE COLESTEROL e colesterol livre.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D04.210.500.247.808.197.244",
+                "D10.532.515.500"
+              ]
+            },
+            {
+              "id": "D006937",
+              "term": "Hipercolesterolemia",
+              "term_en": "Hypercholesterolemia",
+              "scope": "Afecção com níveis anormalmente elevados de COLESTEROL no sangue. É definida como um valor de colesterol maior que o percentil de 95 para a população.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C18.452.584.500.500.396"
+              ]
+            },
+            {
+              "id": "D008075",
+              "term": "Lipoproteínas HDL",
+              "term_en": "Lipoproteins, HDL",
+              "scope": "Classe de lipoproteínas compostas de partículas de pequeno tamanho (4 a 13 nm) e denso (maior que 1,063 g/ml). As lipoproteínas HDL, sintetizadas no fígado sem um centro lipídico, acumula ésteres de c",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D10.532.432",
+                "D12.776.521.479"
+              ]
+            },
+            {
+              "id": "D015243",
+              "term": "VLDL-Colesterol",
+              "term_en": "Cholesterol, VLDL",
+              "scope": "Colesterol que está contido ou ligado a uma lipoproteína de densidade muito baixa (VLDL). Altos níveis circulantes de colesterol VLDL são encontrados na HIPERLIPOPROTEINEMIA TIPO IIB. O colesterol no ",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D04.210.500.247.808.197.247",
+                "D10.532.599.700"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Insulin Resistance",
+          "candidates": [
+            {
+              "id": "D007333",
+              "term": "Resistência à Insulina",
+              "term_en": "Insulin Resistance",
+              "scope": "Redução da efetividade da INSULINA em diminuir a glicemia: há a necessidade do uso de 200 unidades ou mais de insulina por dia para impedir a HIPERGLICEMIA ou a CETOSE.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C18.452.394.968.500",
+                "G07.690.773.984.617"
+              ]
+            },
+            {
+              "id": "D003924",
+              "term": "Diabetes Mellitus Tipo 2",
+              "term_en": "Diabetes Mellitus, Type 2",
+              "scope": "Subclasse de DIABETES MELLITUS que não é responsiva ou dependente de INSULINA (DMNID). Inicialmente, caracteriza-se por RESISTÊNCIA À INSULINA e HIPERINSULINEMIA e finalmente, por INTOLERÂNCIA À GLUCO",
+              "categoria": "Doenças",
+              "arvore": [
+                "C18.452.394.750.149",
+                "C19.246.300"
+              ]
+            },
+            {
+              "id": "D007329",
+              "term": "Antagonistas da Insulina",
+              "term_en": "Insulin Antagonists",
+              "scope": "Compostos que inibem ou antagonizam a biossíntese ou a ação da insulina.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D06.347.420",
+                "D27.505.696.399.450.420"
+              ]
+            },
+            {
+              "id": "D061385",
+              "term": "Insulinas",
+              "term_en": "Insulins",
+              "scope": "Hormônios peptídicos que causam um aumento na absorção de GLUCOSE por células dentro de órgãos como o FÍGADO; MÚSCULOS; e TECIDO ADIPOSO. Durante o metabolismo normal, as insulinas são produzidas por ",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D06.472.699.587.200",
+                "D12.644.548.586.200"
+              ]
+            },
+            {
+              "id": "D006946",
+              "term": "Hiperinsulinismo",
+              "term_en": "Hyperinsulinism",
+              "scope": "Síndrome com níveis extremamente elevados de INSULINA no SANGUE. Pode causar HIPOGLICEMIA. A etiologia do hiperinsulinismo varia, incluindo a hipersecreção de um tumor de células beta (INSULINOMA), au",
+              "categoria": "Doenças",
+              "arvore": [
+                "C18.452.394.968"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "World Health Organization",
+          "candidates": [
+            {
+              "id": "D014944",
+              "term": "Organização Mundial da Saúde",
+              "term_en": "World Health Organization",
+              "scope": "Agência especializada das Nações Unidas, designada como uma autoridade coordenadora no trabalho internacional de saúde. Sua intenção é promover o nível mais alto possível de saúde para todos os povos.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N03.540.514.718.800",
+                "SH1.010.020.020.070"
+              ]
+            },
+            {
+              "id": "DDCS060063",
+              "term": "Direito Internacional Sanitário",
+              "term_en": "International Health Law",
+              "scope": "Área do Direito Internacional Público que tem por objetivo estudar as regras jurídicas aplicáveis  pela comunidade internacional às ações de saúde. A produção normativa internacional no setor de saúde",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP9.242.569.190.701"
+              ]
+            },
+            {
+              "id": "D010175",
+              "term": "Organização Pan-Americana da Saúde",
+              "term_en": "Pan American Health Organization",
+              "scope": "Escritório regional da OMS para as Américas que atua como agência coordenadora para melhoria das condições de saúde na região. As quatro principais funções são: controle ou erradicação de doenças tran",
+              "categoria": "Saúde",
+              "arvore": [
+                "N03.540.514.718.800.628",
+                "SH1.010.020.030.040"
+              ]
+            },
+            {
+              "id": "DDCS016807",
+              "term": "Centro Pan-Americano de Febre Aftosa",
+              "term_en": "Pan American Foot-and-Mouth Disease Center",
+              "scope": "Centro Pan-Americano de Febre Aftosa. (http://new.paho.org/panaftosa/)",
+              "categoria": "SH",
+              "arvore": [
+                "SH1.010.020.030.040.050.070"
+              ]
+            },
+            {
+              "id": "DDCS050027",
+              "term": "Global Forum for Health Research",
+              "term_en": "Global Forum for Health Research",
+              "scope": "Fundação internacional independente estabelecida em Genebra (Suiça) em 1998 com o objetivo de contribuir para a correção da brecha 10/90 em pesquisa em saúde. (Tradução livre do original: http://www.g",
+              "categoria": "SH",
+              "arvore": [
+                "SH1.010.020.060.070"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Metabolic Syndrome"
+      ],
+      "secondary": [
+        "Insulin Resistance",
+        "Waist Circumference",
+        "Triglycerides",
+        "Cholesterol, HDL",
+        "World Health Organization"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Metabolic Syndrome",
+            "candidates": [
+              {
+                "id": "D024821",
+                "term": "Síndrome Metabólica",
+                "term_en": "Metabolic Syndrome",
+                "scope": "Grupo de sintomas que são fatores de risco para as DOENÇAS CARDIOVASCULARES e o DIABETES MELLITUS TIPO 2. Os principais componentes da síndrome metabólica incluem excesso de OBESIDADE ABDOMINAL, DISLI",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C18.452.394.968.500.570",
+                  "C18.452.625"
+                ]
+              },
+              {
+                "id": "D000099074",
+                "term": "Diabesidade",
+                "term_en": "Diabesity",
+                "scope": "Co-ocorrência de DIABETES MELLITUS e OBESIDADE em grande parte devido à HIPERGLICEMIA como complicação diabética. A diabesidade também está associada à deterioração mais rápida pelos sintomas e compli",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C19.246.099.001",
+                  "C23.888.144.699.500.001"
+                ]
+              },
+              {
+                "id": "D017566",
+                "term": "Angina Microvascular",
+                "term_en": "Microvascular Angina",
+                "scope": "ANGINA PECTORIS ou dor torácica tipo angina, com um arteriograma coronariano normal e TESTE DE ESFORÇO positivo. A causa da síndrome é desconhecida. Enquanto seu reconhecimento é de importância clínic",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C14.280.647.187.575",
+                  "C14.907.585.187.575"
+                ]
+              },
+              {
+                "id": "D000083202",
+                "term": "Fatores de Risco Cardiometabólico",
+                "term_en": "Cardiometabolic Risk Factors",
+                "scope": "Conjunto de comportamento ou estilo de vida pessoal, exposição ambiental, condições e características inatas ou hereditárias que, com base em evidências epidemiológicas, estão associadas a DOENÇAS CAR",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.740.600.800.725.500.500",
+                  "N05.715.350.200.700.500.500"
+                ]
+              },
+              {
+                "id": "D008659",
+                "term": "Doenças Metabólicas",
+                "term_en": "Metabolic Diseases",
+                "scope": "Termo genérico para doenças causadas por um processo metabólico anormal. Pode ser congênito devido à anormalidade enzimática herdada (ERROS INATOS DO METABOLISMO) ou adquirido devido à doença de um ór",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C18.452"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Waist Circumference",
+            "candidates": [
+              {
+                "id": "D055105",
+                "term": "Circunferência da Cintura",
+                "term_en": "Waist Circumference",
+                "scope": "Medida feita ao redor do corpo, na altura do ABDOME e acima do osso do quadril. Geralmente a medida é feita imediatamente depois da exalação.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.600.115.100.160.560",
+                  "E05.041.124.160.875"
+                ]
+              },
+              {
+                "id": "DDCS050314",
+                "term": "Circunferência Abdominal",
+                "term_en": "Abdominal Circumference",
+                "scope": "Medida da circunferência do abdômen, correlacionada positivamente à gordura acumulada nessa região do corpo. É um preditor independente de risco de diabetes tipo II, doença arterial coronariana e hipe",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP6.270.233.111.178"
+                ]
+              },
+              {
+                "id": "D049629",
+                "term": "Relação Cintura-Quadril",
+                "term_en": "Waist-Hip Ratio",
+                "scope": "Medida da circunferência da cintura dividida pela medida da circunferência do quadril. Tanto para homens como mulheres, a relação cintura-quadril (RCQ) de 1,0 ou superior é considerada de risco de con",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.600.115.100.960",
+                  "E05.041.124.946"
+                ]
+              },
+              {
+                "id": "D065927",
+                "term": "Razão Cintura-Estatura",
+                "term_en": "Waist-Height Ratio",
+                "scope": "Razão entre a CIRCUNFERÊNCIA DA CINTURA e a ESTATURA.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.600.115.100.160.780",
+                  "E05.041.124.160.937"
+                ]
+              },
+              {
+                "id": "D056128",
+                "term": "Obesidade Abdominal",
+                "term_en": "Obesity, Abdominal",
+                "scope": "Afecção caracterizada pelo excesso de gordura no abdome. A obesidade abdominal é tipicamente definida como a circunferência na cintura de 95 cm ou mais em homens e 85 cm ou mais em mulheres. A obesida",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C18.654.726.750.500.615",
+                  "C23.888.144.699.500.063"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Triglycerides",
+            "candidates": [
+              {
+                "id": "D014280",
+                "term": "Triglicerídeos",
+                "term_en": "Triglycerides",
+                "scope": "Éster formado de GLICEROL e três grupos de ácidos graxos.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D10.351.801"
+                ]
+              },
+              {
+                "id": "D015228",
+                "term": "Hipertrigliceridemia",
+                "term_en": "Hypertriglyceridemia",
+                "scope": "Situação de níveis elevados de TRIGLICERÍDEOS no sangue.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C18.452.584.500.500.851"
+                ]
+              },
+              {
+                "id": "D005989",
+                "term": "Glicerídeos",
+                "term_en": "Glycerides",
+                "scope": "GLICEROL esterificado com ÁCIDOS GRAXOS.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D10.351"
+                ]
+              },
+              {
+                "id": "D004041",
+                "term": "Gorduras na Dieta",
+                "term_en": "Dietary Fats",
+                "scope": "Gorduras contidas nos alimentos, principalmente nas carnes, óleos vegetais, manteiga e margarina. (MAHAN & ESCOTT-STUMP 2002). Mais de 95 por cento da ingestão total de gorduras é composta por triacil",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D10.212.302",
+                  "G07.203.300.375"
+                ]
+              },
+              {
+                "id": "D004075",
+                "term": "Diglicerídeos",
+                "term_en": "Diglycerides",
+                "scope": "Glicerídeos compostos por dois ácidos graxos esterificados ao álcool GLICEROL tri-hídrico. Existem duas formas possíveis: 1,2-diacilgliceróis e 1,3-diacilgliceróis.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D10.351.303"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Cholesterol, HDL",
+            "candidates": [
+              {
+                "id": "D008076",
+                "term": "HDL-Colesterol",
+                "term_en": "Cholesterol, HDL",
+                "scope": "Colesterol que está contido em ou ligado a lipoproteínas de densidade alta (HDL), incluindo os ÉSTERES DO COLESTEROL e colesterol livre.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D04.210.500.247.808.197.238",
+                  "D10.532.432.400"
+                ]
+              },
+              {
+                "id": "D008078",
+                "term": "LDL-Colesterol",
+                "term_en": "Cholesterol, LDL",
+                "scope": "Colesterol que está contido em ou ligado a lipoproteínas de baixa densidade (LDL), incluindo os ÉSTERES DE COLESTEROL e colesterol livre.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D04.210.500.247.808.197.244",
+                  "D10.532.515.500"
+                ]
+              },
+              {
+                "id": "D006937",
+                "term": "Hipercolesterolemia",
+                "term_en": "Hypercholesterolemia",
+                "scope": "Afecção com níveis anormalmente elevados de COLESTEROL no sangue. É definida como um valor de colesterol maior que o percentil de 95 para a população.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C18.452.584.500.500.396"
+                ]
+              },
+              {
+                "id": "D008075",
+                "term": "Lipoproteínas HDL",
+                "term_en": "Lipoproteins, HDL",
+                "scope": "Classe de lipoproteínas compostas de partículas de pequeno tamanho (4 a 13 nm) e denso (maior que 1,063 g/ml). As lipoproteínas HDL, sintetizadas no fígado sem um centro lipídico, acumula ésteres de c",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D10.532.432",
+                  "D12.776.521.479"
+                ]
+              },
+              {
+                "id": "D015243",
+                "term": "VLDL-Colesterol",
+                "term_en": "Cholesterol, VLDL",
+                "scope": "Colesterol que está contido ou ligado a uma lipoproteína de densidade muito baixa (VLDL). Altos níveis circulantes de colesterol VLDL são encontrados na HIPERLIPOPROTEINEMIA TIPO IIB. O colesterol no ",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D04.210.500.247.808.197.247",
+                  "D10.532.599.700"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Insulin Resistance",
+            "candidates": [
+              {
+                "id": "D007333",
+                "term": "Resistência à Insulina",
+                "term_en": "Insulin Resistance",
+                "scope": "Redução da efetividade da INSULINA em diminuir a glicemia: há a necessidade do uso de 200 unidades ou mais de insulina por dia para impedir a HIPERGLICEMIA ou a CETOSE.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C18.452.394.968.500",
+                  "G07.690.773.984.617"
+                ]
+              },
+              {
+                "id": "D003924",
+                "term": "Diabetes Mellitus Tipo 2",
+                "term_en": "Diabetes Mellitus, Type 2",
+                "scope": "Subclasse de DIABETES MELLITUS que não é responsiva ou dependente de INSULINA (DMNID). Inicialmente, caracteriza-se por RESISTÊNCIA À INSULINA e HIPERINSULINEMIA e finalmente, por INTOLERÂNCIA À GLUCO",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C18.452.394.750.149",
+                  "C19.246.300"
+                ]
+              },
+              {
+                "id": "D007329",
+                "term": "Antagonistas da Insulina",
+                "term_en": "Insulin Antagonists",
+                "scope": "Compostos que inibem ou antagonizam a biossíntese ou a ação da insulina.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D06.347.420",
+                  "D27.505.696.399.450.420"
+                ]
+              },
+              {
+                "id": "D061385",
+                "term": "Insulinas",
+                "term_en": "Insulins",
+                "scope": "Hormônios peptídicos que causam um aumento na absorção de GLUCOSE por células dentro de órgãos como o FÍGADO; MÚSCULOS; e TECIDO ADIPOSO. Durante o metabolismo normal, as insulinas são produzidas por ",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D06.472.699.587.200",
+                  "D12.644.548.586.200"
+                ]
+              },
+              {
+                "id": "D006946",
+                "term": "Hiperinsulinismo",
+                "term_en": "Hyperinsulinism",
+                "scope": "Síndrome com níveis extremamente elevados de INSULINA no SANGUE. Pode causar HIPOGLICEMIA. A etiologia do hiperinsulinismo varia, incluindo a hipersecreção de um tumor de células beta (INSULINOMA), au",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C18.452.394.968"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "World Health Organization",
+            "candidates": [
+              {
+                "id": "D014944",
+                "term": "Organização Mundial da Saúde",
+                "term_en": "World Health Organization",
+                "scope": "Agência especializada das Nações Unidas, designada como uma autoridade coordenadora no trabalho internacional de saúde. Sua intenção é promover o nível mais alto possível de saúde para todos os povos.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N03.540.514.718.800",
+                  "SH1.010.020.020.070"
+                ]
+              },
+              {
+                "id": "DDCS060063",
+                "term": "Direito Internacional Sanitário",
+                "term_en": "International Health Law",
+                "scope": "Área do Direito Internacional Público que tem por objetivo estudar as regras jurídicas aplicáveis  pela comunidade internacional às ações de saúde. A produção normativa internacional no setor de saúde",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP9.242.569.190.701"
+                ]
+              },
+              {
+                "id": "D010175",
+                "term": "Organização Pan-Americana da Saúde",
+                "term_en": "Pan American Health Organization",
+                "scope": "Escritório regional da OMS para as Américas que atua como agência coordenadora para melhoria das condições de saúde na região. As quatro principais funções são: controle ou erradicação de doenças tran",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N03.540.514.718.800.628",
+                  "SH1.010.020.030.040"
+                ]
+              },
+              {
+                "id": "DDCS016807",
+                "term": "Centro Pan-Americano de Febre Aftosa",
+                "term_en": "Pan American Foot-and-Mouth Disease Center",
+                "scope": "Centro Pan-Americano de Febre Aftosa. (http://new.paho.org/panaftosa/)",
+                "categoria": "SH",
+                "arvore": [
+                  "SH1.010.020.030.040.050.070"
+                ]
+              },
+              {
+                "id": "DDCS050027",
+                "term": "Global Forum for Health Research",
+                "term_en": "Global Forum for Health Research",
+                "scope": "Fundação internacional independente estabelecida em Genebra (Suiça) em 1998 com o objetivo de contribuir para a correção da brecha 10/90 em pesquisa em saúde. (Tradução livre do original: http://www.g",
+                "categoria": "SH",
+                "arvore": [
+                  "SH1.010.020.060.070"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D024821",
+          "term": "Síndrome Metabólica"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D055105",
+          "term": "Circunferência da Cintura"
+        },
+        {
+          "id": "D014280",
+          "term": "Triglicerídeos"
+        },
+        {
+          "id": "D008076",
+          "term": "HDL-Colesterol"
+        },
+        {
+          "id": "D007333",
+          "term": "Resistência à Insulina"
+        },
+        {
+          "id": "D014944",
+          "term": "Organização Mundial da Saúde"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 1,
+    "secondary_concepts": 5,
+    "total_candidates": 30,
+    "final_primary": 1,
+    "final_secondary": 5
+  }
+}

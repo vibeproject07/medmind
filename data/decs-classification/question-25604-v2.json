@@ -1,0 +1,966 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D000740",
+        "term": "Anemia",
+        "name_en": "Anemia",
+        "scope_note": "Redução no número de ERITRÓCITOS circulantes ou na quantidade de HEMOGLOBINA.",
+        "tree_ids": [
+          "C15.378.050"
+        ],
+        "hierarchy_path": "Doenças › C15.378.050",
+        "parents": [
+          {
+            "id": "D006402",
+            "term": "Doenças Hematológicas"
+          }
+        ],
+        "children": [
+          {
+            "id": "D029502",
+            "term": "Anemia Hipoplástica Congênita"
+          },
+          {
+            "id": "D029503",
+            "term": "Anemia de Diamond-Blackfan"
+          },
+          {
+            "id": "D005955",
+            "term": "Deficiência de Glucosefosfato Desidrogenase"
+          },
+          {
+            "id": "D006450",
+            "term": "Doença da Hemoglobina SC"
+          },
+          {
+            "id": "D006457",
+            "term": "Hemoglobinúria Paroxística"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D018798",
+        "term": "Anemia Ferropriva",
+        "name_en": "Anemia, Iron-Deficiency",
+        "scope_note": "Anemia caracterizada por diminuição ou ausência dos estoques de ferro, baixa concentração de ferro sérico, baixa saturação de transferrina e baixa concentração de hemoglobina ou valor de hematócrito. Nesta condição, os eritrócitos estão hipocrômicos e microcíticos e a capacidade de ligação do ferro está aumentada.",
+        "tree_ids": [
+          "C15.378.050.196.300",
+          "C18.452.565.400.500",
+          "SP6.990.625.344.127.255"
+        ],
+        "hierarchy_path": "Doenças › C15.378.050.196.300",
+        "parents": [
+          {
+            "id": "D000747",
+            "term": "Anemia Hipocrômica"
+          },
+          {
+            "id": "D000090463",
+            "term": "Deficiências de Ferro"
+          },
+          {
+            "id": "DDCS016582",
+            "term": "Anemias Nutricionais"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": [
+      {
+        "id": "D011697",
+        "term": "Púrpura Trombocitopênica Trombótica",
+        "name_en": "Purpura, Thrombotic Thrombocytopenic",
+        "scope_note": "Transtorno adquirido, congênito ou familiar causado por AGREGAÇÃO PLAQUETÁRIA com TROMBOSE em arteríolas terminais e capilares. Entre as características clínicas estão TROMBOCITOPENIA, ANEMIA HEMOLÍTICA, AZOTEMIA, FEBRE, e microangiopatia trombótica. A forma clássica também inclui os sintomas neurológicos e dano em órgão terminal, como INSUFICIÊNCIA RENAL. Foram identificadas mutações no gene da PROTEÍNA ADAMS13 em casos familiares.",
+        "tree_ids": [
+          "C15.378.100.802.687.680",
+          "C15.378.140.855.925.750.680",
+          "C15.378.243.937.925.750.680",
+          "C15.378.925.850",
+          "C23.550.414.950.687.680",
+          "C23.888.885.687.687.680"
+        ],
+        "hierarchy_path": "Doenças › C15.378.100.802.687.680",
+        "parents": [
+          {
+            "id": "D011696",
+            "term": "Púrpura Trombocitopênica"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D000743",
+        "term": "Anemia Hemolítica",
+        "name_en": "Anemia, Hemolytic",
+        "scope_note": "Estado de glóbulos vermelhos inadequados (qualitativa ou quantitativamente) em circulação (ANEMIA) ou de HEMOGLOBINAS insuficiente devido à destruição prematura de glóbulos vermelhos (ERITRÓCITOS).",
+        "tree_ids": [
+          "C15.378.050.141"
+        ],
+        "hierarchy_path": "Doenças › C15.378.050.141",
+        "parents": [
+          {
+            "id": "D000740",
+            "term": "Anemia"
+          }
+        ],
+        "children": [
+          {
+            "id": "D006445",
+            "term": "Doença da Hemoglobina C"
+          },
+          {
+            "id": "D006463",
+            "term": "Síndrome Hemolítico-Urêmica"
+          },
+          {
+            "id": "D017086",
+            "term": "Talassemia beta"
+          },
+          {
+            "id": "D017085",
+            "term": "Talassemia alfa"
+          },
+          {
+            "id": "D013103",
+            "term": "Esferocitose Hereditária"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D013103",
+        "term": "Esferocitose Hereditária",
+        "name_en": "Spherocytosis, Hereditary",
+        "scope_note": "Grupo de anemias hemolíticas congênitas familiares, caracterizadas por numerosos eritrócitos de formato anormal, sendo geralmente esferoidais. Os eritrócitos aumentam a fragilidade osmótica e são anormalmente impermeáveis aos íons sódio.",
+        "tree_ids": [
+          "C15.378.050.141.150.785",
+          "C16.320.070.785"
+        ],
+        "hierarchy_path": "Doenças › C15.378.050.141.150.785",
+        "parents": [
+          {
+            "id": "D000745",
+            "term": "Anemia Hemolítica Congênita"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D000749",
+        "term": "Anemia Megaloblástica",
+        "name_en": "Anemia, Megaloblastic",
+        "scope_note": "Anemia caracterizada pela presença de ANEMIA,ampla anomalia dos glóbulos vermelhos (megalócitos ou macrócitos), e MEGALOBLASTOS.",
+        "tree_ids": [
+          "C15.378.050.252.196"
+        ],
+        "hierarchy_path": "Doenças › C15.378.050.252.196",
+        "parents": [
+          {
+            "id": "D000748",
+            "term": "Anemia Macrocítica"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000752",
+            "term": "Anemia Perniciosa"
+          }
+        ],
+        "role": "secondary"
+      }
+    ]
+  },
+  "themes_identified": {
+    "primary": [
+      "Anemia",
+      "Anemia, Iron-Deficiency"
+    ],
+    "secondary": [
+      "Anemia, Hemolytic",
+      "Anemia, Megaloblastic",
+      "Spherocytosis, Hereditary",
+      "Purpura, Thrombotic Thrombocytopenic"
+    ]
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Anemia",
+          "candidates": [
+            {
+              "id": "D000740",
+              "term": "Anemia",
+              "term_en": "Anemia",
+              "scope": "Redução no número de ERITRÓCITOS circulantes ou na quantidade de HEMOGLOBINA.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050"
+              ]
+            },
+            {
+              "id": "DDCS016582",
+              "term": "Anemias Nutricionais",
+              "term_en": "Nutritional Anemias",
+              "scope": "Situação em que a concentração de hemoglobina, o hematócrito ou o número de eritrócitos está abaixo do normal como resultado da deficiência de um ou mais nutrientes.",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP6.990.625.344.127"
+              ]
+            },
+            {
+              "id": "D018798",
+              "term": "Anemia Ferropriva",
+              "term_en": "Anemia, Iron-Deficiency",
+              "scope": "Anemia caracterizada por diminuição ou ausência dos estoques de ferro, baixa concentração de ferro sérico, baixa saturação de transferrina e baixa concentração de hemoglobina ou valor de hematócrito. ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.196.300",
+                "C18.452.565.400.500"
+              ]
+            },
+            {
+              "id": "D000747",
+              "term": "Anemia Hipocrômica",
+              "term_en": "Anemia, Hypochromic",
+              "scope": "Anemia caracterizada por uma diminuição na razão entre peso da hemoglobina e o volume do eritrócito, i. é, a concentração média corpuscular de hemoglobina é menor do que o normal. Individualmente, as ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.196"
+              ]
+            },
+            {
+              "id": "D000749",
+              "term": "Anemia Megaloblástica",
+              "term_en": "Anemia, Megaloblastic",
+              "scope": "Anemia caracterizada pela presença de ANEMIA,ampla anomalia dos glóbulos vermelhos (megalócitos ou macrócitos), e MEGALOBLASTOS.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.252.196"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Anemia, Iron-Deficiency",
+          "candidates": [
+            {
+              "id": "D018798",
+              "term": "Anemia Ferropriva",
+              "term_en": "Anemia, Iron-Deficiency",
+              "scope": "Anemia caracterizada por diminuição ou ausência dos estoques de ferro, baixa concentração de ferro sérico, baixa saturação de transferrina e baixa concentração de hemoglobina ou valor de hematócrito. ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.196.300",
+                "C18.452.565.400.500"
+              ]
+            },
+            {
+              "id": "D000747",
+              "term": "Anemia Hipocrômica",
+              "term_en": "Anemia, Hypochromic",
+              "scope": "Anemia caracterizada por uma diminuição na razão entre peso da hemoglobina e o volume do eritrócito, i. é, a concentração média corpuscular de hemoglobina é menor do que o normal. Individualmente, as ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.196"
+              ]
+            },
+            {
+              "id": "D000740",
+              "term": "Anemia",
+              "term_en": "Anemia",
+              "scope": "Redução no número de ERITRÓCITOS circulantes ou na quantidade de HEMOGLOBINA.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050"
+              ]
+            },
+            {
+              "id": "DDCS016582",
+              "term": "Anemias Nutricionais",
+              "term_en": "Nutritional Anemias",
+              "scope": "Situação em que a concentração de hemoglobina, o hematócrito ou o número de eritrócitos está abaixo do normal como resultado da deficiência de um ou mais nutrientes.",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP6.990.625.344.127"
+              ]
+            },
+            {
+              "id": "D000090463",
+              "term": "Deficiências de Ferro",
+              "term_en": "Iron Deficiencies",
+              "scope": "Quantidades insuficientes de ferro no corpo como resultado de perda sanguínea, dietas deficientes em ferro, ou algum transtorno da captura ou armazenamento de ferro.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C18.452.565.400",
+                "SP6.990.625.344.378.176.496"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Purpura, Thrombotic Thrombocytopenic",
+          "candidates": [
+            {
+              "id": "D011697",
+              "term": "Púrpura Trombocitopênica Trombótica",
+              "term_en": "Purpura, Thrombotic Thrombocytopenic",
+              "scope": "Transtorno adquirido, congênito ou familiar causado por AGREGAÇÃO PLAQUETÁRIA com TROMBOSE em arteríolas terminais e capilares. Entre as características clínicas estão TROMBOCITOPENIA, ANEMIA HEMOLÍTI",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.100.802.687.680",
+                "C15.378.140.855.925.750.680"
+              ]
+            },
+            {
+              "id": "D057049",
+              "term": "Microangiopatias Trombóticas",
+              "term_en": "Thrombotic Microangiopathies",
+              "scope": "Doenças que resultam em TROMBOSE na MICROVASCULATURA. As duas doenças mais proeminentes são a PURPURA TROMBOCITOPÊNICA TROMBÓTICA e a SÍNDROME HEMOLÍTICO-URÊMICA. Os diversos fatores etiológicos inclu",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.140.855.925",
+                "C15.378.243.937.925"
+              ]
+            },
+            {
+              "id": "D011696",
+              "term": "Púrpura Trombocitopênica",
+              "term_en": "Purpura, Thrombocytopenic",
+              "scope": "Qualquer forma de púrpura em que a CONTAGEM DE PLAQUETAS esteja diminuída. Acredita-se que várias formas sejam causadas por mecanismos imunológicos.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.100.802.687",
+                "C15.378.140.855.925.750"
+              ]
+            },
+            {
+              "id": "D016553",
+              "term": "Púrpura Trombocitopênica Idiopática",
+              "term_en": "Purpura, Thrombocytopenic, Idiopathic",
+              "scope": "Trombocitopenia que ocorre na ausência de exposição tóxica, ou uma doença associada com diminuição de plaquetas. É mediada por mecanismos imunes, em muitos casos, autoanticorpos de IgG, que se ligam à",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.100.802.687.600",
+                "C15.378.140.855.925.750.600"
+              ]
+            },
+            {
+              "id": "D006463",
+              "term": "Síndrome Hemolítico-Urêmica",
+              "term_en": "Hemolytic-Uremic Syndrome",
+              "scope": "Síndrome que está associada com as doenças microvasculares do RIM, como a NECROSE DO CÓRTEX RENAL. É caracterizada por ANEMIA HEMOLÍTICA, TROMBOCITOPENIA e FALÊNCIA RENAL AGUDA.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C12.050.351.968.419.936.463",
+                "C12.200.777.419.936.463"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Anemia, Hemolytic",
+          "candidates": [
+            {
+              "id": "D000743",
+              "term": "Anemia Hemolítica",
+              "term_en": "Anemia, Hemolytic",
+              "scope": "Estado de glóbulos vermelhos inadequados (qualitativa ou quantitativamente) em circulação (ANEMIA) ou de HEMOGLOBINAS insuficiente devido à destruição prematura de glóbulos vermelhos (ERITRÓCITOS).",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.141"
+              ]
+            },
+            {
+              "id": "D000745",
+              "term": "Anemia Hemolítica Congênita",
+              "term_en": "Anemia, Hemolytic, Congenital",
+              "scope": "Anemia hemolítica devido a vários defeitos intrínsecos do eritrócito.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.141.150",
+                "C16.320.070"
+              ]
+            },
+            {
+              "id": "D000746",
+              "term": "Anemia Hemolítica Congênita não Esferocítica",
+              "term_en": "Anemia, Hemolytic, Congenital Nonspherocytic",
+              "scope": "Qualquer uma de um grupo de anemias hemolíticas congênitas em que não há hemoglobina anormal ou esferocitose e em que há um defeito de glicólise no eritrócito. As causas mais comuns incluem deficiênci",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.141.150.100",
+                "C16.320.070.100"
+              ]
+            },
+            {
+              "id": "D000744",
+              "term": "Anemia Hemolítica Autoimune",
+              "term_en": "Anemia, Hemolytic, Autoimmune",
+              "scope": "Anemia hemolítica adquirida devido à presença de AUTOANTICORPOS que aglutinam ou lisam os GLÓBULOS VERMELHOS do próprio paciente.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.141.125",
+                "C20.111.175"
+              ]
+            },
+            {
+              "id": "D005236",
+              "term": "Favismo",
+              "term_en": "Favism",
+              "scope": "Anemia hemolítica devido à ingestão das sementes de fava ou após inalação de pólen da planta Vicia fava por pessoas com eritrócitos deficientes da enzima glucose-6-fosfato desidrogenase.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.141.150.480.370",
+                "C15.378.050.141.370"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Spherocytosis, Hereditary",
+          "candidates": [
+            {
+              "id": "D013103",
+              "term": "Esferocitose Hereditária",
+              "term_en": "Spherocytosis, Hereditary",
+              "scope": "Grupo de anemias hemolíticas congênitas familiares, caracterizadas por numerosos eritrócitos de formato anormal, sendo geralmente esferoidais. Os eritrócitos aumentam a fragilidade osmótica e são anor",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.141.150.785",
+                "C16.320.070.785"
+              ]
+            },
+            {
+              "id": "D013102",
+              "term": "Esferócitos",
+              "term_en": "Spherocytes",
+              "scope": "Células sanguíneas vermelhas anormais, esféricas e pequenas, com maior quantidade de hemoglobina.",
+              "categoria": "Anatomia",
+              "arvore": [
+                "A11.118.290.330.802",
+                "A11.443.240.330.802"
+              ]
+            },
+            {
+              "id": "D004612",
+              "term": "Eliptocitose Hereditária",
+              "term_en": "Elliptocytosis, Hereditary",
+              "scope": "Defeito intrínseco eritrocitário, herdado como um traço autossômico dominante. Os eritrócitos assumem um formato oval ou elíptico.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.141.150.365",
+                "C16.320.070.365"
+              ]
+            },
+            {
+              "id": "D000746",
+              "term": "Anemia Hemolítica Congênita não Esferocítica",
+              "term_en": "Anemia, Hemolytic, Congenital Nonspherocytic",
+              "scope": "Qualquer uma de um grupo de anemias hemolíticas congênitas em que não há hemoglobina anormal ou esferocitose e em que há um defeito de glicólise no eritrócito. As causas mais comuns incluem deficiênci",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.141.150.100",
+                "C16.320.070.100"
+              ]
+            },
+            {
+              "id": "D000745",
+              "term": "Anemia Hemolítica Congênita",
+              "term_en": "Anemia, Hemolytic, Congenital",
+              "scope": "Anemia hemolítica devido a vários defeitos intrínsecos do eritrócito.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.141.150",
+                "C16.320.070"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Anemia, Megaloblastic",
+          "candidates": [
+            {
+              "id": "D000749",
+              "term": "Anemia Megaloblástica",
+              "term_en": "Anemia, Megaloblastic",
+              "scope": "Anemia caracterizada pela presença de ANEMIA,ampla anomalia dos glóbulos vermelhos (megalócitos ou macrócitos), e MEGALOBLASTOS.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.252.196"
+              ]
+            },
+            {
+              "id": "D008534",
+              "term": "Megaloblastos",
+              "term_en": "Megaloblasts",
+              "scope": "Precursores de células sanguíneas vermelhas, correspondendo aos ERITROBLASTOS. São maiores que o normal e geralmente resultam de DEFICIÊNCIA DE ÁCIDO FÓLICO ou de VITAMINA B12.",
+              "categoria": "Anatomia",
+              "arvore": [
+                "A11.118.290.330.531",
+                "A11.148.378.590.837.250.200.500"
+              ]
+            },
+            {
+              "id": "D000752",
+              "term": "Anemia Perniciosa",
+              "term_en": "Anemia, Pernicious",
+              "scope": "Anemia megaloblástica que usualmente ocorre em adultos mais velhos, causada por absorção intestinal prejudicada de vitamina B12 devido à falta de disponibilidade de fator intrínseco. É muitas vezes ca",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.252.196.500",
+                "C18.654.521.500.133.699.923.280"
+              ]
+            },
+            {
+              "id": "D000748",
+              "term": "Anemia Macrocítica",
+              "term_en": "Anemia, Macrocytic",
+              "scope": "Anemia caracterizada por eritrócitos maiores que o normal, volume corpuscular médio (MCV) aumentado e hemoglobina corpuscular média (MCH) aumentada.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C15.378.050.252"
+              ]
+            },
+            {
+              "id": "D014806",
+              "term": "Deficiência de Vitamina B 12",
+              "term_en": "Vitamin B 12 Deficiency",
+              "scope": "Doença nutricional produzida pela deficiência de cianocobalamina (vitamina B12) na dieta, caracterizada por anemia megaloblástica. Uma vez que a vitamina B 12 não está presente em plantas, os homens o",
+              "categoria": "Doenças",
+              "arvore": [
+                "C18.654.521.500.133.699.923",
+                "SP6.990.625.344.378.400.332.535"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Anemia",
+        "Anemia, Iron-Deficiency"
+      ],
+      "secondary": [
+        "Anemia, Hemolytic",
+        "Anemia, Megaloblastic",
+        "Spherocytosis, Hereditary",
+        "Purpura, Thrombotic Thrombocytopenic"
+      ]
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Anemia",
+            "candidates": [
+              {
+                "id": "D000740",
+                "term": "Anemia",
+                "term_en": "Anemia",
+                "scope": "Redução no número de ERITRÓCITOS circulantes ou na quantidade de HEMOGLOBINA.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050"
+                ]
+              },
+              {
+                "id": "DDCS016582",
+                "term": "Anemias Nutricionais",
+                "term_en": "Nutritional Anemias",
+                "scope": "Situação em que a concentração de hemoglobina, o hematócrito ou o número de eritrócitos está abaixo do normal como resultado da deficiência de um ou mais nutrientes.",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP6.990.625.344.127"
+                ]
+              },
+              {
+                "id": "D018798",
+                "term": "Anemia Ferropriva",
+                "term_en": "Anemia, Iron-Deficiency",
+                "scope": "Anemia caracterizada por diminuição ou ausência dos estoques de ferro, baixa concentração de ferro sérico, baixa saturação de transferrina e baixa concentração de hemoglobina ou valor de hematócrito. ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.196.300",
+                  "C18.452.565.400.500"
+                ]
+              },
+              {
+                "id": "D000747",
+                "term": "Anemia Hipocrômica",
+                "term_en": "Anemia, Hypochromic",
+                "scope": "Anemia caracterizada por uma diminuição na razão entre peso da hemoglobina e o volume do eritrócito, i. é, a concentração média corpuscular de hemoglobina é menor do que o normal. Individualmente, as ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.196"
+                ]
+              },
+              {
+                "id": "D000749",
+                "term": "Anemia Megaloblástica",
+                "term_en": "Anemia, Megaloblastic",
+                "scope": "Anemia caracterizada pela presença de ANEMIA,ampla anomalia dos glóbulos vermelhos (megalócitos ou macrócitos), e MEGALOBLASTOS.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.252.196"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Anemia, Iron-Deficiency",
+            "candidates": [
+              {
+                "id": "D018798",
+                "term": "Anemia Ferropriva",
+                "term_en": "Anemia, Iron-Deficiency",
+                "scope": "Anemia caracterizada por diminuição ou ausência dos estoques de ferro, baixa concentração de ferro sérico, baixa saturação de transferrina e baixa concentração de hemoglobina ou valor de hematócrito. ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.196.300",
+                  "C18.452.565.400.500"
+                ]
+              },
+              {
+                "id": "D000747",
+                "term": "Anemia Hipocrômica",
+                "term_en": "Anemia, Hypochromic",
+                "scope": "Anemia caracterizada por uma diminuição na razão entre peso da hemoglobina e o volume do eritrócito, i. é, a concentração média corpuscular de hemoglobina é menor do que o normal. Individualmente, as ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.196"
+                ]
+              },
+              {
+                "id": "D000740",
+                "term": "Anemia",
+                "term_en": "Anemia",
+                "scope": "Redução no número de ERITRÓCITOS circulantes ou na quantidade de HEMOGLOBINA.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050"
+                ]
+              },
+              {
+                "id": "DDCS016582",
+                "term": "Anemias Nutricionais",
+                "term_en": "Nutritional Anemias",
+                "scope": "Situação em que a concentração de hemoglobina, o hematócrito ou o número de eritrócitos está abaixo do normal como resultado da deficiência de um ou mais nutrientes.",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP6.990.625.344.127"
+                ]
+              },
+              {
+                "id": "D000090463",
+                "term": "Deficiências de Ferro",
+                "term_en": "Iron Deficiencies",
+                "scope": "Quantidades insuficientes de ferro no corpo como resultado de perda sanguínea, dietas deficientes em ferro, ou algum transtorno da captura ou armazenamento de ferro.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C18.452.565.400",
+                  "SP6.990.625.344.378.176.496"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Purpura, Thrombotic Thrombocytopenic",
+            "candidates": [
+              {
+                "id": "D011697",
+                "term": "Púrpura Trombocitopênica Trombótica",
+                "term_en": "Purpura, Thrombotic Thrombocytopenic",
+                "scope": "Transtorno adquirido, congênito ou familiar causado por AGREGAÇÃO PLAQUETÁRIA com TROMBOSE em arteríolas terminais e capilares. Entre as características clínicas estão TROMBOCITOPENIA, ANEMIA HEMOLÍTI",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.100.802.687.680",
+                  "C15.378.140.855.925.750.680"
+                ]
+              },
+              {
+                "id": "D057049",
+                "term": "Microangiopatias Trombóticas",
+                "term_en": "Thrombotic Microangiopathies",
+                "scope": "Doenças que resultam em TROMBOSE na MICROVASCULATURA. As duas doenças mais proeminentes são a PURPURA TROMBOCITOPÊNICA TROMBÓTICA e a SÍNDROME HEMOLÍTICO-URÊMICA. Os diversos fatores etiológicos inclu",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.140.855.925",
+                  "C15.378.243.937.925"
+                ]
+              },
+              {
+                "id": "D011696",
+                "term": "Púrpura Trombocitopênica",
+                "term_en": "Purpura, Thrombocytopenic",
+                "scope": "Qualquer forma de púrpura em que a CONTAGEM DE PLAQUETAS esteja diminuída. Acredita-se que várias formas sejam causadas por mecanismos imunológicos.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.100.802.687",
+                  "C15.378.140.855.925.750"
+                ]
+              },
+              {
+                "id": "D016553",
+                "term": "Púrpura Trombocitopênica Idiopática",
+                "term_en": "Purpura, Thrombocytopenic, Idiopathic",
+                "scope": "Trombocitopenia que ocorre na ausência de exposição tóxica, ou uma doença associada com diminuição de plaquetas. É mediada por mecanismos imunes, em muitos casos, autoanticorpos de IgG, que se ligam à",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.100.802.687.600",
+                  "C15.378.140.855.925.750.600"
+                ]
+              },
+              {
+                "id": "D006463",
+                "term": "Síndrome Hemolítico-Urêmica",
+                "term_en": "Hemolytic-Uremic Syndrome",
+                "scope": "Síndrome que está associada com as doenças microvasculares do RIM, como a NECROSE DO CÓRTEX RENAL. É caracterizada por ANEMIA HEMOLÍTICA, TROMBOCITOPENIA e FALÊNCIA RENAL AGUDA.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C12.050.351.968.419.936.463",
+                  "C12.200.777.419.936.463"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Anemia, Hemolytic",
+            "candidates": [
+              {
+                "id": "D000743",
+                "term": "Anemia Hemolítica",
+                "term_en": "Anemia, Hemolytic",
+                "scope": "Estado de glóbulos vermelhos inadequados (qualitativa ou quantitativamente) em circulação (ANEMIA) ou de HEMOGLOBINAS insuficiente devido à destruição prematura de glóbulos vermelhos (ERITRÓCITOS).",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.141"
+                ]
+              },
+              {
+                "id": "D000745",
+                "term": "Anemia Hemolítica Congênita",
+                "term_en": "Anemia, Hemolytic, Congenital",
+                "scope": "Anemia hemolítica devido a vários defeitos intrínsecos do eritrócito.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.141.150",
+                  "C16.320.070"
+                ]
+              },
+              {
+                "id": "D000746",
+                "term": "Anemia Hemolítica Congênita não Esferocítica",
+                "term_en": "Anemia, Hemolytic, Congenital Nonspherocytic",
+                "scope": "Qualquer uma de um grupo de anemias hemolíticas congênitas em que não há hemoglobina anormal ou esferocitose e em que há um defeito de glicólise no eritrócito. As causas mais comuns incluem deficiênci",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.141.150.100",
+                  "C16.320.070.100"
+                ]
+              },
+              {
+                "id": "D000744",
+                "term": "Anemia Hemolítica Autoimune",
+                "term_en": "Anemia, Hemolytic, Autoimmune",
+                "scope": "Anemia hemolítica adquirida devido à presença de AUTOANTICORPOS que aglutinam ou lisam os GLÓBULOS VERMELHOS do próprio paciente.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.141.125",
+                  "C20.111.175"
+                ]
+              },
+              {
+                "id": "D005236",
+                "term": "Favismo",
+                "term_en": "Favism",
+                "scope": "Anemia hemolítica devido à ingestão das sementes de fava ou após inalação de pólen da planta Vicia fava por pessoas com eritrócitos deficientes da enzima glucose-6-fosfato desidrogenase.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.141.150.480.370",
+                  "C15.378.050.141.370"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Spherocytosis, Hereditary",
+            "candidates": [
+              {
+                "id": "D013103",
+                "term": "Esferocitose Hereditária",
+                "term_en": "Spherocytosis, Hereditary",
+                "scope": "Grupo de anemias hemolíticas congênitas familiares, caracterizadas por numerosos eritrócitos de formato anormal, sendo geralmente esferoidais. Os eritrócitos aumentam a fragilidade osmótica e são anor",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.141.150.785",
+                  "C16.320.070.785"
+                ]
+              },
+              {
+                "id": "D013102",
+                "term": "Esferócitos",
+                "term_en": "Spherocytes",
+                "scope": "Células sanguíneas vermelhas anormais, esféricas e pequenas, com maior quantidade de hemoglobina.",
+                "categoria": "Anatomia",
+                "arvore": [
+                  "A11.118.290.330.802",
+                  "A11.443.240.330.802"
+                ]
+              },
+              {
+                "id": "D004612",
+                "term": "Eliptocitose Hereditária",
+                "term_en": "Elliptocytosis, Hereditary",
+                "scope": "Defeito intrínseco eritrocitário, herdado como um traço autossômico dominante. Os eritrócitos assumem um formato oval ou elíptico.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.141.150.365",
+                  "C16.320.070.365"
+                ]
+              },
+              {
+                "id": "D000746",
+                "term": "Anemia Hemolítica Congênita não Esferocítica",
+                "term_en": "Anemia, Hemolytic, Congenital Nonspherocytic",
+                "scope": "Qualquer uma de um grupo de anemias hemolíticas congênitas em que não há hemoglobina anormal ou esferocitose e em que há um defeito de glicólise no eritrócito. As causas mais comuns incluem deficiênci",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.141.150.100",
+                  "C16.320.070.100"
+                ]
+              },
+              {
+                "id": "D000745",
+                "term": "Anemia Hemolítica Congênita",
+                "term_en": "Anemia, Hemolytic, Congenital",
+                "scope": "Anemia hemolítica devido a vários defeitos intrínsecos do eritrócito.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.141.150",
+                  "C16.320.070"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Anemia, Megaloblastic",
+            "candidates": [
+              {
+                "id": "D000749",
+                "term": "Anemia Megaloblástica",
+                "term_en": "Anemia, Megaloblastic",
+                "scope": "Anemia caracterizada pela presença de ANEMIA,ampla anomalia dos glóbulos vermelhos (megalócitos ou macrócitos), e MEGALOBLASTOS.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.252.196"
+                ]
+              },
+              {
+                "id": "D008534",
+                "term": "Megaloblastos",
+                "term_en": "Megaloblasts",
+                "scope": "Precursores de células sanguíneas vermelhas, correspondendo aos ERITROBLASTOS. São maiores que o normal e geralmente resultam de DEFICIÊNCIA DE ÁCIDO FÓLICO ou de VITAMINA B12.",
+                "categoria": "Anatomia",
+                "arvore": [
+                  "A11.118.290.330.531",
+                  "A11.148.378.590.837.250.200.500"
+                ]
+              },
+              {
+                "id": "D000752",
+                "term": "Anemia Perniciosa",
+                "term_en": "Anemia, Pernicious",
+                "scope": "Anemia megaloblástica que usualmente ocorre em adultos mais velhos, causada por absorção intestinal prejudicada de vitamina B12 devido à falta de disponibilidade de fator intrínseco. É muitas vezes ca",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.252.196.500",
+                  "C18.654.521.500.133.699.923.280"
+                ]
+              },
+              {
+                "id": "D000748",
+                "term": "Anemia Macrocítica",
+                "term_en": "Anemia, Macrocytic",
+                "scope": "Anemia caracterizada por eritrócitos maiores que o normal, volume corpuscular médio (MCV) aumentado e hemoglobina corpuscular média (MCH) aumentada.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C15.378.050.252"
+                ]
+              },
+              {
+                "id": "D014806",
+                "term": "Deficiência de Vitamina B 12",
+                "term_en": "Vitamin B 12 Deficiency",
+                "scope": "Doença nutricional produzida pela deficiência de cianocobalamina (vitamina B12) na dieta, caracterizada por anemia megaloblástica. Uma vez que a vitamina B 12 não está presente em plantas, os homens o",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C18.654.521.500.133.699.923",
+                  "SP6.990.625.344.378.400.332.535"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D000740",
+          "term": "Anemia"
+        },
+        {
+          "id": "D018798",
+          "term": "Anemia Ferropriva"
+        }
+      ],
+      "secondary": [
+        {
+          "id": "D011697",
+          "term": "Púrpura Trombocitopênica Trombótica"
+        },
+        {
+          "id": "D000743",
+          "term": "Anemia Hemolítica"
+        },
+        {
+          "id": "D013103",
+          "term": "Esferocitose Hereditária"
+        },
+        {
+          "id": "D000749",
+          "term": "Anemia Megaloblástica"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "primary_concepts": 2,
+    "secondary_concepts": 4,
+    "total_candidates": 30,
+    "final_primary": 2,
+    "final_secondary": 4
+  }
+}

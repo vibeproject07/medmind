@@ -1,0 +1,517 @@
+{
+  "result": {
+    "decs_primary": [
+      {
+        "id": "D012680",
+        "term": "Sensibilidade e Especificidade",
+        "name_en": "Sensitivity and Specificity",
+        "scope_note": "Medidas de classificação binária para avaliar resultados de exames. Sensibilidade ou taxa de recall é a proporção de verdadeiros positivos. Especificidade é a probabilidade do teste determinar corretamente a ausência de uma afecção. (Tradução livre do original: Last, Dictionary of Epidemiology, 2d ed)",
+        "tree_ids": [
+          "E05.318.370.800",
+          "E05.318.740.872",
+          "G17.800",
+          "N05.715.360.325.700",
+          "N05.715.360.750.725",
+          "N06.850.520.445.800",
+          "N06.850.520.830.872"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E05.318.370.800",
+        "parents": [
+          {
+            "id": "D015340",
+            "term": "Projetos de Pesquisa Epidemiológica"
+          },
+          {
+            "id": "D013223",
+            "term": "Estatística como Assunto"
+          },
+          {
+            "id": "D055641",
+            "term": "Conceitos Matemáticos"
+          }
+        ],
+        "children": [
+          {
+            "id": "D059629",
+            "term": "Razão Sinal-Ruído"
+          },
+          {
+            "id": "D011237",
+            "term": "Valor Preditivo dos Testes"
+          },
+          {
+            "id": "D012372",
+            "term": "Curva ROC"
+          },
+          {
+            "id": "D057230",
+            "term": "Limite de Detecção"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "D012680",
+        "term": "Sensibilidade e Especificidade",
+        "name_en": "Sensitivity and Specificity",
+        "scope_note": "Medidas de classificação binária para avaliar resultados de exames. Sensibilidade ou taxa de recall é a proporção de verdadeiros positivos. Especificidade é a probabilidade do teste determinar corretamente a ausência de uma afecção. (Tradução livre do original: Last, Dictionary of Epidemiology, 2d ed)",
+        "tree_ids": [
+          "E05.318.370.800",
+          "E05.318.740.872",
+          "G17.800",
+          "N05.715.360.325.700",
+          "N05.715.360.750.725",
+          "N06.850.520.445.800",
+          "N06.850.520.830.872"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E05.318.370.800",
+        "parents": [
+          {
+            "id": "D015340",
+            "term": "Projetos de Pesquisa Epidemiológica"
+          },
+          {
+            "id": "D013223",
+            "term": "Estatística como Assunto"
+          },
+          {
+            "id": "D055641",
+            "term": "Conceitos Matemáticos"
+          }
+        ],
+        "children": [
+          {
+            "id": "D059629",
+            "term": "Razão Sinal-Ruído"
+          },
+          {
+            "id": "D011237",
+            "term": "Valor Preditivo dos Testes"
+          },
+          {
+            "id": "D012372",
+            "term": "Curva ROC"
+          },
+          {
+            "id": "D057230",
+            "term": "Limite de Detecção"
+          }
+        ],
+        "role": "primary"
+      },
+      {
+        "id": "DDCS032482",
+        "term": "Recursos Renováveis",
+        "name_en": "Renewable Resources",
+        "scope_note": "",
+        "tree_ids": [
+          "SP4.606.837.868"
+        ],
+        "hierarchy_path": "Saúde Pública › SP4.606.837.868",
+        "parents": [
+          {
+            "id": "D000067936",
+            "term": "Recursos Naturais"
+          }
+        ],
+        "children": [],
+        "role": "primary"
+      }
+    ],
+    "decs_secondary": []
+  },
+  "themes_identified": {
+    "primary": [
+      "Enunciado",
+      "As medidas de rendimento de testes diagnósticos são habitualmente analisadas por meio do quadro \"2x2\" que relaciona a presença ou não de uma doença com o resultado de um teste",
+      "Qual das fórmulas abaixo descreve corretamente o cálculo da ESPECIFICIDADE de um teste diagnóstico?"
+    ],
+    "secondary": []
+  },
+  "candidate_groups": [
+    {
+      "label": "primários",
+      "concepts": [
+        {
+          "concept": "Qual das fórmulas abaixo descreve corretamente o cálculo da ESPECIFICIDADE de um teste diagnóstico?",
+          "candidates": [
+            {
+              "id": "D012680",
+              "term": "Sensibilidade e Especificidade",
+              "term_en": "Sensitivity and Specificity",
+              "scope": "Medidas de classificação binária para avaliar resultados de exames. Sensibilidade ou taxa de recall é a proporção de verdadeiros positivos. Especificidade é a probabilidade do teste determinar correta",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.370.800",
+                "E05.318.740.872"
+              ]
+            },
+            {
+              "id": "D011237",
+              "term": "Valor Preditivo dos Testes",
+              "term_en": "Predictive Value of Tests",
+              "scope": "O valor preditivo de um teste diagnóstico é a probabilidade de um resultado positivo (ou negativo) corresponder a um indivíduo doente (ou não doente). Depende da sensibilidade e especificidade do test",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.370.800.650",
+                "N05.715.360.325.700.640"
+              ]
+            },
+            {
+              "id": "D005188",
+              "term": "Reações Falso-Negativas",
+              "term_en": "False Negative Reactions",
+              "scope": "Resultados negativos em pacientes que têm as características para as quais o teste é feito. A classificação de pessoas doentes como saudáveis quando examinadas para a detecção de doenças.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.354.340"
+              ]
+            },
+            {
+              "id": "D000918",
+              "term": "Especificidade de Anticorpos",
+              "term_en": "Antibody Specificity",
+              "scope": "Propriedade dos anticorpos que os capacita a reagir com alguns EPITOPOS e não com outros. A especificidade é dependente da composição química, de forças físicas e da estrutura molecular no sítio de li",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G12.100"
+              ]
+            },
+            {
+              "id": "D005189",
+              "term": "Reações Falso-Positivas",
+              "term_en": "False Positive Reactions",
+              "scope": "Resultados positivos em pacientes que não têm as características para as quais o teste é feito. Classificação de pessoas saudáveis como doentes quando examinadas para a detecção de doenças.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.354.506"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "As medidas de rendimento de testes diagnósticos são habitualmente analisadas por meio do quadro \"2x2\" que relaciona a presença ou não de uma doença com o resultado de um teste",
+          "candidates": [
+            {
+              "id": "D012680",
+              "term": "Sensibilidade e Especificidade",
+              "term_en": "Sensitivity and Specificity",
+              "scope": "Medidas de classificação binária para avaliar resultados de exames. Sensibilidade ou taxa de recall é a proporção de verdadeiros positivos. Especificidade é a probabilidade do teste determinar correta",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.370.800",
+                "E05.318.740.872"
+              ]
+            },
+            {
+              "id": "D011237",
+              "term": "Valor Preditivo dos Testes",
+              "term_en": "Predictive Value of Tests",
+              "scope": "O valor preditivo de um teste diagnóstico é a probabilidade de um resultado positivo (ou negativo) corresponder a um indivíduo doente (ou não doente). Depende da sensibilidade e especificidade do test",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.370.800.650",
+                "N05.715.360.325.700.640"
+              ]
+            },
+            {
+              "id": "D005189",
+              "term": "Reações Falso-Positivas",
+              "term_en": "False Positive Reactions",
+              "scope": "Resultados positivos em pacientes que não têm as características para as quais o teste é feito. Classificação de pessoas saudáveis como doentes quando examinadas para a detecção de doenças.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.354.506"
+              ]
+            },
+            {
+              "id": "D012372",
+              "term": "Curva ROC",
+              "term_en": "ROC Curve",
+              "scope": "Gráfico que se propõe a estimar a capacidade de um teste seletivo de discriminar entre pessoas saudáveis e doentes.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.370.800.750",
+                "E05.318.740.872.750"
+              ]
+            },
+            {
+              "id": "D005188",
+              "term": "Reações Falso-Negativas",
+              "term_en": "False Negative Reactions",
+              "scope": "Resultados negativos em pacientes que têm as características para as quais o teste é feito. A classificação de pessoas doentes como saudáveis quando examinadas para a detecção de doenças.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.354.340"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Enunciado",
+          "candidates": [
+            {
+              "id": "DDCS032482",
+              "term": "Recursos Renováveis",
+              "term_en": "Renewable Resources",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.837.868"
+              ]
+            },
+            {
+              "id": "DDCS051583",
+              "term": "Varredoras",
+              "term_en": "Sweepers",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.987.506.871"
+              ]
+            },
+            {
+              "id": "DDCS051857",
+              "term": "Utilização de Recursos Locais",
+              "term_en": "Local Resources Uses",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.303.766"
+              ]
+            },
+            {
+              "id": "DDCS051642",
+              "term": "Leito Fixo",
+              "term_en": "Fixed Bed",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.806.945.750.207.899.660"
+              ]
+            },
+            {
+              "id": "DDCS025556",
+              "term": "Tanques de Concreto",
+              "term_en": "Reinforced Concrete Tanks",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.141.089.248.433.561"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": []
+    }
+  ],
+  "debug_trace": {
+    "themes": {
+      "primary": [
+        "Enunciado",
+        "As medidas de rendimento de testes diagnósticos são habitualmente analisadas por meio do quadro \"2x2\" que relaciona a presença ou não de uma doença com o resultado de um teste",
+        "Qual das fórmulas abaixo descreve corretamente o cálculo da ESPECIFICIDADE de um teste diagnóstico?"
+      ],
+      "secondary": []
+    },
+    "candidate_groups": [
+      {
+        "label": "primários",
+        "concepts": [
+          {
+            "concept": "Qual das fórmulas abaixo descreve corretamente o cálculo da ESPECIFICIDADE de um teste diagnóstico?",
+            "candidates": [
+              {
+                "id": "D012680",
+                "term": "Sensibilidade e Especificidade",
+                "term_en": "Sensitivity and Specificity",
+                "scope": "Medidas de classificação binária para avaliar resultados de exames. Sensibilidade ou taxa de recall é a proporção de verdadeiros positivos. Especificidade é a probabilidade do teste determinar correta",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.370.800",
+                  "E05.318.740.872"
+                ]
+              },
+              {
+                "id": "D011237",
+                "term": "Valor Preditivo dos Testes",
+                "term_en": "Predictive Value of Tests",
+                "scope": "O valor preditivo de um teste diagnóstico é a probabilidade de um resultado positivo (ou negativo) corresponder a um indivíduo doente (ou não doente). Depende da sensibilidade e especificidade do test",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.370.800.650",
+                  "N05.715.360.325.700.640"
+                ]
+              },
+              {
+                "id": "D005188",
+                "term": "Reações Falso-Negativas",
+                "term_en": "False Negative Reactions",
+                "scope": "Resultados negativos em pacientes que têm as características para as quais o teste é feito. A classificação de pessoas doentes como saudáveis quando examinadas para a detecção de doenças.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.354.340"
+                ]
+              },
+              {
+                "id": "D000918",
+                "term": "Especificidade de Anticorpos",
+                "term_en": "Antibody Specificity",
+                "scope": "Propriedade dos anticorpos que os capacita a reagir com alguns EPITOPOS e não com outros. A especificidade é dependente da composição química, de forças físicas e da estrutura molecular no sítio de li",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G12.100"
+                ]
+              },
+              {
+                "id": "D005189",
+                "term": "Reações Falso-Positivas",
+                "term_en": "False Positive Reactions",
+                "scope": "Resultados positivos em pacientes que não têm as características para as quais o teste é feito. Classificação de pessoas saudáveis como doentes quando examinadas para a detecção de doenças.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.354.506"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "As medidas de rendimento de testes diagnósticos são habitualmente analisadas por meio do quadro \"2x2\" que relaciona a presença ou não de uma doença com o resultado de um teste",
+            "candidates": [
+              {
+                "id": "D012680",
+                "term": "Sensibilidade e Especificidade",
+                "term_en": "Sensitivity and Specificity",
+                "scope": "Medidas de classificação binária para avaliar resultados de exames. Sensibilidade ou taxa de recall é a proporção de verdadeiros positivos. Especificidade é a probabilidade do teste determinar correta",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.370.800",
+                  "E05.318.740.872"
+                ]
+              },
+              {
+                "id": "D011237",
+                "term": "Valor Preditivo dos Testes",
+                "term_en": "Predictive Value of Tests",
+                "scope": "O valor preditivo de um teste diagnóstico é a probabilidade de um resultado positivo (ou negativo) corresponder a um indivíduo doente (ou não doente). Depende da sensibilidade e especificidade do test",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.370.800.650",
+                  "N05.715.360.325.700.640"
+                ]
+              },
+              {
+                "id": "D005189",
+                "term": "Reações Falso-Positivas",
+                "term_en": "False Positive Reactions",
+                "scope": "Resultados positivos em pacientes que não têm as características para as quais o teste é feito. Classificação de pessoas saudáveis como doentes quando examinadas para a detecção de doenças.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.354.506"
+                ]
+              },
+              {
+                "id": "D012372",
+                "term": "Curva ROC",
+                "term_en": "ROC Curve",
+                "scope": "Gráfico que se propõe a estimar a capacidade de um teste seletivo de discriminar entre pessoas saudáveis e doentes.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.370.800.750",
+                  "E05.318.740.872.750"
+                ]
+              },
+              {
+                "id": "D005188",
+                "term": "Reações Falso-Negativas",
+                "term_en": "False Negative Reactions",
+                "scope": "Resultados negativos em pacientes que têm as características para as quais o teste é feito. A classificação de pessoas doentes como saudáveis quando examinadas para a detecção de doenças.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.354.340"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Enunciado",
+            "candidates": [
+              {
+                "id": "DDCS032482",
+                "term": "Recursos Renováveis",
+                "term_en": "Renewable Resources",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.837.868"
+                ]
+              },
+              {
+                "id": "DDCS051583",
+                "term": "Varredoras",
+                "term_en": "Sweepers",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.987.506.871"
+                ]
+              },
+              {
+                "id": "DDCS051857",
+                "term": "Utilização de Recursos Locais",
+                "term_en": "Local Resources Uses",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.303.766"
+                ]
+              },
+              {
+                "id": "DDCS051642",
+                "term": "Leito Fixo",
+                "term_en": "Fixed Bed",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.806.945.750.207.899.660"
+                ]
+              },
+              {
+                "id": "DDCS025556",
+                "term": "Tanques de Concreto",
+                "term_en": "Reinforced Concrete Tanks",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.141.089.248.433.561"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": []
+      }
+    ],
+    "selected_candidates": {
+      "primary": [
+        {
+          "id": "D012680",
+          "term": "Sensibilidade e Especificidade"
+        },
+        {
+          "id": "D012680",
+          "term": "Sensibilidade e Especificidade"
+        },
+        {
+          "id": "DDCS032482",
+          "term": "Recursos Renováveis"
+        }
+      ],
+      "secondary": []
+    }
+  },
+  "stats": {
+    "primary_concepts": 3,
+    "secondary_concepts": 0,
+    "total_candidates": 15,
+    "final_primary": 3,
+    "final_secondary": 0
+  }
+}

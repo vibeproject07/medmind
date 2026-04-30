@@ -1,0 +1,117 @@
+{
+  "result": [
+    {
+      "term": "Nefrite Lúpica",
+      "code": "D008181",
+      "tree_ids": [
+        "C12.050.351.968.419.570.363.680",
+        "C12.200.777.419.570.363.680",
+        "C12.950.419.570.363.680",
+        "C17.300.480.680",
+        "C20.111.590.560"
+      ],
+      "hierarchy_path": "Doenças › C12.050.351.968.419.570.363.680",
+      "scope_note": "Glomerulonefrite associada com doença autoimune, o LUPUS ERITEMATOSO SISTÊMICO. A nefrite lúpica é classificada histologicamente em 6 classes: classe I - glomérulo normal; classe II - alterações mesangiais puras; classe III - glomerulonefrite segmentar focal; classe IV - glomerulonefrite difusa; classe V - glomerulonefrite membranosa difusa e classe VI - glomerulonefrite esclerosante avançada. (Tradução livre do original: The World Health Organization classification 1982)",
+      "name_en": "Lupus Nephritis",
+      "role": "primary"
+    },
+    {
+      "term": "Lúpus Eritematoso Sistêmico",
+      "code": "D008180",
+      "tree_ids": [
+        "C17.300.480",
+        "C20.111.590"
+      ],
+      "hierarchy_path": "Doenças › C17.300.480",
+      "scope_note": "Transtorno multissistêmico, crônico, recidivante, inflamatório e geralmente febril do tecido conjuntivo, caracterizado principalmente pelo envolvimento da pele, articulações, rins e membranas serosas. É de etiologia desconhecida, mas acredita-se que represente uma insuficiência dos mecanismos regulatórios do sistema autoimune. A doença é caracterizada por uma ampla faixa de disfunções sistêmicas, uma taxa de sedimentação de eritrócitos elevada e a formação de células LE no sangue ou na medula óssea.",
+      "name_en": "Lupus Erythematosus, Systemic",
+      "role": "primary"
+    },
+    {
+      "term": "Lúpus Eritematoso Discoide",
+      "code": "D008179",
+      "tree_ids": [
+        "C17.300.475.479",
+        "C17.800.480.479"
+      ],
+      "hierarchy_path": "Doenças › C17.300.475.479",
+      "scope_note": "Forma crônica de lúpus eritematoso cutâneo (LÚPUS ERITEMATOSO CUTÂNEO), na qual as lesões cutâneas mimetizam as da forma sistêmica, porém os sinais sistêmicos são raros. É caracterizada pela presença de placas cutâneas discoides mostrando graus variados de edema, eritema, escamações, tapamento folicular e atrofia cutânea. As lesões são rodeadas por uma margem eritematosa elevada. A doença tipicamente afeta a face e o couro cabeludo, podendo ocorrer uma disseminação generalizada.",
+      "name_en": "Lupus Erythematosus, Discoid",
+      "role": "secondary"
+    },
+    {
+      "term": "Proteinúria",
+      "code": "D011507",
+      "tree_ids": [
+        "C12.050.351.968.934.734",
+        "C12.200.777.934.734",
+        "C12.950.934.734",
+        "C23.888.942.750"
+      ],
+      "hierarchy_path": "Doenças › C12.050.351.968.934.734",
+      "scope_note": "Presença de proteínas na urina, um indicador de NEFROPATIAS.",
+      "name_en": "Proteinuria",
+      "role": "secondary"
+    },
+    {
+      "term": "Inibidor de Coagulação do Lúpus",
+      "code": "D016682",
+      "tree_ids": [
+        "D12.776.124.486.485.114.323.210.600",
+        "D12.776.124.790.651.114.323.210.600",
+        "D12.776.377.715.548.114.323.210.600",
+        "D23.113.475"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D12.776.124.486.485.114.323.210.600",
+      "scope_note": "Anticorpo antifosfolipídico encontrado em associação com uma variedade de doenças (como por exemplo, o LUPUS ERITEMATOSO SISTÊMICO e a SÍNDROME ANTIFOSFOLIPÍDICA), bem como em indivíduos saudáveis. In vitro, o anticorpo interfere na conversão de protrombina em trombina, prolongando o tempo de tromboplastina parcial. In vivo, exerce um efeito pró-coagulante que resulta em trombose, principalmente nas veias e artérias maiores. Além disso, causa complicações obstétricas, inclusive a morte do feto e o aborto espontâneo, bem como várias complicações hematológicas e neurológicas.",
+      "name_en": "Lupus Coagulation Inhibitor",
+      "role": "secondary"
+    },
+    {
+      "term": "Linfopenia",
+      "code": "D008231",
+      "tree_ids": [
+        "C15.378.243.750.605",
+        "C15.378.553.546.605",
+        "C20.673.627"
+      ],
+      "hierarchy_path": "Doenças › C15.378.243.750.605",
+      "scope_note": "Redução no número de linfócitos.",
+      "name_en": "Lymphopenia",
+      "role": "secondary"
+    },
+    {
+      "term": "Anticorpos Antinucleares",
+      "code": "D000974",
+      "tree_ids": [
+        "D12.776.124.486.485.114.323.204",
+        "D12.776.124.790.651.114.323.204",
+        "D12.776.377.715.548.114.323.204"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D12.776.124.486.485.114.323.204",
+      "scope_note": "Autoanticorpos dirigidos contra vários antígenos nucleares, inclusive DNA, RNA, histonas, proteínas nucleares ácidas ou complexos desses elementos moleculares. Os anticorpos antinucleares são encontrados em doenças autoimunes sistêmicas, como o lúpus eritematoso sistêmico, a síndrome de Sjogren's, o escleroderma, a polimiosite, e a doença mista do tecido conjuntivo.",
+      "name_en": "Antibodies, Antinuclear",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Lupus Erythematosus, Systemic",
+      "Lupus Nephritis"
+    ],
+    "secondary": [
+      "Antibodies, Antinuclear",
+      "Lupus Erythematosus, Discoid",
+      "Lupus Coagulation Inhibitor",
+      "Lymphopenia",
+      "Proteinuria"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 2,
+    "secondary_terms": 5,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 0,
+    "final_count": 7
+  }
+}
