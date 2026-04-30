@@ -1226,7 +1226,8 @@ export default function QuestionDetailPage() {
       {/* Descritores DeCS gerados por IA */}
       {isAdmin && (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center justify-between mb-3">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-indigo-500" />
               <h3 className="text-lg font-semibold text-gray-800">Descritores DeCS — IA</h3>
@@ -1255,181 +1256,149 @@ export default function QuestionDetailPage() {
             )}
           </div>
 
-          {/* V1 results */}
-          {aiDecsError && (
-            <p className="text-red-500 text-sm mb-2">{aiDecsError}</p>
-          )}
-          {(question.ai_decs_descriptors ?? []).length > 0 ? (() => {
-            const allDescriptors = question.ai_decs_descriptors ?? [];
-            const primaryDescs = allDescriptors.filter((d) => d.role === 'primary');
-            const secondaryDescs = allDescriptors.filter((d) => d.role === 'secondary');
-            const untagged = allDescriptors.filter((d) => !d.role);
-            return (
-              <div className="space-y-3">
-                <p className="text-xs font-medium text-gray-400 uppercase tracking-wide">Pipeline v1</p>
-                {(primaryDescs.length > 0 || untagged.length > 0) && (
-                  <div>
-                    {primaryDescs.length > 0 && (
-                      <p className="text-xs font-semibold text-indigo-500 uppercase tracking-wide mb-1.5">Temas Principais</p>
-                    )}
-                    <div className="flex flex-wrap gap-2">
-                      {[...primaryDescs, ...untagged].map((d) => (
-                        <span
-                          key={d.code || d.term}
-                          title={d.hierarchy_path || d.tree_ids?.join(', ')}
-                          className="inline-flex flex-col px-3 py-1.5 text-sm font-semibold bg-indigo-100 text-indigo-800 rounded-full border border-indigo-300 cursor-default"
-                        >
-                          <span>{d.term}</span>
-                          {d.code && (
-                            <span className="text-xs text-indigo-400 leading-tight">{d.code}</span>
-                          )}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {secondaryDescs.length > 0 && (
-                  <div>
-                    <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1.5">Temas Secundários</p>
-                    <div className="flex flex-wrap gap-2">
-                      {secondaryDescs.map((d) => (
-                        <span
-                          key={d.code || d.term}
-                          title={d.hierarchy_path || d.tree_ids?.join(', ')}
-                          className="inline-flex flex-col px-3 py-1.5 text-sm font-medium bg-slate-50 text-slate-600 rounded-full border border-slate-200 cursor-default"
-                        >
-                          <span>{d.term}</span>
-                          {d.code && (
-                            <span className="text-xs text-slate-400 leading-tight">{d.code}</span>
-                          )}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          })() : (
-            <p className="text-gray-400 italic text-sm mb-3">
-              {aiDecsLoading ? 'Aguardando resposta da IA…' : 'Nenhum descritor v1 gerado. Clique em "Gerar v1" para classificar esta questão.'}
+          {/* Erros */}
+          {aiDecsError && <p className="text-red-500 text-sm mb-3">{aiDecsError}</p>}
+          {aiDecsV2Error && <p className="text-red-500 text-sm mb-3">{aiDecsV2Error}</p>}
+
+          {/* Loading states */}
+          {(aiDecsLoading || aiDecsV2Loading) && (
+            <p className="text-sm text-indigo-500 italic mb-3">
+              {aiDecsLoading && 'Executando pipeline v1…'}
+              {aiDecsV2Loading && 'Executando pipeline v2 (RAG)…'}
             </p>
           )}
 
-          {/* V2 results — RAG-enhanced with hierarchy */}
-          {(aiDecsV2Result || aiDecsV2Loading || aiDecsV2Error) && (
-            <div className="mt-4 pt-4 border-t border-gray-100">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <p className="text-xs font-medium text-emerald-600 uppercase tracking-wide">Pipeline v2 — RAG + Hierarquia</p>
-                  <button
-                    onClick={() => setShowDecsV2(!showDecsV2)}
-                    className="text-xs text-gray-400 hover:text-gray-600 transition"
-                  >
-                    {showDecsV2 ? '▲ ocultar' : '▼ expandir'}
-                  </button>
-                </div>
+          {/* Tabela comparativa — aparece sempre que ao menos um pipeline tem dados */}
+          {(() => {
+            const v1All = question.ai_decs_descriptors ?? [];
+            const v1Primary = v1All.filter((d) => d.role === 'primary' || !d.role);
+            const v1Secondary = v1All.filter((d) => d.role === 'secondary');
+            const v2Primary = aiDecsV2Result?.decs_primary ?? [];
+            const v2Secondary = aiDecsV2Result?.decs_secondary ?? [];
+            const hasAny = v1All.length > 0 || v2Primary.length > 0 || v2Secondary.length > 0;
+
+            if (!hasAny) {
+              return (
+                <p className="text-gray-400 italic text-sm">
+                  Nenhum descritor gerado ainda. Use os botões acima para classificar esta questão.
+                </p>
+              );
+            }
+
+            const maxRows = Math.max(v1Primary.length, v1Secondary.length, v2Primary.length, v2Secondary.length, 1);
+
+            return (
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm border-collapse">
+                  <thead>
+                    <tr>
+                      <th className="text-left py-2 px-3 bg-indigo-50 border border-indigo-100 rounded-tl-lg text-xs font-semibold text-indigo-700 uppercase tracking-wide w-1/4">
+                        V1 — Primary
+                        <span className="block font-normal text-indigo-400 normal-case tracking-normal mt-0.5">Núcleo semântico</span>
+                      </th>
+                      <th className="text-left py-2 px-3 bg-slate-50 border border-slate-100 text-xs font-semibold text-slate-500 uppercase tracking-wide w-1/4">
+                        V1 — Secondary
+                        <span className="block font-normal text-slate-400 normal-case tracking-normal mt-0.5">Contexto / detalhamento</span>
+                      </th>
+                      <th className="text-left py-2 px-3 bg-emerald-50 border border-emerald-100 text-xs font-semibold text-emerald-700 uppercase tracking-wide w-1/4">
+                        V2 — Primary
+                        <span className="block font-normal text-emerald-400 normal-case tracking-normal mt-0.5">RAG + hierarquia</span>
+                      </th>
+                      <th className="text-left py-2 px-3 bg-teal-50 border border-teal-100 rounded-tr-lg text-xs font-semibold text-teal-600 uppercase tracking-wide w-1/4">
+                        V2 — Secondary
+                        <span className="block font-normal text-teal-400 normal-case tracking-normal mt-0.5">Contexto / RAG</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Array.from({ length: maxRows }).map((_, i) => {
+                      const d1p = v1Primary[i];
+                      const d1s = v1Secondary[i];
+                      const d2p = v2Primary[i];
+                      const d2s = v2Secondary[i];
+                      return (
+                        <tr key={i} className="align-top">
+                          {/* V1 Primary */}
+                          <td className="py-2 px-3 border border-indigo-100 bg-indigo-50/40">
+                            {d1p ? (
+                              <div>
+                                <span className="font-semibold text-indigo-800">{d1p.term}</span>
+                                {d1p.code && (
+                                  <span className="block text-xs text-indigo-400 font-mono mt-0.5">{d1p.code}</span>
+                                )}
+                                {d1p.hierarchy_path && (
+                                  <span className="block text-xs text-indigo-300 mt-0.5">{d1p.hierarchy_path}</span>
+                                )}
+                              </div>
+                            ) : <span className="text-gray-300">—</span>}
+                          </td>
+                          {/* V1 Secondary */}
+                          <td className="py-2 px-3 border border-slate-100 bg-slate-50/40">
+                            {d1s ? (
+                              <div>
+                                <span className="font-medium text-slate-700">{d1s.term}</span>
+                                {d1s.code && (
+                                  <span className="block text-xs text-slate-400 font-mono mt-0.5">{d1s.code}</span>
+                                )}
+                                {d1s.hierarchy_path && (
+                                  <span className="block text-xs text-slate-300 mt-0.5">{d1s.hierarchy_path}</span>
+                                )}
+                              </div>
+                            ) : <span className="text-gray-300">—</span>}
+                          </td>
+                          {/* V2 Primary */}
+                          <td className="py-2 px-3 border border-emerald-100 bg-emerald-50/40">
+                            {d2p ? (
+                              <div>
+                                <span className="font-semibold text-emerald-800">{d2p.term}</span>
+                                {d2p.name_en && (
+                                  <span className="block text-xs text-emerald-500 italic mt-0.5">{d2p.name_en}</span>
+                                )}
+                                <span className="block text-xs text-emerald-400 font-mono mt-0.5">{d2p.id}</span>
+                                {d2p.scope_note && (
+                                  <span className="block text-xs text-gray-400 mt-1 line-clamp-2">{d2p.scope_note}</span>
+                                )}
+                                {d2p.parents.length > 0 && (
+                                  <span className="block text-xs text-emerald-400 mt-1">
+                                    ↑ {d2p.parents.map(p => p.term).join(', ')}
+                                  </span>
+                                )}
+                                {d2p.children.length > 0 && (
+                                  <span className="block text-xs text-gray-400 mt-0.5">
+                                    ↓ {d2p.children.slice(0, 2).map(c => c.term).join(', ')}{d2p.children.length > 2 ? '…' : ''}
+                                  </span>
+                                )}
+                              </div>
+                            ) : <span className="text-gray-300">—</span>}
+                          </td>
+                          {/* V2 Secondary */}
+                          <td className="py-2 px-3 border border-teal-100 bg-teal-50/40">
+                            {d2s ? (
+                              <div>
+                                <span className="font-medium text-teal-800">{d2s.term}</span>
+                                {d2s.name_en && (
+                                  <span className="block text-xs text-teal-500 italic mt-0.5">{d2s.name_en}</span>
+                                )}
+                                <span className="block text-xs text-teal-400 font-mono mt-0.5">{d2s.id}</span>
+                                {d2s.scope_note && (
+                                  <span className="block text-xs text-gray-400 mt-1 line-clamp-2">{d2s.scope_note}</span>
+                                )}
+                                {d2s.parents.length > 0 && (
+                                  <span className="block text-xs text-teal-400 mt-1">
+                                    ↑ {d2s.parents.map(p => p.term).join(', ')}
+                                  </span>
+                                )}
+                              </div>
+                            ) : <span className="text-gray-300">—</span>}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
               </div>
-
-              {aiDecsV2Error && (
-                <p className="text-red-500 text-sm mb-2">{aiDecsV2Error}</p>
-              )}
-
-              {showDecsV2 && aiDecsV2Result && (
-                <div className="space-y-4">
-                  {aiDecsV2Result.decs_primary.length > 0 && (
-                    <div>
-                      <p className="text-xs font-semibold text-emerald-600 uppercase tracking-wide mb-2">Descritores Primários</p>
-                      <div className="space-y-2">
-                        {aiDecsV2Result.decs_primary.map((d) => (
-                          <div key={d.id} className="p-3 bg-emerald-50 rounded-lg border border-emerald-200">
-                            <div className="flex items-start justify-between gap-2">
-                              <div>
-                                <span className="text-sm font-semibold text-emerald-800">{d.term}</span>
-                                {d.name_en && (
-                                  <span className="ml-2 text-xs text-emerald-500 italic">{d.name_en}</span>
-                                )}
-                              </div>
-                              <span className="text-xs text-emerald-400 font-mono shrink-0">{d.id}</span>
-                            </div>
-                            {d.scope_note && (
-                              <p className="text-xs text-gray-500 mt-1 line-clamp-2">{d.scope_note}</p>
-                            )}
-                            {d.hierarchy_path && (
-                              <p className="text-xs text-emerald-400 mt-1">{d.hierarchy_path}</p>
-                            )}
-                            {d.parents.length > 0 && (
-                              <div className="mt-2 flex flex-wrap gap-1 items-center">
-                                <span className="text-xs text-gray-400">↑ pai:</span>
-                                {d.parents.map((p) => (
-                                  <span key={p.id} className="text-xs px-1.5 py-0.5 bg-white border border-emerald-200 rounded text-emerald-600">{p.term}</span>
-                                ))}
-                              </div>
-                            )}
-                            {d.children.length > 0 && (
-                              <div className="mt-1 flex flex-wrap gap-1 items-center">
-                                <span className="text-xs text-gray-400">↓ filhos:</span>
-                                {d.children.map((c) => (
-                                  <span key={c.id} className="text-xs px-1.5 py-0.5 bg-white border border-gray-200 rounded text-gray-500">{c.term}</span>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {aiDecsV2Result.decs_secondary.length > 0 && (
-                    <div>
-                      <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">Descritores Secundários</p>
-                      <div className="space-y-2">
-                        {aiDecsV2Result.decs_secondary.map((d) => (
-                          <div key={d.id} className="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                            <div className="flex items-start justify-between gap-2">
-                              <div>
-                                <span className="text-sm font-medium text-slate-700">{d.term}</span>
-                                {d.name_en && (
-                                  <span className="ml-2 text-xs text-slate-400 italic">{d.name_en}</span>
-                                )}
-                              </div>
-                              <span className="text-xs text-slate-400 font-mono shrink-0">{d.id}</span>
-                            </div>
-                            {d.scope_note && (
-                              <p className="text-xs text-gray-500 mt-1 line-clamp-2">{d.scope_note}</p>
-                            )}
-                            {d.parents.length > 0 && (
-                              <div className="mt-2 flex flex-wrap gap-1 items-center">
-                                <span className="text-xs text-gray-400">↑ pai:</span>
-                                {d.parents.map((p) => (
-                                  <span key={p.id} className="text-xs px-1.5 py-0.5 bg-white border border-slate-200 rounded text-slate-500">{p.term}</span>
-                                ))}
-                              </div>
-                            )}
-                            {d.children.length > 0 && (
-                              <div className="mt-1 flex flex-wrap gap-1 items-center">
-                                <span className="text-xs text-gray-400">↓ filhos:</span>
-                                {d.children.map((c) => (
-                                  <span key={c.id} className="text-xs px-1.5 py-0.5 bg-white border border-gray-100 rounded text-gray-400">{c.term}</span>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {showDecsV2 && aiDecsV2Loading && (
-                <p className="text-sm text-emerald-500 italic">Executando pipeline RAG… pode levar alguns segundos.</p>
-              )}
-
-              {showDecsV2 && !aiDecsV2Loading && !aiDecsV2Error && (!aiDecsV2Result || (aiDecsV2Result.decs_primary.length === 0 && aiDecsV2Result.decs_secondary.length === 0)) && (
-                <p className="text-gray-400 italic text-sm">Nenhum resultado v2 ainda.</p>
-              )}
-            </div>
-          )}
+            );
+          })()}
         </div>
       )}
 
