@@ -18,10 +18,6 @@
         ],
         "children": [
           {
-            "id": "D016330",
-            "term": "Idoso Fragilizado"
-          },
-          {
             "id": "D000369",
             "term": "Idoso de 80 Anos ou mais"
           },
@@ -32,6 +28,10 @@
           {
             "id": "D000087662",
             "term": "Centenários"
+          },
+          {
+            "id": "D016330",
+            "term": "Idoso Fragilizado"
           }
         ],
         "role": "primary"

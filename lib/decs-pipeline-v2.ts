@@ -234,7 +234,11 @@ async function selectDescriptorsWithGemini(
     const body = {
       system_instruction: { parts: [{ text: selectorPrompt }] },
       contents: [{ role: 'user', parts: [{ text: JSON.stringify(contextInput, null, 2) }] }],
-      generationConfig: { temperature: 0.05, maxOutputTokens: 8192 },
+      generationConfig: {
+        temperature: 0.05,
+        maxOutputTokens: 8192,
+        responseMimeType: 'application/json',
+      },
     };
     const res = await fetch(url, {
       method: 'POST',
@@ -330,7 +334,11 @@ export async function runDeCSPipelineV2(
     const body = {
       system_instruction: { parts: [{ text: indexerPrompt }] },
       contents: [{ role: 'user', parts: [{ text: questionText }] }],
-      generationConfig: { temperature: 0.1, maxOutputTokens: 8192 },
+      generationConfig: {
+        temperature: 0.1,
+        maxOutputTokens: 8192,
+        responseMimeType: 'application/json',
+      },
     };
     const res = await fetch(url, {
       method: 'POST',

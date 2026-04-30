@@ -353,7 +353,11 @@ export async function validateDescriptorsWithGemini(
     const body = {
       system_instruction: { parts: [{ text: VALIDATION_PROMPT }] },
       contents: [{ role: 'user', parts: [{ text: userMessage }] }],
-      generationConfig: { temperature: 0, maxOutputTokens: 8192 },
+      generationConfig: {
+        temperature: 0,
+        maxOutputTokens: 8192,
+        responseMimeType: 'application/json',
+      },
     };
     const res = await fetch(url, {
       method: 'POST',

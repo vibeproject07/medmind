@@ -52,6 +52,56 @@
       "label": "primários",
       "concepts": [
         {
+          "concept": "Enunciado",
+          "candidates": [
+            {
+              "id": "DDCS032482",
+              "term": "Recursos Renováveis",
+              "term_en": "Renewable Resources",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.837.868"
+              ]
+            },
+            {
+              "id": "DDCS051583",
+              "term": "Varredoras",
+              "term_en": "Sweepers",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.987.506.871"
+              ]
+            },
+            {
+              "id": "DDCS051857",
+              "term": "Utilização de Recursos Locais",
+              "term_en": "Local Resources Uses",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.303.766"
+              ]
+            },
+            {
+              "id": "DDCS051642",
+              "term": "Leito Fixo",
+              "term_en": "Fixed Bed",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.806.945.750.207.899.660"
+              ]
+            },
+            {
+              "id": "DDCS025556",
+              "term": "Tanques de Concreto",
+              "term_en": "Reinforced Concrete Tanks",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.895.141.089.248.433.561"
+              ]
+            }
+          ]
+        },
+        {
           "concept": "70 anos",
           "candidates": [
             {
@@ -100,56 +150,6 @@
               "categoria": "Grupos Identificados",
               "arvore": [
                 "M01.060.116.100.080.500"
-              ]
-            }
-          ]
-        },
-        {
-          "concept": "Enunciado",
-          "candidates": [
-            {
-              "id": "DDCS032482",
-              "term": "Recursos Renováveis",
-              "term_en": "Renewable Resources",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.606.837.868"
-              ]
-            },
-            {
-              "id": "DDCS051583",
-              "term": "Varredoras",
-              "term_en": "Sweepers",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.895.987.506.871"
-              ]
-            },
-            {
-              "id": "DDCS051857",
-              "term": "Utilização de Recursos Locais",
-              "term_en": "Local Resources Uses",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.303.766"
-              ]
-            },
-            {
-              "id": "DDCS051642",
-              "term": "Leito Fixo",
-              "term_en": "Fixed Bed",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.606.806.945.750.207.899.660"
-              ]
-            },
-            {
-              "id": "DDCS025556",
-              "term": "Tanques de Concreto",
-              "term_en": "Reinforced Concrete Tanks",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.895.141.089.248.433.561"
               ]
             }
           ]
@@ -235,6 +235,56 @@
         "label": "primários",
         "concepts": [
           {
+            "concept": "Enunciado",
+            "candidates": [
+              {
+                "id": "DDCS032482",
+                "term": "Recursos Renováveis",
+                "term_en": "Renewable Resources",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.837.868"
+                ]
+              },
+              {
+                "id": "DDCS051583",
+                "term": "Varredoras",
+                "term_en": "Sweepers",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.987.506.871"
+                ]
+              },
+              {
+                "id": "DDCS051857",
+                "term": "Utilização de Recursos Locais",
+                "term_en": "Local Resources Uses",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.303.766"
+                ]
+              },
+              {
+                "id": "DDCS051642",
+                "term": "Leito Fixo",
+                "term_en": "Fixed Bed",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.806.945.750.207.899.660"
+                ]
+              },
+              {
+                "id": "DDCS025556",
+                "term": "Tanques de Concreto",
+                "term_en": "Reinforced Concrete Tanks",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.895.141.089.248.433.561"
+                ]
+              }
+            ]
+          },
+          {
             "concept": "70 anos",
             "candidates": [
               {
@@ -283,56 +333,6 @@
                 "categoria": "Grupos Identificados",
                 "arvore": [
                   "M01.060.116.100.080.500"
-                ]
-              }
-            ]
-          },
-          {
-            "concept": "Enunciado",
-            "candidates": [
-              {
-                "id": "DDCS032482",
-                "term": "Recursos Renováveis",
-                "term_en": "Renewable Resources",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.606.837.868"
-                ]
-              },
-              {
-                "id": "DDCS051583",
-                "term": "Varredoras",
-                "term_en": "Sweepers",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.895.987.506.871"
-                ]
-              },
-              {
-                "id": "DDCS051857",
-                "term": "Utilização de Recursos Locais",
-                "term_en": "Local Resources Uses",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.303.766"
-                ]
-              },
-              {
-                "id": "DDCS051642",
-                "term": "Leito Fixo",
-                "term_en": "Fixed Bed",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.606.806.945.750.207.899.660"
-                ]
-              },
-              {
-                "id": "DDCS025556",
-                "term": "Tanques de Concreto",
-                "term_en": "Reinforced Concrete Tanks",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.895.141.089.248.433.561"
                 ]
               }
             ]

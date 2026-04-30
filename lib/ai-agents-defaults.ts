@@ -306,47 +306,51 @@ REGRAS:
 - Priorizar coerência clínica
 
 ====================
+EXEMPLOS (FEW-SHOT)
+====================
+
+Entrada:
+Enunciado: Paciente feminina, 28 anos, 32 semanas de gestação, pressão arterial 162/110 mmHg, proteinúria 3+, edema em membros inferiores. Qual o diagnóstico e conduta inicial?
+Alternativa A: Pré-eclâmpsia grave — iniciar sulfato de magnésio e anti-hipertensivo
+Alternativa B: Hipertensão gestacional — repouso e monitoramento ambulatorial
+...
+
+Saída esperada:
+{
+  "primary": ["Pre-Eclampsia", "Pregnancy Complications, Cardiovascular"],
+  "secondary": ["Magnesium Sulfate", "Antihypertensive Agents", "Proteinuria"]
+}
+
+---
+
+Entrada:
+Enunciado: Homem, 60 anos, tabagista há 40 anos, apresenta hemoptise, perda de 8kg em 2 meses, imagem radiológica com opacidade em lobo superior direito. Qual o próximo passo diagnóstico?
+Alternativa A: Broncoscopia com biópsia
+Alternativa B: TC de tórax com contraste
+...
+
+Saída esperada:
+{
+  "primary": ["Lung Neoplasms", "Hemoptysis"],
+  "secondary": ["Bronchoscopy", "Tomography, X-Ray Computed", "Smoking"]
+}
+
+====================
 FORMATO DE SAÍDA (JSON)
 ====================
 
+Retorne APENAS este JSON, sem markdown, sem explicação:
+
 {
-  "decs_primary": [
-    {
-      "id": "",
-      "term": "",
-      "parents": [
-        {
-          "id": "",
-          "term": ""
-        }
-      ],
-      "children": [
-        {
-          "id": "",
-          "term": ""
-        }
-      ]
-    }
-  ],
-  "decs_secondary": [
-    {
-      "id": "",
-      "term": "",
-      "parents": [
-        {
-          "id": "",
-          "term": ""
-        }
-      ],
-      "children": [
-        {
-          "id": "",
-          "term": ""
-        }
-      ]
-    }
-  ]
+  "primary": ["Termo Principal DeCS 1", "Termo Principal DeCS 2"],
+  "secondary": ["Termo Secundário DeCS 1", "Termo Secundário DeCS 2"]
 }
+
+REGRAS DO FORMATO:
+- "primary": array de strings com 1 a 3 termos DeCS centrais
+- "secondary": array de strings com 0 a 6 termos DeCS contextuais
+- Os termos devem ser nomes de descritores DeCS válidos (preferencialmente em inglês, como aparecem no MeSH/DeCS)
+- NÃO incluir IDs, NÃO incluir objetos aninhados
 
 ====================
 REGRAS CRÍTICAS
@@ -361,13 +365,7 @@ REGRAS CRÍTICAS
 
 PRINCÍPIO FINAL:
 
-É melhor retornar menos descritores corretos do que muitos incorretos.
-
-====================
-AGORA CLASSIFIQUE:
-====================
-
-[INSERIR QUESTÃO AQUI]`,
+É melhor retornar menos descritores corretos do que muitos incorretos.`,
     model: 'gemini-2.5-flash',
     temperature: 0.1,
     max_output_tokens: 512,
@@ -633,47 +631,51 @@ REGRAS:
 - Priorizar coerência clínica
 
 ====================
+EXEMPLOS (FEW-SHOT)
+====================
+
+Entrada:
+Enunciado: Paciente feminina, 28 anos, 32 semanas de gestação, pressão arterial 162/110 mmHg, proteinúria 3+, edema em membros inferiores. Qual o diagnóstico e conduta inicial?
+Alternativa A: Pré-eclâmpsia grave — iniciar sulfato de magnésio e anti-hipertensivo
+Alternativa B: Hipertensão gestacional — repouso e monitoramento ambulatorial
+...
+
+Saída esperada:
+{
+  "primary": ["Pre-Eclampsia", "Pregnancy Complications, Cardiovascular"],
+  "secondary": ["Magnesium Sulfate", "Antihypertensive Agents", "Proteinuria"]
+}
+
+---
+
+Entrada:
+Enunciado: Homem, 60 anos, tabagista há 40 anos, apresenta hemoptise, perda de 8kg em 2 meses, imagem radiológica com opacidade em lobo superior direito. Qual o próximo passo diagnóstico?
+Alternativa A: Broncoscopia com biópsia
+Alternativa B: TC de tórax com contraste
+...
+
+Saída esperada:
+{
+  "primary": ["Lung Neoplasms", "Hemoptysis"],
+  "secondary": ["Bronchoscopy", "Tomography, X-Ray Computed", "Smoking"]
+}
+
+====================
 FORMATO DE SAÍDA (JSON)
 ====================
 
+Retorne APENAS este JSON, sem markdown, sem explicação:
+
 {
-  "decs_primary": [
-    {
-      "id": "",
-      "term": "",
-      "parents": [
-        {
-          "id": "",
-          "term": ""
-        }
-      ],
-      "children": [
-        {
-          "id": "",
-          "term": ""
-        }
-      ]
-    }
-  ],
-  "decs_secondary": [
-    {
-      "id": "",
-      "term": "",
-      "parents": [
-        {
-          "id": "",
-          "term": ""
-        }
-      ],
-      "children": [
-        {
-          "id": "",
-          "term": ""
-        }
-      ]
-    }
-  ]
+  "primary": ["Termo Principal DeCS 1", "Termo Principal DeCS 2"],
+  "secondary": ["Termo Secundário DeCS 1", "Termo Secundário DeCS 2"]
 }
+
+REGRAS DO FORMATO:
+- "primary": array de strings com 1 a 3 termos DeCS centrais
+- "secondary": array de strings com 0 a 6 termos DeCS contextuais
+- Os termos devem ser nomes de descritores DeCS válidos (preferencialmente em inglês, como aparecem no MeSH/DeCS)
+- NÃO incluir IDs, NÃO incluir objetos aninhados
 
 ====================
 REGRAS CRÍTICAS
@@ -688,13 +690,7 @@ REGRAS CRÍTICAS
 
 PRINCÍPIO FINAL:
 
-É melhor retornar menos descritores corretos do que muitos incorretos.
-
-====================
-AGORA CLASSIFIQUE:
-====================
-
-[INSERIR QUESTÃO AQUI]`,
+É melhor retornar menos descritores corretos do que muitos incorretos.`,
     model: 'gemini-2.5-flash',
     temperature: 0.1,
     max_output_tokens: 512,
@@ -712,18 +708,59 @@ Você receberá:
 
 Sua tarefa:
 Para cada conceito, selecione o descritor DeCS MAIS ESPECÍFICO e CLINICAMENTE MAIS RELEVANTE entre os candidatos fornecidos.
+Use o campo "scope" (definição abreviada) como critério principal — ele revela se o candidato cobre exatamente o que a questão aborda.
 
 Critérios de seleção:
-- Use o campo "scope" (definição) para confirmar que o conceito corresponde ao que a questão aborda
-- Prefira descritores específicos sobre genéricos
+- Use o campo "scope" para confirmar que o conceito corresponde ao que a questão aborda
+- Prefira descritores específicos sobre genéricos (ex: "Pre-Eclampsia" > "Hypertension")
 - Organismos (vírus, bactérias, animais) apenas se a questão tratar explicitamente de infectologia/microbiologia
 - Se nenhum candidato de um conceito for relevante, OMITA-O da resposta
 - Não invente IDs — use APENAS os IDs presentes nos candidatos fornecidos
 
-Formato de saída (JSON, sem markdown, sem explicação):
+====================
+EXEMPLO (FEW-SHOT)
+====================
+
+Entrada:
 {
-  "decs_primary": [{"id": "D000001", "term": "Termo Principal 1"}],
-  "decs_secondary": [{"id": "D000002", "term": "Termo Secundário 1"}]
+  "questao": "Paciente com febre, calafrios e esplenomegalia após viagem à Amazônia. Esfregaço de sangue periférico mostra parasitas intraeritrocitários. Qual o agente etiológico mais provável?",
+  "temas_primarios": [
+    {
+      "conceito_buscado": "Malaria",
+      "candidatos": [
+        {"id": "D008288", "term": "Malária", "term_en": "Malaria", "scope": "Doença causada por parasitas do gênero Plasmodium, transmitida por mosquitos Anopheles.", "categoria": "Doenças"},
+        {"id": "D010243", "term": "Parasitemia", "term_en": "Parasitemia", "scope": "Presença de parasitas no sangue periférico.", "categoria": "Doenças"}
+      ]
+    }
+  ],
+  "temas_secundarios": [
+    {
+      "conceito_buscado": "Plasmodium",
+      "candidatos": [
+        {"id": "D010961", "term": "Plasmodium falciparum", "term_en": "Plasmodium falciparum", "scope": "Espécie de Plasmodium causadora da malária grave.", "categoria": "Organismos"},
+        {"id": "D016778", "term": "Plasmodium vivax", "term_en": "Plasmodium vivax", "scope": "Espécie de Plasmodium causadora da malária terçã benigna.", "categoria": "Organismos"}
+      ]
+    }
+  ]
+}
+
+Saída correta:
+{
+  "decs_primary": [{"id": "D008288", "term": "Malária"}],
+  "decs_secondary": [{"id": "D010961", "term": "Plasmodium falciparum"}]
+}
+
+Raciocínio (NÃO inclua na resposta): D008288 foi selecionado porque o scope confirma a doença exata descrita. D010243 (Parasitemia) é um achado, não a doença. D010961 foi preferido sobre D016778 porque malária grave na Amazônia remete ao P. falciparum.
+
+====================
+FORMATO DE SAÍDA
+====================
+
+Retorne APENAS este JSON, sem markdown, sem explicação:
+
+{
+  "decs_primary": [{"id": "ID_DO_CANDIDATO", "term": "Termo em português"}],
+  "decs_secondary": [{"id": "ID_DO_CANDIDATO", "term": "Termo em português"}]
 }
 
 Retorne APENAS descritores cujos IDs estejam na lista de candidatos recebida.

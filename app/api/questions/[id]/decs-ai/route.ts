@@ -64,6 +64,7 @@ export async function POST(
         systemInstruction: systemPrompt,
         temperature: 0.1,
         maxOutputTokens: 8192,
+        responseMimeType: 'application/json',
       },
     });
 

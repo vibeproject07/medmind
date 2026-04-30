@@ -18,126 +18,162 @@
         ],
         "children": [],
         "role": "primary"
+      },
+      {
+        "id": "D000087507",
+        "term": "Eficácia de Vacinas",
+        "name_en": "Vaccine Efficacy",
+        "scope_note": "Medida da redução do risco de doença entre vacinados em comparação com pessoas não vacinadas em condições ideais, como em um ensaio clínico. Tal redução da doença medida em condições típicas consiste na eficácia da vacina. Por outro lado, a potência da vacina é medida em testes para assegurar a dosagem e o armazenamento adequados das vacinas, enquanto a imunogenicidade da vacina mede sua capacidade de induzir uma resposta imunitária em um indivíduo vacinado em estudos observacionais.",
+        "tree_ids": [
+          "E05.952.500"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E05.952.500",
+        "parents": [
+          {
+            "id": "D000087506",
+            "term": "Desenvolvimento de Vacinas"
+          }
+        ],
+        "children": [],
+        "role": "primary"
       }
     ],
-    "decs_secondary": []
+    "decs_secondary": [
+      {
+        "id": "D002986",
+        "term": "Ensaios Clínicos como Assunto",
+        "name_en": "Clinical Trials as Topic",
+        "scope_note": "Trabalhos sobre estudos pré-planejados sobre segurança, eficácia, ou esquema de dosagem ótima (se apropriado) de uma ou mais drogas diagnósticas, terapêuticas, ou profiláticas, dispositivos, ou técnicas selecionadas de acordo com critérios pré-determinados de elegibilidade e observadas para evidência pré-definida de efeitos favoráveis ou desfavoráveis. Este conceito inclui ensaios clínicos conduzidos tanto nos EUA quanto em outros países.",
+        "tree_ids": [
+          "E05.318.372.250.250",
+          "N05.715.360.330.250.250",
+          "N06.850.520.450.250.250",
+          "SH1.010.040.020.030.378"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E05.318.372.250.250",
+        "parents": [
+          {
+            "id": "D000068456",
+            "term": "Estudos Clínicos como Assunto"
+          }
+        ],
+        "children": [
+          {
+            "id": "D017321",
+            "term": "Ensaios Clínicos Fase I como Assunto"
+          },
+          {
+            "id": "D017327",
+            "term": "Ensaios Clínicos Fase IV como Assunto"
+          },
+          {
+            "id": "D017326",
+            "term": "Ensaios Clínicos Fase III como Assunto"
+          },
+          {
+            "id": "D018849",
+            "term": "Ensaios Clínicos Controlados como Assunto"
+          },
+          {
+            "id": "D016032",
+            "term": "Ensaios Clínicos Controlados Aleatórios como Assunto"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D003715",
+        "term": "Dengue",
+        "name_en": "Dengue",
+        "scope_note": "Doença febril aguda transmitida por picada de mosquitos AEDES infectados com o VÍRUS DA DENGUE. É autolimitada e caracterizada por febre, mialgia, cefaleia e exantema. A DENGUE GRAVE é uma forma mais virulenta da dengue.",
+        "tree_ids": [
+          "C01.920.852.157",
+          "C01.925.081.270",
+          "C01.925.782.350.250.214",
+          "C01.925.782.417.214",
+          "SP4.909.332.216.372"
+        ],
+        "hierarchy_path": "Doenças › C01.920.852.157",
+        "parents": [
+          {
+            "id": "D000096724",
+            "term": "Doenças Transmitidas por Mosquitos"
+          },
+          {
+            "id": "D001102",
+            "term": "Infecções por Arbovirus"
+          },
+          {
+            "id": "D018177",
+            "term": "Infecções por Flavivirus"
+          }
+        ],
+        "children": [
+          {
+            "id": "D019595",
+            "term": "Dengue Grave"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D015991",
+        "term": "Medidas em Epidemiologia",
+        "name_en": "Epidemiologic Measurements",
+        "scope_note": "Cálculos estatísticos sobre a ocorrência de doenças ou outras condições relacionadas com a saúde em populações definidas.",
+        "tree_ids": [
+          "N06.850.505"
+        ],
+        "hierarchy_path": "Saúde › N06.850.505",
+        "parents": [
+          {
+            "id": "D011634",
+            "term": "Saúde Pública"
+          }
+        ],
+        "children": [
+          {
+            "id": "D006304",
+            "term": "Nível de Saúde"
+          },
+          {
+            "id": "D006798",
+            "term": "Habitação"
+          },
+          {
+            "id": "D015577",
+            "term": "Avaliação Geriátrica"
+          },
+          {
+            "id": "D015596",
+            "term": "Avaliação Nutricional"
+          },
+          {
+            "id": "D008428",
+            "term": "Mortalidade Materna"
+          }
+        ],
+        "role": "secondary"
+      }
+    ]
   },
   "themes_identified": {
     "primary": [
-      "Enunciado",
-      "Um ensaio clínico com a nova vacina contra dengue",
-      "QdengaR"
+      "Dengue Vaccines",
+      "Vaccine Efficacy"
     ],
-    "secondary": []
+    "secondary": [
+      "Clinical Trials as Topic",
+      "Dengue",
+      "Epidemiologic Methods"
+    ]
   },
   "candidate_groups": [
     {
       "label": "primários",
       "concepts": [
         {
-          "concept": "Enunciado",
-          "candidates": [
-            {
-              "id": "DDCS032482",
-              "term": "Recursos Renováveis",
-              "term_en": "Renewable Resources",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.606.837.868"
-              ]
-            },
-            {
-              "id": "DDCS051583",
-              "term": "Varredoras",
-              "term_en": "Sweepers",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.895.987.506.871"
-              ]
-            },
-            {
-              "id": "DDCS051857",
-              "term": "Utilização de Recursos Locais",
-              "term_en": "Local Resources Uses",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.303.766"
-              ]
-            },
-            {
-              "id": "DDCS051642",
-              "term": "Leito Fixo",
-              "term_en": "Fixed Bed",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.606.806.945.750.207.899.660"
-              ]
-            },
-            {
-              "id": "DDCS025556",
-              "term": "Tanques de Concreto",
-              "term_en": "Reinforced Concrete Tanks",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.895.141.089.248.433.561"
-              ]
-            }
-          ]
-        },
-        {
-          "concept": "QdengaR",
-          "candidates": [
-            {
-              "id": "D011798",
-              "term": "Quinaldinas",
-              "term_en": "Quinaldines",
-              "categoria": "Compostos Químicos e Drogas",
-              "arvore": [
-                "D03.633.100.810.637"
-              ]
-            },
-            {
-              "id": "D011804",
-              "term": "Quinolinas",
-              "term_en": "Quinolines",
-              "categoria": "Compostos Químicos e Drogas",
-              "arvore": [
-                "D03.633.100.810"
-              ]
-            },
-            {
-              "id": "D000077764",
-              "term": "Dronedarona",
-              "term_en": "Dronedarone",
-              "scope": "Derivado não iodado da AMIODARONA usada para o tratamento da ARRITMIA.",
-              "categoria": "Compostos Químicos e Drogas",
-              "arvore": [
-                "D03.633.100.127.075.500"
-              ]
-            },
-            {
-              "id": "D003868",
-              "term": "Dequalínio",
-              "term_en": "Dequalinium",
-              "scope": "Bacteriostático tópico disponível como vários sais. É usado nos curativos de ferimentos e em infecções bucais, e pode também ter ação antimicótica, mas pode provocar ulceração na pele.",
-              "categoria": "Compostos Químicos e Drogas",
-              "arvore": [
-                "D03.633.100.810.824.200"
-              ]
-            },
-            {
-              "id": "D011807",
-              "term": "Quinolizinas",
-              "term_en": "Quinolizines",
-              "categoria": "Compostos Químicos e Drogas",
-              "arvore": [
-                "D03.633.100.834"
-              ]
-            }
-          ]
-        },
-        {
-          "concept": "Um ensaio clínico com a nova vacina contra dengue",
+          "concept": "Dengue Vaccines",
           "candidates": [
             {
               "id": "D053059",
@@ -180,13 +216,71 @@
               ]
             },
             {
-              "id": "D000087506",
-              "term": "Desenvolvimento de Vacinas",
-              "term_en": "Vaccine Development",
-              "scope": "Processo integral de introdução de uma nova vacina para uso em VACINAÇÃO, incluindo o desenvolvimento pré-clínico, testes em ENSAIO CLÍNICO CONTROLADO, fabricação, aprovação, licenciamento e distribui",
+              "id": "D046129",
+              "term": "Vacinas contra Ebola",
+              "term_en": "Ebola Vaccines",
+              "scope": "Vacinas ou candidatos a vacinas utilizados para prevenir FEBRE HEMORRÁGICA DO EBOLA.",
+              "categoria": "Compostos Químicos e Drogas",
+              "arvore": [
+                "D20.215.894.899.205"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Vaccine Efficacy",
+          "candidates": [
+            {
+              "id": "D000087507",
+              "term": "Eficácia de Vacinas",
+              "term_en": "Vaccine Efficacy",
+              "scope": "Medida da redução do risco de doença entre vacinados em comparação com pessoas não vacinadas em condições ideais, como em um ensaio clínico. Tal redução da doença medida em condições típicas consiste ",
               "categoria": "Técnicas e Equipamentos Analíticos",
               "arvore": [
-                "E05.952"
+                "E05.952.500"
+              ]
+            },
+            {
+              "id": "D064166",
+              "term": "Potência de Vacina",
+              "term_en": "Vaccine Potency",
+              "scope": "Relação entre uma IMUNIDADE ADAPTATIVA e a dose da vacina administrada. É caracteristicamente medida em um ensaio para garantir a dosagem e o armazenamento adequados de vacinas, enquanto a EFICÁCIA DE",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.952.750",
+                "G12.300.500"
+              ]
+            },
+            {
+              "id": "D000071497",
+              "term": "Imunogenicidade da Vacina",
+              "term_en": "Immunogenicity, Vaccine",
+              "scope": "Capacidade das VACINAS de estimular a RESPOSTA IMUNE ADAPTATIVA para produzir anticorpos e respostas da CÉLULA T específica para antígenos. É geralmente medida em indivíduos vacinados em ambientes de ",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.952.250",
+                "G12.513"
+              ]
+            },
+            {
+              "id": "D000079263",
+              "term": "Doenças Preveníveis por Vacina",
+              "term_en": "Vaccine-Preventable Diseases",
+              "scope": "Doenças para as quais existem vacinas que conferem proteção parcial ou completa. (World Health Organization vaccine-safety-training.org)",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.918"
+              ]
+            },
+            {
+              "id": "DDCS061007",
+              "term": "Segurança Vacinal",
+              "term_en": "Vaccine Safety",
+              "scope": "Estudo, monitoramento e regulamentação de vacinas para garantir que os benefícios da vacinação superem os riscos potenciais na população em geral.",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP9.898.783.802",
+                "VS1.001.003.001.001.005.001.739"
               ]
             }
           ]
@@ -195,126 +289,193 @@
     },
     {
       "label": "secundários",
-      "concepts": []
+      "concepts": [
+        {
+          "concept": "Clinical Trials as Topic",
+          "candidates": [
+            {
+              "id": "D002986",
+              "term": "Ensaios Clínicos como Assunto",
+              "term_en": "Clinical Trials as Topic",
+              "scope": "Trabalhos sobre estudos pré-planejados sobre segurança, eficácia, ou esquema de dosagem ótima (se apropriado) de uma ou mais drogas diagnósticas, terapêuticas, ou profiláticas, dispositivos, ou técnic",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.372.250.250",
+                "N05.715.360.330.250.250"
+              ]
+            },
+            {
+              "id": "D018849",
+              "term": "Ensaios Clínicos Controlados como Assunto",
+              "term_en": "Controlled Clinical Trials as Topic",
+              "scope": "Trabalhos sobre ensaios clínicos que envolvem um ou mais tratamentos teste, com pelo menos um tratamento controlado, resultado especificado para avaliar a intervenção estudada e um método isento de su",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.372.250.250.365",
+                "N05.715.360.330.250.250.365"
+              ]
+            },
+            {
+              "id": "D017322",
+              "term": "Ensaios Clínicos Fase II como Assunto",
+              "term_en": "Clinical Trials, Phase II as Topic",
+              "scope": "Trabalhos sobre estudos que são geralmente controlados para avaliar a efetividade e a dose (se apropriada) de diagnósticos, medicações terapêuticas ou profiláticas, aparelhos ou técnicas. Esses estudo",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.372.250.250.210",
+                "N05.715.360.330.250.250.210"
+              ]
+            },
+            {
+              "id": "D064792",
+              "term": "Ensaios Clínicos Pragmáticos como Assunto",
+              "term_en": "Pragmatic Clinical Trials as Topic",
+              "scope": "Trabalhos sobre estudos clínicos elaborados para avaliar a efetividade das intervenções na prática real dos sistemas de saúde.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.372.250.250.603"
+              ]
+            },
+            {
+              "id": "D017321",
+              "term": "Ensaios Clínicos Fase I como Assunto",
+              "term_en": "Clinical Trials, Phase I as Topic",
+              "scope": "Trabalhos sobre estudos desenvolvidos para avaliar a segurança do diagnóstico, terapêutica ou medicamentos profiláticos, dispositivos ou técnicas em sujeitos saudáveis e determinar a variação da dose ",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.372.250.250.200",
+                "N05.715.360.330.250.250.200"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Dengue",
+          "candidates": [
+            {
+              "id": "D003715",
+              "term": "Dengue",
+              "term_en": "Dengue",
+              "scope": "Doença febril aguda transmitida por picada de mosquitos AEDES infectados com o VÍRUS DA DENGUE. É autolimitada e caracterizada por febre, mialgia, cefaleia e exantema. A DENGUE GRAVE é uma forma mais ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.920.852.157",
+                "C01.925.081.270"
+              ]
+            },
+            {
+              "id": "D019595",
+              "term": "Dengue Grave",
+              "term_en": "Severe Dengue",
+              "scope": "Forma virulenta de dengue caracterizada por TROMBOCITOPENIA e um aumento na permeabilidade vascular (graus I e II), identificável por um teste positivo de dor (ex.: TESTE DA DOR COM TORNIQUETE). Quand",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.920.852.157.200",
+                "C01.925.081.270.200"
+              ]
+            },
+            {
+              "id": "D065632",
+              "term": "Febre de Chikungunya",
+              "term_en": "Chikungunya Fever",
+              "scope": "Infecção aguda transmitida por um mosquito e causada pelo alfavírus VÍRUS CHIKUNGUNYA, caracterizada por EXANTEMA, FEBRE, ARTRALGIA, CONJUNTIVITE, MENINGOENCEFALITE, LINFOPENIA e TROMBOCITOPENIA.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.920.313.078.184",
+                "C01.920.852.032.184"
+              ]
+            },
+            {
+              "id": "D000071243",
+              "term": "Infecção por Zika virus",
+              "term_en": "Zika Virus Infection",
+              "scope": "Doença viral transmitida pela picada de mosquitos AEDES infectados com ZIKA VIRUS. Seus sintomas leves semelhantes à DENGUE incluem febre, erupção cutânea, dores de cabeça e ARTRALGIA. A infecção vira",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.920.852.937",
+                "C01.925.081.990"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Epidemiologic Methods",
+          "candidates": [
+            {
+              "id": "D004812",
+              "term": "Métodos Epidemiológicos",
+              "term_en": "Epidemiologic Methods",
+              "scope": "Técnicas de pesquisa focalizadas em desenhos de estudo e dados que reúnem métodos em populações humanas e animais.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318",
+                "N06.850.520"
+              ]
+            },
+            {
+              "id": "D015991",
+              "term": "Medidas em Epidemiologia",
+              "term_en": "Epidemiologic Measurements",
+              "scope": "Cálculos estatísticos sobre a ocorrência de doenças ou outras condições relacionadas com a saúde em populações definidas.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N06.850.505"
+              ]
+            },
+            {
+              "id": "D016021",
+              "term": "Estudos Epidemiológicos",
+              "term_en": "Epidemiologic Studies",
+              "scope": "Estudos elaborados para examinar associações, geralmente relações de causas hipotéticas. De modo geral, o objetivo é identificar ou medir os efeitos dos fatores de riscos ou das exposições. Os tipos d",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.372.500",
+                "N05.715.360.330.500"
+              ]
+            },
+            {
+              "id": "DDCS028639",
+              "term": "Epidemiologia e Bioestatística",
+              "term_en": "Epidemiology and Biostatistics",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP5"
+              ]
+            },
+            {
+              "id": "D016020",
+              "term": "Características de Estudos Epidemiológicos",
+              "term_en": "Epidemiologic Study Characteristics",
+              "scope": "Trabalhos sobre tipos e formulações de estudos usados em pesquisa epidemiológica.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.372",
+                "N05.715.360.330"
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "debug_trace": {
     "themes": {
       "primary": [
-        "Enunciado",
-        "Um ensaio clínico com a nova vacina contra dengue",
-        "QdengaR"
+        "Dengue Vaccines",
+        "Vaccine Efficacy"
       ],
-      "secondary": []
+      "secondary": [
+        "Clinical Trials as Topic",
+        "Dengue",
+        "Epidemiologic Methods"
+      ]
     },
     "candidate_groups": [
       {
         "label": "primários",
         "concepts": [
           {
-            "concept": "Enunciado",
-            "candidates": [
-              {
-                "id": "DDCS032482",
-                "term": "Recursos Renováveis",
-                "term_en": "Renewable Resources",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.606.837.868"
-                ]
-              },
-              {
-                "id": "DDCS051583",
-                "term": "Varredoras",
-                "term_en": "Sweepers",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.895.987.506.871"
-                ]
-              },
-              {
-                "id": "DDCS051857",
-                "term": "Utilização de Recursos Locais",
-                "term_en": "Local Resources Uses",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.303.766"
-                ]
-              },
-              {
-                "id": "DDCS051642",
-                "term": "Leito Fixo",
-                "term_en": "Fixed Bed",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.606.806.945.750.207.899.660"
-                ]
-              },
-              {
-                "id": "DDCS025556",
-                "term": "Tanques de Concreto",
-                "term_en": "Reinforced Concrete Tanks",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.895.141.089.248.433.561"
-                ]
-              }
-            ]
-          },
-          {
-            "concept": "QdengaR",
-            "candidates": [
-              {
-                "id": "D011798",
-                "term": "Quinaldinas",
-                "term_en": "Quinaldines",
-                "categoria": "Compostos Químicos e Drogas",
-                "arvore": [
-                  "D03.633.100.810.637"
-                ]
-              },
-              {
-                "id": "D011804",
-                "term": "Quinolinas",
-                "term_en": "Quinolines",
-                "categoria": "Compostos Químicos e Drogas",
-                "arvore": [
-                  "D03.633.100.810"
-                ]
-              },
-              {
-                "id": "D000077764",
-                "term": "Dronedarona",
-                "term_en": "Dronedarone",
-                "scope": "Derivado não iodado da AMIODARONA usada para o tratamento da ARRITMIA.",
-                "categoria": "Compostos Químicos e Drogas",
-                "arvore": [
-                  "D03.633.100.127.075.500"
-                ]
-              },
-              {
-                "id": "D003868",
-                "term": "Dequalínio",
-                "term_en": "Dequalinium",
-                "scope": "Bacteriostático tópico disponível como vários sais. É usado nos curativos de ferimentos e em infecções bucais, e pode também ter ação antimicótica, mas pode provocar ulceração na pele.",
-                "categoria": "Compostos Químicos e Drogas",
-                "arvore": [
-                  "D03.633.100.810.824.200"
-                ]
-              },
-              {
-                "id": "D011807",
-                "term": "Quinolizinas",
-                "term_en": "Quinolizines",
-                "categoria": "Compostos Químicos e Drogas",
-                "arvore": [
-                  "D03.633.100.834"
-                ]
-              }
-            ]
-          },
-          {
-            "concept": "Um ensaio clínico com a nova vacina contra dengue",
+            "concept": "Dengue Vaccines",
             "candidates": [
               {
                 "id": "D053059",
@@ -357,13 +518,71 @@
                 ]
               },
               {
-                "id": "D000087506",
-                "term": "Desenvolvimento de Vacinas",
-                "term_en": "Vaccine Development",
-                "scope": "Processo integral de introdução de uma nova vacina para uso em VACINAÇÃO, incluindo o desenvolvimento pré-clínico, testes em ENSAIO CLÍNICO CONTROLADO, fabricação, aprovação, licenciamento e distribui",
+                "id": "D046129",
+                "term": "Vacinas contra Ebola",
+                "term_en": "Ebola Vaccines",
+                "scope": "Vacinas ou candidatos a vacinas utilizados para prevenir FEBRE HEMORRÁGICA DO EBOLA.",
+                "categoria": "Compostos Químicos e Drogas",
+                "arvore": [
+                  "D20.215.894.899.205"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Vaccine Efficacy",
+            "candidates": [
+              {
+                "id": "D000087507",
+                "term": "Eficácia de Vacinas",
+                "term_en": "Vaccine Efficacy",
+                "scope": "Medida da redução do risco de doença entre vacinados em comparação com pessoas não vacinadas em condições ideais, como em um ensaio clínico. Tal redução da doença medida em condições típicas consiste ",
                 "categoria": "Técnicas e Equipamentos Analíticos",
                 "arvore": [
-                  "E05.952"
+                  "E05.952.500"
+                ]
+              },
+              {
+                "id": "D064166",
+                "term": "Potência de Vacina",
+                "term_en": "Vaccine Potency",
+                "scope": "Relação entre uma IMUNIDADE ADAPTATIVA e a dose da vacina administrada. É caracteristicamente medida em um ensaio para garantir a dosagem e o armazenamento adequados de vacinas, enquanto a EFICÁCIA DE",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.952.750",
+                  "G12.300.500"
+                ]
+              },
+              {
+                "id": "D000071497",
+                "term": "Imunogenicidade da Vacina",
+                "term_en": "Immunogenicity, Vaccine",
+                "scope": "Capacidade das VACINAS de estimular a RESPOSTA IMUNE ADAPTATIVA para produzir anticorpos e respostas da CÉLULA T específica para antígenos. É geralmente medida em indivíduos vacinados em ambientes de ",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.952.250",
+                  "G12.513"
+                ]
+              },
+              {
+                "id": "D000079263",
+                "term": "Doenças Preveníveis por Vacina",
+                "term_en": "Vaccine-Preventable Diseases",
+                "scope": "Doenças para as quais existem vacinas que conferem proteção parcial ou completa. (World Health Organization vaccine-safety-training.org)",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.918"
+                ]
+              },
+              {
+                "id": "DDCS061007",
+                "term": "Segurança Vacinal",
+                "term_en": "Vaccine Safety",
+                "scope": "Estudo, monitoramento e regulamentação de vacinas para garantir que os benefícios da vacinação superem os riscos potenciais na população em geral.",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP9.898.783.802",
+                  "VS1.001.003.001.001.005.001.739"
                 ]
               }
             ]
@@ -372,7 +591,173 @@
       },
       {
         "label": "secundários",
-        "concepts": []
+        "concepts": [
+          {
+            "concept": "Clinical Trials as Topic",
+            "candidates": [
+              {
+                "id": "D002986",
+                "term": "Ensaios Clínicos como Assunto",
+                "term_en": "Clinical Trials as Topic",
+                "scope": "Trabalhos sobre estudos pré-planejados sobre segurança, eficácia, ou esquema de dosagem ótima (se apropriado) de uma ou mais drogas diagnósticas, terapêuticas, ou profiláticas, dispositivos, ou técnic",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.372.250.250",
+                  "N05.715.360.330.250.250"
+                ]
+              },
+              {
+                "id": "D018849",
+                "term": "Ensaios Clínicos Controlados como Assunto",
+                "term_en": "Controlled Clinical Trials as Topic",
+                "scope": "Trabalhos sobre ensaios clínicos que envolvem um ou mais tratamentos teste, com pelo menos um tratamento controlado, resultado especificado para avaliar a intervenção estudada e um método isento de su",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.372.250.250.365",
+                  "N05.715.360.330.250.250.365"
+                ]
+              },
+              {
+                "id": "D017322",
+                "term": "Ensaios Clínicos Fase II como Assunto",
+                "term_en": "Clinical Trials, Phase II as Topic",
+                "scope": "Trabalhos sobre estudos que são geralmente controlados para avaliar a efetividade e a dose (se apropriada) de diagnósticos, medicações terapêuticas ou profiláticas, aparelhos ou técnicas. Esses estudo",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.372.250.250.210",
+                  "N05.715.360.330.250.250.210"
+                ]
+              },
+              {
+                "id": "D064792",
+                "term": "Ensaios Clínicos Pragmáticos como Assunto",
+                "term_en": "Pragmatic Clinical Trials as Topic",
+                "scope": "Trabalhos sobre estudos clínicos elaborados para avaliar a efetividade das intervenções na prática real dos sistemas de saúde.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.372.250.250.603"
+                ]
+              },
+              {
+                "id": "D017321",
+                "term": "Ensaios Clínicos Fase I como Assunto",
+                "term_en": "Clinical Trials, Phase I as Topic",
+                "scope": "Trabalhos sobre estudos desenvolvidos para avaliar a segurança do diagnóstico, terapêutica ou medicamentos profiláticos, dispositivos ou técnicas em sujeitos saudáveis e determinar a variação da dose ",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.372.250.250.200",
+                  "N05.715.360.330.250.250.200"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Dengue",
+            "candidates": [
+              {
+                "id": "D003715",
+                "term": "Dengue",
+                "term_en": "Dengue",
+                "scope": "Doença febril aguda transmitida por picada de mosquitos AEDES infectados com o VÍRUS DA DENGUE. É autolimitada e caracterizada por febre, mialgia, cefaleia e exantema. A DENGUE GRAVE é uma forma mais ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.920.852.157",
+                  "C01.925.081.270"
+                ]
+              },
+              {
+                "id": "D019595",
+                "term": "Dengue Grave",
+                "term_en": "Severe Dengue",
+                "scope": "Forma virulenta de dengue caracterizada por TROMBOCITOPENIA e um aumento na permeabilidade vascular (graus I e II), identificável por um teste positivo de dor (ex.: TESTE DA DOR COM TORNIQUETE). Quand",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.920.852.157.200",
+                  "C01.925.081.270.200"
+                ]
+              },
+              {
+                "id": "D065632",
+                "term": "Febre de Chikungunya",
+                "term_en": "Chikungunya Fever",
+                "scope": "Infecção aguda transmitida por um mosquito e causada pelo alfavírus VÍRUS CHIKUNGUNYA, caracterizada por EXANTEMA, FEBRE, ARTRALGIA, CONJUNTIVITE, MENINGOENCEFALITE, LINFOPENIA e TROMBOCITOPENIA.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.920.313.078.184",
+                  "C01.920.852.032.184"
+                ]
+              },
+              {
+                "id": "D000071243",
+                "term": "Infecção por Zika virus",
+                "term_en": "Zika Virus Infection",
+                "scope": "Doença viral transmitida pela picada de mosquitos AEDES infectados com ZIKA VIRUS. Seus sintomas leves semelhantes à DENGUE incluem febre, erupção cutânea, dores de cabeça e ARTRALGIA. A infecção vira",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.920.852.937",
+                  "C01.925.081.990"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Epidemiologic Methods",
+            "candidates": [
+              {
+                "id": "D004812",
+                "term": "Métodos Epidemiológicos",
+                "term_en": "Epidemiologic Methods",
+                "scope": "Técnicas de pesquisa focalizadas em desenhos de estudo e dados que reúnem métodos em populações humanas e animais.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318",
+                  "N06.850.520"
+                ]
+              },
+              {
+                "id": "D015991",
+                "term": "Medidas em Epidemiologia",
+                "term_en": "Epidemiologic Measurements",
+                "scope": "Cálculos estatísticos sobre a ocorrência de doenças ou outras condições relacionadas com a saúde em populações definidas.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N06.850.505"
+                ]
+              },
+              {
+                "id": "D016021",
+                "term": "Estudos Epidemiológicos",
+                "term_en": "Epidemiologic Studies",
+                "scope": "Estudos elaborados para examinar associações, geralmente relações de causas hipotéticas. De modo geral, o objetivo é identificar ou medir os efeitos dos fatores de riscos ou das exposições. Os tipos d",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.372.500",
+                  "N05.715.360.330.500"
+                ]
+              },
+              {
+                "id": "DDCS028639",
+                "term": "Epidemiologia e Bioestatística",
+                "term_en": "Epidemiology and Biostatistics",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP5"
+                ]
+              },
+              {
+                "id": "D016020",
+                "term": "Características de Estudos Epidemiológicos",
+                "term_en": "Epidemiologic Study Characteristics",
+                "scope": "Trabalhos sobre tipos e formulações de estudos usados em pesquisa epidemiológica.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.372",
+                  "N05.715.360.330"
+                ]
+              }
+            ]
+          }
+        ]
       }
     ],
     "selected_candidates": {
@@ -380,16 +765,33 @@
         {
           "id": "D053059",
           "term": "Vacinas contra Dengue"
+        },
+        {
+          "id": "D000087507",
+          "term": "Eficácia de Vacinas"
         }
       ],
-      "secondary": []
+      "secondary": [
+        {
+          "id": "D002986",
+          "term": "Ensaios Clínicos como Assunto"
+        },
+        {
+          "id": "D003715",
+          "term": "Dengue"
+        },
+        {
+          "id": "D015991",
+          "term": "Medidas em Epidemiologia"
+        }
+      ]
     }
   },
   "stats": {
-    "primary_concepts": 3,
-    "secondary_concepts": 0,
-    "total_candidates": 15,
-    "final_primary": 1,
-    "final_secondary": 0
+    "primary_concepts": 2,
+    "secondary_concepts": 3,
+    "total_candidates": 24,
+    "final_primary": 2,
+    "final_secondary": 3
   }
 }

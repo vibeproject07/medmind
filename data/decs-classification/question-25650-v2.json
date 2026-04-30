@@ -36,109 +36,169 @@
         "role": "primary"
       },
       {
-        "id": "D058501",
-        "term": "ELISPOT",
-        "name_en": "Enzyme-Linked Immunospot Assay",
-        "scope_note": "Método para detecção do número de células em uma amostra que secreta uma molécula determinada. Com este método, uma população de células é plaqueada sobre um substrato imuno[ad]sorvente que captura as moléculas secretadas.",
+        "id": "D012680",
+        "term": "Sensibilidade e Especificidade",
+        "name_en": "Sensitivity and Specificity",
+        "scope_note": "Medidas de classificação binária para avaliar resultados de exames. Sensibilidade ou taxa de recall é a proporção de verdadeiros positivos. Especificidade é a probabilidade do teste determinar corretamente a ausência de uma afecção. (Tradução livre do original: Last, Dictionary of Epidemiology, 2d ed)",
         "tree_ids": [
-          "E01.370.225.500.508",
-          "E05.200.500.508",
-          "E05.242.551",
-          "E05.478.566.350.170.500",
-          "E05.478.566.380.360.500",
-          "E05.478.583.400.170.500",
-          "E05.601.470.350.170.500",
-          "E05.601.470.380.360.500"
+          "E05.318.370.800",
+          "E05.318.740.872",
+          "G17.800",
+          "N05.715.360.325.700",
+          "N05.715.360.750.725",
+          "N06.850.520.445.800",
+          "N06.850.520.830.872"
         ],
-        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.225.500.508",
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E05.318.370.800",
         "parents": [
           {
-            "id": "D003584",
-            "term": "Técnicas Citológicas"
+            "id": "D015340",
+            "term": "Projetos de Pesquisa Epidemiológica"
+          },
+          {
+            "id": "D013223",
+            "term": "Estatística como Assunto"
+          },
+          {
+            "id": "D055641",
+            "term": "Conceitos Matemáticos"
           }
         ],
-        "children": [],
+        "children": [
+          {
+            "id": "D059629",
+            "term": "Razão Sinal-Ruído"
+          },
+          {
+            "id": "D011237",
+            "term": "Valor Preditivo dos Testes"
+          },
+          {
+            "id": "D012372",
+            "term": "Curva ROC"
+          },
+          {
+            "id": "D057230",
+            "term": "Limite de Detecção"
+          }
+        ],
         "role": "primary"
       }
     ],
-    "decs_secondary": []
+    "decs_secondary": [
+      {
+        "id": "D019937",
+        "term": "Técnicas e Procedimentos Diagnósticos",
+        "name_en": "Diagnostic Techniques and Procedures",
+        "scope_note": "Métodos, procedimentos e testes feitos para diagnosticar doenças, distúrbios ou incapacidades de função.",
+        "tree_ids": [
+          "E01.370",
+          "VS3.003.001.006.005"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370",
+        "parents": [
+          {
+            "id": "D003933",
+            "term": "Diagnóstico"
+          },
+          {
+            "id": "D013812",
+            "term": "Terapêutica"
+          }
+        ],
+        "children": [
+          {
+            "id": "D025202",
+            "term": "Técnicas de Diagnóstico Molecular"
+          },
+          {
+            "id": "D025401",
+            "term": "Ecocardiografia sob Estresse"
+          },
+          {
+            "id": "D012703",
+            "term": "Sorotipagem"
+          },
+          {
+            "id": "D000067029",
+            "term": "Aparência Física"
+          },
+          {
+            "id": "D005772",
+            "term": "Trânsito Gastrointestinal"
+          }
+        ],
+        "role": "secondary"
+      },
+      {
+        "id": "D005188",
+        "term": "Reações Falso-Negativas",
+        "name_en": "False Negative Reactions",
+        "scope_note": "Resultados negativos em pacientes que têm as características para as quais o teste é feito. A classificação de pessoas doentes como saudáveis quando examinadas para a detecção de doenças.",
+        "tree_ids": [
+          "E01.354.340"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.354.340",
+        "parents": [
+          {
+            "id": "D003951",
+            "term": "Erros de Diagnóstico"
+          }
+        ],
+        "children": [],
+        "role": "secondary"
+      },
+      {
+        "id": "D012015",
+        "term": "Padrões de Referência",
+        "name_en": "Reference Standards",
+        "scope_note": "Base [metodológica] com valores estabelecidos para se medir quantidade, massa, extensão ou qualidade, p.ex. padrões para massa, soluções, métodos, técnicas e procedimentos usados no diagnóstico e na terapêutica.",
+        "tree_ids": [
+          "E05.978.808"
+        ],
+        "hierarchy_path": "Técnicas e Equipamentos Analíticos › E05.978.808",
+        "parents": [
+          {
+            "id": "D014894",
+            "term": "Pesos e Medidas"
+          }
+        ],
+        "children": [
+          {
+            "id": "D000082162",
+            "term": "Níveis de Referência de Diagnóstico"
+          },
+          {
+            "id": "D057918",
+            "term": "Marcadores Fiduciais"
+          },
+          {
+            "id": "D057238",
+            "term": "Gráficos de Crescimento"
+          }
+        ],
+        "role": "secondary"
+      }
+    ]
   },
   "themes_identified": {
     "primary": [
-      "Enunciado",
-      "Um novo teste diagnóstico de TB pulmonar",
-      "denominado provisoriamente de Ellispot"
+      "Sensitivity and Specificity",
+      "Tuberculosis, Pulmonary"
     ],
-    "secondary": []
+    "secondary": [
+      "Reference Standards",
+      "False Negative Reactions",
+      "Diagnostic Techniques and Procedures"
+    ]
   },
   "candidate_groups": [
     {
       "label": "primários",
       "concepts": [
         {
-          "concept": "Enunciado",
+          "concept": "Tuberculosis, Pulmonary",
           "candidates": [
-            {
-              "id": "DDCS032482",
-              "term": "Recursos Renováveis",
-              "term_en": "Renewable Resources",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.606.837.868"
-              ]
-            },
-            {
-              "id": "DDCS051583",
-              "term": "Varredoras",
-              "term_en": "Sweepers",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.895.987.506.871"
-              ]
-            },
-            {
-              "id": "DDCS051857",
-              "term": "Utilização de Recursos Locais",
-              "term_en": "Local Resources Uses",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.303.766"
-              ]
-            },
-            {
-              "id": "DDCS051642",
-              "term": "Leito Fixo",
-              "term_en": "Fixed Bed",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.606.806.945.750.207.899.660"
-              ]
-            },
-            {
-              "id": "DDCS025556",
-              "term": "Tanques de Concreto",
-              "term_en": "Reinforced Concrete Tanks",
-              "categoria": "Saúde Pública",
-              "arvore": [
-                "SP4.895.141.089.248.433.561"
-              ]
-            }
-          ]
-        },
-        {
-          "concept": "Um novo teste diagnóstico de TB pulmonar",
-          "candidates": [
-            {
-              "id": "D000099137",
-              "term": "Baciloscopia",
-              "term_en": "Bacilloscopy",
-              "scope": "Teste diagnóstico utilizado principalmente para detectar TUBERCULOSE e outras infecções respiratórias.",
-              "categoria": "Técnicas e Equipamentos Analíticos",
-              "arvore": [
-                "E01.370.386.001",
-                "VS3.003.001.006.005.004.156"
-              ]
-            },
             {
               "id": "D014397",
               "term": "Tuberculose Pulmonar",
@@ -151,25 +211,132 @@
               ]
             },
             {
-              "id": "D014374",
-              "term": "Teste Tuberculínico",
-              "term_en": "Tuberculin Test",
-              "scope": "Um dos vários testes cutâneos para determinar uma tuberculose desenvolvida no passado ou no presente. Uma proteína purificada derivada do bacilo da tuberculose, chamada tuberculina, é introduzida na p",
-              "categoria": "Técnicas e Equipamentos Analíticos",
+              "id": "D000099298",
+              "term": "Doença Tuberculosa",
+              "term_en": "Tuberculosis Disease",
+              "scope": "Forma avançada de TUBERCULOSE não controlada pelo SISTEMA IMUNITÁRIO que requer tratamento rápido e eficaz para impedir complicações médicas e a transmissão da doença para outras pessoas.",
+              "categoria": "Doenças",
               "arvore": [
-                "E01.370.225.812.871.800",
-                "E05.200.812.871.800"
+                "C01.150.252.410.040.552.846.505"
               ]
             },
             {
-              "id": "D014373",
-              "term": "Tuberculina",
-              "term_en": "Tuberculin",
-              "scope": "Proteína extraída da cultura fervida do bacilo da tuberculose (MYCOBACTERIUM TUBERCULOSIS). É usada no TESTE TUBERCULÍNICO cutâneo para o diagnóstico da infecção por tuberculose em pessoas assintomáti",
-              "categoria": "Compostos Químicos e Drogas",
+              "id": "D014376",
+              "term": "Tuberculose",
+              "term_en": "Tuberculosis",
+              "scope": "Qualquer uma das doenças infecciosas em SERES HUMANOS e de outros animais causadas por espécies de MYCOBACTERIUM TUBERCULOSIS.",
+              "categoria": "Doenças",
               "arvore": [
-                "D12.776.097.025.845",
-                "D23.050.161.845"
+                "C01.150.252.410.040.552.846"
+              ]
+            },
+            {
+              "id": "D000092225",
+              "term": "Tuberculose Extrapulmonar",
+              "term_en": "Tuberculosis, Extrapulmonary",
+              "scope": "Infecções por MYCOBACTERIUM em órgãos diferentes do pulmão.",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.150.252.410.040.552.846.617"
+              ]
+            },
+            {
+              "id": "D020306",
+              "term": "Tuberculose do Sistema Nervoso Central",
+              "term_en": "Tuberculosis, Central Nervous System",
+              "scope": "A tuberculose do cérebro, medula espinhal ou meninges (TUBERCULOSE MENINGEA), mais frequentemente causada pelo MYCOBACTERIUM TUBERCULOSIS e raramemente pelo MYCOBACTERIUM BOVIS. A infecção pode estar ",
+              "categoria": "Doenças",
+              "arvore": [
+                "C01.150.252.223.850",
+                "C01.150.252.410.040.552.846.617.200"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Sensitivity and Specificity",
+          "candidates": [
+            {
+              "id": "D012680",
+              "term": "Sensibilidade e Especificidade",
+              "term_en": "Sensitivity and Specificity",
+              "scope": "Medidas de classificação binária para avaliar resultados de exames. Sensibilidade ou taxa de recall é a proporção de verdadeiros positivos. Especificidade é a probabilidade do teste determinar correta",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.370.800",
+                "E05.318.740.872"
+              ]
+            },
+            {
+              "id": "D011237",
+              "term": "Valor Preditivo dos Testes",
+              "term_en": "Predictive Value of Tests",
+              "scope": "O valor preditivo de um teste diagnóstico é a probabilidade de um resultado positivo (ou negativo) corresponder a um indivíduo doente (ou não doente). Depende da sensibilidade e especificidade do test",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.318.370.800.650",
+                "N05.715.360.325.700.640"
+              ]
+            },
+            {
+              "id": "D013045",
+              "term": "Especificidade da Espécie",
+              "term_en": "Species Specificity",
+              "scope": "Restrição de um comportamento característico, estrutura anatômica ou sistema físico, como resposta imunológica, resposta metabólica ou gene ou variante gênico dos membros de uma espécie. Refere-se às ",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G16.824"
+              ]
+            },
+            {
+              "id": "D000918",
+              "term": "Especificidade de Anticorpos",
+              "term_en": "Antibody Specificity",
+              "scope": "Propriedade dos anticorpos que os capacita a reagir com alguns EPITOPOS e não com outros. A especificidade é dependente da composição química, de forças físicas e da estrutura molecular no sítio de li",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G12.100"
+              ]
+            },
+            {
+              "id": "D009928",
+              "term": "Especificidade de Órgãos",
+              "term_en": "Organ Specificity",
+              "scope": "Característica restrita a um órgão em particular do corpo, como tipo de célula, resposta metabólica ou expressão de uma proteína ou antígeno em particular.",
+              "categoria": "Fenômenos Biológicos",
+              "arvore": [
+                "G07.650"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "secundários",
+      "concepts": [
+        {
+          "concept": "Diagnostic Techniques and Procedures",
+          "candidates": [
+            {
+              "id": "D019937",
+              "term": "Técnicas e Procedimentos Diagnósticos",
+              "term_en": "Diagnostic Techniques and Procedures",
+              "scope": "Métodos, procedimentos e testes feitos para diagnosticar doenças, distúrbios ou incapacidades de função.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370",
+                "VS3.003.001.006.005"
+              ]
+            },
+            {
+              "id": "D003949",
+              "term": "Técnicas de Diagnóstico por Cirurgia",
+              "term_en": "Diagnostic Techniques, Surgical",
+              "scope": "Métodos e procedimentos para o diagnóstico de doenças ou disfunções pela avaliação do local da patologia ou do campo operativo durante uma intervenção cirúrgica.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.388"
               ]
             },
             {
@@ -181,151 +348,163 @@
               "arvore": [
                 "E01.370.386"
               ]
+            },
+            {
+              "id": "D003935",
+              "term": "Técnicas de Diagnóstico Cardiovascular",
+              "term_en": "Diagnostic Techniques, Cardiovascular",
+              "scope": "Métodos e procedimentos para diagnóstico de doenças ou disfunções do sistema cardiovascular ou seus órgãos, ou ainda para a demonstração de seus processos fisiológicos.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.370"
+              ]
+            },
+            {
+              "id": "D003944",
+              "term": "Técnicas de Diagnóstico Obstétrico e Ginecológico",
+              "term_en": "Diagnostic Techniques, Obstetrical and Gynecological",
+              "scope": "Métodos e procedimentos para o diagnóstico de afecções relacionadas à gestação, parto e puerpério, e enfermidades ginecológicas. Inclui também a demonstração da fisiologia genital e da gestação.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E01.370.378"
+              ]
             }
           ]
         },
         {
-          "concept": "denominado provisoriamente de Ellispot",
+          "concept": "False Negative Reactions",
           "candidates": [
             {
-              "id": "D058501",
-              "term": "ELISPOT",
-              "term_en": "Enzyme-Linked Immunospot Assay",
-              "scope": "Método para detecção do número de células em uma amostra que secreta uma molécula determinada. Com este método, uma população de células é plaqueada sobre um substrato imuno[ad]sorvente que captura as",
+              "id": "D005188",
+              "term": "Reações Falso-Negativas",
+              "term_en": "False Negative Reactions",
+              "scope": "Resultados negativos em pacientes que têm as características para as quais o teste é feito. A classificação de pessoas doentes como saudáveis quando examinadas para a detecção de doenças.",
               "categoria": "Técnicas e Equipamentos Analíticos",
               "arvore": [
-                "E01.370.225.500.508",
-                "E05.200.500.508"
+                "E01.354.340"
               ]
             },
             {
-              "id": "D059425",
-              "term": "Testes de Liberação de Interferon-gama",
-              "term_en": "Interferon-gamma Release Tests",
-              "scope": "Ensaio de liberação de INTERFERON GAMA dos linfócitos depois da exposição um antígeno teste específico, a fim de verificar a MEMÓRIA IMUNOLÓGICA resultante de uma exposição prévia ao antígeno. A quant",
+              "id": "D005189",
+              "term": "Reações Falso-Positivas",
+              "term_en": "False Positive Reactions",
+              "scope": "Resultados positivos em pacientes que não têm as características para as quais o teste é feito. Classificação de pessoas saudáveis como doentes quando examinadas para a detecção de doenças.",
               "categoria": "Técnicas e Equipamentos Analíticos",
               "arvore": [
-                "E01.370.225.812.453",
-                "E05.200.812.453"
+                "E01.354.506"
               ]
             },
             {
-              "id": "D018984",
-              "term": "Epitopos de Linfócito T",
-              "term_en": "Epitopes, T-Lymphocyte",
-              "scope": "Determinantes antigênicos reconhecidos e ligados pelo receptor da célula T. Os epitopos reconhecidos pelo receptor da célula T frequentemente estão localizados no lado interno (não exposto) do antígen",
-              "categoria": "Compostos Químicos e Drogas",
+              "id": "D003429",
+              "term": "Reações Cruzadas",
+              "term_en": "Cross Reactions",
+              "scope": "Reações sorológicas em que um antissoro [desenvolvido] contra um antígeno reage com um antígeno não idêntico mas estreitamente relacionado com ele.",
+              "categoria": "Fenômenos Biológicos",
               "arvore": [
-                "D23.050.550.402"
+                "G12.122.281"
               ]
             },
             {
-              "id": "D016056",
-              "term": "Epitopos Imunodominantes",
-              "term_en": "Immunodominant Epitopes",
-              "scope": "Subunidades do determinante antigênico que são mais facilmente reconhecidos pelo sistema imune, e assim influenciam extremamente a especificidade do anticorpo induzido.",
-              "categoria": "Compostos Químicos e Drogas",
+              "id": "D000076723",
+              "term": "Resultados Negativos",
+              "term_en": "Negative Results",
+              "scope": "Assunto relacionado a estudos de pesquisa em que os dados não demonstram nenhuma evidência clara de efeitos, especialmente se um efeito estiver sendo esperado.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
               "arvore": [
-                "D23.050.550.500"
+                "E05.318.308.544",
+                "L01.399.250.780"
               ]
             },
             {
-              "id": "D000094632",
-              "term": "Linfopoietina do Estroma do Timo",
-              "term_en": "Thymic Stromal Lymphopoietin",
-              "scope": "Citocina pleiotrópica envolvida na INFLAMAÇÃO e na imunorregulação. A linfopoietina do estroma do timo pode ativar os MASTÓCITOS, as CÉLULAS DENDRÍTICAS e os LINFÓCITOS T, sendo produzida por vários t",
-              "categoria": "Compostos Químicos e Drogas",
+              "id": "D000081006",
+              "term": "Diagnóstico Ausente",
+              "term_en": "Missed Diagnosis",
+              "scope": "Falha em identificar ou diagnosticar uma afecção médica no momento em que um profissional de saúde é apresentado aos sintomas.",
+              "categoria": "Saúde",
               "arvore": [
-                "D12.644.276.374.656",
-                "D12.776.467.374.656"
+                "N02.421.450.280.500"
+              ]
+            }
+          ]
+        },
+        {
+          "concept": "Reference Standards",
+          "candidates": [
+            {
+              "id": "D012015",
+              "term": "Padrões de Referência",
+              "term_en": "Reference Standards",
+              "scope": "Base [metodológica] com valores estabelecidos para se medir quantidade, massa, extensão ou qualidade, p.ex. padrões para massa, soluções, métodos, técnicas e procedimentos usados no diagnóstico e na t",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.978.808"
+              ]
+            },
+            {
+              "id": "DDCS051557",
+              "term": "Normas de Qualidade do Solo",
+              "term_en": "Standards of Soil Quality",
+              "categoria": "Vigilância Sanitária",
+              "arvore": [
+                "VS4.001.001.003.001.001"
+              ]
+            },
+            {
+              "id": "D012016",
+              "term": "Valores de Referência",
+              "term_en": "Reference Values",
+              "scope": "Faixa (ou distribuição de frequências) dos [valores] medidos em uma população (de organismos, órgãos ou coisas) que não foi selecionada para [indicar] a presença de doença ou de anormalidade.",
+              "categoria": "Técnicas e Equipamentos Analíticos",
+              "arvore": [
+                "E05.978.810"
+              ]
+            },
+            {
+              "id": "D059039",
+              "term": "Padrão de Cuidado",
+              "term_en": "Standard of Care",
+              "scope": "Mínimo aceitável de assistência ao paciente, baseado em estatutos, decisões judiciais, políticas ou orientações de classes profissionais.",
+              "categoria": "Saúde",
+              "arvore": [
+                "N04.761.789.900",
+                "N05.715.840"
+              ]
+            },
+            {
+              "id": "DDCS025398",
+              "term": "Normas de Qualidade da Água",
+              "term_en": "Water Quality Standards",
+              "scope": "Padrão de potabilidade da água: Conjunto de valores permitidos como parâmetro da qualidade da água para consumo humano, conforme definido em norma legal. (Fonte: BRASIL, 2017)",
+              "categoria": "Saúde Pública",
+              "arvore": [
+                "SP4.606.837.620.114.812.626",
+                "VS4.001.001.002.001.001"
               ]
             }
           ]
         }
       ]
-    },
-    {
-      "label": "secundários",
-      "concepts": []
     }
   ],
   "debug_trace": {
     "themes": {
       "primary": [
-        "Enunciado",
-        "Um novo teste diagnóstico de TB pulmonar",
-        "denominado provisoriamente de Ellispot"
+        "Sensitivity and Specificity",
+        "Tuberculosis, Pulmonary"
       ],
-      "secondary": []
+      "secondary": [
+        "Reference Standards",
+        "False Negative Reactions",
+        "Diagnostic Techniques and Procedures"
+      ]
     },
     "candidate_groups": [
       {
         "label": "primários",
         "concepts": [
           {
-            "concept": "Enunciado",
+            "concept": "Tuberculosis, Pulmonary",
             "candidates": [
-              {
-                "id": "DDCS032482",
-                "term": "Recursos Renováveis",
-                "term_en": "Renewable Resources",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.606.837.868"
-                ]
-              },
-              {
-                "id": "DDCS051583",
-                "term": "Varredoras",
-                "term_en": "Sweepers",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.895.987.506.871"
-                ]
-              },
-              {
-                "id": "DDCS051857",
-                "term": "Utilização de Recursos Locais",
-                "term_en": "Local Resources Uses",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.303.766"
-                ]
-              },
-              {
-                "id": "DDCS051642",
-                "term": "Leito Fixo",
-                "term_en": "Fixed Bed",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.606.806.945.750.207.899.660"
-                ]
-              },
-              {
-                "id": "DDCS025556",
-                "term": "Tanques de Concreto",
-                "term_en": "Reinforced Concrete Tanks",
-                "categoria": "Saúde Pública",
-                "arvore": [
-                  "SP4.895.141.089.248.433.561"
-                ]
-              }
-            ]
-          },
-          {
-            "concept": "Um novo teste diagnóstico de TB pulmonar",
-            "candidates": [
-              {
-                "id": "D000099137",
-                "term": "Baciloscopia",
-                "term_en": "Bacilloscopy",
-                "scope": "Teste diagnóstico utilizado principalmente para detectar TUBERCULOSE e outras infecções respiratórias.",
-                "categoria": "Técnicas e Equipamentos Analíticos",
-                "arvore": [
-                  "E01.370.386.001",
-                  "VS3.003.001.006.005.004.156"
-                ]
-              },
               {
                 "id": "D014397",
                 "term": "Tuberculose Pulmonar",
@@ -338,25 +517,132 @@
                 ]
               },
               {
-                "id": "D014374",
-                "term": "Teste Tuberculínico",
-                "term_en": "Tuberculin Test",
-                "scope": "Um dos vários testes cutâneos para determinar uma tuberculose desenvolvida no passado ou no presente. Uma proteína purificada derivada do bacilo da tuberculose, chamada tuberculina, é introduzida na p",
-                "categoria": "Técnicas e Equipamentos Analíticos",
+                "id": "D000099298",
+                "term": "Doença Tuberculosa",
+                "term_en": "Tuberculosis Disease",
+                "scope": "Forma avançada de TUBERCULOSE não controlada pelo SISTEMA IMUNITÁRIO que requer tratamento rápido e eficaz para impedir complicações médicas e a transmissão da doença para outras pessoas.",
+                "categoria": "Doenças",
                 "arvore": [
-                  "E01.370.225.812.871.800",
-                  "E05.200.812.871.800"
+                  "C01.150.252.410.040.552.846.505"
                 ]
               },
               {
-                "id": "D014373",
-                "term": "Tuberculina",
-                "term_en": "Tuberculin",
-                "scope": "Proteína extraída da cultura fervida do bacilo da tuberculose (MYCOBACTERIUM TUBERCULOSIS). É usada no TESTE TUBERCULÍNICO cutâneo para o diagnóstico da infecção por tuberculose em pessoas assintomáti",
-                "categoria": "Compostos Químicos e Drogas",
+                "id": "D014376",
+                "term": "Tuberculose",
+                "term_en": "Tuberculosis",
+                "scope": "Qualquer uma das doenças infecciosas em SERES HUMANOS e de outros animais causadas por espécies de MYCOBACTERIUM TUBERCULOSIS.",
+                "categoria": "Doenças",
                 "arvore": [
-                  "D12.776.097.025.845",
-                  "D23.050.161.845"
+                  "C01.150.252.410.040.552.846"
+                ]
+              },
+              {
+                "id": "D000092225",
+                "term": "Tuberculose Extrapulmonar",
+                "term_en": "Tuberculosis, Extrapulmonary",
+                "scope": "Infecções por MYCOBACTERIUM em órgãos diferentes do pulmão.",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.150.252.410.040.552.846.617"
+                ]
+              },
+              {
+                "id": "D020306",
+                "term": "Tuberculose do Sistema Nervoso Central",
+                "term_en": "Tuberculosis, Central Nervous System",
+                "scope": "A tuberculose do cérebro, medula espinhal ou meninges (TUBERCULOSE MENINGEA), mais frequentemente causada pelo MYCOBACTERIUM TUBERCULOSIS e raramemente pelo MYCOBACTERIUM BOVIS. A infecção pode estar ",
+                "categoria": "Doenças",
+                "arvore": [
+                  "C01.150.252.223.850",
+                  "C01.150.252.410.040.552.846.617.200"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Sensitivity and Specificity",
+            "candidates": [
+              {
+                "id": "D012680",
+                "term": "Sensibilidade e Especificidade",
+                "term_en": "Sensitivity and Specificity",
+                "scope": "Medidas de classificação binária para avaliar resultados de exames. Sensibilidade ou taxa de recall é a proporção de verdadeiros positivos. Especificidade é a probabilidade do teste determinar correta",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.370.800",
+                  "E05.318.740.872"
+                ]
+              },
+              {
+                "id": "D011237",
+                "term": "Valor Preditivo dos Testes",
+                "term_en": "Predictive Value of Tests",
+                "scope": "O valor preditivo de um teste diagnóstico é a probabilidade de um resultado positivo (ou negativo) corresponder a um indivíduo doente (ou não doente). Depende da sensibilidade e especificidade do test",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.318.370.800.650",
+                  "N05.715.360.325.700.640"
+                ]
+              },
+              {
+                "id": "D013045",
+                "term": "Especificidade da Espécie",
+                "term_en": "Species Specificity",
+                "scope": "Restrição de um comportamento característico, estrutura anatômica ou sistema físico, como resposta imunológica, resposta metabólica ou gene ou variante gênico dos membros de uma espécie. Refere-se às ",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G16.824"
+                ]
+              },
+              {
+                "id": "D000918",
+                "term": "Especificidade de Anticorpos",
+                "term_en": "Antibody Specificity",
+                "scope": "Propriedade dos anticorpos que os capacita a reagir com alguns EPITOPOS e não com outros. A especificidade é dependente da composição química, de forças físicas e da estrutura molecular no sítio de li",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G12.100"
+                ]
+              },
+              {
+                "id": "D009928",
+                "term": "Especificidade de Órgãos",
+                "term_en": "Organ Specificity",
+                "scope": "Característica restrita a um órgão em particular do corpo, como tipo de célula, resposta metabólica ou expressão de uma proteína ou antígeno em particular.",
+                "categoria": "Fenômenos Biológicos",
+                "arvore": [
+                  "G07.650"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "secundários",
+        "concepts": [
+          {
+            "concept": "Diagnostic Techniques and Procedures",
+            "candidates": [
+              {
+                "id": "D019937",
+                "term": "Técnicas e Procedimentos Diagnósticos",
+                "term_en": "Diagnostic Techniques and Procedures",
+                "scope": "Métodos, procedimentos e testes feitos para diagnosticar doenças, distúrbios ou incapacidades de função.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370",
+                  "VS3.003.001.006.005"
+                ]
+              },
+              {
+                "id": "D003949",
+                "term": "Técnicas de Diagnóstico por Cirurgia",
+                "term_en": "Diagnostic Techniques, Surgical",
+                "scope": "Métodos e procedimentos para o diagnóstico de doenças ou disfunções pela avaliação do local da patologia ou do campo operativo durante uma intervenção cirúrgica.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.388"
                 ]
               },
               {
@@ -368,72 +654,142 @@
                 "arvore": [
                   "E01.370.386"
                 ]
+              },
+              {
+                "id": "D003935",
+                "term": "Técnicas de Diagnóstico Cardiovascular",
+                "term_en": "Diagnostic Techniques, Cardiovascular",
+                "scope": "Métodos e procedimentos para diagnóstico de doenças ou disfunções do sistema cardiovascular ou seus órgãos, ou ainda para a demonstração de seus processos fisiológicos.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.370"
+                ]
+              },
+              {
+                "id": "D003944",
+                "term": "Técnicas de Diagnóstico Obstétrico e Ginecológico",
+                "term_en": "Diagnostic Techniques, Obstetrical and Gynecological",
+                "scope": "Métodos e procedimentos para o diagnóstico de afecções relacionadas à gestação, parto e puerpério, e enfermidades ginecológicas. Inclui também a demonstração da fisiologia genital e da gestação.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E01.370.378"
+                ]
               }
             ]
           },
           {
-            "concept": "denominado provisoriamente de Ellispot",
+            "concept": "False Negative Reactions",
             "candidates": [
               {
-                "id": "D058501",
-                "term": "ELISPOT",
-                "term_en": "Enzyme-Linked Immunospot Assay",
-                "scope": "Método para detecção do número de células em uma amostra que secreta uma molécula determinada. Com este método, uma população de células é plaqueada sobre um substrato imuno[ad]sorvente que captura as",
+                "id": "D005188",
+                "term": "Reações Falso-Negativas",
+                "term_en": "False Negative Reactions",
+                "scope": "Resultados negativos em pacientes que têm as características para as quais o teste é feito. A classificação de pessoas doentes como saudáveis quando examinadas para a detecção de doenças.",
                 "categoria": "Técnicas e Equipamentos Analíticos",
                 "arvore": [
-                  "E01.370.225.500.508",
-                  "E05.200.500.508"
+                  "E01.354.340"
                 ]
               },
               {
-                "id": "D059425",
-                "term": "Testes de Liberação de Interferon-gama",
-                "term_en": "Interferon-gamma Release Tests",
-                "scope": "Ensaio de liberação de INTERFERON GAMA dos linfócitos depois da exposição um antígeno teste específico, a fim de verificar a MEMÓRIA IMUNOLÓGICA resultante de uma exposição prévia ao antígeno. A quant",
+                "id": "D005189",
+                "term": "Reações Falso-Positivas",
+                "term_en": "False Positive Reactions",
+                "scope": "Resultados positivos em pacientes que não têm as características para as quais o teste é feito. Classificação de pessoas saudáveis como doentes quando examinadas para a detecção de doenças.",
                 "categoria": "Técnicas e Equipamentos Analíticos",
                 "arvore": [
-                  "E01.370.225.812.453",
-                  "E05.200.812.453"
+                  "E01.354.506"
                 ]
               },
               {
-                "id": "D018984",
-                "term": "Epitopos de Linfócito T",
-                "term_en": "Epitopes, T-Lymphocyte",
-                "scope": "Determinantes antigênicos reconhecidos e ligados pelo receptor da célula T. Os epitopos reconhecidos pelo receptor da célula T frequentemente estão localizados no lado interno (não exposto) do antígen",
-                "categoria": "Compostos Químicos e Drogas",
+                "id": "D003429",
+                "term": "Reações Cruzadas",
+                "term_en": "Cross Reactions",
+                "scope": "Reações sorológicas em que um antissoro [desenvolvido] contra um antígeno reage com um antígeno não idêntico mas estreitamente relacionado com ele.",
+                "categoria": "Fenômenos Biológicos",
                 "arvore": [
-                  "D23.050.550.402"
+                  "G12.122.281"
                 ]
               },
               {
-                "id": "D016056",
-                "term": "Epitopos Imunodominantes",
-                "term_en": "Immunodominant Epitopes",
-                "scope": "Subunidades do determinante antigênico que são mais facilmente reconhecidos pelo sistema imune, e assim influenciam extremamente a especificidade do anticorpo induzido.",
-                "categoria": "Compostos Químicos e Drogas",
+                "id": "D000076723",
+                "term": "Resultados Negativos",
+                "term_en": "Negative Results",
+                "scope": "Assunto relacionado a estudos de pesquisa em que os dados não demonstram nenhuma evidência clara de efeitos, especialmente se um efeito estiver sendo esperado.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
                 "arvore": [
-                  "D23.050.550.500"
+                  "E05.318.308.544",
+                  "L01.399.250.780"
                 ]
               },
               {
-                "id": "D000094632",
-                "term": "Linfopoietina do Estroma do Timo",
-                "term_en": "Thymic Stromal Lymphopoietin",
-                "scope": "Citocina pleiotrópica envolvida na INFLAMAÇÃO e na imunorregulação. A linfopoietina do estroma do timo pode ativar os MASTÓCITOS, as CÉLULAS DENDRÍTICAS e os LINFÓCITOS T, sendo produzida por vários t",
-                "categoria": "Compostos Químicos e Drogas",
+                "id": "D000081006",
+                "term": "Diagnóstico Ausente",
+                "term_en": "Missed Diagnosis",
+                "scope": "Falha em identificar ou diagnosticar uma afecção médica no momento em que um profissional de saúde é apresentado aos sintomas.",
+                "categoria": "Saúde",
                 "arvore": [
-                  "D12.644.276.374.656",
-                  "D12.776.467.374.656"
+                  "N02.421.450.280.500"
+                ]
+              }
+            ]
+          },
+          {
+            "concept": "Reference Standards",
+            "candidates": [
+              {
+                "id": "D012015",
+                "term": "Padrões de Referência",
+                "term_en": "Reference Standards",
+                "scope": "Base [metodológica] com valores estabelecidos para se medir quantidade, massa, extensão ou qualidade, p.ex. padrões para massa, soluções, métodos, técnicas e procedimentos usados no diagnóstico e na t",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.978.808"
+                ]
+              },
+              {
+                "id": "DDCS051557",
+                "term": "Normas de Qualidade do Solo",
+                "term_en": "Standards of Soil Quality",
+                "categoria": "Vigilância Sanitária",
+                "arvore": [
+                  "VS4.001.001.003.001.001"
+                ]
+              },
+              {
+                "id": "D012016",
+                "term": "Valores de Referência",
+                "term_en": "Reference Values",
+                "scope": "Faixa (ou distribuição de frequências) dos [valores] medidos em uma população (de organismos, órgãos ou coisas) que não foi selecionada para [indicar] a presença de doença ou de anormalidade.",
+                "categoria": "Técnicas e Equipamentos Analíticos",
+                "arvore": [
+                  "E05.978.810"
+                ]
+              },
+              {
+                "id": "D059039",
+                "term": "Padrão de Cuidado",
+                "term_en": "Standard of Care",
+                "scope": "Mínimo aceitável de assistência ao paciente, baseado em estatutos, decisões judiciais, políticas ou orientações de classes profissionais.",
+                "categoria": "Saúde",
+                "arvore": [
+                  "N04.761.789.900",
+                  "N05.715.840"
+                ]
+              },
+              {
+                "id": "DDCS025398",
+                "term": "Normas de Qualidade da Água",
+                "term_en": "Water Quality Standards",
+                "scope": "Padrão de potabilidade da água: Conjunto de valores permitidos como parâmetro da qualidade da água para consumo humano, conforme definido em norma legal. (Fonte: BRASIL, 2017)",
+                "categoria": "Saúde Pública",
+                "arvore": [
+                  "SP4.606.837.620.114.812.626",
+                  "VS4.001.001.002.001.001"
                 ]
               }
             ]
           }
         ]
-      },
-      {
-        "label": "secundários",
-        "concepts": []
       }
     ],
     "selected_candidates": {
@@ -443,18 +799,31 @@
           "term": "Tuberculose Pulmonar"
         },
         {
-          "id": "D058501",
-          "term": "ELISPOT"
+          "id": "D012680",
+          "term": "Sensibilidade e Especificidade"
         }
       ],
-      "secondary": []
+      "secondary": [
+        {
+          "id": "D019937",
+          "term": "Técnicas e Procedimentos Diagnósticos"
+        },
+        {
+          "id": "D005188",
+          "term": "Reações Falso-Negativas"
+        },
+        {
+          "id": "D012015",
+          "term": "Padrões de Referência"
+        }
+      ]
     }
   },
   "stats": {
-    "primary_concepts": 3,
-    "secondary_concepts": 0,
-    "total_candidates": 15,
+    "primary_concepts": 2,
+    "secondary_concepts": 3,
+    "total_candidates": 25,
     "final_primary": 2,
-    "final_secondary": 0
+    "final_secondary": 3
   }
 }

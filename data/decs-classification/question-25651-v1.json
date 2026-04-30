@@ -1,0 +1,73 @@
+{
+  "result": [
+    {
+      "term": "Vacinas contra Dengue",
+      "code": "D053059",
+      "tree_ids": [
+        "D20.215.894.899.162"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D20.215.894.899.162",
+      "scope_note": "Vacinas ou candidatos a vacinas utilizadas para impedir infecção com o VÍRUS DA DENGUE. Incluem a vacina atenuada viva, subunidade de DNA e vacinas inativas.",
+      "name_en": "Dengue Vaccines",
+      "role": "primary"
+    },
+    {
+      "term": "Eficácia de Vacinas",
+      "code": "D000087507",
+      "tree_ids": [
+        "E05.952.500"
+      ],
+      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E05.952.500",
+      "scope_note": "Medida da redução do risco de doença entre vacinados em comparação com pessoas não vacinadas em condições ideais, como em um ensaio clínico. Tal redução da doença medida em condições típicas consiste na eficácia da vacina. Por outro lado, a potência da vacina é medida em testes para assegurar a dosagem e o armazenamento adequados das vacinas, enquanto a imunogenicidade da vacina mede sua capacidade de induzir uma resposta imunitária em um indivíduo vacinado em estudos observacionais.",
+      "name_en": "Vaccine Efficacy",
+      "role": "primary"
+    },
+    {
+      "term": "Dengue",
+      "code": "D003715",
+      "tree_ids": [
+        "C01.920.852.157",
+        "C01.925.081.270",
+        "C01.925.782.350.250.214",
+        "C01.925.782.417.214",
+        "SP4.909.332.216.372"
+      ],
+      "hierarchy_path": "Doenças › C01.920.852.157",
+      "scope_note": "Doença febril aguda transmitida por picada de mosquitos AEDES infectados com o VÍRUS DA DENGUE. É autolimitada e caracterizada por febre, mialgia, cefaleia e exantema. A DENGUE GRAVE é uma forma mais virulenta da dengue.",
+      "name_en": "Dengue",
+      "role": "secondary"
+    },
+    {
+      "term": "Ensaios Clínicos como Assunto",
+      "code": "D002986",
+      "tree_ids": [
+        "E05.318.372.250.250",
+        "N05.715.360.330.250.250",
+        "N06.850.520.450.250.250",
+        "SH1.010.040.020.030.378"
+      ],
+      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E05.318.372.250.250",
+      "scope_note": "Trabalhos sobre estudos pré-planejados sobre segurança, eficácia, ou esquema de dosagem ótima (se apropriado) de uma ou mais drogas diagnósticas, terapêuticas, ou profiláticas, dispositivos, ou técnicas selecionadas de acordo com critérios pré-determinados de elegibilidade e observadas para evidência pré-definida de efeitos favoráveis ou desfavoráveis. Este conceito inclui ensaios clínicos conduzidos tanto nos EUA quanto em outros países.",
+      "name_en": "Clinical Trials as Topic",
+      "role": "secondary"
+    }
+  ],
+  "themes_identified": {
+    "primary": [
+      "Dengue Vaccines",
+      "Vaccine Efficacy"
+    ],
+    "secondary": [
+      "Dengue",
+      "Clinical Trials as Topic",
+      "Risk Assessment"
+    ]
+  },
+  "pipeline_stats": {
+    "primary_terms": 2,
+    "secondary_terms": 3,
+    "dropped_by_category_filter": 0,
+    "dropped_by_gemini_validation": 1,
+    "final_count": 4
+  }
+}
