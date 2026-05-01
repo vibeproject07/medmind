@@ -447,7 +447,6 @@ NÃO inserir frases de encerramento, comentários finais ou despedidas.
     temperature: 0.1,
     max_output_tokens: 12288,
   },
-  },
   {
     key: 'transform_base',
     name: 'Agente Base de Transformação',
