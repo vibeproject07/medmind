@@ -120,6 +120,34 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
         }
         transcriptionText = data.text || '';
         setResult(transcriptionText);
+
+        if (transcriptionText.trim()) {
+          const geminiRes = await fetch('/api/gemini/transform', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              transcription: transcriptionText,
+              instruction: 'Resuma a transcrição em material de estudo claro, organizado e em português do Brasil.',
+              agentKey: 'ajuste_transcricao',
+            }),
+          });
+          const geminiText = await geminiRes.text();
+          let geminiData: { error?: string; text?: string };
+          try {
+            geminiData = geminiText ? JSON.parse(geminiText) : {};
+          } catch {
+            setSummaryError('Resposta inválida do servidor ao gerar resumo.');
+            return;
+          }
+          if (geminiRes.ok && geminiData.text) {
+            setSummary(geminiData.text);
+          } else {
+            setSummaryError(geminiData.error || 'Não foi possível gerar o resumo.');
+          }
+        }
       } else if (link.trim()) {
         const linkUrl = link.trim();
         const isYouTube =
