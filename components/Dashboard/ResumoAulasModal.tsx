@@ -210,8 +210,8 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
             return;
           }
           if (resDoc.ok) {
-            setResult(NAO_PROCESSADO_PELA_IA);
-            setSummary(null);
+            setResult(dataDoc.originalText || '');
+            setSummary(NAO_PROCESSADO_PELA_IA);
           } else {
             const errMsg = dataDoc.error;
             const message =
