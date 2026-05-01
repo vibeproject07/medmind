@@ -272,9 +272,6 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
   const hasLink = link.trim().length > 0;
   const canTranscribe = files.length > 0 || hasLink;
   const showOnlyAddButton = showContinueToNote && (result || summary) && onSaveResumo;
-  const originalContent = result ?? '';
-  const transformedContent = summary ?? '';
-
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden">
@@ -415,17 +412,6 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
               placeholder="https://..."
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div className="px-4 py-3 rounded-lg border border-primary-200 bg-primary-50">
-              <div className="font-semibold text-primary-700">Arquivo original</div>
-              <div className="text-sm text-gray-600 whitespace-pre-wrap">{originalContent || '—'}</div>
-            </div>
-            <div className="px-4 py-3 rounded-lg border border-gray-200 bg-white">
-              <div className="font-semibold text-gray-700">Arquivo transformado pela IA</div>
-              <div className="text-sm text-gray-600 whitespace-pre-wrap">{transformedContent || '—'}</div>
-            </div>
           </div>
 
           {showContinueToNote ? (
