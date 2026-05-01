@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { Suspense, useState, useRef, useEffect, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeft, BookOpen, Sparkles, X, Image as ImageIcon, ChevronDown, ChevronUp, Star } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
@@ -52,7 +52,7 @@ const AVAILABLE_TAGS = [
 type TabId = 'fontes' | 'conteudo' | 'estudio';
 type NotaSubTabId = 'imagens' | 'descricao' | 'classificacao';
 
-export default function NewNotePage() {
+function NewNotePageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const tabFromUrl = (searchParams.get('tab') as TabId) || 'conteudo';
@@ -1054,5 +1054,13 @@ export default function NewNotePage() {
         }}
       />
     </div>
+  );
+}
+
+export default function NewNotePage() {
+  return (
+    <Suspense fallback={null}>
+      <NewNotePageContent />
+    </Suspense>
   );
 }
