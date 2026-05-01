@@ -182,7 +182,7 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
           setResult(transcriptionText);
         }
       } else {
-        // Nenhum áudio/vídeo nem link: processar documento ou imagem com o agente de leitura/melhoria
+        // Nenhum áudio/vídeo nem link: mostrar apenas o conteúdo original de documento ou imagem, sem Gemini
         const docOrImageFile = files.find(
           (f) =>
             f.type.startsWith('image/') ||
@@ -209,9 +209,9 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
             setError('Resposta inválida do servidor ao processar o documento.');
             return;
           }
-          if (resDoc.ok && dataDoc.text) {
-            setResult(dataDoc.originalText ?? NAO_PROCESSADO_PELA_IA);
-            setSummary(dataDoc.text);
+          if (resDoc.ok) {
+            setResult(dataDoc.originalText ?? dataDoc.text ?? NAO_PROCESSADO_PELA_IA);
+            setSummary(null);
           } else {
             const errMsg = dataDoc.error;
             const message =
