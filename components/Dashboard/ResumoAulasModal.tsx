@@ -302,6 +302,7 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
   const showOnlyAddButton = showContinueToNote && (result || summary) && onSaveResumo;
   const originalContent = result ?? '';
   const transformedContent = summary ?? '';
+  const isAudioOrVideoSelection = files.some((f) => f.type.startsWith('audio/') || f.type.startsWith('video/')) || (hasLink && !link.trim().includes('youtube.com/watch') && !link.trim().includes('youtu.be/'));
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden">
@@ -497,7 +498,9 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
               </div>
               <div className="px-4 py-3 rounded-lg border border-gray-200 bg-white">
                 <div className="font-semibold text-gray-700">Arquivo transformado pela IA</div>
-                <div className="text-sm text-gray-600 whitespace-pre-wrap">{transformedContent || '—'}</div>
+                <div className="text-sm text-gray-600 whitespace-pre-wrap">
+                  {isAudioOrVideoSelection ? transformedContent || '—' : 'Conteúdo não processado pela IA'}
+                </div>
               </div>
             </div>
           )}
