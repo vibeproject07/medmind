@@ -558,10 +558,11 @@ export default function NewNotePage() {
                   Selecione a estrela para definir qual conteúdo será usado no conteúdo da nota.
                 </p>
                 <div className="flex gap-1 p-1.5 bg-gray-100 border-b border-gray-200">
-                  <button
-                    type="button"
+                  <div
+                    role="button"
+                    tabIndex={0}
                     onClick={() => setResumoAulasSubTab('melhorado')}
-                    className={`flex-1 px-4 py-3 text-sm font-semibold rounded-md transition flex items-center justify-between gap-2 ${
+                    className={`flex-1 px-4 py-3 text-sm font-semibold rounded-md transition flex items-center justify-between gap-2 cursor-pointer ${
                       resumoAulasSubTab === 'melhorado'
                         ? 'bg-white text-primary-600 shadow-sm ring-2 ring-primary-500/30'
                         : 'text-gray-500 bg-transparent hover:bg-gray-200 hover:text-gray-700'
@@ -590,11 +591,12 @@ export default function NewNotePage() {
                         }`}
                       />
                     </button>
-                  </button>
-                  <button
-                    type="button"
+                  </div>
+                  <div
+                    role="button"
+                    tabIndex={0}
                     onClick={() => setResumoAulasSubTab('original')}
-                    className={`flex-1 px-4 py-3 text-sm font-semibold rounded-md transition flex items-center justify-between gap-2 ${
+                    className={`flex-1 px-4 py-3 text-sm font-semibold rounded-md transition flex items-center justify-between gap-2 cursor-pointer ${
                       resumoAulasSubTab === 'original'
                         ? 'bg-white text-primary-600 shadow-sm ring-2 ring-primary-500/30'
                         : 'text-gray-500 bg-transparent hover:bg-gray-200 hover:text-gray-700'
@@ -623,7 +625,7 @@ export default function NewNotePage() {
                         }`}
                       />
                     </button>
-                  </button>
+                  </div>
                 </div>
                 <div className="p-4 min-h-[120px] bg-gray-50/50">
                   {resumoAulasSubTab === 'melhorado' && (
