@@ -437,35 +437,72 @@ export async function runDeCSPipeline(
   const seenCodes = new Set<string>();
   const afterSearch: DeCSRecord[] = [];
 
-  // Search primary and secondary terms in parallel, tagging each with its role
+  // Search primary and secondary terms in parallel, tagging each with its role.
+  // We inline the search so we can distinguish between:
+  //   • dropped_by_filter  — candidates existed but ALL were rejected by isCategoryAcceptable
+  //   • no_candidate       — no candidates returned at all (search failure / too dissimilar)
+  //   • dropped_by_dedup   — best match found but code already in seenCodes
   const searchAll = [
     ...structured.primary.map((term) => ({ term, role: 'primary' as const })),
     ...structured.secondary.map((term) => ({ term, role: 'secondary' as const })),
   ];
 
-  // Collect results first so we can accurately count no-match vs dedup
-  const searchResults = await Promise.allSettled(
-    searchAll.map(async ({ term, role }) => {
-      const match = await findBestDeCSMatch(term, decsKey, questionText, 0.15, 5, geminiKey);
-      return { role, match };
+  type SearchOutcome =
+    | { status: 'accepted'; role: 'primary' | 'secondary'; match: DeCSRecord }
+    | { status: 'category_filtered' }
+    | { status: 'no_candidate' }
+    | { status: 'deduped' };
+
+  const outcomes = await Promise.allSettled(
+    searchAll.map(async ({ term, role }): Promise<SearchOutcome> => {
+      const MIN_SIMILARITY = 0.15;
+
+      // ── 1. Try local pgvector first ────────────────────────────────────────
+      let rawCandidates: DeCSRecord[] = [];
+      if (geminiKey && await isLocalDeCSAvailable()) {
+        rawCandidates = await searchDeCSLocal(term, geminiKey, 5, 0.60);
+      }
+
+      // ── 2. Fallback: BVS API ───────────────────────────────────────────────
+      if (rawCandidates.length === 0) {
+        const apiResults = await searchDeCSCandidates(term, decsKey, 5);
+        rawCandidates = apiResults
+          .map((c) => ({ ...c, similarity: wordJaccard(term, c.term) }))
+          .filter((c) => (c.similarity ?? 0) >= MIN_SIMILARITY)
+          .sort((a, b) => (b.similarity ?? 0) - (a.similarity ?? 0));
+      }
+
+      // No candidates found at all (search failed or similarity too low)
+      if (rawCandidates.length === 0) return { status: 'no_candidate' };
+
+      // ── 3. Category filter — track drops separately ────────────────────────
+      const accepted = rawCandidates.filter((c) => isCategoryAcceptable(c, questionText));
+      if (accepted.length === 0) {
+        // Had candidates, but category B filter rejected all of them
+        return { status: 'category_filtered' };
+      }
+
+      // ── 4. Deduplication ───────────────────────────────────────────────────
+      const best = accepted[0];
+      if (seenCodes.has(best.code)) return { status: 'deduped' };
+
+      seenCodes.add(best.code);
+      return { status: 'accepted', role, match: best };
     })
   );
 
-  let noMatchCount = 0;
-  for (const res of searchResults) {
-    if (res.status === 'rejected') { noMatchCount++; continue; }
-    const { role, match } = res.value;
-    if (!match) {
-      noMatchCount++;
-    } else if (!seenCodes.has(match.code)) {
-      seenCodes.add(match.code);
-      afterSearch.push({ ...match, role });
+  // Tally outcomes and build the search result list
+  let droppedByFilter = 0; // terms with candidates that the category filter removed
+  for (const res of outcomes) {
+    if (res.status === 'rejected') continue; // unexpected error — skip silently
+    const outcome = res.value;
+    if (outcome.status === 'accepted') {
+      afterSearch.push({ ...outcome.match, role: outcome.role });
+    } else if (outcome.status === 'category_filtered') {
+      droppedByFilter++;
     }
-    // match exists but was already seen (dedup) — not counted as dropped_by_filter
+    // 'no_candidate' and 'deduped' do not count toward dropped_by_filter
   }
-
-  // dropped_by_filter = terms with no candidate found (includes category-filtered)
-  const droppedByFilter = noMatchCount;
 
   // Enrich BVS API results with scope_note/name_en from local DB before validation
   const enriched = await enrichFromDB(afterSearch);
