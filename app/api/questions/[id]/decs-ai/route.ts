@@ -54,14 +54,25 @@ export async function POST(
       .filter(Boolean)
       .join('\n');
 
-    // ── Step 1: Gemini identifies primary + secondary themes ─────────────────
-    const classifierAgent = await getAgent('decs_classifier');
+    // ── Pre-flight: verify all agent prompts are configured ──────────────────
+    const [classifierAgent, validatorAgent] = await Promise.all([
+      getAgent('decs_classifier'),
+      getAgent('decs_validator'),
+    ]);
     if (!classifierAgent?.system_prompt) {
       return NextResponse.json(
         { error: 'Agente decs_classifier não configurado. Verifique o painel de agentes.' },
         { status: 500 }
       );
     }
+    if (!validatorAgent?.system_prompt) {
+      return NextResponse.json(
+        { error: 'Agente decs_validator não configurado. Verifique o painel de agentes.' },
+        { status: 500 }
+      );
+    }
+
+    // ── Step 1: Gemini identifies primary + secondary themes ─────────────────
     const systemPrompt = classifierAgent.system_prompt;
     const classifierModel = classifierAgent.model ?? 'gemini-2.5-flash';
 

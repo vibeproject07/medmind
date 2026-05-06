@@ -53,10 +53,20 @@ export async function POST(
       .filter(Boolean)
       .join('\n');
 
-    const indexerAgent = await getAgent('decs_indexer_v2');
+    // ── Pre-flight: verify all V2 agent prompts are configured ───────────────
+    const [indexerAgent, selectorAgent] = await Promise.all([
+      getAgent('decs_indexer_v2'),
+      getAgent('decs_selector_v2'),
+    ]);
     if (!indexerAgent?.system_prompt) {
       return NextResponse.json(
         { error: 'Agente decs_indexer_v2 não configurado. Verifique o painel de agentes.' },
+        { status: 500 }
+      );
+    }
+    if (!selectorAgent?.system_prompt) {
+      return NextResponse.json(
+        { error: 'Agente decs_selector_v2 não configurado. Verifique o painel de agentes.' },
         { status: 500 }
       );
     }
