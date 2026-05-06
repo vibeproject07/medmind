@@ -106,7 +106,7 @@ async function runV1Full(questionText: string, decsKey: string, geminiKey: strin
   }
 
   if (themes.primary.length === 0) throw new Error('V1: nenhum tema extraído');
-  const { descriptors } = await runDeCSPipeline(themes, questionText, decsKey, geminiKey);
+  const { descriptors } = await runDeCSPipeline(themes, questionText, decsKey, geminiKey, model);
   return descriptors;
 }
 
