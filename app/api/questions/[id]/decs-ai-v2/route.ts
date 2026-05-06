@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
+import { getAgent } from '@/lib/ai-agents';
 import { runDeCSPipelineV2, type DeCSV2Result, type DeCSV2CandidateGroup } from '@/lib/decs-pipeline-v2';
 import { saveClassificationArtifact } from '@/lib/decs-classification-storage';
 
@@ -52,10 +53,20 @@ export async function POST(
       .filter(Boolean)
       .join('\n');
 
+    const indexerAgent = await getAgent('decs_indexer_v2');
+    if (!indexerAgent?.system_prompt) {
+      return NextResponse.json(
+        { error: 'Agente decs_indexer_v2 não configurado. Verifique o painel de agentes.' },
+        { status: 500 }
+      );
+    }
+    const v2Model = indexerAgent.model ?? 'gemini-2.5-flash';
+
     const { result, themes_identified, candidate_groups, debug_trace, stats } = await runDeCSPipelineV2(
       questionText,
       decsKey,
-      geminiKey
+      geminiKey,
+      v2Model
     );
 
     await query(

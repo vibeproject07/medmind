@@ -301,33 +301,51 @@ export async function findBestDeCSMatch(
   return scored.length > 0 ? scored[0] : null;
 }
 
+// ── Candidate enrichment from DB ─────────────────────────────────────────────
+
+/**
+ * If a record came from the BVS API (no scope_note), try to enrich it
+ * from the local decs_descriptors table by matching on ui (code).
+ * Exported so decs-pipeline-v2.ts can import it instead of duplicating.
+ */
+export async function enrichFromDB(records: DeCSRecord[]): Promise<DeCSRecord[]> {
+  if (records.length === 0) return [];
+  const missing = records.filter((r) => !r.scope_note && r.code);
+  if (missing.length === 0) return records;
+
+  try {
+    const { query } = await import('@/lib/db');
+    const codes = missing.map((r) => r.code);
+    const res = await query(
+      `SELECT ui, name_en, scope_note FROM decs_descriptors WHERE ui = ANY($1)`,
+      [codes]
+    );
+    const map = new Map<string, { name_en: string; scope_note: string }>(
+      res.rows.map((r) => [r.ui, { name_en: r.name_en, scope_note: r.scope_note }])
+    );
+    return records.map((r) => {
+      const extra = map.get(r.code);
+      return extra ? { ...r, ...extra } : r;
+    });
+  } catch {
+    return records;
+  }
+}
+
 // ── Improvement 3: Gemini validation ────────────────────────────────────────
-
-const VALIDATION_PROMPT = `Você é um especialista em vocabulário controlado DeCS/MeSH e indexação biomédica.
-
-Dado o enunciado de uma questão médica e uma lista de descritores DeCS candidatos (cada um com código, termo, termo em inglês, definição abreviada e categoria), filtre e mantenha APENAS os descritores CLINICAMENTE RELEVANTES para o tema central da questão.
-
-Critérios de relevância:
-- O descritor deve representar um conceito clínico CENTRAL da questão (condição principal, fármaco, exame diagnóstico, procedimento, achado anatomopatológico relevante).
-- Use o campo "scope" (definição) para confirmar se o conceito corresponde ao que a questão aborda.
-- Descritores de organismos (vírus, bactérias, animais) só são relevantes se a questão tratar explicitamente de infectologia, microbiologia ou parasitologia.
-- Descritores muito genéricos ou de área não relacionada devem ser removidos.
-- Prefira manter descritores específicos sobre genéricos quando ambos estiverem presentes.
-
-Retorne SOMENTE um array JSON com os códigos dos descritores aprovados.
-Exemplo: ["D011014","D001523","D020521"]
-Sem explicação, sem markdown, apenas o array JSON.`;
 
 /**
  * Ask Gemini to validate which descriptors are truly relevant for the question.
  * Returns the subset of `descriptors` that Gemini approved.
  * On any error, returns the original list unchanged (fail-open).
+ *
+ * Reads the validation prompt from the `decs_validator` agent (DB or default).
  */
 export async function validateDescriptorsWithGemini(
   descriptors: DeCSRecord[],
   questionText: string,
   geminiKey: string,
-  model = 'gemini-3-pro-preview'
+  model = 'gemini-2.5-flash'
 ): Promise<DeCSRecord[]> {
   if (descriptors.length === 0) return [];
 
@@ -349,9 +367,12 @@ export async function validateDescriptorsWithGemini(
   ].join('\n');
 
   try {
+    const { getAgentPrompt } = await import('@/lib/ai-agents');
+    const validationPrompt = await getAgentPrompt('decs_validator');
+
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiKey}`;
     const body = {
-      system_instruction: { parts: [{ text: VALIDATION_PROMPT }] },
+      system_instruction: { parts: [{ text: validationPrompt }] },
       contents: [{ role: 'user', parts: [{ text: userMessage }] }],
       generationConfig: {
         temperature: 0,
@@ -405,14 +426,14 @@ export async function runDeCSPipeline(
   themes: DeCSThemes | string[],
   questionText: string,
   decsKey: string,
-  geminiKey: string
+  geminiKey: string,
+  model = 'gemini-2.5-flash'
 ): Promise<{ descriptors: DeCSRecord[]; dropped_by_filter: number; dropped_by_gemini: number }> {
   // Normalise input — support legacy string[] call
   const structured: DeCSThemes = Array.isArray(themes)
     ? { primary: themes, secondary: [] }
     : themes;
 
-  const totalTerms = structured.primary.length + structured.secondary.length;
   const seenCodes = new Set<string>();
   const afterSearch: DeCSRecord[] = [];
 
@@ -422,23 +443,39 @@ export async function runDeCSPipeline(
     ...structured.secondary.map((term) => ({ term, role: 'secondary' as const })),
   ];
 
-  await Promise.allSettled(
+  // Collect results first so we can accurately count no-match vs dedup
+  const searchResults = await Promise.allSettled(
     searchAll.map(async ({ term, role }) => {
       const match = await findBestDeCSMatch(term, decsKey, questionText, 0.15, 5, geminiKey);
-      if (match && !seenCodes.has(match.code)) {
-        seenCodes.add(match.code);
-        afterSearch.push({ ...match, role });
-      }
+      return { role, match };
     })
   );
 
-  const droppedByFilter = totalTerms - afterSearch.length;
+  let noMatchCount = 0;
+  for (const res of searchResults) {
+    if (res.status === 'rejected') { noMatchCount++; continue; }
+    const { role, match } = res.value;
+    if (!match) {
+      noMatchCount++;
+    } else if (!seenCodes.has(match.code)) {
+      seenCodes.add(match.code);
+      afterSearch.push({ ...match, role });
+    }
+    // match exists but was already seen (dedup) — not counted as dropped_by_filter
+  }
+
+  // dropped_by_filter = terms with no candidate found (includes category-filtered)
+  const droppedByFilter = noMatchCount;
+
+  // Enrich BVS API results with scope_note/name_en from local DB before validation
+  const enriched = await enrichFromDB(afterSearch);
 
   // Step 3: Gemini validation — operates on the flat list, role is preserved
   const afterValidation = await validateDescriptorsWithGemini(
-    afterSearch,
+    enriched,
     questionText,
-    geminiKey
+    geminiKey,
+    model
   );
 
   const droppedByGemini = afterSearch.length - afterValidation.length;

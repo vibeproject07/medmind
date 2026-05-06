@@ -190,7 +190,73 @@ function isCategoryAcceptable(record, questionText) {
   return BIO_RE.test(questionText);
 }
 
-// ── DeCS search (multi-candidate) ────────────────────────────────────────────
+// ── Local pgvector search (decs_descriptors) ─────────────────────────────────
+const EMBED_BASE = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent';
+
+async function generateEmbedding(text) {
+  try {
+    const res = await fetch(`${EMBED_BASE}?key=${GEMINI_KEY}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'models/gemini-embedding-001',
+        content: { parts: [{ text: text.substring(0, 2000) }] },
+        taskType: 'RETRIEVAL_QUERY',
+      }),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data?.embedding?.values ?? null;
+  } catch { return null; }
+}
+
+let localDeCSAvailable = null; // null = not checked yet
+
+async function checkLocalDeCS() {
+  if (localDeCSAvailable !== null) return localDeCSAvailable;
+  try {
+    const { rows } = await pool.query(`SELECT 1 FROM decs_descriptors WHERE embedding IS NOT NULL LIMIT 1`);
+    localDeCSAvailable = rows.length > 0;
+  } catch { localDeCSAvailable = false; }
+  return localDeCSAvailable;
+}
+
+async function searchDeCSLocal(searchTerm, maxCandidates = 5, minSimilarity = 0.60) {
+  try {
+    if (!await checkLocalDeCS()) return [];
+    const embedding = await generateEmbedding(searchTerm);
+    if (!embedding) return [];
+    const vec = `[${embedding.join(',')}]`;
+    const { rows } = await pool.query(`
+      SELECT
+        ui AS code,
+        name_pt AS term,
+        name_en,
+        scope_note,
+        tree_numbers,
+        1 - (embedding::halfvec(3072) <=> $1::halfvec(3072)) AS similarity
+      FROM decs_descriptors
+      WHERE embedding IS NOT NULL
+        AND (1 - (embedding::halfvec(3072) <=> $1::halfvec(3072))) >= $2
+      ORDER BY embedding::halfvec(3072) <=> $1::halfvec(3072)
+      LIMIT $3
+    `, [vec, minSimilarity, maxCandidates]);
+    return rows.map(r => {
+      const tree_ids = Array.isArray(r.tree_numbers) ? r.tree_numbers : JSON.parse(r.tree_numbers ?? '[]');
+      return {
+        term: r.term,
+        code: r.code,
+        tree_ids,
+        hierarchy_path: buildHierarchyPath(tree_ids[0] ?? ''),
+        similarity: parseFloat(r.similarity ?? '0'),
+        scope_note: r.scope_note ?? undefined,
+        name_en: r.name_en ?? undefined,
+      };
+    });
+  } catch { return []; }
+}
+
+// ── DeCS BVS API search ───────────────────────────────────────────────────────
 function parseDeCSRecord(rec) {
   const code = rec?.attr?.mfn ?? '';
   const descriptors = toArray(rec.descriptor_list).flatMap(d => toArray(d));
@@ -221,7 +287,21 @@ async function searchDeCSCandidates(searchTerm) {
   } catch { return []; }
 }
 
+/**
+ * Find the best DeCS match for a search term.
+ * Strategy:
+ *   1. Local pgvector search on decs_descriptors (fast, offline, semantic)
+ *   2. Fallback to BVS API (slower, requires DECS_API_KEY)
+ */
 async function findBestDeCSMatch(searchTerm, questionText) {
+  // ── Try local pgvector first ──────────────────────────────────────────────
+  const localCandidates = await searchDeCSLocal(searchTerm, MAX_CANDIDATES);
+  const localFiltered = localCandidates
+    .filter(c => isCategoryAcceptable(c, questionText))
+    .sort((a, b) => (b.similarity ?? 0) - (a.similarity ?? 0));
+  if (localFiltered.length > 0) return localFiltered[0];
+
+  // ── Fallback: BVS API ─────────────────────────────────────────────────────
   const candidates = await searchDeCSCandidates(searchTerm);
   const scored = candidates
     .map(c => ({ ...c, similarity: wordJaccard(searchTerm, c.term) }))

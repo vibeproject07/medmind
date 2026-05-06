@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
-import { getAgentPrompt } from '@/lib/ai-agents';
+import { getAgent } from '@/lib/ai-agents';
 import { GoogleGenAI } from '@google/genai';
 import { runDeCSPipeline, type DeCSRecord, type DeCSThemes } from '@/lib/decs-pipeline';
 import { saveClassificationArtifact } from '@/lib/decs-classification-storage';
@@ -55,10 +55,19 @@ export async function POST(
       .join('\n');
 
     // ── Step 1: Gemini identifies primary + secondary themes ─────────────────
-    const systemPrompt = await getAgentPrompt('decs_classifier');
+    const classifierAgent = await getAgent('decs_classifier');
+    if (!classifierAgent?.system_prompt) {
+      return NextResponse.json(
+        { error: 'Agente decs_classifier não configurado. Verifique o painel de agentes.' },
+        { status: 500 }
+      );
+    }
+    const systemPrompt = classifierAgent.system_prompt;
+    const classifierModel = classifierAgent.model ?? 'gemini-2.5-flash';
+
     const ai = new GoogleGenAI({ apiKey: geminiKey, apiVersion: 'v1beta' });
     const response = await ai.models.generateContent({
-      model: 'gemini-3-pro-preview',
+      model: classifierModel,
       contents: [{ role: 'user', parts: [{ text: questionText }] }],
       config: {
         systemInstruction: systemPrompt,
@@ -111,7 +120,8 @@ export async function POST(
       themes,
       questionText,
       decsKey,
-      geminiKey
+      geminiKey,
+      classifierModel
     );
 
     const artifact = {

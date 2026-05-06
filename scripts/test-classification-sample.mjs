@@ -40,30 +40,62 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 function vectorStr(v) { return `[${v.join(',')}]`; }
 
-// ── [1] Gemini — extração de termos médicos ──────────────────────────────────
+// ── Agent prompt loader ───────────────────────────────────────────────────────
+
+const DEFAULT_CLASSIFIER_PROMPT = `Você é um especialista em classificação médica e no vocabulário controlado DeCS (Descritores em Ciências da Saúde) / MeSH.
+
+Analise o enunciado e as alternativas da questão médica abaixo. Compreenda o contexto clínico completo.
+
+Identifique:
+- TEMAS PRINCIPAIS (1 a 3): os conceitos médicos CENTRAIS da questão — diagnóstico principal, condição tratada, fármaco central ou procedimento chave.
+- TEMAS SECUNDÁRIOS (0 a 6, se aplicável): conceitos médicos relevantes mas não centrais — fisiopatologia associada, complicações, achados diagnósticos secundários, contexto clínico.
+
+Regras IMPORTANTES:
+- Use EXCLUSIVAMENTE termos que existam como descritores no vocabulário DeCS/MeSH em português (pt-BR).
+- Prefira termos específicos: "Insuficiência Cardíaca Congestiva" em vez de "Coração".
+- Inclua: condições clínicas, fármacos, exames diagnósticos, procedimentos, achados anatomopatológicos.
+- NÃO inclua: adjetivos genéricos ("crônico", "agudo"), o formato da questão, termos não-DeCS.
+- NÃO combine termos em frases compostas que não existam no DeCS.
+
+Retorne SOMENTE um JSON com esta estrutura (sem markdown, sem explicação):
+{"primary":["tema principal 1","tema principal 2"],"secondary":["tema secundário 1","tema secundário 2"]}`;
+
+let classifierPrompt = DEFAULT_CLASSIFIER_PROMPT;
+let classifierModel = 'gemini-2.5-flash';
+
+async function loadClassifierAgent() {
+  try {
+    const res = await pool.query(
+      `SELECT system_prompt, model FROM ai_agents WHERE key = 'decs_classifier'`
+    );
+    if (res.rows.length > 0 && res.rows[0].system_prompt) {
+      classifierPrompt = res.rows[0].system_prompt;
+      classifierModel = res.rows[0].model ?? 'gemini-2.5-flash';
+      console.log(`   ✓ Agente decs_classifier carregado do banco (model: ${classifierModel})`);
+    } else {
+      console.log(`   ℹ Usando prompt padrão do decs_classifier (model: ${classifierModel})`);
+    }
+  } catch {
+    console.log(`   ⚠ Tabela ai_agents não encontrada — usando prompt padrão`);
+  }
+}
+
+// ── [1] Gemini — identificação de temas DeCS (primary + secondary) ───────────
 /**
- * Usa Gemini Flash para extrair 3–5 termos médicos centrais do enunciado.
- * Retorna um array de strings em português.
+ * Usa o agente decs_classifier (mesmo da API de produção) para extrair temas
+ * primários e secundários da questão no formato DeCS/MeSH.
  *
- * Função: generateMedicalTerms(questionText) → string[]
- * Modelo : gemini-2.5-flash
+ * Função: extractDeCSThemes(questionText) → { primary: string[], secondary: string[] }
+ * Modelo : classifierModel (lido do agente no DB, padrão: gemini-2.5-flash)
  * Chave  : GEMINI_API_KEY
  */
-async function generateMedicalTerms(questionText) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${geminiKey}`;
-
-  const systemPrompt = `Você é um especialista em terminologia médica.
-Dado o enunciado de uma questão de concurso médico, retorne APENAS um array JSON com 3 a 5 termos médicos centrais em português (doenças, fármacos, procedimentos, anatomia, exames).
-Regras:
-- Prefira termos que existam no vocabulário DeCS/MeSH
-- Termos específicos são melhores que genéricos (ex: "Infarto Agudo do Miocárdio" em vez de "coração")
-- Sem explicação, sem markdown, apenas o array JSON.
-Exemplo: ["Diabetes Mellitus Tipo 2","Metformina","Resistência à Insulina"]`;
+async function extractDeCSThemes(questionText) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${classifierModel}:generateContent?key=${geminiKey}`;
 
   const body = {
-    system_instruction: { parts: [{ text: systemPrompt }] },
-    contents: [{ role: 'user', parts: [{ text: questionText.slice(0, 2000) }] }],
-    generationConfig: { temperature: 0, maxOutputTokens: 400 },
+    system_instruction: { parts: [{ text: classifierPrompt }] },
+    contents: [{ role: 'user', parts: [{ text: questionText.slice(0, 3000) }] }],
+    generationConfig: { temperature: 0.1, maxOutputTokens: 1024, responseMimeType: 'application/json' },
   };
 
   const res = await fetch(url, {
@@ -74,19 +106,34 @@ Exemplo: ["Diabetes Mellitus Tipo 2","Metformina","Resistência à Insulina"]`;
 
   if (!res.ok) throw new Error(`Gemini error ${res.status}`);
   const data = await res.json();
-  const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
+  const rawText = (data?.candidates?.[0]?.content?.parts
+    ?.filter(p => !p?.thought)
+    ?.map(p => p?.text)
+    .filter(Boolean)
+    .join('') ?? '');
   const cleaned = rawText.trim().replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
 
-  // Robust parse: try direct JSON, then extract array via regex
-  let terms;
   try {
-    terms = JSON.parse(cleaned);
+    const parsed = JSON.parse(cleaned);
+    if (Array.isArray(parsed)) {
+      return { primary: parsed.filter(t => typeof t === 'string').slice(0, 3), secondary: [] };
+    }
+    if (parsed && typeof parsed === 'object') {
+      return {
+        primary: (Array.isArray(parsed.primary) ? parsed.primary : [])
+          .filter(t => typeof t === 'string' && t.trim()).slice(0, 3),
+        secondary: (Array.isArray(parsed.secondary) ? parsed.secondary : [])
+          .filter(t => typeof t === 'string' && t.trim()).slice(0, 6),
+      };
+    }
   } catch {
     const match = cleaned.match(/\[[\s\S]*?\]/);
-    if (!match) throw new Error(`JSON parse failed: ${cleaned.slice(0, 60)}`);
-    terms = JSON.parse(match[0]);
+    if (match) {
+      const arr = JSON.parse(match[0]);
+      return { primary: arr.filter(t => typeof t === 'string').slice(0, 3), secondary: [] };
+    }
   }
-  return Array.isArray(terms) ? terms.map(String) : [];
+  return { primary: [], secondary: [] };
 }
 
 // ── [2] DeCS API — busca de descritores ──────────────────────────────────────
@@ -198,9 +245,10 @@ async function classifyQuestion(q) {
     exam_year:         q.exam_year,
     statement_preview: q.statement.slice(0, 150),
 
-    // [1] Gemini
-    gemini_status: 'pending',
-    gemini_terms:  [],
+    // [1] decs_classifier agent (same as production API)
+    gemini_status:   'pending',
+    gemini_themes:   { primary: [], secondary: [] },
+    gemini_terms:    [], // flat list for backward-compat summary
 
     // [2] DeCS
     decs_status:    decsAvailable ? 'pending' : 'api_unavailable',
@@ -210,10 +258,20 @@ async function classifyQuestion(q) {
     similar_questions: [],
   };
 
-  // ── [1] Gemini term extraction ─────────────────────────────────────────────
+  // ── [1] Gemini: identify primary + secondary DeCS themes ──────────────────
   try {
-    result.gemini_terms  = await generateMedicalTerms(q.statement);
-    result.gemini_status = result.gemini_terms.length > 0 ? 'ok' : 'no_terms';
+    const questionText = [
+      'Enunciado:', q.statement, '',
+      'Alternativa A: ' + (q.option_a ?? ''),
+      'Alternativa B: ' + (q.option_b ?? ''),
+      q.option_c ? 'Alternativa C: ' + q.option_c : null,
+      q.option_d ? 'Alternativa D: ' + q.option_d : null,
+      q.option_e ? 'Alternativa E: ' + q.option_e : null,
+    ].filter(Boolean).join('\n');
+
+    result.gemini_themes  = await extractDeCSThemes(questionText);
+    result.gemini_terms   = [...result.gemini_themes.primary, ...result.gemini_themes.secondary];
+    result.gemini_status  = result.gemini_terms.length > 0 ? 'ok' : 'no_terms';
   } catch (e) {
     result.gemini_status = `error: ${e.message.slice(0, 80)}`;
   }
@@ -221,7 +279,7 @@ async function classifyQuestion(q) {
   // ── [2] DeCS lookup for each term ─────────────────────────────────────────
   if (decsAvailable && result.gemini_terms.length > 0) {
     const decsHits = [];
-    for (const term of result.gemini_terms.slice(0, 4)) { // max 4 API calls per question
+    for (const term of result.gemini_terms.slice(0, 6)) { // up to 6 terms (3p+3s)
       const hit = await searchDeCS(term);
       if (hit) decsHits.push(hit);
       if (!decsAvailable) break; // blocked — skip remaining terms
@@ -248,21 +306,27 @@ async function classifyQuestion(q) {
 // ── Main ─────────────────────────────────────────────────────────────────────
 
 async function main() {
-  console.log(`\n🔬 Teste de Classificação — ${SAMPLE_SIZE} questões`);
+  console.log(`\n🔬 Teste de Classificação DeCS — ${SAMPLE_SIZE} questões`);
   console.log(`   Gemini: ${geminiKey ? '✅' : '❌'}  |  DeCS API: ${decsKey ? '✅' : '❌ (sem chave)'}`);
   console.log(`   Concorrência: ${CONCURRENCY}  |  Delay: ${DELAY_MS}ms\n`);
+
+  console.log(`Carregando agente decs_classifier...`);
+  await loadClassifierAgent();
+  console.log();
 
   // Seleciona 100 questões com embedding, distribuídas por banca
   const { rows: questions } = await pool.query(`
     WITH ranked AS (
       SELECT
-        id, statement, exam_board, exam_year,
+        id, statement, option_a, option_b, option_c, option_d, option_e,
+        exam_board, exam_year,
         embedding::text AS embedding,
         ROW_NUMBER() OVER (PARTITION BY COALESCE(exam_board, 'UNKNOWN') ORDER BY RANDOM()) AS rn
       FROM questions
       WHERE embedding IS NOT NULL
     )
-    SELECT id, statement, exam_board, exam_year, embedding
+    SELECT id, statement, option_a, option_b, option_c, option_d, option_e,
+           exam_board, exam_year, embedding
     FROM ranked
     WHERE rn <= 4
     ORDER BY RANDOM()

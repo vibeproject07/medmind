@@ -9,7 +9,7 @@
  *   5. Text-based fallback for descriptors without embeddings
  */
 
-import { buildHierarchyPath, isCategoryAcceptable, searchDeCSLocal, searchDeCSCandidates, type DeCSRecord } from './decs-pipeline';
+import { buildHierarchyPath, isCategoryAcceptable, searchDeCSLocal, searchDeCSCandidates, enrichFromDB, type DeCSRecord } from './decs-pipeline';
 import { getAgentPrompt } from './ai-agents';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -152,37 +152,7 @@ async function searchDeCSByText(
   }
 }
 
-// ── Candidate enrichment from DB ──────────────────────────────────────────────
-
-/**
- * If a record came from the BVS API (no scope_note), try to enrich it
- * from the local decs_descriptors table by matching on ui (code).
- */
-async function enrichFromDB(records: DeCSRecord[]): Promise<DeCSRecord[]> {
-  if (records.length === 0) return [];
-  const missing = records.filter((r) => !r.scope_note && r.code);
-  if (missing.length === 0) return records;
-
-  try {
-    const { query } = await import('@/lib/db');
-    const codes = missing.map((r) => r.code);
-    const res = await query(
-      `SELECT ui, name_en, scope_note FROM decs_descriptors WHERE ui = ANY($1)`,
-      [codes]
-    );
-    const map = new Map<string, { name_en: string; scope_note: string }>(
-      res.rows.map((r) => [r.ui, { name_en: r.name_en, scope_note: r.scope_note }])
-    );
-    return records.map((r) => {
-      const extra = map.get(r.code);
-      return extra ? { ...r, ...extra } : r;
-    });
-  } catch {
-    return records;
-  }
-}
-
-// ── Gemini selector (Step 3) ──────────────────────────────────────────────────
+// ── Gemini selector (Step 4) ──────────────────────────────────────────────────
 
 const GEMINI_BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
 
@@ -198,7 +168,8 @@ async function selectDescriptorsWithGemini(
   questionText: string,
   primaryCandidates: Map<string, DeCSRecord[]>,
   secondaryCandidates: Map<string, DeCSRecord[]>,
-  geminiKey: string
+  geminiKey: string,
+  model = 'gemini-2.5-flash'
 ): Promise<{ primary: DeCSRecord[]; secondary: DeCSRecord[] }> {
   const buildCandidateBlock = (
     label: string,
@@ -230,7 +201,7 @@ async function selectDescriptorsWithGemini(
   const selectorPrompt = await getAgentPrompt('decs_selector_v2');
 
   try {
-    const url = `${GEMINI_BASE}/gemini-3-pro-preview:generateContent?key=${geminiKey}`;
+    const url = `${GEMINI_BASE}/${model}:generateContent?key=${geminiKey}`;
     const body = {
       system_instruction: { parts: [{ text: selectorPrompt }] },
       contents: [{ role: 'user', parts: [{ text: JSON.stringify(contextInput, null, 2) }] }],
@@ -311,7 +282,8 @@ function fallbackSelect(
 export async function runDeCSPipelineV2(
   questionText: string,
   decsKey: string,
-  geminiKey: string
+  geminiKey: string,
+  model = 'gemini-2.5-flash'
 ): Promise<{
   result: DeCSV2Result;
   themes_identified: { primary: string[]; secondary: string[] };
@@ -330,7 +302,7 @@ export async function runDeCSPipelineV2(
   let themes: { primary: string[]; secondary: string[] } = { primary: [], secondary: [] };
 
   try {
-    const url = `${GEMINI_BASE}/gemini-3-pro-preview:generateContent?key=${geminiKey}`;
+    const url = `${GEMINI_BASE}/${model}:generateContent?key=${geminiKey}`;
     const body = {
       system_instruction: { parts: [{ text: indexerPrompt }] },
       contents: [{ role: 'user', parts: [{ text: questionText }] }],
@@ -402,14 +374,8 @@ export async function runDeCSPipelineV2(
       candidates = apiCandidates.filter((c) => isCategoryAcceptable(c, questionText));
     }
 
-    if (candidates.length === 0) {
-      candidates = [{
-        code: `fallback:${term}`,
-        term,
-        tree_ids: [],
-        hierarchy_path: '',
-      }];
-    }
+    // If no real candidate found for this concept, skip it entirely
+    if (candidates.length === 0) return [];
 
     // Enrich records that came from BVS API (no scope_note)
     candidates = await enrichFromDB(candidates);
@@ -444,7 +410,8 @@ export async function runDeCSPipelineV2(
       questionText,
       primaryCandidates,
       secondaryCandidates,
-      geminiKey
+      geminiKey,
+      model
     );
 
   // ── Step 5: Resolve hierarchy (parents + children) from DB ────────────────

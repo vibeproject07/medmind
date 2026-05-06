@@ -9,7 +9,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
-import { getAgentPrompt } from '@/lib/ai-agents';
 import { runDeCSPipeline, type DeCSThemes } from '@/lib/decs-pipeline';
 import { runDeCSPipelineV2 } from '@/lib/decs-pipeline-v2';
 
@@ -70,8 +69,11 @@ function buildQuestionText(q: Record<string, unknown>): string {
 // ── V1 full pipeline (theme extraction + runDeCSPipeline) ─────────────────────
 
 async function runV1Full(questionText: string, decsKey: string, geminiKey: string) {
-  const systemPrompt = await getAgentPrompt('decs_classifier');
-  const url = `${GEMINI_BASE}/gemini-3-pro-preview:generateContent?key=${geminiKey}`;
+  const { getAgent } = await import('@/lib/ai-agents');
+  const classifierAgent = await getAgent('decs_classifier');
+  const systemPrompt = classifierAgent?.system_prompt ?? '';
+  const model = classifierAgent?.model ?? 'gemini-2.5-flash';
+  const url = `${GEMINI_BASE}/${model}:generateContent?key=${geminiKey}`;
 
   const res = await fetch(url, {
     method: 'POST',
