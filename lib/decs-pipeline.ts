@@ -9,17 +9,19 @@
  */
 
 export interface DeCSRecord {
-  term: string;
-  code: string;
-  tree_ids: string[];
-  hierarchy_path: string;
-  similarity?: number;
-  role?: 'primary' | 'secondary';
-  scope_note?: string;
-  name_en?: string;
+  // interface is a way to define the structure of an object!!
+  term: string; // nome do descritor
+  code: string; //identificador DeCS (index) (UI)
+  tree_ids: string[]; // e.g. ["C01.635.500", "C01.635.500.500"] - posição hierárquica
+  hierarchy_path: string; // e.g. "Doenças › C01.635.500" - caminho categórico
+  similarity?: number; // score vetorial
+  role?: "primary" | "secondary"; // importância temática
+  scope_note?: string; // descrição do conceito
+  name_en?: string; // nome em inglês
 }
 
 export interface DeCSThemes {
+  // export (function/const/interface) makes it available to other files!!
   primary: string[];
   secondary: string[];
 }
@@ -27,22 +29,22 @@ export interface DeCSThemes {
 // ── Category metadata ────────────────────────────────────────────────────────
 
 export const DECS_CATEGORY_LABELS: Record<string, string> = {
-  A: 'Anatomia',
-  B: 'Organismos',
-  C: 'Doenças',
-  D: 'Compostos Químicos e Drogas',
-  E: 'Técnicas e Equipamentos Analíticos',
-  F: 'Psiquiatria e Psicologia',
-  G: 'Fenômenos Biológicos',
-  H: 'Disciplinas e Ocupações',
-  I: 'Antropologia, Educação, Sociologia',
-  J: 'Tecnologia, Indústria, Agricultura',
-  K: 'Humanidades',
-  L: 'Ciência da Informação',
-  M: 'Grupos Identificados',
-  N: 'Saúde',
-  SP: 'Saúde Pública',
-  VS: 'Vigilância Sanitária',
+  A: "Anatomia",
+  B: "Organismos",
+  C: "Doenças",
+  D: "Compostos Químicos e Drogas",
+  E: "Técnicas e Equipamentos Analíticos",
+  F: "Psiquiatria e Psicologia",
+  G: "Fenômenos Biológicos",
+  H: "Disciplinas e Ocupações",
+  I: "Antropologia, Educação, Sociologia",
+  J: "Tecnologia, Indústria, Agricultura",
+  K: "Humanidades",
+  L: "Ciência da Informação",
+  M: "Grupos Identificados",
+  N: "Saúde",
+  SP: "Saúde Pública",
+  VS: "Vigilância Sanitária",
 };
 
 /**
@@ -50,14 +52,23 @@ export const DECS_CATEGORY_LABELS: Record<string, string> = {
  * E.g. "C01.635.500" → "C", "B04.820.578" → "B"
  */
 export function treeCategory(treeId: string): string {
-  return treeId.split('.')[0].replace(/[0-9]/g, '');
+  return treeId.split(".")[0].replace(/[0-9]/g, ""); // [[[ROW 15]]]
+  /*
+   *the function gets the full tree_id as a param(eter) and returns the first letter of the first part of the tree_id by splitting the string by the dot and removing the numbers, choosing the index 0 of the array, the first part of the string;
+   */
 }
 
 export function buildHierarchyPath(treeId: string): string {
-  if (!treeId) return '';
-  const cat = treeCategory(treeId);
-  const label = DECS_CATEGORY_LABELS[cat] ?? cat;
-  return treeId.split('.').length <= 1 ? label : `${label} › ${treeId}`;
+  if (!treeId) return ""; // [[[ROW 15]]]
+  const cat = treeCategory(treeId); //[[[ROWS 54-59]]]
+  const label = DECS_CATEGORY_LABELS[cat] ?? cat; //[[[ROWS 31-48]]]
+  return treeId.split(".").length <= 1 ? label : `${label} › ${treeId}`;
+  /*
+   * if treeId is empty, null, undefined or false, the return is an empty string; the variable 'cat' is equal the constant of the previous function treeCategory which parameter is the treeId; the variable 'label' is equal to the constant DECS_CATEGORY_LABELS, that grants access to an object or dictionary, which index is the variable 'cat';
+   *[[label = DECS_CATEGORY_LABELS[cat] ?? cat;]] == if there is an existing label for the category, use its label, otherwise, use the category itself;
+   * [[treeId.split(".").length <= 1 ? label : `${label} › ${treeId}`;]] == if (treeId.split(".").length <= 1) {return label;} else {return `${label} › ${treeId}`;} (ternary operator);
+   *
+   */
 }
 
 // ── Improvement 2: Category filter ──────────────────────────────────────────
@@ -72,7 +83,7 @@ export function buildHierarchyPath(treeId: string): string {
  * We allow descriptors in these sub-trees when the question explicitly mentions
  * microbiology, infection, or organisms.
  */
-const BIO_KEYWORD_RE =
+const BIO_KEYWORD_RE = // this is a regex (regular expression)
   /\b(vírus|virus|bactéria|bacteria|bacilo|fungo|fung|parasita|parasit|microbiol|infectol|viral|bacteria|antibiótic|antibiotic|vaccin|vacin|patógen|patogen|prion|rickettsia|protozoár|helmint|coccídio|coccidi|tripanossom|leishman|plasmodium|schistosoma)\b/i;
 
 /**
@@ -80,12 +91,20 @@ const BIO_KEYWORD_RE =
  * Descriptors outside category B are always accepted.
  * B-category descriptors require an explicit bio/micro context in the question.
  */
-export function isCategoryAcceptable(record: DeCSRecord, questionText: string): boolean {
-  if (!record.tree_ids || record.tree_ids.length === 0) return true;
-  const cats = record.tree_ids.map(treeCategory);
-  const allOrganism = cats.every((c) => c === 'B');
+export function isCategoryAcceptable(
+  record: DeCSRecord, // param that expects a DeCSRecord object rows // [[[ROWS 11-20]]]
+  questionText: string, // param that expects the question text
+): boolean {
+  if (!record.tree_ids || record.tree_ids.length === 0) return true; // [[[ROW 15]]]
+  // if there is no tree_ids (!treeIds == non existent) or the length of the array is 0, the return is true
+  const cats = record.tree_ids.map(treeCategory); // [[[ROWS 54-59]]]
+  // the variable cats is equal to the array of tree_ids, mapped to the treeCategory function
+  const allOrganism = cats.every((c) => c === "B"); // [[[ROW 100]]]
+  // the variable allOrganism is equal to the array of cats, every element of the array is equal to "B"
   if (!allOrganism) return true; // Has at least one non-B category — keep
+  // if allOrganism is false, the return is true
   return BIO_KEYWORD_RE.test(questionText);
+  // if allOrganism is true, the return is the result of the regex test on the questionText
 }
 
 // ── Improvement 1: Multi-candidate search + similarity ranking ────────────────
@@ -105,15 +124,17 @@ export function wordJaccard(a: string, b: string): number {
     new Set(
       s
         .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
         .split(/\W+/)
-        .filter((w) => w.length > 3)
+        .filter((w) => w.length > 3),
     );
   const A = tokenise(a);
   const B = tokenise(b);
   let inter = 0;
-  A.forEach((w) => { if (B.has(w)) inter++; });
+  A.forEach((w) => {
+    if (B.has(w)) inter++;
+  });
   const union = new Set(Array.from(A).concat(Array.from(B))).size;
   return union === 0 ? 0 : inter / union;
 }
@@ -124,19 +145,23 @@ export function wordJaccard(a: string, b: string): number {
  */
 function parseDeCSRecord(rec: Record<string, unknown>): DeCSRecord | null {
   const attrObj = rec.attr as Record<string, string> | undefined;
-  const code = attrObj?.mfn ?? '';
+  const code = attrObj?.mfn ?? ""; //what does const stand for? it is a variable that cannot be reassigned!!!!
 
   const descriptors = toArray(rec.descriptor_list as unknown).flatMap((d) =>
-    toArray(d as unknown)
+    toArray(d as unknown),
   ) as Record<string, unknown>[];
 
-  let term = '';
-  for (const pl of ['pt-br', 'pt']) {
+  let term = ""; // what does let stand for? it is a variable that can be reassigned!!!!
+  for (const pl of ["pt-br", "pt"]) {
     const found = descriptors.find((d) => {
       const da = d?.attr as Record<string, string> | undefined;
       return da?.lang === pl;
     });
-    if (found && typeof found.descriptor === 'string' && found.descriptor.trim()) {
+    if (
+      found &&
+      typeof found.descriptor === "string" &&
+      found.descriptor.trim()
+    ) {
       term = found.descriptor.trim();
       break;
     }
@@ -144,13 +169,18 @@ function parseDeCSRecord(rec: Record<string, unknown>): DeCSRecord | null {
   if (!term) return null;
 
   const treeList = toArray(rec.tree_id_list as unknown).flatMap((t) =>
-    toArray(t as unknown)
+    toArray(t as unknown),
   ) as Record<string, unknown>[];
   const tree_ids: string[] = treeList
-    .map((t) => (t?.tree_id as string | undefined)?.trim() ?? '')
+    .map((t) => (t?.tree_id as string | undefined)?.trim() ?? "")
     .filter(Boolean);
 
-  return { term, code, tree_ids, hierarchy_path: buildHierarchyPath(tree_ids[0] ?? '') };
+  return {
+    term,
+    code,
+    tree_ids,
+    hierarchy_path: buildHierarchyPath(tree_ids[0] ?? ""),
+  };
 }
 
 // ── Layer 1 (primary): Local pgvector search ─────────────────────────────────
@@ -162,7 +192,7 @@ function parseDeCSRecord(rec: Record<string, unknown>): DeCSRecord | null {
 async function isLocalDeCSAvailable(): Promise<boolean> {
   try {
     // Dynamic import so this file is usable in scripts that don't have the DB pool
-    const { query } = await import('@/lib/db');
+    const { query } = await import("@/lib/db");
     const res = await query(`SELECT 1 FROM decs_descriptors LIMIT 1`);
     return res.rows.length > 0;
   } catch {
@@ -181,17 +211,20 @@ export async function searchDeCSLocal(
   searchTerm: string,
   geminiKey: string,
   maxCandidates = 5,
-  minSimilarity = 0.60
+  minSimilarity = 0.6,
 ): Promise<DeCSRecord[]> {
   try {
-    const { generateEmbedding, vectorToString } = await import('@/lib/embeddings');
-    const { query } = await import('@/lib/db');
+    const { generateEmbedding, vectorToString } = await import(
+      "@/lib/embeddings"
+    );
+    const { query } = await import("@/lib/db");
 
     const embedding = await generateEmbedding(searchTerm, geminiKey);
     const vec = vectorToString(embedding);
 
     // Cast to halfvec to use the halfvec HNSW index (pgvector 0.8, >2000 dims)
-    const res = await query(`
+    const res = await query(
+      `
       SELECT
         ui AS code,
         name_pt AS term,
@@ -204,18 +237,20 @@ export async function searchDeCSLocal(
         AND (1 - (embedding::halfvec(3072) <=> $1::halfvec(3072))) >= $2
       ORDER BY embedding::halfvec(3072) <=> $1::halfvec(3072)
       LIMIT $3
-    `, [vec, minSimilarity, maxCandidates]);
+    `,
+      [vec, minSimilarity, maxCandidates],
+    );
 
     return res.rows.map((r) => {
       const tree_ids: string[] = Array.isArray(r.tree_numbers)
         ? r.tree_numbers
-        : JSON.parse(r.tree_numbers ?? '[]');
+        : JSON.parse(r.tree_numbers ?? "[]");
       return {
         term: r.term,
         code: r.code,
         tree_ids,
-        hierarchy_path: buildHierarchyPath(tree_ids[0] ?? ''),
-        similarity: parseFloat(r.similarity ?? '0'),
+        hierarchy_path: buildHierarchyPath(tree_ids[0] ?? ""),
+        similarity: parseFloat(r.similarity ?? "0"),
         scope_note: r.scope_note ?? undefined,
         name_en: r.name_en ?? undefined,
       };
@@ -227,7 +262,7 @@ export async function searchDeCSLocal(
 
 // ── BVS API (fallback) ────────────────────────────────────────────────────────
 
-const DECS_BASE = 'https://api.bvsalud.org/decs/v2';
+const DECS_BASE = "https://api.bvsalud.org/decs/v2";
 
 /**
  * Search DeCS and return up to `maxCandidates` parsed records.
@@ -236,14 +271,14 @@ const DECS_BASE = 'https://api.bvsalud.org/decs/v2';
 export async function searchDeCSCandidates(
   searchTerm: string,
   apiKey: string,
-  maxCandidates = 5
+  maxCandidates = 5,
 ): Promise<DeCSRecord[]> {
   try {
     const url = `${DECS_BASE}/search-by-words?words=${encodeURIComponent(searchTerm)}&lang=pt&format=json`;
     const res = await fetch(url, { headers: { apikey: apiKey } });
     if (!res.ok) return [];
 
-    const data = await res.json() as Record<string, unknown>;
+    const data = (await res.json()) as Record<string, unknown>;
     const objects = data?.objects as unknown[];
     if (!Array.isArray(objects) || objects.length === 0) return [];
 
@@ -252,7 +287,10 @@ export async function searchDeCSCandidates(
     const recordList = resp?.record_list as Record<string, unknown>;
     if (!recordList) return [];
 
-    const rawRecords = toArray(recordList?.record as unknown).slice(0, maxCandidates);
+    const rawRecords = toArray(recordList?.record as unknown).slice(
+      0,
+      maxCandidates,
+    );
     const parsed: DeCSRecord[] = [];
     for (const r of rawRecords) {
       const rec = parseDeCSRecord(r as Record<string, unknown>);
@@ -278,11 +316,15 @@ export async function findBestDeCSMatch(
   questionText: string,
   minSimilarity = 0.15,
   maxCandidates = 5,
-  geminiKey?: string
+  geminiKey?: string,
 ): Promise<DeCSRecord | null> {
   // ── Try local pgvector first ──────────────────────────────────────────────
-  if (geminiKey && await isLocalDeCSAvailable()) {
-    const localCandidates = await searchDeCSLocal(searchTerm, geminiKey, maxCandidates);
+  if (geminiKey && (await isLocalDeCSAvailable())) {
+    const localCandidates = await searchDeCSLocal(
+      searchTerm,
+      geminiKey,
+      maxCandidates,
+    );
     const filtered = localCandidates
       .filter((c) => isCategoryAcceptable(c, questionText))
       .sort((a, b) => (b.similarity ?? 0) - (a.similarity ?? 0));
@@ -290,7 +332,11 @@ export async function findBestDeCSMatch(
   }
 
   // ── Fallback: BVS API ─────────────────────────────────────────────────────
-  const candidates = await searchDeCSCandidates(searchTerm, apiKey, maxCandidates);
+  const candidates = await searchDeCSCandidates(
+    searchTerm,
+    apiKey,
+    maxCandidates,
+  );
 
   const scored = candidates
     .map((c) => ({ ...c, similarity: wordJaccard(searchTerm, c.term) }))
@@ -308,20 +354,25 @@ export async function findBestDeCSMatch(
  * from the local decs_descriptors table by matching on ui (code).
  * Exported so decs-pipeline-v2.ts can import it instead of duplicating.
  */
-export async function enrichFromDB(records: DeCSRecord[]): Promise<DeCSRecord[]> {
+export async function enrichFromDB(
+  records: DeCSRecord[],
+): Promise<DeCSRecord[]> {
   if (records.length === 0) return [];
   const missing = records.filter((r) => !r.scope_note && r.code);
   if (missing.length === 0) return records;
 
   try {
-    const { query } = await import('@/lib/db');
+    const { query } = await import("@/lib/db");
     const codes = missing.map((r) => r.code);
     const res = await query(
       `SELECT ui, name_en, scope_note FROM decs_descriptors WHERE ui = ANY($1)`,
-      [codes]
+      [codes],
     );
     const map = new Map<string, { name_en: string; scope_note: string }>(
-      res.rows.map((r) => [r.ui, { name_en: r.name_en, scope_note: r.scope_note }])
+      res.rows.map((r) => [
+        r.ui,
+        { name_en: r.name_en, scope_note: r.scope_note },
+      ]),
     );
     return records.map((r) => {
       const extra = map.get(r.code);
@@ -345,58 +396,61 @@ export async function validateDescriptorsWithGemini(
   descriptors: DeCSRecord[],
   questionText: string,
   geminiKey: string,
-  model = 'gemini-2.5-flash'
+  model = "gemini-2.5-flash",
 ): Promise<DeCSRecord[]> {
   if (descriptors.length === 0) return [];
 
-  const candidateList = descriptors
-    .map((d) => ({
-      code: d.code,
-      term: d.term,
-      term_en: d.name_en ?? undefined,
-      scope: d.scope_note ? d.scope_note.substring(0, 180) : undefined,
-      categoria: buildHierarchyPath(d.tree_ids[0] ?? '').split(' › ')[0],
-    }));
+  const candidateList = descriptors.map((d) => ({
+    code: d.code,
+    term: d.term,
+    term_en: d.name_en ?? undefined,
+    scope: d.scope_note ? d.scope_note.substring(0, 180) : undefined,
+    categoria: buildHierarchyPath(d.tree_ids[0] ?? "").split(" › ")[0],
+  }));
 
   const userMessage = [
-    'Questão:',
+    "Questão:",
     questionText,
-    '',
-    'Candidatos:',
+    "",
+    "Candidatos:",
     JSON.stringify(candidateList, null, 2),
-  ].join('\n');
+  ].join("\n");
 
   try {
-    const { getAgentPrompt } = await import('@/lib/ai-agents');
-    const validationPrompt = await getAgentPrompt('decs_validator');
+    const { getAgentPrompt } = await import("@/lib/ai-agents");
+    const validationPrompt = await getAgentPrompt("decs_validator");
 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiKey}`;
     const body = {
       system_instruction: { parts: [{ text: validationPrompt }] },
-      contents: [{ role: 'user', parts: [{ text: userMessage }] }],
+      contents: [{ role: "user", parts: [{ text: userMessage }] }],
       generationConfig: {
         temperature: 0,
         maxOutputTokens: 8192,
-        responseMimeType: 'application/json',
+        responseMimeType: "application/json",
       },
     };
     const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
     if (!res.ok) return descriptors; // fail-open
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const data = await res.json() as any;
+    const data = (await res.json()) as any;
     const rawText: string =
-      (data?.candidates?.[0]?.content?.parts
+      data?.candidates?.[0]?.content?.parts
         ?.filter((p: Record<string, unknown>) => !p?.thought)
         ?.map((p: Record<string, unknown>) => p?.text)
         .filter(Boolean)
-        .join('') ?? '');
+        .join("") ?? "";
 
-    const cleaned = rawText.trim().replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
+    const cleaned = rawText
+      .trim()
+      .replace(/^```json\s*/i, "")
+      .replace(/```\s*$/i, "")
+      .trim();
     const approved: string[] = JSON.parse(cleaned);
     if (!Array.isArray(approved)) return descriptors;
 
@@ -427,8 +481,12 @@ export async function runDeCSPipeline(
   questionText: string,
   decsKey: string,
   geminiKey: string,
-  model = 'gemini-2.5-flash'
-): Promise<{ descriptors: DeCSRecord[]; dropped_by_filter: number; dropped_by_gemini: number }> {
+  model = "gemini-2.5-flash",
+): Promise<{
+  descriptors: DeCSRecord[];
+  dropped_by_filter: number;
+  dropped_by_gemini: number;
+}> {
   // Normalise input — support legacy string[] call
   const structured: DeCSThemes = Array.isArray(themes)
     ? { primary: themes, secondary: [] }
@@ -443,15 +501,18 @@ export async function runDeCSPipeline(
   //   • no_candidate       — no candidates returned at all (search failure / too dissimilar)
   //   • dropped_by_dedup   — best match found but code already in seenCodes
   const searchAll = [
-    ...structured.primary.map((term) => ({ term, role: 'primary' as const })),
-    ...structured.secondary.map((term) => ({ term, role: 'secondary' as const })),
+    ...structured.primary.map((term) => ({ term, role: "primary" as const })),
+    ...structured.secondary.map((term) => ({
+      term,
+      role: "secondary" as const,
+    })),
   ];
 
   type SearchOutcome =
-    | { status: 'accepted'; role: 'primary' | 'secondary'; match: DeCSRecord }
-    | { status: 'category_filtered' }
-    | { status: 'no_candidate' }
-    | { status: 'deduped' };
+    | { status: "accepted"; role: "primary" | "secondary"; match: DeCSRecord }
+    | { status: "category_filtered" }
+    | { status: "no_candidate" }
+    | { status: "deduped" };
 
   const outcomes = await Promise.allSettled(
     searchAll.map(async ({ term, role }): Promise<SearchOutcome> => {
@@ -459,8 +520,8 @@ export async function runDeCSPipeline(
 
       // ── 1. Try local pgvector first ────────────────────────────────────────
       let rawCandidates: DeCSRecord[] = [];
-      if (geminiKey && await isLocalDeCSAvailable()) {
-        rawCandidates = await searchDeCSLocal(term, geminiKey, 5, 0.60);
+      if (geminiKey && (await isLocalDeCSAvailable())) {
+        rawCandidates = await searchDeCSLocal(term, geminiKey, 5, 0.6);
       }
 
       // ── 2. Fallback: BVS API ───────────────────────────────────────────────
@@ -473,32 +534,34 @@ export async function runDeCSPipeline(
       }
 
       // No candidates found at all (search failed or similarity too low)
-      if (rawCandidates.length === 0) return { status: 'no_candidate' };
+      if (rawCandidates.length === 0) return { status: "no_candidate" };
 
       // ── 3. Category filter — track drops separately ────────────────────────
-      const accepted = rawCandidates.filter((c) => isCategoryAcceptable(c, questionText));
+      const accepted = rawCandidates.filter((c) =>
+        isCategoryAcceptable(c, questionText),
+      );
       if (accepted.length === 0) {
         // Had candidates, but category B filter rejected all of them
-        return { status: 'category_filtered' };
+        return { status: "category_filtered" };
       }
 
       // ── 4. Deduplication ───────────────────────────────────────────────────
       const best = accepted[0];
-      if (seenCodes.has(best.code)) return { status: 'deduped' };
+      if (seenCodes.has(best.code)) return { status: "deduped" };
 
       seenCodes.add(best.code);
-      return { status: 'accepted', role, match: best };
-    })
+      return { status: "accepted", role, match: best };
+    }),
   );
 
   // Tally outcomes and build the search result list
   let droppedByFilter = 0; // terms with candidates that the category filter removed
   for (const res of outcomes) {
-    if (res.status === 'rejected') continue; // unexpected error — skip silently
+    if (res.status === "rejected") continue; // unexpected error — skip silently
     const outcome = res.value;
-    if (outcome.status === 'accepted') {
+    if (outcome.status === "accepted") {
       afterSearch.push({ ...outcome.match, role: outcome.role });
-    } else if (outcome.status === 'category_filtered') {
+    } else if (outcome.status === "category_filtered") {
       droppedByFilter++;
     }
     // 'no_candidate' and 'deduped' do not count toward dropped_by_filter
@@ -512,20 +575,24 @@ export async function runDeCSPipeline(
     enriched,
     questionText,
     geminiKey,
-    model
+    model,
   );
 
   const droppedByGemini = afterSearch.length - afterValidation.length;
 
   // Strip the internal similarity field, keep role; primary first
   const primary = afterValidation
-    .filter((d) => d.role === 'primary')
+    .filter((d) => d.role === "primary")
     .map(({ similarity: _s, ...rest }) => rest);
   const secondary = afterValidation
-    .filter((d) => d.role !== 'primary')
+    .filter((d) => d.role !== "primary")
     .map(({ similarity: _s, ...rest }) => rest);
 
   const descriptors = [...primary, ...secondary];
 
-  return { descriptors, dropped_by_filter: droppedByFilter, dropped_by_gemini: droppedByGemini };
+  return {
+    descriptors,
+    dropped_by_filter: droppedByFilter,
+    dropped_by_gemini: droppedByGemini,
+  };
 }
