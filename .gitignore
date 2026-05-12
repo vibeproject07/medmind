@@ -34,12 +34,15 @@ yarn-error.log*
 *.db-shm
 *.db-wal
 medmind.db
+backup_completo.sql
+backup_completo.sql.gz
 
 
 # TypeScript build info
 *.tsbuildinfo
 
 backup_completo.sql
+backup_completo.sql.gz
 attached_assets/send2me_1780691575527.zip
 data/decs-classification/question-19873-v1.json
 matheus/
