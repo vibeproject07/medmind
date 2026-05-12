@@ -176,10 +176,10 @@ async function selectDescriptorsWithGemini(
     map: Map<string, DeCSRecord[]>
   ) => {
     const entries: object[] = [];
-    for (const [concept, candidates] of map) {
+    for (const [concept, candidates] of Array.from(map.entries())) {
       entries.push({
         conceito_buscado: concept,
-        candidatos: candidates.map((c) => ({
+        candidatos: candidates.map((c: DeCSRecord) => ({
           id: c.code,
           term: c.term,
           term_en: c.name_en,
@@ -235,7 +235,7 @@ async function selectDescriptorsWithGemini(
 
     // Build a map of ALL candidates for ID lookup
     const allCandidates = new Map<string, DeCSRecord>();
-    for (const candidates of [...primaryCandidates.values(), ...secondaryCandidates.values()]) {
+    for (const candidates of Array.from(primaryCandidates.values()).concat(Array.from(secondaryCandidates.values()))) {
       for (const c of candidates) allCandidates.set(c.code, c);
     }
 

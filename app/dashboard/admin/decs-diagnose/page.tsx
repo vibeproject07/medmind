@@ -550,6 +550,7 @@ export default function DeCSdiagnosePage() {
             ) : (
               <div className="bg-red-50 border border-red-200 rounded-lg p-3">
                 <p className="text-sm text-red-700 font-medium">Pipeline falhou: {result.error}</p>
+                <p className="text-xs text-red-500 mt-1">Se a etapa 1 vier vazia, o diagnóstico agora tenta um fallback local para mostrar pelo menos temas prováveis.</p>
               </div>
             )}
           </div>

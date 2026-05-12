@@ -192,22 +192,48 @@ async function runV1Trace(question: Record<string, unknown>, geminiKey: string, 
     step1Ms = elapsed_ms;
     themes.primary = (Array.isArray(parsed?.primary) ? parsed.primary as string[] : []).filter(t => typeof t === 'string').slice(0, 3);
     themes.secondary = (Array.isArray(parsed?.secondary) ? parsed.secondary as string[] : []).filter(t => typeof t === 'string').slice(0, 6);
+    steps.push({
+      step: 1,
+      title: 'Extração de temas (Gemini — decs_classifier)',
+      agent: { key: 'decs_classifier', model: classifierAgent.model, source: classifierAgent.source },
+      input_preview: questionText.slice(0, 400),
+      output: { themes_primary: themes.primary, themes_secondary: themes.secondary, raw: parsed },
+      elapsed_ms: step1Ms,
+      error: null,
+      status: themes.primary.length > 0 ? 'ok' : 'empty',
+    });
   } catch (e) {
     step1Error = (e as Error).message;
+    steps.push({
+      step: 1,
+      title: 'Extração de temas (Gemini — decs_classifier)',
+      agent: { key: 'decs_classifier', model: classifierAgent.model, source: classifierAgent.source },
+      input_preview: questionText.slice(0, 400),
+      output: { themes_primary: themes.primary, themes_secondary: themes.secondary },
+      elapsed_ms: step1Ms,
+      error: step1Error,
+      status: 'error',
+    });
   }
-  steps.push({
-    step: 1,
-    title: 'Extração de temas (Gemini — decs_classifier)',
-    agent: { key: 'decs_classifier', model: classifierAgent.model, source: classifierAgent.source },
-    input_preview: questionText.slice(0, 400),
-    output: { themes_primary: themes.primary, themes_secondary: themes.secondary },
-    elapsed_ms: step1Ms,
-    error: step1Error,
-    status: step1Error ? 'error' : themes.primary.length > 0 ? 'ok' : 'empty',
-  });
 
   if (themes.primary.length === 0) {
-    return { pipeline: 'v1', question_id: question.id, steps, final: null, error: 'Nenhum tema extraído na etapa 1' };
+    const fallbackThemes = questionText
+      .split(/\n|[.;:()\-]/)
+      .map(t => t.trim())
+      .filter(t => t.length > 3)
+      .slice(0, 3);
+    if (fallbackThemes.length > 0) {
+      themes.primary = fallbackThemes;
+      steps.push({
+        step: 1,
+        title: 'Fallback local de temas',
+        input: { question_preview: questionText.slice(0, 400) },
+        output: { themes_primary: themes.primary, themes_secondary: themes.secondary, source: 'fallback-local' },
+        status: 'empty',
+      });
+    } else {
+      return { pipeline: 'v1', question_id: question.id, steps, final: null, error: 'Nenhum tema extraído na etapa 1' };
+    }
   }
 
   // Step 2 — Search candidates
