@@ -1,5 +1,5 @@
 {
-  "done": 40,
+  "done": 60,
   "total": 100,
   "results": [
     {
@@ -2864,6 +2864,1465 @@
           "exam_year": null,
           "statement_preview": "Uma mulher de 38 anos em tratamento para infertilidade apresenta múltiplos cistos ovarianos bilatera",
           "similarity": 0.7887,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        }
+      ]
+    },
+    {
+      "question_id": 19058,
+      "exam_board": "UEL",
+      "exam_year": 2025,
+      "statement_preview": "Assinale a alternativa que apresenta, corretamente, o órgão cuja localização é a mais comum do tumor estromal gastrointestinal.",
+      "gemini_status": "error: Gemini error 429",
+      "gemini_themes": {
+        "primary": [],
+        "secondary": []
+      },
+      "gemini_terms": [],
+      "decs_status": "pending",
+      "decs_results": [],
+      "similar_questions": [
+        {
+          "id": 6179,
+          "exam_board": "HAS",
+          "exam_year": 2025,
+          "statement_preview": "O tumor estromal gastrointestinal ou GIST (da sigla em inglês) é um dos sarcomas de partes moles, qu",
+          "similarity": 0.8636,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 6630,
+          "exam_board": "HCP",
+          "exam_year": 2025,
+          "statement_preview": "Os tumores denominados GIST podem ter origem em todo o trato digestivo, mas suas localizações são da",
+          "similarity": 0.8538,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 13554,
+          "exam_board": "PUC",
+          "exam_year": null,
+          "statement_preview": "Um homem de 62 anos foi encaminhado à clínica de cirurgia geral para avaliação adicional de dor abdo",
+          "similarity": 0.7845,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 13555,
+          "exam_board": "PUC",
+          "exam_year": null,
+          "statement_preview": "Um homem de 62 anos foi encaminhado à clínica de cirurgia geral para avaliação adicional de dor abdo",
+          "similarity": 0.78,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 8153,
+          "exam_board": "HNMD",
+          "exam_year": 2025,
+          "statement_preview": "Os tumores estromais gastrointestinais (GIST) são os tumores sarcomatosos mais comuns do trato gastr",
+          "similarity": 0.7735,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        }
+      ]
+    },
+    {
+      "question_id": 25168,
+      "exam_board": "AMS",
+      "exam_year": null,
+      "statement_preview": "Com relação ao tratamento da doença pulmonar obstrutiva crônica (DPOC), é CORRETO afirmar que:",
+      "gemini_status": "ok",
+      "gemini_themes": {
+        "primary": [
+          "Doença Pulmonar Obstrutiva Crônica"
+        ],
+        "secondary": []
+      },
+      "gemini_terms": [
+        "Doença Pulmonar Obstrutiva Crônica"
+      ],
+      "decs_status": "ok",
+      "decs_results": [
+        {
+          "term": "Doença Pulmonar Obstrutiva Crônica",
+          "code": "36008",
+          "tree_ids": [
+            "C08.381.495.389",
+            "C23.550.291.500.875"
+          ],
+          "category": "C",
+          "search_input": "Doença Pulmonar Obstrutiva Crônica"
+        }
+      ],
+      "similar_questions": [
+        {
+          "id": 20699,
+          "exam_board": "UFRJ",
+          "exam_year": 2025,
+          "statement_preview": "Pode-se afirmar, em relação ao tratamento da doença pulmonar obstrutiva crônica, que:",
+          "similarity": 0.8706,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 8188,
+          "exam_board": "HOA",
+          "exam_year": null,
+          "statement_preview": "No paciente com DPOC e exacerbações frequentes, deve-se avaliar o uso de:",
+          "similarity": 0.8578,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 25043,
+          "exam_board": "AMRIGS",
+          "exam_year": 2024,
+          "statement_preview": "Qual das seguintes alternativas descreve corretamente uma recomendação atual para o tratamento da Do",
+          "similarity": 0.8535,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 16751,
+          "exam_board": "SES",
+          "exam_year": null,
+          "statement_preview": "No que se refere à doença pulmonar obstrutiva crônica (DPOC) de acordo com o GOLD, analise os itens ",
+          "similarity": 0.8527,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 8007,
+          "exam_board": "HMV",
+          "exam_year": 2025,
+          "statement_preview": "Marque a alternativa CORRETA sobre o manejo da exacerbação da Doença Pulmonar Obstrutiva Crônica:",
+          "similarity": 0.8512,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        }
+      ]
+    },
+    {
+      "question_id": 13748,
+      "exam_board": "PUC",
+      "exam_year": null,
+      "statement_preview": "O desmatamento e a alta mobilidade humana, devido às atividades de garimpo, têm sido fundamentais para o aumento dos casos de malária nas Américas. De",
+      "gemini_status": "ok",
+      "gemini_themes": {
+        "primary": [
+          "Malária",
+          "Epidemiologia"
+        ],
+        "secondary": []
+      },
+      "gemini_terms": [
+        "Malária",
+        "Epidemiologia"
+      ],
+      "decs_status": "ok",
+      "decs_results": [
+        {
+          "term": "Malária Falciparum",
+          "code": "29997",
+          "tree_ids": [
+            "C01.610.752.530.650",
+            "C01.920.852.750.650"
+          ],
+          "category": "C",
+          "search_input": "Malária"
+        },
+        {
+          "term": "/epidemiologia",
+          "code": "22080",
+          "tree_ids": [
+            "Q55.010"
+          ],
+          "category": "Q",
+          "search_input": "Epidemiologia"
+        }
+      ],
+      "similar_questions": [
+        {
+          "id": 20141,
+          "exam_board": "UFCSPA",
+          "exam_year": 2025,
+          "statement_preview": "O efeito estufa e as mudanças climáticas decorrentes dele têm alterado os indicadores epidemiológico",
+          "similarity": 0.7062,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 12568,
+          "exam_board": "PRMMT",
+          "exam_year": 2025,
+          "statement_preview": "O sistema de saúde brasileiro tem lidado com problemas de saúde causados por agentes etiológicos eme",
+          "similarity": 0.7022,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 22936,
+          "exam_board": "USCS",
+          "exam_year": 2025,
+          "statement_preview": "A relação entre saúde e meio ambiente ganhou destaque nas políticas de saúde pública em razão dos im",
+          "similarity": 0.6984,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 5556,
+          "exam_board": "FUBOG",
+          "exam_year": 2025,
+          "statement_preview": "Paciente, 35 anos, que recentemente voltou de uma viagem à Amazônia, apresenta febre alta, calafrios",
+          "similarity": 0.6919,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 13751,
+          "exam_board": "PUC",
+          "exam_year": null,
+          "statement_preview": "Queimadas de grandes proporções, como as que ocorreram no Brasil em 2024, são responsáveis pela libe",
+          "similarity": 0.6819,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        }
+      ]
+    },
+    {
+      "question_id": 4307,
+      "exam_board": "FAMEMA",
+      "exam_year": 2025,
+      "statement_preview": "Paciente de 72 anos, ex-fumante de 40 anos-maço, apresenta dispneia progressiva nos últimos cinco anos, além de tosse crônica produtiva com escarro es",
+      "gemini_status": "ok",
+      "gemini_themes": {
+        "primary": [
+          "Doença Pulmonar Obstrutiva Crônica",
+          "Espirometria",
+          "Estadiamento de Doença"
+        ],
+        "secondary": []
+      },
+      "gemini_terms": [
+        "Doença Pulmonar Obstrutiva Crônica",
+        "Espirometria",
+        "Estadiamento de Doença"
+      ],
+      "decs_status": "ok",
+      "decs_results": [
+        {
+          "term": "Doença Pulmonar Obstrutiva Crônica",
+          "code": "36008",
+          "tree_ids": [
+            "C08.381.495.389",
+            "C23.550.291.500.875"
+          ],
+          "category": "C",
+          "search_input": "Doença Pulmonar Obstrutiva Crônica"
+        },
+        {
+          "term": "Espirometria",
+          "code": "13530",
+          "tree_ids": [
+            "E01.370.386.700.750"
+          ],
+          "category": "E",
+          "search_input": "Espirometria"
+        }
+      ],
+      "similar_questions": [
+        {
+          "id": 4308,
+          "exam_board": "FAMEMA",
+          "exam_year": 2025,
+          "statement_preview": "Paciente de 72 anos, ex-fumante de 40 anos-maço, apresenta dispneia progressiva nos últimos cinco an",
+          "similarity": 0.9214,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 13798,
+          "exam_board": "REVALIDA INEP",
+          "exam_year": 2025,
+          "statement_preview": "Homem de 55 anos procura atendimento em unidade básica de saúde (UBS) para renovar prescrição de los",
+          "similarity": 0.8993,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 17721,
+          "exam_board": "SMS",
+          "exam_year": null,
+          "statement_preview": "Um paciente de 65 anos, com histórico de tabagismo por 40 anos (60 maços-ano), apresenta-se com disp",
+          "similarity": 0.8859,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 5872,
+          "exam_board": "HAC",
+          "exam_year": null,
+          "statement_preview": "Paciente masculino, 65 anos, tabagista de 40 maços-ano, vem ao ambulatório com queixa de dispneia ao",
+          "similarity": 0.8784,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 5828,
+          "exam_board": "HAC",
+          "exam_year": null,
+          "statement_preview": "Paciente masculino, 65 anos, tabagista de 40 maços-ano, vem ao ambulatório com queixa de dispneia ao",
+          "similarity": 0.8784,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        }
+      ]
+    },
+    {
+      "question_id": 9282,
+      "exam_board": "HSJC",
+      "exam_year": null,
+      "statement_preview": "Considerando as características da hérnia, assinale a alternativa que apresenta a específica de uma hérnia estrangulada, em contraste com uma hérnia e",
+      "gemini_status": "ok",
+      "gemini_themes": {
+        "primary": [
+          "Hérnia Estrangulada",
+          "Hérnia Encarcerada"
+        ],
+        "secondary": []
+      },
+      "gemini_terms": [
+        "Hérnia Estrangulada",
+        "Hérnia Encarcerada"
+      ],
+      "decs_status": "no_match",
+      "decs_results": [],
+      "similar_questions": [
+        {
+          "id": 9257,
+          "exam_board": "HSJC",
+          "exam_year": null,
+          "statement_preview": "Considerando as características abaixo, assinale a alternativa que apresenta a que é específica de u",
+          "similarity": 0.9951,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 20903,
+          "exam_board": "UNAERP",
+          "exam_year": 2025,
+          "statement_preview": "Assinale a alternativa que apresenta a diferença entre hérnia encarcerada e hérnia estrangulada.",
+          "similarity": 0.9682,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 13958,
+          "exam_board": "SCM",
+          "exam_year": null,
+          "statement_preview": "Sobre o manejo de hérnias encarceradas, é correto afirmar que:",
+          "similarity": 0.8578,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 1909,
+          "exam_board": "ABC",
+          "exam_year": 2025,
+          "statement_preview": "Paciente, 35 anos, lavrador, queixa-se de dor na região da virilha direita há 1 ano. Porém, há 2 dia",
+          "similarity": 0.8439,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 19883,
+          "exam_board": "UESPI",
+          "exam_year": 2025,
+          "statement_preview": "Qual alternativa melhor apresenta o quadro clínico de uma paciente com hérnia inguinal com estrangul",
+          "similarity": 0.8416,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        }
+      ]
+    },
+    {
+      "question_id": 14230,
+      "exam_board": "SCMBH",
+      "exam_year": 2025,
+      "statement_preview": "Em relação às operações para fístula perianal, assinale a alternativa INCORRETA:",
+      "gemini_status": "error: Gemini error 503",
+      "gemini_themes": {
+        "primary": [],
+        "secondary": []
+      },
+      "gemini_terms": [],
+      "decs_status": "pending",
+      "decs_results": [],
+      "similar_questions": [
+        {
+          "id": 21295,
+          "exam_board": "UNESP",
+          "exam_year": 2025,
+          "statement_preview": "A técnica de ligadura interesfincteriana do trajeto fistuloso (LIFT) é segura e eficaz para o tratam",
+          "similarity": 0.8187,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 21184,
+          "exam_board": "UNESP",
+          "exam_year": 2025,
+          "statement_preview": "A técnica de ligadura interesfincteriana do trajeto fistuloso (LIFT) é segura e eficaz para o tratam",
+          "similarity": 0.8187,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 15982,
+          "exam_board": "SES",
+          "exam_year": null,
+          "statement_preview": "No que se refere a fistulas perianais, assinale a alternativa correta.",
+          "similarity": 0.8149,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 3477,
+          "exam_board": "CMC",
+          "exam_year": 2025,
+          "statement_preview": "Em relação à fístula perianal, qual das alternativas é correta?",
+          "similarity": 0.811,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 3876,
+          "exam_board": "ENARE",
+          "exam_year": 2025,
+          "statement_preview": "No que diz respeito às fístulas anorretais, é correto afirmar que:",
+          "similarity": 0.8078,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        }
+      ]
+    },
+    {
+      "question_id": 10536,
+      "exam_board": "IAMSPE",
+      "exam_year": 2025,
+      "statement_preview": "Um paciente jovem procura o pronto atendimento com queixa de cefaleia intensa, febre e rigidez na nuca. Durante o exame físico, o médico identifica o ",
+      "gemini_status": "ok",
+      "gemini_themes": {
+        "primary": [
+          "Meningite",
+          "Sinal de Brudzinski"
+        ],
+        "secondary": [
+          "Irritação Meníngea",
+          "Cefaleia",
+          "Febre",
+          "Rigidez da Nuca"
+        ]
+      },
+      "gemini_terms": [
+        "Meningite",
+        "Sinal de Brudzinski",
+        "Irritação Meníngea",
+        "Cefaleia",
+        "Febre",
+        "Rigidez da Nuca"
+      ],
+      "decs_status": "ok",
+      "decs_results": [
+        {
+          "term": "Tuberculose Meníngea",
+          "code": "14791",
+          "tree_ids": [
+            "C01.150.252.223.500.937",
+            "C01.150.252.223.850.800",
+            "C01.150.252.410.040.552.846.617.200.600",
+            "C01.207.180.500.937",
+            "C01.207.180.850.800",
+            "C10.228.228.180.500.937",
+            "C10.228.228.180.850.800",
+            "C10.586.625.280.915"
+          ],
+          "category": "C",
+          "search_input": "Meningite"
+        },
+        {
+          "term": "Cefaleias Vasculares",
+          "code": "15056",
+          "tree_ids": [
+            "C10.228.140.300.800",
+            "C10.228.140.546.699.500",
+            "C14.907.253.937"
+          ],
+          "category": "C",
+          "search_input": "Cefaleia"
+        },
+        {
+          "term": "Pirina",
+          "code": "56595",
+          "tree_ids": [
+            "D12.776.220.909",
+            "D12.776.934.750"
+          ],
+          "category": "D",
+          "search_input": "Febre"
+        },
+        {
+          "term": "Rigidez Muscular",
+          "code": "9318",
+          "tree_ids": [
+            "C05.651.504",
+            "C10.597.613.550.500",
+            "C23.888.592.608.550.500"
+          ],
+          "category": "C",
+          "search_input": "Rigidez da Nuca"
+        }
+      ],
+      "similar_questions": [
+        {
+          "id": 18828,
+          "exam_board": "SUS",
+          "exam_year": null,
+          "statement_preview": "Um jovem de 22 anos de idade, previamente hígido, chegou ao pronto-socorro com cefaleia, febre e mal",
+          "similarity": 0.9227,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 14902,
+          "exam_board": "SCMRP",
+          "exam_year": 2025,
+          "statement_preview": "Paciente do sexo feminino, 28 anos, previamente saudável, apresenta história de febre alta, cefaleia",
+          "similarity": 0.8133,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 14023,
+          "exam_board": "SCM",
+          "exam_year": null,
+          "statement_preview": "Um paciente apresenta cefaleia súbita, febre alta e rigidez de nuca. Está letárgico e com sinais de ",
+          "similarity": 0.8075,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 6382,
+          "exam_board": "HC",
+          "exam_year": null,
+          "statement_preview": "Homem, 23 anos, saudável até hoje pela manhã, há seis horas passou a apresentar cefaleia holo crania",
+          "similarity": 0.8009,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 8115,
+          "exam_board": "HNMD",
+          "exam_year": 2025,
+          "statement_preview": "Considerando as meningites agudas e crônicas, assinale a alternativa correta.",
+          "similarity": 0.7983,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        }
+      ]
+    },
+    {
+      "question_id": 13994,
+      "exam_board": "SCM",
+      "exam_year": null,
+      "statement_preview": "Sobre o choque hipovolêmico, assinale a alternativa correta.",
+      "gemini_status": "error: Gemini error 429",
+      "gemini_themes": {
+        "primary": [],
+        "secondary": []
+      },
+      "gemini_terms": [],
+      "decs_status": "pending",
+      "decs_results": [],
+      "similar_questions": [
+        {
+          "id": 14009,
+          "exam_board": "SCM",
+          "exam_year": null,
+          "statement_preview": "Sobre a fisiopatologia do choque em pediatria, é correto afirmar que:",
+          "similarity": 0.8626,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 7926,
+          "exam_board": "HMMG",
+          "exam_year": 2025,
+          "statement_preview": "O choque hipovolêmico pode ser causado por várias condições, incluindo hemorragias e desidratação. Q",
+          "similarity": 0.8589,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 7860,
+          "exam_board": "HMMG",
+          "exam_year": 2025,
+          "statement_preview": "Um paciente apresenta choque hipovolêmico devido a uma hemorragia interna massiva. Qual dos mecanism",
+          "similarity": 0.8309,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 7855,
+          "exam_board": "HMMG",
+          "exam_year": 2025,
+          "statement_preview": "Em relação ao choque hipovolêmico, qual é o principal mecanismo fisiopatológico entre os apresentado",
+          "similarity": 0.8291,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 12824,
+          "exam_board": "PSU",
+          "exam_year": null,
+          "statement_preview": "O choque hipovolêmico pode ser dividido em duas etiologias com diferenças concomitantes no tratament",
+          "similarity": 0.8257,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        }
+      ]
+    },
+    {
+      "question_id": 11879,
+      "exam_board": "IPSEMG",
+      "exam_year": 2025,
+      "statement_preview": "Homem de 50 anos apresenta-se com dor epigástrica e náuseas. A tomografia revela um pseudoaneurisma de artéria esplênica. Qual é a indicação de tratam",
+      "gemini_status": "error: Gemini error 429",
+      "gemini_themes": {
+        "primary": [],
+        "secondary": []
+      },
+      "gemini_terms": [],
+      "decs_status": "pending",
+      "decs_results": [],
+      "similar_questions": [
+        {
+          "id": 13975,
+          "exam_board": "SCM",
+          "exam_year": null,
+          "statement_preview": "Um homem de 45 anos sofre trauma abdominal contuso em acidente de trânsito. A tomografia computadori",
+          "similarity": 0.8234,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 22782,
+          "exam_board": "UNOESTE",
+          "exam_year": 2025,
+          "statement_preview": "Homem de 30 anos deu entrada na Emergência de um Hospital de Referência em Trauma, por trauma abdomi",
+          "similarity": 0.8146,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 11946,
+          "exam_board": "IPSEMG",
+          "exam_year": 2025,
+          "statement_preview": "Homem com história de dor abdominal intensa e imagem de aneurisma da aorta abdominal na tomografia. ",
+          "similarity": 0.8049,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 13988,
+          "exam_board": "SCM",
+          "exam_year": null,
+          "statement_preview": "Um paciente de 35 anos sofre um trauma abdominal contuso em acidente automobilístico. A tomografia c",
+          "similarity": 0.8007,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 19071,
+          "exam_board": "UEL",
+          "exam_year": 2025,
+          "statement_preview": "Homem, 48 anos de idade, é admitido no pronto-socorro cirúrgico, encaminhado de município do interio",
+          "similarity": 0.7992,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        }
+      ]
+    },
+    {
+      "question_id": 12162,
+      "exam_board": "ISJ",
+      "exam_year": 2025,
+      "statement_preview": "A ventilação pulmonar é o ponto crítico para o sucesso da reanimação neonatal em sala de parto. Sobre os procedimentos e princípios envolvidos nesse c",
+      "gemini_status": "error: Gemini error 429",
+      "gemini_themes": {
+        "primary": [],
+        "secondary": []
+      },
+      "gemini_terms": [],
+      "decs_status": "pending",
+      "decs_results": [],
+      "similar_questions": [
+        {
+          "id": 25342,
+          "exam_board": "CCANSPS",
+          "exam_year": 2024,
+          "statement_preview": "Em relação a reanimação neonatal é CORRETO afirmar:",
+          "similarity": 0.9015,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 14000,
+          "exam_board": "SCM",
+          "exam_year": null,
+          "statement_preview": "Sobre a reanimação neonatal, é correto afirmar que:",
+          "similarity": 0.8966,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 13636,
+          "exam_board": "PUC",
+          "exam_year": null,
+          "statement_preview": "Qual é o procedimento mais efetivo na reanimação neonatal?",
+          "similarity": 0.896,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 13726,
+          "exam_board": "PUC",
+          "exam_year": null,
+          "statement_preview": "Qual é o procedimento mais efetivo na reanimação neonatal?",
+          "similarity": 0.896,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 24072,
+          "exam_board": "USP",
+          "exam_year": null,
+          "statement_preview": "O procedimento mais importante e mais efetivo na reanimação neonatal é:",
+          "similarity": 0.8679,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        }
+      ]
+    },
+    {
+      "question_id": 20915,
+      "exam_board": "UNAERP",
+      "exam_year": 2025,
+      "statement_preview": "Paciente 40 anos, chega no pronto socorro com dor nas costas após horas de trabalho de vigilante em sua motocicleta há 2 dias. Antecedente pessoal é h",
+      "gemini_status": "error: Gemini error 429",
+      "gemini_themes": {
+        "primary": [],
+        "secondary": []
+      },
+      "gemini_terms": [],
+      "decs_status": "pending",
+      "decs_results": [],
+      "similar_questions": [
+        {
+          "id": 8683,
+          "exam_board": "HPEV",
+          "exam_year": 2025,
+          "statement_preview": "Mulher, de 19 anos de idade, compareceu à unidade de emergência com queixa de dor em região interglú",
+          "similarity": 0.8427,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 12834,
+          "exam_board": "PSU",
+          "exam_year": null,
+          "statement_preview": "Paciente obeso, do sexo masculino, com dor anal pulsátil aguda procura o Pronto Socorro e, ao exame ",
+          "similarity": 0.8363,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 2967,
+          "exam_board": "CCANSPS",
+          "exam_year": 2025,
+          "statement_preview": "Homem obeso e diabético, 54 anos com quadro de dor na região anal há 4 dias, sem melhora e surgiment",
+          "similarity": 0.8334,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 5261,
+          "exam_board": "FIPA",
+          "exam_year": 2025,
+          "statement_preview": "Um homem de 39 anos apresenta dor intensa na região perianal, febre e edema local. O exame físico re",
+          "similarity": 0.8299,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 15284,
+          "exam_board": "SCMSP",
+          "exam_year": 2025,
+          "statement_preview": "Homem de 48 anos é admitido no pronto-socorro por dor perianal hà 2 dias, progressiva e forte intens",
+          "similarity": 0.8253,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        }
+      ]
+    },
+    {
+      "question_id": 2108,
+      "exam_board": "AFAMCI",
+      "exam_year": 2025,
+      "statement_preview": "Sobre as diferentes classificações dos principais desenhos de estudos epidemiológicos, relacione as colunas e assinale a alternativa com a sequência c",
+      "gemini_status": "error: Gemini error 429",
+      "gemini_themes": {
+        "primary": [],
+        "secondary": []
+      },
+      "gemini_terms": [],
+      "decs_status": "pending",
+      "decs_results": [],
+      "similar_questions": [
+        {
+          "id": 17576,
+          "exam_board": "SESAPI",
+          "exam_year": 2025,
+          "statement_preview": "Em relação aos estudos epidemiológicos, assinale a alternativa correta:",
+          "similarity": 0.8547,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 19474,
+          "exam_board": "UEPA",
+          "exam_year": null,
+          "statement_preview": "No que se refere aos estudos epidemiológicos, assinale a alternativa INCORRETA.",
+          "similarity": 0.853,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 6571,
+          "exam_board": "HCMR",
+          "exam_year": 2025,
+          "statement_preview": "Os estudos epidemiológicos são essenciais para compreender a distribuição e os determinantes de doen",
+          "similarity": 0.8501,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 12353,
+          "exam_board": "ITPAC",
+          "exam_year": 2025,
+          "statement_preview": "Qual é o tipo de estudo epidemiológico mais adequado para investigar a relação causal entre exposiçã",
+          "similarity": 0.8456,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 24245,
+          "exam_board": "VILA VERDE",
+          "exam_year": null,
+          "statement_preview": "Dente os tipos de estudos epidemiológicos observacionais analíticos, a alternativa que apresenta o e",
+          "similarity": 0.8253,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        }
+      ]
+    },
+    {
+      "question_id": 22517,
+      "exam_board": "UNIVAG",
+      "exam_year": 2025,
+      "statement_preview": "Um paciente do sexo masculino, 70 anos, com história de doença pulmonar obstrutiva crônica, apresenta-se com dispneia grave, dor torácica e hipotensão",
+      "gemini_status": "error: Gemini error 429",
+      "gemini_themes": {
+        "primary": [],
+        "secondary": []
+      },
+      "gemini_terms": [],
+      "decs_status": "pending",
+      "decs_results": [],
+      "similar_questions": [
+        {
+          "id": 3407,
+          "exam_board": "CLINICA SALDANHA",
+          "exam_year": 2025,
+          "statement_preview": "Um paciente do sexo masculino, 70 anos, com história de doença pulmonar obstrutiva crônica, apresent",
+          "similarity": 0.999,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 9033,
+          "exam_board": "HSA",
+          "exam_year": null,
+          "statement_preview": "Um homem de 35 anos, anteriormente saudável, apresenta dor torácica súbita, de forte intensidade, as",
+          "similarity": 0.861,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 17489,
+          "exam_board": "SESAPI",
+          "exam_year": 2025,
+          "statement_preview": "Paciente do sexo masculino, 75 anos, procura atendimento na UPA com dispneia de início súbito, acomp",
+          "similarity": 0.8399,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 21941,
+          "exam_board": "UNIFESP",
+          "exam_year": 2025,
+          "statement_preview": "Homem, 70 anos de idade, foi submetido à pneumonectomia direita intrapericárdica. Antes de encaminha",
+          "similarity": 0.8361,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 9642,
+          "exam_board": "HSL",
+          "exam_year": null,
+          "statement_preview": "Um homem de 35 anos è admitido no pronto-socorro após um acidente automobilístico. Ele estava dirigi",
+          "similarity": 0.8338,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        }
+      ]
+    },
+    {
+      "question_id": 13843,
+      "exam_board": "REVALIDA INEP",
+      "exam_year": 2025,
+      "statement_preview": "Mulher de 57 anos com diagnóstico de diabetes mellitus há 10 anos e uso regular de metformina 2 g/dia e gliclazida 60 mg/dia comparece à unidade básic",
+      "gemini_status": "error: Gemini error 429",
+      "gemini_themes": {
+        "primary": [],
+        "secondary": []
+      },
+      "gemini_terms": [],
+      "decs_status": "pending",
+      "decs_results": [],
+      "similar_questions": [
+        {
+          "id": 22091,
+          "exam_board": "UNIFESP",
+          "exam_year": 2025,
+          "statement_preview": "Mulher, 66 anos de idade, é atendida em consulta de rotina por diabetes tipo 2 e hipertensão arteria",
+          "similarity": 0.8638,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 22854,
+          "exam_board": "USCS",
+          "exam_year": 2025,
+          "statement_preview": "Uma mulher de 55 anos, com histórico de hipertensão arterial sistêmica (HAS) diagnosticada há 10 ano",
+          "similarity": 0.8604,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 21970,
+          "exam_board": "UNIFESP",
+          "exam_year": 2025,
+          "statement_preview": "Mulher, 47 anos de idade, está em acompanhamento por obesidade e diabetes mellitus, em uso de metfor",
+          "similarity": 0.8472,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 21089,
+          "exam_board": "UNESC",
+          "exam_year": null,
+          "statement_preview": "Nos pacientes hipertensos portadores de diabetes, a classe terapêutica de primeira escolha para o tr",
+          "similarity": 0.8452,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 21861,
+          "exam_board": "UNIFESP",
+          "exam_year": 2025,
+          "statement_preview": "Mulher, 47 anos de idade, está em acompanhamento por obesidade e diabetes mellitus, em uso de metfor",
+          "similarity": 0.8451,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        }
+      ]
+    },
+    {
+      "question_id": 10274,
+      "exam_board": "HZNL",
+      "exam_year": 2025,
+      "statement_preview": "No contexto do rastreamento do câncer do colo do útero, qual é a conduta recomendada para mulheres com exame citopatológico indicando ASC-US?",
+      "gemini_status": "error: Gemini error 429",
+      "gemini_themes": {
+        "primary": [],
+        "secondary": []
+      },
+      "gemini_terms": [],
+      "decs_status": "pending",
+      "decs_results": [],
+      "similar_questions": [
+        {
+          "id": 15686,
+          "exam_board": "SEMAD",
+          "exam_year": 2025,
+          "statement_preview": "Mulher, Gesta 1 Para 1 (Parto Cesárea), 28 anos, comparece a consulta de revisão ginecológica levand",
+          "similarity": 0.9211,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 19312,
+          "exam_board": "UEPA",
+          "exam_year": null,
+          "statement_preview": "Mulher com 36 anos apresenta o seguinte resultado no exame de colpocitologia oncótica do colo de úte",
+          "similarity": 0.92,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 1731,
+          "exam_board": "ABC",
+          "exam_year": 2025,
+          "statement_preview": "Mulher, 31 anos, recebeu o resultado do citopatológico do colo uterino, que indicou a presença de cé",
+          "similarity": 0.9114,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 12191,
+          "exam_board": "ISJ",
+          "exam_year": 2025,
+          "statement_preview": "Paciente, 23 anos, realizou o exame citopatológico por indicação médica e apresentou um resultado de",
+          "similarity": 0.9063,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 10998,
+          "exam_board": "IDOR",
+          "exam_year": 2025,
+          "statement_preview": "Mulher, 38 anos, GIIPII, sem quaisquer comorbidades, após vários exames anteriores colpocitológicos ",
+          "similarity": 0.9001,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        }
+      ]
+    },
+    {
+      "question_id": 21547,
+      "exam_board": "UNICAMP",
+      "exam_year": 2025,
+      "statement_preview": "Presume-se que carcinoma de células escamosas metastático para linfonodos do pescoço seja originário da mucosa da orofaringe, em sua maioria. SOBRE O ",
+      "gemini_status": "error: Gemini error 429",
+      "gemini_themes": {
+        "primary": [],
+        "secondary": []
+      },
+      "gemini_terms": [],
+      "decs_status": "pending",
+      "decs_results": [],
+      "similar_questions": [
+        {
+          "id": 21312,
+          "exam_board": "UNESP",
+          "exam_year": 2025,
+          "statement_preview": "Homem de 63 anos queixa-se de odinofagia e disfagia para sólidos há 3 semanas. AP: tabagista (60 ano",
+          "similarity": 0.8055,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 18376,
+          "exam_board": "SUS",
+          "exam_year": null,
+          "statement_preview": "Paciente, sexo masculino, 65 anos de idade, diagnosticado com carcinoma espinocelular de assoalho de",
+          "similarity": 0.8039,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 18460,
+          "exam_board": "SUS",
+          "exam_year": null,
+          "statement_preview": "Paciente, sexo masculino, 65 anos de idade, diagnosticado com carcinoma espinocelular de assoalho de",
+          "similarity": 0.8019,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 6462,
+          "exam_board": "HCB",
+          "exam_year": null,
+          "statement_preview": "PACIENTE TABAGISTA E ETILISTA CRÔNICO, COM LESÃO ULCERADA E INDOLOR NA CAVIDADE ORAL, DE OBSERVAÇÃO ",
+          "similarity": 0.7957,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 15762,
+          "exam_board": "SES",
+          "exam_year": null,
+          "statement_preview": "Em relação ao câncer da região de cabeça e pescoço, assinale a alternativa correta.",
+          "similarity": 0.7915,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        }
+      ]
+    },
+    {
+      "question_id": 15598,
+      "exam_board": "SCO",
+      "exam_year": 2025,
+      "statement_preview": "Paciente feminina, 45 anos de idade, dá entrada no pronto atendimento com queixa de icterícia, associada a dor abdominal em hipocôndrio direito e febr",
+      "gemini_status": "error: Gemini error 429",
+      "gemini_themes": {
+        "primary": [],
+        "secondary": []
+      },
+      "gemini_terms": [],
+      "decs_status": "pending",
+      "decs_results": [],
+      "similar_questions": [
+        {
+          "id": 8179,
+          "exam_board": "HNMD",
+          "exam_year": 2025,
+          "statement_preview": "Durante atendimento no pronto-socorro, um paciente encontra-se com dor abdominal em quadrante superi",
+          "similarity": 0.8832,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 8210,
+          "exam_board": "HOA",
+          "exam_year": null,
+          "statement_preview": "A tríade clássica de Charcot, encontrada na colangite aguda, inclui:",
+          "similarity": 0.8661,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 14722,
+          "exam_board": "SCMM",
+          "exam_year": 2025,
+          "statement_preview": "Um homem de 60 anos apresenta febre alta, dor abdominal no quadrante superior direito e icterícia pr",
+          "similarity": 0.859,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 18031,
+          "exam_board": "SMSCG",
+          "exam_year": 2025,
+          "statement_preview": "Um homem de 52 anos chega ao pronto-socorro com queixas de dor abdominal intensa no quadrante superi",
+          "similarity": 0.8529,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 9262,
+          "exam_board": "HSJC",
+          "exam_year": null,
+          "statement_preview": "Paciente de 45 anos apresenta febre, icterícia e dor no hipocôndrio direito após diagnóstico de cole",
+          "similarity": 0.8403,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        }
+      ]
+    },
+    {
+      "question_id": 11611,
+      "exam_board": "INTO",
+      "exam_year": 2025,
+      "statement_preview": "A triagem auditiva neonatal (exame de emissões otoacústicas evocadas) deve ser realizada:",
+      "gemini_status": "error: Gemini error 429",
+      "gemini_themes": {
+        "primary": [],
+        "secondary": []
+      },
+      "gemini_terms": [],
+      "decs_status": "pending",
+      "decs_results": [],
+      "similar_questions": [
+        {
+          "id": 3191,
+          "exam_board": "CERMAM",
+          "exam_year": 2025,
+          "statement_preview": "O teste da orelhinha ou exame de emissão otoacústica deve ser realizado em:",
+          "similarity": 0.9092,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 25105,
+          "exam_board": "AMRIGS",
+          "exam_year": 2024,
+          "statement_preview": "Recém-nascido com 37 semanas de idade gestacional permaneceu internado na UTI neonatal, tendo recebi",
+          "similarity": 0.8497,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 22404,
+          "exam_board": "UNITAU",
+          "exam_year": 2025,
+          "statement_preview": "Considerando que o recém-nascido acima, permaneceu internado em UTI neonatal por 1 mês e meio, contr",
+          "similarity": 0.8495,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 14968,
+          "exam_board": "SCMRP",
+          "exam_year": 2025,
+          "statement_preview": "Recém-nascido, 35 semanas de idade gestacional, permaneceu internado na UTI Neonatal por dez dias, o",
+          "similarity": 0.8418,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 23091,
+          "exam_board": "USP",
+          "exam_year": null,
+          "statement_preview": "Mãe refere que sua filha realizou o teste da orelhinha (emissões otoacústicas transientes) ao nascer",
+          "similarity": 0.8331,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        }
+      ]
+    },
+    {
+      "question_id": 6316,
+      "exam_board": "HC",
+      "exam_year": null,
+      "statement_preview": "Paciente de 47 anos está no segundo pós operatório de histerectomia radical com linfadenectomia, por adenocarcinoma de endométrio. Tem antecedentes de",
+      "gemini_status": "error: Gemini error 429",
+      "gemini_themes": {
+        "primary": [],
+        "secondary": []
+      },
+      "gemini_terms": [],
+      "decs_status": "pending",
+      "decs_results": [],
+      "similar_questions": [
+        {
+          "id": 5256,
+          "exam_board": "FIPA",
+          "exam_year": 2025,
+          "statement_preview": "Um homem de 49 anos, obeso e tabagista desde 18 anos, é submetido a uma laparotomia mediana ampla po",
+          "similarity": 0.8417,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 14110,
+          "exam_board": "SCMAS",
+          "exam_year": 2025,
+          "statement_preview": "Homem, 70 anos, no pós-operatório imediato de proctocolectomia total, queixa-se de dor em ferida ope",
+          "similarity": 0.8279,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 13888,
+          "exam_board": "SAFE",
+          "exam_year": 2025,
+          "statement_preview": "Paciente feminina, 45 anos, com obesidade grave (IMC 43kg/m²) associada a diabetes e doença do reflu",
+          "similarity": 0.8278,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 17941,
+          "exam_board": "SMS",
+          "exam_year": null,
+          "statement_preview": "Paciente de 72 anos, hipertenso e com histórico de tabagismo, está no segundo dia de pós-operatório ",
+          "similarity": 0.8234,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 2245,
+          "exam_board": "AMIL",
+          "exam_year": null,
+          "statement_preview": "Mulher, 46 anos, com obesidade grave (IMC 44kg/m²), associada a diabetes mellitus e doença do reflux",
+          "similarity": 0.8125,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        }
+      ]
+    },
+    {
+      "question_id": 8842,
+      "exam_board": "HPP",
+      "exam_year": 2025,
+      "statement_preview": "Paciente portador de trombose venoso profunda (femoral esquerda) recebendo enoxiparina, apresenta os seguintes exames: Coagulograma: RNI 1,2, Tempo de",
+      "gemini_status": "error: Gemini error 429",
+      "gemini_themes": {
+        "primary": [],
+        "secondary": []
+      },
+      "gemini_terms": [],
+      "decs_status": "pending",
+      "decs_results": [],
+      "similar_questions": [
+        {
+          "id": 3909,
+          "exam_board": "ENARE",
+          "exam_year": 2025,
+          "statement_preview": "Uma paciente de 45 anos com sobrepeso foi internada na clínica médica por extensão de trombose venos",
+          "similarity": 0.8186,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 20679,
+          "exam_board": "UFRJ",
+          "exam_year": 2025,
+          "statement_preview": "Mulher, 42 anos, com diagnóstico de síndrome antifosfolípide, apresenta trombose venosa profunda não",
+          "similarity": 0.8155,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 25309,
+          "exam_board": "CCANSPS",
+          "exam_year": 2024,
+          "statement_preview": "Paciente de 26 anos, portadora de lúpus eritematoso sistêmico cutaneoarticular, internada em pós-ope",
+          "similarity": 0.8122,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 6957,
+          "exam_board": "HCPA",
+          "exam_year": 2025,
+          "statement_preview": "Paciente feminina, de 58 anos, com história de hipertensão arterial sistêmica de longa data e insufi",
+          "similarity": 0.808,
+          "existing_decs": [],
+          "existing_tags": [],
+          "existing_areas": []
+        },
+        {
+          "id": 6862,
+          "exam_board": "HCPA",
+          "exam_year": 2025,
+          "statement_preview": "Paciente feminina, de 34 anos, apresentou trombose venosa profunda no membro inferior direito há 2 m",
+          "similarity": 0.806,
           "existing_decs": [],
           "existing_tags": [],
           "existing_areas": []
