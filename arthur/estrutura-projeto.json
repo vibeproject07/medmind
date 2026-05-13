@@ -1,0 +1,2707 @@
+{
+  "geradoEm": "2026-05-13T21:33:09.622Z",
+  "raiz": "/home/runner/workspace",
+  "exclusoes": [
+    "node_modules",
+    ".git",
+    ".next",
+    "artifacts",
+    ".cache",
+    ".local",
+    ".pythonlibs"
+  ],
+  "nota": "Pastas excluídas: dependências npm, Git, build Next, artefatos em massa e caches do ambiente.",
+  "totais": {
+    "arquivos": 392,
+    "pastas": 104,
+    "linhasLista": 496
+  },
+  "arvore": {
+    "name": "workspace",
+    "type": "dir",
+    "children": [
+      {
+        "name": ".agents",
+        "type": "dir",
+        "children": [
+          {
+            "name": "agent_assets_metadata.toml",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "name": ".canvas",
+        "type": "dir",
+        "children": [
+          {
+            "name": "assets",
+            "type": "dir",
+            "children": [
+              {
+                "name": "asset_-1844010104.png",
+                "type": "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": ".config",
+        "type": "dir",
+        "children": [
+          {
+            "name": ".vscode-server",
+            "type": "dir",
+            "children": []
+          },
+          {
+            "name": "npm",
+            "type": "dir",
+            "children": [
+              {
+                "name": "node_global",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "lib",
+                    "type": "dir",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": ".env.example",
+        "type": "file"
+      },
+      {
+        "name": ".env.local",
+        "type": "file"
+      },
+      {
+        "name": ".gitattributes",
+        "type": "file"
+      },
+      {
+        "name": ".gitignore",
+        "type": "file"
+      },
+      {
+        "name": ".replit",
+        "type": "file"
+      },
+      {
+        "name": "adicionar-tag-ciclo-basico.js",
+        "type": "file"
+      },
+      {
+        "name": "app",
+        "type": "dir",
+        "children": [
+          {
+            "name": "api",
+            "type": "dir",
+            "children": [
+              {
+                "name": "admin",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "decs-batch-test",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "decs-diagnose",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "embed-batch",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "embed-decs",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "embed-notes",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "ai-agents",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "[key]",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "route.ts",
+                    "type": "file"
+                  }
+                ]
+              },
+              {
+                "name": "auth",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "forgot-password",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "login",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "register",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "reset-password",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "verify",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "verify-email",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "comentarios",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "[questionId]",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "feedback",
+                        "type": "dir",
+                        "children": [
+                          {
+                            "name": "route.ts",
+                            "type": "file"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "import",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "companies",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "route.ts",
+                    "type": "file"
+                  }
+                ]
+              },
+              {
+                "name": "decs",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "search",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "tree",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "gemini",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "process-document",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "process-youtube",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "transform",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "groq",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "route.ts",
+                    "type": "file"
+                  },
+                  {
+                    "name": "transcribe",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "transcribe-with-extract",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "notes",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "[id]",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "questions",
+                        "type": "dir",
+                        "children": [
+                          {
+                            "name": "route.ts",
+                            "type": "file"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      },
+                      {
+                        "name": "similar",
+                        "type": "dir",
+                        "children": [
+                          {
+                            "name": "route.ts",
+                            "type": "file"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "route.ts",
+                    "type": "file"
+                  }
+                ]
+              },
+              {
+                "name": "pinecone",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "status",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "provas",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "[id]",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "route.ts",
+                    "type": "file"
+                  }
+                ]
+              },
+              {
+                "name": "questions",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "[id]",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "decs-ai",
+                        "type": "dir",
+                        "children": [
+                          {
+                            "name": "route.ts",
+                            "type": "file"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "decs-ai-v2",
+                        "type": "dir",
+                        "children": [
+                          {
+                            "name": "route.ts",
+                            "type": "file"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "embedding",
+                        "type": "dir",
+                        "children": [
+                          {
+                            "name": "route.ts",
+                            "type": "file"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      },
+                      {
+                        "name": "similar",
+                        "type": "dir",
+                        "children": [
+                          {
+                            "name": "route.ts",
+                            "type": "file"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "by-tags",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "route.ts",
+                    "type": "file"
+                  },
+                  {
+                    "name": "semantic-search",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "settings",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "email_smtp",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      },
+                      {
+                        "name": "test",
+                        "type": "dir",
+                        "children": [
+                          {
+                            "name": "route.ts",
+                            "type": "file"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "route.ts",
+                    "type": "file"
+                  }
+                ]
+              },
+              {
+                "name": "users",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "[id]",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "me",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "route.ts",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "route.ts",
+                    "type": "file"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "dashboard",
+            "type": "dir",
+            "children": [
+              {
+                "name": "admin",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "decs-diagnose",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "page.tsx",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "decs-test",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "page.tsx",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "vectorization",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "page.tsx",
+                        "type": "file"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "agentes-editor",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "page.tsx",
+                    "type": "file"
+                  }
+                ]
+              },
+              {
+                "name": "error.tsx",
+                "type": "file"
+              },
+              {
+                "name": "layout.tsx",
+                "type": "file"
+              },
+              {
+                "name": "notes",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "[id]",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "page.tsx",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "new",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "page.tsx",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "page.tsx",
+                    "type": "file"
+                  },
+                  {
+                    "name": "select-questions",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "page.tsx",
+                        "type": "file"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "page.tsx",
+                "type": "file"
+              },
+              {
+                "name": "provas",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "[id]",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "page.tsx",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "page.tsx",
+                    "type": "file"
+                  }
+                ]
+              },
+              {
+                "name": "questions",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "[id]",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "page.tsx",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "page.tsx",
+                    "type": "file"
+                  },
+                  {
+                    "name": "simulate",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "page.tsx",
+                        "type": "file"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "settings",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "agentes-ia",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "page.tsx",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "page.tsx",
+                    "type": "file"
+                  }
+                ]
+              },
+              {
+                "name": "simulados",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "novo",
+                    "type": "dir",
+                    "children": [
+                      {
+                        "name": "page.tsx",
+                        "type": "file"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "page.tsx",
+                    "type": "file"
+                  }
+                ]
+              },
+              {
+                "name": "users",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "page.tsx",
+                    "type": "file"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "error.tsx",
+            "type": "file"
+          },
+          {
+            "name": "globals.css",
+            "type": "file"
+          },
+          {
+            "name": "layout.tsx",
+            "type": "file"
+          },
+          {
+            "name": "login",
+            "type": "dir",
+            "children": [
+              {
+                "name": "page.tsx",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "name": "not-found.tsx",
+            "type": "file"
+          },
+          {
+            "name": "page.tsx",
+            "type": "file"
+          },
+          {
+            "name": "reset-password",
+            "type": "dir",
+            "children": [
+              {
+                "name": "page.tsx",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "name": "verify-email",
+            "type": "dir",
+            "children": [
+              {
+                "name": "page.tsx",
+                "type": "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "arthur",
+        "type": "dir",
+        "children": [
+          {
+            "name": "__pycache__",
+            "type": "dir",
+            "children": [
+              {
+                "name": "crawler_contador_questoes.cpython-312.pyc",
+                "type": "file"
+              },
+              {
+                "name": "web_crawler_4.cpython-314.pyc",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "name": ".env.example",
+            "type": "file"
+          },
+          {
+            "name": "1.2MedMind.html",
+            "type": "file"
+          },
+          {
+            "name": "abrir-dbeaver.bat",
+            "type": "file"
+          },
+          {
+            "name": "AUTO-REFRESH-DBEAVER.md",
+            "type": "file"
+          },
+          {
+            "name": "chunks_50_recentes",
+            "type": "dir",
+            "children": [
+              {
+                "name": "chunk_01.json",
+                "type": "file"
+              },
+              {
+                "name": "chunk_02.json",
+                "type": "file"
+              },
+              {
+                "name": "chunk_03.json",
+                "type": "file"
+              },
+              {
+                "name": "chunk_04.json",
+                "type": "file"
+              },
+              {
+                "name": "chunk_05.json",
+                "type": "file"
+              },
+              {
+                "name": "index.json",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "name": "COMPONENTES-MEDMIND.md",
+            "type": "file"
+          },
+          {
+            "name": "crawler_contador_questoes.py",
+            "type": "file"
+          },
+          {
+            "name": "DOCKER-LEIA-ME.txt",
+            "type": "file"
+          },
+          {
+            "name": "Dockerfile",
+            "type": "file"
+          },
+          {
+            "name": "DOCUMENTACAO_BANCO_DADOS.md",
+            "type": "file"
+          },
+          {
+            "name": "GUIA-CONFIGURAR-SMTP.md",
+            "type": "file"
+          },
+          {
+            "name": "GUIA-DBEAVER.md",
+            "type": "file"
+          },
+          {
+            "name": "README-CRAWLER-SEGURO.md",
+            "type": "file"
+          },
+          {
+            "name": "requirements-crawler.txt",
+            "type": "file"
+          },
+          {
+            "name": "resultado_crawl_compativel.json",
+            "type": "file"
+          },
+          {
+            "name": "resultado_crawl.json",
+            "type": "file"
+          },
+          {
+            "name": "web_crawler (1).py",
+            "type": "file"
+          },
+          {
+            "name": "web_crawler (2).py",
+            "type": "file"
+          },
+          {
+            "name": "web_crawler.py",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "name": "attached_assets",
+        "type": "dir",
+        "children": [
+          {
+            "name": "100_questoes_sem_imagem_1775606130916.json",
+            "type": "file"
+          },
+          {
+            "name": "100_questoes_sem_imagem_1775684176641.json",
+            "type": "file"
+          },
+          {
+            "name": "100questoes_1775685300018.json",
+            "type": "file"
+          },
+          {
+            "name": "100questoes_1775685300026.csv",
+            "type": "file"
+          },
+          {
+            "name": "100questoes_1775685687873.json",
+            "type": "file"
+          },
+          {
+            "name": "100questoes_1775685687879.csv",
+            "type": "file"
+          },
+          {
+            "name": "100questoes_1775779105339.json",
+            "type": "file"
+          },
+          {
+            "name": "100questoes_1775779105342.csv",
+            "type": "file"
+          },
+          {
+            "name": "100questoes_modificado.csv",
+            "type": "file"
+          },
+          {
+            "name": "100questoes_modificado.json",
+            "type": "file"
+          },
+          {
+            "name": "Captura_de_Tela_2026-04-16_às_00.16.16_1776309379677.png",
+            "type": "file"
+          },
+          {
+            "name": "decs_pt_2026_1776458030474.tgz",
+            "type": "file"
+          },
+          {
+            "name": "image_1775684368068.png",
+            "type": "file"
+          },
+          {
+            "name": "image_1775687064122.png",
+            "type": "file"
+          },
+          {
+            "name": "image_1775691872126.png",
+            "type": "file"
+          },
+          {
+            "name": "image_1775774965014.png",
+            "type": "file"
+          },
+          {
+            "name": "image_1775775401647.png",
+            "type": "file"
+          },
+          {
+            "name": "image_1775862683158.png",
+            "type": "file"
+          },
+          {
+            "name": "image_1775863032262.png",
+            "type": "file"
+          },
+          {
+            "name": "image_1775863075945.png",
+            "type": "file"
+          },
+          {
+            "name": "image_1776993165702.png",
+            "type": "file"
+          },
+          {
+            "name": "image_1777069984902.png",
+            "type": "file"
+          },
+          {
+            "name": "image_1777512251643.png",
+            "type": "file"
+          },
+          {
+            "name": "image_1777512957558.png",
+            "type": "file"
+          },
+          {
+            "name": "image_1777592737593.png",
+            "type": "file"
+          },
+          {
+            "name": "image_1777593612910.png",
+            "type": "file"
+          },
+          {
+            "name": "image_1777593931326.png",
+            "type": "file"
+          },
+          {
+            "name": "image_1777594062267.png",
+            "type": "file"
+          },
+          {
+            "name": "image_1777594615517.png",
+            "type": "file"
+          },
+          {
+            "name": "image_1778614568581.png",
+            "type": "file"
+          },
+          {
+            "name": "modelo-resumo_1777598116356.pdf",
+            "type": "file"
+          },
+          {
+            "name": "Novo_prompt_1777074120661.pdf",
+            "type": "file"
+          },
+          {
+            "name": "Pasted--BUSCA-PARA-CLASSIFICA-O-POR-TERMOS-DeCS-sub-Temas-1-O-_1776883207137.txt",
+            "type": "file"
+          },
+          {
+            "name": "Pasted-An-lise-Detalhada-Pipelines-DeCS-V1-e-V2-vs-os-6-Pontos_1777511540021.txt",
+            "type": "file"
+          },
+          {
+            "name": "Pasted-Essa-uma-percep-o-muito-comum-ao-transicionar-do-chat-i_1777507309163.txt",
+            "type": "file"
+          },
+          {
+            "name": "Pasted-Voc-um-especialista-em-indexa-o-biom-dica-utilizando-o-_1777422906081.txt",
+            "type": "file"
+          },
+          {
+            "name": "pipeline_provas_analise_1774476092549.pdf",
+            "type": "file"
+          },
+          {
+            "name": "pipeline_provas_analise_1774476104703.docx",
+            "type": "file"
+          },
+          {
+            "name": "Prompt_—_Agente_Comentarista_de_Questões_de_Residência_Médica_1775179034315.docx",
+            "type": "file"
+          },
+          {
+            "name": "prova_pdf_1775176858147.json",
+            "type": "file"
+          },
+          {
+            "name": "prova_pdf_1775687624456.json",
+            "type": "file"
+          },
+          {
+            "name": "resultado_crawl_1775684131674.json",
+            "type": "file"
+          },
+          {
+            "name": "resultado_crawl_1775688818210.json",
+            "type": "file"
+          },
+          {
+            "name": "resultado_crawl_1776387948033.json",
+            "type": "file"
+          },
+          {
+            "name": "resultado_crawl_clean_1776387948028.json",
+            "type": "file"
+          },
+          {
+            "name": "resultado_crawl_uou_1776387652092.json",
+            "type": "file"
+          },
+          {
+            "name": "web_crawler_merged_29_1774478137385.py",
+            "type": "file"
+          },
+          {
+            "name": "web_crawler_modified_30_1775687485807.py",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "name": "atualizar-banco.js",
+        "type": "file"
+      },
+      {
+        "name": "backup_completo.sql",
+        "type": "file"
+      },
+      {
+        "name": "backup_completo.sql.gz",
+        "type": "file"
+      },
+      {
+        "name": "classification_test_partial.json",
+        "type": "file"
+      },
+      {
+        "name": "classification_test_results_100_recent.zip",
+        "type": "file"
+      },
+      {
+        "name": "classification_test_results.json",
+        "type": "file"
+      },
+      {
+        "name": "components",
+        "type": "dir",
+        "children": [
+          {
+            "name": "Common",
+            "type": "dir",
+            "children": [
+              {
+                "name": "DeCSAutocomplete.tsx",
+                "type": "file"
+              },
+              {
+                "name": "ImageLightbox.tsx",
+                "type": "file"
+              },
+              {
+                "name": "QuestionAutocomplete.tsx",
+                "type": "file"
+              },
+              {
+                "name": "TagAutocomplete.tsx",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "name": "Dashboard",
+            "type": "dir",
+            "children": [
+              {
+                "name": "CriarAgenteModal.tsx",
+                "type": "file"
+              },
+              {
+                "name": "CriarNotaModal.tsx",
+                "type": "file"
+              },
+              {
+                "name": "FloatingButton.tsx",
+                "type": "file"
+              },
+              {
+                "name": "ResumoAulasModal.tsx",
+                "type": "file"
+              },
+              {
+                "name": "Sidebar.tsx",
+                "type": "file"
+              },
+              {
+                "name": "Topbar.tsx",
+                "type": "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "configurar-smtp.js",
+        "type": "file"
+      },
+      {
+        "name": "content_links.json",
+        "type": "file"
+      },
+      {
+        "name": "contexts",
+        "type": "dir",
+        "children": [
+          {
+            "name": "DashboardSearchContext.tsx",
+            "type": "file"
+          },
+          {
+            "name": "SidebarContext.tsx",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "name": "data",
+        "type": "dir",
+        "children": [
+          {
+            "name": "decs-classification",
+            "type": "dir",
+            "children": [
+              {
+                "name": "question-25552-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25553-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25553-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25554-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25555-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25555-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25556-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25557-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25558-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25558-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25559-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25560-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25561-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25561-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25562-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25563-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25564-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25565-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25566-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25566-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25567-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25568-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25568-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25569-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25570-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25571-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25572-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25573-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25574-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25576-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25577-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25578-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25580-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25582-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25583-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25583-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25584-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25585-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25587-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25588-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25589-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25589-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25590-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25591-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25592-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25594-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25595-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25595-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25596-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25596-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25597-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25598-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25599-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25600-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25600-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25601-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25602-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25604-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25605-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25605-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25606-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25607-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25607-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25608-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25608-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25609-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25610-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25611-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25613-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25613-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25614-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25615-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25616-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25616-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25617-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25617-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25619-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25620-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25620-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25621-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25622-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25622-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25623-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25625-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25625-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25626-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25627-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25627-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25628-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25628-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25629-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25629-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25630-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25630-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25631-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25631-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25632-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25632-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25633-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25633-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25634-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25634-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25635-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25635-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25636-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25636-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25637-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25637-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25638-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25638-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25640-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25640-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25642-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25642-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25643-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25643-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25644-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25644-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25645-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25645-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25646-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25646-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25647-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25647-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25648-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25648-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25649-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25649-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25650-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25650-v2.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25651-v1.json",
+                "type": "file"
+              },
+              {
+                "name": "question-25651-v2.json",
+                "type": "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "decs_200_recent_questions.json",
+        "type": "file"
+      },
+      {
+        "name": "decs_200_recent_v2_part2.json",
+        "type": "file"
+      },
+      {
+        "name": "decs_200_recent_v2.json",
+        "type": "file"
+      },
+      {
+        "name": "decs_500_questions.json",
+        "type": "file"
+      },
+      {
+        "name": "decs_classification_results_100_recent.zip",
+        "type": "file"
+      },
+      {
+        "name": "decs_classification_results.json",
+        "type": "file"
+      },
+      {
+        "name": "embedding_test_results.json",
+        "type": "file"
+      },
+      {
+        "name": "lib",
+        "type": "dir",
+        "children": [
+          {
+            "name": "ai-agents-defaults.ts",
+            "type": "file"
+          },
+          {
+            "name": "ai-agents.ts",
+            "type": "file"
+          },
+          {
+            "name": "api-client.ts",
+            "type": "file"
+          },
+          {
+            "name": "areas-assuntos.ts",
+            "type": "file"
+          },
+          {
+            "name": "auth.ts",
+            "type": "file"
+          },
+          {
+            "name": "db.ts",
+            "type": "file"
+          },
+          {
+            "name": "decs-classification-storage.ts",
+            "type": "file"
+          },
+          {
+            "name": "decs-pipeline-v2.ts",
+            "type": "file"
+          },
+          {
+            "name": "decs-pipeline.ts",
+            "type": "file"
+          },
+          {
+            "name": "document-extract.ts",
+            "type": "file"
+          },
+          {
+            "name": "email.ts",
+            "type": "file"
+          },
+          {
+            "name": "embeddings.ts",
+            "type": "file"
+          },
+          {
+            "name": "enrichment.ts",
+            "type": "file"
+          },
+          {
+            "name": "gemini.ts",
+            "type": "file"
+          },
+          {
+            "name": "groq-stt.ts",
+            "type": "file"
+          },
+          {
+            "name": "groq.ts",
+            "type": "file"
+          },
+          {
+            "name": "jwt.ts",
+            "type": "file"
+          },
+          {
+            "name": "pinecone.ts",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "name": "medmind-crawler-docker.zip",
+        "type": "file"
+      },
+      {
+        "name": "medmind.db",
+        "type": "file"
+      },
+      {
+        "name": "medmind.db-shm",
+        "type": "file"
+      },
+      {
+        "name": "medmind.db-wal",
+        "type": "file"
+      },
+      {
+        "name": "middleware.ts",
+        "type": "file"
+      },
+      {
+        "name": "next-env.d.ts",
+        "type": "file"
+      },
+      {
+        "name": "next.config.js",
+        "type": "file"
+      },
+      {
+        "name": "nohup.out",
+        "type": "file"
+      },
+      {
+        "name": "package-lock.json",
+        "type": "file"
+      },
+      {
+        "name": "package.json",
+        "type": "file"
+      },
+      {
+        "name": "postcss.config.js",
+        "type": "file"
+      },
+      {
+        "name": "README.md",
+        "type": "file"
+      },
+      {
+        "name": "replit.md",
+        "type": "file"
+      },
+      {
+        "name": "scripts",
+        "type": "dir",
+        "children": [
+          {
+            "name": "add-username-column.js",
+            "type": "file"
+          },
+          {
+            "name": "batch-decs-classify-notes.mjs",
+            "type": "file"
+          },
+          {
+            "name": "batch-decs-classify.mjs",
+            "type": "file"
+          },
+          {
+            "name": "batch-embed-questions.mjs",
+            "type": "file"
+          },
+          {
+            "name": "comentarios_output",
+            "type": "dir",
+            "children": [
+              {
+                "name": "100questoes.csv",
+                "type": "file"
+              },
+              {
+                "name": "100questoes.json",
+                "type": "file"
+              },
+              {
+                "name": "comentarios_20260408_000154.csv",
+                "type": "file"
+              },
+              {
+                "name": "comentarios_20260408_000154.json",
+                "type": "file"
+              },
+              {
+                "name": "progresso.log",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "name": "compute-similarities.mjs",
+            "type": "file"
+          },
+          {
+            "name": "criar-zip-docker-crawler.ps1",
+            "type": "file"
+          },
+          {
+            "name": "debug-pipeline-steps.mjs",
+            "type": "file"
+          },
+          {
+            "name": "embed-decs-descriptors.mjs",
+            "type": "file"
+          },
+          {
+            "name": "embed-notes.mjs",
+            "type": "file"
+          },
+          {
+            "name": "fix_crawler_json.py",
+            "type": "file"
+          },
+          {
+            "name": "gerar_comentarios.py",
+            "type": "file"
+          },
+          {
+            "name": "import-decs-xml.mjs",
+            "type": "file"
+          },
+          {
+            "name": "init-db.js",
+            "type": "file"
+          },
+          {
+            "name": "neon",
+            "type": "dir",
+            "children": [
+              {
+                "name": "README.md",
+                "type": "file"
+              },
+              {
+                "name": "schema.sql",
+                "type": "file"
+              },
+              {
+                "name": "seed.js",
+                "type": "file"
+              },
+              {
+                "name": "sync_provas_to_production.sql",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "name": "pipeline",
+            "type": "dir",
+            "children": [
+              {
+                "name": "__pycache__",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "pipeline_analise_provas_gemini.cpython-312.pyc",
+                    "type": "file"
+                  },
+                  {
+                    "name": "pipeline_analise_provas_tavily.cpython-312.pyc",
+                    "type": "file"
+                  }
+                ]
+              },
+              {
+                "name": "pipeline_analise_provas_gemini.py",
+                "type": "file"
+              },
+              {
+                "name": "pipeline_analise_provas_tavily.py",
+                "type": "file"
+              },
+              {
+                "name": "pipeline_analise_provas.py",
+                "type": "file"
+              },
+              {
+                "name": "requirements.txt",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "name": "test-classification-sample.mjs",
+            "type": "file"
+          },
+          {
+            "name": "test-embedding-backends.mjs",
+            "type": "file"
+          },
+          {
+            "name": "test-groq.js",
+            "type": "file"
+          },
+          {
+            "name": "teste_comentarios",
+            "type": "dir",
+            "children": [
+              {
+                "name": "comentarios_20260403_004343.csv",
+                "type": "file"
+              },
+              {
+                "name": "comentarios_20260403_004343.json",
+                "type": "file"
+              },
+              {
+                "name": "comentarios_20260403_012005.csv",
+                "type": "file"
+              },
+              {
+                "name": "comentarios_20260403_012005.json",
+                "type": "file"
+              },
+              {
+                "name": "comentarios_20260403_013217.csv",
+                "type": "file"
+              },
+              {
+                "name": "comentarios_20260403_013217.json",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "name": "teste_output",
+            "type": "dir",
+            "children": [
+              {
+                "name": "comentarios_20260407_235844.csv",
+                "type": "file"
+              },
+              {
+                "name": "comentarios_20260407_235844.json",
+                "type": "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "tailwind.config.js",
+        "type": "file"
+      },
+      {
+        "name": "test_100_questions_full.json",
+        "type": "file"
+      },
+      {
+        "name": "test-db.js",
+        "type": "file"
+      },
+      {
+        "name": "tsconfig.json",
+        "type": "file"
+      },
+      {
+        "name": "tsconfig.tsbuildinfo",
+        "type": "file"
+      },
+      {
+        "name": "verificar-smtp.js",
+        "type": "file"
+      }
+    ]
+  },
+  "listaPlana": [
+    "workspace/",
+    "workspace/.agents/",
+    "workspace/.agents/agent_assets_metadata.toml",
+    "workspace/.canvas/",
+    "workspace/.canvas/assets/",
+    "workspace/.canvas/assets/asset_-1844010104.png",
+    "workspace/.config/",
+    "workspace/.config/.vscode-server/",
+    "workspace/.config/npm/",
+    "workspace/.config/npm/node_global/",
+    "workspace/.config/npm/node_global/lib/",
+    "workspace/.env.example",
+    "workspace/.env.local",
+    "workspace/.gitattributes",
+    "workspace/.gitignore",
+    "workspace/.replit",
+    "workspace/README.md",
+    "workspace/adicionar-tag-ciclo-basico.js",
+    "workspace/app/",
+    "workspace/app/api/",
+    "workspace/app/api/admin/",
+    "workspace/app/api/admin/decs-batch-test/",
+    "workspace/app/api/admin/decs-batch-test/route.ts",
+    "workspace/app/api/admin/decs-diagnose/",
+    "workspace/app/api/admin/decs-diagnose/route.ts",
+    "workspace/app/api/admin/embed-batch/",
+    "workspace/app/api/admin/embed-batch/route.ts",
+    "workspace/app/api/admin/embed-decs/",
+    "workspace/app/api/admin/embed-decs/route.ts",
+    "workspace/app/api/admin/embed-notes/",
+    "workspace/app/api/admin/embed-notes/route.ts",
+    "workspace/app/api/ai-agents/",
+    "workspace/app/api/ai-agents/[key]/",
+    "workspace/app/api/ai-agents/[key]/route.ts",
+    "workspace/app/api/ai-agents/route.ts",
+    "workspace/app/api/auth/",
+    "workspace/app/api/auth/forgot-password/",
+    "workspace/app/api/auth/forgot-password/route.ts",
+    "workspace/app/api/auth/login/",
+    "workspace/app/api/auth/login/route.ts",
+    "workspace/app/api/auth/register/",
+    "workspace/app/api/auth/register/route.ts",
+    "workspace/app/api/auth/reset-password/",
+    "workspace/app/api/auth/reset-password/route.ts",
+    "workspace/app/api/auth/verify-email/",
+    "workspace/app/api/auth/verify-email/route.ts",
+    "workspace/app/api/auth/verify/",
+    "workspace/app/api/auth/verify/route.ts",
+    "workspace/app/api/comentarios/",
+    "workspace/app/api/comentarios/[questionId]/",
+    "workspace/app/api/comentarios/[questionId]/feedback/",
+    "workspace/app/api/comentarios/[questionId]/feedback/route.ts",
+    "workspace/app/api/comentarios/[questionId]/route.ts",
+    "workspace/app/api/comentarios/import/",
+    "workspace/app/api/comentarios/import/route.ts",
+    "workspace/app/api/companies/",
+    "workspace/app/api/companies/route.ts",
+    "workspace/app/api/decs/",
+    "workspace/app/api/decs/search/",
+    "workspace/app/api/decs/search/route.ts",
+    "workspace/app/api/decs/tree/",
+    "workspace/app/api/decs/tree/route.ts",
+    "workspace/app/api/gemini/",
+    "workspace/app/api/gemini/process-document/",
+    "workspace/app/api/gemini/process-document/route.ts",
+    "workspace/app/api/gemini/process-youtube/",
+    "workspace/app/api/gemini/process-youtube/route.ts",
+    "workspace/app/api/gemini/transform/",
+    "workspace/app/api/gemini/transform/route.ts",
+    "workspace/app/api/groq/",
+    "workspace/app/api/groq/route.ts",
+    "workspace/app/api/groq/transcribe-with-extract/",
+    "workspace/app/api/groq/transcribe-with-extract/route.ts",
+    "workspace/app/api/groq/transcribe/",
+    "workspace/app/api/groq/transcribe/route.ts",
+    "workspace/app/api/notes/",
+    "workspace/app/api/notes/[id]/",
+    "workspace/app/api/notes/[id]/questions/",
+    "workspace/app/api/notes/[id]/questions/route.ts",
+    "workspace/app/api/notes/[id]/route.ts",
+    "workspace/app/api/notes/[id]/similar/",
+    "workspace/app/api/notes/[id]/similar/route.ts",
+    "workspace/app/api/notes/route.ts",
+    "workspace/app/api/pinecone/",
+    "workspace/app/api/pinecone/status/",
+    "workspace/app/api/pinecone/status/route.ts",
+    "workspace/app/api/provas/",
+    "workspace/app/api/provas/[id]/",
+    "workspace/app/api/provas/[id]/route.ts",
+    "workspace/app/api/provas/route.ts",
+    "workspace/app/api/questions/",
+    "workspace/app/api/questions/[id]/",
+    "workspace/app/api/questions/[id]/decs-ai-v2/",
+    "workspace/app/api/questions/[id]/decs-ai-v2/route.ts",
+    "workspace/app/api/questions/[id]/decs-ai/",
+    "workspace/app/api/questions/[id]/decs-ai/route.ts",
+    "workspace/app/api/questions/[id]/embedding/",
+    "workspace/app/api/questions/[id]/embedding/route.ts",
+    "workspace/app/api/questions/[id]/route.ts",
+    "workspace/app/api/questions/[id]/similar/",
+    "workspace/app/api/questions/[id]/similar/route.ts",
+    "workspace/app/api/questions/by-tags/",
+    "workspace/app/api/questions/by-tags/route.ts",
+    "workspace/app/api/questions/route.ts",
+    "workspace/app/api/questions/semantic-search/",
+    "workspace/app/api/questions/semantic-search/route.ts",
+    "workspace/app/api/settings/",
+    "workspace/app/api/settings/email_smtp/",
+    "workspace/app/api/settings/email_smtp/route.ts",
+    "workspace/app/api/settings/email_smtp/test/",
+    "workspace/app/api/settings/email_smtp/test/route.ts",
+    "workspace/app/api/settings/route.ts",
+    "workspace/app/api/users/",
+    "workspace/app/api/users/[id]/",
+    "workspace/app/api/users/[id]/route.ts",
+    "workspace/app/api/users/me/",
+    "workspace/app/api/users/me/route.ts",
+    "workspace/app/api/users/route.ts",
+    "workspace/app/dashboard/",
+    "workspace/app/dashboard/admin/",
+    "workspace/app/dashboard/admin/decs-diagnose/",
+    "workspace/app/dashboard/admin/decs-diagnose/page.tsx",
+    "workspace/app/dashboard/admin/decs-test/",
+    "workspace/app/dashboard/admin/decs-test/page.tsx",
+    "workspace/app/dashboard/admin/vectorization/",
+    "workspace/app/dashboard/admin/vectorization/page.tsx",
+    "workspace/app/dashboard/agentes-editor/",
+    "workspace/app/dashboard/agentes-editor/page.tsx",
+    "workspace/app/dashboard/error.tsx",
+    "workspace/app/dashboard/layout.tsx",
+    "workspace/app/dashboard/notes/",
+    "workspace/app/dashboard/notes/[id]/",
+    "workspace/app/dashboard/notes/[id]/page.tsx",
+    "workspace/app/dashboard/notes/new/",
+    "workspace/app/dashboard/notes/new/page.tsx",
+    "workspace/app/dashboard/notes/page.tsx",
+    "workspace/app/dashboard/notes/select-questions/",
+    "workspace/app/dashboard/notes/select-questions/page.tsx",
+    "workspace/app/dashboard/page.tsx",
+    "workspace/app/dashboard/provas/",
+    "workspace/app/dashboard/provas/[id]/",
+    "workspace/app/dashboard/provas/[id]/page.tsx",
+    "workspace/app/dashboard/provas/page.tsx",
+    "workspace/app/dashboard/questions/",
+    "workspace/app/dashboard/questions/[id]/",
+    "workspace/app/dashboard/questions/[id]/page.tsx",
+    "workspace/app/dashboard/questions/page.tsx",
+    "workspace/app/dashboard/questions/simulate/",
+    "workspace/app/dashboard/questions/simulate/page.tsx",
+    "workspace/app/dashboard/settings/",
+    "workspace/app/dashboard/settings/agentes-ia/",
+    "workspace/app/dashboard/settings/agentes-ia/page.tsx",
+    "workspace/app/dashboard/settings/page.tsx",
+    "workspace/app/dashboard/simulados/",
+    "workspace/app/dashboard/simulados/novo/",
+    "workspace/app/dashboard/simulados/novo/page.tsx",
+    "workspace/app/dashboard/simulados/page.tsx",
+    "workspace/app/dashboard/users/",
+    "workspace/app/dashboard/users/page.tsx",
+    "workspace/app/error.tsx",
+    "workspace/app/globals.css",
+    "workspace/app/layout.tsx",
+    "workspace/app/login/",
+    "workspace/app/login/page.tsx",
+    "workspace/app/not-found.tsx",
+    "workspace/app/page.tsx",
+    "workspace/app/reset-password/",
+    "workspace/app/reset-password/page.tsx",
+    "workspace/app/verify-email/",
+    "workspace/app/verify-email/page.tsx",
+    "workspace/arthur/",
+    "workspace/arthur/.env.example",
+    "workspace/arthur/1.2MedMind.html",
+    "workspace/arthur/AUTO-REFRESH-DBEAVER.md",
+    "workspace/arthur/COMPONENTES-MEDMIND.md",
+    "workspace/arthur/DOCKER-LEIA-ME.txt",
+    "workspace/arthur/DOCUMENTACAO_BANCO_DADOS.md",
+    "workspace/arthur/Dockerfile",
+    "workspace/arthur/GUIA-CONFIGURAR-SMTP.md",
+    "workspace/arthur/GUIA-DBEAVER.md",
+    "workspace/arthur/README-CRAWLER-SEGURO.md",
+    "workspace/arthur/__pycache__/",
+    "workspace/arthur/__pycache__/crawler_contador_questoes.cpython-312.pyc",
+    "workspace/arthur/__pycache__/web_crawler_4.cpython-314.pyc",
+    "workspace/arthur/abrir-dbeaver.bat",
+    "workspace/arthur/chunks_50_recentes/",
+    "workspace/arthur/chunks_50_recentes/chunk_01.json",
+    "workspace/arthur/chunks_50_recentes/chunk_02.json",
+    "workspace/arthur/chunks_50_recentes/chunk_03.json",
+    "workspace/arthur/chunks_50_recentes/chunk_04.json",
+    "workspace/arthur/chunks_50_recentes/chunk_05.json",
+    "workspace/arthur/chunks_50_recentes/index.json",
+    "workspace/arthur/crawler_contador_questoes.py",
+    "workspace/arthur/requirements-crawler.txt",
+    "workspace/arthur/resultado_crawl.json",
+    "workspace/arthur/resultado_crawl_compativel.json",
+    "workspace/arthur/web_crawler (1).py",
+    "workspace/arthur/web_crawler (2).py",
+    "workspace/arthur/web_crawler.py",
+    "workspace/attached_assets/",
+    "workspace/attached_assets/100_questoes_sem_imagem_1775606130916.json",
+    "workspace/attached_assets/100_questoes_sem_imagem_1775684176641.json",
+    "workspace/attached_assets/100questoes_1775685300018.json",
+    "workspace/attached_assets/100questoes_1775685300026.csv",
+    "workspace/attached_assets/100questoes_1775685687873.json",
+    "workspace/attached_assets/100questoes_1775685687879.csv",
+    "workspace/attached_assets/100questoes_1775779105339.json",
+    "workspace/attached_assets/100questoes_1775779105342.csv",
+    "workspace/attached_assets/100questoes_modificado.csv",
+    "workspace/attached_assets/100questoes_modificado.json",
+    "workspace/attached_assets/Captura_de_Tela_2026-04-16_às_00.16.16_1776309379677.png",
+    "workspace/attached_assets/Novo_prompt_1777074120661.pdf",
+    "workspace/attached_assets/Pasted--BUSCA-PARA-CLASSIFICA-O-POR-TERMOS-DeCS-sub-Temas-1-O-_1776883207137.txt",
+    "workspace/attached_assets/Pasted-An-lise-Detalhada-Pipelines-DeCS-V1-e-V2-vs-os-6-Pontos_1777511540021.txt",
+    "workspace/attached_assets/Pasted-Essa-uma-percep-o-muito-comum-ao-transicionar-do-chat-i_1777507309163.txt",
+    "workspace/attached_assets/Pasted-Voc-um-especialista-em-indexa-o-biom-dica-utilizando-o-_1777422906081.txt",
+    "workspace/attached_assets/Prompt_—_Agente_Comentarista_de_Questões_de_Residência_Médica_1775179034315.docx",
+    "workspace/attached_assets/decs_pt_2026_1776458030474.tgz",
+    "workspace/attached_assets/image_1775684368068.png",
+    "workspace/attached_assets/image_1775687064122.png",
+    "workspace/attached_assets/image_1775691872126.png",
+    "workspace/attached_assets/image_1775774965014.png",
+    "workspace/attached_assets/image_1775775401647.png",
+    "workspace/attached_assets/image_1775862683158.png",
+    "workspace/attached_assets/image_1775863032262.png",
+    "workspace/attached_assets/image_1775863075945.png",
+    "workspace/attached_assets/image_1776993165702.png",
+    "workspace/attached_assets/image_1777069984902.png",
+    "workspace/attached_assets/image_1777512251643.png",
+    "workspace/attached_assets/image_1777512957558.png",
+    "workspace/attached_assets/image_1777592737593.png",
+    "workspace/attached_assets/image_1777593612910.png",
+    "workspace/attached_assets/image_1777593931326.png",
+    "workspace/attached_assets/image_1777594062267.png",
+    "workspace/attached_assets/image_1777594615517.png",
+    "workspace/attached_assets/image_1778614568581.png",
+    "workspace/attached_assets/modelo-resumo_1777598116356.pdf",
+    "workspace/attached_assets/pipeline_provas_analise_1774476092549.pdf",
+    "workspace/attached_assets/pipeline_provas_analise_1774476104703.docx",
+    "workspace/attached_assets/prova_pdf_1775176858147.json",
+    "workspace/attached_assets/prova_pdf_1775687624456.json",
+    "workspace/attached_assets/resultado_crawl_1775684131674.json",
+    "workspace/attached_assets/resultado_crawl_1775688818210.json",
+    "workspace/attached_assets/resultado_crawl_1776387948033.json",
+    "workspace/attached_assets/resultado_crawl_clean_1776387948028.json",
+    "workspace/attached_assets/resultado_crawl_uou_1776387652092.json",
+    "workspace/attached_assets/web_crawler_merged_29_1774478137385.py",
+    "workspace/attached_assets/web_crawler_modified_30_1775687485807.py",
+    "workspace/atualizar-banco.js",
+    "workspace/backup_completo.sql",
+    "workspace/backup_completo.sql.gz",
+    "workspace/classification_test_partial.json",
+    "workspace/classification_test_results.json",
+    "workspace/classification_test_results_100_recent.zip",
+    "workspace/components/",
+    "workspace/components/Common/",
+    "workspace/components/Common/DeCSAutocomplete.tsx",
+    "workspace/components/Common/ImageLightbox.tsx",
+    "workspace/components/Common/QuestionAutocomplete.tsx",
+    "workspace/components/Common/TagAutocomplete.tsx",
+    "workspace/components/Dashboard/",
+    "workspace/components/Dashboard/CriarAgenteModal.tsx",
+    "workspace/components/Dashboard/CriarNotaModal.tsx",
+    "workspace/components/Dashboard/FloatingButton.tsx",
+    "workspace/components/Dashboard/ResumoAulasModal.tsx",
+    "workspace/components/Dashboard/Sidebar.tsx",
+    "workspace/components/Dashboard/Topbar.tsx",
+    "workspace/configurar-smtp.js",
+    "workspace/content_links.json",
+    "workspace/contexts/",
+    "workspace/contexts/DashboardSearchContext.tsx",
+    "workspace/contexts/SidebarContext.tsx",
+    "workspace/data/",
+    "workspace/data/decs-classification/",
+    "workspace/data/decs-classification/question-25552-v1.json",
+    "workspace/data/decs-classification/question-25553-v1.json",
+    "workspace/data/decs-classification/question-25553-v2.json",
+    "workspace/data/decs-classification/question-25554-v2.json",
+    "workspace/data/decs-classification/question-25555-v1.json",
+    "workspace/data/decs-classification/question-25555-v2.json",
+    "workspace/data/decs-classification/question-25556-v2.json",
+    "workspace/data/decs-classification/question-25557-v2.json",
+    "workspace/data/decs-classification/question-25558-v1.json",
+    "workspace/data/decs-classification/question-25558-v2.json",
+    "workspace/data/decs-classification/question-25559-v2.json",
+    "workspace/data/decs-classification/question-25560-v2.json",
+    "workspace/data/decs-classification/question-25561-v1.json",
+    "workspace/data/decs-classification/question-25561-v2.json",
+    "workspace/data/decs-classification/question-25562-v2.json",
+    "workspace/data/decs-classification/question-25563-v2.json",
+    "workspace/data/decs-classification/question-25564-v2.json",
+    "workspace/data/decs-classification/question-25565-v2.json",
+    "workspace/data/decs-classification/question-25566-v1.json",
+    "workspace/data/decs-classification/question-25566-v2.json",
+    "workspace/data/decs-classification/question-25567-v1.json",
+    "workspace/data/decs-classification/question-25568-v1.json",
+    "workspace/data/decs-classification/question-25568-v2.json",
+    "workspace/data/decs-classification/question-25569-v2.json",
+    "workspace/data/decs-classification/question-25570-v2.json",
+    "workspace/data/decs-classification/question-25571-v2.json",
+    "workspace/data/decs-classification/question-25572-v2.json",
+    "workspace/data/decs-classification/question-25573-v2.json",
+    "workspace/data/decs-classification/question-25574-v1.json",
+    "workspace/data/decs-classification/question-25576-v2.json",
+    "workspace/data/decs-classification/question-25577-v2.json",
+    "workspace/data/decs-classification/question-25578-v2.json",
+    "workspace/data/decs-classification/question-25580-v2.json",
+    "workspace/data/decs-classification/question-25582-v2.json",
+    "workspace/data/decs-classification/question-25583-v1.json",
+    "workspace/data/decs-classification/question-25583-v2.json",
+    "workspace/data/decs-classification/question-25584-v2.json",
+    "workspace/data/decs-classification/question-25585-v2.json",
+    "workspace/data/decs-classification/question-25587-v2.json",
+    "workspace/data/decs-classification/question-25588-v2.json",
+    "workspace/data/decs-classification/question-25589-v1.json",
+    "workspace/data/decs-classification/question-25589-v2.json",
+    "workspace/data/decs-classification/question-25590-v2.json",
+    "workspace/data/decs-classification/question-25591-v2.json",
+    "workspace/data/decs-classification/question-25592-v2.json",
+    "workspace/data/decs-classification/question-25594-v2.json",
+    "workspace/data/decs-classification/question-25595-v1.json",
+    "workspace/data/decs-classification/question-25595-v2.json",
+    "workspace/data/decs-classification/question-25596-v1.json",
+    "workspace/data/decs-classification/question-25596-v2.json",
+    "workspace/data/decs-classification/question-25597-v1.json",
+    "workspace/data/decs-classification/question-25598-v2.json",
+    "workspace/data/decs-classification/question-25599-v2.json",
+    "workspace/data/decs-classification/question-25600-v1.json",
+    "workspace/data/decs-classification/question-25600-v2.json",
+    "workspace/data/decs-classification/question-25601-v2.json",
+    "workspace/data/decs-classification/question-25602-v2.json",
+    "workspace/data/decs-classification/question-25604-v2.json",
+    "workspace/data/decs-classification/question-25605-v1.json",
+    "workspace/data/decs-classification/question-25605-v2.json",
+    "workspace/data/decs-classification/question-25606-v2.json",
+    "workspace/data/decs-classification/question-25607-v1.json",
+    "workspace/data/decs-classification/question-25607-v2.json",
+    "workspace/data/decs-classification/question-25608-v1.json",
+    "workspace/data/decs-classification/question-25608-v2.json",
+    "workspace/data/decs-classification/question-25609-v2.json",
+    "workspace/data/decs-classification/question-25610-v2.json",
+    "workspace/data/decs-classification/question-25611-v2.json",
+    "workspace/data/decs-classification/question-25613-v1.json",
+    "workspace/data/decs-classification/question-25613-v2.json",
+    "workspace/data/decs-classification/question-25614-v1.json",
+    "workspace/data/decs-classification/question-25615-v2.json",
+    "workspace/data/decs-classification/question-25616-v1.json",
+    "workspace/data/decs-classification/question-25616-v2.json",
+    "workspace/data/decs-classification/question-25617-v1.json",
+    "workspace/data/decs-classification/question-25617-v2.json",
+    "workspace/data/decs-classification/question-25619-v2.json",
+    "workspace/data/decs-classification/question-25620-v1.json",
+    "workspace/data/decs-classification/question-25620-v2.json",
+    "workspace/data/decs-classification/question-25621-v2.json",
+    "workspace/data/decs-classification/question-25622-v1.json",
+    "workspace/data/decs-classification/question-25622-v2.json",
+    "workspace/data/decs-classification/question-25623-v2.json",
+    "workspace/data/decs-classification/question-25625-v1.json",
+    "workspace/data/decs-classification/question-25625-v2.json",
+    "workspace/data/decs-classification/question-25626-v2.json",
+    "workspace/data/decs-classification/question-25627-v1.json",
+    "workspace/data/decs-classification/question-25627-v2.json",
+    "workspace/data/decs-classification/question-25628-v1.json",
+    "workspace/data/decs-classification/question-25628-v2.json",
+    "workspace/data/decs-classification/question-25629-v1.json",
+    "workspace/data/decs-classification/question-25629-v2.json",
+    "workspace/data/decs-classification/question-25630-v1.json",
+    "workspace/data/decs-classification/question-25630-v2.json",
+    "workspace/data/decs-classification/question-25631-v1.json",
+    "workspace/data/decs-classification/question-25631-v2.json",
+    "workspace/data/decs-classification/question-25632-v1.json",
+    "workspace/data/decs-classification/question-25632-v2.json",
+    "workspace/data/decs-classification/question-25633-v1.json",
+    "workspace/data/decs-classification/question-25633-v2.json",
+    "workspace/data/decs-classification/question-25634-v1.json",
+    "workspace/data/decs-classification/question-25634-v2.json",
+    "workspace/data/decs-classification/question-25635-v1.json",
+    "workspace/data/decs-classification/question-25635-v2.json",
+    "workspace/data/decs-classification/question-25636-v1.json",
+    "workspace/data/decs-classification/question-25636-v2.json",
+    "workspace/data/decs-classification/question-25637-v1.json",
+    "workspace/data/decs-classification/question-25637-v2.json",
+    "workspace/data/decs-classification/question-25638-v1.json",
+    "workspace/data/decs-classification/question-25638-v2.json",
+    "workspace/data/decs-classification/question-25640-v1.json",
+    "workspace/data/decs-classification/question-25640-v2.json",
+    "workspace/data/decs-classification/question-25642-v1.json",
+    "workspace/data/decs-classification/question-25642-v2.json",
+    "workspace/data/decs-classification/question-25643-v1.json",
+    "workspace/data/decs-classification/question-25643-v2.json",
+    "workspace/data/decs-classification/question-25644-v1.json",
+    "workspace/data/decs-classification/question-25644-v2.json",
+    "workspace/data/decs-classification/question-25645-v1.json",
+    "workspace/data/decs-classification/question-25645-v2.json",
+    "workspace/data/decs-classification/question-25646-v1.json",
+    "workspace/data/decs-classification/question-25646-v2.json",
+    "workspace/data/decs-classification/question-25647-v1.json",
+    "workspace/data/decs-classification/question-25647-v2.json",
+    "workspace/data/decs-classification/question-25648-v1.json",
+    "workspace/data/decs-classification/question-25648-v2.json",
+    "workspace/data/decs-classification/question-25649-v1.json",
+    "workspace/data/decs-classification/question-25649-v2.json",
+    "workspace/data/decs-classification/question-25650-v1.json",
+    "workspace/data/decs-classification/question-25650-v2.json",
+    "workspace/data/decs-classification/question-25651-v1.json",
+    "workspace/data/decs-classification/question-25651-v2.json",
+    "workspace/decs_200_recent_questions.json",
+    "workspace/decs_200_recent_v2.json",
+    "workspace/decs_200_recent_v2_part2.json",
+    "workspace/decs_500_questions.json",
+    "workspace/decs_classification_results.json",
+    "workspace/decs_classification_results_100_recent.zip",
+    "workspace/embedding_test_results.json",
+    "workspace/lib/",
+    "workspace/lib/ai-agents-defaults.ts",
+    "workspace/lib/ai-agents.ts",
+    "workspace/lib/api-client.ts",
+    "workspace/lib/areas-assuntos.ts",
+    "workspace/lib/auth.ts",
+    "workspace/lib/db.ts",
+    "workspace/lib/decs-classification-storage.ts",
+    "workspace/lib/decs-pipeline-v2.ts",
+    "workspace/lib/decs-pipeline.ts",
+    "workspace/lib/document-extract.ts",
+    "workspace/lib/email.ts",
+    "workspace/lib/embeddings.ts",
+    "workspace/lib/enrichment.ts",
+    "workspace/lib/gemini.ts",
+    "workspace/lib/groq-stt.ts",
+    "workspace/lib/groq.ts",
+    "workspace/lib/jwt.ts",
+    "workspace/lib/pinecone.ts",
+    "workspace/medmind-crawler-docker.zip",
+    "workspace/medmind.db",
+    "workspace/medmind.db-shm",
+    "workspace/medmind.db-wal",
+    "workspace/middleware.ts",
+    "workspace/next-env.d.ts",
+    "workspace/next.config.js",
+    "workspace/nohup.out",
+    "workspace/package-lock.json",
+    "workspace/package.json",
+    "workspace/postcss.config.js",
+    "workspace/replit.md",
+    "workspace/scripts/",
+    "workspace/scripts/add-username-column.js",
+    "workspace/scripts/batch-decs-classify-notes.mjs",
+    "workspace/scripts/batch-decs-classify.mjs",
+    "workspace/scripts/batch-embed-questions.mjs",
+    "workspace/scripts/comentarios_output/",
+    "workspace/scripts/comentarios_output/100questoes.csv",
+    "workspace/scripts/comentarios_output/100questoes.json",
+    "workspace/scripts/comentarios_output/comentarios_20260408_000154.csv",
+    "workspace/scripts/comentarios_output/comentarios_20260408_000154.json",
+    "workspace/scripts/comentarios_output/progresso.log",
+    "workspace/scripts/compute-similarities.mjs",
+    "workspace/scripts/criar-zip-docker-crawler.ps1",
+    "workspace/scripts/debug-pipeline-steps.mjs",
+    "workspace/scripts/embed-decs-descriptors.mjs",
+    "workspace/scripts/embed-notes.mjs",
+    "workspace/scripts/fix_crawler_json.py",
+    "workspace/scripts/gerar_comentarios.py",
+    "workspace/scripts/import-decs-xml.mjs",
+    "workspace/scripts/init-db.js",
+    "workspace/scripts/neon/",
+    "workspace/scripts/neon/README.md",
+    "workspace/scripts/neon/schema.sql",
+    "workspace/scripts/neon/seed.js",
+    "workspace/scripts/neon/sync_provas_to_production.sql",
+    "workspace/scripts/pipeline/",
+    "workspace/scripts/pipeline/__pycache__/",
+    "workspace/scripts/pipeline/__pycache__/pipeline_analise_provas_gemini.cpython-312.pyc",
+    "workspace/scripts/pipeline/__pycache__/pipeline_analise_provas_tavily.cpython-312.pyc",
+    "workspace/scripts/pipeline/pipeline_analise_provas.py",
+    "workspace/scripts/pipeline/pipeline_analise_provas_gemini.py",
+    "workspace/scripts/pipeline/pipeline_analise_provas_tavily.py",
+    "workspace/scripts/pipeline/requirements.txt",
+    "workspace/scripts/test-classification-sample.mjs",
+    "workspace/scripts/test-embedding-backends.mjs",
+    "workspace/scripts/test-groq.js",
+    "workspace/scripts/teste_comentarios/",
+    "workspace/scripts/teste_comentarios/comentarios_20260403_004343.csv",
+    "workspace/scripts/teste_comentarios/comentarios_20260403_004343.json",
+    "workspace/scripts/teste_comentarios/comentarios_20260403_012005.csv",
+    "workspace/scripts/teste_comentarios/comentarios_20260403_012005.json",
+    "workspace/scripts/teste_comentarios/comentarios_20260403_013217.csv",
+    "workspace/scripts/teste_comentarios/comentarios_20260403_013217.json",
+    "workspace/scripts/teste_output/",
+    "workspace/scripts/teste_output/comentarios_20260407_235844.csv",
+    "workspace/scripts/teste_output/comentarios_20260407_235844.json",
+    "workspace/tailwind.config.js",
+    "workspace/test-db.js",
+    "workspace/test_100_questions_full.json",
+    "workspace/tsconfig.json",
+    "workspace/tsconfig.tsbuildinfo",
+    "workspace/verificar-smtp.js"
+  ]
+}

@@ -34,7 +34,7 @@ yarn-error.log*
 *.db-shm
 *.db-wal
 medmind.db
-backup_completo.sql
+
 
 
 
