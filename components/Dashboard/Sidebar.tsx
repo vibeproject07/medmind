@@ -18,6 +18,7 @@ import {
   TestTube2,
   Cpu,
   ScanSearch,
+  DatabaseZap,
 } from 'lucide-react';
 import { useSidebar } from '@/contexts/SidebarContext';
 
@@ -65,6 +66,7 @@ export default function Sidebar() {
     { href: '/dashboard/admin/vectorization', icon: Cpu, label: 'Vetorização', roles: ['admin'] as UserRole[] },
     { href: '/dashboard/admin/decs-test', icon: TestTube2, label: 'Teste DeCS A/B', roles: ['admin'] as UserRole[] },
     { href: '/dashboard/admin/decs-diagnose', icon: ScanSearch, label: 'Diagnóstico DeCS', roles: ['admin'] as UserRole[] },
+    { href: '/dashboard/admin/query', icon: DatabaseZap, label: 'Consulta Questões', roles: ['admin'] as UserRole[] },
   ];
 
   // Filtrar menu items baseado no role do usuário
