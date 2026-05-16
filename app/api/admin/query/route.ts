@@ -9,7 +9,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import pool from '@/lib/db';
+import { query as dbQuery } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 
 export const runtime = 'nodejs';
@@ -102,7 +102,7 @@ export async function POST(req: NextRequest) {
     LIMIT ${limit}
   `;
 
-  const { rows, rowCount } = await pool.query(sql, params);
+  const { rows, rowCount } = await dbQuery(sql, params);
 
   return NextResponse.json({ rows, total: rowCount, sql: sql.replace(/\s+/g, ' ').trim() });
 }
@@ -131,7 +131,7 @@ export async function GET(req: NextRequest) {
   if (!id || isNaN(parseInt(id)))
     return NextResponse.json({ error: 'ID inválido' }, { status: 400 });
 
-  const { rows } = await pool.query(
+  const { rows } = await dbQuery(
     `SELECT id, statement, option_a, option_b, option_c, option_d, option_e,
             correct_answer, explanation, exam_year, exam_board, exam_institution,
             exam_region, tags, areas_conhecimento, assuntos, anulada, ai_decs_descriptors
