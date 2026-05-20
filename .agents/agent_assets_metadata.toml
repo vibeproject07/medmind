@@ -54,3 +54,9 @@ id = "Yg23V_1cl6F8tY2hz5mIy"
 uri = "file://decs_classification_results.csv"
 type = "table"
 title = "Resultados de classificação DeCS"
+
+[[outputs]]
+id = "CNnA5Q7ggl92zyKofRKG4"
+uri = "file://questoes_recentes_200.csv"
+type = "table"
+title = "200 questões mais recentes"
