@@ -368,7 +368,8 @@ export default function SimuladosPage() {
               <GraduationCap className="w-6 h-6 text-white" />
             </div>
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1 flex-wrap">
+              {/* Linha do título: chips + botão alinhados na mesma faixa */}
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
                 <h3 className="font-bold text-gray-900 text-base">Simulado Tutorial</h3>
                 <span className="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-full border border-emerald-200">
                   Tutorial
@@ -381,42 +382,42 @@ export default function SimuladosPage() {
                     <CheckCircle className="w-3 h-3" />Concluído
                   </span>
                 )}
-              </div>
-              <p className="text-sm text-gray-600 mb-3 leading-relaxed">
-                Aprenda como funcionam os simulados do MedMind: responda questões, use o modo rascunho para taxar alternativas, veja o gabarito e o comentário da IA ao final.
-              </p>
-              <div className="flex items-center gap-2 flex-wrap">
-                <div className="flex items-center gap-1.5 text-xs text-gray-400">
-                  <Sparkles className="w-3.5 h-3.5 text-emerald-500" />
-                  <span>Comentários de IA • Modo rascunho • Gabarito detalhado</span>
+                {/* Botão na mesma linha, empurrado para a direita */}
+                <div className="ml-auto flex-shrink-0">
+                  {tutorialInProgress && tutorialResultInProgress ? (
+                    <button
+                      type="button"
+                      onClick={() => handleContinuar(tutorialResultInProgress)}
+                      className="flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 transition shadow-sm whitespace-nowrap"
+                    >
+                      <Play className="w-3.5 h-3.5" />Continuar
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={handleIniciarTutorial}
+                      disabled={tutorialLoading}
+                      className="flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 transition shadow-sm whitespace-nowrap disabled:opacity-60"
+                    >
+                      {tutorialLoading ? (
+                        <><span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />Carregando…</>
+                      ) : tutorialCompleted ? (
+                        <><RotateCcw className="w-3.5 h-3.5" />Refazer</>
+                      ) : (
+                        <><Play className="w-3.5 h-3.5" />Iniciar Tutorial</>
+                      )}
+                    </button>
+                  )}
                 </div>
               </div>
-            </div>
-            <div className="flex-shrink-0 flex flex-col gap-2">
-              {tutorialInProgress && tutorialResultInProgress ? (
-                <button
-                  type="button"
-                  onClick={() => handleContinuar(tutorialResultInProgress)}
-                  className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-xl text-sm font-semibold hover:bg-emerald-700 transition shadow-sm whitespace-nowrap"
-                >
-                  <Play className="w-4 h-4" />Continuar
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={handleIniciarTutorial}
-                  disabled={tutorialLoading}
-                  className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-xl text-sm font-semibold hover:bg-emerald-700 transition shadow-sm whitespace-nowrap disabled:opacity-60"
-                >
-                  {tutorialLoading ? (
-                    <span className="flex items-center gap-2"><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Carregando…</span>
-                  ) : tutorialCompleted ? (
-                    <><RotateCcw className="w-4 h-4" />Refazer</>
-                  ) : (
-                    <><Play className="w-4 h-4" />Iniciar Tutorial</>
-                  )}
-                </button>
-              )}
+              {/* Descrição e features ocupam a largura toda */}
+              <p className="text-sm text-gray-600 mb-2 leading-relaxed">
+                Aprenda como funcionam os simulados do MedMind: responda questões, use o modo rascunho para taxar alternativas, veja o gabarito e o comentário da IA ao final.
+              </p>
+              <div className="flex items-center gap-1.5 text-xs text-gray-400">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-500" />
+                <span>Comentários de IA • Modo rascunho • Gabarito detalhado</span>
+              </div>
             </div>
           </div>
         </div>
