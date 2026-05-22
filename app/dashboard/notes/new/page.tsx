@@ -621,7 +621,6 @@ function NewNotePageContent() {
   );
 
   return (
-    <>
     <div className="-m-3 sm:-m-4 md:-m-3 flex flex-col overflow-hidden" style={{ height: 'calc(100vh - 52px)' }}>
 
       {/* ── Header ──────────────────────────────────────────────────────── */}
@@ -682,35 +681,34 @@ function NewNotePageContent() {
         </footer>
       )}
 
-    </div>
-
-    {/* ── Discard confirmation modal ───────────────────────────────────── */}
-    {showDiscardModal && (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-        <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-sm w-full mx-4">
-          <div className="flex items-start gap-3 mb-4">
-            <div className="flex-shrink-0 w-9 h-9 rounded-full bg-red-100 flex items-center justify-center">
-              <Trash2 className="w-4 h-4 text-red-500" />
+      {/* ── Discard confirmation modal ───────────────────────────────────── */}
+      {showDiscardModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-sm w-full mx-4">
+            <div className="flex items-start gap-3 mb-4">
+              <div className="flex-shrink-0 w-9 h-9 rounded-full bg-red-100 flex items-center justify-center">
+                <Trash2 className="w-4 h-4 text-red-500" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-gray-800">Descartar nota?</h3>
+                <p className="text-sm text-gray-500 mt-0.5">Todas as alterações serão perdidas permanentemente.</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-base font-bold text-gray-800">Descartar nota?</h3>
-              <p className="text-sm text-gray-500 mt-0.5">Todas as alterações serão perdidas permanentemente.</p>
+            <div className="flex gap-2 justify-end">
+              <button type="button" onClick={() => setShowDiscardModal(false)}
+                className="px-4 py-2 text-sm border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-50 transition font-medium">
+                Cancelar
+              </button>
+              <button type="button" onClick={handleDiscard}
+                className="flex items-center gap-1.5 px-4 py-2 text-sm bg-red-500 text-white rounded-xl font-semibold hover:bg-red-600 transition">
+                <Trash2 className="w-3.5 h-3.5" />Descartar
+              </button>
             </div>
-          </div>
-          <div className="flex gap-2 justify-end">
-            <button type="button" onClick={() => setShowDiscardModal(false)}
-              className="px-4 py-2 text-sm border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-50 transition font-medium">
-              Cancelar
-            </button>
-            <button type="button" onClick={handleDiscard}
-              className="flex items-center gap-1.5 px-4 py-2 text-sm bg-red-500 text-white rounded-xl font-semibold hover:bg-red-600 transition">
-              <Trash2 className="w-3.5 h-3.5" />Descartar
-            </button>
           </div>
         </div>
-      </div>
-    )}
-    </>
+      )}
+
+    </div>
   );
 }
 
