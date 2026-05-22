@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { Bell, Search, User, X } from 'lucide-react';
 import { useSidebar } from '@/contexts/SidebarContext';
 import { useDashboardSearch } from '@/contexts/DashboardSearchContext';
+import { useNote } from '@/contexts/NoteContext';
 
 interface UserProfile {
   id: number;
@@ -32,6 +33,7 @@ export default function Topbar() {
   const { toggleMobile } = useSidebar();
   const pathname = usePathname();
   const { searchQuery, setSearchQuery } = useDashboardSearch();
+  const { noteTitle } = useNote();
 
   // Decode JWT on mount to show initials immediately in mobile header
   useEffect(() => {
@@ -123,9 +125,16 @@ export default function Topbar() {
     return name.substring(0, 2).toUpperCase();
   };
 
+  const isNoteDetail = !!(
+    pathname?.startsWith('/dashboard/notes/') &&
+    pathname.split('/')[3] &&
+    pathname.split('/')[3] !== 'new'
+  );
+
   const pageTitle = useMemo(() => {
     if (!pathname) return 'MedMind';
     if (pathname === '/dashboard')                       return 'Dashboard';
+    if (isNoteDetail && noteTitle)                       return noteTitle;
     if (pathname.startsWith('/dashboard/notes'))         return 'Notas';
     if (pathname.startsWith('/dashboard/questions'))     return 'Questões';
     if (pathname.startsWith('/dashboard/simulados'))     return 'Simulados';
@@ -134,7 +143,7 @@ export default function Topbar() {
     if (pathname.startsWith('/dashboard/profile'))       return 'Perfil';
     if (pathname.startsWith('/dashboard/admin'))         return 'Admin';
     return 'MedMind';
-  }, [pathname]);
+  }, [pathname, noteTitle, isNoteDetail]);
 
   const showSearch =
     pathname?.startsWith('/dashboard/notes') ||

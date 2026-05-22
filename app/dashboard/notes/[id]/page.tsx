@@ -13,6 +13,7 @@ import {
   ASSUNTOS_BY_AREA, toDisplayArea, toDisplayAssunto,
   fromDisplay, AREAS_OPTIONS_DISPLAY,
 } from '@/lib/areas-assuntos';
+import { useNote } from '@/contexts/NoteContext';
 
 const AVAILABLE_TAGS = [
   'Acupuntura','Anestesiologia','Cirurgia Cardiovascular','Cirurgia Geral',
@@ -78,7 +79,7 @@ export default function NoteDetailPage() {
   const [isAdmin, setIsAdmin]             = useState(false);
   const [isOwner, setIsOwner]             = useState(false);
   const [error, setError]                 = useState<string | null>(null);
-  const [activePanel, setActivePanel]     = useState<ActivePanel>(null);
+  const { setNoteTitle, notePanel: activePanel, setNotePanel: setActivePanel } = useNote();
   const [fontesResumoSubTab, setFontesResumoSubTab] = useState<'melhorado' | 'original'>('melhorado');
   const [fontesSelectedForNote, setFontesSelectedForNote] = useState<'melhorado' | 'original' | null>(null);
   const [relatedQuestions, setRelatedQuestions] = useState<Question[]>([]);
@@ -153,6 +154,7 @@ export default function NoteDetailPage() {
           if (note.user_id === payload.id) setIsOwner(true);
         } catch { /* ignore */ }
       }
+      setNoteTitle(note.title);
       setEditTitle(note.title);
       setEditDescription(note.description);
       setEditTipoConteudo((note as Note).tipo_conteudo || '');
@@ -161,7 +163,15 @@ export default function NoteDetailPage() {
       setEditAssuntos(note.assuntos || []);
       setEditImages(note.images || []);
     }
-  }, [note]);
+  }, [note]); // eslint-disable-line
+
+  // Clear topbar title + panel when leaving the note page
+  useEffect(() => {
+    return () => {
+      setNoteTitle('');
+      setActivePanel(null);
+    };
+  }, []); // eslint-disable-line
 
   useEffect(() => {
     if (editAreasConhecimento.length === 0) { setEditAssuntos([]); return; }
@@ -321,7 +331,7 @@ export default function NoteDetailPage() {
 
   // ── Panel toggle helper ──────────────────────────────────────────────
   const togglePanel = (panel: 'fontes' | 'estudio') =>
-    setActivePanel((p) => p === panel ? null : panel);
+    setActivePanel(activePanel === panel ? null : panel);
 
   // ── Fontes panel ─────────────────────────────────────────────────────
   const FontesPanel = () => (
@@ -489,8 +499,6 @@ export default function NoteDetailPage() {
           <ArrowLeft className="w-5 h-5 text-gray-600" />
         </button>
 
-        <h1 className="text-2xl font-bold text-gray-800 flex-1 min-w-0 truncate">{note.title}</h1>
-
         <div className="flex items-center gap-1.5 flex-shrink-0">
           {/* Always-visible Fontes icon button */}
           <button
@@ -551,22 +559,17 @@ export default function NoteDetailPage() {
           {/* Note body card */}
           <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
             <div className="p-6 space-y-5">
-              {/* Title */}
-              {isEditing ? (
+              {/* Title — only shown in edit mode (view mode: topbar) */}
+              {isEditing && (
                 <div className="space-y-1.5">
                   <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Título</label>
                   <input
                     type="text"
                     value={editTitle}
-                    onChange={(e) => setEditTitle(e.target.value)}
+                    onChange={(e) => { setEditTitle(e.target.value); setNoteTitle(e.target.value); }}
                     className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent text-base font-semibold"
                     placeholder="Título da nota"
                   />
-                </div>
-              ) : (
-                <div>
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Título</p>
-                  <p className="text-xl font-bold text-gray-800">{note.title}</p>
                 </div>
               )}
 
