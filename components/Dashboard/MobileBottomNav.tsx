@@ -20,11 +20,6 @@ const NAV_ITEMS = [
   { href: '/dashboard/provas',    icon: BookOpen,        label: 'Provas'    },
 ];
 
-const NOTE_ACTIONS = [
-  { key: 'fontes'  as const, icon: BookOpen, label: 'Fontes'  },
-  { key: 'estudio' as const, icon: Sparkles, label: 'Estúdio' },
-];
-
 export default function MobileBottomNav() {
   const pathname = usePathname();
   const { notePanel, setNotePanel } = useNote();
@@ -39,7 +34,7 @@ export default function MobileBottomNav() {
     <nav
       className="md:hidden flex-shrink-0 h-[92px] overflow-hidden"
       style={{
-        background: isNoteDetail ? 'rgb(46 16 101)' : 'transparent',
+        background: isNoteDetail ? '#63783D' : 'transparent',
         transition: 'background 0.3s ease',
       }}
     >
@@ -81,33 +76,66 @@ export default function MobileBottomNav() {
           })}
         </div>
 
-        {/* ── Panel 2: Note context (Fontes + Estúdio) ──────────────── */}
+        {/* ── Panel 2: Note context (Fontes | Nota | Estúdio) ───────── */}
         <div
-          className="flex items-center justify-around px-8 pb-2"
+          className="flex items-center justify-around px-4 pb-2"
           style={{ width: '50%' }}
         >
-          {NOTE_ACTIONS.map(({ key, icon: Icon, label }) => {
-            const isActive = notePanel === key;
-            return (
-              <button
-                key={key}
-                type="button"
-                onClick={() => setNotePanel(isActive ? null : key)}
-                className="flex flex-col items-center gap-1.5 flex-1 py-2"
-              >
-                <div
-                  className={`w-14 h-14 rounded-full flex items-center justify-center transition-all ${
-                    isActive ? 'bg-violet-500 shadow-lg shadow-violet-900/60' : 'bg-white/10'
-                  }`}
-                >
-                  <Icon className={`w-6 h-6 ${isActive ? 'text-white' : 'text-violet-300'}`} />
-                </div>
-                <span className={`text-[10px] font-medium leading-none ${isActive ? 'text-white' : 'text-violet-400'}`}>
-                  {label}
-                </span>
-              </button>
-            );
-          })}
+          {/* Fontes */}
+          <button
+            type="button"
+            onClick={() => setNotePanel(notePanel === 'fontes' ? null : 'fontes')}
+            className="flex flex-col items-center gap-1.5 flex-1 py-2"
+          >
+            <div
+              className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
+                notePanel === 'fontes' ? 'bg-white/25 ring-2 ring-white/40' : 'bg-white/10'
+              }`}
+            >
+              <BookOpen className={`w-5 h-5 ${notePanel === 'fontes' ? 'text-white' : 'text-white/60'}`} />
+            </div>
+            <span className={`text-[10px] font-medium leading-none ${notePanel === 'fontes' ? 'text-white' : 'text-white/60'}`}>
+              Fontes
+            </span>
+          </button>
+
+          {/* Nota — center, larger, always prominent */}
+          <button
+            type="button"
+            onClick={() => setNotePanel(null)}
+            className="flex flex-col items-center gap-1.5 flex-1 py-1"
+          >
+            <div
+              className={`w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-md ${
+                notePanel === null
+                  ? 'bg-white shadow-lg ring-2 ring-white/60'
+                  : 'bg-white/20'
+              }`}
+            >
+              <FileText className={`w-6 h-6 ${notePanel === null ? 'text-[#63783D]' : 'text-white/70'}`} />
+            </div>
+            <span className={`text-[10px] font-semibold leading-none ${notePanel === null ? 'text-white' : 'text-white/60'}`}>
+              Nota
+            </span>
+          </button>
+
+          {/* Estúdio */}
+          <button
+            type="button"
+            onClick={() => setNotePanel(notePanel === 'estudio' ? null : 'estudio')}
+            className="flex flex-col items-center gap-1.5 flex-1 py-2"
+          >
+            <div
+              className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
+                notePanel === 'estudio' ? 'bg-white/25 ring-2 ring-white/40' : 'bg-white/10'
+              }`}
+            >
+              <Sparkles className={`w-5 h-5 ${notePanel === 'estudio' ? 'text-white' : 'text-white/60'}`} />
+            </div>
+            <span className={`text-[10px] font-medium leading-none ${notePanel === 'estudio' ? 'text-white' : 'text-white/60'}`}>
+              Estúdio
+            </span>
+          </button>
         </div>
       </div>
     </nav>

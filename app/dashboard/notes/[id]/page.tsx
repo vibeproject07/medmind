@@ -490,7 +490,7 @@ export default function NoteDetailPage() {
     <div className="space-y-6 p-4 sm:p-6">
 
       {/* ── Header ────────────────────────────────────────────────────── */}
-      <div className="flex items-center gap-2 flex-wrap">
+      <div className="flex items-center gap-2">
         <button
           onClick={() => router.back()}
           className="p-2 rounded-lg hover:bg-gray-100 transition flex-shrink-0"
@@ -499,55 +499,17 @@ export default function NoteDetailPage() {
           <ArrowLeft className="w-5 h-5 text-gray-600" />
         </button>
 
-        <div className="flex items-center gap-1.5 flex-shrink-0">
-          {/* Always-visible Fontes icon button */}
-          <button
-            type="button"
-            onClick={() => togglePanel('fontes')}
-            title="Fontes"
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition ${
-              activePanel === 'fontes'
-                ? 'bg-primary-50 text-primary-700 ring-1 ring-primary-200'
-                : 'text-gray-600 hover:bg-gray-100'
-            }`}
-          >
-            <BookOpen className="w-4 h-4" />
-            <span className="hidden sm:inline">Fontes</span>
-            {(note.fontes_arquivos?.length ?? 0) > 0 && (
-              <span className={`w-2 h-2 rounded-full flex-shrink-0 ${activePanel === 'fontes' ? 'bg-primary-500' : 'bg-gray-300'}`} />
-            )}
-          </button>
+        <div className="flex-1" />
 
-          {/* Always-visible Estúdio icon button */}
+        {canEdit && !isEditing && (
           <button
-            type="button"
-            onClick={() => togglePanel('estudio')}
-            title="Estúdio"
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition ${
-              activePanel === 'estudio'
-                ? 'bg-primary-50 text-primary-700 ring-1 ring-primary-200'
-                : 'text-gray-600 hover:bg-gray-100'
-            }`}
+            onClick={handleEdit}
+            className="flex items-center gap-1.5 px-3 py-1.5 border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 transition text-sm font-medium"
           >
-            <Sparkles className="w-4 h-4" />
-            <span className="hidden sm:inline">Estúdio</span>
-            {relatedQuestions.length > 0 && (
-              <span className={`min-w-[18px] h-[18px] rounded-full text-xs font-bold flex items-center justify-center flex-shrink-0 ${
-                activePanel === 'estudio' ? 'bg-primary-600 text-white' : 'bg-gray-200 text-gray-600'
-              }`}>{relatedQuestions.length}</span>
-            )}
+            <Edit className="w-3.5 h-3.5" />
+            <span>Editar</span>
           </button>
-
-          {canEdit && !isEditing && (
-            <button
-              onClick={handleEdit}
-              className="flex items-center gap-1.5 px-3 py-1.5 border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 transition text-sm font-medium"
-            >
-              <Edit className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Editar</span>
-            </button>
-          )}
-        </div>
+        )}
       </div>
 
       {/* ── Main layout: content + side panel ───────────────────────── */}
@@ -587,7 +549,14 @@ export default function NoteDetailPage() {
                 </div>
               ) : (
                 <div>
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Conteúdo</p>
+                  {/* Section header */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-1 h-4 rounded-full bg-primary-500" />
+                      <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Conteúdo</span>
+                    </div>
+                    <div className="flex-1 h-px bg-gradient-to-r from-gray-200 to-transparent" />
+                  </div>
                   <div className="text-gray-700 whitespace-pre-wrap leading-relaxed text-sm">
                     {note.description || <span className="text-gray-400 italic">Sem conteúdo</span>}
                   </div>
