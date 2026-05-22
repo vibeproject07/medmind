@@ -34,9 +34,9 @@ export default function MobileBottomNav() {
     <nav
       className="md:hidden flex-shrink-0 overflow-hidden"
       style={{
-        height: isNoteDetail ? '95px' : '92px',
-        borderBottom: isNoteDetail ? '7px solid #10b981' : 'none',
-        transition: 'height 0.3s ease, border-bottom 0.3s ease',
+        height: '92px',
+        boxShadow: isNoteDetail ? 'inset 0 -7px 0 #10b981' : 'none',
+        transition: 'box-shadow 0.3s ease',
       }}
     >
       {/* Two-panel carousel — slides left when on a note detail page */}
@@ -90,7 +90,7 @@ export default function MobileBottomNav() {
           >
             <div
               className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
-                notePanel === 'fontes' ? 'bg-white/25 ring-2 ring-white/40' : 'bg-white/10'
+                notePanel === 'fontes' ? 'bg-primary-500' : 'bg-white/10'
               }`}
             >
               <BookOpen className={`w-5 h-5 ${notePanel === 'fontes' ? 'text-white' : 'text-white/60'}`} />
@@ -128,7 +128,7 @@ export default function MobileBottomNav() {
           >
             <div
               className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
-                notePanel === 'estudio' ? 'bg-white/25 ring-2 ring-white/40' : 'bg-white/10'
+                notePanel === 'estudio' ? 'bg-primary-500' : 'bg-white/10'
               }`}
             >
               <Sparkles className={`w-5 h-5 ${notePanel === 'estudio' ? 'text-white' : 'text-white/60'}`} />
