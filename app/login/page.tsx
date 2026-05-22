@@ -143,6 +143,28 @@ export default function LoginPage() {
     }
   };
 
+  const handleDevLogin = async () => {
+    setError('');
+    setLoading(true);
+    try {
+      const response = await fetch('/api/auth/dev-login', { method: 'POST' });
+      const data = await response.json();
+      if (response.ok) {
+        const cleanToken = data.token?.trim().replace(/^["']|["']$/g, '');
+        if (cleanToken) {
+          localStorage.setItem('token', cleanToken);
+          window.location.href = '/dashboard';
+        }
+      } else {
+        setError(data.error || 'Erro no login rápido');
+      }
+    } catch {
+      setError('Erro de conexão.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     setForgotPasswordLoading(true);
@@ -351,6 +373,17 @@ export default function LoginPage() {
               'Cadastrar'
             )}
           </button>
+
+          {process.env.NODE_ENV !== 'production' && isLogin && (
+            <button
+              type="button"
+              onClick={handleDevLogin}
+              disabled={loading}
+              className="w-full mt-2 py-3 rounded-lg font-semibold border-2 border-dashed border-amber-400 bg-amber-50 text-amber-700 hover:bg-amber-100 transition disabled:opacity-50 text-sm"
+            >
+              ⚡ Login rápido como Admin (dev)
+            </button>
+          )}
         </form>
 
         {isLogin && (
