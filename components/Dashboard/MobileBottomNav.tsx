@@ -107,13 +107,11 @@ export default function MobileBottomNav() {
             className="flex flex-col items-center gap-1.5 flex-1 py-1"
           >
             <div
-              className={`w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-md ${
-                notePanel === null
-                  ? 'bg-white shadow-lg ring-2 ring-white/60'
-                  : 'bg-white/20'
+              className={`w-14 h-14 rounded-full flex items-center justify-center transition-all ${
+                notePanel === null ? 'bg-primary-500' : 'bg-white/10'
               }`}
             >
-              <FileText className={`w-6 h-6 ${notePanel === null ? 'text-primary-600' : 'text-white/70'}`} />
+              <FileText className={`w-6 h-6 ${notePanel === null ? 'text-white' : 'text-white/60'}`} />
             </div>
             <span className={`text-[10px] font-semibold leading-none ${notePanel === null ? 'text-white' : 'text-white/60'}`}>
               Nota
