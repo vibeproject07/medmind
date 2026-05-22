@@ -308,7 +308,7 @@ export default function NotesPage() {
             className={`note-action p-1.5 rounded-lg transition flex-shrink-0 ${
               note.is_favorited
                 ? 'text-amber-400 hover:text-amber-500'
-                : 'text-gray-200 hover:text-amber-300 opacity-0 group-hover:opacity-100'
+                : 'text-gray-300 hover:text-amber-300'
             }`}
             aria-label={note.is_favorited ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
           >

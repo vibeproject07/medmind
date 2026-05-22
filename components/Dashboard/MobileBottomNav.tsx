@@ -88,10 +88,10 @@ export default function MobileBottomNav() {
           <button
             type="button"
             onClick={() => router.push('/dashboard/notes')}
-            className="absolute left-1 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-white/30 hover:text-white/70 transition-colors"
+            className="absolute left-1 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-white/55 hover:text-white/90 transition-colors"
             aria-label="Voltar"
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-5 h-5" />
           </button>
           {/* Fontes */}
           <button

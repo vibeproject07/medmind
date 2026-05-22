@@ -489,28 +489,7 @@ export default function NoteDetailPage() {
   return (
     <div className="space-y-6 p-4 sm:p-6">
 
-      {/* ── Header ────────────────────────────────────────────────────── */}
-      <div className="flex items-center gap-2">
-        <button
-          onClick={() => router.push('/dashboard/notes')}
-          className="p-2 rounded-lg hover:bg-gray-100 transition flex-shrink-0"
-          aria-label="Voltar"
-        >
-          <ArrowLeft className="w-5 h-5 text-gray-600" />
-        </button>
-
-        <div className="flex-1" />
-
-        {canEdit && !isEditing && (
-          <button
-            onClick={handleEdit}
-            className="flex items-center gap-1.5 px-3 py-1.5 border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 transition text-sm font-medium"
-          >
-            <Edit className="w-3.5 h-3.5" />
-            <span>Editar</span>
-          </button>
-        )}
-      </div>
+      {/* ── Header removed — actions moved into content card ────────── */}
 
       {/* ── Main layout: content + side panel ───────────────────────── */}
       <div className="flex gap-6 items-start">
@@ -551,11 +530,27 @@ export default function NoteDetailPage() {
                 <div>
                   {/* Section header */}
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-shrink-0">
                       <div className="w-1 h-4 rounded-full bg-primary-500" />
                       <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Conteúdo</span>
                     </div>
                     <div className="flex-1 h-px bg-gradient-to-r from-gray-200 to-transparent" />
+                    {canEdit && (
+                      <button
+                        onClick={handleEdit}
+                        className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-gray-500 hover:bg-gray-100 transition text-xs font-medium flex-shrink-0"
+                      >
+                        <Edit className="w-3 h-3" />
+                        <span>Editar</span>
+                      </button>
+                    )}
+                    <button
+                      onClick={() => router.push('/dashboard/notes')}
+                      className="p-1 rounded-lg hover:bg-gray-100 transition flex-shrink-0"
+                      aria-label="Voltar"
+                    >
+                      <ArrowLeft className="w-4 h-4 text-gray-400" />
+                    </button>
                   </div>
                   <div className="text-gray-700 whitespace-pre-wrap leading-relaxed text-sm">
                     {note.description || <span className="text-gray-400 italic">Sem conteúdo</span>}
