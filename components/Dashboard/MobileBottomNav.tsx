@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   LayoutDashboard,
   FileText,
@@ -9,6 +9,7 @@ import {
   ClipboardList,
   BookOpen,
   Sparkles,
+  ChevronLeft,
 } from 'lucide-react';
 import { useNote } from '@/contexts/NoteContext';
 
@@ -22,6 +23,7 @@ const NAV_ITEMS = [
 
 export default function MobileBottomNav() {
   const pathname = usePathname();
+  const router = useRouter();
   const { notePanel, setNotePanel } = useNote();
 
   const isNoteDetail = !!(
@@ -79,9 +81,18 @@ export default function MobileBottomNav() {
 
         {/* ── Panel 2: Note context (Fontes | Nota | Estúdio) ───────── */}
         <div
-          className="flex items-center justify-around px-4 pb-2"
+          className="relative flex items-center justify-around px-4 pb-2"
           style={{ width: '50%' }}
         >
+          {/* Back chevron — subtle, left edge */}
+          <button
+            type="button"
+            onClick={() => router.push('/dashboard/notes')}
+            className="absolute left-1 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-white/30 hover:text-white/70 transition-colors"
+            aria-label="Voltar"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
           {/* Fontes */}
           <button
             type="button"
