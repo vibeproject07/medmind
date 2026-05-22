@@ -6,7 +6,7 @@ import {
   ArrowLeft, X, Image as ImageIcon,
   FileText, Film, Music,
   Link as LinkIcon, Loader2,
-  AlertCircle, CheckCircle2,
+  AlertCircle, CheckCircle2, Save, Trash2,
 } from 'lucide-react';
 
 const AVAILABLE_TAGS = [
@@ -221,6 +221,7 @@ function NewNotePageContent() {
   const [linkInput, setLinkInput]         = useState('');
 
   // Processing state
+  const [showDiscardModal, setShowDiscardModal] = useState(false);
   const [processing, setProcessing]       = useState(false);
   const [processingStatus, setProcessingStatus] = useState('');
   const [processingError, setProcessingError]   = useState<string | null>(null);
@@ -554,43 +555,73 @@ function NewNotePageContent() {
   );
 
   // ── STEP 2: Note editor / preview ─────────────────────────────────────
+  // Returns a fragment — siblings live at the same flex level as the main header
   const renderStep2 = () => (
-    <div className="flex-1 flex flex-col min-h-0 px-4 sm:px-6 pt-4 pb-0">
-      <div className="max-w-2xl mx-auto w-full flex flex-col flex-1 min-h-0 gap-3">
-
-        {/* Source badge */}
-        {fontesArquivosNames.length > 0 && (
-          <div className="flex-shrink-0 flex items-center gap-2 px-3 py-2 bg-primary-50 border border-primary-100 rounded-xl">
-            <CheckCircle2 className="w-3.5 h-3.5 text-primary-500 flex-shrink-0" />
-            <span className="text-xs text-primary-600 truncate">
-              Gerado a partir de: {fontesArquivosNames.join(', ')}
-            </span>
-          </div>
-        )}
-
-        {/* Title */}
+    <>
+      {/* Fixed sub-header: title + action buttons */}
+      <div className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 border-b border-gray-200 bg-white">
         <input
           type="text"
           value={formData.title}
           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
           placeholder="Título da nota"
           required
-          className="flex-shrink-0 w-full text-2xl font-bold bg-transparent border-0 border-b-2 border-transparent focus:border-primary-400 focus:outline-none text-gray-800 pb-2 transition placeholder:text-gray-300"
+          className="flex-1 min-w-0 text-base font-semibold bg-transparent border-0 focus:outline-none text-gray-800 placeholder:text-gray-300"
+          style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}
         />
+        <div className="flex items-center gap-1.5 flex-shrink-0">
+          {message && (
+            <span className={`text-xs px-2 py-1 rounded-full hidden sm:inline ${
+              message.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+            }`}>
+              {message.text}
+            </span>
+          )}
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={formLoading}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-600 text-white rounded-lg text-sm font-semibold hover:bg-primary-700 transition disabled:opacity-50"
+          >
+            {formLoading
+              ? <><Loader2 className="w-3.5 h-3.5 animate-spin" />Salvando…</>
+              : <><Save className="w-3.5 h-3.5" />Salvar</>}
+          </button>
+          <button
+            type="button"
+            onClick={() => setShowDiscardModal(true)}
+            className="p-1.5 rounded-lg border border-red-200 text-red-400 hover:bg-red-50 hover:text-red-600 transition"
+            title="Descartar nota"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
 
-        {/* Content — fills remaining space, scrolls independently */}
+      {/* Fixed source badge */}
+      {fontesArquivosNames.length > 0 && (
+        <div className="flex-shrink-0 flex items-center gap-2 px-4 py-2 border-b border-gray-100 bg-primary-50/70">
+          <CheckCircle2 className="w-3.5 h-3.5 text-primary-500 flex-shrink-0" />
+          <span className="text-xs text-primary-600 truncate">
+            Gerado a partir de: {fontesArquivosNames.join(', ')}
+          </span>
+        </div>
+      )}
+
+      {/* Scrollable content — only this area scrolls */}
+      <div className="flex-1 min-h-0 flex flex-col px-4 sm:px-6 py-3">
         <textarea
           value={formData.informacoes}
           onChange={(e) => setFormData({ ...formData, informacoes: e.target.value })}
           placeholder="Conteúdo da nota…"
-          className="flex-1 min-h-0 w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm text-gray-700 resize-none leading-relaxed shadow-sm overflow-y-auto"
+          className="flex-1 min-h-0 w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm text-gray-700 resize-none leading-relaxed shadow-sm"
         />
-
       </div>
-    </div>
+    </>
   );
 
   return (
+    <>
     <div className="-m-3 sm:-m-4 md:-m-3 flex flex-col overflow-hidden" style={{ height: 'calc(100vh - 52px)' }}>
 
       {/* ── Header ──────────────────────────────────────────────────────── */}
@@ -621,62 +652,65 @@ function NewNotePageContent() {
       {/* ── Step content ────────────────────────────────────────────────── */}
       {step === 1 ? renderStep1() : renderStep2()}
 
-      {/* ── Footer ──────────────────────────────────────────────────────── */}
-      <footer className="flex-shrink-0 flex items-center justify-between px-4 sm:px-6 py-3 border-t border-gray-200 bg-white shadow-[0_-1px_6px_rgba(0,0,0,0.04)]">
-        {step === 1 ? (
-          <>
-            <button type="button" onClick={handleDiscard}
-              className="px-4 py-2 text-sm border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-50 transition">
-              Cancelar
-            </button>
-            <button
-              type="button"
-              disabled={processing}
-              onClick={() => {
-                if (!formData.title.trim()) { setMessage({ type: 'error', text: 'Informe o título antes de continuar' }); return; }
-                setMessage(null); setStep(2);
-              }}
-              className="flex items-center gap-2 px-5 py-2 text-sm bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition disabled:opacity-40"
-            >
-              {processing ? (
-                <><Loader2 className="w-3.5 h-3.5 animate-spin" />Processando…</>
-              ) : (
-                <>Escrever nota<span className="text-xs opacity-70">→</span></>
-              )}
-            </button>
-          </>
-        ) : (
-          <>
-            <div className="flex items-center gap-2">
-              <button type="button" onClick={() => setStep(1)}
-                className="flex items-center gap-1.5 px-3 py-2 text-sm border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-50 transition">
-                <ArrowLeft className="w-3.5 h-3.5" />Voltar
-              </button>
-              <button type="button" onClick={handleDiscard}
-                className="px-3 py-2 text-sm border border-red-200 rounded-xl text-red-600 hover:bg-red-50 transition">
-                Descartar
-              </button>
-            </div>
-            {message && (
-              <span className={`text-xs px-2 py-1 rounded-full ${
-                message.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-              }`}>
-                {message.text}
-              </span>
-            )}
-            <button
-              type="button"
-              onClick={handleSubmit}
-              disabled={formLoading}
-              className="px-5 py-2 text-sm bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition disabled:opacity-50"
-            >
-              {formLoading ? 'Salvando…' : 'Salvar Nota'}
-            </button>
-          </>
-        )}
-      </footer>
+      {/* ── Footer — step 1 only ────────────────────────────────────────── */}
+      {step === 1 && (
+        <footer className="flex-shrink-0 flex items-center justify-between px-4 sm:px-6 py-3 border-t border-gray-200 bg-white shadow-[0_-1px_6px_rgba(0,0,0,0.04)]">
+          <button type="button" onClick={handleDiscard}
+            className="px-4 py-2 text-sm border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-50 transition">
+            Cancelar
+          </button>
+          {message && (
+            <span className={`text-xs px-2 py-1 rounded-full ${
+              message.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+            }`}>
+              {message.text}
+            </span>
+          )}
+          <button
+            type="button"
+            disabled={processing}
+            onClick={() => {
+              if (!formData.title.trim()) { setMessage({ type: 'error', text: 'Informe o título antes de continuar' }); return; }
+              setMessage(null); setStep(2);
+            }}
+            className="flex items-center gap-2 px-5 py-2 text-sm bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition disabled:opacity-40"
+          >
+            {processing
+              ? <><Loader2 className="w-3.5 h-3.5 animate-spin" />Processando…</>
+              : <>Escrever nota <span className="text-xs opacity-70">→</span></>}
+          </button>
+        </footer>
+      )}
 
     </div>
+
+    {/* ── Discard confirmation modal ───────────────────────────────────── */}
+    {showDiscardModal && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+        <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-sm w-full mx-4">
+          <div className="flex items-start gap-3 mb-4">
+            <div className="flex-shrink-0 w-9 h-9 rounded-full bg-red-100 flex items-center justify-center">
+              <Trash2 className="w-4 h-4 text-red-500" />
+            </div>
+            <div>
+              <h3 className="text-base font-bold text-gray-800">Descartar nota?</h3>
+              <p className="text-sm text-gray-500 mt-0.5">Todas as alterações serão perdidas permanentemente.</p>
+            </div>
+          </div>
+          <div className="flex gap-2 justify-end">
+            <button type="button" onClick={() => setShowDiscardModal(false)}
+              className="px-4 py-2 text-sm border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-50 transition font-medium">
+              Cancelar
+            </button>
+            <button type="button" onClick={handleDiscard}
+              className="flex items-center gap-1.5 px-4 py-2 text-sm bg-red-500 text-white rounded-xl font-semibold hover:bg-red-600 transition">
+              <Trash2 className="w-3.5 h-3.5" />Descartar
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+    </>
   );
 }
 
