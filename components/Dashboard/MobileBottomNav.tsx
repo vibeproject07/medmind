@@ -32,10 +32,11 @@ export default function MobileBottomNav() {
 
   return (
     <nav
-      className="md:hidden flex-shrink-0 h-[92px] overflow-hidden"
+      className="md:hidden flex-shrink-0 overflow-hidden"
       style={{
-        background: isNoteDetail ? '#63783D' : 'transparent',
-        transition: 'background 0.3s ease',
+        height: isNoteDetail ? '95px' : '92px',
+        borderBottom: isNoteDetail ? '3px solid #10b981' : 'none',
+        transition: 'height 0.3s ease, border-bottom 0.3s ease',
       }}
     >
       {/* Two-panel carousel — slides left when on a note detail page */}
@@ -112,7 +113,7 @@ export default function MobileBottomNav() {
                   : 'bg-white/20'
               }`}
             >
-              <FileText className={`w-6 h-6 ${notePanel === null ? 'text-[#63783D]' : 'text-white/70'}`} />
+              <FileText className={`w-6 h-6 ${notePanel === null ? 'text-primary-600' : 'text-white/70'}`} />
             </div>
             <span className={`text-[10px] font-semibold leading-none ${notePanel === null ? 'text-white' : 'text-white/60'}`}>
               Nota
