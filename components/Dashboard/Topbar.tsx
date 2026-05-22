@@ -148,10 +148,11 @@ export default function Topbar() {
     <>
       <div className="bg-white border-b border-gray-200 px-3 sm:px-4 md:px-6 py-3 sm:py-4 flex items-center justify-between gap-2">
         <div className="flex items-center gap-2 min-w-0 flex-1">
+          {/* Hamburger + logo — visible only on mobile */}
           <button
             type="button"
             onClick={toggleMobile}
-            className="flex-shrink-0 flex items-center gap-2 p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition min-h-[44px]"
+            className="md:hidden flex-shrink-0 flex items-center gap-2 p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition min-h-[44px]"
             aria-label="Abrir menu de navegação"
           >
             <div className="bg-primary-600 p-1.5 rounded-lg">
