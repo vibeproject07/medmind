@@ -549,7 +549,7 @@ export default function NoteDetailPage() {
                       className="p-1 rounded-lg hover:bg-gray-100 transition flex-shrink-0"
                       aria-label="Voltar"
                     >
-                      <ArrowLeft className="w-4 h-4 text-gray-400" />
+                      <X className="w-4 h-4 text-gray-400" />
                     </button>
                   </div>
                   <div className="border-t border-gray-100 -mx-6 mb-4" />
