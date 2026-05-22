@@ -117,6 +117,7 @@ function SimuladoNovoInner() {
   const [currentSimulateResultId, setCurrentSimulateResultId] = useState<number | null>(null);
   const [resumedTags, setResumedTags] = useState<string[]>([]);
   const [presetQuestionsPool, setPresetQuestionsPool] = useState<Question[] | null>(null);
+  const [isTutorial, setIsTutorial] = useState(false);
 
   const [aiCommentOpen, setAiCommentOpen] = useState(false);
   const [aiCommentCache, setAiCommentCache] = useState<Record<number, string | null>>({});
@@ -235,6 +236,7 @@ function SimuladoNovoInner() {
           setResumedTags(pending.tags ?? []);
           setSimulateAvailableCount(pending.questions.length);
           setSimulateQuestionCount(Math.min(10, pending.questions.length));
+          setIsTutorial(!!(pending as { is_tutorial?: boolean }).is_tutorial);
           setPhase('wizard-2');
           return;
         }
@@ -314,6 +316,7 @@ function SimuladoNovoInner() {
         simulate_questions: selected,
         current_index: 0,
         selected_answers: {} as Record<number, string>,
+        ...(isTutorial ? { is_tutorial: true } : {}),
       };
       const savedResults = localStorage.getItem('simulateResults');
       const results = savedResults ? JSON.parse(savedResults) : [];
@@ -425,6 +428,7 @@ function SimuladoNovoInner() {
           created_at: existing.created_at ?? new Date().toISOString(),
           name: simulateName.trim() || (existing as { name?: string }).name,
           ...userInfo,
+          ...((existing as { is_tutorial?: boolean }).is_tutorial ? { is_tutorial: true } : {}),
         };
       }
       setCurrentSimulateResultId(null);

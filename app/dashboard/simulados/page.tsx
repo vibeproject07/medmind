@@ -2,7 +2,11 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { ClipboardList, Calendar, CheckCircle, XCircle, Trash2, RotateCcw, Play, Circle } from 'lucide-react';
+import {
+  ClipboardList, Calendar, CheckCircle, XCircle, Trash2,
+  RotateCcw, Play, Circle, Plus, Search, X,
+  BookOpen, GraduationCap, Sparkles, ChevronDown, ChevronUp,
+} from 'lucide-react';
 import { useDashboardSearch } from '@/contexts/DashboardSearchContext';
 
 interface SimulateResult {
@@ -20,8 +24,8 @@ interface SimulateResult {
   user_email?: string;
   current_index?: number;
   selected_answers?: Record<number, string>;
-  /** Questões do simulado em andamento (para calcular corretas/incorretas) */
   simulate_questions?: { id: number; correct_answer: string }[];
+  is_tutorial?: boolean;
 }
 
 const PAGE_SIZE = 20;
@@ -33,317 +37,477 @@ export default function SimuladosPage() {
   const [loading, setLoading] = useState(true);
   const [userRole, setUserRole] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchText, setSearchText] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+  const [tutorialCompleted, setTutorialCompleted] = useState(false);
+  const [tutorialInProgress, setTutorialInProgress] = useState(false);
+  const [tutorialLoading, setTutorialLoading] = useState(false);
+  const [inProgressOpen, setInProgressOpen] = useState(true);
+
+  // Debounce local search
+  useEffect(() => {
+    const t = setTimeout(() => { setDebouncedSearch(searchText); setCurrentPage(1); }, 350);
+    return () => clearTimeout(t);
+  }, [searchText]);
+
+  const activeSearch = debouncedSearch || searchQuery;
 
   const filteredResults = useMemo(() => {
-    if (!searchQuery.trim()) return results;
-    const q = searchQuery.trim().toLowerCase();
-    return results.filter((r) => {
-      const name = (r.name?.trim() || 'Simulado').toLowerCase();
-      return name.includes(q);
-    });
-  }, [results, searchQuery]);
+    if (!activeSearch.trim()) return results;
+    const q = activeSearch.trim().toLowerCase();
+    return results.filter(r => (r.name?.trim() || 'Simulado').toLowerCase().includes(q));
+  }, [results, activeSearch]);
 
-  const totalPages = Math.ceil(filteredResults.length / PAGE_SIZE);
-  const paginatedResults = filteredResults.slice(
-    (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE
-  );
+  const inProgress = useMemo(() => filteredResults.filter(r => r.status === 'in_progress'), [filteredResults]);
+  const completed  = useMemo(() => filteredResults.filter(r => r.status !== 'in_progress'), [filteredResults]);
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchQuery]);
+  const totalCompleted = completed.length;
+  const totalPages = Math.ceil(totalCompleted / PAGE_SIZE);
+  const paginatedCompleted = completed.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
+  useEffect(() => { setCurrentPage(1); }, [searchQuery, debouncedSearch]);
+
+  const getToken = () => typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
   useEffect(() => {
-    // Obter role do usuário do token JWT
-    const token = localStorage.getItem('token');
+    const token = getToken();
     if (token) {
       try {
         const payload = JSON.parse(atob(token.split('.')[1]));
         setUserRole(payload.role || 'regular');
-      } catch (error) {
-        console.error('Erro ao decodificar token:', error);
-        setUserRole('regular');
-      }
+      } catch { setUserRole('regular'); }
     }
     fetchResults();
   }, []);
 
-  const fetchResults = async () => {
+  const fetchResults = () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        router.push('/login');
-        return;
-      }
-
-      // Por enquanto, vamos simular dados ou buscar do localStorage
-      // Quando houver uma API de resultados de simulados, podemos buscar aqui
-      const savedResults = localStorage.getItem('simulateResults');
-      if (savedResults) {
-        setResults(JSON.parse(savedResults));
-      }
-    } catch (error) {
-      console.error('Erro ao buscar resultados:', error);
-    } finally {
-      setLoading(false);
-    }
+      const token = getToken();
+      if (!token) { router.push('/login'); return; }
+      const raw = localStorage.getItem('simulateResults');
+      const all: SimulateResult[] = raw ? JSON.parse(raw) : [];
+      setResults(all);
+      // Tutorial status
+      const hasTutorialDone = all.some(r => r.is_tutorial && r.status === 'completed');
+      const hasTutorialInProg = all.some(r => r.is_tutorial && r.status === 'in_progress');
+      setTutorialCompleted(hasTutorialDone);
+      setTutorialInProgress(hasTutorialInProg);
+    } catch { /* ignore */ }
+    finally { setLoading(false); }
   };
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
+  const formatDate = (s: string) =>
+    new Date(s).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 
-  /** Para simulado em andamento: calcula corretas, incorretas e não realizadas (não respondidas). */
-  const getProgressCounts = (
-    result: SimulateResult
-  ): { correct: number; incorrect: number; notDone: number; responded: number; hasBreakdown: boolean } => {
+  const getProgressCounts = (result: SimulateResult) => {
     const total = result.total_questions;
     const selected = result.selected_answers ?? {};
     const questions = result.simulate_questions;
     if (questions && questions.length > 0) {
-      let correct = 0;
-      let incorrect = 0;
+      let correct = 0; let incorrect = 0;
       for (const q of questions) {
         const answer = selected[q.id];
-        if (answer == null || answer === '') continue;
-        if (answer === q.correct_answer) correct++;
-        else incorrect++;
+        if (!answer) continue;
+        if (answer === q.correct_answer) correct++; else incorrect++;
       }
       return { correct, incorrect, notDone: total - correct - incorrect, responded: correct + incorrect, hasBreakdown: true };
     }
-    const responded = Object.keys(selected).filter((k) => selected[Number(k)] != null && selected[Number(k)] !== '').length;
+    const responded = Object.keys(selected).filter(k => selected[Number(k)]).length;
     return { correct: 0, incorrect: 0, notDone: total - responded, responded, hasBreakdown: false };
   };
 
   const handleDelete = (resultId: number) => {
-    if (!confirm('Tem certeza que deseja excluir este simulado?')) {
-      return;
-    }
-
+    if (!confirm('Excluir este simulado?')) return;
     try {
-      const savedResults = localStorage.getItem('simulateResults');
-      if (savedResults) {
-        const results = JSON.parse(savedResults);
-        const filteredResults = results.filter((r: SimulateResult) => r.id !== resultId);
-        localStorage.setItem('simulateResults', JSON.stringify(filteredResults));
-        setResults(filteredResults);
+      const raw = localStorage.getItem('simulateResults');
+      if (raw) {
+        const filtered = (JSON.parse(raw) as SimulateResult[]).filter(r => r.id !== resultId);
+        localStorage.setItem('simulateResults', JSON.stringify(filtered));
+        setResults(filtered);
+        setTutorialCompleted(filtered.some(r => r.is_tutorial && r.status === 'completed'));
+        setTutorialInProgress(filtered.some(r => r.is_tutorial && r.status === 'in_progress'));
       }
-    } catch (error) {
-      console.error('Erro ao deletar simulado:', error);
-      alert('Erro ao deletar o simulado');
-    }
+    } catch { alert('Erro ao excluir o simulado'); }
   };
 
-  const handleRefazer = (result: SimulateResult) => {
-    router.push('/dashboard/simulados/novo');
-  };
-
-  const handleContinuar = (result: SimulateResult) => {
+  const handleContinuar = (result: SimulateResult) =>
     router.push(`/dashboard/simulados/novo?resume=${result.id}`);
+
+  const handleRefazer = () => router.push('/dashboard/simulados/novo');
+
+  // ── Tutorial ─────────────────────────────────────────────────────────────
+  const handleIniciarTutorial = async () => {
+    setTutorialLoading(true);
+    try {
+      const token = getToken();
+      if (!token) { router.push('/login'); return; }
+      const res = await fetch('/api/questions?page=1&limit=5', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error('Falha ao buscar questões');
+      const data = await res.json();
+      const questions = Array.isArray(data) ? data : (data.questions ?? []);
+      if (!questions.length) { alert('Nenhuma questão disponível para o tutorial.'); return; }
+      localStorage.setItem('pendingSimulateQuestions', JSON.stringify({
+        questions,
+        name: 'Simulado Tutorial',
+        tags: ['Tutorial'],
+        is_tutorial: true,
+      }));
+      router.push('/dashboard/simulados/novo');
+    } catch { alert('Erro ao iniciar o tutorial. Tente novamente.'); }
+    finally { setTutorialLoading(false); }
   };
 
+  const tutorialResultInProgress = results.find(r => r.is_tutorial && r.status === 'in_progress');
+
+  // ── Card renderer ────────────────────────────────────────────────────────
+  const renderCard = (result: SimulateResult) => {
+    const isInProgress = result.status === 'in_progress';
+    const accentClass = isInProgress
+      ? 'bg-gradient-to-r from-amber-400 to-orange-400'
+      : 'bg-gradient-to-r from-primary-400 to-primary-600';
+
+    return (
+      <div
+        key={result.id}
+        className="group bg-white rounded-xl border border-gray-200 hover:border-primary-300 hover:shadow-lg hover:shadow-primary-500/5 transition-all overflow-hidden flex flex-col"
+      >
+        <div className={`h-1 flex-shrink-0 ${accentClass}`} />
+        <div className="p-4 sm:p-5 flex flex-col flex-1 gap-3">
+          {/* Title + status + delete */}
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="flex-1 font-semibold text-gray-900 text-base leading-snug group-hover:text-primary-700 transition-colors">
+              {result.name?.trim() || 'Simulado'}
+            </h3>
+            <div className="flex items-start gap-2 flex-shrink-0">
+              {isInProgress ? (
+                <span className="px-2 py-0.5 text-xs font-medium bg-amber-100 text-amber-800 rounded-full whitespace-nowrap">
+                  Em andamento
+                </span>
+              ) : (
+                <div className="text-right">
+                  <div className="text-xl font-bold text-primary-600 leading-none">{result.percentage}%</div>
+                  <div className="text-xs text-gray-400 mt-0.5">{result.correct_answers}/{result.total_questions}</div>
+                </div>
+              )}
+              <button
+                onClick={() => handleDelete(result.id)}
+                className="p-1.5 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition flex-shrink-0"
+                aria-label="Excluir simulado"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* Admin author */}
+          {userRole === 'admin' && result.user_name && (
+            <p className="text-xs text-gray-500">
+              Por: <span className="font-medium text-gray-700">{result.user_name}{result.user_username && ` (@${result.user_username})`}</span>
+            </p>
+          )}
+
+          {/* Tags */}
+          {result.tags?.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              {result.tags.map((tag, idx) => (
+                <span key={idx} className="px-2 py-0.5 text-xs font-medium bg-primary-50 text-primary-700 rounded-full border border-primary-100">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* Stats row */}
+          {isInProgress ? (
+            (() => {
+              const { correct, incorrect, notDone, responded, hasBreakdown } = getProgressCounts(result);
+              return (
+                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-700 pt-2 border-t border-gray-100">
+                  {hasBreakdown ? (
+                    <>
+                      <span className="flex items-center gap-1.5"><CheckCircle className="w-4 h-4 text-green-500" />{correct} certas</span>
+                      <span className="flex items-center gap-1.5"><XCircle className="w-4 h-4 text-red-500" />{incorrect} erradas</span>
+                    </>
+                  ) : (
+                    <span className="flex items-center gap-1.5"><CheckCircle className="w-4 h-4 text-gray-400" />{responded} respondidas</span>
+                  )}
+                  <span className="flex items-center gap-1.5"><Circle className="w-4 h-4 text-gray-300" />{notDone} restantes</span>
+                </div>
+              );
+            })()
+          ) : (
+            <div className="flex items-center gap-4 text-sm text-gray-700 pt-2 border-t border-gray-100">
+              <span className="flex items-center gap-1.5"><CheckCircle className="w-4 h-4 text-green-500" />{result.correct_answers} certas</span>
+              <span className="flex items-center gap-1.5"><XCircle className="w-4 h-4 text-red-500" />{result.total_questions - result.correct_answers} erradas</span>
+            </div>
+          )}
+
+          {/* Date */}
+          <div className="flex items-center gap-1.5 text-xs text-gray-400 mt-auto">
+            <Calendar className="w-3.5 h-3.5 flex-shrink-0" />
+            {formatDate(result.created_at)}
+          </div>
+
+          {/* Actions */}
+          <div className="flex gap-2 pt-1">
+            {isInProgress && (
+              <button
+                type="button"
+                onClick={() => handleContinuar(result)}
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition font-semibold text-sm"
+              >
+                <Play className="w-4 h-4" />Continuar
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={handleRefazer}
+              className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition ${
+                isInProgress
+                  ? 'flex-1 border border-gray-200 text-gray-600 hover:bg-gray-50'
+                  : 'w-full bg-primary-600 text-white hover:bg-primary-700'
+              }`}
+            >
+              <RotateCcw className="w-4 h-4" />Refazer
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const totalAll = results.length;
+  const hasAny   = totalAll > 0;
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6 p-6">
-      {/* Header */}
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-3">
-          <ClipboardList className="w-8 h-8 text-primary-600" />
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800">Resultados dos Simulados feitos</h1>
-            <p className="text-gray-600 mt-1">Visualize o histórico dos seus simulados</p>
+    <div className="space-y-4 relative pb-6">
+
+      {/* ══ MOBILE: search + action row ══════════════════════════════════ */}
+      <div className="md:hidden flex items-center gap-2">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+          <input
+            type="text"
+            value={searchText}
+            onChange={e => setSearchText(e.target.value)}
+            placeholder="Buscar simulados…"
+            className="w-full pl-9 pr-8 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent shadow-sm"
+          />
+          {searchText && (
+            <button type="button" onClick={() => setSearchText('')}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
+        <button
+          type="button"
+          onClick={() => router.push('/dashboard/simulados/novo')}
+          className="inline-flex items-center gap-1.5 bg-primary-600 text-white px-3.5 py-2.5 rounded-xl text-sm font-semibold hover:bg-primary-700 transition shadow-sm whitespace-nowrap"
+        >
+          <Plus className="w-4 h-4" />Novo
+        </button>
+      </div>
+
+      {/* ══ DESKTOP: gradient page header ════════════════════════════════ */}
+      <div className="hidden md:block bg-gradient-to-br from-primary-600 to-primary-700 rounded-2xl p-6 text-white shadow-sm">
+        <div className="flex items-center justify-between gap-3 flex-wrap">
+          <div className="flex items-center gap-3">
+            <div className="bg-white/15 p-2.5 rounded-xl">
+              <ClipboardList className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold leading-tight">Meus Simulados</h1>
+              <p className="text-primary-100 text-sm mt-0.5">Pratique com simulados e acompanhe seu desempenho</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            {!loading && hasAny && (
+              <div className="bg-white/15 px-3 py-1.5 rounded-lg text-sm font-semibold">
+                {totalAll} {totalAll === 1 ? 'simulado' : 'simulados'}
+              </div>
+            )}
+            <button
+              type="button"
+              onClick={() => router.push('/dashboard/simulados/novo')}
+              className="inline-flex items-center gap-2 bg-white text-primary-700 px-4 py-2 rounded-xl font-semibold text-sm hover:bg-primary-50 transition shadow-sm"
+            >
+              <Plus className="w-4 h-4" />Novo Simulado
+            </button>
           </div>
         </div>
       </div>
 
-      {loading ? (
-        <div className="text-center py-12">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
-          <p className="text-gray-600 mt-4">Carregando resultados...</p>
-        </div>
-      ) : results.length === 0 ? (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
-          <ClipboardList className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-600 text-lg mb-2">Nenhum simulado realizado ainda</p>
-          <p className="text-gray-500 text-sm">
-            Realize simulados através das notas ou questões para ver seus resultados aqui
-          </p>
-        </div>
-      ) : filteredResults.length === 0 ? (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
-          <p className="text-gray-500 text-lg">Nenhum simulado encontrado com &quot;{searchQuery}&quot;</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {paginatedResults.map((result) => (
-            <div
-              key={result.id}
-              className="bg-white rounded-xl shadow-md border border-gray-200 p-6 flex flex-col gap-4"
-            >
-              {/* Top row: título à esquerda; percentual + lixeira à direita */}
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="text-xl font-bold text-gray-900 flex-1 min-w-0">
-                  {result.name?.trim() || 'Simulado'}
-                </h3>
-                <div className="flex items-start gap-2 flex-shrink-0">
-                  {result.status === 'in_progress' ? (
-                    <div className="flex flex-col items-end">
-                      <span className="inline-block px-2.5 py-1 text-xs font-medium bg-amber-100 text-amber-800 rounded-full">
-                        Em andamento
-                      </span>
-                      <p className="text-xs text-gray-600 mt-1">
-                        {result.selected_answers ? Object.keys(result.selected_answers).length : result.current_index ?? 0} de {result.total_questions} questões
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="flex flex-col items-end">
-                      <div className="text-2xl font-bold text-primary-600 leading-none">
-                        {result.percentage}%
-                      </div>
-                      <p className="text-xs text-gray-600 mt-1">
-                        {result.correct_answers} de {result.total_questions} questões
-                      </p>
-                    </div>
-                  )}
-                  <button
-                    onClick={() => handleDelete(result.id)}
-                    className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition flex-shrink-0"
-                    aria-label="Excluir simulado"
-                    title="Excluir simulado"
-                  >
-                    <Trash2 className="w-5 h-5" />
-                  </button>
-                </div>
-              </div>
+      {/* ══ DESKTOP: search bar ══════════════════════════════════════════ */}
+      <div className="hidden md:block relative">
+        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+        <input
+          type="text"
+          value={searchText}
+          onChange={e => setSearchText(e.target.value)}
+          placeholder="Buscar por nome do simulado…"
+          className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent shadow-sm"
+        />
+        {searchText && (
+          <button type="button" onClick={() => setSearchText('')}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+            <X className="w-4 h-4" />
+          </button>
+        )}
+      </div>
 
-              {/* Data e hora */}
-              <div className="flex items-center gap-2 text-gray-600 text-sm">
-                <Calendar className="w-4 h-4 flex-shrink-0 text-gray-500" />
-                <span>{formatDate(result.created_at)}</span>
-              </div>
-
-              {/* Realizado por (admin) */}
-              {userRole === 'admin' && result.user_name && (
-                <p className="text-sm text-gray-700">
-                  Realizado por: <span className="font-semibold text-primary-700">
-                    {result.user_name}
-                    {result.user_username && ` (@${result.user_username})`}
+      {/* ══ TUTORIAL CARD (sempre visível) ═══════════════════════════════ */}
+      <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl border-2 border-emerald-200 overflow-hidden">
+        <div className="h-1 bg-gradient-to-r from-emerald-400 to-teal-500" />
+        <div className="p-4 sm:p-5">
+          <div className="flex items-start gap-4">
+            <div className="bg-gradient-to-br from-emerald-500 to-teal-600 p-2.5 rounded-xl flex-shrink-0 hidden sm:flex items-center justify-center">
+              <GraduationCap className="w-6 h-6 text-white" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1 flex-wrap">
+                <h3 className="font-bold text-gray-900 text-base">Simulado Tutorial</h3>
+                <span className="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-full border border-emerald-200">
+                  Tutorial
+                </span>
+                <span className="px-2 py-0.5 bg-white text-gray-500 text-xs font-medium rounded-full border border-gray-200">
+                  5 questões
+                </span>
+                {tutorialCompleted && (
+                  <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-medium rounded-full border border-green-200 flex items-center gap-1">
+                    <CheckCircle className="w-3 h-3" />Concluído
                   </span>
-                </p>
-              )}
-
-              {/* Tags / categorias em pill */}
-              {result.tags && result.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {result.tags.map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className="px-3 py-1 text-xs font-medium bg-primary-100 text-primary-700 rounded-full"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              {/* Resumo: corretas / incorretas (concluído) ou corretas / incorretas / não realizadas (em andamento) */}
-              {result.status === 'in_progress' ? (
-                (() => {
-                  const { correct, incorrect, notDone, responded, hasBreakdown } = getProgressCounts(result);
-                  return (
-                    <div className="flex flex-wrap items-center gap-6 text-sm text-gray-800 pt-1 border-t border-gray-200">
-                      {hasBreakdown ? (
-                        <>
-                          <div className="flex items-center gap-1.5">
-                            <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
-                            <span>{correct} corretas</span>
-                          </div>
-                          <div className="flex items-center gap-1.5">
-                            <XCircle className="w-4 h-4 text-red-600 flex-shrink-0" />
-                            <span>{incorrect} incorretas</span>
-                          </div>
-                        </>
-                      ) : (
-                        <div className="flex items-center gap-1.5">
-                          <CheckCircle className="w-4 h-4 text-gray-500 flex-shrink-0" />
-                          <span>{responded} respondidas</span>
-                        </div>
-                      )}
-                      <div className="flex items-center gap-1.5">
-                        <Circle className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                        <span>{notDone} não realizadas</span>
-                      </div>
-                    </div>
-                  );
-                })()
-              ) : (
-                <div className="flex items-center gap-6 text-sm text-gray-800 pt-1 border-t border-gray-200">
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
-                    <span>{result.correct_answers} corretas</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <XCircle className="w-4 h-4 text-red-600 flex-shrink-0" />
-                    <span>{result.total_questions - result.correct_answers} incorretas</span>
-                  </div>
-                </div>
-              )}
-
-              {/* Botões: Continuar (se em andamento) + Refazer */}
-              <div className="flex flex-col sm:flex-row gap-2 mt-auto pt-2">
-                {result.status === 'in_progress' && (
-                  <button
-                    type="button"
-                    onClick={() => handleContinuar(result)}
-                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition font-semibold text-sm"
-                  >
-                    <Play className="w-4 h-4" />
-                    Continuar
-                  </button>
                 )}
-                <button
-                  type="button"
-                  onClick={() => handleRefazer(result)}
-                  className={result.status === 'in_progress'
-                    ? 'flex-1 flex items-center justify-center gap-2 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-semibold text-sm'
-                    : 'w-full flex items-center justify-center gap-2 px-4 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition font-semibold text-sm'}
-                >
-                  <RotateCcw className="w-4 h-4" />
-                  Refazer
-                </button>
+              </div>
+              <p className="text-sm text-gray-600 mb-3 leading-relaxed">
+                Aprenda como funcionam os simulados do MedMind: responda questões, use o modo rascunho para taxar alternativas, veja o gabarito e o comentário da IA ao final.
+              </p>
+              <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex items-center gap-1.5 text-xs text-gray-400">
+                  <Sparkles className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>Comentários de IA • Modo rascunho • Gabarito detalhado</span>
+                </div>
               </div>
             </div>
-          ))}
+            <div className="flex-shrink-0 flex flex-col gap-2">
+              {tutorialInProgress && tutorialResultInProgress ? (
+                <button
+                  type="button"
+                  onClick={() => handleContinuar(tutorialResultInProgress)}
+                  className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-xl text-sm font-semibold hover:bg-emerald-700 transition shadow-sm whitespace-nowrap"
+                >
+                  <Play className="w-4 h-4" />Continuar
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleIniciarTutorial}
+                  disabled={tutorialLoading}
+                  className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-xl text-sm font-semibold hover:bg-emerald-700 transition shadow-sm whitespace-nowrap disabled:opacity-60"
+                >
+                  {tutorialLoading ? (
+                    <span className="flex items-center gap-2"><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Carregando…</span>
+                  ) : tutorialCompleted ? (
+                    <><RotateCcw className="w-4 h-4" />Refazer</>
+                  ) : (
+                    <><Play className="w-4 h-4" />Iniciar Tutorial</>
+                  )}
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ══ LOADING ══════════════════════════════════════════════════════ */}
+      {loading && (
+        <div className="text-center py-12">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600" />
+          <p className="text-gray-500 mt-4 text-sm">Carregando simulados…</p>
         </div>
       )}
 
-      {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-2 flex-wrap mt-6">
+      {/* ══ EM ANDAMENTO ════════════════════════════════════════════════ */}
+      {!loading && inProgress.length > 0 && (
+        <div className="space-y-3">
           <button
             type="button"
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-            disabled={currentPage <= 1}
-            className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+            onClick={() => setInProgressOpen(v => !v)}
+            className="flex items-center gap-2 w-full text-left group"
           >
+            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              Em andamento ({inProgress.length})
+            </span>
+            <div className="flex-1 h-px bg-gray-200" />
+            {inProgressOpen
+              ? <ChevronUp className="w-3.5 h-3.5 text-gray-400 group-hover:text-gray-600 flex-shrink-0" />
+              : <ChevronDown className="w-3.5 h-3.5 text-gray-400 group-hover:text-gray-600 flex-shrink-0" />}
+          </button>
+          {inProgressOpen && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {inProgress.map(renderCard)}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ══ CONCLUÍDOS ══════════════════════════════════════════════════ */}
+      {!loading && completed.length > 0 && (
+        <div className="space-y-3">
+          {inProgress.length > 0 && (
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                Concluídos ({totalCompleted})
+              </span>
+              <div className="flex-1 h-px bg-gray-200" />
+            </div>
+          )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {paginatedCompleted.map(renderCard)}
+          </div>
+        </div>
+      )}
+
+      {/* ══ EMPTY STATE (sem simulados do usuário) ═══════════════════════ */}
+      {!loading && !hasAny && (
+        <div className="bg-white rounded-xl border border-gray-200 p-10 text-center">
+          <div className="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <ClipboardList className="w-7 h-7 text-primary-400" />
+          </div>
+          <p className="text-gray-700 font-semibold mb-1">Nenhum simulado ainda</p>
+          <p className="text-gray-500 text-sm mb-5">
+            Comece pelo Tutorial acima ou crie um simulado personalizado.
+          </p>
+          <button
+            type="button"
+            onClick={() => router.push('/dashboard/simulados/novo')}
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary-600 text-white rounded-xl font-semibold text-sm hover:bg-primary-700 transition shadow-sm"
+          >
+            <Plus className="w-4 h-4" />Criar primeiro simulado
+          </button>
+        </div>
+      )}
+
+      {/* ══ EMPTY SEARCH STATE ══════════════════════════════════════════ */}
+      {!loading && hasAny && filteredResults.length === 0 && (
+        <div className="bg-white rounded-xl border border-gray-200 p-8 text-center">
+          <p className="text-gray-500">Nenhum simulado encontrado com <strong>&quot;{activeSearch}&quot;</strong></p>
+        </div>
+      )}
+
+      {/* ══ PAGINATION ══════════════════════════════════════════════════ */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-2 flex-wrap mt-2">
+          <button type="button" onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage <= 1}
+            className="px-4 py-2 rounded-xl border border-gray-200 text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition">
             Anterior
           </button>
-          <span className="px-4 py-2 text-sm text-gray-600">
-            Página {currentPage} de {totalPages}
-          </span>
-          <button
-            type="button"
-            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-            disabled={currentPage >= totalPages}
-            className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
-          >
+          <span className="px-4 py-2 text-sm text-gray-500">Página {currentPage} de {totalPages}</span>
+          <button type="button" onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage >= totalPages}
+            className="px-4 py-2 rounded-xl border border-gray-200 text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition">
             Próxima
           </button>
         </div>
