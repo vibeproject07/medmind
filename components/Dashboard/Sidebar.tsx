@@ -129,7 +129,7 @@ export default function Sidebar() {
   return (
     <>
       {/* ── DESKTOP: sidebar estática, parte do fluxo ── */}
-      <aside className="hidden md:flex flex-col w-64 flex-shrink-0 bg-gray-900 text-white h-screen">
+      <aside className="hidden md:flex flex-col w-64 flex-shrink-0 bg-gray-900 text-white h-full">
         {sidebarContent}
       </aside>
 
