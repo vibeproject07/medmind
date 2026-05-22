@@ -320,10 +320,11 @@ export default function DashboardPage() {
         }
       })
       .catch((error) => {
-        console.error('Erro na requisição:', error);
-        localStorage.removeItem('token');
-        document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-        router.push('/login');
+        // Network error (e.g. request aborted during Fast Refresh reload).
+        // Do NOT remove the token — just show the page and let the user continue.
+        console.warn('Verify request failed (network):', error);
+        setIsLoading(false);
+        fetchUserProfile();
       });
   }, [router]);
 
