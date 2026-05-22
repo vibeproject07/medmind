@@ -552,6 +552,7 @@ export default function NoteDetailPage() {
                       <ArrowLeft className="w-4 h-4 text-gray-400" />
                     </button>
                   </div>
+                  <div className="border-t border-gray-100 -mx-6 mb-4" />
                   <div className="text-gray-700 whitespace-pre-wrap leading-relaxed text-sm">
                     {note.description || <span className="text-gray-400 italic">Sem conteúdo</span>}
                   </div>
