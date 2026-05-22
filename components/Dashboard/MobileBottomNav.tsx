@@ -35,7 +35,7 @@ export default function MobileBottomNav() {
       className="md:hidden flex-shrink-0 overflow-hidden"
       style={{
         height: isNoteDetail ? '95px' : '92px',
-        borderBottom: isNoteDetail ? '3px solid #10b981' : 'none',
+        borderBottom: isNoteDetail ? '7px solid #10b981' : 'none',
         transition: 'height 0.3s ease, border-bottom 0.3s ease',
       }}
     >

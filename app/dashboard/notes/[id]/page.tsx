@@ -492,7 +492,7 @@ export default function NoteDetailPage() {
       {/* ── Header ────────────────────────────────────────────────────── */}
       <div className="flex items-center gap-2">
         <button
-          onClick={() => router.back()}
+          onClick={() => router.push('/dashboard/notes')}
           className="p-2 rounded-lg hover:bg-gray-100 transition flex-shrink-0"
           aria-label="Voltar"
         >
