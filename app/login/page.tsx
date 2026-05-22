@@ -165,6 +165,28 @@ export default function LoginPage() {
     }
   };
 
+  const handleDevLoginUser = async () => {
+    setError('');
+    setLoading(true);
+    try {
+      const response = await fetch('/api/auth/dev-login-user', { method: 'POST' });
+      const data = await response.json();
+      if (response.ok) {
+        const cleanToken = data.token?.trim().replace(/^["']|["']$/g, '');
+        if (cleanToken) {
+          localStorage.setItem('token', cleanToken);
+          window.location.href = '/dashboard';
+        }
+      } else {
+        setError(data.error || 'Erro no login rápido');
+      }
+    } catch {
+      setError('Erro de conexão.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     setForgotPasswordLoading(true);
@@ -375,14 +397,24 @@ export default function LoginPage() {
           </button>
 
           {process.env.NODE_ENV !== 'production' && isLogin && (
-            <button
-              type="button"
-              onClick={handleDevLogin}
-              disabled={loading}
-              className="w-full mt-2 py-3 rounded-lg font-semibold border-2 border-dashed border-amber-400 bg-amber-50 text-amber-700 hover:bg-amber-100 transition disabled:opacity-50 text-sm"
-            >
-              ⚡ Login rápido como Admin (dev)
-            </button>
+            <div className="flex gap-2 mt-2">
+              <button
+                type="button"
+                onClick={handleDevLogin}
+                disabled={loading}
+                className="flex-1 py-3 rounded-lg font-semibold border-2 border-dashed border-amber-400 bg-amber-50 text-amber-700 hover:bg-amber-100 transition disabled:opacity-50 text-sm"
+              >
+                ⚡ Admin (dev)
+              </button>
+              <button
+                type="button"
+                onClick={handleDevLoginUser}
+                disabled={loading}
+                className="flex-1 py-3 rounded-lg font-semibold border-2 border-dashed border-blue-300 bg-blue-50 text-blue-700 hover:bg-blue-100 transition disabled:opacity-50 text-sm"
+              >
+                👤 Usuário (dev)
+              </button>
+            </div>
           )}
         </form>
 
