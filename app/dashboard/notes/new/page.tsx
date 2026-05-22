@@ -38,19 +38,24 @@ const SOURCE_TYPES = [
     iconColor: 'text-cyan-500',   bgColor: 'bg-cyan-50   border-cyan-100  hover:border-cyan-300',  linkMode: true  },
 ];
 
-function StepIndicator({ step }: { step: 1 | 2 }) {
+function StepIndicator({ step, onBack }: { step: 1 | 2; onBack?: () => void }) {
   return (
     <div className="flex items-center gap-1 min-w-0">
-      <div className={`flex items-center gap-1.5 ${step === 1 ? 'text-primary-700' : 'text-gray-400'}`}>
+      {/* Step 1 — clickable when on step 2 to go back */}
+      <button
+        type="button"
+        onClick={step === 2 ? onBack : undefined}
+        className={`flex items-center gap-1.5 ${step === 2 ? 'cursor-pointer hover:opacity-80 transition' : 'cursor-default'} ${step === 1 ? 'text-primary-700' : 'text-gray-400'}`}
+      >
         <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
           step === 1 ? 'bg-primary-600 text-white' : 'bg-primary-100 text-primary-600'
         }`}>
           {step > 1 ? <CheckCircle2 className="w-4 h-4" /> : '1'}
         </div>
         <span className="text-xs font-semibold whitespace-nowrap">Fontes</span>
-      </div>
+      </button>
       <div className={`w-8 h-0.5 flex-shrink-0 mx-1 rounded ${step > 1 ? 'bg-primary-400' : 'bg-gray-200'}`} />
-      <div className={`flex items-center gap-1.5 ${step === 2 ? 'text-primary-700' : 'text-gray-400'}`}>
+      <div className={`flex items-center gap-1.5 cursor-default ${step === 2 ? 'text-primary-700' : 'text-gray-400'}`}>
         <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
           step === 2 ? 'bg-primary-600 text-white' : 'bg-gray-200 text-gray-500'
         }`}>2</div>
@@ -320,18 +325,21 @@ function NewNotePageContent() {
     setProcessing(true);
     setProcessingError(null);
     setProcessingStatus('Iniciando processamento…');
+    let succeeded = false;
     try {
       const result = await runSourceTransformation(files, link, token, setProcessingStatus);
       setResumoAulas({ melhorado: result.melhorado, original: result.original });
       setFontesArquivosNames(result.fileNames);
       setFormData((p) => ({ ...p, informacoes: result.melhorado }));
-      setStep(2); // auto-advance
+      succeeded = true;
     } catch (err) {
       setProcessingError(err instanceof Error ? err.message : 'Erro ao processar fonte.');
     } finally {
       setProcessing(false);
       setProcessingStatus('');
     }
+    // advance AFTER state updates settle (outside try/catch/finally to avoid React batching edge cases)
+    if (succeeded) setStep(2);
   };
 
   const openFilePickerFor = (accept: string) => {
@@ -627,7 +635,7 @@ function NewNotePageContent() {
       <header className="flex-shrink-0 flex items-center justify-between px-4 py-2.5 border-b border-gray-200 bg-white shadow-sm gap-3">
         <div className="flex items-center gap-2 min-w-0 flex-1">
           <button type="button"
-            onClick={() => step === 1 ? router.back() : setStep(1)}
+            onClick={() => step === 1 ? router.push('/dashboard/notes') : setStep(1)}
             className="p-1.5 rounded-lg hover:bg-gray-100 transition flex-shrink-0"
             aria-label="Voltar">
             <ArrowLeft className="w-4 h-4 text-gray-600" />
@@ -635,7 +643,7 @@ function NewNotePageContent() {
           <span className="text-sm font-semibold text-gray-700 hidden sm:inline">Nova Nota</span>
         </div>
 
-        <StepIndicator step={step} />
+        <StepIndicator step={step} onBack={() => setStep(1)} />
 
         <div className="flex items-center gap-2 flex-1 justify-end">
           {message && (
