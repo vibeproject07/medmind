@@ -447,7 +447,7 @@ function SimuladoNovoInner() {
     }
 
     localStorage.setItem('simulateResults', JSON.stringify(results));
-    router.push('/dashboard/simulados');
+    router.push('/dashboard/simulados?tab=resultados');
   };
 
   const handleRefazerSimulate = () => {
