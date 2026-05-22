@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import {
   MoreVertical, Edit, Trash2, X, Image as ImageIcon,
-  Plus, FileText, Search, Calendar,
+  Plus, FileText, Search, Calendar, Star,
 } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
@@ -38,6 +38,8 @@ interface Note {
   areas_conhecimento?: string[];
   assuntos?: string[];
   images?: string[];
+  is_favorited?: boolean;
+  is_system?: boolean;
   created_at: string;
   updated_at: string;
   user_id?: number;
@@ -55,30 +57,27 @@ export default function NotesPage() {
   const searchParams = useSearchParams();
   const { searchQuery } = useDashboardSearch();
 
-  // ── Core state ────────────────────────────────────────────────────────
   const [notes, setNotes]           = useState<Note[]>([]);
   const [loading, setLoading]       = useState(true);
   const [totalNotes, setTotalNotes] = useState(0);
   const PAGE_SIZE = 20;
   const [currentPage, setCurrentPage] = useState(1);
 
-  // ── Text search (debounced) ───────────────────────────────────────────
-  const [searchText, setSearchText]         = useState('');
+  // Text search with debounce
+  const [searchText, setSearchText]           = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
-
   useEffect(() => {
     const t = setTimeout(() => { setDebouncedSearch(searchText); setCurrentPage(1); }, 400);
     return () => clearTimeout(t);
   }, [searchText]);
 
-  // ── Admin filters ─────────────────────────────────────────────────────
-  const [userRole, setUserRole]         = useState<string | null>(null);
-  const [isAdmin, setIsAdmin]           = useState(false);
-  const [companies, setCompanies]       = useState<Company[]>([]);
-  const [filterRole, setFilterRole]     = useState('');
-  const [filterCompanyId, setFilterCompanyId] = useState('');
+  // Admin filters
+  const [isAdmin, setIsAdmin]                     = useState(false);
+  const [companies, setCompanies]                 = useState<Company[]>([]);
+  const [filterRole, setFilterRole]               = useState('');
+  const [filterCompanyId, setFilterCompanyId]     = useState('');
 
-  // ── Edit modal state ──────────────────────────────────────────────────
+  // Edit modal
   const [availableTags, setAvailableTags] = useState<string[]>(AVAILABLE_TAGS);
   const [showModal, setShowModal]         = useState(false);
   const [editingNote, setEditingNote]     = useState<Note | null>(null);
@@ -91,63 +90,59 @@ export default function NotesPage() {
   const [message, setMessage]         = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [openMenuId, setOpenMenuId]   = useState<number | null>(null);
 
-  // ── Derived: filter loaded notes by topbar quick-search ──────────────
-  const filteredNotes = useMemo(() => {
-    if (!searchQuery.trim()) return notes;
-    const q = searchQuery.trim().toLowerCase();
-    return notes.filter(n => n.title.toLowerCase().includes(q));
+  // Derive favorited / regular sets
+  const favoritedNotes = useMemo(() => notes.filter(n => n.is_favorited), [notes]);
+  const regularNotes   = useMemo(() => {
+    const all = notes.filter(n => !n.is_favorited);
+    if (!searchQuery.trim()) return all;
+    const q = searchQuery.toLowerCase();
+    return all.filter(n => n.title.toLowerCase().includes(q));
   }, [notes, searchQuery]);
 
-  // ── Modal assuntos options ────────────────────────────────────────────
-  const areasConhecimentoModal  = formData.areasConhecimento ?? [];
-  const assuntosModal           = formData.assuntos ?? [];
-  const modalAssuntosOptions    = useMemo(() => {
-    if (areasConhecimentoModal.length === 0) return [];
-    const set = new Set<string>();
-    areasConhecimentoModal.forEach(area => {
-      ASSUNTOS_BY_AREA[area]?.forEach(a => set.add(a));
-    });
-    return Array.from(set);
-  }, [areasConhecimentoModal]);
+  const favoritedFiltered = useMemo(() => {
+    if (!searchQuery.trim()) return favoritedNotes;
+    const q = searchQuery.toLowerCase();
+    return favoritedNotes.filter(n => n.title.toLowerCase().includes(q));
+  }, [favoritedNotes, searchQuery]);
 
-  // ── Helpers ───────────────────────────────────────────────────────────
+  // Modal assuntos cascade
+  const modalAssuntosOptions = useMemo(() => {
+    if ((formData.areasConhecimento ?? []).length === 0) return [];
+    const set = new Set<string>();
+    (formData.areasConhecimento ?? []).forEach(a => ASSUNTOS_BY_AREA[a]?.forEach(s => set.add(s)));
+    return Array.from(set);
+  }, [formData.areasConhecimento]);
+
   const getToken = () => typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
   const fetchNotes = async () => {
     try {
       const token = getToken();
       if (!token) return;
-      const params = new URLSearchParams();
-      if (debouncedSearch)  params.append('q',          debouncedSearch);
-      if (isAdmin && filterRole)      params.append('role',       filterRole);
-      if (isAdmin && filterCompanyId) params.append('company_id', filterCompanyId);
-      params.append('page',  String(currentPage));
-      params.append('limit', String(PAGE_SIZE));
-      const response = await fetch(`/api/notes?${params}`, {
+      const p = new URLSearchParams();
+      if (debouncedSearch)  p.append('q',          debouncedSearch);
+      if (isAdmin && filterRole)      p.append('role',       filterRole);
+      if (isAdmin && filterCompanyId) p.append('company_id', filterCompanyId);
+      p.append('page',  String(currentPage));
+      p.append('limit', String(PAGE_SIZE));
+      const res = await fetch(`/api/notes?${p}`, {
         headers: { Authorization: `Bearer ${token}` }, cache: 'no-store',
       });
-      if (response.ok) {
-        const data = await response.json();
-        if (Array.isArray(data.notes) && typeof data.total === 'number') {
-          setNotes(data.notes); setTotalNotes(data.total);
-        } else {
-          setNotes(Array.isArray(data) ? data : []);
-          setTotalNotes(Array.isArray(data) ? data.length : 0);
-        }
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data.notes)) { setNotes(data.notes); setTotalNotes(data.total ?? data.notes.length); }
+        else { setNotes([]); setTotalNotes(0); }
       }
-    } catch (err) { console.error('Erro ao buscar notas:', err); }
+    } catch (err) { console.error(err); }
     finally       { setLoading(false); }
   };
 
-  // ── Init ──────────────────────────────────────────────────────────────
   useEffect(() => {
     const token = getToken();
     if (!token) { setLoading(false); return; }
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
-      const role    = payload.role || 'regular';
-      setUserRole(role);
-      const admin = role === 'admin';
+      const admin   = payload.role === 'admin';
       setIsAdmin(admin);
       if (admin) {
         fetch('/api/companies', { headers: { Authorization: `Bearer ${token}` } })
@@ -156,17 +151,16 @@ export default function NotesPage() {
     } catch { setLoading(false); }
   }, []);
 
-  useEffect(() => { fetchNotes(); },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [debouncedSearch, filterRole, filterCompanyId, isAdmin, currentPage]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { fetchNotes(); }, [debouncedSearch, filterRole, filterCompanyId, isAdmin, currentPage]);
 
   useEffect(() => {
-    const handler = () => fetchNotes();
-    window.addEventListener('notesUpdated', handler);
-    return () => window.removeEventListener('notesUpdated', handler);
+    const h = () => fetchNotes();
+    window.addEventListener('notesUpdated', h);
+    return () => window.removeEventListener('notesUpdated', h);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAdmin, debouncedSearch]);
 
-  // Auto-open edit modal from URL param
   useEffect(() => {
     if (!searchParams) return;
     const editId = searchParams.get('edit');
@@ -177,26 +171,62 @@ export default function NotesPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, notes]);
 
-  // Modal assuntos cascade
   useEffect(() => {
     const areas = formData.areasConhecimento ?? [];
     if (areas.length === 0) { setFormData(p => ({ ...p, assuntos: [] })); return; }
     const valid = new Set<string>();
-    areas.forEach(area => ASSUNTOS_BY_AREA[area]?.forEach(a => valid.add(a)));
-    setFormData(p => ({ ...p, assuntos: (p.assuntos ?? []).filter(a => valid.has(a)) }));
+    areas.forEach(a => ASSUNTOS_BY_AREA[a]?.forEach(s => valid.add(s)));
+    setFormData(p => ({ ...p, assuntos: (p.assuntos ?? []).filter(s => valid.has(s)) }));
   }, [formData.areasConhecimento]);
 
-  // ── Click-outside to close dropdown menus ────────────────────────────
   useEffect(() => {
-    const handler = (e: MouseEvent) => {
+    const h = (e: MouseEvent) => {
       if (openMenuId !== null && !(e.target as HTMLElement).closest('.note-menu-container'))
         setOpenMenuId(null);
     };
-    document.addEventListener('click', handler);
-    return () => document.removeEventListener('click', handler);
+    document.addEventListener('click', h);
+    return () => document.removeEventListener('click', h);
   }, [openMenuId]);
 
   // ── Handlers ─────────────────────────────────────────────────────────
+  const toggleFavorite = async (id: number, current: boolean) => {
+    setNotes(prev => prev.map(n => n.id === id ? { ...n, is_favorited: !current } : n));
+    try {
+      const token = getToken();
+      if (!token) return;
+      await fetch(`/api/notes/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ is_favorited: !current }),
+      });
+    } catch (err) {
+      console.error(err);
+      setNotes(prev => prev.map(n => n.id === id ? { ...n, is_favorited: current } : n));
+    }
+  };
+
+  const handleEdit = (note: Note) => {
+    setEditingNote(note);
+    setFormData({
+      title: note.title, description: note.description,
+      tags: note.tags || [], areasConhecimento: note.areas_conhecimento ?? [],
+      assuntos: note.assuntos ?? [], images: note.images || [],
+    });
+    setShowModal(true); setOpenMenuId(null);
+  };
+
+  const handleDelete = async (id: number) => {
+    if (!confirm('Excluir esta nota?')) return;
+    try {
+      const token = getToken();
+      if (!token) return;
+      const res = await fetch(`/api/notes/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
+      if (res.ok) { setMessage({ type: 'success', text: 'Nota excluída.' }); fetchNotes(); }
+      else { const err = await res.json(); setMessage({ type: 'error', text: err.error || 'Erro ao excluir' }); }
+    } catch { setMessage({ type: 'error', text: 'Erro ao excluir.' }); }
+    setOpenMenuId(null);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); setFormLoading(true); setMessage(null);
     try {
@@ -215,9 +245,8 @@ export default function NotesPage() {
         const updated = await res.json();
         setNotes(prev => prev.map(n => n.id === updated.id ? {
           ...n, ...updated,
-          tags: updated.tags ?? n.tags ?? [],
-          areas_conhecimento: updated.areas_conhecimento ?? n.areas_conhecimento ?? [],
-          assuntos: updated.assuntos ?? n.assuntos ?? [],
+          tags: updated.tags ?? [], areas_conhecimento: updated.areas_conhecimento ?? [],
+          assuntos: updated.assuntos ?? [],
         } : n));
         setMessage({ type: 'success', text: 'Nota atualizada!' });
         closeModal();
@@ -242,28 +271,6 @@ export default function NotesPage() {
   const removeImage = (idx: number) =>
     setFormData(p => ({ ...p, images: p.images.filter((_, i) => i !== idx) }));
 
-  const handleEdit = (note: Note) => {
-    setEditingNote(note);
-    setFormData({
-      title: note.title, description: note.description,
-      tags: note.tags || [], areasConhecimento: note.areas_conhecimento ?? [],
-      assuntos: note.assuntos ?? [], images: note.images || [],
-    });
-    setShowModal(true); setOpenMenuId(null);
-  };
-
-  const handleDelete = async (id: number) => {
-    if (!confirm('Excluir esta nota?')) return;
-    try {
-      const token = getToken();
-      if (!token) return;
-      const res = await fetch(`/api/notes/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
-      if (res.ok) { setMessage({ type: 'success', text: 'Nota excluída.' }); fetchNotes(); }
-      else { const err = await res.json(); setMessage({ type: 'error', text: err.error || 'Erro ao excluir' }); }
-    } catch { setMessage({ type: 'error', text: 'Erro ao excluir.' }); }
-    finally   { setOpenMenuId(null); }
-  };
-
   const closeModal = () => {
     setShowModal(false); setEditingNote(null);
     setFormData({ title: '', description: '', tags: [], areasConhecimento: [], assuntos: [], images: [] });
@@ -274,25 +281,147 @@ export default function NotesPage() {
     new Date(s).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
 
   const totalPages = Math.ceil(totalNotes / PAGE_SIZE);
+  const hasAny     = notes.length > 0;
+  const hasResults = favoritedFiltered.length > 0 || regularNotes.length > 0;
+
+  // ── Note card renderer ────────────────────────────────────────────────
+  const renderCard = (note: Note) => (
+    <div
+      key={note.id}
+      onClick={(e) => {
+        if ((e.target as HTMLElement).closest('.note-action')) return;
+        router.push(`/dashboard/notes/${note.id}`);
+      }}
+      className="group bg-white rounded-xl border border-gray-200 hover:border-primary-300 hover:shadow-lg hover:shadow-primary-500/5 transition-all cursor-pointer overflow-hidden flex flex-col"
+    >
+      <div className="h-1 bg-gradient-to-r from-primary-400 to-primary-600 flex-shrink-0" />
+      <div className="p-4 sm:p-5 flex flex-col flex-1">
+        {/* Title row */}
+        <div className="flex items-start gap-1.5 mb-2">
+          <h3 className="flex-1 font-semibold text-gray-900 text-base leading-snug group-hover:text-primary-700 transition-colors">
+            {note.title}
+          </h3>
+          {/* Favorite */}
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); toggleFavorite(note.id, note.is_favorited ?? false); }}
+            className={`note-action p-1.5 rounded-lg transition flex-shrink-0 ${
+              note.is_favorited
+                ? 'text-amber-400 hover:text-amber-500'
+                : 'text-gray-200 hover:text-amber-300 opacity-0 group-hover:opacity-100'
+            }`}
+            aria-label={note.is_favorited ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+          >
+            <Star className={`w-4 h-4 ${note.is_favorited ? 'fill-amber-400' : ''}`} />
+          </button>
+          {/* Menu */}
+          <div className="note-action note-menu-container relative flex-shrink-0">
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); setOpenMenuId(openMenuId === note.id ? null : note.id); }}
+              className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition"
+            >
+              <MoreVertical className="w-4 h-4" />
+            </button>
+            {openMenuId === note.id && (
+              <div className="absolute top-8 right-0 bg-white rounded-xl shadow-xl border border-gray-100 z-20 min-w-[130px] overflow-hidden">
+                <button type="button" onClick={() => handleEdit(note)}
+                  className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2">
+                  <Edit className="w-4 h-4 text-gray-400" />Editar
+                </button>
+                <button type="button" onClick={() => handleDelete(note.id)}
+                  className="w-full px-4 py-2.5 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2">
+                  <Trash2 className="w-4 h-4" />Excluir
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {isAdmin && note.user_name && (
+          <div className="flex flex-wrap items-center gap-1.5 mb-2">
+            <span className="text-xs text-gray-400">Por:</span>
+            <span className="text-xs font-medium text-gray-600">{note.user_name}</span>
+            {note.user_role && (
+              <span className="px-1.5 py-0.5 bg-gray-100 text-gray-500 rounded text-xs">
+                {note.user_role === 'admin' ? 'Admin' : note.user_role === 'manager' ? 'Gerente' : 'Regular'}
+              </span>
+            )}
+            {note.company_name && (
+              <span className="px-1.5 py-0.5 bg-primary-50 text-primary-600 rounded text-xs">{note.company_name}</span>
+            )}
+          </div>
+        )}
+
+        <p className="text-gray-500 text-sm line-clamp-3 mb-4 flex-1 leading-relaxed">{note.description}</p>
+
+        {((note.tags ?? []).length > 0 || (note.areas_conhecimento ?? []).length > 0 || (note.assuntos ?? []).length > 0) && (
+          <div className="flex flex-wrap gap-1.5 mb-4">
+            {(note.tags ?? []).map(tag => (
+              <span key={tag} className="px-2 py-0.5 text-xs font-medium bg-primary-50 text-primary-700 rounded-full border border-primary-100">{tag}</span>
+            ))}
+            {(note.areas_conhecimento ?? []).map(area => (
+              <span key={area} className="px-2 py-0.5 text-xs font-medium bg-emerald-50 text-emerald-700 rounded-full border border-emerald-100">{toDisplayArea(area)}</span>
+            ))}
+            {(note.assuntos ?? []).map(assunto => (
+              <span key={assunto} className="px-2 py-0.5 text-xs font-medium bg-teal-50 text-teal-700 rounded-full border border-teal-100">{toDisplayAssunto(assunto)}</span>
+            ))}
+          </div>
+        )}
+
+        <div className="flex items-center gap-1.5 text-xs text-gray-400 pt-3 border-t border-gray-100 mt-auto">
+          <Calendar className="w-3.5 h-3.5 flex-shrink-0" />
+          {formatDate(note.created_at)}
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="space-y-4 relative pb-6">
 
       {/* ══════════════════════════════════════════
-          PAGE HEADER
+          MOBILE: search + action row
+          (sits below the green mobile topbar)
           ══════════════════════════════════════════ */}
-      <div className="bg-gradient-to-br from-primary-600 to-primary-700 rounded-2xl p-4 sm:p-6 text-white shadow-sm">
+      <div className="md:hidden flex items-center gap-2">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+          <input
+            type="text"
+            value={searchText}
+            onChange={e => setSearchText(e.target.value)}
+            placeholder={loading ? 'Carregando…' : `Buscar em suas ${totalNotes} ${totalNotes === 1 ? 'nota' : 'notas'}`}
+            className="w-full pl-9 pr-8 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent shadow-sm"
+          />
+          {searchText && (
+            <button type="button" onClick={() => setSearchText('')}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
+        <Link href="/dashboard/notes/new">
+          <span className="inline-flex items-center gap-1.5 bg-primary-600 text-white px-3.5 py-2.5 rounded-xl text-sm font-semibold hover:bg-primary-700 transition shadow-sm cursor-pointer whitespace-nowrap">
+            <Plus className="w-4 h-4" />Nova
+          </span>
+        </Link>
+      </div>
+
+      {/* ══════════════════════════════════════════
+          DESKTOP: gradient page header
+          ══════════════════════════════════════════ */}
+      <div className="hidden md:block bg-gradient-to-br from-primary-600 to-primary-700 rounded-2xl p-6 text-white shadow-sm">
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <div className="flex items-center gap-3">
             <div className="bg-white/15 p-2.5 rounded-xl">
-              <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+              <FileText className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-lg sm:text-2xl font-bold leading-tight">
+              <h1 className="text-2xl font-bold leading-tight">
                 {isAdmin ? 'Todas as Notas' : 'Minhas Notas'}
               </h1>
-              {/* subtitle hidden on mobile */}
-              <p className="hidden sm:block text-primary-100 text-sm mt-0.5">
+              <p className="text-primary-100 text-sm mt-0.5">
                 {isAdmin ? 'Visualize e gerencie notas de todos os usuários' : 'Crie e gerencie suas notas de estudo'}
               </p>
             </div>
@@ -304,9 +433,8 @@ export default function NotesPage() {
               </div>
             )}
             <Link href="/dashboard/notes/new">
-              <span className="inline-flex items-center gap-2 bg-white text-primary-700 px-3 sm:px-4 py-2 rounded-xl font-semibold text-sm hover:bg-primary-50 transition shadow-sm cursor-pointer">
-                <Plus className="w-4 h-4" />
-                <span className="hidden sm:inline">Nova Nota</span>
+              <span className="inline-flex items-center gap-2 bg-white text-primary-700 px-4 py-2 rounded-xl font-semibold text-sm hover:bg-primary-50 transition shadow-sm cursor-pointer">
+                <Plus className="w-4 h-4" />Nova Nota
               </span>
             </Link>
           </div>
@@ -314,9 +442,9 @@ export default function NotesPage() {
       </div>
 
       {/* ══════════════════════════════════════════
-          SEARCH BAR
+          DESKTOP: search + admin filters
           ══════════════════════════════════════════ */}
-      <div className="space-y-2">
+      <div className="hidden md:block space-y-2">
         <div className="relative">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
           <input
@@ -327,34 +455,23 @@ export default function NotesPage() {
             className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent shadow-sm"
           />
           {searchText && (
-            <button
-              type="button"
-              onClick={() => setSearchText('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-            >
+            <button type="button" onClick={() => setSearchText('')}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
               <X className="w-4 h-4" />
             </button>
           )}
         </div>
-
-        {/* Admin compact filter row */}
         {isAdmin && (
           <div className="flex flex-wrap gap-2">
-            <select
-              value={filterRole}
-              onChange={e => { setFilterRole(e.target.value); setCurrentPage(1); }}
-              className="flex-1 min-w-[140px] px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-            >
+            <select value={filterRole} onChange={e => { setFilterRole(e.target.value); setCurrentPage(1); }}
+              className="flex-1 min-w-[140px] px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500">
               <option value="">Todos os perfis</option>
               <option value="admin">Administrador</option>
               <option value="manager">Gerente</option>
               <option value="regular">Regular</option>
             </select>
-            <select
-              value={filterCompanyId}
-              onChange={e => { setFilterCompanyId(e.target.value); setCurrentPage(1); }}
-              className="flex-1 min-w-[140px] px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-            >
+            <select value={filterCompanyId} onChange={e => { setFilterCompanyId(e.target.value); setCurrentPage(1); }}
+              className="flex-1 min-w-[140px] px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500">
               <option value="">Todas as empresas</option>
               {companies.map(c => <option key={c.id} value={c.id.toString()}>{c.name}</option>)}
             </select>
@@ -362,9 +479,25 @@ export default function NotesPage() {
         )}
       </div>
 
-      {/* ══════════════════════════════════════════
-          FLASH MESSAGE
-          ══════════════════════════════════════════ */}
+      {/* Mobile admin filters */}
+      {isAdmin && (
+        <div className="md:hidden flex flex-wrap gap-2">
+          <select value={filterRole} onChange={e => { setFilterRole(e.target.value); setCurrentPage(1); }}
+            className="flex-1 min-w-[130px] px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500">
+            <option value="">Todos os perfis</option>
+            <option value="admin">Administrador</option>
+            <option value="manager">Gerente</option>
+            <option value="regular">Regular</option>
+          </select>
+          <select value={filterCompanyId} onChange={e => { setFilterCompanyId(e.target.value); setCurrentPage(1); }}
+            className="flex-1 min-w-[130px] px-3 py-2 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500">
+            <option value="">Todas as empresas</option>
+            {companies.map(c => <option key={c.id} value={c.id.toString()}>{c.name}</option>)}
+          </select>
+        </div>
+      )}
+
+      {/* Flash message */}
       {message && (
         <div className={`flex items-center gap-3 p-3.5 rounded-xl border text-sm font-medium ${
           message.type === 'success'
@@ -377,14 +510,17 @@ export default function NotesPage() {
       )}
 
       {/* ══════════════════════════════════════════
-          NOTES GRID
+          LOADING
           ══════════════════════════════════════════ */}
-      {loading ? (
+      {loading && (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
           <div className="w-8 h-8 border-[3px] border-primary-200 border-t-primary-600 rounded-full animate-spin" />
           <p className="text-sm text-gray-400">Carregando notas…</p>
         </div>
-      ) : notes.length === 0 && !debouncedSearch ? (
+      )}
+
+      {/* Empty state — no notes at all */}
+      {!loading && !hasAny && !debouncedSearch && (
         <div className="bg-white rounded-2xl border border-dashed border-gray-200 p-16 text-center">
           <div className="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <FileText className="w-7 h-7 text-primary-400" />
@@ -397,99 +533,56 @@ export default function NotesPage() {
             </span>
           </Link>
         </div>
-      ) : filteredNotes.length === 0 ? (
+      )}
+
+      {/* No search results */}
+      {!loading && hasAny && !hasResults && (
         <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center">
           <Search className="w-10 h-10 text-gray-200 mx-auto mb-3" />
           <p className="text-gray-500 font-medium">Nenhuma nota encontrada</p>
-          <p className="text-gray-400 text-sm mt-1">
-            {debouncedSearch ? `para "${debouncedSearch}"` : `para "${searchQuery}"`}
-          </p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-          {filteredNotes.map((note) => (
-            <div
-              key={note.id}
-              onClick={(e) => {
-                if ((e.target as HTMLElement).closest('.note-menu-container')) return;
-                router.push(`/dashboard/notes/${note.id}`);
-              }}
-              className="group bg-white rounded-xl border border-gray-200 hover:border-primary-300 hover:shadow-lg hover:shadow-primary-500/5 transition-all cursor-pointer overflow-hidden flex flex-col"
-            >
-              <div className="h-1 bg-gradient-to-r from-primary-400 to-primary-600 flex-shrink-0" />
-              <div className="p-4 sm:p-5 flex flex-col flex-1">
-                {/* Title + menu */}
-                <div className="flex items-start justify-between gap-2 mb-2">
-                  <h3 className="font-semibold text-gray-900 text-base leading-snug group-hover:text-primary-700 transition-colors">
-                    {note.title}
-                  </h3>
-                  <div className="note-menu-container flex-shrink-0 relative" onClick={e => e.stopPropagation()}>
-                    <button
-                      type="button"
-                      onClick={() => setOpenMenuId(openMenuId === note.id ? null : note.id)}
-                      className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition"
-                    >
-                      <MoreVertical className="w-4 h-4" />
-                    </button>
-                    {openMenuId === note.id && (
-                      <div className="absolute top-8 right-0 bg-white rounded-xl shadow-xl border border-gray-100 z-20 min-w-[130px] overflow-hidden">
-                        <button type="button" onClick={() => handleEdit(note)} className="w-full px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2">
-                          <Edit className="w-4 h-4 text-gray-400" />Editar
-                        </button>
-                        <button type="button" onClick={() => handleDelete(note.id)} className="w-full px-4 py-2.5 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2">
-                          <Trash2 className="w-4 h-4" />Excluir
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {isAdmin && note.user_name && (
-                  <div className="flex flex-wrap items-center gap-1.5 mb-2">
-                    <span className="text-xs text-gray-400">Por:</span>
-                    <span className="text-xs font-medium text-gray-600">{note.user_name}</span>
-                    {note.user_role && (
-                      <span className="px-1.5 py-0.5 bg-gray-100 text-gray-500 rounded text-xs">
-                        {note.user_role === 'admin' ? 'Admin' : note.user_role === 'manager' ? 'Gerente' : 'Regular'}
-                      </span>
-                    )}
-                    {note.company_name && (
-                      <span className="px-1.5 py-0.5 bg-primary-50 text-primary-600 rounded text-xs">{note.company_name}</span>
-                    )}
-                  </div>
-                )}
-
-                <p className="text-gray-500 text-sm line-clamp-3 mb-4 flex-1 leading-relaxed">
-                  {note.description}
-                </p>
-
-                {((note.tags ?? []).length > 0 || (note.areas_conhecimento ?? []).length > 0 || (note.assuntos ?? []).length > 0) && (
-                  <div className="flex flex-wrap gap-1.5 mb-4">
-                    {(note.tags ?? []).map(tag => (
-                      <span key={`tag-${tag}`} className="inline-block px-2 py-0.5 text-xs font-medium bg-primary-50 text-primary-700 rounded-full border border-primary-100">{tag}</span>
-                    ))}
-                    {(note.areas_conhecimento ?? []).map(area => (
-                      <span key={`area-${area}`} className="inline-block px-2 py-0.5 text-xs font-medium bg-emerald-50 text-emerald-700 rounded-full border border-emerald-100">{toDisplayArea(area)}</span>
-                    ))}
-                    {(note.assuntos ?? []).map(assunto => (
-                      <span key={`assunto-${assunto}`} className="inline-block px-2 py-0.5 text-xs font-medium bg-teal-50 text-teal-700 rounded-full border border-teal-100">{toDisplayAssunto(assunto)}</span>
-                    ))}
-                  </div>
-                )}
-
-                <div className="flex items-center gap-1.5 text-xs text-gray-400 pt-3 border-t border-gray-100 mt-auto">
-                  <Calendar className="w-3.5 h-3.5 flex-shrink-0" />
-                  {formatDate(note.created_at)}
-                </div>
-              </div>
-            </div>
-          ))}
+          <p className="text-gray-400 text-sm mt-1">para "{debouncedSearch || searchQuery}"</p>
         </div>
       )}
 
       {/* ══════════════════════════════════════════
-          PAGINATION
+          FAVORITED SECTION
           ══════════════════════════════════════════ */}
+      {!loading && favoritedFiltered.length > 0 && (
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 px-1">
+            <Star className="w-4 h-4 text-amber-400 fill-amber-400 flex-shrink-0" />
+            <span className="text-sm font-semibold text-amber-700">
+              Favoritas{favoritedFiltered.length > 1 ? ` · ${favoritedFiltered.length}` : ''}
+            </span>
+          </div>
+          <div className="p-3 sm:p-4 bg-amber-50/60 rounded-2xl border border-amber-100">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              {favoritedFiltered.map(renderCard)}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ══════════════════════════════════════════
+          REGULAR NOTES SECTION
+          ══════════════════════════════════════════ */}
+      {!loading && regularNotes.length > 0 && (
+        <div className="space-y-3">
+          {favoritedFiltered.length > 0 && (
+            <div className="flex items-center gap-2 px-1">
+              <FileText className="w-4 h-4 text-gray-400 flex-shrink-0" />
+              <span className="text-sm font-semibold text-gray-500">
+                Todas as notas{regularNotes.length > 0 ? ` · ${regularNotes.length}` : ''}
+              </span>
+            </div>
+          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+            {regularNotes.map(renderCard)}
+          </div>
+        </div>
+      )}
+
+      {/* Pagination */}
       {!loading && totalNotes > PAGE_SIZE && (
         <div className="flex items-center justify-center gap-2 pt-2">
           <button type="button" onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage <= 1}
@@ -523,26 +616,21 @@ export default function NotesPage() {
                 <X className="w-5 h-5" />
               </button>
             </div>
-
             <form onSubmit={handleSubmit} className="p-6 space-y-5">
               <div>
-                <label htmlFor="modal-title" className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Título</label>
-                <input type="text" id="modal-title" value={formData.title}
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Título</label>
+                <input type="text" value={formData.title} required
                   onChange={e => setFormData({ ...formData, title: e.target.value })}
                   placeholder="Título da sua nota"
-                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-gray-50 focus:bg-white transition"
-                  required />
+                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-gray-50 focus:bg-white transition" />
               </div>
-
               <div>
-                <label htmlFor="modal-description" className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Conteúdo</label>
-                <textarea id="modal-description" value={formData.description}
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Conteúdo</label>
+                <textarea value={formData.description} required rows={10}
                   onChange={e => setFormData({ ...formData, description: e.target.value })}
-                  placeholder="Descreva aqui seu caso de estudo" rows={10}
-                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-y bg-gray-50 focus:bg-white transition"
-                  required />
+                  placeholder="Descreva aqui seu caso de estudo"
+                  className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-y bg-gray-50 focus:bg-white transition" />
               </div>
-
               <div>
                 <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Imagens</label>
                 <div className="border-2 border-dashed border-gray-200 rounded-xl p-4 hover:border-primary-300 transition-colors bg-gray-50">
@@ -567,47 +655,44 @@ export default function NotesPage() {
                   </div>
                 )}
               </div>
-
               <div className="flex flex-wrap gap-4">
-                <div className="flex-1 min-w-0" style={{ minWidth: 200 }}>
+                <div className="flex-1 min-w-[200px]">
                   <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Área do Conhecimento</label>
                   <TagAutocomplete
                     options={AREAS_OPTIONS_DISPLAY}
-                    selectedTags={areasConhecimentoModal.map(toDisplayArea)}
+                    selectedTags={(formData.areasConhecimento ?? []).map(toDisplayArea)}
                     onChange={tags => setFormData({ ...formData, areasConhecimento: tags.map(fromDisplay) })}
                     onSaveNewTag={() => {}}
                     placeholder="Selecione áreas do conhecimento…" />
                 </div>
-                <div className="flex-1 min-w-0" style={{ minWidth: 200 }}>
+                <div className="flex-1 min-w-[200px]">
                   <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Assunto</label>
                   <TagAutocomplete
                     options={modalAssuntosOptions.map(toDisplayAssunto)}
-                    selectedTags={assuntosModal.map(toDisplayAssunto)}
+                    selectedTags={(formData.assuntos ?? []).map(toDisplayAssunto)}
                     onChange={tags => setFormData({ ...formData, assuntos: tags.map(fromDisplay) })}
                     onSaveNewTag={() => {}}
-                    placeholder={areasConhecimentoModal.length === 0 ? 'Selecione uma área primeiro' : 'Selecione assuntos…'} />
+                    placeholder={(formData.areasConhecimento ?? []).length === 0 ? 'Selecione uma área primeiro' : 'Selecione assuntos…'} />
                 </div>
               </div>
-
               <div>
                 <TagAutocomplete
-                  options={availableTags}
-                  selectedTags={formData.tags}
+                  options={availableTags} selectedTags={formData.tags}
                   onChange={tags => setFormData({ ...formData, tags })}
                   onSaveNewTag={t => { if (!availableTags.includes(t)) setAvailableTags(p => [...p, t]); }}
                   label="Especialidade / Tags"
                   placeholder="Digite para buscar tags…" />
               </div>
-
               {message && (
                 <div className={`p-3.5 rounded-xl border text-sm ${message.type === 'success' ? 'bg-primary-50 border-primary-200 text-primary-800' : 'bg-red-50 border-red-200 text-red-700'}`}>
                   {message.text}
                 </div>
               )}
-
               <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
-                <button type="button" onClick={closeModal} className="px-5 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-600 hover:bg-gray-50 transition">Cancelar</button>
-                <button type="submit" disabled={formLoading} className="px-5 py-2.5 bg-primary-600 text-white rounded-xl text-sm font-semibold hover:bg-primary-700 transition disabled:opacity-50">
+                <button type="button" onClick={closeModal}
+                  className="px-5 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-600 hover:bg-gray-50 transition">Cancelar</button>
+                <button type="submit" disabled={formLoading}
+                  className="px-5 py-2.5 bg-primary-600 text-white rounded-xl text-sm font-semibold hover:bg-primary-700 transition disabled:opacity-50">
                   {formLoading ? 'Salvando…' : 'Salvar Nota'}
                 </button>
               </div>

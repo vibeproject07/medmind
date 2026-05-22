@@ -142,6 +142,43 @@ export async function PUT(
   }
 }
 
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const authHeader = request.headers.get('authorization');
+    let token = authHeader?.replace('Bearer ', '') || request.cookies.get('token')?.value;
+    if (token) token = token.trim().replace(/^["']|["']$/g, '');
+    if (!token) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
+
+    const user = verifyToken(token);
+    if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
+
+    const body = await request.json();
+    const { is_favorited } = body;
+
+    if (typeof is_favorited !== 'boolean')
+      return NextResponse.json({ error: 'Campo is_favorited deve ser boolean' }, { status: 400 });
+
+    const check = (await query(
+      'SELECT id FROM notes WHERE id = $1 AND user_id = $2',
+      [params.id, user.id]
+    )).rows[0];
+    if (!check) return NextResponse.json({ error: 'Nota não encontrada' }, { status: 404 });
+
+    await query(
+      'UPDATE notes SET is_favorited = $1, updated_at = NOW() WHERE id = $2 AND user_id = $3',
+      [is_favorited, params.id, user.id]
+    );
+
+    return NextResponse.json({ success: true, is_favorited });
+  } catch (error) {
+    console.error('Erro ao atualizar favorito:', error);
+    return NextResponse.json({ error: 'Erro ao atualizar favorito' }, { status: 500 });
+  }
+}
+
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }

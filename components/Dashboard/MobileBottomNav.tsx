@@ -22,7 +22,7 @@ export default function MobileBottomNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="md:hidden flex-shrink-0 flex items-center justify-around h-[82px] px-2 pb-1">
+    <nav className="md:hidden flex-shrink-0 flex items-center justify-around h-[92px] px-2 pb-2">
       {NAV_ITEMS.map(({ href, icon: Icon, label }) => {
         const isActive =
           href === '/dashboard'
@@ -33,7 +33,7 @@ export default function MobileBottomNav() {
           <Link
             key={href}
             href={href}
-            className="flex flex-col items-center gap-1.5 flex-1 py-1.5"
+            className="flex flex-col items-center gap-1.5 flex-1 py-2"
           >
             <div
               className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
