@@ -127,27 +127,9 @@ export default function Sidebar() {
   );
 
   return (
-    <>
-      {/* ── DESKTOP: sidebar estática, parte do fluxo ── */}
-      <aside className="hidden md:flex flex-col w-64 flex-shrink-0 bg-gray-900 text-white h-full">
-        {sidebarContent}
-      </aside>
-
-      {/* ── MOBILE: overlay deslizante ── */}
-      <div
-        className={`fixed inset-0 bg-black/50 z-40 transition-opacity md:hidden ${
-          mobileOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
-        onClick={closeSidebar}
-        aria-hidden="true"
-      />
-      <aside
-        className={`fixed inset-y-0 left-0 z-50 bg-gray-900 text-white flex flex-col w-64 max-w-[85vw] shadow-xl transition-transform duration-300 ease-out md:hidden ${
-          mobileOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
-      >
-        {sidebarContent}
-      </aside>
-    </>
+    /* ── DESKTOP only: sidebar estática, parte do fluxo ── */
+    <aside className="hidden md:flex flex-col w-64 flex-shrink-0 bg-gray-900 text-white h-full">
+      {sidebarContent}
+    </aside>
   );
 }
