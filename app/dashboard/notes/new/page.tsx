@@ -1,13 +1,14 @@
 'use client';
 
-import { Suspense, useState, useRef, useEffect, useMemo } from 'react';
+import { Suspense, useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
   ArrowLeft, X, Image as ImageIcon,
   FileText, Film, Music,
   Link as LinkIcon, Loader2,
-  AlertCircle, CheckCircle2, Save, Trash2, Sparkles,
+  AlertCircle, CheckCircle2, Save, Trash2, Sparkles, BookOpen,
 } from 'lucide-react';
+import { ASSUNTOS_BY_AREA } from '@/lib/areas-assuntos';
 
 const AVAILABLE_TAGS = [
   'Acupuntura','Anestesiologia','Cirurgia Cardiovascular','Cirurgia Geral',
@@ -44,7 +45,7 @@ function StepIndicator({ step, onBack }: { step: 1 | 2; onBack?: () => void }) {
       {/* Step 1 — clickable when on step 2 to go back */}
       <button
         type="button"
-        onClick={step === 2 ? onBack : undefined}
+        onClick={step === 2 && onBack ? onBack : undefined}
         className={`flex items-center gap-1.5 ${step === 2 ? 'cursor-pointer hover:opacity-80 transition' : 'cursor-default'} ${step === 1 ? 'text-primary-700' : 'text-gray-400'}`}
       >
         <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
@@ -214,6 +215,59 @@ async function runSourceTransformation(
     files.length > 0 ? files.map((f) => f.name) : link.trim() ? [link.trim()] : [];
   return { melhorado, original, fileNames };
 }
+type SaveReminderAction = { type: 'leave' } | { type: 'step1' } | { type: 'openEstudio' };
+
+function SaveReminderModal({
+  open,
+  onClose,
+  onSave,
+  onLeaveWithoutSave,
+  saving,
+}: {
+  open: boolean;
+  onClose: () => void;
+  onSave: () => void;
+  onLeaveWithoutSave: () => void;
+  saving: boolean;
+}) {
+  if (!open) return null;
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm relative">
+        <button
+          type="button"
+          onClick={onClose}
+          className="absolute top-3 right-3 p-1.5 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition"
+          aria-label="Fechar"
+        >
+          <X className="w-5 h-5" />
+        </button>
+        <div className="px-6 pt-6 pb-5">
+          <p className="text-base font-semibold text-gray-800 pr-8">Lembre-se de salvar a nota criada</p>
+        </div>
+        <div className="flex flex-col-reverse sm:flex-row gap-2 px-6 pb-6">
+          <button
+            type="button"
+            onClick={onLeaveWithoutSave}
+            disabled={saving}
+            className="flex-1 px-4 py-2.5 text-sm border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-50 transition font-medium disabled:opacity-50"
+          >
+            Sair sem salvar
+          </button>
+          <button
+            type="button"
+            onClick={onSave}
+            disabled={saving}
+            className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 text-sm bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition disabled:opacity-50"
+          >
+            {saving ? <><Loader2 className="w-4 h-4 animate-spin" />Salvando…</> : <><Save className="w-4 h-4" />Salvar</>}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 
 function NewNotePageContent() {
@@ -222,11 +276,14 @@ function NewNotePageContent() {
   const tabFromUrl   = searchParams.get('tab');
 
   const [step, setStep] = useState<1 | 2>(1);
+  const [activePanel, setActivePanel] = useState<'estudio' | null>(null);
   const [showLinkInput, setShowLinkInput] = useState(false);
   const [linkInput, setLinkInput]         = useState('');
 
   // Processing state
   const [showDiscardModal, setShowDiscardModal] = useState(false);
+  const [showSaveReminderModal, setShowSaveReminderModal] = useState(false);
+  const pendingSaveActionRef = useRef<SaveReminderAction | null>(null);
   const [processing, setProcessing]       = useState(false);
   const [processingStatus, setProcessingStatus] = useState('');
   const [processingError, setProcessingError]   = useState<string | null>(null);
@@ -254,6 +311,52 @@ function NewNotePageContent() {
     formData.areasConhecimento.forEach((area) => { ASSUNTOS_BY_AREA[area]?.forEach((a) => set.add(a)); });
     return Array.from(set);
   }, [formData.areasConhecimento]);
+
+  const hasUnsavedContent = useMemo(() => {
+    return !!(
+      formData.title.trim() ||
+      formData.informacoes.trim() ||
+      formData.tags.length > 0 ||
+      formData.areasConhecimento.length > 0 ||
+      formData.assuntos.length > 0 ||
+      formData.images.length > 0 ||
+      resumoAulas.melhorado.trim() ||
+      resumoAulas.original.trim() ||
+      fontesArquivosNames.length > 0
+    );
+  }, [formData, resumoAulas, fontesArquivosNames]);
+
+  const guardUnsaved = useCallback(
+    (action: SaveReminderAction, run: () => void) => {
+      if (!hasUnsavedContent) {
+        run();
+        return;
+      }
+      pendingSaveActionRef.current = action;
+      setShowSaveReminderModal(true);
+    },
+    [hasUnsavedContent],
+  );
+
+  const executePendingWithoutSave = useCallback(() => {
+    const action = pendingSaveActionRef.current;
+    pendingSaveActionRef.current = null;
+    setShowSaveReminderModal(false);
+    if (!action) return;
+    if (action.type === 'leave') {
+      localStorage.removeItem('draftNote');
+      router.push('/dashboard/notes');
+    } else if (action.type === 'step1') {
+      setActivePanel(null);
+      setStep(1);
+    } else if (action.type === 'openEstudio') {
+      setActivePanel('estudio');
+    }
+  }, [router]);
+
+  const requestOpenEstudio = useCallback(() => {
+    guardUnsaved({ type: 'openEstudio' }, () => setActivePanel('estudio'));
+  }, [guardUnsaved]);
 
   useEffect(() => {
     if (formData.areasConhecimento.length === 0) { setFormData((p) => ({ ...p, assuntos: [] })); return; }
@@ -290,6 +393,24 @@ function NewNotePageContent() {
       ).then((files) => processSource(files, link.trim()));
     } catch { /* ignore */ }
   }, [tabFromUrl]); // eslint-disable-line
+
+  // ?tab=conteudo → abrir passo da nota; ?tab=estudio → passo 2 + painel estúdio (com aviso se não salvo)
+  useEffect(() => {
+    if (tabFromUrl === 'conteudo') setStep(2);
+    if (tabFromUrl === 'estudio') {
+      setStep(2);
+      requestOpenEstudio();
+    }
+  }, [tabFromUrl, requestOpenEstudio]);
+
+  useEffect(() => {
+    if (!hasUnsavedContent) return;
+    const onBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+    };
+    window.addEventListener('beforeunload', onBeforeUnload);
+    return () => window.removeEventListener('beforeunload', onBeforeUnload);
+  }, [hasUnsavedContent]);
 
   // Save draft
   useEffect(() => {
@@ -358,7 +479,17 @@ function NewNotePageContent() {
     }
   };
 
-  const handleDiscard = () => { localStorage.removeItem('draftNote'); router.push('/dashboard/notes'); };
+  const handleDiscard = () => {
+    localStorage.removeItem('draftNote');
+    router.push('/dashboard/notes');
+  };
+
+  const requestLeave = () => guardUnsaved({ type: 'leave' }, handleDiscard);
+
+  const requestStep1 = () => guardUnsaved({ type: 'step1' }, () => {
+    setActivePanel(null);
+    setStep(1);
+  });
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     Array.from(e.target.files ?? []).forEach((file) => {
@@ -372,20 +503,31 @@ function NewNotePageContent() {
 
   const removeImage = (i: number) => setFormData((p) => ({ ...p, images: p.images.filter((_, j) => j !== i) }));
 
-  const handleSubmit = async () => {
-    if (!formData.title.trim()) { setMessage({ type: 'error', text: 'O título é obrigatório' }); return; }
-    setFormLoading(true); setMessage(null);
+  const handleSubmit = async (
+    afterSave?: 'note' | 'list' | 'estudio',
+  ): Promise<number | null> => {
+    if (!formData.title.trim()) {
+      setMessage({ type: 'error', text: 'O título é obrigatório' });
+      return null;
+    }
+    setFormLoading(true);
+    setMessage(null);
     try {
       const token = localStorage.getItem('token');
-      if (!token) { setMessage({ type: 'error', text: 'Não autorizado' }); return; }
+      if (!token) {
+        setMessage({ type: 'error', text: 'Não autorizado' });
+        return null;
+      }
       const response = await fetch('/api/notes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({
           title: formData.title,
           description: formData.informacoes,
-          tags: formData.tags, images: formData.images,
-          areas_conhecimento: formData.areasConhecimento, assuntos: formData.assuntos,
+          tags: formData.tags,
+          images: formData.images,
+          areas_conhecimento: formData.areasConhecimento,
+          assuntos: formData.assuntos,
           fontes_resumo_melhorado: resumoAulas.melhorado || undefined,
           fontes_resumo_original: resumoAulas.original || undefined,
           fontes_arquivos: fontesArquivosNames.length > 0 ? fontesArquivosNames : undefined,
@@ -408,13 +550,39 @@ function NewNotePageContent() {
           } catch { /* ignore */ }
         }
         localStorage.removeItem('draftNote');
-        router.push(`/dashboard/notes/${noteData.id}`);
-      } else {
-        const err = await response.json().catch(() => ({}));
-        setMessage({ type: 'error', text: err.error || 'Erro ao criar a nota' });
+        if (afterSave === 'list') {
+          router.push('/dashboard/notes');
+        } else {
+          if (afterSave === 'estudio' && typeof window !== 'undefined') {
+            sessionStorage.setItem('openNotePanel', 'estudio');
+          }
+          router.push(`/dashboard/notes/${noteData.id}`);
+        }
+        return noteData.id as number;
       }
-    } catch { setMessage({ type: 'error', text: 'Erro ao criar a nota. Tente novamente.' }); }
-    finally   { setFormLoading(false); }
+      const err = await response.json().catch(() => ({}));
+      setMessage({ type: 'error', text: err.error || 'Erro ao criar a nota' });
+      return null;
+    } catch {
+      setMessage({ type: 'error', text: 'Erro ao criar a nota. Tente novamente.' });
+      return null;
+    } finally {
+      setFormLoading(false);
+    }
+  };
+
+  const handleSaveReminderSalvar = async () => {
+    const action = pendingSaveActionRef.current;
+    const redirect =
+      action?.type === 'leave' ? 'list' : action?.type === 'openEstudio' ? 'estudio' : 'note';
+    const noteId = await handleSubmit(redirect);
+    if (noteId == null) {
+      pendingSaveActionRef.current = action;
+      setShowSaveReminderModal(true);
+      return;
+    }
+    pendingSaveActionRef.current = null;
+    setShowSaveReminderModal(false);
   };
 
   // ── STEP 1: Sources ───────────────────────────────────────────────────
@@ -556,68 +724,156 @@ function NewNotePageContent() {
 
   // ── STEP 2: Note editor / preview ─────────────────────────────────────
   // Returns a fragment — siblings live at the same flex level as the main header
-  const renderStep2 = () => (
-    <>
-      {/* Fixed sub-header: title + action buttons */}
-      <div className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 border-b border-gray-200 bg-white">
-        <input
-          type="text"
-          value={formData.title}
-          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-          placeholder="Título da nota"
-          required
-          className="flex-1 min-w-0 text-base font-semibold bg-transparent border-0 focus:outline-none text-gray-800 placeholder:text-gray-300"
-          style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}
-        />
-        <div className="flex items-center gap-1.5 flex-shrink-0">
-          {message && (
-            <span className={`text-xs px-2 py-1 rounded-full hidden sm:inline ${
-              message.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-            }`}>
-              {message.text}
-            </span>
-          )}
-          <button
-            type="button"
-            onClick={handleSubmit}
-            disabled={formLoading}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-600 text-white rounded-lg text-sm font-semibold hover:bg-primary-700 transition disabled:opacity-50"
-          >
-            {formLoading
-              ? <><Loader2 className="w-3.5 h-3.5 animate-spin" />Salvando…</>
-              : <><Save className="w-3.5 h-3.5" />Salvar</>}
-          </button>
-          <button
-            type="button"
-            onClick={() => setShowDiscardModal(true)}
-            className="p-1.5 rounded-lg border border-red-200 text-red-400 hover:bg-red-50 hover:text-red-600 transition"
-            title="Descartar nota"
-          >
-            <Trash2 className="w-4 h-4" />
-          </button>
+  const renderEstudioPanel = () => (
+    <div className="space-y-4 p-4">
+      <p className="text-xs text-gray-500">
+        Salve a nota para persistir associações. Você ainda pode buscar questões por tags antes de salvar.
+      </p>
+      {formData.tags.length > 0 ? (
+        <button
+          type="button"
+          onClick={() => {
+            const tagsParam = encodeURIComponent(JSON.stringify(formData.tags));
+            router.push(`/dashboard/notes/select-questions?tags=${tagsParam}`);
+          }}
+          className="w-full px-3 py-2 bg-primary-600 text-white rounded-lg text-xs font-semibold hover:bg-primary-700 transition"
+        >
+          Buscar questões por tags
+        </button>
+      ) : (
+        <p className="text-xs text-gray-400">Adicione tags à nota para buscar questões relacionadas.</p>
+      )}
+      <div className="pt-3 border-t border-gray-100">
+        <p className="text-xs font-semibold text-gray-700 mb-2">Artigos</p>
+        <div className="text-center py-4 text-gray-400">
+          <BookOpen className="w-6 h-6 mx-auto mb-1.5 opacity-40" />
+          <p className="text-xs">Em desenvolvimento</p>
         </div>
       </div>
+    </div>
+  );
 
-      {/* Fixed source badge */}
-      {fontesArquivosNames.length > 0 && (
-        <div className="flex-shrink-0 flex items-center gap-2 px-4 py-2 border-b border-gray-100 bg-primary-50/70">
-          <CheckCircle2 className="w-3.5 h-3.5 text-primary-500 flex-shrink-0" />
-          <span className="text-xs text-primary-600 truncate">
-            Gerado a partir de: {fontesArquivosNames.join(', ')}
-          </span>
+  const renderStep2 = () => (
+    <div className="flex-1 min-h-0 flex flex-col md:flex-row">
+      <div className="flex-1 min-h-0 flex flex-col min-w-0">
+        {/* Fixed sub-header: title + action buttons */}
+        <div className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 border-b border-gray-200 bg-white">
+          <input
+            type="text"
+            value={formData.title}
+            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+            placeholder="Título da nota"
+            required
+            className="flex-1 min-w-0 text-base font-semibold bg-transparent border-0 focus:outline-none text-gray-800 placeholder:text-gray-300"
+            style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}
+          />
+          <div className="flex items-center gap-1.5 flex-shrink-0">
+            <button
+              type="button"
+              onClick={requestOpenEstudio}
+              className={`hidden sm:flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition ${
+                activePanel === 'estudio'
+                  ? 'bg-primary-50 text-primary-700 border-primary-200'
+                  : 'text-gray-600 border-gray-200 hover:bg-gray-50'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              Estúdio
+            </button>
+            {message && (
+              <span className={`text-xs px-2 py-1 rounded-full hidden sm:inline ${
+                message.type === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+              }`}>
+                {message.text}
+              </span>
+            )}
+            <button
+              type="button"
+              onClick={() => handleSubmit()}
+              disabled={formLoading}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-600 text-white rounded-lg text-sm font-semibold hover:bg-primary-700 transition disabled:opacity-50"
+            >
+              {formLoading
+                ? <><Loader2 className="w-3.5 h-3.5 animate-spin" />Salvando…</>
+                : <><Save className="w-3.5 h-3.5" />Salvar</>}
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowDiscardModal(true)}
+              className="p-1.5 rounded-lg border border-red-200 text-red-400 hover:bg-red-50 hover:text-red-600 transition"
+              title="Descartar nota"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile: Estúdio tab */}
+        <div className="flex-shrink-0 sm:hidden flex border-b border-gray-200 bg-white">
+          <button
+            type="button"
+            onClick={() => setActivePanel(null)}
+            className={`flex-1 py-2.5 text-xs font-semibold transition ${
+              activePanel !== 'estudio' ? 'text-primary-600 border-b-2 border-primary-600' : 'text-gray-500'
+            }`}
+          >
+            Nota
+          </button>
+          <button
+            type="button"
+            onClick={requestOpenEstudio}
+            className={`flex-1 py-2.5 text-xs font-semibold flex items-center justify-center gap-1 transition ${
+              activePanel === 'estudio' ? 'text-primary-600 border-b-2 border-primary-600' : 'text-gray-500'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            Estúdio
+          </button>
+        </div>
+
+        {fontesArquivosNames.length > 0 && activePanel !== 'estudio' && (
+          <div className="flex-shrink-0 flex items-center gap-2 px-4 py-2 border-b border-gray-100 bg-primary-50/70">
+            <CheckCircle2 className="w-3.5 h-3.5 text-primary-500 flex-shrink-0" />
+            <span className="text-xs text-primary-600 truncate">
+              Gerado a partir de: {fontesArquivosNames.join(', ')}
+            </span>
+          </div>
+        )}
+
+        {activePanel === 'estudio' ? (
+          <div className="flex-1 min-h-0 overflow-y-auto md:hidden bg-white">{renderEstudioPanel()}</div>
+        ) : (
+          <div className="flex-1 min-h-0 flex flex-col px-4 sm:px-6 py-3">
+            <textarea
+              value={formData.informacoes}
+              onChange={(e) => setFormData({ ...formData, informacoes: e.target.value })}
+              placeholder="Conteúdo da nota…"
+              className="flex-1 min-h-0 w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm text-gray-700 resize-none leading-relaxed shadow-sm"
+            />
+          </div>
+        )}
+      </div>
+
+      {activePanel === 'estudio' && (
+        <div className="hidden md:flex w-72 xl:w-80 flex-shrink-0 border-l border-gray-200 bg-white flex-col min-h-0">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 flex-shrink-0">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-primary-600" />
+              <span className="text-sm font-semibold text-gray-700">Estúdio</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setActivePanel(null)}
+              className="p-1 rounded-lg hover:bg-gray-100 transition text-gray-400"
+              aria-label="Fechar estúdio"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+          <div className="flex-1 min-h-0 overflow-y-auto">{renderEstudioPanel()}</div>
         </div>
       )}
-
-      {/* Scrollable content — only this area scrolls */}
-      <div className="flex-1 min-h-0 flex flex-col px-4 sm:px-6 py-3">
-        <textarea
-          value={formData.informacoes}
-          onChange={(e) => setFormData({ ...formData, informacoes: e.target.value })}
-          placeholder="Conteúdo da nota…"
-          className="flex-1 min-h-0 w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm text-gray-700 resize-none leading-relaxed shadow-sm"
-        />
-      </div>
-    </>
+    </div>
   );
 
   return (
@@ -626,16 +882,18 @@ function NewNotePageContent() {
       {/* ── Header ──────────────────────────────────────────────────────── */}
       <header className="flex-shrink-0 flex items-center justify-between px-4 py-2.5 border-b border-gray-200 bg-white shadow-sm gap-3">
         <div className="flex items-center gap-2 min-w-0 flex-1">
-          <button type="button"
-            onClick={() => step === 1 ? router.push('/dashboard/notes') : setStep(1)}
+          <button
+            type="button"
+            onClick={() => (step === 1 ? requestLeave() : requestStep1())}
             className="p-1.5 rounded-lg hover:bg-gray-100 transition flex-shrink-0"
-            aria-label="Voltar">
+            aria-label="Voltar"
+          >
             <ArrowLeft className="w-4 h-4 text-gray-600" />
           </button>
           <span className="text-sm font-semibold text-gray-700 hidden sm:inline">Nova Nota</span>
         </div>
 
-        <StepIndicator step={step} onBack={() => setStep(1)} />
+        <StepIndicator step={step} onBack={requestStep1} />
 
         <div className="flex items-center gap-2 flex-1 justify-end">
           {message && (
@@ -662,8 +920,11 @@ function NewNotePageContent() {
       {/* ── Footer — step 1 only ────────────────────────────────────────── */}
       {step === 1 && (
         <footer className="flex-shrink-0 flex items-center justify-between px-4 sm:px-6 py-3 border-t border-gray-200 bg-white shadow-[0_-1px_6px_rgba(0,0,0,0.04)]">
-          <button type="button" onClick={handleDiscard}
-            className="px-4 py-2 text-sm border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-50 transition">
+          <button
+            type="button"
+            onClick={requestLeave}
+            className="px-4 py-2 text-sm border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-50 transition"
+          >
             Cancelar
           </button>
           {message && (
@@ -688,6 +949,17 @@ function NewNotePageContent() {
           </button>
         </footer>
       )}
+
+      <SaveReminderModal
+        open={showSaveReminderModal}
+        onClose={() => {
+          pendingSaveActionRef.current = null;
+          setShowSaveReminderModal(false);
+        }}
+        onSave={handleSaveReminderSalvar}
+        onLeaveWithoutSave={executePendingWithoutSave}
+        saving={formLoading}
+      />
 
       {/* ── Discard confirmation modal ───────────────────────────────────── */}
       {showDiscardModal && (

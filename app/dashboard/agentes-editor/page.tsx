@@ -23,6 +23,7 @@ interface AiAgent {
   name: string;
   description: string;
   system_prompt: string;
+  system_instruction: string | null;
   model: string;
   temperature: number;
   max_output_tokens: number;
@@ -45,6 +46,7 @@ const EMPTY_NEW_AGENT = {
   name: '',
   description: '',
   system_prompt: '',
+  system_instruction: '',
   model: 'gemini-2.5-flash',
   temperature: 0.2,
   max_output_tokens: 4096,
@@ -123,6 +125,7 @@ export default function AgentesEditorPage() {
           name: editing.name,
           description: editing.description,
           system_prompt: editing.system_prompt,
+          system_instruction: editing.system_instruction?.trim() ? editing.system_instruction : null,
           model: editing.model,
           temperature: editing.temperature,
           max_output_tokens: editing.max_output_tokens,
@@ -336,7 +339,23 @@ export default function AgentesEditorPage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Prompt do Sistema <span className="text-red-500">*</span>
+                  Instrução do Sistema (runtime)
+                  <span className="ml-2 text-xs text-gray-400 font-normal">
+                    {newAgent.system_instruction.length} caracteres · enviada ao Gemini; se vazio, usa o prompt legado
+                  </span>
+                </label>
+                <textarea
+                  value={newAgent.system_instruction}
+                  onChange={(e) => setNewAgent((p) => ({ ...p, system_instruction: e.target.value }))}
+                  rows={6}
+                  placeholder="Instrução enviada ao Gemini. Opcional se o prompt legado já estiver preenchido."
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl text-sm font-mono leading-relaxed focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none resize-y"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Prompt do Sistema (legado) <span className="text-red-500">*</span>
                   <span className="ml-2 text-xs text-gray-400 font-normal">{newAgent.system_prompt.length} caracteres</span>
                 </label>
                 <textarea
@@ -516,11 +535,27 @@ export default function AgentesEditorPage() {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Prompt do Sistema
-                    <span className="ml-2 text-xs text-gray-400 font-normal">{editing.system_prompt.length} caracteres</span>
-                  </label>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Instrução do Sistema (runtime)
+                  <span className="ml-2 text-xs text-gray-400 font-normal">
+                    {(editing.system_instruction ?? '').length} caracteres · tem prioridade sobre o prompt legado
+                  </span>
+                </label>
+                <textarea
+                  value={editing.system_instruction ?? ''}
+                  onChange={(e) => handleChange('system_instruction', e.target.value)}
+                  rows={12}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl text-sm font-mono leading-relaxed focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none resize-y"
+                  placeholder="Instrução enviada ao Gemini em classificações. Se vazio, usa o prompt legado abaixo."
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Prompt do Sistema (legado)
+                  <span className="ml-2 text-xs text-gray-400 font-normal">{editing.system_prompt.length} caracteres</span>
+                </label>
                   <textarea
                     value={editing.system_prompt}
                     onChange={(e) => handleChange('system_prompt', e.target.value)}

@@ -1,6 +1,17 @@
 {
   "result": [
     {
+      "term": "Hipertensão",
+      "code": "D006973",
+      "tree_ids": [
+        "C14.907.489"
+      ],
+      "hierarchy_path": "Doenças › C14.907.489",
+      "scope_note": "PRESSÃO ARTERIAL sistêmica persistentemente alta. Com base em várias medições (DETERMINAÇÃO DA PRESSÃO ARTERIAL), a hipertensão é atualmente definida como sendo a PRESSÃO SISTÓLICA repetidamente maior que 140 mm Hg ou a PRESSÃO DIASTÓLICA de 90 mm Hg ou superior.",
+      "name_en": "Hypertension",
+      "role": "primary"
+    },
+    {
       "term": "Hipopotassemia",
       "code": "D007008",
       "tree_ids": [
@@ -31,29 +42,6 @@
       "hierarchy_path": "Doenças › C19.053.800.604",
       "scope_note": "Afecção causada pela produção elevada de ALDOSTERONA. Caracteriza-se por retenção de sódio e excreção de potássio resultando em HIPERTENSÃO e HIPOCALEMIA.",
       "name_en": "Hyperaldosteronism",
-      "role": "primary"
-    },
-    {
-      "term": "Hipertensão",
-      "code": "D006973",
-      "tree_ids": [
-        "C14.907.489"
-      ],
-      "hierarchy_path": "Doenças › C14.907.489",
-      "scope_note": "PRESSÃO ARTERIAL sistêmica persistentemente alta. Com base em várias medições (DETERMINAÇÃO DA PRESSÃO ARTERIAL), a hipertensão é atualmente definida como sendo a PRESSÃO SISTÓLICA repetidamente maior que 140 mm Hg ou a PRESSÃO DIASTÓLICA de 90 mm Hg ou superior.",
-      "name_en": "Hypertension",
-      "role": "secondary"
-    },
-    {
-      "term": "Cloreto de Potássio",
-      "code": "D011189",
-      "tree_ids": [
-        "D01.210.450.150.750",
-        "D01.745.625"
-      ],
-      "hierarchy_path": "Compostos Químicos e Drogas › D01.210.450.150.750",
-      "scope_note": "Cristal branco ou pó cristalino utilizado em TAMPÕES, FERTILIZANTES, e EXPLOSIVOS. Pode ser usado para reabastecer ELETRÓLITOS e repor o EQUILÍBRIO HIDRO-ELETROLÍTICO no tratamento de HIPOPOTASSEMIA.",
-      "name_en": "Potassium Chloride",
       "role": "secondary"
     },
     {
@@ -69,25 +57,39 @@
       "scope_note": "Queixa vaga de debilidade, fadiga e exaustão que é atribuída à fraqueza de vários músculos. A fraqueza pode ser caracterizada como subaguda ou crônica, frequentemente progressiva, e é a manifestação de muitas doenças musculares e neuromusculares.",
       "name_en": "Muscle Weakness",
       "role": "secondary"
+    },
+    {
+      "term": "Arritmias Cardíacas",
+      "code": "D001145",
+      "tree_ids": [
+        "C14.280.067",
+        "C23.550.073"
+      ],
+      "hierarchy_path": "Doenças › C14.280.067",
+      "scope_note": "Quaisquer distúrbios da pulsação rítmica normal do coração ou CONTRAÇÃO MIOCÁRDICA. As arritmias cardíacas podem ser classificadas pelas anormalidades da FREQUÊNCIA CARDÍACA, transtornos de geração de impulsos elétricos, ou condução de impulso.",
+      "name_en": "Arrhythmias, Cardiac",
+      "role": "secondary"
     }
   ],
   "themes_identified": {
     "primary": [
-      "Hypokalemia",
-      "Alkalosis, Metabolic",
-      "Hyperaldosteronism"
+      "Hipertensão",
+      "Hipocalemia",
+      "Alcalose Metabólica"
     ],
     "secondary": [
-      "Hypertension",
-      "Potassium Chloride",
-      "Muscle Weakness"
+      "Hiperaldosteronismo",
+      "Terapia de Reposição de Potássio",
+      "Diagnóstico Diferencial",
+      "Fraqueza Muscular",
+      "Arritmias Cardíacas"
     ]
   },
   "pipeline_stats": {
     "primary_terms": 3,
-    "secondary_terms": 3,
+    "secondary_terms": 5,
     "dropped_by_category_filter": 0,
-    "dropped_by_gemini_validation": 0,
+    "dropped_by_gemini_validation": 2,
     "final_count": 6
   }
 }

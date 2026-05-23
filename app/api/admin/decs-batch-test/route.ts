@@ -69,19 +69,20 @@ function buildQuestionText(q: Record<string, unknown>): string {
 // ── V1 full pipeline (theme extraction + runDeCSPipeline) ─────────────────────
 
 async function runV1Full(questionText: string, decsKey: string, geminiKey: string) {
-  const { getAgent } = await import('@/lib/ai-agents');
-  const classifierAgent = await getAgent('decs_classifier');
-  const systemPrompt = classifierAgent?.system_prompt ?? '';
-  const model = classifierAgent?.model ?? 'gemini-2.5-flash';
-  const url = `${GEMINI_BASE}/${model}:generateContent?key=${geminiKey}`;
+  const { getRuntimeAgent } = await import('@/lib/ai-agent-runtime');
+  const classifierAgent = await getRuntimeAgent('decs_classifier');
+  const url = `${GEMINI_BASE}/${classifierAgent.model}:generateContent?key=${geminiKey}`;
 
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      system_instruction: { parts: [{ text: systemPrompt }] },
+      system_instruction: { parts: [{ text: classifierAgent.system_instruction }] },
       contents: [{ role: 'user', parts: [{ text: questionText }] }],
-      generationConfig: { temperature: 0.1, maxOutputTokens: 8192 },
+      generationConfig: {
+        temperature: classifierAgent.temperature,
+        maxOutputTokens: classifierAgent.max_output_tokens,
+      },
     }),
   });
   if (!res.ok) throw new Error(`Gemini V1 step1 failed: ${res.status}`);
@@ -106,7 +107,13 @@ async function runV1Full(questionText: string, decsKey: string, geminiKey: strin
   }
 
   if (themes.primary.length === 0) throw new Error('V1: nenhum tema extraído');
-  const { descriptors } = await runDeCSPipeline(themes, questionText, decsKey, geminiKey, model);
+  const { descriptors } = await runDeCSPipeline(
+    themes,
+    questionText,
+    decsKey,
+    geminiKey,
+    classifierAgent.model,
+  );
   return descriptors;
 }
 

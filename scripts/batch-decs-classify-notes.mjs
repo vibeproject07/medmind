@@ -1,52 +1,66 @@
 /**
  * Batch DeCS Classifier for Notes — uses local pgvector (no external BVS API)
  *
- * Pipeline for each note:
- *   Step 1: Gemini extracts 3–6 medical search terms from the note content
- *   Step 2: Each term is embedded (gemini-embedding-001) → cosine search against decs_descriptors
- *   Step 3: Gemini validation pass to filter false positives
- *   Step 4: Save approved descriptors to notes.decs_terms (JSONB)
+ * Agentes carregados exclusivamente de ai_agents (discover_notes_terms, validate_notes_decs_terms).
  *
  * Run:
  *   node --env-file=.env.local scripts/batch-decs-classify-notes.mjs [options]
- *
- * Options:
- *   --limit N         Process only N notes (default: all pending)
- *   --concurrency N   Parallel Gemini requests (default: 3)
- *   --delay N         ms delay between batches (default: 400)
- *   --no-resume       Re-classify even notes that already have decs_terms
- *   --min-score N     Minimum cosine similarity to accept a descriptor (default: 0.75)
  */
 
 import pg from 'pg';
 import fs from 'fs';
+import { loadRuntimeAgents, buildGeminiBody } from './lib/ai-agents-db.mjs';
 
-// ── Config ───────────────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
 const getArg = (name, def) => {
   const i = args.indexOf(`--${name}`);
   return i !== -1 ? args[i + 1] : def;
 };
 
-const LIMIT       = parseInt(getArg('limit', '0'));
-const CONCURRENCY = parseInt(getArg('concurrency', '3'));
-const DELAY_MS    = parseInt(getArg('delay', '400'));
-const RESUME      = !args.includes('--no-resume');
-const MIN_SCORE   = parseFloat(getArg('min-score', '0.75'));
+const LIMIT = parseInt(getArg('limit', '0'), 10);
+const CONCURRENCY = parseInt(getArg('concurrency', '3'), 10);
+const DELAY_MS = parseInt(getArg('delay', '400'), 10);
+const RESUME = !args.includes('--no-resume');
+const MIN_SCORE = parseFloat(getArg('min-score', '0.75'));
 
 const EMBEDDING_MODEL = 'gemini-embedding-001';
-const GEMINI_MODEL    = 'gemini-2.5-flash-lite';
-const RESULTS_FILE    = 'decs_notes_classification_results.json';
-const MAX_DECS        = 5;  // top-N DeCS descriptors per search term
+const RESULTS_FILE = 'decs_notes_classification_results.json';
+const MAX_DECS = 5;
 
-// ── DB ────────────────────────────────────────────────────────────────────────
 const { Pool } = pg;
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
 const GEMINI_KEY = process.env.GEMINI_API_KEY?.trim() || process.env.GOOGLE_API_KEY?.trim();
 if (!GEMINI_KEY) throw new Error('GEMINI_API_KEY not set');
 
-// ── Gemini embedding ──────────────────────────────────────────────────────────
+let discoverAgent;
+let validateAgent;
+
+async function initAgents() {
+  const map = await loadRuntimeAgents(pool, ['discover_notes_terms', 'validate_notes_decs_terms']);
+  discoverAgent = map.get('discover_notes_terms');
+  validateAgent = map.get('validate_notes_decs_terms');
+  console.log(
+    `Agentes DB: discover_notes_terms (${discoverAgent.model}), validate_notes_decs_terms (${validateAgent.model})\n`,
+  );
+}
+
+async function callGemini(agent, userMessage, overrides = {}) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${agent.model}:generateContent?key=${GEMINI_KEY}`;
+  const body = buildGeminiBody(agent, userMessage, overrides);
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Gemini ${res.status}: ${err}`);
+  }
+  const data = await res.json();
+  return (data?.candidates?.[0]?.content?.parts?.map((p) => p.text).join('') ?? '').trim();
+}
+
 async function generateEmbedding(text) {
   const trimmed = text.slice(0, 8000);
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${EMBEDDING_MODEL}:embedContent?key=${GEMINI_KEY}`;
@@ -65,59 +79,31 @@ async function generateEmbedding(text) {
   return values;
 }
 
-// ── Gemini text generation ─────────────────────────────────────────────────────
-async function callGemini(systemPrompt, userMessage, maxTokens = 512) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`;
-  const body = {
-    system_instruction: { parts: [{ text: systemPrompt }] },
-    contents: [{ role: 'user', parts: [{ text: userMessage }] }],
-    generationConfig: { temperature: 0.1, maxOutputTokens: maxTokens },
-  };
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) { const err = await res.text(); throw new Error(`Gemini ${res.status}: ${err}`); }
-  const data = await res.json();
-  return (data?.candidates?.[0]?.content?.parts?.map(p => p.text).join('') ?? '').trim();
-}
-
-// ── Prompts ───────────────────────────────────────────────────────────────────
-const EXTRACTION_PROMPT = `Você é um especialista em classificação de conteúdo médico e no vocabulário controlado DeCS/MeSH.
-
-Dado o título e conteúdo de uma nota de estudo médica, identifique de 3 a 6 conceitos médicos chave que representam os temas principais.
-
-Regras:
-- Use EXCLUSIVAMENTE termos que existam como descritores no vocabulário DeCS/MeSH em português.
-- Prefira termos específicos: "Insuficiência Cardíaca" em vez de "Coração".
-- Inclua: condições clínicas, fármacos, exames diagnósticos, procedimentos, achados anatomopatológicos.
-- NÃO inclua: adjetivos genéricos, termos não-DeCS.
-- Retorne SOMENTE um array JSON de strings. Sem markdown, sem explicação.
-
-Exemplo: ["Diabetes Mellitus Tipo 2","Insulina","Hemoglobina A Glicada"]`;
-
-const VALIDATION_PROMPT = `Você é um especialista em vocabulário controlado DeCS/MeSH.
-
-Dado o conteúdo de uma nota de estudo médica e uma lista de descritores DeCS candidatos, filtre e mantenha APENAS os descritores CLINICAMENTE RELEVANTES para o tema central da nota.
-
-Retorne SOMENTE um array JSON com os UI (códigos) dos descritores aprovados.
-Ex: ["D003924","D007328"]
-Sem explicação, sem markdown.`;
-
-// ── Parse search terms ────────────────────────────────────────────────────────
-function parseSearchTerms(raw) {
+function parseThemes(raw) {
   try {
     const cleaned = raw.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
     const parsed = JSON.parse(cleaned);
-    if (Array.isArray(parsed)) return parsed.filter(t => typeof t === 'string' && t.trim()).slice(0, 6);
+    if (Array.isArray(parsed)) {
+      return { primary: parsed.filter((t) => typeof t === 'string' && t.trim()).slice(0, 3), secondary: [] };
+    }
+    if (parsed && typeof parsed === 'object') {
+      return {
+        primary: (Array.isArray(parsed.primary) ? parsed.primary : [])
+          .filter((t) => typeof t === 'string' && t.trim())
+          .slice(0, 3),
+        secondary: (Array.isArray(parsed.secondary) ? parsed.secondary : [])
+          .filter((t) => typeof t === 'string' && t.trim())
+          .slice(0, 6),
+      };
+    }
   } catch {}
   const matches = raw.match(/"([^"]+)"/g);
-  if (matches) return matches.map(m => m.replace(/"/g, '').trim()).filter(Boolean).slice(0, 6);
-  return [];
+  if (matches) {
+    return { primary: matches.map((m) => m.replace(/"/g, '').trim()).filter(Boolean).slice(0, 3), secondary: [] };
+  }
+  return { primary: [], secondary: [] };
 }
 
-// ── Local DeCS search via pgvector ────────────────────────────────────────────
 async function searchDeCSLocal(termEmbedding) {
   const vecStr = `[${termEmbedding.join(',')}]`;
   const res = await pool.query(
@@ -127,114 +113,142 @@ async function searchDeCSLocal(termEmbedding) {
      WHERE embedding IS NOT NULL
      ORDER BY embedding <=> $1::vector
      LIMIT $2`,
-    [vecStr, MAX_DECS]
+    [vecStr, MAX_DECS],
   );
   return res.rows
-    .map(r => ({ ui: r.ui, name_pt: r.name_pt, name_en: r.name_en, score: parseFloat(r.score ?? 0) }))
-    .filter(r => r.score >= MIN_SCORE);
+    .map((r) => ({ ui: r.ui, name_pt: r.name_pt, name_en: r.name_en, score: parseFloat(r.score ?? 0) }))
+    .filter((r) => r.score >= MIN_SCORE);
 }
 
-// ── Gemini validation ─────────────────────────────────────────────────────────
 async function validateDescriptors(descriptors, noteText) {
   if (descriptors.length === 0) return [];
-  const candidateList = descriptors.map(d => ({ ui: d.ui, term: d.name_pt }));
+  const candidateList = descriptors.map((d) => ({ code: d.code, term: d.term }));
   const userMessage = ['Nota:', noteText, '', 'Candidatos:', JSON.stringify(candidateList, null, 2)].join('\n');
   try {
-    const raw = await callGemini(VALIDATION_PROMPT, userMessage, 256);
+    const raw = await callGemini(validateAgent, userMessage, { maxOutputTokens: 256 });
     const cleaned = raw.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
     const approved = JSON.parse(cleaned);
     if (!Array.isArray(approved)) return descriptors;
     const approvedSet = new Set(approved.map(String));
-    const filtered = descriptors.filter(d => approvedSet.has(d.ui));
+    const filtered = descriptors.filter((d) => approvedSet.has(d.code));
     return filtered.length > 0 ? filtered : descriptors;
-  } catch { return descriptors; }
+  } catch {
+    return descriptors;
+  }
 }
 
-// ── Build note text ───────────────────────────────────────────────────────────
 function buildNoteText(n) {
   const parse = (f) => {
     if (!f) return [];
     if (Array.isArray(f)) return f;
-    try { return JSON.parse(f); } catch { return []; }
+    try {
+      return JSON.parse(f);
+    } catch {
+      return [];
+    }
   };
   const body = [n.title, n.description].filter(Boolean).join('\n\n');
   const meta = [...parse(n.tags), ...parse(n.areas_conhecimento), ...parse(n.assuntos)]
-    .filter((v, i, a) => a.indexOf(v) === i).join(', ');
+    .filter((v, i, a) => a.indexOf(v) === i)
+    .join(', ');
   return meta ? `${body}\n\n[${meta}]` : body;
 }
 
-function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
 
-// ── Process one note ──────────────────────────────────────────────────────────
 async function processNote(n, idx, total) {
   const noteText = buildNoteText(n).slice(0, 4000);
   let descriptors = [];
   let error = null;
 
   try {
-    // Step 1: extract search terms via Gemini
-    const rawTerms = await callGemini(EXTRACTION_PROMPT, `Título: ${n.title}\n\nConteúdo: ${noteText}`);
-    const searchTerms = parseSearchTerms(rawTerms);
+    const rawTerms = await callGemini(
+      discoverAgent,
+      `Título: ${n.title}\n\nConteúdo: ${noteText}`,
+      { responseMimeType: 'application/json' },
+    );
+    const themes = parseThemes(rawTerms);
+    const totalTerms = themes.primary.length + themes.secondary.length;
 
-    if (searchTerms.length === 0) {
-      error = 'No search terms extracted';
+    if (totalTerms === 0) {
+      error = 'No themes extracted';
     } else {
-      // Step 2: embed each term → local DeCS cosine search
       const seen = new Set();
       const afterSearch = [];
-      await Promise.allSettled(searchTerms.map(async (term) => {
-        try {
-          const emb = await generateEmbedding(term);
-          const matches = await searchDeCSLocal(emb);
-          for (const m of matches) {
-            if (!seen.has(m.ui)) { seen.add(m.ui); afterSearch.push(m); }
+      const searchAll = [
+        ...themes.primary.map((term) => ({ term, role: 'primary' })),
+        ...themes.secondary.map((term) => ({ term, role: 'secondary' })),
+      ];
+      await Promise.allSettled(
+        searchAll.map(async ({ term, role }) => {
+          try {
+            const emb = await generateEmbedding(term);
+            const matches = await searchDeCSLocal(emb);
+            const best = matches[0];
+            if (best && !seen.has(best.ui)) {
+              seen.add(best.ui);
+              afterSearch.push({
+                term: best.name_pt,
+                code: best.ui,
+                name_en: best.name_en,
+                role,
+              });
+            }
+          } catch {
+            /* skip term on error */
           }
-        } catch { /* skip term on error */ }
-      }));
+        }),
+      );
 
-      // Step 3: Gemini validation pass
       const afterValidation = await validateDescriptors(afterSearch, noteText);
-      descriptors = afterValidation.map(({ score: _s, ...rest }) => rest);
+      const primary = afterValidation.filter((d) => d.role === 'primary');
+      const secondary = afterValidation.filter((d) => d.role !== 'primary');
+      descriptors = [...primary, ...secondary];
     }
-  } catch (e) { error = e.message; }
+  } catch (e) {
+    error = e.message;
+  }
 
-  const status = error
-    ? `✗ — ${error}`
-    : `✓ ${descriptors.length} descritores`;
+  const status = error ? `✗ — ${error}` : `✓ ${descriptors.length} descritores`;
   console.log(`[${String(idx + 1).padStart(4)}/${total}] Note#${n.id} "${n.title?.slice(0, 40)}" ${status}`);
 
-  return { id_note: n.id, decs_terms: descriptors, error };
+  const legacyTerms = descriptors.map((d) => ({
+    ui: d.code,
+    name_pt: d.term,
+    name_en: d.name_en ?? d.term,
+    role: d.role ?? 'secondary',
+  }));
+  return { id_note: n.id, ai_decs_descriptors: descriptors, decs_terms: legacyTerms, error };
 }
 
-// ── Main ──────────────────────────────────────────────────────────────────────
 async function main() {
   console.log(`\n📝 MedMind — Batch DeCS Classifier para Notas`);
-  console.log(`   Usando pgvector local (sem API externa) · min-score=${MIN_SCORE}\n`);
+  console.log(`   Agentes do banco · pgvector local · min-score=${MIN_SCORE}\n`);
 
-  // Verify local DeCS is ready
-  const { rows: [{ count: decsCount }] } = await pool.query(
-    `SELECT COUNT(*) FROM decs_descriptors WHERE embedding IS NOT NULL`
-  );
-  if (parseInt(decsCount) === 0) {
+  await initAgents();
+
+  const {
+    rows: [{ count: decsCount }],
+  } = await pool.query(`SELECT COUNT(*) FROM decs_descriptors WHERE embedding IS NOT NULL`);
+  if (parseInt(decsCount, 10) === 0) {
     console.error('❌ decs_descriptors não tem embeddings. Execute embed-decs-descriptors.mjs primeiro.');
     await pool.end();
     process.exit(1);
   }
   console.log(`✅ DeCS local pronto: ${decsCount} descritores vetorizados\n`);
 
-  // Ensure notes.decs_terms column exists
-  await pool.query(
-    `ALTER TABLE notes ADD COLUMN IF NOT EXISTS decs_terms JSONB DEFAULT '[]'::jsonb`
-  );
+  await pool.query(`ALTER TABLE notes ADD COLUMN IF NOT EXISTS decs_terms JSONB DEFAULT '[]'::jsonb`);
+  await pool.query(`ALTER TABLE notes ADD COLUMN IF NOT EXISTS ai_decs_descriptors TEXT`);
 
-  // Fetch notes to process
   const whereClause = RESUME
-    ? `WHERE (decs_terms IS NULL OR decs_terms = '[]'::jsonb)`
+    ? `WHERE (ai_decs_descriptors IS NULL OR btrim(ai_decs_descriptors) = '' OR ai_decs_descriptors = '[]')`
     : '';
   const limitClause = LIMIT > 0 ? `LIMIT ${LIMIT}` : '';
   const { rows: toProcess } = await pool.query(
     `SELECT id, title, description, tags, areas_conhecimento, assuntos
-     FROM notes ${whereClause} ORDER BY id ${limitClause}`
+     FROM notes ${whereClause} ORDER BY id ${limitClause}`,
   );
 
   if (toProcess.length === 0) {
@@ -250,29 +264,39 @@ async function main() {
 
   for (let i = 0; i < toProcess.length; i += CONCURRENCY) {
     const batch = toProcess.slice(i, i + CONCURRENCY);
-    const batchResults = await Promise.all(
-      batch.map((n, bIdx) => processNote(n, i + bIdx, toProcess.length))
-    );
+    const batchResults = await Promise.all(batch.map((n, bIdx) => processNote(n, i + bIdx, toProcess.length)));
     results.push(...batchResults);
 
     for (const r of batchResults) {
       await pool.query(
-        `UPDATE notes SET decs_terms = $1, updated_at = NOW() WHERE id = $2`,
-        [JSON.stringify(r.decs_terms), r.id_note]
+        `UPDATE notes
+         SET ai_decs_descriptors = $1,
+             decs_terms = $2::jsonb,
+             updated_at = NOW()
+         WHERE id = $3`,
+        [JSON.stringify(r.ai_decs_descriptors), JSON.stringify(r.decs_terms), r.id_note],
       );
     }
 
     if (i + CONCURRENCY < toProcess.length) await sleep(DELAY_MS);
   }
 
-  // Write results file
-  fs.writeFileSync(RESULTS_FILE, JSON.stringify(results.map(r => ({
-    id_note: r.id_note, decs_terms: r.decs_terms
-  })), null, 2));
+  fs.writeFileSync(
+    RESULTS_FILE,
+    JSON.stringify(
+      results.map((r) => ({
+        id_note: r.id_note,
+        ai_decs_descriptors: r.ai_decs_descriptors,
+        decs_terms: r.decs_terms,
+      })),
+      null,
+      2,
+    ),
+  );
 
-  const withDesc = results.filter(r => r.decs_terms.length > 0).length;
-  const failed   = results.filter(r => r.error).length;
-  const totalDesc = results.flatMap(r => r.decs_terms).length;
+  const withDesc = results.filter((r) => r.decs_terms.length > 0).length;
+  const failed = results.filter((r) => r.error).length;
+  const totalDesc = results.flatMap((r) => r.decs_terms).length;
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
 
   console.log(`\n✅ Concluído em ${elapsed}s!`);
@@ -284,4 +308,7 @@ async function main() {
   await pool.end();
 }
 
-main().catch(e => { console.error('\n💥 Fatal:', e); process.exit(1); });
+main().catch((e) => {
+  console.error('\n💥 Fatal:', e);
+  process.exit(1);
+});

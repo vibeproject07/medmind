@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
+import NoteDeCsDescriptorsTable, { type NoteDeCSRecord } from '@/components/Notes/NoteDeCsDescriptorsTable';
 import {
   ASSUNTOS_BY_AREA, toDisplayArea, toDisplayAssunto,
   fromDisplay, AREAS_OPTIONS_DISPLAY,
@@ -36,6 +37,8 @@ interface Note {
   areas_conhecimento?: string[];
   assuntos?: string[];
   images?: string[];
+  decs_terms?: string[] | { name_pt?: string; term?: string }[];
+  ai_decs_descriptors?: NoteDeCSRecord[];
   fontes_resumo_melhorado?: string | null;
   fontes_resumo_original?: string | null;
   fontes_arquivos?: string[];
@@ -68,6 +71,7 @@ interface Question {
 }
 
 type ActivePanel = 'fontes' | 'estudio' | null;
+type SimilarTab = 'notes-vector' | 'notes-terms' | 'questions-vector' | 'questions-terms';
 
 export default function NoteDetailPage() {
   const router  = useRouter();
@@ -96,12 +100,23 @@ export default function NoteDetailPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [questionsCount, setQuestionsCount] = useState<number>(0);
 
-  type SimilarNote     = { id: number; title: string; description: string; tags: string[]; areas_conhecimento: string[]; similarity: number };
-  type SimilarQuestion = { id: number; statement: string; tags: string[]; areas_conhecimento: string[]; exam_year: number | null; exam_board: string | null; exam_institution: string | null; similarity: number };
-  const [similarNotes,     setSimilarNotes]     = useState<SimilarNote[]>([]);
-  const [similarQuestions, setSimilarQuestions] = useState<SimilarQuestion[]>([]);
-  const [similarLoading,   setSimilarLoading]   = useState(false);
-  const [similarTab,       setSimilarTab]       = useState<'notes' | 'questions'>('notes');
+  type SimilarNote = {
+    id: number; title: string; description: string; tags: string[]; areas_conhecimento: string[];
+    similarity: number; score?: number; primary_matches?: number; secondary_matches?: number;
+  };
+  type SimilarQuestion = {
+    id: number; statement: string; tags: string[]; areas_conhecimento: string[];
+    exam_year: number | null; exam_board: string | null; exam_institution: string | null;
+    similarity: number; score?: number; primary_matches?: number; secondary_matches?: number;
+  };
+  const [notesByVector,       setNotesByVector]       = useState<SimilarNote[]>([]);
+  const [notesByTerms,        setNotesByTerms]        = useState<SimilarNote[]>([]);
+  const [questionsByVector,   setQuestionsByVector]   = useState<SimilarQuestion[]>([]);
+  const [questionsByTerms,    setQuestionsByTerms]    = useState<SimilarQuestion[]>([]);
+  const [similarLoading, setSimilarLoading] = useState(false);
+  const [similarTab, setSimilarTab] = useState<SimilarTab>('notes-vector');
+  const [aiDecsLoading, setAiDecsLoading] = useState(false);
+  const [aiDecsError, setAiDecsError] = useState<string | null>(null);
 
   const editAssuntosOptions = useMemo(() => {
     if (editAreasConhecimento.length === 0) return [];
@@ -135,8 +150,20 @@ export default function NoteDetailPage() {
     if (!token) return;
     setSimilarLoading(true);
     fetch(`/api/notes/${noteId}/similar?limit=5`, { headers: { Authorization: `Bearer ${token}` } })
-      .then((r) => r.ok ? r.json() : { notes: [], questions: [] })
-      .then((data) => { setSimilarNotes(data.notes ?? []); setSimilarQuestions(data.questions ?? []); })
+      .then((r) => (r.ok ? r.json() : null) as Promise<{
+        notesByVector?: SimilarNote[];
+        notesByTerms?: SimilarNote[];
+        questionsByVector?: SimilarQuestion[];
+        questionsByTerms?: SimilarQuestion[];
+        notes?: SimilarNote[];
+      } | null>)
+      .then((data) => {
+        if (!data) return;
+        setNotesByVector(data.notesByVector ?? data.notes ?? []);
+        setNotesByTerms(data.notesByTerms ?? []);
+        setQuestionsByVector(data.questionsByVector ?? []);
+        setQuestionsByTerms(data.questionsByTerms ?? []);
+      })
       .catch(() => {})
       .finally(() => setSimilarLoading(false));
   }, [noteId, note?.id]); // eslint-disable-line
@@ -164,6 +191,15 @@ export default function NoteDetailPage() {
       setEditImages(note.images || []);
     }
   }, [note]); // eslint-disable-line
+
+  // Abrir painel Estúdio após salvar na página "nova nota"
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (sessionStorage.getItem('openNotePanel') === 'estudio') {
+      sessionStorage.removeItem('openNotePanel');
+      setActivePanel('estudio');
+    }
+  }, [noteId]); // eslint-disable-line
 
   // Clear topbar title + panel when leaving the note page
   useEffect(() => {
@@ -294,6 +330,41 @@ export default function NoteDetailPage() {
       if (response.ok) { setNote(await response.json()); setIsEditing(false); }
       else alert('Erro ao salvar as alterações');
     } catch { alert('Erro ao salvar as alterações'); }
+  };
+
+  const handleClassifyNoteDeCS = async () => {
+    if (!noteId || !note) return;
+    setAiDecsLoading(true);
+    setAiDecsError(null);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const res = await fetch(`/api/notes/${noteId}/decs-ai`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setAiDecsError(data.error || 'Erro ao classificar com DeCS.');
+        return;
+      }
+      setNote((prev) =>
+        prev ? { ...prev, ai_decs_descriptors: data.descriptors ?? [] } : prev,
+      );
+      // Atualiza abas de conteúdo relacionado por DeCS
+      const simRes = await fetch(`/api/notes/${noteId}/similar?limit=5`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (simRes.ok) {
+        const simData = await simRes.json();
+        setNotesByTerms(simData.notesByTerms ?? []);
+        setQuestionsByTerms(simData.questionsByTerms ?? []);
+      }
+    } catch {
+      setAiDecsError('Erro ao conectar com o servidor.');
+    } finally {
+      setAiDecsLoading(false);
+    }
   };
 
   const formatDate = (dateString: string) =>
@@ -768,31 +839,108 @@ export default function NoteDetailPage() {
         </div>
       )}
 
-      {/* ── Related content (semantic search) ───────────────────────── */}
+      {/* ── DeCS / MeSH ─────────────────────────────────────────────── */}
+      {!isEditing && (
+        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 space-y-6">
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <h3 className="text-lg font-semibold text-gray-800">Termos DeCS/MeSH</h3>
+              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">vocabulário controlado BVS</span>
+            </div>
+            {(() => {
+              const legacyTerms = (note.decs_terms ?? []).map((t) =>
+                typeof t === 'string' ? t : (t.name_pt || t.term || ''),
+              ).filter(Boolean);
+              return legacyTerms.length > 0 ? (
+                <div className="flex flex-wrap gap-2">
+                  {legacyTerms.map((term) => (
+                    <span
+                      key={term}
+                      className="inline-block px-3 py-1 text-sm font-medium bg-primary-100 text-primary-700 rounded-full"
+                    >
+                      {term}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-400 italic text-sm">Nenhum termo DeCS adicionado</p>
+              );
+            })()}
+          </div>
+
+          {(canEdit || isAdmin) && (
+            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-4 w-4 text-indigo-500" />
+                <h3 className="text-lg font-semibold text-gray-800">Descritores DeCS — IA</h3>
+                <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">agentes de notas</span>
+              </div>
+              <button
+                type="button"
+                onClick={handleClassifyNoteDeCS}
+                disabled={aiDecsLoading}
+                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition"
+              >
+                {aiDecsLoading ? (
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <Sparkles className="h-3.5 w-3.5" />
+                )}
+                {aiDecsLoading ? 'Classificando…' : 'Classificar DeCS'}
+              </button>
+            </div>
+          )}
+
+          {!(canEdit || isAdmin) && (
+            <div className="flex items-center gap-2 mb-4">
+              <Sparkles className="h-4 w-4 text-indigo-500" />
+              <h3 className="text-lg font-semibold text-gray-800">Descritores DeCS — IA</h3>
+            </div>
+          )}
+
+          {aiDecsError && (canEdit || isAdmin) && (
+            <p className="text-red-500 text-sm mb-3">{aiDecsError}</p>
+          )}
+          {aiDecsLoading && (canEdit || isAdmin) && (
+            <p className="text-sm text-indigo-500 italic mb-3">
+              Executando discover_notes_terms → validate_notes_decs_terms…
+            </p>
+          )}
+
+          <NoteDeCsDescriptorsTable descriptors={note.ai_decs_descriptors ?? []} />
+        </div>
+      )}
+
+      {/* ── Related content ─────────────────────────────────────────── */}
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
         <div className="flex items-center gap-2 px-6 py-4 border-b border-gray-100">
           <Brain className="h-4 w-4 text-violet-500" />
           <h3 className="text-sm font-semibold text-gray-800">Conteúdo relacionado</h3>
-          <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">busca semântica</span>
+          <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">vetorização + DeCS</span>
         </div>
 
-        <div className="flex gap-1 px-4 pt-3 border-b border-gray-100 bg-gray-50/50">
-          {(['notes', 'questions'] as const).map((tab) => (
+        <div className="flex gap-1 px-2 sm:px-4 pt-3 border-b border-gray-100 bg-gray-50/50 overflow-x-auto">
+          {(
+            [
+              { id: 'notes-vector' as const, label: 'Notas por vetorização', count: notesByVector.length },
+              { id: 'notes-terms' as const, label: 'Notas por termos DeCS', count: notesByTerms.length },
+              { id: 'questions-vector' as const, label: 'Questões por vetorização', count: questionsByVector.length },
+              { id: 'questions-terms' as const, label: 'Questões por termos DeCS', count: questionsByTerms.length },
+            ] as const
+          ).map((tab) => (
             <button
-              key={tab}
-              onClick={() => setSimilarTab(tab)}
-              className={`px-4 py-2 text-sm font-medium rounded-t-md transition ${
-                similarTab === tab
+              key={tab.id}
+              type="button"
+              onClick={() => setSimilarTab(tab.id)}
+              className={`flex-shrink-0 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-t-md transition whitespace-nowrap ${
+                similarTab === tab.id
                   ? 'bg-white text-violet-600 border border-b-white border-gray-200 -mb-px'
                   : 'text-gray-500 hover:text-gray-700'
               }`}
             >
-              {tab === 'notes' ? 'Notas parecidas' : 'Questões do mesmo tema'}
-              {tab === 'notes' && similarNotes.length > 0 && (
-                <span className="ml-1.5 text-xs bg-violet-100 text-violet-600 px-1.5 py-0.5 rounded-full">{similarNotes.length}</span>
-              )}
-              {tab === 'questions' && similarQuestions.length > 0 && (
-                <span className="ml-1.5 text-xs bg-violet-100 text-violet-600 px-1.5 py-0.5 rounded-full">{similarQuestions.length}</span>
+              {tab.label}
+              {tab.count > 0 && (
+                <span className="ml-1.5 text-xs bg-violet-100 text-violet-600 px-1.5 py-0.5 rounded-full">{tab.count}</span>
               )}
             </button>
           ))}
@@ -804,68 +952,132 @@ export default function NoteDetailPage() {
               <Loader2 className="h-4 w-4 animate-spin" />
               <span>Buscando conteúdo similar…</span>
             </div>
-          ) : similarTab === 'notes' ? (
-            similarNotes.length === 0 ? (
-              <div className="text-center py-6">
-                <Brain className="h-8 w-8 text-gray-200 mx-auto mb-2" />
-                <p className="text-gray-400 text-sm">Nenhuma nota similar. O embedding desta nota precisa ser gerado primeiro.</p>
-              </div>
+          ) : similarTab === 'notes-vector' ? (
+            notesByVector.length === 0 ? (
+              <SimilarEmpty hint="Gere o embedding desta nota para ativar a busca vetorial entre notas." />
             ) : (
               <div className="space-y-3">
-                {similarNotes.map((sn) => (
-                  <div key={sn.id} className="flex items-start gap-3 p-3 rounded-xl border border-gray-100 hover:border-violet-200 hover:bg-violet-50/30 transition group">
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-800 truncate">{sn.title}</p>
-                      <p className="text-xs text-gray-500 line-clamp-1 mt-0.5">{sn.description}</p>
-                      <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
-                        {sn.areas_conhecimento?.slice(0, 2).map((a) => (
-                          <span key={a} className="text-xs px-1.5 py-0.5 bg-violet-50 text-violet-600 rounded-full">{a}</span>
-                        ))}
-                        <span className="ml-auto text-xs font-medium text-violet-600">{Math.round(sn.similarity * 100)}% similar</span>
-                      </div>
-                    </div>
-                    <button onClick={() => router.push(`/dashboard/notes/${sn.id}`)}
-                      className="flex-shrink-0 p-1.5 text-gray-400 hover:text-violet-600 transition opacity-0 group-hover:opacity-100" title="Ver nota">
-                      <ExternalLink className="h-4 w-4" />
-                    </button>
-                  </div>
+                {notesByVector.map((sn) => (
+                  <SimilarNoteCard key={sn.id} note={sn} onOpen={() => router.push(`/dashboard/notes/${sn.id}`)} />
                 ))}
               </div>
             )
+          ) : similarTab === 'notes-terms' ? (
+            notesByTerms.length === 0 ? (
+              <SimilarEmpty hint="Classifique a nota com DeCS (termos primary/secondary) para ver notas com os mesmos descritores." />
+            ) : (
+              <div className="space-y-3">
+                {notesByTerms.map((sn) => (
+                  <SimilarNoteCard key={sn.id} note={sn} onOpen={() => router.push(`/dashboard/notes/${sn.id}`)} />
+                ))}
+              </div>
+            )
+          ) : similarTab === 'questions-vector' ? (
+            questionsByVector.length === 0 ? (
+              <SimilarEmpty hint="Gere o embedding desta nota para relacionar questões por similaridade vetorial." />
+            ) : (
+              <div className="space-y-3">
+                {questionsByVector.map((sq) => (
+                  <SimilarQuestionCard key={sq.id} question={sq} onOpen={() => router.push(`/dashboard/questions/${sq.id}`)} />
+                ))}
+              </div>
+            )
+          ) : questionsByTerms.length === 0 ? (
+            <SimilarEmpty hint="Classifique a nota com DeCS para encontrar questões com os mesmos descritores." />
           ) : (
-            similarQuestions.length === 0 ? (
-              <div className="text-center py-6">
-                <Brain className="h-8 w-8 text-gray-200 mx-auto mb-2" />
-                <p className="text-gray-400 text-sm">Nenhuma questão similar. O embedding desta nota precisa ser gerado primeiro.</p>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {similarQuestions.map((sq) => (
-                  <div key={sq.id} className="flex items-start gap-3 p-3 rounded-xl border border-gray-100 hover:border-violet-200 hover:bg-violet-50/30 transition group">
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm text-gray-700 line-clamp-2">{sq.statement}</p>
-                      <div className="flex flex-wrap items-center gap-2 mt-1.5">
-                        {sq.exam_year && <span className="text-xs text-gray-500">{sq.exam_year}</span>}
-                        {sq.exam_board && <span className="text-xs text-gray-500">· {sq.exam_board}</span>}
-                        {sq.exam_institution && <span className="text-xs text-gray-500">· {sq.exam_institution}</span>}
-                        {sq.areas_conhecimento?.slice(0, 2).map((a) => (
-                          <span key={a} className="text-xs px-1.5 py-0.5 bg-violet-50 text-violet-600 rounded-full">{a}</span>
-                        ))}
-                        <span className="ml-auto text-xs font-medium text-violet-600">{Math.round(sq.similarity * 100)}% similar</span>
-                      </div>
-                    </div>
-                    <button onClick={() => router.push(`/dashboard/questions/${sq.id}`)}
-                      className="flex-shrink-0 p-1.5 text-gray-400 hover:text-violet-600 transition opacity-0 group-hover:opacity-100" title="Ver questão">
-                      <ExternalLink className="h-4 w-4" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )
+            <div className="space-y-3">
+              {questionsByTerms.map((sq) => (
+                <SimilarQuestionCard key={sq.id} question={sq} onOpen={() => router.push(`/dashboard/questions/${sq.id}`)} />
+              ))}
+            </div>
           )}
         </div>
       </div>
 
+    </div>
+  );
+}
+
+function formatSimilarityPercent(item: { similarity: number; score?: number }) {
+  if (item.score != null) return `${Math.round(item.score)}%`;
+  return `${Math.round(item.similarity * 100)}%`;
+}
+
+function SimilarNoteCard({
+  note,
+  onOpen,
+}: {
+  note: { id: number; title: string; description: string; areas_conhecimento?: string[]; similarity: number; score?: number; primary_matches?: number; secondary_matches?: number };
+  onOpen: () => void;
+}) {
+  return (
+    <div className="flex items-start gap-3 p-3 rounded-xl border border-gray-100 hover:border-violet-200 hover:bg-violet-50/30 transition group">
+      <div className="flex-1 min-w-0">
+        <p className="text-sm font-medium text-gray-800 truncate">{note.title}</p>
+        <p className="text-xs text-gray-500 line-clamp-1 mt-0.5">{note.description}</p>
+        <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
+          {note.areas_conhecimento?.slice(0, 2).map((a) => (
+            <span key={a} className="text-xs px-1.5 py-0.5 bg-violet-50 text-violet-600 rounded-full">{a}</span>
+          ))}
+          {(note.primary_matches != null || note.secondary_matches != null) && (
+            <span className="text-xs text-gray-400">
+              {note.primary_matches ?? 0} prim. · {note.secondary_matches ?? 0} sec.
+            </span>
+          )}
+          <span className="ml-auto text-xs font-medium text-violet-600">{formatSimilarityPercent(note)}</span>
+        </div>
+      </div>
+      <button type="button" onClick={onOpen}
+        className="flex-shrink-0 p-1.5 text-gray-400 hover:text-violet-600 transition opacity-0 group-hover:opacity-100" title="Ver nota">
+        <ExternalLink className="h-4 w-4" />
+      </button>
+    </div>
+  );
+}
+
+function SimilarQuestionCard({
+  question,
+  onOpen,
+}: {
+  question: {
+    id: number; statement: string; areas_conhecimento?: string[];
+    exam_year: number | null; exam_board: string | null; exam_institution: string | null;
+    similarity: number; score?: number; primary_matches?: number; secondary_matches?: number;
+  };
+  onOpen: () => void;
+}) {
+  return (
+    <div className="flex items-start gap-3 p-3 rounded-xl border border-gray-100 hover:border-violet-200 hover:bg-violet-50/30 transition group">
+      <div className="flex-1 min-w-0">
+        <p className="text-sm text-gray-700 line-clamp-2">{question.statement}</p>
+        <div className="flex flex-wrap items-center gap-2 mt-1.5">
+          {question.exam_year && <span className="text-xs text-gray-500">{question.exam_year}</span>}
+          {question.exam_board && <span className="text-xs text-gray-500">· {question.exam_board}</span>}
+          {question.exam_institution && <span className="text-xs text-gray-500">· {question.exam_institution}</span>}
+          {question.areas_conhecimento?.slice(0, 2).map((a) => (
+            <span key={a} className="text-xs px-1.5 py-0.5 bg-violet-50 text-violet-600 rounded-full">{a}</span>
+          ))}
+          {(question.primary_matches != null || question.secondary_matches != null) && (
+            <span className="text-xs text-gray-400">
+              {question.primary_matches ?? 0} prim. · {question.secondary_matches ?? 0} sec.
+            </span>
+          )}
+          <span className="ml-auto text-xs font-medium text-violet-600">{formatSimilarityPercent(question)}</span>
+        </div>
+      </div>
+      <button type="button" onClick={onOpen}
+        className="flex-shrink-0 p-1.5 text-gray-400 hover:text-violet-600 transition opacity-0 group-hover:opacity-100" title="Ver questão">
+        <ExternalLink className="h-4 w-4" />
+      </button>
+    </div>
+  );
+}
+
+function SimilarEmpty({ hint }: { hint: string }) {
+  return (
+    <div className="text-center py-6">
+      <Brain className="h-8 w-8 text-gray-200 mx-auto mb-2" />
+      <p className="text-gray-400 text-sm">{hint}</p>
     </div>
   );
 }

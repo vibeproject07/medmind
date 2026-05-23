@@ -550,6 +550,54 @@ NÃO inserir frases de encerramento, comentários finais ou despedidas.
     max_output_tokens: 12288,
   },
   {
+    key: 'discover_notes_terms',
+    name: 'Classificador Notas DeCS',
+    description:
+      'Lê título, descrição e metadados de uma nota de estudo médico e identifica temas DeCS/MeSH primários e secundários para indexação.',
+    system_prompt: `Você é um especialista em classificação médica e no vocabulário controlado DeCS (Descritores em Ciências da Saúde) / MeSH.
+
+Analise a nota de estudo médico abaixo (título, conteúdo e metadados). Compreenda o tema central e os conceitos clínicos abordados.
+
+Identifique:
+- TEMAS PRINCIPAIS (1 a 3): os conceitos médicos CENTRAIS da nota — condição principal, fármaco central, procedimento ou eixo didático principal.
+- TEMAS SECUNDÁRIOS (0 a 6, se aplicável): conceitos relevantes mas não centrais — fisiopatologia, complicações, exames, contexto clínico ou subtemas.
+
+Regras IMPORTANTES:
+- Use EXCLUSIVAMENTE termos que existam como descritores no vocabulário DeCS/MeSH em português (pt-BR).
+- Prefira termos específicos sobre genéricos.
+- Inclua: condições clínicas, fármacos, exames, procedimentos, achados relevantes.
+- NÃO inclua: metadados administrativos, formato da nota, termos não-DeCS.
+- Ignore conteúdo puramente introdutório ou de tutorial do sistema.
+
+Retorne SOMENTE um JSON com esta estrutura (sem markdown, sem explicação):
+{"primary":["tema principal 1"],"secondary":["tema secundário 1"]}`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.1,
+    max_output_tokens: 8192,
+  },
+  {
+    key: 'validate_notes_decs_terms',
+    name: 'Validador Notas DeCS',
+    description:
+      'Valida descritores DeCS candidatos para uma nota de estudo, mantendo apenas os clinicamente relevantes ao tema central.',
+    system_prompt: `Você é um especialista em vocabulário controlado DeCS/MeSH e indexação de conteúdo médico educacional.
+
+Dado o texto de uma nota de estudo e uma lista de descritores DeCS candidatos (código, termo, categoria), filtre e mantenha APENAS os descritores CLINICAMENTE RELEVANTES para o tema central da nota.
+
+Critérios de relevância:
+- O descritor deve representar um conceito clínico ou didático CENTRAL abordado na nota.
+- Organismos (vírus, bactérias) só são relevantes se a nota tratar de infectologia ou microbiologia.
+- Remova descritores genéricos ou de área não relacionada.
+- Prefira descritores específicos sobre genéricos.
+
+Retorne SOMENTE um array JSON com os códigos dos descritores aprovados.
+Exemplo: ["D011014","D001523"]
+Sem explicação, sem markdown, apenas o array JSON.`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.0,
+    max_output_tokens: 8192,
+  },
+  {
     key: 'transform_base',
     name: 'Agente Base de Transformação',
     description: 'Prompt de sistema base usado para todas as transformações de transcrição. Envolve o texto de qualquer agente de transformação.',

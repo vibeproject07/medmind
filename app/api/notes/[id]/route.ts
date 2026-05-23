@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { triggerEnrichment } from '@/lib/enrichment';
+import { ensureNoteDeCsColumn, parseNoteAiDeCsDescriptors } from '@/lib/note-decs';
 
 export const runtime = 'nodejs';
 
@@ -50,6 +51,8 @@ export async function GET(
       return NextResponse.json({ error: 'Nota não encontrada' }, { status: 404 });
     }
 
+    await ensureNoteDeCsColumn();
+
     return NextResponse.json({
       ...note,
       tags: note.tags ? JSON.parse(note.tags) : [],
@@ -57,6 +60,8 @@ export async function GET(
       areas_conhecimento: note.areas_conhecimento ? JSON.parse(note.areas_conhecimento) : [],
       assuntos: note.assuntos ? JSON.parse(note.assuntos) : [],
       fontes_arquivos: note.fontes_arquivos ? JSON.parse(note.fontes_arquivos) : [],
+      decs_terms: note.decs_terms ?? [],
+      ai_decs_descriptors: parseNoteAiDeCsDescriptors(note.ai_decs_descriptors as string | null),
     });
   } catch (error) {
     console.error('Erro ao buscar nota:', error);
@@ -128,13 +133,20 @@ export async function PUT(
     triggerEnrichment('note', parseInt(params.id));
 
     const updatedRow = (await query('SELECT * FROM notes WHERE id = $1', [params.id])).rows[0];
+    await ensureNoteDeCsColumn();
     return NextResponse.json({
       ...updatedRow,
       tags: updatedRow.tags ? JSON.parse(updatedRow.tags) : [],
       images: updatedRow.images ? JSON.parse(updatedRow.images) : [],
-      areas_conhecimento: updatedRow.areas_conhecimento ? JSON.parse(updatedRow.areas_conhecimento) : [],
+      areas_conhecimento: updatedRow.areas_conhecimento
+        ? JSON.parse(updatedRow.areas_conhecimento)
+        : [],
       assuntos: updatedRow.assuntos ? JSON.parse(updatedRow.assuntos) : [],
       fontes_arquivos: updatedRow.fontes_arquivos ? JSON.parse(updatedRow.fontes_arquivos) : [],
+      decs_terms: updatedRow.decs_terms ?? [],
+      ai_decs_descriptors: parseNoteAiDeCsDescriptors(
+        updatedRow.ai_decs_descriptors as string | null,
+      ),
     });
   } catch (error) {
     console.error('Erro ao atualizar nota:', error);

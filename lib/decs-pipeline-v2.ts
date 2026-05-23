@@ -10,7 +10,7 @@
  */
 
 import { buildHierarchyPath, isCategoryAcceptable, searchDeCSLocal, searchDeCSCandidates, enrichFromDB, type DeCSRecord } from './decs-pipeline';
-import { getAgentPrompt } from './ai-agents';
+import { getRuntimeAgent } from './ai-agent-runtime';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -198,16 +198,16 @@ async function selectDescriptorsWithGemini(
     temas_secundarios: buildCandidateBlock('secundários', secondaryCandidates).conceitos,
   };
 
-  const selectorPrompt = await getAgentPrompt('decs_selector_v2');
+  const selectorAgent = await getRuntimeAgent('decs_selector_v2');
 
   try {
-    const url = `${GEMINI_BASE}/${model}:generateContent?key=${geminiKey}`;
+    const url = `${GEMINI_BASE}/${selectorAgent.model}:generateContent?key=${geminiKey}`;
     const body = {
-      system_instruction: { parts: [{ text: selectorPrompt }] },
+      system_instruction: { parts: [{ text: selectorAgent.system_instruction }] },
       contents: [{ role: 'user', parts: [{ text: JSON.stringify(contextInput, null, 2) }] }],
       generationConfig: {
-        temperature: 0.05,
-        maxOutputTokens: 8192,
+        temperature: selectorAgent.temperature,
+        maxOutputTokens: selectorAgent.max_output_tokens,
         responseMimeType: 'application/json',
       },
     };
@@ -298,17 +298,17 @@ export async function runDeCSPipelineV2(
   };
 }> {
   // ── Step 1: Extract concept names via decs_indexer_v2 ──────────────────────
-  const indexerPrompt = await getAgentPrompt('decs_indexer_v2');
+  const indexerAgent = await getRuntimeAgent('decs_indexer_v2');
   let themes: { primary: string[]; secondary: string[] } = { primary: [], secondary: [] };
 
   try {
-    const url = `${GEMINI_BASE}/${model}:generateContent?key=${geminiKey}`;
+    const url = `${GEMINI_BASE}/${indexerAgent.model}:generateContent?key=${geminiKey}`;
     const body = {
-      system_instruction: { parts: [{ text: indexerPrompt }] },
+      system_instruction: { parts: [{ text: indexerAgent.system_instruction }] },
       contents: [{ role: 'user', parts: [{ text: questionText }] }],
       generationConfig: {
-        temperature: 0.1,
-        maxOutputTokens: 8192,
+        temperature: indexerAgent.temperature,
+        maxOutputTokens: indexerAgent.max_output_tokens,
         responseMimeType: 'application/json',
       },
     };

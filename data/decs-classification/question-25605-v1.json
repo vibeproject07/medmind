@@ -13,29 +13,15 @@
       "role": "primary"
     },
     {
-      "term": "Teste de Coombs",
-      "code": "D003298",
+      "term": "Corticosteroides",
+      "code": "D000305",
       "tree_ids": [
-        "E01.370.225.812.735.050.375.150",
-        "E05.200.812.735.050.375.150",
-        "E05.478.594.760.050.375.150"
+        "D06.472.040"
       ],
-      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.225.812.735.050.375.150",
-      "scope_note": "Teste para detectar ANTICORPOS não aglutinantes contra ERITRÓCITOS por meio do uso de antianticorpos (o reagente de Coombs). O teste direto é aplicado ao sangue recém-coletado para detectar anticorpo ligado a hemácias. O teste indireto é aplicado ao soro para detectar a presença de anticorpos que podem se ligar a hemácias.",
-      "name_en": "Coombs Test",
-      "role": "secondary"
-    },
-    {
-      "term": "Glucocorticoides",
-      "code": "D005938",
-      "tree_ids": [
-        "D06.472.040.543",
-        "D27.505.696.399.472.488"
-      ],
-      "hierarchy_path": "Compostos Químicos e Drogas › D06.472.040.543",
-      "scope_note": "Grupo de CORTICOSTEROIDES que afetam o metabolismo de carboidratos (GLUCONEOGÊNESE, depósito de glicogênio hepático, elevação da GLICEMIA), inibem a secreção de CORTICOTROPINA e possuem atividade anti-inflamatória pronunciada. Também desempenham um papel no metabolismo de gorduras e proteínas, manutenção da pressão arterial, alteração da resposta do tecido conjuntivo a lesão, redução no número de linfócitos circulantes e no funcionamento do sistema nervoso central.",
-      "name_en": "Glucocorticoids",
-      "role": "secondary"
+      "hierarchy_path": "Compostos Químicos e Drogas › D06.472.040",
+      "scope_note": "HORMÔNIOS produzidos pelo CÓRTEX SUPRARRENAL, incluindo tanto os hormônios esteroides como os peptídicos. Os principais hormônios produzidos são HIDROCORTISONA e ALDOSTERONA.",
+      "name_en": "Adrenal Cortex Hormones",
+      "role": "primary"
     },
     {
       "term": "Transfusão de Sangue",
@@ -49,34 +35,73 @@
       "role": "secondary"
     },
     {
-      "term": "Incompatibilidade de Grupos Sanguíneos",
-      "code": "D001787",
+      "term": "Teste de Coombs",
+      "code": "D003298",
       "tree_ids": [
-        "G09.188.114",
-        "G12.186"
+        "E01.370.225.812.735.050.375.150",
+        "E05.200.812.735.050.375.150",
+        "E05.478.594.760.050.375.150"
       ],
-      "hierarchy_path": "Fenômenos Biológicos › G09.188.114",
-      "scope_note": "Incompatibilidade antigênica entre os sangues do doador e do receptor. Os anticorpos presentes no soro do receptor podem ser dirigidos contra os antígenos do doador. Tal incompatibilidade pode resultar em uma reação de transfusão na qual, por exemplo, o sangue do doador é hemolisado. (Tradução livre do original: Saunders Dictionary & Encyclopedia of Laboratory Medicine and Technology, 1984)",
-      "name_en": "Blood Group Incompatibility",
+      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.225.812.735.050.375.150",
+      "scope_note": "Teste para detectar ANTICORPOS não aglutinantes contra ERITRÓCITOS por meio do uso de antianticorpos (o reagente de Coombs). O teste direto é aplicado ao sangue recém-coletado para detectar anticorpo ligado a hemácias. O teste indireto é aplicado ao soro para detectar a presença de anticorpos que podem se ligar a hemácias.",
+      "name_en": "Coombs Test",
+      "role": "secondary"
+    },
+    {
+      "term": "Hemólise",
+      "code": "D006461",
+      "tree_ids": [
+        "C23.550.403",
+        "G12.122.545"
+      ],
+      "hierarchy_path": "Doenças › C23.550.403",
+      "scope_note": "Destruição de ERITRÓCITOS por muitos agentes causais diferentes, como anticorpos, bactérias, químicos, temperatura e alterações na tonicidade.",
+      "name_en": "Hemolysis",
+      "role": "secondary"
+    },
+    {
+      "term": "Ácido Fólico",
+      "code": "D005492",
+      "tree_ids": [
+        "D03.633.100.733.631.400"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D03.633.100.733.631.400",
+      "scope_note": "Membro da fam��lia da vitamina B que estimula o sistema hematopoiético. Está presente no fígado e rim e pode ser encontrado em cogumelos, espinafre, levedura, folhas verdes e gramíneas (POACEAE). O ácido fólico é utilizado no tratamento e prevenção das deficiências de folato e anemia megaloblástica.",
+      "name_en": "Folic Acid",
+      "role": "secondary"
+    },
+    {
+      "term": "Icterícia",
+      "code": "D007565",
+      "tree_ids": [
+        "C23.550.429.500",
+        "C23.888.885.375"
+      ],
+      "hierarchy_path": "Doenças › C23.550.429.500",
+      "scope_note": "Manifestação clínica de HIPERBILIRRUBINEMIA, caracterizada pela coloração amarelada da PELE, MEMBRANA MUCOSA e ESCLERA. Icterícia clínica geralmente é sinal de disfunção no FÍGADO.",
+      "name_en": "Jaundice",
       "role": "secondary"
     }
   ],
   "themes_identified": {
     "primary": [
-      "Anemia, Hemolytic, Autoimmune"
+      "Anemia Hemolítica Autoimune",
+      "Corticoterapia"
     ],
     "secondary": [
-      "Coombs Test",
-      "Blood Group Incompatibility",
-      "Blood Transfusion",
-      "Glucocorticoids"
+      "Anemia",
+      "Transfusão de Sangue",
+      "Teste de Antiglobulina Direta",
+      "Hemólise",
+      "Ácido Fólico",
+      "Icterícia"
     ]
   },
   "pipeline_stats": {
-    "primary_terms": 1,
-    "secondary_terms": 4,
+    "primary_terms": 2,
+    "secondary_terms": 6,
     "dropped_by_category_filter": 0,
-    "dropped_by_gemini_validation": 0,
-    "final_count": 5
+    "dropped_by_gemini_validation": 1,
+    "final_count": 7
   }
 }

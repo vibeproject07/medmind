@@ -13,6 +13,18 @@
       "role": "primary"
     },
     {
+      "term": "Hemorragia Gastrointestinal",
+      "code": "D006471",
+      "tree_ids": [
+        "C06.405.227",
+        "C23.550.414.788"
+      ],
+      "hierarchy_path": "Doenças › C06.405.227",
+      "scope_note": "Sangramento em qualquer segmento do TRATO GASTROINTESTINAL do ESÔFAGO até o RETO.",
+      "name_en": "Gastrointestinal Hemorrhage",
+      "role": "primary"
+    },
+    {
       "term": "Prevenção Secundária",
       "code": "D055502",
       "tree_ids": [
@@ -24,18 +36,6 @@
       "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.897",
       "scope_note": "Prevenção de recorrências ou exacerbações de uma doença ou de complicações advindas de seu tratamento.",
       "name_en": "Secondary Prevention",
-      "role": "primary"
-    },
-    {
-      "term": "Hemorragia Gastrointestinal",
-      "code": "D006471",
-      "tree_ids": [
-        "C06.405.227",
-        "C23.550.414.788"
-      ],
-      "hierarchy_path": "Doenças › C06.405.227",
-      "scope_note": "Sangramento em qualquer segmento do TRATO GASTROINTESTINAL do ESÔFAGO até o RETO.",
-      "name_en": "Gastrointestinal Hemorrhage",
       "role": "primary"
     },
     {
@@ -51,6 +51,28 @@
       "role": "secondary"
     },
     {
+      "term": "Hipertensão Portal",
+      "code": "D006975",
+      "tree_ids": [
+        "C06.552.494"
+      ],
+      "hierarchy_path": "Doenças › C06.552.494",
+      "scope_note": "Aumento anormal de resistência ao fluxo sanguíneo dentro do SISTEMA PORTA hepático, frequentemente observado na CIRROSE HEPÁTICA e em situações com obstrução da VEIA PORTA.",
+      "name_en": "Hypertension, Portal",
+      "role": "secondary"
+    },
+    {
+      "term": "Ligadura",
+      "code": "D008026",
+      "tree_ids": [
+        "E04.426"
+      ],
+      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E04.426",
+      "scope_note": "Aplicação de uma ligadura para atar um vaso ou estrangular uma região.",
+      "name_en": "Ligation",
+      "role": "secondary"
+    },
+    {
       "term": "Endoscopia do Sistema Digestório",
       "code": "D016145",
       "tree_ids": [
@@ -62,6 +84,18 @@
       "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.372.250",
       "scope_note": "Exame endoscópico, terapia ou cirurgia do trato digestório.",
       "name_en": "Endoscopy, Digestive System",
+      "role": "secondary"
+    },
+    {
+      "term": "Antagonistas Adrenérgicos beta",
+      "code": "D000319",
+      "tree_ids": [
+        "D27.505.519.625.050.200.200",
+        "D27.505.696.577.050.200.200"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D27.505.519.625.050.200.200",
+      "scope_note": "Fármacos que se ligam aos receptores beta adrenérgicos sem ativá-los, bloqueando assim as ações de agonistas adrenérgicos beta. Os antagonistas adrenérgicos beta são usados no tratamento da hipertensão, arritmias cardíacas, angina pectoris, glaucoma, enxaquecas e ansiedade.",
+      "name_en": "Adrenergic beta-Antagonists",
       "role": "secondary"
     },
     {
@@ -83,23 +117,24 @@
   ],
   "themes_identified": {
     "primary": [
-      "Esophageal Varices",
-      "Gastrointestinal Hemorrhage",
-      "Secondary Prevention"
+      "Varizes Esofágicas",
+      "Hemorragia Gastrointestinal",
+      "Profilaxia Secundária"
     ],
     "secondary": [
-      "Liver Cirrhosis",
-      "Ligation",
-      "Endoscopy, Digestive System",
-      "Hepatitis C, Chronic",
-      "Ascites"
+      "Cirrose Hepática",
+      "Hipertensão Portal",
+      "Ligadura Elástica",
+      "Endoscopia Digestiva Alta",
+      "Betabloqueadores",
+      "Hepatite C Crônica"
     ]
   },
   "pipeline_stats": {
     "primary_terms": 3,
-    "secondary_terms": 5,
+    "secondary_terms": 6,
     "dropped_by_category_filter": 0,
-    "dropped_by_gemini_validation": 2,
-    "final_count": 6
+    "dropped_by_gemini_validation": 0,
+    "final_count": 9
   }
 }

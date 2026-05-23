@@ -14,8 +14,8 @@ import {
   generateEmbedding,
   buildQuestionText,
   vectorToString,
-  EMBEDDING_DIM,
 } from '@/lib/embeddings';
+import { classifyNoteDeCS } from '@/lib/note-decs';
 
 // ── Text builders ─────────────────────────────────────────────────────────────
 
@@ -142,22 +142,32 @@ async function enrichNote(noteId: number): Promise<void> {
     console.error(`[enrichment] content_links failed for note ${noteId}:`, e)
   );
 
-  // Check if local DeCS is available
-  const decsCheck = await query(
-    `SELECT COUNT(*) FROM decs_descriptors WHERE embedding IS NOT NULL`
-  );
-  const decsReady = parseInt(decsCheck.rows[0].count) > 0;
-
-  if (decsReady) {
-    const matches = await findTopDeCSLocal(embedding, 5);
-    const relevant = matches.filter((m) => m.score >= 0.75);
-    // Canonical shape: {ui, name_pt, name_en} — no score, matches batch script output
-    // Always write (even []) to clear any stale prior terms
-    const terms = relevant.map((m) => ({ ui: m.ui, name_pt: m.name_pt, name_en: m.name_en }));
-    await query(
-      `UPDATE notes SET decs_terms = $1 WHERE id = $2`,
-      [JSON.stringify(terms), noteId]
+  const decsKey = process.env.DECS_API_KEY?.trim();
+  const geminiKey = process.env.GEMINI_API_KEY?.trim() || process.env.GOOGLE_API_KEY?.trim();
+  if (decsKey && geminiKey) {
+    await classifyNoteDeCS(noteId).catch((e) =>
+      console.error(`[enrichment] DeCS classification failed for note ${noteId}:`, e),
     );
+  } else {
+  // Fallback rápido: apenas sugestão local por embedding (todos como secondary em decs_terms)
+    const decsCheck = await query(
+      `SELECT COUNT(*) FROM decs_descriptors WHERE embedding IS NOT NULL`,
+    );
+    const decsReady = parseInt(decsCheck.rows[0].count, 10) > 0;
+    if (decsReady) {
+      const matches = await findTopDeCSLocal(embedding, 5);
+      const relevant = matches.filter((m) => m.score >= 0.75);
+      const terms = relevant.map((m) => ({
+        ui: m.ui,
+        name_pt: m.name_pt,
+        name_en: m.name_en,
+        role: 'secondary',
+      }));
+      await query(`UPDATE notes SET decs_terms = $1::jsonb WHERE id = $2`, [
+        JSON.stringify(terms),
+        noteId,
+      ]);
+    }
   }
 
   console.log(`[enrichment] note ${noteId} enriched (embedding + DeCS)`);

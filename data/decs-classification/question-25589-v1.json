@@ -13,6 +13,17 @@
       "role": "primary"
     },
     {
+      "term": "Diagnóstico",
+      "code": "D003933",
+      "tree_ids": [
+        "E01"
+      ],
+      "hierarchy_path": "Técnicas e Equipamentos Analíticos",
+      "scope_note": "Determinação da natureza de uma doença ou estado, ou a diferenciação entre elas. A avaliação pode ser feita através de exame físico, exames laboratoriais, ou similares. É possível usar softwares para melhorar o processo de tomada de decisão.",
+      "name_en": "Diagnosis",
+      "role": "primary"
+    },
+    {
       "term": "Resistência à Insulina",
       "code": "D007333",
       "tree_ids": [
@@ -25,16 +36,14 @@
       "role": "primary"
     },
     {
-      "term": "Circunferência da Cintura",
-      "code": "D055105",
+      "term": "Triglicerídeos",
+      "code": "D014280",
       "tree_ids": [
-        "E01.370.600.115.100.160.560",
-        "E05.041.124.160.875",
-        "G07.100.100.160.560"
+        "D10.351.801"
       ],
-      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.600.115.100.160.560",
-      "scope_note": "Medida feita ao redor do corpo, na altura do ABDOME e acima do osso do quadril. Geralmente a medida é feita imediatamente depois da exalação.",
-      "name_en": "Waist Circumference",
+      "hierarchy_path": "Compostos Químicos e Drogas › D10.351.801",
+      "scope_note": "Éster formado de GLICEROL e três grupos de ácidos graxos.",
+      "name_en": "Triglycerides",
       "role": "secondary"
     },
     {
@@ -52,34 +61,61 @@
       "role": "secondary"
     },
     {
-      "term": "Triglicerídeos",
-      "code": "D014280",
+      "term": "Diabetes Mellitus",
+      "code": "D003920",
       "tree_ids": [
-        "D10.351.801"
+        "C18.452.394.750",
+        "C19.246"
       ],
-      "hierarchy_path": "Compostos Químicos e Drogas › D10.351.801",
-      "scope_note": "Éster formado de GLICEROL e três grupos de ácidos graxos.",
-      "name_en": "Triglycerides",
+      "hierarchy_path": "Doenças › C18.452.394.750",
+      "scope_note": "Grupo de transtornos heterogêneos caracterizados por HIPERGLICEMIA e INTOLERÂNCIA À GLUCOSE.",
+      "name_en": "Diabetes Mellitus",
+      "role": "secondary"
+    },
+    {
+      "term": "Intolerância à Glucose",
+      "code": "D018149",
+      "tree_ids": [
+        "C18.452.394.952.500"
+      ],
+      "hierarchy_path": "Doenças › C18.452.394.952.500",
+      "scope_note": "Estado patológico no qual o nível de GLICEMIA é menor que aproximadamente 140 mg/100 ml de PLASMA em jejum, e acima de 200 mg/100 ml aos 30, 60 e 90 minutos durante um TESTE DE TOLERÂNCIA A GLUCOSE. Esta afecção é encontrada frequentemente em DIABETES MELLITUS, mas também ocorre com outras doenças e DESNUTRIÇÃO.",
+      "name_en": "Glucose Intolerance",
+      "role": "secondary"
+    },
+    {
+      "term": "Obesidade Abdominal",
+      "code": "D056128",
+      "tree_ids": [
+        "C18.654.726.750.500.615",
+        "C23.888.144.699.500.063"
+      ],
+      "hierarchy_path": "Doenças › C18.654.726.750.500.615",
+      "scope_note": "Afecção caracterizada pelo excesso de gordura no abdome. A obesidade abdominal é tipicamente definida como a circunferência na cintura de 95 cm ou mais em homens e 85 cm ou mais em mulheres. A obesidade abnominal eleva o risco de desenvolver distúrbios como DIABETES, HIPERTENSÃO e SÍNDROME METABÓLICA.",
+      "name_en": "Obesity, Abdominal",
       "role": "secondary"
     }
   ],
   "themes_identified": {
     "primary": [
-      "Metabolic Syndrome",
-      "Insulin Resistance"
+      "Síndrome Metabólica",
+      "Diagnóstico",
+      "Resistência à Insulina"
     ],
     "secondary": [
-      "Waist Circumference",
-      "Triglycerides",
-      "Cholesterol, HDL",
-      "World Health Organization"
+      "Triglicerídeos",
+      "Colesterol HDL",
+      "Diabetes Mellitus",
+      "Intolerância à Glicose",
+      "Obesidade Abdominal",
+      "Organização Mundial da Saúde"
     ]
   },
   "pipeline_stats": {
-    "primary_terms": 2,
-    "secondary_terms": 4,
+    "primary_terms": 3,
+    "secondary_terms": 6,
     "dropped_by_category_filter": 0,
     "dropped_by_gemini_validation": 1,
-    "final_count": 5
+    "final_count": 8
   }
 }

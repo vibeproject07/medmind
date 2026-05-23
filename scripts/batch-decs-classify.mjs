@@ -21,6 +21,7 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import pg from 'pg';
+import { loadRuntimeAgents, buildGeminiBody } from './lib/ai-agents-db.mjs';
 
 // ── Load .env.local ──────────────────────────────────────────────────────────
 function loadEnv(path) {
@@ -63,69 +64,17 @@ const DECS_BASE        = 'https://api.bvsalud.org/decs/v2';
 const MAX_CANDIDATES   = 5;   // DeCS records fetched per search term
 const MIN_SIMILARITY   = 0.15; // minimum word-Jaccard to accept a DeCS result
 
-// ── Prompt defaults (used as fallback if agent not customized in DB) ──────────
-const DEFAULT_EXTRACTION_PROMPT = `Você é um especialista em classificação médica e no vocabulário controlado DeCS (Descritores em Ciências da Saúde) / MeSH.
-
-Analise o enunciado e as alternativas da questão médica abaixo. Compreenda o contexto clínico completo.
-
-Identifique:
-- TEMAS PRINCIPAIS (1 a 3): os conceitos médicos CENTRAIS da questão — diagnóstico principal, condição tratada, fármaco central ou procedimento chave.
-- TEMAS SECUNDÁRIOS (0 a 6, se aplicável): conceitos médicos relevantes mas não centrais — fisiopatologia associada, complicações, achados diagnósticos secundários, contexto clínico.
-
-Regras IMPORTANTES:
-- Use EXCLUSIVAMENTE termos que existam como descritores no vocabulário DeCS/MeSH em português (pt-BR).
-- Prefira termos específicos: "Insuficiência Cardíaca Congestiva" em vez de "Coração".
-- Inclua: condições clínicas, fármacos, exames diagnósticos, procedimentos, achados anatomopatológicos.
-- NÃO inclua: adjetivos genéricos ("crônico", "agudo"), o formato da questão, termos não-DeCS.
-- NÃO combine termos em frases compostas que não existam no DeCS.
-
-Retorne SOMENTE um JSON com esta estrutura (sem markdown, sem explicação):
-{"primary":["tema principal 1","tema principal 2"],"secondary":["tema secundário 1","tema secundário 2"]}
-
-Exemplos corretos:
-{"primary":["Diabetes Mellitus Tipo 2","Insulina"],"secondary":["Hemoglobina A Glicada","Nefropatias Diabéticas","Hiperglicemia"]}
-{"primary":["Doença Inflamatória Pélvica"],"secondary":["Gravidez Ectópica","Infertilidade Feminina"]}
-{"primary":["Infarto do Miocárdio","Trombolíticos"],"secondary":["Troponina","Eletrocardiografia","Choque Cardiogênico"]}`;
-
-const DEFAULT_VALIDATION_PROMPT = `Você é um especialista em vocabulário controlado DeCS/MeSH e classificação de conteúdo médico.
-
-Dado o enunciado de uma questão médica e uma lista de descritores DeCS candidatos (retornados pela API BVSalud), filtre e mantenha APENAS os descritores CLINICAMENTE RELEVANTES para o tema central da questão.
-
-Critérios de aprovação:
-- O descritor deve representar um conceito clínico central da questão (condição, fármaco, exame diagnóstico, procedimento, achado anatomopatológico).
-- Organismos (vírus, bactérias, parasitas, animais) são relevantes SOMENTE se a questão tratar de infectologia, microbiologia ou parasitologia explicitamente.
-- Descritores de categorias não relacionadas ao tema principal devem ser removidos.
-- Prefira manter descritores específicos sobre genéricos quando ambos estiverem presentes.
-
-Retorne SOMENTE um array JSON com os CÓDIGOS DeCS dos descritores aprovados.
-Exemplo: ["292","4794","51221"]
-Sem explicação, sem markdown, apenas o array JSON.`;
-
-// Prompts are loaded from DB at startup (overrides defaults if admin customized them)
-let EXTRACTION_PROMPT = DEFAULT_EXTRACTION_PROMPT;
-let VALIDATION_PROMPT = DEFAULT_VALIDATION_PROMPT;
+let classifierAgent;
+let validatorAgent;
 
 // ── DB ───────────────────────────────────────────────────────────────────────
 const pool = new pg.Pool({ connectionString: DB_URL });
 
-async function loadAgentPrompts() {
-  try {
-    const res = await pool.query(
-      `SELECT key, system_prompt FROM ai_agents WHERE key IN ('decs_classifier', 'decs_validator')`
-    );
-    for (const row of res.rows) {
-      if (row.key === 'decs_classifier' && row.system_prompt) {
-        EXTRACTION_PROMPT = row.system_prompt;
-        console.log(`   ✓ Prompt "decs_classifier" carregado do banco (customizado)`);
-      }
-      if (row.key === 'decs_validator' && row.system_prompt) {
-        VALIDATION_PROMPT = row.system_prompt;
-        console.log(`   ✓ Prompt "decs_validator" carregado do banco (customizado)`);
-      }
-    }
-  } catch {
-    console.log(`   ⚠ ai_agents não encontrada — usando prompts padrão`);
-  }
+async function loadAgentsFromDb() {
+  const map = await loadRuntimeAgents(pool, ['decs_classifier', 'decs_validator']);
+  classifierAgent = map.get('decs_classifier');
+  validatorAgent = map.get('decs_validator');
+  console.log(`   ✓ Agentes DB: decs_classifier (${classifierAgent.model}), decs_validator (${validatorAgent.model})`);
 }
 
 async function fetchQuestions() {
@@ -312,13 +261,9 @@ async function findBestDeCSMatch(searchTerm, questionText) {
 }
 
 // ── Gemini helpers ────────────────────────────────────────────────────────────
-async function callGemini(systemPrompt, userMessage, maxTokens = 512) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`;
-  const body = {
-    system_instruction: { parts: [{ text: systemPrompt }] },
-    contents: [{ role: 'user', parts: [{ text: userMessage }] }],
-    generationConfig: { temperature: 0.1, maxOutputTokens: maxTokens },
-  };
+async function callGeminiWithAgent(agent, userMessage, genOverrides = {}) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${agent.model}:generateContent?key=${GEMINI_KEY}`;
+  const body = buildGeminiBody(agent, userMessage, genOverrides);
   const res = await fetch(url, {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
   });
@@ -360,7 +305,7 @@ async function validateDescriptors(descriptors, questionText) {
   }));
   const userMessage = ['Questão:', questionText, '', 'Candidatos:', JSON.stringify(candidateList, null, 2)].join('\n');
   try {
-    const raw = await callGemini(VALIDATION_PROMPT, userMessage, 256);
+    const raw = await callGeminiWithAgent(validatorAgent, userMessage, { maxOutputTokens: 256 });
     const cleaned = raw.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
     const approved = JSON.parse(cleaned);
     if (!Array.isArray(approved)) return descriptors;
@@ -387,7 +332,7 @@ async function processQuestion(q, idx, total) {
 
   try {
     // Step 1: Gemini identifies primary + secondary themes
-    const rawText = await callGemini(EXTRACTION_PROMPT, questionText);
+    const rawText = await callGeminiWithAgent(classifierAgent, questionText, { responseMimeType: 'application/json' });
     const themes = parseThemes(rawText);
     const totalTerms = themes.primary.length + themes.secondary.length;
 
@@ -441,8 +386,8 @@ async function main() {
   console.log(`\n🔬 MedMind — Batch DeCS Classifier v2 (3-layer pipeline)`);
   console.log(`limit=${LIMIT} offset=${OFFSET} skip-classified=${SKIP_CLASSIFIED} (use --include-classified to reprocess) concurrency=${CONCURRENCY}\n`);
 
-  console.log(`Carregando prompts dos agentes...`);
-  await loadAgentPrompts();
+  console.log(`Carregando agentes do banco (ai_agents)…`);
+  await loadAgentsFromDb();
 
   await pool.query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_decs_descriptors TEXT`);
   const questions = await fetchQuestions();

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
-import { getAgent } from '@/lib/ai-agents';
+import { getRuntimeAgent } from '@/lib/ai-agent-runtime';
 import { runDeCSPipelineV2, type DeCSV2Result, type DeCSV2CandidateGroup } from '@/lib/decs-pipeline-v2';
 import { saveClassificationArtifact } from '@/lib/decs-classification-storage';
 
@@ -53,24 +53,9 @@ export async function POST(
       .filter(Boolean)
       .join('\n');
 
-    // ── Pre-flight: verify all V2 agent prompts are configured ───────────────
-    const [indexerAgent, selectorAgent] = await Promise.all([
-      getAgent('decs_indexer_v2'),
-      getAgent('decs_selector_v2'),
-    ]);
-    if (!indexerAgent?.system_prompt) {
-      return NextResponse.json(
-        { error: 'Agente decs_indexer_v2 não configurado. Verifique o painel de agentes.' },
-        { status: 500 }
-      );
-    }
-    if (!selectorAgent?.system_prompt) {
-      return NextResponse.json(
-        { error: 'Agente decs_selector_v2 não configurado. Verifique o painel de agentes.' },
-        { status: 500 }
-      );
-    }
-    const v2Model = indexerAgent.model ?? 'gemini-2.5-flash';
+    const indexerAgent = await getRuntimeAgent('decs_indexer_v2');
+    await getRuntimeAgent('decs_selector_v2');
+    const v2Model = indexerAgent.model;
 
     const { result, themes_identified, candidate_groups, debug_trace, stats } = await runDeCSPipelineV2(
       questionText,

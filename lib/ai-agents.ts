@@ -1,11 +1,13 @@
 import { query } from '@/lib/db';
 import { AI_AGENT_DEFAULTS, AiAgentDefault, getDefault } from '@/lib/ai-agents-defaults';
+import { ensureAgentSchema } from '@/lib/ai-agent-runtime';
 
 export interface AiAgent {
   key: string;
   name: string;
   description: string;
   system_prompt: string;
+  system_instruction: string | null;
   model: string;
   temperature: number;
   max_output_tokens: number;
@@ -15,18 +17,7 @@ export interface AiAgent {
 }
 
 async function ensureTable() {
-  await query(`
-    CREATE TABLE IF NOT EXISTS ai_agents (
-      key VARCHAR(100) PRIMARY KEY,
-      name VARCHAR(255) NOT NULL,
-      description TEXT NOT NULL DEFAULT '',
-      system_prompt TEXT NOT NULL,
-      model VARCHAR(100) NOT NULL DEFAULT 'gemini-2.5-flash',
-      temperature NUMERIC(3,2) NOT NULL DEFAULT 0.20,
-      max_output_tokens INTEGER NOT NULL DEFAULT 4096,
-      updated_at TIMESTAMPTZ
-    )
-  `);
+  await ensureAgentSchema();
 }
 
 function rowToAgent(row: Record<string, unknown>, isBuiltin: boolean): AiAgent {
@@ -35,6 +26,7 @@ function rowToAgent(row: Record<string, unknown>, isBuiltin: boolean): AiAgent {
     name: row.name as string,
     description: (row.description as string) ?? '',
     system_prompt: row.system_prompt as string,
+    system_instruction: (row.system_instruction as string | null) ?? null,
     model: (row.model as string) ?? 'gemini-2.5-flash',
     temperature: parseFloat(String(row.temperature ?? 0.2)),
     max_output_tokens: parseInt(String(row.max_output_tokens ?? 4096), 10),
@@ -61,7 +53,7 @@ export async function listAgents(): Promise<AiAgent[]> {
   const builtins: AiAgent[] = AI_AGENT_DEFAULTS.map((def) => {
     const row = dbMap.get(def.key);
     if (row) return mergeWithDefault(row, def);
-    return { ...def, is_customized: false, is_builtin: true, updated_at: null };
+    return { ...def, system_instruction: null, is_customized: false, is_builtin: true, updated_at: null };
   });
 
   const customs: AiAgent[] = [];
@@ -81,7 +73,7 @@ export async function getAgent(key: string): Promise<AiAgent | null> {
 
   if (res.rows.length === 0) {
     if (!def) return null;
-    return { ...def, is_customized: false, is_builtin: true, updated_at: null };
+    return { ...def, system_instruction: null, is_customized: false, is_builtin: true, updated_at: null };
   }
 
   const row = res.rows[0] as Record<string, unknown>;
@@ -91,7 +83,12 @@ export async function getAgent(key: string): Promise<AiAgent | null> {
 
 export async function upsertAgent(
   key: string,
-  data: Partial<Pick<AiAgent, 'name' | 'description' | 'system_prompt' | 'model' | 'temperature' | 'max_output_tokens'>>
+  data: Partial<
+    Pick<
+      AiAgent,
+      'name' | 'description' | 'system_prompt' | 'system_instruction' | 'model' | 'temperature' | 'max_output_tokens'
+    >
+  >
 ): Promise<AiAgent | null> {
   const def = getDefault(key);
   await ensureTable();
@@ -102,22 +99,28 @@ export async function upsertAgent(
   const name = data.name ?? def?.name ?? existing?.name ?? '';
   const description = data.description ?? def?.description ?? existing?.description ?? '';
   const system_prompt = data.system_prompt ?? def?.system_prompt ?? existing?.system_prompt ?? '';
+  const system_instruction =
+    data.system_instruction !== undefined
+      ? data.system_instruction
+      : (existing?.system_instruction ?? def?.system_prompt ?? system_prompt);
   const model = data.model ?? def?.model ?? existing?.model ?? 'gemini-2.5-flash';
   const temperature = data.temperature ?? def?.temperature ?? existing?.temperature ?? 0.2;
-  const max_output_tokens = data.max_output_tokens ?? def?.max_output_tokens ?? existing?.max_output_tokens ?? 4096;
+  const max_output_tokens =
+    data.max_output_tokens ?? def?.max_output_tokens ?? existing?.max_output_tokens ?? 4096;
 
   await query(
-    `INSERT INTO ai_agents (key, name, description, system_prompt, model, temperature, max_output_tokens, updated_at)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
+    `INSERT INTO ai_agents (key, name, description, system_prompt, system_instruction, model, temperature, max_output_tokens, updated_at)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW())
      ON CONFLICT (key) DO UPDATE SET
        name = EXCLUDED.name,
        description = EXCLUDED.description,
        system_prompt = EXCLUDED.system_prompt,
+       system_instruction = EXCLUDED.system_instruction,
        model = EXCLUDED.model,
        temperature = EXCLUDED.temperature,
        max_output_tokens = EXCLUDED.max_output_tokens,
        updated_at = NOW()`,
-    [key, name, description, system_prompt, model, temperature, max_output_tokens]
+    [key, name, description, system_prompt, system_instruction, model, temperature, max_output_tokens]
   );
 
   return getAgent(key);
@@ -128,6 +131,7 @@ export async function createAgent(data: {
   name: string;
   description: string;
   system_prompt: string;
+  system_instruction?: string | null;
   model: string;
   temperature: number;
   max_output_tokens: number;
@@ -142,9 +146,18 @@ export async function createAgent(data: {
 
   try {
     await query(
-      `INSERT INTO ai_agents (key, name, description, system_prompt, model, temperature, max_output_tokens, updated_at)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())`,
-      [data.key, data.name, data.description, data.system_prompt, data.model, data.temperature, data.max_output_tokens]
+      `INSERT INTO ai_agents (key, name, description, system_prompt, system_instruction, model, temperature, max_output_tokens, updated_at)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW())`,
+      [
+        data.key,
+        data.name,
+        data.description,
+        data.system_prompt,
+        data.system_instruction ?? data.system_prompt,
+        data.model,
+        data.temperature,
+        data.max_output_tokens,
+      ],
     );
   } catch (err: unknown) {
     const pgErr = err as { code?: string };
@@ -173,6 +186,7 @@ export async function deleteAgent(key: string): Promise<boolean> {
 }
 
 export async function getAgentPrompt(key: string): Promise<string> {
-  const agent = await getAgent(key);
-  return agent?.system_prompt ?? getDefault(key)?.system_prompt ?? '';
+  const { getRuntimeAgent } = await import('@/lib/ai-agent-runtime');
+  const agent = await getRuntimeAgent(key);
+  return agent.system_instruction;
 }

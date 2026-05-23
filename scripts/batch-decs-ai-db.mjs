@@ -25,6 +25,7 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import pg from 'pg';
 import { GoogleGenAI } from '@google/genai';
+import { loadRuntimeAgents, buildGeminiBody } from './lib/ai-agents-db.mjs';
 
 // ── .env.local ───────────────────────────────────────────────────────────────
 function loadEnv(path) {
@@ -75,38 +76,6 @@ const DECS_BASE = 'https://api.bvsalud.org/decs/v2';
 const MAX_CANDIDATES = 5;
 const MIN_SIMILARITY = 0.15;
 const EMBED_BASE = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent';
-
-const DEFAULT_CLASSIFIER_PROMPT = `Você é um especialista em classificação médica e no vocabulário controlado DeCS (Descritores em Ciências da Saúde) / MeSH.
-
-Analise o enunciado e as alternativas da questão médica abaixo. Compreenda o contexto clínico completo.
-
-Identifique:
-- TEMAS PRINCIPAIS (1 a 3): os conceitos médicos CENTRAIS da questão — diagnóstico principal, condição tratada, fármaco central ou procedimento chave.
-- TEMAS SECUNDÁRIOS (0 a 6, se aplicável): conceitos médicos relevantes mas não centrais — fisiopatologia associada, complicações, achados diagnósticos secundários, contexto clínico.
-
-Regras IMPORTANTES:
-- Use EXCLUSIVAMENTE termos que existam como descritores no vocabulário DeCS/MeSH em português (pt-BR).
-- Prefira termos específicos: "Insuficiência Cardíaca Congestiva" em vez de "Coração".
-- Inclua: condições clínicas, fármacos, exames diagnósticos, procedimentos, achados anatomopatológicos.
-- NÃO inclua: adjetivos genéricos ("crônico", "agudo"), o formato da questão, termos não-DeCS.
-- NÃO combine termos em frases compostas que não existam no DeCS.
-
-Retorne SOMENTE um JSON com esta estrutura (sem markdown, sem explicação):
-{"primary":["tema principal 1","tema principal 2"],"secondary":["tema secundário 1","tema secundário 2"]}`;
-
-const DEFAULT_VALIDATOR_PROMPT = `Você é um especialista em vocabulário controlado DeCS/MeSH e classificação de conteúdo médico.
-
-Dado o enunciado de uma questão médica e uma lista de descritores DeCS candidatos (retornados pela API BVSalud), filtre e mantenha APENAS os descritores CLINICAMENTE RELEVANTES para o tema central da questão.
-
-Critérios de aprovação:
-- O descritor deve representar um conceito clínico central da questão (condição, fármaco, exame diagnóstico, procedimento, achado anatomopatológico).
-- Organismos (vírus, bactérias, parasitas, animais) são relevantes SOMENTE se a questão tratar de infectologia, microbiologia ou parasitologia explicitamente.
-- Descritores de categorias não relacionadas ao tema principal devem ser removidos.
-- Prefira manter descritores específicos sobre genéricos quando ambos estiverem presentes.
-
-Retorne SOMENTE um array JSON com os CÓDIGOS DeCS dos descritores aprovados.
-Exemplo: ["292","4794","51221"]
-Sem explicação, sem markdown, apenas o array JSON.`;
 
 const CATEGORY_LABELS = {
   A: 'Anatomia',
@@ -190,8 +159,8 @@ async function withGemini429Retry(label, fn, { maxAttempts = GEMINI_MAX_RETRIES 
   throw lastErr;
 }
 
-let classifierAgent = { system_prompt: DEFAULT_CLASSIFIER_PROMPT, model: 'gemini-2.5-flash' };
-let validatorPrompt = DEFAULT_VALIDATOR_PROMPT;
+let classifierAgent;
+let validatorAgent;
 
 function toArray(v) {
   if (Array.isArray(v)) return v;
@@ -243,24 +212,10 @@ async function ensureColumns() {
 }
 
 async function loadAgentsFromDb() {
-  try {
-    const res = await pool.query(
-      `SELECT key, system_prompt, model FROM ai_agents WHERE key = ANY($1)`,
-      [['decs_classifier', 'decs_validator']],
-    );
-    for (const row of res.rows) {
-      if (row.key === 'decs_classifier' && row.system_prompt) {
-        classifierAgent.system_prompt = row.system_prompt;
-        if (row.model) classifierAgent.model = row.model;
-      }
-      if (row.key === 'decs_validator' && row.system_prompt) {
-        validatorPrompt = row.system_prompt;
-      }
-    }
-    console.log('Prompts carregados (decs_classifier / decs_validator).');
-  } catch {
-    console.log('Tabela ai_agents indisponível — usando prompts padrão embutidos.');
-  }
+  const map = await loadRuntimeAgents(pool, ['decs_classifier', 'decs_validator']);
+  classifierAgent = map.get('decs_classifier');
+  validatorAgent = map.get('decs_validator');
+  console.log(`Agentes DB: decs_classifier (${classifierAgent.model}), decs_validator (${validatorAgent.model})`);
 }
 
 let localDeCSAvailable = null;
@@ -388,7 +343,7 @@ async function enrichFromDB(records) {
   }
 }
 
-async function validateDescriptorsWithGemini(descriptors, questionText, model) {
+async function validateDescriptorsWithGemini(descriptors, questionText) {
   if (descriptors.length === 0) return [];
   const candidateList = descriptors.map((d) => ({
     code: d.code,
@@ -398,16 +353,8 @@ async function validateDescriptorsWithGemini(descriptors, questionText, model) {
     categoria: buildHierarchyPath(d.tree_ids[0] ?? '').split(' › ')[0],
   }));
   const userMessage = ['Questão:', questionText, '', 'Candidatos:', JSON.stringify(candidateList, null, 2)].join('\n');
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_KEY}`;
-  const body = {
-    system_instruction: { parts: [{ text: validatorPrompt }] },
-    contents: [{ role: 'user', parts: [{ text: userMessage }] }],
-    generationConfig: {
-      temperature: 0,
-      maxOutputTokens: 8192,
-      responseMimeType: 'application/json',
-    },
-  };
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${validatorAgent.model}:generateContent?key=${GEMINI_KEY}`;
+  const body = buildGeminiBody(validatorAgent, userMessage, { responseMimeType: 'application/json' });
   try {
     let data;
     for (let attempt = 1; attempt <= GEMINI_MAX_RETRIES; attempt++) {
@@ -513,7 +460,7 @@ async function runDeCSPipeline(themes, questionText) {
   }
 
   const enriched = await enrichFromDB(afterSearch);
-  const afterValidation = await validateDescriptorsWithGemini(enriched, questionText, classifierAgent.model);
+  const afterValidation = await validateDescriptorsWithGemini(enriched, questionText);
   const droppedByGemini = afterSearch.length - afterValidation.length;
 
   const primary = afterValidation
@@ -588,9 +535,9 @@ async function extractThemesWithGoogleGenAI(questionText) {
       model: classifierAgent.model,
       contents: [{ role: 'user', parts: [{ text: questionText }] }],
       config: {
-        systemInstruction: classifierAgent.system_prompt,
-        temperature: 0.1,
-        maxOutputTokens: 8192,
+        systemInstruction: classifierAgent.system_instruction,
+        temperature: classifierAgent.temperature,
+        maxOutputTokens: classifierAgent.max_output_tokens,
         responseMimeType: 'application/json',
       },
     });
@@ -639,12 +586,12 @@ async function processOneQuestion(q, index, total) {
   const questionText = buildQuestionText(q);
   const label = `[${String(index + 1).padStart(4)}/${total}] id=${q.id}`;
 
-  if (!classifierAgent.system_prompt?.trim()) {
-    console.log(`${label} ✗ Agente decs_classifier sem system_prompt`);
+  if (!classifierAgent.system_instruction?.trim()) {
+    console.log(`${label} ✗ Agente decs_classifier sem system_instruction/system_prompt no banco`);
     return { ok: false, reason: 'no_classifier_prompt' };
   }
-  if (!validatorPrompt?.trim()) {
-    console.log(`${label} ✗ Agente decs_validator sem system_prompt`);
+  if (!validatorAgent.system_instruction?.trim()) {
+    console.log(`${label} ✗ Agente decs_validator sem system_instruction/system_prompt no banco`);
     return { ok: false, reason: 'no_validator_prompt' };
   }
 

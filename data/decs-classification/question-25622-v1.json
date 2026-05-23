@@ -1,19 +1,6 @@
 {
   "result": [
     {
-      "term": "Dor Crônica",
-      "code": "D059350",
-      "tree_ids": [
-        "C23.888.592.612.274",
-        "F02.830.816.444.433",
-        "G11.561.790.444.461"
-      ],
-      "hierarchy_path": "Doenças › C23.888.592.612.274",
-      "scope_note": "Sensação de dor que persiste por mais do que poucos meses. Pode ou não estar associada com trauma ou doença e pode persistir depois que a lesão inicial estiver cicatrizada. Sua localização, características e periodicidade são mais imprecisas do que as da dor aguda.",
-      "name_en": "Chronic Pain",
-      "role": "primary"
-    },
-    {
       "term": "Dor Lombar",
       "code": "D017116",
       "tree_ids": [
@@ -25,16 +12,14 @@
       "role": "primary"
     },
     {
-      "term": "Anti-Inflamatórios não Esteroides",
-      "code": "D000894",
+      "term": "Serviços de Fisioterapia",
+      "code": "DDCS060738",
       "tree_ids": [
-        "D27.505.696.663.850.014.040.500",
-        "D27.505.954.158.030",
-        "D27.505.954.329.030"
+        "SP2.840.087"
       ],
-      "hierarchy_path": "Compostos Químicos e Drogas › D27.505.696.663.850.014.040.500",
-      "scope_note": "Anti-inflamatórios de natureza não esteroidal. Além de ações anti-inflamatórias, têm ações analgésicas, antipiréticas e inibidoras de plaquetas. Atuam bloqueando a síntese de prostaglandinas por meio da inibição da ciclooxigenase, que converte o ácido araquidônico em endoperóxidos cíclicos, precursores das prostaglandinas. A inibição da síntese de prostaglandinas é responsável por suas ações analgésicas, antipiréticas e inibidoras de plaquetas. Outros mecanismos podem contribuir para seus efeitos anti-inflamatórios.",
-      "name_en": "Anti-Inflammatory Agents, Non-Steroidal",
+      "hierarchy_path": "Saúde Pública › SP2.840.087",
+      "scope_note": "Conjunto de procedimentos realizados por fisioterapeutas com o objetivo de promover a recuperação, prevenção e melhoria da função física, mobilidade e qualidade de vida de indivíduos e populações, sendo prestados em diferentes contextos, como hospitais, clínicas, centros de reabilitação, domicílios e instituições de ensino.",
+      "name_en": "Physical Therapy Services",
       "role": "secondary"
     },
     {
@@ -51,35 +36,47 @@
       "role": "secondary"
     },
     {
-      "term": "Modalidades de Fisioterapia",
-      "code": "D026741",
+      "term": "Diagnóstico",
+      "code": "D003933",
       "tree_ids": [
-        "E02.779",
-        "E02.831.535"
+        "E01"
       ],
-      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.779",
-      "scope_note": "Modalidades terapêuticas frequentemente utilizadas na ESPECIALIDADE DE FISIOTERAPIA por FISIOTERAPEUTAS para melhorar, manter ou restaurar o bem-estar físico e fisiológico de um indivíduo.",
-      "name_en": "Physical Therapy Modalities",
+      "hierarchy_path": "Técnicas e Equipamentos Analíticos",
+      "scope_note": "Determinação da natureza de uma doença ou estado, ou a diferenciação entre elas. A avaliação pode ser feita através de exame físico, exames laboratoriais, ou similares. É possível usar softwares para melhorar o processo de tomada de decisão.",
+      "name_en": "Diagnosis",
+      "role": "secondary"
+    },
+    {
+      "term": "Manejo da Dor",
+      "code": "D059408",
+      "tree_ids": [
+        "E02.745",
+        "N04.590.607.500"
+      ],
+      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.745",
+      "scope_note": "Forma de terapia que emprega uma abordagem coordenada e interdisciplinar para acalmar o sofrimento e melhorar a qualidade de vida de quem sente dor.",
+      "name_en": "Pain Management",
       "role": "secondary"
     }
   ],
   "themes_identified": {
     "primary": [
-      "Low Back Pain",
-      "Chronic Pain"
+      "Dor Lombar Crônica",
+      "Síndromes de Dor Miofascial"
     ],
     "secondary": [
-      "Physical Therapy Modalities",
-      "Muscle Relaxants, Central",
-      "Anti-Inflammatory Agents, Non-Steroidal",
-      "Conservative Treatment"
+      "Fisioterapia",
+      "Relaxantes Musculares",
+      "Educação do Paciente",
+      "Exames de Diagnóstico",
+      "Manejo da Dor"
     ]
   },
   "pipeline_stats": {
     "primary_terms": 2,
-    "secondary_terms": 4,
+    "secondary_terms": 5,
     "dropped_by_category_filter": 0,
-    "dropped_by_gemini_validation": 1,
+    "dropped_by_gemini_validation": 2,
     "final_count": 5
   }
 }

@@ -315,10 +315,11 @@ export async function findBestDeCSMatch(
   apiKey: string,
   questionText: string,
   minSimilarity = 0.15,
-  maxCandidates = 5,
+  maxCandidates = 5, 
   geminiKey?: string,
 ): Promise<DeCSRecord | null> {
   // ── Try local pgvector first ──────────────────────────────────────────────
+  console.log("Candidatos", maxCandidates);
   if (geminiKey && (await isLocalDeCSAvailable())) {
     const localCandidates = await searchDeCSLocal(
       searchTerm,
@@ -329,6 +330,8 @@ export async function findBestDeCSMatch(
       .filter((c) => isCategoryAcceptable(c, questionText))
       .sort((a, b) => (b.similarity ?? 0) - (a.similarity ?? 0));
     if (filtered.length > 0) return filtered[0];
+
+    console.log("DB", localCandidates);
   }
 
   // ── Fallback: BVS API ─────────────────────────────────────────────────────
@@ -337,6 +340,8 @@ export async function findBestDeCSMatch(
     apiKey,
     maxCandidates,
   );
+
+  console.log("API", candidates);
 
   const scored = candidates
     .map((c) => ({ ...c, similarity: wordJaccard(searchTerm, c.term) }))
@@ -397,6 +402,7 @@ export async function validateDescriptorsWithGemini(
   questionText: string,
   geminiKey: string,
   model = "gemini-2.5-flash",
+  validatorAgentKey = "decs_validator",
 ): Promise<DeCSRecord[]> {
   if (descriptors.length === 0) return [];
 
@@ -409,7 +415,7 @@ export async function validateDescriptorsWithGemini(
   }));
 
   const userMessage = [
-    "Questão:",
+    "Conteúdo:",
     questionText,
     "",
     "Candidatos:",
@@ -417,16 +423,16 @@ export async function validateDescriptorsWithGemini(
   ].join("\n");
 
   try {
-    const { getAgentPrompt } = await import("@/lib/ai-agents");
-    const validationPrompt = await getAgentPrompt("decs_validator");
+    const { getRuntimeAgent } = await import("@/lib/ai-agent-runtime");
+    const validator = await getRuntimeAgent(validatorAgentKey);
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${geminiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${validator.model}:generateContent?key=${geminiKey}`;
     const body = {
-      system_instruction: { parts: [{ text: validationPrompt }] },
+      system_instruction: { parts: [{ text: validator.system_instruction }] },
       contents: [{ role: "user", parts: [{ text: userMessage }] }],
       generationConfig: {
-        temperature: 0,
-        maxOutputTokens: 8192,
+        temperature: validator.temperature,
+        maxOutputTokens: validator.max_output_tokens,
         responseMimeType: "application/json",
       },
     };
@@ -482,6 +488,7 @@ export async function runDeCSPipeline(
   decsKey: string,
   geminiKey: string,
   model = "gemini-2.5-flash",
+  validatorAgentKey = "decs_validator",
 ): Promise<{
   descriptors: DeCSRecord[];
   dropped_by_filter: number;
@@ -576,6 +583,7 @@ export async function runDeCSPipeline(
     questionText,
     geminiKey,
     model,
+    validatorAgentKey,
   );
 
   const droppedByGemini = afterSearch.length - afterValidation.length;

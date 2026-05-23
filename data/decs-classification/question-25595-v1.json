@@ -13,40 +13,15 @@
       "role": "primary"
     },
     {
-      "term": "Cirrose Hepática",
-      "code": "D008103",
+      "term": "Ascite",
+      "code": "D001201",
       "tree_ids": [
-        "C06.552.630",
-        "C23.550.355.412"
+        "C23.550.081"
       ],
-      "hierarchy_path": "Doenças › C06.552.630",
-      "scope_note": "A doença hepática na qual a microcirculação normal, a anatomia vascular no geral, e a arquitetura hepática têm sido destruídas e alteradas de modo variado por septos fibrosos ao redor de nódulos parenquimatosos regenerados ou em regeneração.",
-      "name_en": "Liver Cirrhosis",
+      "hierarchy_path": "Doenças › C23.550.081",
+      "scope_note": "Acúmulo ou retenção de líquido livre dentro da cavidade peritoneal.",
+      "name_en": "Ascites",
       "role": "primary"
-    },
-    {
-      "term": "Hemorragia Gastrointestinal",
-      "code": "D006471",
-      "tree_ids": [
-        "C06.405.227",
-        "C23.550.414.788"
-      ],
-      "hierarchy_path": "Doenças › C06.405.227",
-      "scope_note": "Sangramento em qualquer segmento do TRATO GASTROINTESTINAL do ESÔFAGO até o RETO.",
-      "name_en": "Gastrointestinal Hemorrhage",
-      "role": "primary"
-    },
-    {
-      "term": "Antibioticoprofilaxia",
-      "code": "D019072",
-      "tree_ids": [
-        "E02.319.162.150",
-        "E02.319.703.150"
-      ],
-      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.319.162.150",
-      "scope_note": "Utilização de antibióticos antes, durante ou após um procedimento diagnóstico, terapêutico ou cirúrgico para prevenir complicações infecciosas.",
-      "name_en": "Antibiotic Prophylaxis",
-      "role": "secondary"
     },
     {
       "term": "Hepatite C Crônica",
@@ -65,48 +40,91 @@
       "role": "secondary"
     },
     {
-      "term": "Ceftriaxona",
-      "code": "D002443",
+      "term": "Hemorragia Gastrointestinal",
+      "code": "D006471",
       "tree_ids": [
-        "D02.065.589.099.249.190.190.155",
-        "D02.886.665.074.190.190.155",
-        "D03.633.100.300.249.190.190.155"
+        "C06.405.227",
+        "C23.550.414.788"
       ],
-      "hierarchy_path": "Compostos Químicos e Drogas › D02.065.589.099.249.190.190.155",
-      "scope_note": "Antibiótico cefalosporina de amplo espectro e derivado de cefotaxima com uma longa meia-vida e alta penetrabilidade em meninges, olhos e orelhas internas.",
-      "name_en": "Ceftriaxone",
+      "hierarchy_path": "Doenças › C06.405.227",
+      "scope_note": "Sangramento em qualquer segmento do TRATO GASTROINTESTINAL do ESÔFAGO até o RETO.",
+      "name_en": "Gastrointestinal Hemorrhage",
       "role": "secondary"
     },
     {
-      "term": "Líquido Ascítico",
-      "code": "D001202",
+      "term": "Antibioticoprofilaxia",
+      "code": "D019072",
       "tree_ids": [
-        "A12.207.119"
+        "E02.319.162.150",
+        "E02.319.703.150"
       ],
-      "hierarchy_path": "Anatomia › A12.207.119",
-      "scope_note": "Líquido seroso das ASCITES que se acumula na cavidade peritoneal.",
-      "name_en": "Ascitic Fluid",
+      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E02.319.162.150",
+      "scope_note": "Utilização de antibióticos antes, durante ou após um procedimento diagnóstico, terapêutico ou cirúrgico para prevenir complicações infecciosas.",
+      "name_en": "Antibiotic Prophylaxis",
+      "role": "secondary"
+    },
+    {
+      "term": "Combinação Piperacilina e Tazobactam",
+      "code": "D000077725",
+      "tree_ids": [
+        "D02.065.589.099.750.687.750.500",
+        "D02.065.589.099.750.750.050.650.500",
+        "D02.886.108.750.687.750.500",
+        "D02.886.108.750.750.050.650.500",
+        "D02.886.590.841.500",
+        "D03.633.100.300.750.687.750.500",
+        "D03.633.100.300.750.750.050.650.500",
+        "D26.310.625"
+      ],
+      "hierarchy_path": "Compostos Químicos e Drogas › D02.065.589.099.750.687.750.500",
+      "scope_note": "Produto da combinação de antibióticos piperaciclina e tazobactam, um derivado do ácido penicilânico com atividade inibitória da beta-lactamase, usado no tratamento endovenoso de dores abdominais, pélvicas e infecções de pele e no de pneumonia associada à comunidade de gravidade moderada. É também usada no tratamento de INFECÇÕES POR PSEUDOMONAS AERUGINOSA.",
+      "name_en": "Piperacillin, Tazobactam Drug Combination",
+      "role": "secondary"
+    },
+    {
+      "term": "Leucocitose",
+      "code": "D007964",
+      "tree_ids": [
+        "C15.378.553.475",
+        "C23.550.526"
+      ],
+      "hierarchy_path": "Doenças › C15.378.553.475",
+      "scope_note": "Aumento transitório no número de leucócitos em um líquido corpóreo.",
+      "name_en": "Leukocytosis",
+      "role": "secondary"
+    },
+    {
+      "term": "Anemia",
+      "code": "D000740",
+      "tree_ids": [
+        "C15.378.050"
+      ],
+      "hierarchy_path": "Doenças › C15.378.050",
+      "scope_note": "Redução no número de ERITRÓCITOS circulantes ou na quantidade de HEMOGLOBINA.",
+      "name_en": "Anemia",
       "role": "secondary"
     }
   ],
   "themes_identified": {
     "primary": [
-      "Liver Cirrhosis",
-      "Peritonitis",
-      "Gastrointestinal Hemorrhage"
+      "Hepatopatia Crônica",
+      "Peritonite Bacteriana Espontânea",
+      "Ascite"
     ],
     "secondary": [
-      "Ascites",
-      "Hepatitis C, Chronic",
-      "Antibiotic Prophylaxis",
-      "Ceftriaxone"
+      "Hepatite C Crônica",
+      "Hemorragia Gastrointestinal",
+      "Antibioticoterapia",
+      "Piperacilina-Tazobactam",
+      "Leucocitose",
+      "Anemia"
     ]
   },
   "pipeline_stats": {
     "primary_terms": 3,
-    "secondary_terms": 4,
+    "secondary_terms": 6,
     "dropped_by_category_filter": 0,
-    "dropped_by_gemini_validation": 0,
-    "final_count": 7
+    "dropped_by_gemini_validation": 1,
+    "final_count": 8
   }
 }

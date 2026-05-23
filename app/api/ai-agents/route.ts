@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'JSON inválido' }, { status: 400 });
   }
 
-  const { key, name, description, system_prompt, model, temperature, max_output_tokens } = body;
+  const { key, name, description, system_prompt, system_instruction, model, temperature, max_output_tokens } = body;
 
   if (typeof key !== 'string' || !key.trim()) {
     return NextResponse.json({ error: 'O campo "key" é obrigatório' }, { status: 400 });
@@ -83,6 +83,10 @@ export async function POST(req: NextRequest) {
       name: (name as string).trim(),
       description: typeof description === 'string' ? description.trim() : '',
       system_prompt: (system_prompt as string).trim(),
+      system_instruction:
+        typeof system_instruction === 'string' && system_instruction.trim()
+          ? system_instruction.trim()
+          : (system_prompt as string).trim(),
       model: modelValue,
       temperature: tempValue,
       max_output_tokens: tokensValue,

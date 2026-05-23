@@ -44,7 +44,7 @@ export async function PUT(req: NextRequest, { params }: { params: { key: string 
     return NextResponse.json({ error: 'JSON inválido' }, { status: 400 });
   }
 
-  const { name, description, system_prompt, model, temperature, max_output_tokens } = body as Record<string, unknown>;
+  const { name, description, system_prompt, system_instruction, model, temperature, max_output_tokens } = body as Record<string, unknown>;
 
   if (Number.isFinite(temperature) && ((temperature as number) < 0 || (temperature as number) > 1)) {
     return NextResponse.json({ error: 'Temperatura deve estar entre 0 e 1.' }, { status: 400 });
@@ -57,6 +57,8 @@ export async function PUT(req: NextRequest, { params }: { params: { key: string 
     name: typeof name === 'string' ? name : undefined,
     description: typeof description === 'string' ? description : undefined,
     system_prompt: typeof system_prompt === 'string' ? system_prompt : undefined,
+    system_instruction:
+      typeof system_instruction === 'string' ? system_instruction : system_instruction === null ? null : undefined,
     model: typeof model === 'string' && VALID_MODELS.has(model) ? model : undefined,
     temperature: Number.isFinite(temperature) ? (temperature as number) : undefined,
     max_output_tokens: Number.isFinite(max_output_tokens) ? Math.round(max_output_tokens as number) : undefined,

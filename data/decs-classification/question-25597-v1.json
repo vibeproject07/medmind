@@ -13,15 +13,31 @@
       "role": "primary"
     },
     {
-      "term": "Diarreia",
-      "code": "D003967",
+      "term": "Complexo Antígeno L1 Leucocitário",
+      "code": "D039841",
       "tree_ids": [
-        "C23.888.821.214"
+        "D12.776.157.125.750.500",
+        "D12.776.631.658.750",
+        "D23.050.301.562"
       ],
-      "hierarchy_path": "Doenças › C23.888.821.214",
-      "scope_note": "Aumento na liquidez ou diminuição na consistência das FEZES, como evacuação contínua. A consistência fecal está relacionada com a razão entre a capacidade de sólidos insolúveis para reter água e a água total, e não com o total de água presente. Diarreia é diferente de excesso de defecação ou massa fecal aumentada.",
-      "name_en": "Diarrhea",
-      "role": "primary"
+      "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.125.750.500",
+      "scope_note": "Membro da família proteína S-100 presente em altas concentração no sangue e líquido intersticial em vários transtornos infecciosos, inflamatórios e malignos, incluindo a artrite reumatoide, doença inflamatória do intestino e fibrose cística. É um complexo de cadeia leve (CALGRANULINA A) e uma cadeia pesada (CALGRANULINA B). L1 se liga ao cálcio através dos motivos EF hand e mostrou-se possuir atividade antimicrobiana.",
+      "name_en": "Leukocyte L1 Antigen Complex",
+      "role": "secondary"
+    },
+    {
+      "term": "Colonoscopia",
+      "code": "D003113",
+      "tree_ids": [
+        "E01.370.372.250.250.200",
+        "E01.370.388.250.250.250.160",
+        "E04.210.240.250.160",
+        "E04.502.250.250.250.160"
+      ],
+      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.372.250.250.200",
+      "scope_note": "Exame endoscópico, terapia ou cirurgia da superfície luminal do colo.",
+      "name_en": "Colonoscopy",
+      "role": "secondary"
     },
     {
       "term": "Hemorragia Gastrointestinal",
@@ -50,33 +66,6 @@
       "role": "secondary"
     },
     {
-      "term": "Complexo Antígeno L1 Leucocitário",
-      "code": "D039841",
-      "tree_ids": [
-        "D12.776.157.125.750.500",
-        "D12.776.631.658.750",
-        "D23.050.301.562"
-      ],
-      "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.125.750.500",
-      "scope_note": "Membro da família proteína S-100 presente em altas concentração no sangue e líquido intersticial em vários transtornos infecciosos, inflamatórios e malignos, incluindo a artrite reumatoide, doença inflamatória do intestino e fibrose cística. É um complexo de cadeia leve (CALGRANULINA A) e uma cadeia pesada (CALGRANULINA B). L1 se liga ao cálcio através dos motivos EF hand e mostrou-se possuir atividade antimicrobiana.",
-      "name_en": "Leukocyte L1 Antigen Complex",
-      "role": "secondary"
-    },
-    {
-      "term": "Colonoscopia",
-      "code": "D003113",
-      "tree_ids": [
-        "E01.370.372.250.250.200",
-        "E01.370.388.250.250.250.160",
-        "E04.210.240.250.160",
-        "E04.502.250.250.250.160"
-      ],
-      "hierarchy_path": "Técnicas e Equipamentos Analíticos › E01.370.372.250.250.200",
-      "scope_note": "Exame endoscópico, terapia ou cirurgia da superfície luminal do colo.",
-      "name_en": "Colonoscopy",
-      "role": "secondary"
-    },
-    {
       "term": "Redução de Peso",
       "code": "D015431",
       "tree_ids": [
@@ -92,22 +81,23 @@
   ],
   "themes_identified": {
     "primary": [
-      "Inflammatory Bowel Diseases",
-      "Diarrhea"
+      "Doença Inflamatória Intestinal",
+      "Diagnóstico"
     ],
     "secondary": [
-      "Gastrointestinal Hemorrhage",
-      "Leukocyte L1 Antigen Complex",
-      "Colonoscopy",
-      "Weight Loss",
-      "Abdominal Pain"
+      "Calprotectina Fecal",
+      "Colonoscopia",
+      "Hemorragia Gastrointestinal",
+      "Dor Abdominal",
+      "Perda de Peso",
+      "Tireoidite de Hashimoto"
     ]
   },
   "pipeline_stats": {
     "primary_terms": 2,
-    "secondary_terms": 5,
+    "secondary_terms": 6,
     "dropped_by_category_filter": 0,
-    "dropped_by_gemini_validation": 0,
-    "final_count": 7
+    "dropped_by_gemini_validation": 2,
+    "final_count": 6
   }
 }
