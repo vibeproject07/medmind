@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Plus, Edit, Trash2, X, Image as ImageIcon, Filter, ChevronDown, ChevronUp, ClipboardList, Ban, AlertTriangle, Sparkles, Brain, Search, Loader2, RefreshCw } from 'lucide-react';
+import { Plus, Edit, Trash2, X, Image as ImageIcon, Filter, ChevronDown, ChevronUp, ClipboardList, Ban, AlertTriangle, Sparkles, Brain, Search, Loader2 } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import DeCSAutocomplete from '@/components/Common/DeCSAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
@@ -141,8 +141,6 @@ export default function QuestionsPage() {
   const [aiDecsLoadingIds, setAiDecsLoadingIds] = useState<Set<number>>(new Set());
   const [aiDecsErrors, setAiDecsErrors] = useState<Record<number, string>>({});
   const [showFilters, setShowFilters] = useState(false);
-  const [batchClassifyLoading, setBatchClassifyLoading] = useState(false);
-  const [batchClassifyMsg, setBatchClassifyMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   // ── Semantic search ────────────────────────────────────────────────────────
   const [semanticQuery, setSemanticQuery] = useState('');
@@ -188,27 +186,7 @@ export default function QuestionsPage() {
   };
   // ─────────────────────────────────────────────────────────────────────────
 
-  const runBatchClassify = async () => {
-    setBatchClassifyLoading(true);
-    setBatchClassifyMsg(null);
-    try {
-      const token = getToken();
-      if (!token) return;
-      const res = await fetch('/api/admin/decs-classify-batch', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ limit: 0 }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? `HTTP ${res.status}`);
-      setBatchClassifyMsg({ type: 'success', text: data.message ?? 'Classificação iniciada em background!' });
-      setTimeout(() => fetchQuestions(), 3000);
-    } catch (e) {
-      setBatchClassifyMsg({ type: 'error', text: e instanceof Error ? e.message : 'Erro ao iniciar classificação' });
-    } finally {
-      setBatchClassifyLoading(false);
-    }
-  };
+  // Classificação DeCS em lote desativada temporariamente.
 
   const [filters, setFilters] = useState({
     exam_year: '',
@@ -643,19 +621,6 @@ export default function QuestionsPage() {
           )}
           {isAdmin && (
             <button
-              onClick={runBatchClassify}
-              disabled={batchClassifyLoading}
-              title="Classifica todas as questões sem DeCS usando o pipeline de IA em background"
-              className="flex items-center gap-2 px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 disabled:opacity-60 transition"
-            >
-              {batchClassifyLoading
-                ? <Loader2 className="w-4 h-4 animate-spin" />
-                : <RefreshCw className="w-4 h-4" />}
-              {batchClassifyLoading ? 'Iniciando…' : 'Classificar DeCS'}
-            </button>
-          )}
-          {isAdmin && (
-            <button
               onClick={() => setShowModal(true)}
               className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition"
             >
@@ -666,16 +631,6 @@ export default function QuestionsPage() {
         </div>
       </header>
 
-      {batchClassifyMsg && (
-        <div className={`rounded-lg px-4 py-3 text-sm flex items-center justify-between gap-3 ${
-          batchClassifyMsg.type === 'success'
-            ? 'bg-amber-50 border border-amber-200 text-amber-800'
-            : 'bg-red-50 border border-red-200 text-red-800'
-        }`}>
-          <span>{batchClassifyMsg.text}</span>
-          <button onClick={() => setBatchClassifyMsg(null)} className="opacity-60 hover:opacity-100 text-lg leading-none">×</button>
-        </div>
-      )}
 
       {/* Busca Semântica (pgvector) */}
       <div className="bg-gradient-to-r from-violet-50 to-purple-50 border border-violet-200 rounded-lg p-4">

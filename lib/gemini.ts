@@ -1,6 +1,5 @@
 import { GoogleGenAI, createUserContent, createPartFromUri, createPartFromText } from '@google/genai';
-import { getAgentPrompt } from '@/lib/ai-agents';
-import { getDefault } from '@/lib/ai-agents-defaults';
+import { getRuntimeAgent } from '@/lib/ai-agent-runtime';
 
 const DOCUMENT_INSTRUCTION_FALLBACK = `Leia o documento anexo e produza um resumo claro e organizado para estudo.
 Preserve termos técnicos e pontos principais. Organize em tópicos e destaque o que for mais relevante.
@@ -61,15 +60,10 @@ export async function geminiProcessDocument({
   let effectiveMaxTokens = maxOutputTokens ?? 4096;
 
   if (!effectiveInstruction && agentKey) {
-    effectiveInstruction = await getAgentPrompt(agentKey).catch(() => undefined);
-    if (!effectiveInstruction) {
-      effectiveInstruction = getDefault(agentKey)?.system_prompt;
-    }
-    const def = getDefault(agentKey);
-    if (def) {
-      effectiveTemperature = temperature ?? def.temperature;
-      effectiveMaxTokens = maxOutputTokens ?? def.max_output_tokens;
-    }
+    const runtimeAgent = await getRuntimeAgent(agentKey);
+    effectiveInstruction = runtimeAgent.system_instruction;
+    effectiveTemperature = temperature ?? runtimeAgent.temperature;
+    effectiveMaxTokens = maxOutputTokens ?? runtimeAgent.max_output_tokens;
   }
 
   if (!effectiveInstruction) {
@@ -154,15 +148,10 @@ export async function geminiProcessYouTube({
   let effectiveMaxTokens = 8192;
 
   if (!effectiveInstruction && agentKey) {
-    effectiveInstruction = await getAgentPrompt(agentKey).catch(() => undefined);
-    if (!effectiveInstruction) {
-      effectiveInstruction = getDefault(agentKey)?.system_prompt;
-    }
-    const def = getDefault(agentKey);
-    if (def) {
-      effectiveTemperature = def.temperature;
-      effectiveMaxTokens = def.max_output_tokens;
-    }
+    const runtimeAgent = await getRuntimeAgent(agentKey);
+    effectiveInstruction = runtimeAgent.system_instruction;
+    effectiveTemperature = runtimeAgent.temperature;
+    effectiveMaxTokens = runtimeAgent.max_output_tokens;
   }
 
   if (!effectiveInstruction) {
@@ -267,15 +256,10 @@ export async function geminiTransformTranscription({
   let effectiveMaxTokens = maxOutputTokens;
 
   if (!effectiveSystemPrompt && agentKey) {
-    const resolved = await getAgentPrompt(agentKey).catch(() => '');
-    effectiveSystemPrompt = resolved || getDefault(agentKey)?.system_prompt;
-    if (effectiveTemperature === undefined || effectiveMaxTokens === undefined) {
-      const def = getDefault(agentKey);
-      if (def) {
-        effectiveTemperature = effectiveTemperature ?? def.temperature;
-        effectiveMaxTokens = effectiveMaxTokens ?? def.max_output_tokens;
-      }
-    }
+    const runtimeAgent = await getRuntimeAgent(agentKey);
+    effectiveSystemPrompt = runtimeAgent.system_instruction;
+    effectiveTemperature = effectiveTemperature ?? runtimeAgent.temperature;
+    effectiveMaxTokens = effectiveMaxTokens ?? runtimeAgent.max_output_tokens;
   }
 
   const ai = new GoogleGenAI({ apiKey: key, apiVersion: 'v1' });

@@ -54,148 +54,23 @@ export async function POST(
       .filter(Boolean)
       .join('\n');
 
-    const [classifierAgent, validatorAgent] = await Promise.all([
+    const [classifierAgent] = await Promise.all([
       getRuntimeAgent('decs_classifier'),
       getRuntimeAgent('decs_validator'),
     ]);
 
     const ai = new GoogleGenAI({ apiKey: geminiKey, apiVersion: 'v1beta' });
-
-    const nossoPrompt = `
-Você é um especialista em classificação médica e no vocabulário controlado DeCS (Descritores em Ciências da Saúde) / MeSH.
-
-Analise o enunciado e as alternativas da questão médica abaixo. Compreenda o contexto clínico completo.
-
-Identifique:
-- TEMAS PRINCIPAIS (1 a 3): os conceitos médicos CENTRAIS da questão — diagnóstico principal, condição tratada, fármaco central ou procedimento chave.
-- TEMAS SECUNDÁRIOS (0 a 6, se aplicável): conceitos médicos relevantes mas não centrais — fisiopatologia …sem explicação):
-
-{"primary":["tema principal 1","tema principal 2"],"secondary":["tema secundário 1","tema secundário 2"]}
-
-
-====================
-DEFINIÇÃO DE PRIORIDADE (PRIMARY vs SECONDARY):
-====================
-
-DECS_PRIMARY deve representar o núcleo semântico da questão.
-
-Critério: Se o descritor for removido, a questão perde seu significado principal ?.
-
-DECS_SECONDARY representa contexto ou detalhamento.
-
-Critério: Se removido, a questão permanece compreensível ?.
-
-====================
-USO DAS ALTERNATIVAS
-====================
-
-A análise das alternativas para extração de conceitos depende do COMANDO da questão:
-
-CENÁRIO A: Questões de INCLUSÃO (pedem a afirmação verdadeira/conduta correta)
-- O GABARITO (alternativa-alvo) geralmente aponta o foco operacional e a tomada de decisão. Avalie seus termos para DECS_PRIMARY.
-- Os DISTRATORES (alternativas erradas) mapeiam o contexto e armadilhas comuns. Avalie para DECS_SECONDARY.
-
-CENÁRIO B: Questões de EXCLUSÃO (pedem a incorreta, a falsa, a contraindicação ou "exceto")
-- ATENÇÃO REDOBRADA: O GABARITO aqui é uma afirmação falsa ou um erro clínico. Ele NÃO deve definir o núcleo da questão. Se contiver termos válidos, classifique no máximo como SECONDARY. Se descrever uma conduta/doença inexistente, ignore.
-- Os DISTRATORES (neste caso, as afirmações que são VERDADEIRAS na prática médica) representam o consenso clínico sobre o tema. O conjunto dessas alternativas verdadeiras é que define o NÚCLEO SEMÂNTICO (DECS_PRIMARY) e o contexto (DECS_SECONDARY).
-
-IMPORTANTE (Regra Geral):
-O conteúdo de uma alternativa só deve ser PRIMARY se ele definir o tema central exigido pela questão. Se for um elemento específico, dependente de outro conceito, ou uma exceção isolada, classifique como SECONDARY.
-
-IMPORTANTE: O conteúdo da alternativa correta NÃO deve ser automaticamente classificado como PRIMARY.
-
-IMPORTANTE: Se for um elemento específico, operacional ou dependente de outro conceito:
-→ classificar como SECONDARY
-
-====================
-HEURÍSTICA DE DECISÃO
-====================
-
-PRIMARY responde:
-"Do que se trata essa questão?"
-
-SECONDARY responde:
-"Como isso está sendo abordado?"
-
-====================
-CLASSIFICAÇÃO FINAL
-====================
-
-DECS_PRIMARY:
-- 1 a 3 descritores centrais
-
-DECS_SECONDARY:
-- 2 a 6 descritores contextuais relevantes
-
-REGRAS:
-- NÃO repetir termos
-- Priorizar coerência clínica
-
-====================
-USO DE TERMOS GENÉRICOS
-====================
-
-Termos genéricos são aceitáveis quando:
-
-- representam corretamente o nível de abstração do conceito
-- não existe descritor mais específico adequado
-
-Especialmente em áreas como:
-
-- Saúde pública
-- Epidemiologia
-- Organização de sistemas de saúde
-
-Exemplos válidos:
-- Primary Health Care
-- Community Health Services
-- Health Services Accessibility
-- Delivery of Health Care
-
-REGRA:
-
-Evitar termos genéricos apenas quando houver alternativa mais específica claramente aplicável.
-
-====================
-REGRA DE COBERTURA SEMÂNTICA
-====================
-
-A classificação deve cobrir:
-
-1. O núcleo da questão (PRIMARY)
-2. O contexto clínico ou organizacional (SECONDARY)
-
-Se a lista de descritores estiver muito curta:
-
-- Verifique se há conceitos relevantes não representados
-- Adicione descritores secundários coerentes
-
-META:
-
-- 1 a 3 PRIMARY
-- 3 a 6 SECONDARY (sempre que possível)
-
-Evitar respostas com poucos descritores quando a questão contém múltiplos conceitos relevantes.
-
-====================
-SAÍDA EM FORMATO JSON
-====================
-{"primary":["tema principal 1","tema principal 2"],"secondary":["tema secundário 1","tema secundário 2"]}`
-    
     const response = await ai.models.generateContent({
       model: classifierAgent.model,
       contents: [{ role: 'user', parts: [{ text: questionText }] }],
       config: {
-        systemInstruction: nossoPrompt,
+        systemInstruction: classifierAgent.system_instruction,
         temperature: classifierAgent.temperature,
         maxOutputTokens: classifierAgent.max_output_tokens,
         responseMimeType: 'application/json',
       },
     });
 
-
-console.log(nossoPrompt)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const resp = response as any;
     const rawText: string =
       (typeof resp?.text === 'string' ? resp.text : '') ||

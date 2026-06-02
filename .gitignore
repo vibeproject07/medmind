@@ -49,6 +49,6 @@ matheus/
 # DeCS batch via API (Matheus)
 classification-output.zip
 classification-output/
+matheus/classification-output-shouldDelete/
 matheus/classify-decs-via-api.local.mjs
-data/decs-classification
-
+data/decs-classification/

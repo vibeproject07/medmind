@@ -19,6 +19,9 @@ import {
   XOctagon,
   SplitSquareHorizontal,
   History,
+  Edit,
+  Save,
+  RotateCcw,
 } from 'lucide-react';
 import ImageLightbox from '@/components/Common/ImageLightbox';
 
@@ -115,6 +118,7 @@ function QuestionCarousel({
   groupIndex,
   setGroupIndex,
   groupSize,
+  disableNavigation,
 }: {
   questions: ProvaQuestion[];
   examIndex: number;
@@ -124,6 +128,7 @@ function QuestionCarousel({
   groupIndex: number;
   setGroupIndex: (g: number | ((prev: number) => number)) => void;
   groupSize: number;
+  disableNavigation: boolean;
 }) {
   const total = questions.length;
   const totalGroups = Math.ceil(total / groupSize);
@@ -143,7 +148,7 @@ function QuestionCarousel({
         <button
           type="button"
           onClick={prevGroup}
-          disabled={groupIndex === 0}
+          disabled={groupIndex === 0 || disableNavigation}
           className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition flex-shrink-0"
           title="Grupo anterior"
         >
@@ -173,11 +178,13 @@ function QuestionCarousel({
               <button
                 key={q.id}
                 type="button"
-                onClick={() => setExamIndex(i)}
+                onClick={() => !disableNavigation && setExamIndex(i)}
+                disabled={disableNavigation}
                 title={`Questão ${i + 1}${revealed ? (correct ? ' ✓' : ' ✗') : answered ? ' (respondida)' : ''}`}
                 className={`relative w-9 h-9 rounded-full border-2 flex items-center justify-center text-xs font-semibold transition-all duration-150 cursor-pointer flex-shrink-0
                   ${ballClass}
-                  ${isCurrent ? 'ring-2 ring-offset-2 ring-primary-500 border-primary-500 shadow-sm' : 'hover:opacity-80'}`}
+                  ${isCurrent ? 'ring-2 ring-offset-2 ring-primary-500 border-primary-500 shadow-sm' : 'hover:opacity-80'}
+                  ${disableNavigation ? 'opacity-60 cursor-not-allowed' : ''}`}
               >
                 {revealed ? (
                   correct ? <Check className="w-3.5 h-3.5" /> : <X className="w-3.5 h-3.5" />
@@ -192,7 +199,7 @@ function QuestionCarousel({
         <button
           type="button"
           onClick={nextGroup}
-          disabled={groupIndex >= totalGroups - 1}
+          disabled={groupIndex >= totalGroups - 1 || disableNavigation}
           className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition flex-shrink-0"
           title="Próximo grupo"
         >
@@ -206,7 +213,8 @@ function QuestionCarousel({
             <button
               key={g}
               type="button"
-              onClick={() => setGroupIndex(g)}
+              onClick={() => !disableNavigation && setGroupIndex(g)}
+              disabled={disableNavigation}
               className={`rounded-full transition-all duration-200 ${
                 g === groupIndex ? 'w-5 h-1.5 bg-primary-500' : 'w-1.5 h-1.5 bg-gray-300 hover:bg-gray-400'
               }`}
@@ -351,6 +359,29 @@ export default function ProvaExamPage() {
 
   const [groupSize, setGroupSize] = useState(DESKTOP_GROUP);
   const [groupIndex, setGroupIndex] = useState(0);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [editingQuestionId, setEditingQuestionId] = useState<number | null>(null);
+  const [editForm, setEditForm] = useState<{
+    statement: string;
+    option_a: string;
+    option_b: string;
+    option_c: string;
+    option_d: string;
+    option_e: string;
+    correct_answer: 'A' | 'B' | 'C' | 'D' | 'E';
+    explanation: string;
+  }>({
+    statement: '',
+    option_a: '',
+    option_b: '',
+    option_c: '',
+    option_d: '',
+    option_e: '',
+    correct_answer: 'A',
+    explanation: '',
+  });
+  const [savingEdit, setSavingEdit] = useState(false);
+  const [togglingAnulada, setTogglingAnulada] = useState(false);
 
   useEffect(() => {
     const update = () => setGroupSize(window.innerWidth < 640 ? MOBILE_GROUP : DESKTOP_GROUP);
@@ -369,6 +400,17 @@ export default function ProvaExamPage() {
     try { setProva(JSON.parse(raw)); }
     catch { router.replace('/dashboard/provas'); }
   }, [provaId, router]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      setIsAdmin(payload.role === 'admin');
+    } catch {
+      setIsAdmin(false);
+    }
+  }, []);
 
   useEffect(() => {
     setAiCommentOpen(false);
@@ -599,6 +641,145 @@ export default function ProvaExamPage() {
   const currentCommentData = currentQuestion ? aiCommentCache[currentQuestion.id] : null;
   const hasComment = !aiCommentLoading && currentCommentData?.comentario != null;
 
+  const isEditingCurrent = !!currentQuestion && editingQuestionId === currentQuestion.id;
+  const editAvailableOptions: Array<'A' | 'B' | 'C' | 'D' | 'E'> = [
+    'A',
+    'B',
+    ...(editForm.option_c.trim() ? (['C'] as const) : []),
+    ...(editForm.option_d.trim() ? (['D'] as const) : []),
+    ...(editForm.option_e.trim() ? (['E'] as const) : []),
+  ];
+
+  const startEditCurrentQuestion = () => {
+    if (!currentQuestion) return;
+    setEditingQuestionId(currentQuestion.id);
+    setEditForm({
+      statement: currentQuestion.statement ?? '',
+      option_a: currentQuestion.option_a ?? '',
+      option_b: currentQuestion.option_b ?? '',
+      option_c: currentQuestion.option_c ?? '',
+      option_d: currentQuestion.option_d ?? '',
+      option_e: currentQuestion.option_e ?? '',
+      correct_answer: (currentQuestion.correct_answer as 'A' | 'B' | 'C' | 'D' | 'E') ?? 'A',
+      explanation: currentQuestion.explanation ?? '',
+    });
+  };
+
+  const cancelEditCurrentQuestion = () => {
+    setEditingQuestionId(null);
+  };
+
+  const saveEditCurrentQuestion = async () => {
+    if (!currentQuestion) return;
+    if (!editForm.statement.trim() || !editForm.option_a.trim() || !editForm.option_b.trim()) {
+      alert('Enunciado e alternativas A/B são obrigatórios.');
+      return;
+    }
+    if (!editAvailableOptions.includes(editForm.correct_answer)) {
+      alert('Resposta correta deve corresponder a uma alternativa preenchida.');
+      return;
+    }
+
+    setSavingEdit(true);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const payload: Record<string, unknown> = {
+        statement: editForm.statement.trim(),
+        option_a: editForm.option_a.trim(),
+        option_b: editForm.option_b.trim(),
+        correct_answer: editForm.correct_answer,
+        option_c: editForm.option_c.trim() || null,
+        option_d: editForm.option_d.trim() || null,
+        option_e: editForm.option_e.trim() || null,
+        explanation: editForm.explanation.trim() || null,
+      };
+
+      const res = await fetch(`/api/questions/${currentQuestion.id}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+      const updated = await res.json();
+      if (!res.ok) {
+        alert(updated.error || 'Erro ao salvar questão.');
+        return;
+      }
+
+      setProva((prev) => {
+        if (!prev) return prev;
+        const nextQuestions = prev.questions.map((q) =>
+          q.id === currentQuestion.id
+            ? {
+                ...q,
+                statement: updated.statement ?? q.statement,
+                option_a: updated.option_a ?? q.option_a,
+                option_b: updated.option_b ?? q.option_b,
+                option_c: updated.option_c ?? null,
+                option_d: updated.option_d ?? null,
+                option_e: updated.option_e ?? null,
+                correct_answer: updated.correct_answer ?? q.correct_answer,
+                explanation: updated.explanation ?? null,
+              }
+            : q,
+        );
+        const next = { ...prev, questions: nextQuestions };
+        localStorage.setItem(`examProva_${provaId}`, JSON.stringify(next));
+        return next;
+      });
+
+      setEditingQuestionId(null);
+    } catch {
+      alert('Erro ao salvar questão.');
+    } finally {
+      setSavingEdit(false);
+    }
+  };
+
+  const handleToggleAnulada = async () => {
+    if (!currentQuestion) return;
+    const novaAnulada = !currentQuestion.anulada;
+    const confirmMsg = novaAnulada
+      ? 'Anular esta questão? Ela ficará inacessível para simulados, mas continuará visível nas provas.'
+      : 'Reativar esta questão? Ela voltará a estar disponível para simulados.';
+    if (!confirm(confirmMsg)) return;
+
+    setTogglingAnulada(true);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const res = await fetch(`/api/questions/${currentQuestion.id}`, {
+        method: 'PATCH',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ anulada: novaAnulada }),
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        alert(err.error || 'Erro ao atualizar questão.');
+        return;
+      }
+      const raw = await res.json();
+
+      setProva((prev) => {
+        if (!prev) return prev;
+        const nextQuestions = prev.questions.map((q) =>
+          q.id === currentQuestion.id ? { ...q, anulada: raw.anulada } : q,
+        );
+        const next = { ...prev, questions: nextQuestions };
+        localStorage.setItem(`examProva_${provaId}`, JSON.stringify(next));
+        return next;
+      });
+      setEditingQuestionId(null);
+    } catch {
+      alert('Erro ao atualizar questão.');
+    } finally {
+      setTogglingAnulada(false);
+    }
+  };
+
   // ── Exit confirmation modal ───────────────────────────────────────────────
   const ExitConfirmModal = showExitConfirm ? (
     <div className="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center p-4">
@@ -725,6 +906,7 @@ export default function ProvaExamPage() {
           groupIndex={groupIndex}
           setGroupIndex={setGroupIndex}
           groupSize={groupSize}
+          disableNavigation={editingQuestionId !== null}
         />
       </div>
 
@@ -746,9 +928,18 @@ export default function ProvaExamPage() {
                     <Ban className="w-3 h-3" /> ANULADA
                   </span>
                 )}
-                <p className="text-base font-medium text-gray-800 whitespace-pre-wrap leading-relaxed">
-                  {currentQuestion.statement}
-                </p>
+                {isEditingCurrent ? (
+                  <textarea
+                    value={editForm.statement}
+                    onChange={(e) => setEditForm((prev) => ({ ...prev, statement: e.target.value }))}
+                    rows={4}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  />
+                ) : (
+                  <p className="text-base font-medium text-gray-800 whitespace-pre-wrap leading-relaxed">
+                    {currentQuestion.statement}
+                  </p>
+                )}
               </div>
 
               {currentQuestion.images && currentQuestion.images.length > 0 && (
@@ -760,7 +951,42 @@ export default function ProvaExamPage() {
               )}
 
               <div className="space-y-2.5">
-                {availableOptions.map((option) => {
+                {(isEditingCurrent
+                  ? ([
+                      { key: 'A', value: editForm.option_a },
+                      { key: 'B', value: editForm.option_b },
+                      { key: 'C', value: editForm.option_c },
+                      { key: 'D', value: editForm.option_d },
+                      { key: 'E', value: editForm.option_e },
+                    ] as const)
+                  : availableOptions
+                ).map((option) => {
+                  if (isEditingCurrent) {
+                    return (
+                      <div key={option.key} className="rounded-xl border border-gray-200 bg-white p-3">
+                        <label className="block text-xs font-semibold text-gray-500 mb-1">
+                          Alternativa {option.key}
+                          {(option.key === 'A' || option.key === 'B') ? ' *' : ' (opcional)'}
+                        </label>
+                        <input
+                          type="text"
+                          value={option.value}
+                          onChange={(e) =>
+                            setEditForm((prev) => ({
+                              ...prev,
+                              ...(option.key === 'A' ? { option_a: e.target.value } : {}),
+                              ...(option.key === 'B' ? { option_b: e.target.value } : {}),
+                              ...(option.key === 'C' ? { option_c: e.target.value } : {}),
+                              ...(option.key === 'D' ? { option_d: e.target.value } : {}),
+                              ...(option.key === 'E' ? { option_e: e.target.value } : {}),
+                            }))
+                          }
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                        />
+                      </div>
+                    );
+                  }
+
                   const isSelected = selectedAnswer === option.key;
                   const isConfirmedTaxed = confirmedTaxed.get(currentQuestion.id)?.has(option.key) || false;
                   const isRevealed = revealedAnswers.has(currentQuestion.id);
@@ -828,6 +1054,39 @@ export default function ProvaExamPage() {
                 })}
               </div>
 
+              {isEditingCurrent && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-500 mb-1">Resposta correta *</label>
+                    <select
+                      value={editForm.correct_answer}
+                      onChange={(e) =>
+                        setEditForm((prev) => ({
+                          ...prev,
+                          correct_answer: e.target.value as 'A' | 'B' | 'C' | 'D' | 'E',
+                        }))
+                      }
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    >
+                      {editAvailableOptions.map((k) => (
+                        <option key={k} value={k}>
+                          {k}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="sm:col-span-1">
+                    <label className="block text-xs font-semibold text-gray-500 mb-1">Explicação (opcional)</label>
+                    <textarea
+                      value={editForm.explanation}
+                      onChange={(e) => setEditForm((prev) => ({ ...prev, explanation: e.target.value }))}
+                      rows={3}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    />
+                  </div>
+                </div>
+              )}
+
               {revealedAnswers.has(currentQuestion.id) && (() => {
                 const correctOption = availableOptions.find((o) => o.key === currentQuestion.correct_answer);
                 return correctOption ? (
@@ -894,7 +1153,7 @@ export default function ProvaExamPage() {
           <button
             type="button"
             onClick={() => { if (examIndex > 0) setExamIndex((i) => i - 1); }}
-            disabled={examIndex === 0}
+            disabled={examIndex === 0 || editingQuestionId !== null}
             className="flex items-center gap-1.5 px-3 sm:px-4 py-2 border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 transition disabled:opacity-40 disabled:cursor-not-allowed text-sm font-medium"
           >
             <ChevronLeft className="w-4 h-4" />
@@ -902,6 +1161,67 @@ export default function ProvaExamPage() {
           </button>
 
           <div className="flex gap-2 items-center">
+            {isAdmin && !isEditingCurrent && (
+              <button
+                type="button"
+                onClick={startEditCurrentQuestion}
+                className="flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition text-sm font-semibold shadow-sm"
+                title="Editar esta questão da prova"
+              >
+                <Edit className="w-4 h-4" />
+                <span className="hidden sm:inline">Editar</span>
+              </button>
+            )}
+            {isAdmin && isEditingCurrent && (
+              <>
+                <button
+                  type="button"
+                  onClick={cancelEditCurrentQuestion}
+                  disabled={savingEdit || togglingAnulada}
+                  className="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 transition text-sm font-medium disabled:opacity-50"
+                  title="Cancelar edição"
+                >
+                  <X className="w-4 h-4" />
+                  <span className="hidden sm:inline">Cancelar</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={handleToggleAnulada}
+                  disabled={savingEdit || togglingAnulada}
+                  className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-2 border rounded-lg transition text-sm font-medium disabled:opacity-50 ${
+                    currentQuestion?.anulada
+                      ? 'border-green-300 text-green-700 hover:bg-green-50'
+                      : 'border-red-300 text-red-700 hover:bg-red-50'
+                  }`}
+                  title={currentQuestion?.anulada ? 'Reativar questão' : 'Anular questão'}
+                >
+                  {togglingAnulada ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : currentQuestion?.anulada ? (
+                    <RotateCcw className="w-4 h-4" />
+                  ) : (
+                    <Ban className="w-4 h-4" />
+                  )}
+                  <span className="hidden sm:inline">
+                    {togglingAnulada
+                      ? 'Salvando...'
+                      : currentQuestion?.anulada
+                      ? 'Reativar'
+                      : 'Anular'}
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  onClick={saveEditCurrentQuestion}
+                  disabled={savingEdit || togglingAnulada}
+                  className="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition text-sm font-semibold disabled:opacity-50"
+                  title="Salvar alterações da questão"
+                >
+                  {savingEdit ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                  <span className="hidden sm:inline">Salvar</span>
+                </button>
+              </>
+            )}
             <button
               type="button"
               onClick={() => {
@@ -947,7 +1267,8 @@ export default function ProvaExamPage() {
               if (examIndex < total - 1) setExamIndex((i) => i + 1);
               else setShowResults(true);
             }}
-            className="flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition text-sm font-semibold"
+            disabled={editingQuestionId !== null}
+            className="flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition text-sm font-semibold disabled:opacity-50"
           >
             {examIndex >= total - 1 ? (
               'Finalizar'

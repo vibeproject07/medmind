@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import {
   MoreVertical, Edit, Trash2, X, Image as ImageIcon,
-  Plus, FileText, Search, Calendar, Star, Sparkles, Loader2,
+  Plus, FileText, Search, Calendar, Star,
 } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
@@ -17,11 +17,6 @@ import {
   fromDisplay,
   AREAS_OPTIONS_DISPLAY,
 } from '@/lib/areas-assuntos';
-import NotesDecsBatchTracker, {
-  getStoredNotesDecsJobId,
-  storeNotesDecsJobId,
-  clearStoredNotesDecsJobId,
-} from '@/components/Notes/NotesDecsBatchTracker';
 
 const AVAILABLE_TAGS = [
   'Acupuntura','Anestesiologia','Cirurgia Cardiovascular','Cirurgia Geral',
@@ -95,12 +90,7 @@ export default function NotesPage() {
   const [message, setMessage]         = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [openMenuId, setOpenMenuId]   = useState<number | null>(null);
 
-  const [decsStats, setDecsStats] = useState<{ total: number; pending: number; classified: number } | null>(null);
-  const [decsBatchLoading, setDecsBatchLoading] = useState(false);
-  const [showDecsBatchModal, setShowDecsBatchModal] = useState(false);
-  const [decsBatchLimit, setDecsBatchLimit] = useState('0');
-  const [decsIncludeClassified, setDecsIncludeClassified] = useState(false);
-  const [activeDecsJobId, setActiveDecsJobId] = useState<string | null>(null);
+  // Classificação DeCS em lote desativada temporariamente.
 
   // Derive favorited / regular sets
   const favoritedNotes = useMemo(() => notes.filter(n => n.is_favorited), [notes]);
@@ -127,39 +117,6 @@ export default function NotesPage() {
 
   const getToken = () => typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
-  const handleStartDecsBatch = async () => {
-    const token = getToken();
-    if (!token) return;
-    setDecsBatchLoading(true);
-    setMessage(null);
-    try {
-      const limit = parseInt(decsBatchLimit, 10);
-      const res = await fetch('/api/admin/notes-decs-classify-batch', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          limit: Number.isNaN(limit) ? 0 : limit,
-          includeClassified: decsIncludeClassified,
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Falha ao iniciar classificação');
-      if (data.jobId) {
-        storeNotesDecsJobId(data.jobId);
-        setActiveDecsJobId(data.jobId);
-      }
-      setMessage({ type: 'success', text: data.message ?? 'Classificação DeCS iniciada.' });
-      setShowDecsBatchModal(false);
-      fetchDecsStats();
-    } catch (e) {
-      setMessage({ type: 'error', text: e instanceof Error ? e.message : 'Erro ao iniciar classificação' });
-    } finally {
-      setDecsBatchLoading(false);
-    }
-  };
 
   const fetchNotes = async () => {
     try {
@@ -183,23 +140,6 @@ export default function NotesPage() {
     finally       { setLoading(false); }
   };
 
-  const fetchDecsStats = async () => {
-    const token = getToken();
-    if (!token) return;
-    try {
-      const res = await fetch('/api/admin/notes-decs-classify-batch', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setDecsStats(data);
-        if (data.activeJob?.status === 'running') {
-          storeNotesDecsJobId(data.activeJob.id);
-          setActiveDecsJobId(data.activeJob.id);
-        }
-      }
-    } catch { /* ignore */ }
-  };
 
   useEffect(() => {
     const token = getToken();
@@ -211,9 +151,6 @@ export default function NotesPage() {
       if (admin) {
         fetch('/api/companies', { headers: { Authorization: `Bearer ${token}` } })
           .then(r => r.ok ? r.json() : []).then(setCompanies).catch(() => {});
-        fetchDecsStats();
-        const storedJob = getStoredNotesDecsJobId();
-        if (storedJob) setActiveDecsJobId(storedJob);
       }
     } catch { setLoading(false); }
   }, []);
@@ -468,16 +405,6 @@ export default function NotesPage() {
             </button>
           )}
         </div>
-        {isAdmin && (
-          <button
-            type="button"
-            onClick={() => setShowDecsBatchModal(true)}
-            className="inline-flex items-center gap-1.5 bg-violet-600 text-white px-3 py-2.5 rounded-xl text-sm font-semibold hover:bg-violet-700 transition shadow-sm whitespace-nowrap"
-          >
-            <Sparkles className="w-4 h-4" />
-            DeCS
-          </button>
-        )}
         <Link href="/dashboard/notes/new">
           <span className="inline-flex items-center gap-1.5 bg-primary-600 text-white px-3.5 py-2.5 rounded-xl text-sm font-semibold hover:bg-primary-700 transition shadow-sm cursor-pointer whitespace-nowrap">
             <Plus className="w-4 h-4" />Nova
@@ -508,20 +435,6 @@ export default function NotesPage() {
               <div className="bg-white/15 px-3 py-1.5 rounded-lg text-sm font-semibold">
                 {totalNotes} {totalNotes === 1 ? 'nota' : 'notas'}
               </div>
-            )}
-            {isAdmin && (
-              <button
-                type="button"
-                onClick={() => setShowDecsBatchModal(true)}
-                className="inline-flex items-center gap-2 bg-violet-500/90 text-white px-3 py-2 rounded-xl font-semibold text-sm hover:bg-violet-600 transition shadow-sm"
-                title="Classificar notas com agentes DeCS"
-              >
-                <Sparkles className="w-4 h-4" />
-                Classificar DeCS
-                {decsStats != null && decsStats.pending > 0 && (
-                  <span className="text-xs bg-white/20 px-1.5 py-0.5 rounded-full">{decsStats.pending}</span>
-                )}
-              </button>
             )}
             <Link href="/dashboard/notes/new">
               <span className="inline-flex items-center gap-2 bg-white text-primary-700 px-4 py-2 rounded-xl font-semibold text-sm hover:bg-primary-50 transition shadow-sm cursor-pointer">
@@ -792,75 +705,6 @@ export default function NotesPage() {
         </div>
       )}
 
-      {showDecsBatchModal && isAdmin && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
-          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
-            <div className="flex items-center gap-2 mb-1">
-              <Sparkles className="w-5 h-5 text-violet-600" />
-              <h2 className="text-lg font-semibold text-gray-900">Classificar notas (DeCS)</h2>
-            </div>
-            <p className="text-sm text-gray-500 mb-4">
-              Usa os agentes <span className="font-mono text-xs">discover_notes_terms</span> e{' '}
-              <span className="font-mono text-xs">validate_notes_decs_terms</span> para preencher{' '}
-              <code className="text-xs">ai_decs_descriptors</code> em background.
-            </p>
-            {decsStats && (
-              <p className="text-xs text-gray-600 mb-4 bg-gray-50 rounded-lg px-3 py-2">
-                {decsStats.pending} pendente(s) · {decsStats.classified} classificada(s) · {decsStats.total} total
-              </p>
-            )}
-            <div className="space-y-3 mb-5">
-              <div>
-                <label className="block text-xs font-medium text-gray-500 mb-1">Limite (0 = todas pendentes)</label>
-                <input
-                  type="number"
-                  min={0}
-                  value={decsBatchLimit}
-                  onChange={(e) => setDecsBatchLimit(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm"
-                />
-              </div>
-              <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={decsIncludeClassified}
-                  onChange={(e) => setDecsIncludeClassified(e.target.checked)}
-                  className="rounded border-gray-300"
-                />
-                Reclassificar notas que já têm DeCS
-              </label>
-            </div>
-            <div className="flex gap-2 justify-end">
-              <button
-                type="button"
-                onClick={() => setShowDecsBatchModal(false)}
-                className="px-4 py-2 text-sm text-gray-600 border border-gray-200 rounded-xl hover:bg-gray-50"
-              >
-                Cancelar
-              </button>
-              <button
-                type="button"
-                onClick={handleStartDecsBatch}
-                disabled={decsBatchLoading}
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-violet-600 rounded-xl hover:bg-violet-700 disabled:opacity-50"
-              >
-                {decsBatchLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
-                Iniciar classificação
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <NotesDecsBatchTracker
-        jobId={isAdmin ? activeDecsJobId : null}
-        onDismiss={() => {
-          clearStoredNotesDecsJobId();
-          setActiveDecsJobId(null);
-          fetchDecsStats();
-        }}
-        onComplete={fetchDecsStats}
-      />
     </div>
   );
 }
