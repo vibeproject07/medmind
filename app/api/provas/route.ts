@@ -23,7 +23,7 @@ function mapQuestaoToOptions(questoes: {
   numero?: number;
   titulo?: string;
   enunciado?: string;
-  imagens?: string[];
+  imagens?: unknown[];
   alternativas?: Alternativa[];
   alternativa_correta?: string | { letra?: string };
   letra_correta?: string;
@@ -46,6 +46,12 @@ function mapQuestaoToOptions(questoes: {
     const finalCorrect = ['A', 'B', 'C', 'D', 'E'].includes(correct) ? correct : 'A';
     if (!byLetter['A']) byLetter['A'] = 'Alternativa A';
     if (!byLetter['B']) byLetter['B'] = 'Alternativa B';
+
+    const rawImagens = Array.isArray(q.imagens) ? q.imagens : [];
+    const hasMetadata = rawImagens.length > 0 && typeof rawImagens[0] === 'object' && rawImagens[0] !== null;
+    const imagesMeta: unknown[] = hasMetadata ? rawImagens : [];
+    const imagesBase64: string[] = hasMetadata ? [] : rawImagens.filter((i) => typeof i === 'string') as string[];
+
     return {
       numero: (() => {
         const num = typeof q.numero === 'number' ? q.numero : parseInt(String(q.numero ?? ''), 10);
@@ -58,7 +64,8 @@ function mapQuestaoToOptions(questoes: {
       option_d: byLetter['D'] || null,
       option_e: byLetter['E'] || null,
       correct_answer: finalCorrect,
-      images: Array.isArray(q.imagens) ? q.imagens : [],
+      images: imagesBase64,
+      images_meta: imagesMeta,
       anulada: Boolean(q.estado ?? q.anulada ?? false),
     };
   });
@@ -235,6 +242,8 @@ export async function POST(request: NextRequest) {
     if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
 
     const body = await request.json() as Record<string, unknown>;
+    await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS images_meta TEXT`);
+
     const rawProvas = normalizeImportPayload(body);
     if (rawProvas.length === 0) {
       return NextResponse.json({
@@ -276,6 +285,7 @@ export async function POST(request: NextRequest) {
         const optA = q.option_a || 'Alternativa A';
         const optB = q.option_b || 'Alternativa B';
         const imagesJson = q.images?.length ? JSON.stringify(q.images) : null;
+        const imagesMetaJson = q.images_meta?.length ? JSON.stringify(q.images_meta) : null;
 
         let examYear: number | null = null;
         if (ano) {
@@ -287,13 +297,14 @@ export async function POST(request: NextRequest) {
         const safeProvaId = isNaN(provaId) ? null : provaId;
 
         const qResult = await query(
-          `INSERT INTO questions (statement, option_a, option_b, option_c, option_d, option_e, correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region, exam_type, prova_id, numero_na_prova, anulada)
-           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18) RETURNING id`,
+          `INSERT INTO questions (statement, option_a, option_b, option_c, option_d, option_e, correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region, exam_type, prova_id, numero_na_prova, anulada, images_meta)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19) RETURNING id`,
           [
             q.statement || '(Sem enunciado)',
             optA, optB, q.option_c, q.option_d, q.option_e,
             q.correct_answer, null, null, imagesJson, examYear,
             banca, null, regiao, tipo, safeProvaId, questionNumber, q.anulada ?? false,
+            imagesMetaJson,
           ]
         );
         questionIds.push({ id: qResult.rows[0].id, numero_na_prova: q.numero });
