@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/jwt';
 import { getAgent, upsertAgent, resetAgent, deleteAgent } from '@/lib/ai-agents';
-import { getDefault } from '@/lib/ai-agents-defaults';
 
 const VALID_MODELS = new Set([
   'gemini-2.5-flash',
@@ -76,15 +75,12 @@ export async function DELETE(req: NextRequest, { params }: { params: { key: stri
   if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
   if (user.role !== 'admin') return NextResponse.json({ error: 'Apenas administradores podem excluir/resetar agentes' }, { status: 403 });
 
-  const isBuiltin = !!getDefault(params.key);
-
-  if (isBuiltin) {
-    const agent = await resetAgent(params.key);
-    if (!agent) return NextResponse.json({ error: 'Agente não encontrado' }, { status: 404 });
-    return NextResponse.json({ agent, action: 'reset' });
-  } else {
-    const deleted = await deleteAgent(params.key);
-    if (!deleted) return NextResponse.json({ error: 'Agente não encontrado' }, { status: 404 });
-    return NextResponse.json({ agent: { key: params.key }, action: 'deleted' });
+  const resetted = await resetAgent(params.key);
+  if (resetted) {
+    return NextResponse.json({ agent: resetted, action: 'reset' });
   }
+
+  const deleted = await deleteAgent(params.key);
+  if (!deleted) return NextResponse.json({ error: 'Agente não encontrado' }, { status: 404 });
+  return NextResponse.json({ agent: { key: params.key }, action: 'deleted' });
 }

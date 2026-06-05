@@ -659,7 +659,3 @@ Antes de retornar a saída, verifique:
     max_output_tokens: 8192,
   },
 ];
-
-export function getDefault(key: string): AiAgentDefault | undefined {
-  return AI_AGENT_DEFAULTS.find((a) => a.key === key);
-}

@@ -1,5 +1,5 @@
 import { query } from '@/lib/db';
-import { AI_AGENT_DEFAULTS, AiAgentDefault, getDefault } from '@/lib/ai-agents-defaults';
+import { AI_AGENT_DEFAULTS } from '@/lib/ai-agents-defaults';
 import { ensureAgentSchema } from '@/lib/ai-agent-runtime';
 
 export interface AiAgent {
@@ -16,13 +16,12 @@ export interface AiAgent {
   updated_at: string | null;
 }
 
-async function ensureTable() {
-  await ensureAgentSchema();
-}
+const BUILTIN_KEYS = new Set(AI_AGENT_DEFAULTS.map((d) => d.key));
 
-function rowToAgent(row: Record<string, unknown>, isBuiltin: boolean): AiAgent {
+function rowToAgent(row: Record<string, unknown>): AiAgent {
+  const key = row.key as string;
   return {
-    key: row.key as string,
+    key,
     name: row.name as string,
     description: (row.description as string) ?? '',
     system_prompt: row.system_prompt as string,
@@ -31,54 +30,22 @@ function rowToAgent(row: Record<string, unknown>, isBuiltin: boolean): AiAgent {
     temperature: parseFloat(String(row.temperature ?? 0.2)),
     max_output_tokens: parseInt(String(row.max_output_tokens ?? 4096), 10),
     is_customized: true,
-    is_builtin: isBuiltin,
+    is_builtin: BUILTIN_KEYS.has(key),
     updated_at: (row.updated_at as string) ?? null,
   };
 }
 
-function mergeWithDefault(row: Record<string, unknown>, def: AiAgentDefault): AiAgent {
-  return rowToAgent({ ...def, ...row, key: def.key }, true);
-}
-
 export async function listAgents(): Promise<AiAgent[]> {
-  await ensureTable();
+  await ensureAgentSchema();
   const res = await query('SELECT * FROM ai_agents ORDER BY updated_at DESC NULLS LAST');
-  const dbMap = new Map<string, Record<string, unknown>>();
-  for (const row of res.rows) {
-    dbMap.set(row.key as string, row as Record<string, unknown>);
-  }
-
-  const builtinKeys = new Set(AI_AGENT_DEFAULTS.map((d) => d.key));
-
-  const builtins: AiAgent[] = AI_AGENT_DEFAULTS.map((def) => {
-    const row = dbMap.get(def.key);
-    if (row) return mergeWithDefault(row, def);
-    return { ...def, system_instruction: null, is_customized: false, is_builtin: true, updated_at: null };
-  });
-
-  const customs: AiAgent[] = [];
-  for (const [key, row] of dbMap.entries()) {
-    if (!builtinKeys.has(key)) {
-      customs.push(rowToAgent(row, false));
-    }
-  }
-
-  return [...builtins, ...customs];
+  return res.rows.map((row) => rowToAgent(row as Record<string, unknown>));
 }
 
 export async function getAgent(key: string): Promise<AiAgent | null> {
-  await ensureTable();
-  const def = getDefault(key);
+  await ensureAgentSchema();
   const res = await query('SELECT * FROM ai_agents WHERE key = $1', [key]);
-
-  if (res.rows.length === 0) {
-    if (!def) return null;
-    return { ...def, system_instruction: null, is_customized: false, is_builtin: true, updated_at: null };
-  }
-
-  const row = res.rows[0] as Record<string, unknown>;
-  if (def) return mergeWithDefault(row, def);
-  return rowToAgent(row, false);
+  if (res.rows.length === 0) return null;
+  return rowToAgent(res.rows[0] as Record<string, unknown>);
 }
 
 export async function upsertAgent(
@@ -90,23 +57,21 @@ export async function upsertAgent(
     >
   >
 ): Promise<AiAgent | null> {
-  const def = getDefault(key);
-  await ensureTable();
+  await ensureAgentSchema();
 
   const existing = await getAgent(key);
-  if (!existing && !def) return null;
+  if (!existing) return null;
 
-  const name = data.name ?? def?.name ?? existing?.name ?? '';
-  const description = data.description ?? def?.description ?? existing?.description ?? '';
-  const system_prompt = data.system_prompt ?? def?.system_prompt ?? existing?.system_prompt ?? '';
+  const name = data.name ?? existing.name;
+  const description = data.description ?? existing.description;
+  const system_prompt = data.system_prompt ?? existing.system_prompt;
   const system_instruction =
     data.system_instruction !== undefined
       ? data.system_instruction
-      : (existing?.system_instruction ?? def?.system_prompt ?? system_prompt);
-  const model = data.model ?? def?.model ?? existing?.model ?? 'gemini-2.5-flash';
-  const temperature = data.temperature ?? def?.temperature ?? existing?.temperature ?? 0.2;
-  const max_output_tokens =
-    data.max_output_tokens ?? def?.max_output_tokens ?? existing?.max_output_tokens ?? 4096;
+      : existing.system_instruction;
+  const model = data.model ?? existing.model;
+  const temperature = data.temperature ?? existing.temperature;
+  const max_output_tokens = data.max_output_tokens ?? existing.max_output_tokens;
 
   await query(
     `INSERT INTO ai_agents (key, name, description, system_prompt, system_instruction, model, temperature, max_output_tokens, updated_at)
@@ -136,13 +101,10 @@ export async function createAgent(data: {
   temperature: number;
   max_output_tokens: number;
 }): Promise<{ agent: AiAgent | null; conflict: boolean }> {
-  await ensureTable();
+  await ensureAgentSchema();
 
   const existing = await query('SELECT key FROM ai_agents WHERE key = $1', [data.key]);
   if (existing.rows.length > 0) return { agent: null, conflict: true };
-
-  const def = getDefault(data.key);
-  if (def) return { agent: null, conflict: true };
 
   try {
     await query(
@@ -170,17 +132,30 @@ export async function createAgent(data: {
 }
 
 export async function resetAgent(key: string): Promise<AiAgent | null> {
-  const def = getDefault(key);
+  const def = AI_AGENT_DEFAULTS.find((d) => d.key === key);
   if (!def) return null;
-  await ensureTable();
-  await query('DELETE FROM ai_agents WHERE key = $1', [key]);
-  return { ...def, is_customized: false, is_builtin: true, updated_at: null };
+  await ensureAgentSchema();
+
+  await query(
+    `INSERT INTO ai_agents (key, name, description, system_prompt, system_instruction, model, temperature, max_output_tokens, updated_at)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW())
+     ON CONFLICT (key) DO UPDATE SET
+       name = EXCLUDED.name,
+       description = EXCLUDED.description,
+       system_prompt = EXCLUDED.system_prompt,
+       system_instruction = EXCLUDED.system_instruction,
+       model = EXCLUDED.model,
+       temperature = EXCLUDED.temperature,
+       max_output_tokens = EXCLUDED.max_output_tokens,
+       updated_at = NOW()`,
+    [def.key, def.name, def.description, def.system_prompt, def.system_prompt, def.model, def.temperature, def.max_output_tokens]
+  );
+
+  return getAgent(key);
 }
 
 export async function deleteAgent(key: string): Promise<boolean> {
-  const def = getDefault(key);
-  if (def) return false;
-  await ensureTable();
+  await ensureAgentSchema();
   const res = await query('DELETE FROM ai_agents WHERE key = $1 RETURNING key', [key]);
   return res.rows.length > 0;
 }
