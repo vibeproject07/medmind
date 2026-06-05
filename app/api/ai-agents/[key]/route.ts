@@ -75,11 +75,6 @@ export async function DELETE(req: NextRequest, { params }: { params: { key: stri
   if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
   if (user.role !== 'admin') return NextResponse.json({ error: 'Apenas administradores podem excluir/resetar agentes' }, { status: 403 });
 
-  const resetted = await resetAgent(params.key);
-  if (resetted) {
-    return NextResponse.json({ agent: resetted, action: 'reset' });
-  }
-
   const deleted = await deleteAgent(params.key);
   if (!deleted) return NextResponse.json({ error: 'Agente não encontrado' }, { status: 404 });
   return NextResponse.json({ agent: { key: params.key }, action: 'deleted' });
