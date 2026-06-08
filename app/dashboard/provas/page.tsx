@@ -30,6 +30,8 @@ interface ImportSummary {
   provasImportadas: number;
   provasIgnoradas: number;
   questoesImportadas: number;
+  provasComErro: number;
+  erros: { nome: string; reason: string }[];
 }
 
 const ANO_INICIO = 1990;
@@ -228,6 +230,8 @@ export default function ProvasPage() {
         let totalImportadas = 0;
         let totalIgnoradas = 0;
         let totalQuestoes = 0;
+        let totalComErro = 0;
+        const todosErros: { nome: string; reason: string }[] = [];
 
         const runBatches = async (items: unknown[], batchSize: number, key: string) => {
           const batches: unknown[][] = [];
@@ -242,15 +246,27 @@ export default function ProvasPage() {
             });
             const body = await res.json();
             if (!res.ok) {
-              if (res.status === 401 || res.status === 403) setSessionExpired(true);
-              else setJsonError(body.error || 'Erro ao importar lote.');
-              setLoadingJson(false);
-              setImportProgress(null);
-              return false;
+              if (res.status === 401 || res.status === 403) { setSessionExpired(true); return false; }
+              // Partial failure with saved provas — show as warning, not fatal error
+              if (body.summary) {
+                totalImportadas += body.summary.provasImportadas ?? 0;
+                totalIgnoradas  += body.summary.provasIgnoradas  ?? 0;
+                totalQuestoes   += body.summary.questoesImportadas ?? 0;
+                totalComErro    += body.summary.provasComErro ?? 0;
+                if (Array.isArray(body.errors)) todosErros.push(...body.errors);
+              } else {
+                setJsonError(body.error || 'Erro ao importar lote.');
+                setLoadingJson(false);
+                setImportProgress(null);
+                return false;
+              }
+              continue;
             }
             totalImportadas += body.summary?.provasImportadas ?? 0;
             totalIgnoradas  += body.summary?.provasIgnoradas  ?? 0;
             totalQuestoes   += body.summary?.questoesImportadas ?? 0;
+            totalComErro    += body.summary?.provasComErro ?? 0;
+            if (Array.isArray(body.errors)) todosErros.push(...body.errors);
           }
           return true;
         };
@@ -263,7 +279,7 @@ export default function ProvasPage() {
 
         setImportProgress(null);
         setShowFileModal(false);
-        setImportSummary({ provasImportadas: totalImportadas, provasIgnoradas: totalIgnoradas, questoesImportadas: totalQuestoes });
+        setImportSummary({ provasImportadas: totalImportadas, provasIgnoradas: totalIgnoradas, questoesImportadas: totalQuestoes, provasComErro: totalComErro, erros: todosErros });
         await fetchProvas(1);
         setCurrentPage(1);
       } catch (err) {
@@ -328,27 +344,43 @@ export default function ProvasPage() {
         </div>
       )}
 
-      {/* Feedback de importação bem-sucedida */}
+      {/* Feedback de importação */}
       {importSummary && (
-        <div className="flex items-start gap-3 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800">
-          <CheckCircle className="w-5 h-5 mt-0.5 flex-shrink-0 text-green-600" />
-          <div>
-            <p className="font-semibold">Importação concluída!</p>
+        <div className={`flex items-start gap-3 p-4 rounded-lg border ${importSummary.provasComErro > 0 && importSummary.provasImportadas === 0 ? 'bg-red-50 border-red-200 text-red-800' : importSummary.provasComErro > 0 ? 'bg-amber-50 border-amber-200 text-amber-800' : 'bg-green-50 border-green-200 text-green-800'}`}>
+          <CheckCircle className={`w-5 h-5 mt-0.5 flex-shrink-0 ${importSummary.provasComErro > 0 && importSummary.provasImportadas === 0 ? 'text-red-500' : importSummary.provasComErro > 0 ? 'text-amber-500' : 'text-green-600'}`} />
+          <div className="flex-1 min-w-0">
+            <p className="font-semibold">
+              {importSummary.provasComErro > 0 && importSummary.provasImportadas === 0
+                ? 'Nenhuma prova foi importada'
+                : importSummary.provasComErro > 0
+                ? 'Importação parcialmente concluída'
+                : 'Importação concluída!'}
+            </p>
             <p className="text-sm mt-1">
-              {importSummary.provasImportadas > 0
-                ? <><strong>{importSummary.provasImportadas}</strong> prova(s) e <strong>{importSummary.questoesImportadas}</strong> questão(ões) importadas.</>
-                : 'Nenhuma prova nova importada.'}{' '}
+              {importSummary.provasImportadas > 0 && (
+                <><strong>{importSummary.provasImportadas}</strong> prova(s) e <strong>{importSummary.questoesImportadas}</strong> questão(ões) salvas com sucesso.{' '}</>
+              )}
               {importSummary.provasIgnoradas > 0 && (
-                <span className="text-green-700">
-                  <strong>{importSummary.provasIgnoradas}</strong> prova(s) já existiam e foram ignoradas (sem duplicatas).
-                </span>
+                <span><strong>{importSummary.provasIgnoradas}</strong> prova(s) já existiam e foram ignoradas.{' '}</span>
+              )}
+              {importSummary.provasComErro > 0 && (
+                <span><strong>{importSummary.provasComErro}</strong> prova(s) não puderam ser processadas.</span>
               )}
             </p>
+            {importSummary.erros.length > 0 && (
+              <ul className="mt-2 space-y-0.5">
+                {importSummary.erros.map((e, i) => (
+                  <li key={i} className="text-xs opacity-80 truncate">
+                    <strong>{e.nome}</strong>: {e.reason}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
           <button
             type="button"
             onClick={() => setImportSummary(null)}
-            className="ml-auto p-1 text-green-600 hover:text-green-800 rounded"
+            className="ml-auto p-1 rounded opacity-60 hover:opacity-100 transition"
             aria-label="Fechar"
           >
             <X className="w-4 h-4" />
