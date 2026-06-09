@@ -356,17 +356,20 @@ export default function ProvasPage() {
                 ? 'Importação parcialmente concluída'
                 : 'Importação concluída!'}
             </p>
-            <p className="text-sm mt-1">
-              {importSummary.provasImportadas > 0 && (
-                <><strong>{importSummary.provasImportadas}</strong> prova(s) e <strong>{importSummary.questoesImportadas}</strong> questão(ões) salvas com sucesso.{' '}</>
-              )}
-              {importSummary.provasIgnoradas > 0 && (
-                <span><strong>{importSummary.provasIgnoradas}</strong> prova(s) já existiam e foram ignoradas.{' '}</span>
-              )}
+            <ul className="text-sm mt-1 space-y-0.5">
+              <li>
+                <strong>{importSummary.provasImportadas}</strong> prova(s) novas adicionadas
+                {importSummary.provasImportadas > 0 && <> ({importSummary.questoesImportadas} questão(ões))</>}.
+              </li>
+              <li>
+                <strong>{importSummary.provasIgnoradas}</strong> prova(s) já existiam e foram ignoradas.
+              </li>
               {importSummary.provasComErro > 0 && (
-                <span><strong>{importSummary.provasComErro}</strong> prova(s) não puderam ser processadas.</span>
+                <li>
+                  <strong>{importSummary.provasComErro}</strong> prova(s) não puderam ser processadas.
+                </li>
               )}
-            </p>
+            </ul>
             {importSummary.erros.length > 0 && (
               <ul className="mt-2 space-y-0.5">
                 {importSummary.erros.map((e, i) => (
