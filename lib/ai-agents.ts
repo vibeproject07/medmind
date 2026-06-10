@@ -161,7 +161,13 @@ export async function deleteAgent(key: string): Promise<boolean> {
 }
 
 export async function getAgentPrompt(key: string): Promise<string> {
-  const { getRuntimeAgent } = await import('@/lib/ai-agent-runtime');
-  const agent = await getRuntimeAgent(key);
-  return agent.system_instruction;
+  try {
+    const { getRuntimeAgent } = await import('@/lib/ai-agent-runtime');
+    const agent = await getRuntimeAgent(key);
+    return agent.system_instruction;
+  } catch {
+    const def = AI_AGENT_DEFAULTS.find((d) => d.key === key);
+    if (def?.system_prompt) return def.system_prompt;
+    throw new Error(`Agente "${key}" não encontrado nem em ai_agents nem nos defaults.`);
+  }
 }

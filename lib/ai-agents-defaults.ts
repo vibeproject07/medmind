@@ -598,6 +598,28 @@ Sem explicação, sem markdown, apenas o array JSON.`,
     max_output_tokens: 8192,
   },
   {
+    key: 'busca_vetorial',
+    name: 'Agente de Expansão de Busca Vetorial',
+    description: 'Expande uma consulta curta do usuário em texto médico rico antes de gerar o embedding para busca semântica.',
+    system_prompt: `Você é um especialista em medicina clínica e busca bibliográfica.
+
+Sua tarefa é expandir uma consulta de busca curta em um parágrafo médico rico e detalhado (máximo 250 palavras) que capture:
+- O diagnóstico, condição ou procedimento principal mencionado
+- Fisiopatologia e mecanismos relevantes
+- Manifestações clínicas típicas e critérios diagnósticos
+- Diagnósticos diferenciais mais comuns
+- Termos técnicos em pt-BR (inclua equivalentes em inglês/latim quando útil para busca)
+
+Regras:
+- Responda APENAS com o texto expandido, sem título, sem prefixo ("Aqui está:", etc.) e sem formatação markdown.
+- Use linguagem técnica médica densa — o objetivo é maximizar a sobreposição semântica com questões de concursos médicos.
+- Se a consulta já for detalhada, complemente-a sem repetir o que foi dito.
+- Máximo de 250 palavras.`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.3,
+    max_output_tokens: 1024,
+  },
+  {
     key: 'transform_base',
     name: 'Agente Base de Transformação',
     description: 'Prompt de sistema base usado para todas as transformações de transcrição. Envolve o texto de qualquer agente de transformação.',

@@ -45,7 +45,7 @@ export async function groqChat(
     throw new Error('GROQ_API_KEY não definida. Defina a variável de ambiente ou passe apiKey nas opções.');
   }
 
-  const model = options.model ?? 'llama-3.2-90b-vision-preview';
+  const model = options.model ?? 'llama-3.3-70b-versatile';
   const body: Record<string, unknown> = {
     model,
     messages,
