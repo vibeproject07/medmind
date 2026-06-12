@@ -170,10 +170,15 @@ export async function GET(request: NextRequest) {
     const filterRegiao = url.searchParams.get('regiao') ?? '';
     const filterAno    = url.searchParams.get('ano')    ?? '';
     const filterTipo   = url.searchParams.get('tipo')   ?? '';
+    const filterSearch = (url.searchParams.get('q') ?? url.searchParams.get('search') ?? '').trim();
 
     // Build WHERE clause
     const conditions: string[] = [];
     const params: unknown[] = [];
+    if (filterSearch) {
+      params.push(`%${filterSearch}%`);
+      conditions.push(`LOWER(nome) LIKE LOWER($${params.length})`);
+    }
     if (filterBanca)  { params.push(filterBanca);  conditions.push(`LOWER(banca)  = LOWER($${params.length})`); }
     if (filterRegiao) { params.push(filterRegiao); conditions.push(`regiao = $${params.length}`); }
     if (filterAno)    { params.push(filterAno);    conditions.push(`ano = $${params.length}`); }
