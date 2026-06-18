@@ -39,7 +39,7 @@ Exemplos corretos:
     temperature: 0.1,
     max_output_tokens: 8192,
   },
-  {
+  /*{
     key: 'decs_validator',
     name: 'Validador DeCS (Etapa 3)',
     description: 'Recebe candidatos DeCS pré-filtrados e valida quais são clinicamente relevantes para o tema central da questão médica.',
@@ -60,7 +60,7 @@ Sem explicação, sem markdown, apenas o array JSON.`,
     model: 'gemini-2.5-flash',
     temperature: 0.0,
     max_output_tokens: 8192,
-  },
+  },*/
   {
     key: 'decs_indexer_v2',
     name: 'Indexador DeCS V2 (Etapa 1)',

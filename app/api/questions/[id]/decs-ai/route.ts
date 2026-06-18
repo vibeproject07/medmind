@@ -56,7 +56,7 @@ export async function POST(
 
     const [classifierAgent] = await Promise.all([
       getRuntimeAgent('decs_classifier'),
-      getRuntimeAgent('decs_validator'),
+      //getRuntimeAgent('decs_validator'),
     ]);
 
     const ai = new GoogleGenAI({ apiKey: geminiKey, apiVersion: 'v1beta' });
@@ -114,7 +114,7 @@ export async function POST(
       decsKey,
       geminiKey,
       classifierAgent.model,
-      'decs_validator',
+      //'decs_validator',
     );
 
     const artifact = {

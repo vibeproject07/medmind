@@ -493,8 +493,9 @@ export async function runDeCSPipeline(
   descriptors: DeCSRecord[];
   dropped_by_filter: number;
   dropped_by_gemini: number;
-}> {
-  // Normalise input — support legacy string[] call
+}> { 
+
+// Normalise input — support legacy string[] call
   const structured: DeCSThemes = Array.isArray(themes)
     ? { primary: themes, secondary: [] }
     : themes;
@@ -578,7 +579,7 @@ export async function runDeCSPipeline(
   const enriched = await enrichFromDB(afterSearch);
 
   // Step 3: Gemini validation — operates on the flat list, role is preserved
-  const afterValidation = await validateDescriptorsWithGemini(
+ /* const afterValidation = await validateDescriptorsWithGemini(
     enriched,
     questionText,
     geminiKey,
@@ -587,12 +588,12 @@ export async function runDeCSPipeline(
   );
 
   const droppedByGemini = afterSearch.length - afterValidation.length;
-
+*/
   // Strip the internal similarity field, keep role; primary first
-  const primary = afterValidation
+  const primary = afterSearch
     .filter((d) => d.role === "primary")
     .map(({ similarity: _s, ...rest }) => rest);
-  const secondary = afterValidation
+  const secondary = afterSearch
     .filter((d) => d.role !== "primary")
     .map(({ similarity: _s, ...rest }) => rest);
 
@@ -601,6 +602,6 @@ export async function runDeCSPipeline(
   return {
     descriptors,
     dropped_by_filter: droppedByFilter,
-    dropped_by_gemini: droppedByGemini,
+    dropped_by_gemini: 0 //droppedByGemini,
   };
 }
