@@ -54,10 +54,8 @@ export async function POST(
       .filter(Boolean)
       .join('\n');
 
-    const [classifierAgent] = await Promise.all([
-      getRuntimeAgent('decs_classifier'),
-      //getRuntimeAgent('decs_validator'),
-    ]);
+    // decs_validator desativado em 18/06/2026 — validação Gemini removida do pipeline V1
+    const classifierAgent = await getRuntimeAgent('decs_classifier');
 
     const ai = new GoogleGenAI({ apiKey: geminiKey, apiVersion: 'v1beta' });
     const response = await ai.models.generateContent({
@@ -114,7 +112,6 @@ export async function POST(
       decsKey,
       geminiKey,
       classifierAgent.model,
-      //'decs_validator',
     );
 
     const artifact = {

@@ -1,11 +1,13 @@
 /**
  * DeCS AI Pipeline — shared classifier logic
  *
- * Three quality layers:
+ * Quality layers (active):
  *   1. Local pgvector search (decs_descriptors table) — fast, offline
  *      Fallback → BVS API when local table is empty
  *   2. Category filter              (reject organism/virus categories unless biomed context)
- *   3. Gemini relevance validation  (one extra call to drop false positives)
+ *
+ * Layer 3 (Gemini relevance validation via decs_validator) disabled 18/06/2026 —
+ * was removing essential descriptors after an otherwise accurate pgvector/BVS match.
  */
 
 export interface DeCSRecord {
@@ -472,12 +474,12 @@ export async function validateDescriptorsWithGemini(
 // ── Full pipeline ────────────────────────────────────────────────────────────
 
 /**
- * Given Gemini-extracted themes (primary + secondary), run the full 3-layer pipeline:
+ * Given Gemini-extracted themes (primary + secondary), run the DeCS pipeline:
  *   1. Multi-candidate DeCS search + similarity ranking (per theme, tagged with role)
  *   2. Category filter
- *   3. Gemini validation
+ *   (3. Gemini validation — disabled 18/06/2026, see validateDescriptorsWithGemini)
  *
- * Returns a flat, deduplicated, validated list of DeCS records with role tags.
+ * Returns a flat, deduplicated list of DeCS records with role tags.
  * Primary descriptors appear first; secondary follow.
  *
  * Also accepts a plain string[] for backward compatibility (all treated as 'primary').
@@ -575,25 +577,26 @@ export async function runDeCSPipeline(
     // 'no_candidate' and 'deduped' do not count toward dropped_by_filter
   }
 
-  // Enrich BVS API results with scope_note/name_en from local DB before validation
+  // Enrich BVS API results with scope_note/name_en from local DB
   const enriched = await enrichFromDB(afterSearch);
 
-  // Step 3: Gemini validation — operates on the flat list, role is preserved
- /* const afterValidation = await validateDescriptorsWithGemini(
-    enriched,
-    questionText,
-    geminiKey,
-    model,
-    validatorAgentKey,
-  );
+  // Validação Gemini (decs_validator) desativada em 18/06/2026 — removia termos
+  // essenciais após busca pgvector/BVS com boa acurácia.
+  // const afterValidation = await validateDescriptorsWithGemini(
+  //   enriched,
+  //   questionText,
+  //   geminiKey,
+  //   model,
+  //   validatorAgentKey,
+  // );
+  // const droppedByGemini = afterSearch.length - afterValidation.length;
+  const afterValidation = enriched;
 
-  const droppedByGemini = afterSearch.length - afterValidation.length;
-*/
   // Strip the internal similarity field, keep role; primary first
-  const primary = afterSearch
+  const primary = afterValidation
     .filter((d) => d.role === "primary")
     .map(({ similarity: _s, ...rest }) => rest);
-  const secondary = afterSearch
+  const secondary = afterValidation
     .filter((d) => d.role !== "primary")
     .map(({ similarity: _s, ...rest }) => rest);
 
@@ -602,6 +605,6 @@ export async function runDeCSPipeline(
   return {
     descriptors,
     dropped_by_filter: droppedByFilter,
-    dropped_by_gemini: 0 //droppedByGemini,
+    dropped_by_gemini: 0,
   };
 }
