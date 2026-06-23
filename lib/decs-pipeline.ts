@@ -524,9 +524,10 @@ export async function runDeCSPipeline(
     | { status: "no_candidate" }
     | { status: "deduped" };
 
+    // 19/06/2026 - faz busca multi-candidata, filtro de categoria, validação Gemini. COMENTAR VALIDAÇÃO
   const outcomes = await Promise.allSettled(
     searchAll.map(async ({ term, role }): Promise<SearchOutcome> => {
-      const MIN_SIMILARITY = 0.15;
+      const MIN_SIMILARITY = 1; // 19/06/2026 - similaridade mínima para considerar um candidato
 
       // ── 1. Try local pgvector first ────────────────────────────────────────
       let rawCandidates: DeCSRecord[] = [];
@@ -535,7 +536,7 @@ export async function runDeCSPipeline(
       }
 
       // ── 2. Fallback: BVS API ───────────────────────────────────────────────
-      if (rawCandidates.length === 0) {
+      if (rawCandidates.length != 0 ) {
         const apiResults = await searchDeCSCandidates(term, decsKey, 5);
         rawCandidates = apiResults
           .map((c) => ({ ...c, similarity: wordJaccard(term, c.term) }))
@@ -547,6 +548,7 @@ export async function runDeCSPipeline(
       if (rawCandidates.length === 0) return { status: "no_candidate" };
 
       // ── 3. Category filter — track drops separately ────────────────────────
+      // 19/06/2026 - faz filtragem de categoria B (organismo sem contexto bio), não é validação
       const accepted = rawCandidates.filter((c) =>
         isCategoryAcceptable(c, questionText),
       );
@@ -564,11 +566,13 @@ export async function runDeCSPipeline(
     }),
   );
 
+  // 19/06/2026 - conta quantos termos foram removidos pelo filtro de categoria DEVERIA SER COMENTADO?
   // Tally outcomes and build the search result list
   let droppedByFilter = 0; // terms with candidates that the category filter removed
   for (const res of outcomes) {
     if (res.status === "rejected") continue; // unexpected error — skip silently
     const outcome = res.value;
+    // 19/06/2026 - faz deduplicação, adiciona ao resultado
     if (outcome.status === "accepted") {
       afterSearch.push({ ...outcome.match, role: outcome.role });
     } else if (outcome.status === "category_filtered") {
