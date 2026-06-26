@@ -891,3 +891,201 @@
                             Tree IDs:   D12.776.157.530.400.875.750.800, D12.776.543.550.450.875.750.800, D12.776.543.585.400.875.750.800, D12.776.631.960.800
                             EN:         NAV1.8 Voltage-Gated Sodium Channel
                             Nota:       Subtipo de canal de sódio disparado por voltagem expresso em nociceptores, inclusive nos neurônios sensoriais espinais e trigêmeos. Desempen…
+
+%%%%%%%%%%% JSON ARQUIVOS DE EMBEDDING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{
+  "embedding_files": {
+    "lib": [
+      {
+        "path": "lib/embeddings.ts",
+        "role": "Central de embeddings",
+        "exports": ["generateEmbedding", "buildQuestionText", "semanticSearchQuestions", "findSimilarQuestions", "vectorToString", "ensureVectorExtension", "ensureEmbeddingColumn", "ensureEmbeddingIndex"],
+        "model": "gemini-embedding-001",
+        "dims": 3072,
+        "backend": "pgvector",
+        "relevance": "EXTREMELLY HIGH"
+      },
+      {
+        "path": "lib/pinecone.ts",
+        "role": "Integração com Pinecone (backend gerenciado)",
+        "exports": ["upsertQuestionEmbedding", "queryPineconeSimilar", "getPineconeIndexStats"],
+        "index": "medmind-questions",
+        "backend": "pinecone",
+        "relevance": "EXTREMELLY LOW"
+      },
+      {
+        "path": "lib/decs-pipeline.ts",
+        "role": "Pipeline de classificação DeCS — inclui busca vetorial local nos descritores",
+        "exports": ["searchDeCSLocal", "searchDeCSCandidates", "buildHierarchyPath", "runDeCSPipeline"],
+        "backend": "pgvector (decs_descriptors)",
+        "relevance": "EXTREMELLY HIGH"
+      },
+      {
+        "path": "lib/decs-pipeline-v2.ts",
+        "role": "Pipeline DeCS v2 com RAG — busca vetorial por conceito individualmente",
+        "exports": ["runDeCSPipelineV2"],
+        "backend": "pgvector (decs_descriptors)",
+        "relevance": "HIGH"
+      },
+      {
+        "path": "lib/enrichment.ts",
+        "role": "Pipeline de enriquecimento de questões e notas",
+        "backend": "pgvector",
+        "relevance": "PROBABLY HIGH"
+      }
+    ],
+    "api_routes": [
+      {
+        "path": "app/api/admin/embed-batch/route.ts",
+        "methods": ["GET", "POST"],
+        "get": "Progresso do batch (contagem pgvector + Pinecone)",
+        "post": "Dispara scripts/batch-embed-questions.mjs como processo detached"
+      },
+      {
+        "path": "app/api/admin/embed-notes/route.ts",
+        "methods": ["POST"],
+        "post": "Gera embeddings para notas do usuário"
+      },
+      {
+        "path": "app/api/admin/embed-decs/route.ts",
+        "methods": ["POST"],
+        "post": "Gera embeddings para descritores DeCS",
+        "relevance": "EXTREMELLY HIGH"
+      },
+      {
+        "path": "app/api/questions/[id]/embedding/route.ts",
+        "methods": ["GET", "POST"],
+        "get": "Verifica se a questão tem embedding",
+        "post": "Gera e salva embedding de uma questão específica (RETRIEVAL_DOCUMENT)",
+        "relevance": "EXTREMELLY HIGH"
+      },
+      {
+        "path": "app/api/questions/[id]/similar/route.ts",
+        "methods": ["GET"],
+        "get": "Questões similares — Pinecone como primário, pgvector como fallback"
+      },
+      {
+        "path": "app/api/questions/semantic-search/route.ts",
+        "methods": ["GET"],
+        "get": "Busca semântica com expansão de query via Gemini Flash antes de vetorizar"
+      },
+      {
+        "path": "app/api/notes/[id]/similar/route.ts",
+        "methods": ["GET"],
+        "get": "Questões semanticamente similares a uma nota"
+      },
+      {
+        "path": "app/api/pinecone/status/route.ts",
+        "methods": ["GET"],
+        "get": "Stats do índice Pinecone (admin only)"
+      },
+      {
+        "path": "app/api/admin/decs-diagnose/route.ts",
+        "methods": ["GET"],
+        "get": "Diagnóstico do pipeline DeCS incluindo status de embeddings",
+        "relevance": "EXTREMELLY HIGH"
+      }
+    ],
+    "scripts": [
+      {
+        "path": "scripts/batch-embed-questions.mjs",
+        "role": "Batch principal — embeda todas as questões",
+        "task_type": "RETRIEVAL_DOCUMENT",
+        "backends": ["pgvector", "pinecone"],
+        "options": ["--limit N", "--concurrency N", "--delay N", "--no-resume", "--pinecone-batch N"],
+        "run": "node --env-file=.env.local scripts/batch-embed-questions.mjs"
+      },
+      {
+        "path": "scripts/embed-decs-descriptors.mjs",
+        "role": "Embeda os 35.033 descritores DeCS",
+        "task_type": "SEMANTIC_SIMILARITY",
+        "backends": ["pgvector (decs_descriptors)"],
+        "options": ["--limit N", "--concurrency N", "--delay N", "--no-resume"],
+        "run": "node --env-file=.env.local scripts/embed-decs-descriptors.mjs"
+      },
+      {
+        "path": "scripts/embed-notes.mjs",
+        "role": "Embeda notas do usuário",
+        "backends": ["pgvector"],
+        "run": "node --env-file=.env.local scripts/embed-notes.mjs"
+      },
+      {
+        "path": "scripts/decs-embed-search.mjs",
+        "role": "Busca semântica DeCS — recebe texto, vetoriza e retorna descritores",
+        "task_type": "SEMANTIC_SIMILARITY",
+        "requires_env": ["DATABASE_URL", "GEMINI_API_KEY"],
+        "run": "node scripts/decs-embed-search.mjs \"<texto>\"",
+        "options": ["--limit N", "--min-similarity F", "--json"]
+      },
+      {
+        "path": "scripts/decs-search.mjs",
+        "role": "Busca DeCS por texto (ILIKE) ou vetor pré-computado (sem API)",
+        "requires_env": ["DATABASE_URL"],
+        "run": "node scripts/decs-search.mjs --term \"<texto>\"",
+        "options": ["--term", "--vector <arquivo.json>", "--limit N", "--min-similarity F", "--json"]
+      },
+      {
+        "path": "scripts/test-embedding-backends.mjs",
+        "role": "Testa pgvector e Pinecone lado a lado"
+      },
+      {
+        "path": "scripts/compute-similarities.mjs",
+        "role": "Calcula e persiste links de similaridade entre questões"
+      },
+      {
+        "path": "scripts/bootstrap-decs-similarity-readiness.mjs",
+        "role": "Verifica pré-condições para rodar similarity no DeCS"
+      },
+      {
+        "path": "scripts/debug-pipeline-steps.mjs",
+        "role": "Debug passo a passo do pipeline de classificação DeCS"
+      },
+      {
+        "path": "scripts/batch-decs-classify.mjs",
+        "role": "Classifica questões via DeCS em batch"
+      },
+      {
+        "path": "scripts/batch-decs-classify-notes.mjs",
+        "role": "Classifica notas via DeCS em batch"
+      },
+      {
+        "path": "scripts/batch-decs-ai-db.mjs",
+        "role": "Classifica questões DeCS usando agentes de IA"
+      },
+      {
+        "path": "scripts/batch-notes-decs-agents.mjs",
+        "role": "Classifica notas via agentes DeCS"
+      },
+      {
+        "path": "scripts/test-classification-sample.mjs",
+        "role": "Testa classificação em amostra de questões"
+      }
+    ],
+    "admin_pages": [
+      {
+        "path": "app/dashboard/admin/vectorization/page.tsx",
+        "role": "Painel de controle do batch de embeddings",
+        "features": ["progresso pgvector", "progresso Pinecone", "botão iniciar batch", "estatísticas do índice"]
+      },
+      {
+        "path": "app/dashboard/admin/decs-diagnose/page.tsx",
+        "role": "Diagnóstico do pipeline DeCS incluindo status de embeddings"
+      }
+    ],
+    "consumer_pages": [
+      {
+        "path": "app/dashboard/questions/page.tsx",
+        "uses": "Barra de busca semântica → /api/questions/semantic-search"
+      },
+      {
+        "path": "app/dashboard/questions/[id]/page.tsx",
+        "uses": "Seção Questões Similares → /api/questions/[id]/similar"
+      },
+      {
+        "path": "app/dashboard/notes/[id]/page.tsx",
+        "uses": "Questões similares à nota → /api/notes/[id]/similar"
+      }
+    ]
+  }
+}
