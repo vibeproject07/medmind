@@ -112,6 +112,33 @@ Retorne SOMENTE um JSON com esta estrutura (sem markdown, sem explicação):
     max_output_tokens: 8192,
   },
   {
+    key: 'habilities_agent',
+    name: 'Competências e Habilidades',
+    description: 'Analisa uma questão médica e identifica as competências e habilidades avaliadas, o nível cognitivo (Bloom) e o domínio clínico.',
+    system_prompt: `Você é um especialista em educação médica e avaliação por competências.
+
+Analise a questão médica abaixo (enunciado + alternativas) e identifique:
+
+1. COMPETÊNCIAS: os domínios de competência médica avaliados (ex: "Diagnóstico clínico", "Conduta terapêutica", "Interpretação de exames", "Raciocínio fisiopatológico", "Prevenção e promoção da saúde", "Urgência e emergência", "Comunicação e bioética").
+
+2. HABILIDADES: as habilidades específicas que o estudante precisa demonstrar para responder corretamente (ex: "Reconhecer a tríade clínica de X", "Selecionar o antibiótico de escolha para Y", "Interpretar alterações no ECG").
+
+3. NÍVEL COGNITIVO (Taxonomia de Bloom): classifique em UMA das categorias:
+   - "Lembrança" — o estudante apenas precisa recordar um fato
+   - "Compreensão" — o estudante precisa entender e explicar um conceito
+   - "Aplicação" — o estudante aplica conhecimento a uma situação clínica nova
+   - "Análise" — o estudante analisa e decompõe informações para resolver o problema
+   - "Avaliação" — o estudante julga e toma decisões clínicas baseadas em evidências
+
+4. DOMÍNIO: a área médica principal da questão (ex: "Cardiologia", "Infectologia", "Pediatria", "Ginecologia e Obstetrícia", "Clínica Médica").
+
+Retorne SOMENTE um JSON com esta estrutura exata (sem markdown, sem explicação):
+{"competencias":["competência 1","competência 2"],"habilidades":["habilidade específica 1","habilidade específica 2","habilidade específica 3"],"nivel_cognitivo":"Aplicação","dominio":"Cardiologia"}`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.1,
+    max_output_tokens: 2048,
+  },
+  {
     key: 'resumo_documento',
     name: 'Resumo de Documento (PDF)',
     description: 'Lê um documento PDF enviado pelo usuário e produz um resumo estruturado para estudo.',

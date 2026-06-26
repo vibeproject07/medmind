@@ -42,6 +42,7 @@ export async function GET(
       assuntos: question.assuntos ? JSON.parse(question.assuntos) : [],
       decs_terms: question.decs_terms ? JSON.parse(question.decs_terms) : [],
       ai_decs_descriptors: question.ai_decs_descriptors ? JSON.parse(question.ai_decs_descriptors) : [],
+      competencias: question.competencias ? JSON.parse(question.competencias) : null,
     });
   } catch (error) {
     console.error('Erro ao buscar questão:', error);
