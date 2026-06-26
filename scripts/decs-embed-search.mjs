@@ -140,7 +140,7 @@ async function searchDeCS(pool, embedding, limit, minSimilarity) {
 // ── Parser de argumentos CLI ──────────────────────────────────────────────────
 
 function parseArgs(argv) {
-  const args = { text: '', limit: 5, minSimilarity: 0.5, json: false };
+  const args = { text: '', limit: 5, minSimilarity: 0.15, json: false }; // interessante mudar esses valores;
 
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
