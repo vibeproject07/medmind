@@ -524,7 +524,7 @@ export default function QuestionsPage() {
       }
       setQuestions((prev) =>
         prev.map((q) =>
-          q.id === questionId ? { ...q, ai_decs_descriptors: data.descriptors } : q
+          q.id === questionId ? { ...q, ai_decs_descriptors: data.result } : q
         )
       );
     } catch {
