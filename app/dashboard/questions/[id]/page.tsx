@@ -514,7 +514,7 @@ export default function QuestionDetailPage() {
         return;
       }
       setQuestion((prev) =>
-        prev ? { ...prev, ai_decs_descriptors: data.descriptors } : prev
+        prev ? { ...prev, ai_decs_descriptors: data.result } : prev
       );
     } catch {
       setAiDecsError('Erro ao conectar com o servidor.');
