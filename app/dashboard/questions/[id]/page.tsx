@@ -45,6 +45,7 @@ interface Question {
   decs_terms?: string[];
   ai_decs_descriptors?: DeCSRecord[];
   competencias?: CompetenciasResult | null;
+  temas?: TemasResult | null;
   created_at: string;
   updated_at: string;
 }
@@ -81,6 +82,12 @@ interface CompetenciasResult {
   habilidades: string[];
   nivel_cognitivo: string;
   dominio: string;
+}
+
+interface TemasResult {
+  temas: string[];
+  subtemas: string[];
+  tema_principal: string;
 }
 
 interface SimilarQuestion {
@@ -130,6 +137,8 @@ export default function QuestionDetailPage() {
   const [showDecsV2, setShowDecsV2] = useState(false);
   const [habilitiesLoading, setHabilitiesLoading] = useState(false);
   const [habilitiesError, setHabilitiesError] = useState<string | null>(null);
+  const [temasLoading, setTemasLoading] = useState(false);
+  const [temasError, setTemasError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [similarQuestions, setSimilarQuestions] = useState<SimilarQuestion[]>([]);
@@ -259,6 +268,29 @@ export default function QuestionDetailPage() {
       console.error('Erro ao gerar embedding', err);
     } finally {
       setGeneratingEmbedding(false);
+    }
+  };
+
+  const handleGenerateTemas = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    setTemasLoading(true);
+    setTemasError(null);
+    try {
+      const res = await fetch(`/api/questions/${questionId}/themes`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setTemasError(data.error || 'Erro ao gerar temas.');
+        return;
+      }
+      setQuestion((prev) => prev ? { ...prev, temas: data.result } : prev);
+    } catch {
+      setTemasError('Erro ao conectar com o servidor.');
+    } finally {
+      setTemasLoading(false);
     }
   };
 
@@ -1508,6 +1540,79 @@ export default function QuestionDetailPage() {
             !habilitiesLoading && (
               <p className="text-gray-400 italic text-sm">
                 Nenhuma competência gerada ainda. Clique em &quot;Gerar com IA&quot; para classificar esta questão.
+              </p>
+            )
+          )}
+        </div>
+      )}
+
+      {/* Temas e Subtemas — IA */}
+      {isAdmin && (
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-teal-500" />
+              <h3 className="text-lg font-semibold text-gray-800">Temas e Subtemas</h3>
+              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">gerado por IA</span>
+            </div>
+            {!isEditing && (
+              <button
+                onClick={handleGenerateTemas}
+                disabled={temasLoading}
+                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-teal-600 text-white rounded-lg hover:bg-teal-700 disabled:opacity-50 transition"
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+                {temasLoading ? 'Gerando…' : 'Gerar com IA'}
+              </button>
+            )}
+          </div>
+
+          {temasError && <p className="text-red-500 text-sm mb-3">{temasError}</p>}
+          {temasLoading && (
+            <p className="text-sm text-teal-500 italic mb-3">Identificando temas e subtemas…</p>
+          )}
+
+          {question.temas ? (
+            <div className="space-y-4">
+              {question.temas.tema_principal && (
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">Tema Principal</span>
+                  <span className="px-3 py-1 text-sm font-semibold bg-teal-600 text-white rounded-full">
+                    {question.temas.tema_principal}
+                  </span>
+                </div>
+              )}
+
+              {question.temas.temas.length > 0 && (
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Temas</p>
+                  <div className="flex flex-wrap gap-2">
+                    {question.temas.temas.map((t, i) => (
+                      <span key={i} className="inline-block px-3 py-1 text-sm font-medium bg-teal-50 border border-teal-200 text-teal-800 rounded-full">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {question.temas.subtemas.length > 0 && (
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Subtemas</p>
+                  <div className="flex flex-wrap gap-2">
+                    {question.temas.subtemas.map((s, i) => (
+                      <span key={i} className="inline-block px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200 rounded-full">
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            !temasLoading && (
+              <p className="text-gray-400 italic text-sm">
+                Nenhum tema gerado ainda. Clique em &quot;Gerar com IA&quot; para classificar esta questão.
               </p>
             )
           )}

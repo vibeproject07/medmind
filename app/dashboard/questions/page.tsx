@@ -74,6 +74,7 @@ interface Question {
   ai_decs_descriptors?: AiDeCSRecord[];
   ai_decs_v2?: AiDeCSV2Result | null;
   competencias?: CompetenciasResult | null;
+  temas?: TemasResult | null;
   created_at: string;
   updated_at: string;
 }
@@ -101,6 +102,12 @@ interface CompetenciasResult {
   habilidades: string[];
   nivel_cognitivo: string;
   dominio: string;
+}
+
+interface TemasResult {
+  temas: string[];
+  subtemas: string[];
+  tema_principal: string;
 }
 
 export default function QuestionsPage() {
@@ -150,6 +157,8 @@ export default function QuestionsPage() {
   const [aiDecsErrors, setAiDecsErrors] = useState<Record<number, string>>({});
   const [habilitiesLoadingIds, setHabilitiesLoadingIds] = useState<Set<number>>(new Set());
   const [habilitiesErrors, setHabilitiesErrors] = useState<Record<number, string>>({});
+  const [temasLoadingIds, setTemasLoadingIds] = useState<Set<number>>(new Set());
+  const [temasErrors, setTemasErrors] = useState<Record<number, string>>({});
   const [showFilters, setShowFilters] = useState(false);
 
   // ── Semantic search ────────────────────────────────────────────────────────
@@ -541,6 +550,33 @@ export default function QuestionsPage() {
       setAiDecsErrors((prev) => ({ ...prev, [questionId]: 'Erro ao conectar com o servidor.' }));
     } finally {
       setAiDecsLoadingIds((prev) => { const next = new Set(prev); next.delete(questionId); return next; });
+    }
+  };
+
+  const handleGenerateTemas = async (questionId: number) => {
+    setTemasLoadingIds((prev) => new Set(prev).add(questionId));
+    setTemasErrors((prev) => { const next = { ...prev }; delete next[questionId]; return next; });
+    try {
+      const token = getToken();
+      if (!token) return;
+      const res = await fetch(`/api/questions/${questionId}/themes`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setTemasErrors((prev) => ({ ...prev, [questionId]: data.error || 'Erro ao gerar temas.' }));
+        return;
+      }
+      setQuestions((prev) =>
+        prev.map((q) =>
+          q.id === questionId ? { ...q, temas: data.result } : q
+        )
+      );
+    } catch {
+      setTemasErrors((prev) => ({ ...prev, [questionId]: 'Erro ao conectar com o servidor.' }));
+    } finally {
+      setTemasLoadingIds((prev) => { const next = new Set(prev); next.delete(questionId); return next; });
     }
   };
 
@@ -1217,6 +1253,60 @@ export default function QuestionsPage() {
                 ) : (
                   !habilitiesLoadingIds.has(question.id) && (
                     <p className="text-xs text-gray-400 italic">Nenhuma competência gerada.</p>
+                  )
+                )}
+              </div>
+              )}
+
+              {isAdmin && (
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="flex items-center gap-2 mb-2">
+                  <Sparkles className="h-3.5 w-3.5 text-teal-400" />
+                  <span className="text-xs font-medium text-gray-500">Temas e Subtemas — IA</span>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); handleGenerateTemas(question.id); }}
+                    disabled={temasLoadingIds.has(question.id)}
+                    className="ml-auto flex items-center gap-1 px-2 py-1 text-xs font-medium bg-teal-50 text-teal-600 border border-teal-200 rounded-lg hover:bg-teal-100 disabled:opacity-50 transition"
+                  >
+                    <Sparkles className="h-3 w-3" />
+                    {temasLoadingIds.has(question.id) ? 'Gerando…' : 'Gerar com IA'}
+                  </button>
+                </div>
+                {temasErrors[question.id] && (
+                  <p className="text-xs text-red-500 mb-1">{temasErrors[question.id]}</p>
+                )}
+                {question.temas ? (
+                  <div className="space-y-1.5">
+                    {question.temas.tema_principal && (
+                      <div className="flex items-center gap-1 flex-wrap">
+                        <span className="text-xs text-gray-400 mr-1">Principal:</span>
+                        <span className="px-2 py-0.5 text-xs font-semibold bg-teal-600 text-white rounded-full">
+                          {question.temas.tema_principal}
+                        </span>
+                      </div>
+                    )}
+                    {question.temas.temas.length > 0 && (
+                      <div className="flex flex-wrap gap-1">
+                        {question.temas.temas.map((t, i) => (
+                          <span key={i} className="px-2 py-0.5 text-xs bg-teal-50 border border-teal-200 text-teal-700 rounded-full">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    {question.temas.subtemas.length > 0 && (
+                      <div className="flex flex-wrap gap-1">
+                        {question.temas.subtemas.map((s, i) => (
+                          <span key={i} className="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 border border-gray-200 rounded-full">
+                            {s}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  !temasLoadingIds.has(question.id) && (
+                    <p className="text-xs text-gray-400 italic">Nenhum tema gerado.</p>
                   )
                 )}
               </div>

@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
     let questions = (await query(`
       SELECT id, statement, option_a, option_b, option_c, option_d, option_e,
              correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region,
-             areas_conhecimento, assuntos, decs_terms, ai_decs_descriptors, ai_decs_v2, competencias, anulada, created_at, updated_at
+             areas_conhecimento, assuntos, decs_terms, ai_decs_descriptors, ai_decs_v2, competencias, temas, anulada, created_at, updated_at
       FROM questions
       ORDER BY created_at DESC
     `)).rows;
@@ -77,6 +77,7 @@ export async function GET(request: NextRequest) {
       ai_decs_descriptors: question.ai_decs_descriptors ? JSON.parse(question.ai_decs_descriptors) : [],
       ai_decs_v2: question.ai_decs_v2 ? JSON.parse(question.ai_decs_v2) : null,
       competencias: question.competencias ? JSON.parse(question.competencias) : null,
+      temas: question.temas ? JSON.parse(question.temas) : null,
     }));
 
     if (filterTags) {

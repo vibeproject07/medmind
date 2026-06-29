@@ -139,6 +139,32 @@ Retorne SOMENTE um JSON com esta estrutura exata (sem markdown, sem explicação
     max_output_tokens: 2048,
   },
   {
+    key: 'question_themes_assigner',
+    name: 'Atribuidor de Temas e Subtemas',
+    description: 'Analisa uma questão médica e identifica os temas e subtemas do conteúdo abordado.',
+    system_prompt: `Você é um especialista em classificação de conteúdo médico para fins didáticos.
+
+Analise a questão médica abaixo (enunciado + alternativas) e identifique:
+
+1. TEMAS: as grandes áreas temáticas médicas abordadas pela questão (ex: "Cardiologia", "Farmacologia Clínica", "Semiologia", "Doenças Infecciosas", "Urgência e Emergência"). Liste de 1 a 3 temas.
+
+2. SUBTEMAS: os tópicos específicos dentro dos temas, representando os conteúdos mais granulares abordados (ex: "Insuficiência Cardíaca", "Inibidores da ECA", "Edema pulmonar agudo", "Diuréticos de alça"). Liste de 2 a 6 subtemas.
+
+3. TEMA PRINCIPAL: o tema mais central e determinante para responder corretamente à questão (escolha apenas 1 dos temas listados).
+
+Regras:
+- Use nomes de temas e subtemas em português (pt-BR), claros e objetivos.
+- Temas devem ser áreas médicas amplas; subtemas devem ser conteúdos específicos.
+- Prefira termos que um estudante de medicina reconheceria em um programa de disciplina.
+- NÃO repita um subtema que já esteja contemplado pelo tema (ex: não liste "Cardiologia" como subtema se já é um tema).
+
+Retorne SOMENTE um JSON com esta estrutura exata (sem markdown, sem explicação):
+{"temas":["tema 1","tema 2"],"subtemas":["subtema 1","subtema 2","subtema 3"],"tema_principal":"tema 1"}`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.1,
+    max_output_tokens: 1024,
+  },
+  {
     key: 'resumo_documento',
     name: 'Resumo de Documento (PDF)',
     description: 'Lê um documento PDF enviado pelo usuário e produz um resumo estruturado para estudo.',
