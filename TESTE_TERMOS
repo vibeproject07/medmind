@@ -895,6 +895,30 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+~/workspace$ node --env-file=.env.local scripts/decs-entry-terms-search.mjs "Síndrome de West"
+⏳ Buscando entry_terms [substring]: "Síndrome de West"
+✓ 1 descritor(es) encontrado(s) [limit: 20]
+
+
+[1] Espasmos Infantis  [D013036]
+    EN:           Spasms, Infantile
+    Hierarquia:   Doenças › C10.228.140.490.375.760
+    Tree IDs:     C10.228.140.490.375.760, C10.228.140.490.493.875
+    Casou em:     "«Síndrome de West»"
+    Total termos: 68
+    Nota:         Síndrome epiléptica caracterizada pela tríade de espasmos infantis, hipsarritmia e interrupção do desenvolvimento psicomotor no início dos ataques. A maioria se…
+~/workspace$ node --env-file=.env.local scripts/decs-entry-terms-search.mjs "Hipsarritmia"
+⏳ Buscando entry_terms [substring]: "Hipsarritmia"
+✓ 1 descritor(es) encontrado(s) [limit: 20]
+
+
+[1] Espasmos Infantis  [D013036]
+    EN:           Spasms, Infantile
+    Hierarquia:   Doenças › C10.228.140.490.375.760
+    Tree IDs:     C10.228.140.490.375.760, C10.228.140.490.493.875
+    Casou em:     "Síndrome epiléptica caracterizada pela tríade de espasmos infantis, «hipsarritmia» e interrupção do desenvolvimento psicomotor no início dos ataques. A maioria se manifesta entre os 3 e 12 meses de idade, com espasmos constituídos de combinações de movimentos flexores ou extensores breves da cabeça, tronco e membros. A afecção é dividida em duas formas: criptogênica (idiopática) e sintomática (secundária a um processo de doença conhecido, como infecções intrauterinas, anormalidades do sistema nervoso, DOENÇAS CEREBRAIS METABÓLICAS CONGÊNITAS, prematuridade, asfixia perinatal, ESCLEROSE TUBEROSA, etc.). (Tradução livre do original: Menkes, Textbook of Child Neurology, 5th ed, pp744-8)", "«Hipsarritmia»[Hypsarrhythmia]", "«Hipsarritmia»"
+    Total termos: 68
+    Nota:         Síndrome epiléptica caracterizada pela tríade de espasmos infantis, hipsarritmia e interrupção do desenvolvimento psicomotor no início dos ataques. A maioria se…
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
