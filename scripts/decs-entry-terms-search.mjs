@@ -322,6 +322,28 @@ main().catch(err => {
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
+// MODO DE USO
+// ─────────────────────────────────────────────────────────────────────────────
+//
+//   node --env-file=.env.local scripts/decs-entry-terms-search.mjs <texto> [opções]
+//
+// ─────────────────────────────────────────────────────────────────────────────
+// FUNCIONALIDADES (opções)
+// ─────────────────────────────────────────────────────────────────────────────
+//
+//   Opção                       Atalho  Padrão  Descrição
+//   ──────────────────────────────────────────────────────────────────────────
+//   --limit <n>                 -l      20      Máximo de resultados retornados
+//   --exact                     -e      (não)   Correspondência exata em vez de substring
+//   --lang <pt|en|all>          -L      all     Idioma a buscar nos entry_terms
+//   --category <letra>          -c      (todos) Filtrar por categoria DeCS (C, D, N, SP…)
+//   --show-all-terms            -t      (não)   Exibir todos os entry_terms do descritor
+//   --json                      -j      (não)   Saída em JSON puro (para piping/scripts)
+//   --stats                     -S      (não)   Mostrar estatísticas dos entry_terms no banco
+//
+//   Obs.: termos que casam com a busca são destacados com «guillemets» na saída de texto.
+//
+// ─────────────────────────────────────────────────────────────────────────────
 // COMANDOS DISPONÍVEIS
 // ─────────────────────────────────────────────────────────────────────────────
 //
