@@ -41,12 +41,12 @@ function buildDeCSText(d) {
   const parts = [
     d.name_pt,
     d.name_en ? `[${d.name_en}]` : null,
-    terms.length > 0 ? `Sinônimos: ${terms.slice(0, 20).join(', ')}` : null, //de 10 para 20
-    d.scope_note ? d.scope_note.slice(0, 5000) : null, // de 1000 para 5000
+    terms.length > 0 ? `Sinônimos: ${terms.slice(0, 50).join(', ')}` : null, //de 10 para 20 para 50
+    d.scope_note ? d.scope_note.slice(0, 5000) : null, // de 1000 para 5000 caracteres
     trees.length > 0 ? `Hierarquia: ${trees.slice(0, 5).join(' | ')}` : null,
   ].filter(Boolean);
 
-  return parts.join('\n').slice(0, 8000);
+  return parts.join('\n').slice(0, 8000); // 8000 é o máximo de caracteres que o modelo aceita
 }
 
 // ── Embedding ─────────────────────────────────────────────────────────────────
