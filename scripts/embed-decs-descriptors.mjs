@@ -41,8 +41,8 @@ function buildDeCSText(d) {
   const parts = [
     d.name_pt,
     d.name_en ? `[${d.name_en}]` : null,
-    terms.length > 0 ? `Sinônimos: ${terms.slice(0, 10).join(', ')}` : null,
-    d.scope_note ? d.scope_note.slice(0, 1000) : null,
+    terms.length > 0 ? `Sinônimos: ${terms.slice(0, 20).join(', ')}` : null, //de 10 para 20
+    d.scope_note ? d.scope_note.slice(0, 5000) : null, // de 1000 para 5000
     trees.length > 0 ? `Hierarquia: ${trees.slice(0, 5).join(' | ')}` : null,
   ].filter(Boolean);
 

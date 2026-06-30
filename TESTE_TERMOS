@@ -949,7 +949,8 @@
         "path": "app/api/admin/embed-batch/route.ts",
         "methods": ["GET", "POST"],
         "get": "Progresso do batch (contagem pgvector + Pinecone)",
-        "post": "Dispara scripts/batch-embed-questions.mjs como processo detached"
+        "post": "Dispara scripts/batch-embed-questions.mjs como processo detached",
+        "relevance" : "DANGEROUS to the workflow (and the wallet)"
       },
       {
         "path": "app/api/admin/embed-notes/route.ts",
@@ -1011,7 +1012,8 @@
         "task_type": "SEMANTIC_SIMILARITY",
         "backends": ["pgvector (decs_descriptors)"],
         "options": ["--limit N", "--concurrency N", "--delay N", "--no-resume"],
-        "run": "node --env-file=.env.local scripts/embed-decs-descriptors.mjs"
+        "run": "node --env-file=.env.local scripts/embed-decs-descriptors.mjs",
+        'relevance': 'EXTREMELY HIGH'
       },
       {
         "path": "scripts/embed-notes.mjs",
