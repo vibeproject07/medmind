@@ -90,3 +90,9 @@ id = "glbnTA4_zbz3qwTxnSZUD"
 uri = "file://exports/edge-cases-vector-search-results.json"
 type = "unspecified"
 title = "Resultados de busca vetorial — 4 termos edge-case"
+
+[[outputs]]
+id = "o8JxcoWzWVLXF4I0C6Xjy"
+uri = "file://exports/decs-embedding-text-audit.json"
+type = "unspecified"
+title = "Auditoria de texto de embedding — 5 termos de epilepsia"
