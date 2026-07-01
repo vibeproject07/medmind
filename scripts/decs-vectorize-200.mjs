@@ -16,28 +16,28 @@
  *   --out <f>    Caminho do arquivo de saída (padrão: exports/decs-vectorization-200.json)
  */
 
-import pg      from 'pg';
-import fs      from 'fs';
-import path    from 'path';
+import pg from 'pg';
+import fs from 'fs';
+import path from 'path';
 
 const EMBEDDING_MODEL = 'gemini-embedding-001';
-const EMBEDDING_DIM   = 3072;
-const TARGET_COUNT    = 200;
-const CONCURRENCY     = 4;
-const DELAY_MS        = 350;
+const EMBEDDING_DIM = 3072;
+const TARGET_COUNT = 200;
+const CONCURRENCY = 4;
+const DELAY_MS = 350;
 
 const MANDATORY_NAMES = [
   'espasmos infantis',
-  'síndrome de lennox-gastaut',
+  'síndrome de lennox-gastaut',     // COMENTEI PARA NÃO RESTRINGIR
   'síndromes epilépticas',
   'epilepsia mioclônica juvenil',
   'eletroencefalografia',
   'epilepsias mioclônicas',
 ];
 
-const args    = process.argv.slice(2);
+const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
-const outIdx  = args.indexOf('--out');
+const outIdx = args.indexOf('--out');
 const OUT_FILE = outIdx !== -1 ? args[outIdx + 1] : 'exports/decs-vectorization-200.json';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -46,14 +46,14 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 function vectorStr(v) { return `[${v.join(',')}]`; }
 
 function buildDeCSText(d) {
-  const terms = Array.isArray(d.entry_terms)  ? d.entry_terms  : JSON.parse(d.entry_terms  || '[]');
-  const trees  = Array.isArray(d.tree_numbers) ? d.tree_numbers : JSON.parse(d.tree_numbers || '[]');
+  const terms = Array.isArray(d.entry_terms) ? d.entry_terms : JSON.parse(d.entry_terms || '[]');
+  const trees = Array.isArray(d.tree_numbers) ? d.tree_numbers : JSON.parse(d.tree_numbers || '[]');
   const parts = [
     d.name_pt,
     d.name_en ? `[${d.name_en}]` : null,
-    terms.length > 0  ? `Sinônimos: ${terms.slice(0, 245).join(', ')}` : null,
-    d.scope_note      ? d.scope_note.slice(0, 5000) : null,
-    trees.length > 0  ? `Hierarquia: ${trees.slice(0, 5).join(' | ')}` : null,
+    terms.length > 0 ? `Sinônimos: ${terms.slice(0, 245).join(', ')}` : null,
+    d.scope_note ? d.scope_note.slice(0, 5000) : null,
+    trees.length > 0 ? `Hierarquia: ${trees.slice(0, 5).join(' | ')}` : null,
   ].filter(Boolean);
   return parts.join('\n').slice(0, 8000);
 }
@@ -68,10 +68,10 @@ async function generateEmbedding(text, retries = 3) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       const res = await fetch(url, {
-        method:  'POST',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({
-          content:  { parts: [{ text }] },
+        body: JSON.stringify({
+          content: { parts: [{ text }] },
           taskType: 'RETRIEVAL_DOCUMENT',
         }),
       });
@@ -80,7 +80,7 @@ async function generateEmbedding(text, retries = 3) {
         if (res.status === 429 || res.status === 503) { await sleep(attempt * 2000); continue; }
         throw new Error(`API ${res.status}: ${errBody.slice(0, 100)}`);
       }
-      const data   = await res.json();
+      const data = await res.json();
       const values = data?.embedding?.values;
       if (!Array.isArray(values) || values.length === 0) throw new Error('Embedding vazio');
       return values;
@@ -114,7 +114,7 @@ async function selectDescriptors(pool) {
   );
 
   const foundNames = mandatory.map(r => r.name_pt.toLowerCase());
-  const missing    = MANDATORY_NAMES.filter(n => !foundNames.includes(n));
+  const missing = MANDATORY_NAMES.filter(n => !foundNames.includes(n));
   if (missing.length > 0) {
     console.warn(`⚠️  Termos obrigatórios não encontrados (verifique a grafia): ${missing.join(', ')}`);
   }
@@ -177,14 +177,14 @@ async function main() {
     console.log(`   Conc.  : ${CONCURRENCY} | Delay: ${DELAY_MS}ms\n`);
 
     let done = 0, success = 0, failed = 0;
-    const startTime  = Date.now();
+    const startTime = Date.now();
     const exportRows = [];
-    const errors     = [];
+    const errors = [];
 
     const printProgress = () => {
       const elapsed = ((Date.now() - startTime) / 1000).toFixed(0);
-      const rate    = done > 0 ? (done / ((Date.now() - startTime) / 1000)).toFixed(1) : 0;
-      const eta     = rate > 0 ? Math.round((descriptors.length - done) / rate) : '?';
+      const rate = done > 0 ? (done / ((Date.now() - startTime) / 1000)).toFixed(1) : 0;
+      const eta = rate > 0 ? Math.round((descriptors.length - done) / rate) : '?';
       process.stdout.write(
         `\r⏳ ${done}/${descriptors.length} | ✅ ${success} ❌ ${failed} | ${rate}/s | ETA ~${eta}s | ${elapsed}s    `,
       );
@@ -200,24 +200,24 @@ async function main() {
           [vectorStr(embedding), d.id],
         );
 
-        const terms  = Array.isArray(d.entry_terms)  ? d.entry_terms  : JSON.parse(d.entry_terms  || '[]');
-        const trees  = Array.isArray(d.tree_numbers)  ? d.tree_numbers : JSON.parse(d.tree_numbers || '[]');
+        const terms = Array.isArray(d.entry_terms) ? d.entry_terms : JSON.parse(d.entry_terms || '[]');
+        const trees = Array.isArray(d.tree_numbers) ? d.tree_numbers : JSON.parse(d.tree_numbers || '[]');
         const isMandatory = MANDATORY_NAMES.includes(d.name_pt.toLowerCase());
 
         exportRows.push({
-          mandatory:    isMandatory,
-          id:           d.id,
-          ui:           d.ui,
-          name_pt:      d.name_pt,
-          name_en:      d.name_en   ?? null,
-          scope_note:   d.scope_note ?? null,
-          entry_terms:  terms,
+          mandatory: isMandatory,
+          id: d.id,
+          ui: d.ui,
+          name_pt: d.name_pt,
+          name_en: d.name_en ?? null,
+          scope_note: d.scope_note ?? null,
+          entry_terms: terms,
           tree_numbers: trees,
-          embedding_model:    EMBEDDING_MODEL,
+          embedding_model: EMBEDDING_MODEL,
           embedding_task_type: 'RETRIEVAL_DOCUMENT',
-          embedding_dims:      EMBEDDING_DIM,
+          embedding_dims: EMBEDDING_DIM,
           embedding_text_used: text,
-          embedding_vector:    embedding,
+          embedding_vector: embedding,
         });
 
         success++;
@@ -248,17 +248,17 @@ async function main() {
 
     const document = {
       metadata: {
-        generated_at:        new Date().toISOString(),
-        total_descriptors:   descriptors.length,
-        success:             success,
-        failed:              failed,
-        duration_seconds:    parseFloat(duration),
-        embedding_model:     EMBEDDING_MODEL,
+        generated_at: new Date().toISOString(),
+        total_descriptors: descriptors.length,
+        success: success,
+        failed: failed,
+        duration_seconds: parseFloat(duration),
+        embedding_model: EMBEDDING_MODEL,
         embedding_task_type: 'RETRIEVAL_DOCUMENT',
-        embedding_dims:      EMBEDDING_DIM,
-        mandatory_terms:     MANDATORY_NAMES,
-        mandatory_found:     exportRows.filter(r => r.mandatory).map(r => r.name_pt),
-        errors:              errors,
+        embedding_dims: EMBEDDING_DIM,
+        mandatory_terms: MANDATORY_NAMES,
+        mandatory_found: exportRows.filter(r => r.mandatory).map(r => r.name_pt),
+        errors: errors,
       },
       descriptors: exportRows.sort((a, b) => b.mandatory - a.mandatory || a.name_pt.localeCompare(b.name_pt)),
     };
