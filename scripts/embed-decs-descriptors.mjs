@@ -15,16 +15,16 @@
 
 import pg from 'pg';
 
-const EMBEDDING_DIM   = 3072;
+const EMBEDDING_DIM = 3072;
 const EMBEDDING_MODEL = 'gemini-embedding-001';
 
 const args = process.argv.slice(2);
-const getArg = (name, def) => { const i = args.indexOf(`--${name}`); return i !== -1 ? args[i+1] : def; };
+const getArg = (name, def) => { const i = args.indexOf(`--${name}`); return i !== -1 ? args[i + 1] : def; };
 
-const LIMIT       = parseInt(getArg('limit', '0'));
+const LIMIT = parseInt(getArg('limit', '0'));
 const CONCURRENCY = parseInt(getArg('concurrency', '4'));
-const DELAY_MS    = parseInt(getArg('delay', '300'));
-const RESUME      = !args.includes('--no-resume');
+const DELAY_MS = parseInt(getArg('delay', '300'));
+const RESUME = !args.includes('--no-resume');
 
 const { Pool } = pg;
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
@@ -36,12 +36,12 @@ if (!geminiKey) throw new Error('GEMINI_API_KEY is not set');
 
 function buildDeCSText(d) {
   const terms = Array.isArray(d.entry_terms) ? d.entry_terms : JSON.parse(d.entry_terms || '[]');
-  const trees  = Array.isArray(d.tree_numbers) ? d.tree_numbers : JSON.parse(d.tree_numbers || '[]');
+  const trees = Array.isArray(d.tree_numbers) ? d.tree_numbers : JSON.parse(d.tree_numbers || '[]');
 
   const parts = [
     d.name_pt,
     d.name_en ? `[${d.name_en}]` : null,
-    terms.length > 0 ? `Sinônimos: ${terms.slice(0, 50).join(', ')}` : null, //de 10 para 20 para 50
+    terms.length > 0 ? `Sinônimos: ${terms.slice(0, 245).join(', ')}` : null, //de 10 para 20 para 50
     d.scope_note ? d.scope_note.slice(0, 5000) : null, // de 1000 para 5000 caracteres
     trees.length > 0 ? `Hierarquia: ${trees.slice(0, 5).join(' | ')}` : null,
   ].filter(Boolean);
@@ -81,7 +81,7 @@ async function generateEmbedding(text, retries = 3) {
 }
 
 function vectorStr(v) { return `[${v.join(',')}]`; }
-function sleep(ms)    { return new Promise(r => setTimeout(r, ms)); }
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 
@@ -117,7 +117,7 @@ async function main() {
   const printProgress = () => {
     const elapsed = ((Date.now() - startTime) / 1000).toFixed(0);
     const rate = done > 0 ? (done / ((Date.now() - startTime) / 1000)).toFixed(1) : 0;
-    const eta  = rate > 0 ? Math.round((total - done) / rate) : '?';
+    const eta = rate > 0 ? Math.round((total - done) / rate) : '?';
     process.stdout.write(`\r⏳ ${done}/${total} | ✅ ${success} ❌ ${failed} | ${rate}/s | ETA ~${eta}s | ${elapsed}s    `);
   };
 

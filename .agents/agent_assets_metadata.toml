@@ -72,3 +72,15 @@ id = "Ui04c2e7xG6_vN-bgxX1_"
 uri = "file://exports/decs-vectorization-200-compact.json"
 type = "unspecified"
 title = "DeCS — Vetorização 200 descritores (compacto)"
+
+[[outputs]]
+id = "CPPk2ipWD9WxfeybGZw2S"
+uri = "file://exports/edge-cases-before-revectorization.json"
+type = "unspecified"
+title = "Edge Cases — Estado ANTES da revetorização"
+
+[[outputs]]
+id = "ZawvgRI6ZS0_dzfwAXzAX"
+uri = "file://exports/edge-cases-after-revectorization.json"
+type = "unspecified"
+title = "Edge Cases — Estado APÓS revetorização"
