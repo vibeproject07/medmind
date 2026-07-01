@@ -60,3 +60,9 @@ id = "CNnA5Q7ggl92zyKofRKG4"
 uri = "file://questoes_recentes_200.csv"
 type = "table"
 title = "200 questões mais recentes"
+
+[[outputs]]
+id = "mH-sMZxuVOYBJmEUDgWc1"
+uri = "file://exports/decs-vectorization-200.json"
+type = "unspecified"
+title = "DeCS — Vetorização 200 descritores"
