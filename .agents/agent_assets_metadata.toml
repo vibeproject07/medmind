@@ -84,3 +84,9 @@ id = "ZawvgRI6ZS0_dzfwAXzAX"
 uri = "file://exports/edge-cases-after-revectorization.json"
 type = "unspecified"
 title = "Edge Cases — Estado APÓS revetorização"
+
+[[outputs]]
+id = "glbnTA4_zbz3qwTxnSZUD"
+uri = "file://exports/edge-cases-vector-search-results.json"
+type = "unspecified"
+title = "Resultados de busca vetorial — 4 termos edge-case"
