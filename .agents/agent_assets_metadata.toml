@@ -66,3 +66,9 @@ id = "mH-sMZxuVOYBJmEUDgWc1"
 uri = "file://exports/decs-vectorization-200.json"
 type = "unspecified"
 title = "DeCS — Vetorização 200 descritores"
+
+[[outputs]]
+id = "Ui04c2e7xG6_vN-bgxX1_"
+uri = "file://exports/decs-vectorization-200-compact.json"
+type = "unspecified"
+title = "DeCS — Vetorização 200 descritores (compacto)"
