@@ -179,6 +179,15 @@ function buildHierarchyPath(treeId) {
   return treeId.split('.').length <= 1 ? label : `${label} › ${treeId}`;
 }
 
+/**
+ * Resolve TODAS as ramificações (tree_ids) de um descritor, não só a primeira.
+ * Mesmo comportamento de buildBranches em lib/decs-pipeline.ts — mantido aqui
+ * localmente pois scripts .mjs não resolvem imports "@/lib/*" do Next.
+ */
+function buildBranches(treeIds) {
+  return (treeIds ?? []).filter(Boolean).map((tree_id) => ({ tree_id, hierarchy_path: buildHierarchyPath(tree_id) }));
+}
+
 function wordJaccard(a, b) {
   const tokenise = (s) =>
     new Set(
@@ -280,6 +289,7 @@ async function searchDeCSLocal(searchTerm, maxCandidates = 5, minSimilarity = 0.
         code: r.code,
         tree_ids,
         hierarchy_path: buildHierarchyPath(tree_ids[0] ?? ''),
+        branches: buildBranches(tree_ids),
         similarity: parseFloat(r.similarity ?? '0'),
         scope_note: r.scope_note ?? undefined,
         name_en: r.name_en ?? undefined,
@@ -304,7 +314,7 @@ function parseDeCSRecord(rec) {
   if (!term) return null;
   const treeList = toArray(rec.tree_id_list).flatMap((t) => toArray(t));
   const tree_ids = treeList.map((t) => t?.tree_id?.trim()).filter(Boolean);
-  return { term, code, tree_ids, hierarchy_path: buildHierarchyPath(tree_ids[0] ?? '') };
+  return { term, code, tree_ids, hierarchy_path: buildHierarchyPath(tree_ids[0] ?? ''), branches: buildBranches(tree_ids) };
 }
 
 async function searchDeCSCandidates(searchTerm) {

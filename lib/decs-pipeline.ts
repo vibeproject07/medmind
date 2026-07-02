@@ -10,12 +10,18 @@
  * was removing essential descriptors after an otherwise accurate pgvector/BVS match.
  */
 
+export interface DeCSBranch {
+  tree_id: string; // e.g. "C01.635.500"
+  hierarchy_path: string; // e.g. "Doenças › C01.635.500"
+}
+
 export interface DeCSRecord {
   // interface is a way to define the structure of an object!!
   term: string; // nome do descritor
   code: string; //identificador DeCS (index) (UI)
   tree_ids: string[]; // e.g. ["C01.635.500", "C01.635.500.500"] - posição hierárquica
-  hierarchy_path: string; // e.g. "Doenças › C01.635.500" - caminho categórico
+  hierarchy_path: string; // e.g. "Doenças › C01.635.500" - caminho categórico (primeiro ramo)
+  branches?: DeCSBranch[]; // TODAS as ramificações (um descritor pode pertencer a mais de uma árvore)
   similarity?: number; // score vetorial
   role?: "primary" | "secondary"; // importância temática
   scope_note?: string; // descrição do conceito
@@ -71,6 +77,20 @@ export function buildHierarchyPath(treeId: string): string {
    * [[treeId.split(".").length <= 1 ? label : `${label} › ${treeId}`;]] == if (treeId.split(".").length <= 1) {return label;} else {return `${label} › ${treeId}`;} (ternary operator);
    *
    */
+}
+
+/**
+ * Resolve TODAS as ramificações (tree_ids) de um descritor para exibição.
+ * Um descritor DeCS pode pertencer a mais de uma árvore hierárquica ao mesmo
+ * tempo (ex: um fármaco pode estar em "D" e também em "C" se também for uma
+ * doença relacionada) — hierarchy_path sozinho só mostra a primeira.
+ * Usado pelo frontend para exibir a lista completa de tree_numbers do termo
+ * selecionado, não apenas o primeiro.
+ */
+export function buildBranches(treeIds: string[]): DeCSBranch[] {
+  return (treeIds ?? [])
+    .filter(Boolean)
+    .map((tree_id) => ({ tree_id, hierarchy_path: buildHierarchyPath(tree_id) }));
 }
 
 // ── Improvement 2: Category filter ──────────────────────────────────────────
@@ -182,6 +202,7 @@ function parseDeCSRecord(rec: Record<string, unknown>): DeCSRecord | null {
     code,
     tree_ids,
     hierarchy_path: buildHierarchyPath(tree_ids[0] ?? ""),
+    branches: buildBranches(tree_ids),
   };
 }
 
@@ -252,6 +273,7 @@ export async function searchDeCSLocal(
         code: r.code,
         tree_ids,
         hierarchy_path: buildHierarchyPath(tree_ids[0] ?? ""),
+        branches: buildBranches(tree_ids),
         similarity: parseFloat(r.similarity ?? "0"),
         scope_note: r.scope_note ?? undefined,
         name_en: r.name_en ?? undefined,

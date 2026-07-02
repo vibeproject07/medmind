@@ -79,8 +79,17 @@ interface Question {
   updated_at: string;
 }
 
+interface AiDeCSBranch {
+  tree_id: string;
+  hierarchy_path: string;
+}
+
 interface AiDeCSRecord {
   term: string;
+  code?: string;
+  tree_ids?: string[];
+  hierarchy_path?: string;
+  branches?: AiDeCSBranch[];
   role?: 'primary' | 'secondary';
 }
 
@@ -1183,14 +1192,52 @@ export default function QuestionsPage() {
                             </tr>
                           </thead>
                           <tbody>
-                            {Array.from({ length: maxRows }).map((_, i) => (
+                            {Array.from({ length: maxRows }).map((_, i) => {
+                              const v1p = v1Primary[i];
+                              const v1s = v1Secondary[i];
+                              return (
                               <tr key={i} className="align-top">
-                                <td className="py-2 px-3 border border-indigo-100 bg-indigo-50/40 font-semibold text-indigo-800">{v1Primary[i]?.term ?? '—'}</td>
-                                <td className="py-2 px-3 border border-slate-100 bg-slate-50/40 font-medium text-slate-700">{v1Secondary[i]?.term ?? '—'}</td>
+                                <td className="py-2 px-3 border border-indigo-100 bg-indigo-50/40">
+                                  {v1p ? (
+                                    <div>
+                                      <span className="font-semibold text-indigo-800">{v1p.term}</span>
+                                      {v1p.branches && v1p.branches.length > 0 ? (
+                                        <div className="mt-0.5 space-y-0.5">
+                                          {v1p.branches.map((b) => (
+                                            <span key={b.tree_id} className="block text-xs text-indigo-300">
+                                              {b.hierarchy_path} <span className="font-mono text-indigo-200">({b.tree_id})</span>
+                                            </span>
+                                          ))}
+                                        </div>
+                                      ) : v1p.hierarchy_path ? (
+                                        <span className="block text-xs text-indigo-300 mt-0.5">{v1p.hierarchy_path}</span>
+                                      ) : null}
+                                    </div>
+                                  ) : '—'}
+                                </td>
+                                <td className="py-2 px-3 border border-slate-100 bg-slate-50/40">
+                                  {v1s ? (
+                                    <div>
+                                      <span className="font-medium text-slate-700">{v1s.term}</span>
+                                      {v1s.branches && v1s.branches.length > 0 ? (
+                                        <div className="mt-0.5 space-y-0.5">
+                                          {v1s.branches.map((b) => (
+                                            <span key={b.tree_id} className="block text-xs text-slate-300">
+                                              {b.hierarchy_path} <span className="font-mono text-slate-200">({b.tree_id})</span>
+                                            </span>
+                                          ))}
+                                        </div>
+                                      ) : v1s.hierarchy_path ? (
+                                        <span className="block text-xs text-slate-300 mt-0.5">{v1s.hierarchy_path}</span>
+                                      ) : null}
+                                    </div>
+                                  ) : '—'}
+                                </td>
                                 <td className="py-2 px-3 border border-emerald-100 bg-emerald-50/40 font-semibold text-emerald-800">{v2Primary[i]?.term ?? '—'}</td>
                                 <td className="py-2 px-3 border border-teal-100 bg-teal-50/40 font-medium text-teal-800">{v2Secondary[i]?.term ?? '—'}</td>
                               </tr>
-                            ))}
+                              );
+                            })}
                           </tbody>
                         </table>
                       );

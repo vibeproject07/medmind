@@ -26,21 +26,10 @@
  *   - scripts/embed-decs-descriptors.mjs → buildDeCSText (referência, não usado diretamente aqui
  *                                           pois aqui vetorizamos o TERMO de busca, não o descritor)
  *
- * Usage:
- *   node --env-file=.env.local scripts/decs-pipeline-v1-run.mjs --id <question_id> [opções]
- *   node --env-file=.env.local scripts/decs-pipeline-v1-run.mjs --text "<enunciado completo>" [opções]
+ * Cada descritor no resultado inclui `branches` — TODAS as ramificações (tree_numbers)
+ * a que ele pertence (não só a primeira, como `hierarchy_path`).
  *
- * Options:
- *   --id <n>                    ID da questão (busca statement + alternativas no banco)
- *   --text "<texto>"            Texto livre da questão (alternativa a --id)
- *   --min-text-similarity <f>   Jaccard mínimo termo×descritor para aceitar via texto (padrão: 0.5)
- *   --min-vector-similarity <f> Similaridade coseno mínima para aceitar via vetor  (padrão: 0.6)
- *   --text-limit <n>            Máx. candidatos na busca textual  (padrão: 20)
- *   --vector-limit <n>          Máx. candidatos na busca vetorial (padrão: 5)
- *   --save                      Grava o resultado em questions.ai_decs_descriptors + decs_classification_runs
- *                                (requer --id; replica o efeito colateral do botão "Gerar V1")
- *   --json                      Saída em JSON puro (para piping)
- *   --out <arquivo>             Caminho de exportação (padrão: exports/decs-pipeline-v1-run-<id|ts>.json)
+ * Uso e opções: ver bloco "COMANDOS DISPONÍVEIS" ao final deste arquivo.
  */
 
 import pg   from 'pg';
@@ -85,6 +74,15 @@ function buildHierarchyPath(treeId) {
   const cat   = treeCategory(treeId);
   const label = DECS_CATEGORY_LABELS[cat] ?? cat;
   return treeId.split('.').length <= 1 ? label : `${label} › ${treeId}`;
+}
+
+/**
+ * Resolve TODAS as ramificações (tree_ids) de um descritor, não só a primeira
+ * (hierarchy_path mostra apenas tree_ids[0]). Idêntico a buildBranches em
+ * lib/decs-pipeline.ts — replicado aqui pois scripts .mjs não resolvem "@/lib/*".
+ */
+function buildBranches(treeIds) {
+  return (treeIds ?? []).filter(Boolean).map((tree_id) => ({ tree_id, hierarchy_path: buildHierarchyPath(tree_id) }));
 }
 
 // Categoria B (organismos) só é aceita se a questão tiver contexto bio/micro explícito
@@ -267,6 +265,7 @@ async function searchTextual(pool, term, limit) {
       scope_note:     r.scope_note ?? undefined,
       tree_ids,
       hierarchy_path: buildHierarchyPath(tree_ids[0] ?? ''),
+      branches:       buildBranches(tree_ids),
       matched_terms:  matched,
       all_entry_terms: allTerms,
     };
@@ -337,6 +336,7 @@ async function searchVector(pool, embedding, limit, minSimilarity) {
       scope_note:     r.scope_note ?? undefined,
       tree_ids,
       hierarchy_path: buildHierarchyPath(tree_ids[0] ?? ''),
+      branches:       buildBranches(tree_ids),
       similarity:     parseFloat(r.similarity ?? '0'),
     };
   });
@@ -384,7 +384,7 @@ function parseBvsRecord(rec) {
   if (!term) return null;
   const treeList = toArray(rec.tree_id_list).flatMap((t) => toArray(t));
   const tree_ids = treeList.map((t) => (t?.tree_id ?? '').trim()).filter(Boolean);
-  return { code, term, tree_ids, hierarchy_path: buildHierarchyPath(tree_ids[0] ?? '') };
+  return { code, term, tree_ids, hierarchy_path: buildHierarchyPath(tree_ids[0] ?? ''), branches: buildBranches(tree_ids) };
 }
 
 async function searchBvs(term, decsApiKey, maxCandidates) {
@@ -492,6 +492,7 @@ async function resolveTerm(pool, term, role, questionText, seenCodes, geminiKey,
     code:           winner.code,
     tree_ids:       winner.tree_ids ?? [],
     hierarchy_path: winner.hierarchy_path ?? '',
+    branches:       winner.branches ?? buildBranches(winner.tree_ids ?? []),
     role,
     search_method:  method,
     similarity:     winner.similarity ?? null,
@@ -590,14 +591,7 @@ async function main() {
     console.error(
       'Uso: node --env-file=.env.local scripts/decs-pipeline-v1-run.mjs --id <question_id> [opções]\n' +
       '  ou node --env-file=.env.local scripts/decs-pipeline-v1-run.mjs --text "<enunciado>" [opções]\n\n' +
-      'Opções:\n' +
-      '  --min-text-similarity <f>   Jaccard mínimo p/ aceitar via texto   (padrão: 0.5)\n' +
-      '  --min-vector-similarity <f> Similaridade mínima p/ aceitar via vetor (padrão: 0.6)\n' +
-      '  --text-limit <n>            Máx. candidatos na busca textual (padrão: 20)\n' +
-      '  --vector-limit <n>          Máx. candidatos na busca vetorial (padrão: 5)\n' +
-      '  --save                      Grava em questions.ai_decs_descriptors (requer --id)\n' +
-      '  --json                      Saída em JSON puro\n' +
-      '  --out <arquivo>             Caminho de exportação',
+      'Ver todas as opções e exemplos no bloco "COMANDOS DISPONÍVEIS" ao final do script.',
     );
     process.exit(1);
   }
@@ -760,4 +754,56 @@ main().catch((e) => { console.error('\n💥 Fatal:', e.message); process.exit(1)
 //    Gemini já corresponde a um sinônimo cadastrado — reservando a busca
 //    vetorial (mais cara e mais "nebulosa") para os casos em que o termo não
 //    tem correspondência textual direta ou boa o bastante.
+//
+// 7. Cada descritor aceito carrega `branches`: TODAS as ramificações
+//    (tree_numbers) a que ele pertence, resolvidas via buildBranches — não
+//    apenas a primeira, como `hierarchy_path` mostra isoladamente.
+// ─────────────────────────────────────────────────────────────────────────────
+//
+// MODO DE USO
+// ─────────────────────────────────────────────────────────────────────────────
+//
+//   node --env-file=.env.local scripts/decs-pipeline-v1-run.mjs --id <question_id> [opções]
+//   node --env-file=.env.local scripts/decs-pipeline-v1-run.mjs --text "<enunciado completo>" [opções]
+//
+// ─────────────────────────────────────────────────────────────────────────────
+// FUNCIONALIDADES (opções)
+// ─────────────────────────────────────────────────────────────────────────────
+//
+//   Opção                        Padrão                                Descrição
+//   ────────────────────────────────────────────────────────────────────────────
+//   --id <n>                     —        ID da questão (busca statement + alternativas no banco)
+//   --text "<texto>"             —        Texto livre da questão (alternativa a --id)
+//   --min-text-similarity <f>    0.5      Jaccard mínimo termo×descritor para aceitar via texto
+//   --min-vector-similarity <f>  0.6      Similaridade coseno mínima para aceitar via vetor
+//   --text-limit <n>             20       Máx. candidatos na busca textual
+//   --vector-limit <n>           5        Máx. candidatos na busca vetorial
+//   --save                       (não)    Grava em questions.ai_decs_descriptors + decs_classification_runs (requer --id)
+//   --json                       (não)    Saída em JSON puro (para piping)
+//   --out <arquivo>              auto     Caminho de exportação (padrão: exports/decs-pipeline-v1-run-<id|ts>.json)
+//
+// ─────────────────────────────────────────────────────────────────────────────
+// COMANDOS DISPONÍVEIS
+// ─────────────────────────────────────────────────────────────────────────────
+//
+// ── Rodar a partir de uma questão já cadastrada no banco ──────────────────────
+//
+//   node --env-file=.env.local scripts/decs-pipeline-v1-run.mjs --id 42
+//   node --env-file=.env.local scripts/decs-pipeline-v1-run.mjs --id 42 --json
+//   node --env-file=.env.local scripts/decs-pipeline-v1-run.mjs --id 42 --save
+//
+// ── Rodar a partir de um texto livre (sem gravar nada, sem precisar de --id) ──
+//
+//   node --env-file=.env.local scripts/decs-pipeline-v1-run.mjs --text "Paciente com dispneia e febre, com foco em tuberculose pulmonar"
+//
+// ── Ajustando limiares e limites de busca ──────────────────────────────────────
+//
+//   node --env-file=.env.local scripts/decs-pipeline-v1-run.mjs --id 42 --min-text-similarity 0.6
+//   node --env-file=.env.local scripts/decs-pipeline-v1-run.mjs --id 42 --min-vector-similarity 0.7 --vector-limit 8
+//   node --env-file=.env.local scripts/decs-pipeline-v1-run.mjs --id 42 --text-limit 10
+//
+// ── Exportando para um arquivo específico ──────────────────────────────────────
+//
+//   node --env-file=.env.local scripts/decs-pipeline-v1-run.mjs --id 42 --out exports/questao-42-v1.json
+//
 // ─────────────────────────────────────────────────────────────────────────────
