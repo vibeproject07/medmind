@@ -1,0 +1,1400 @@
+{
+  "metadata": {
+    "generated_at": "2026-07-02T20:47:53.314Z",
+    "filters": {
+      "search": "hipsarritmia",
+      "ui": null,
+      "category": null,
+      "limit": 50,
+      "min_terms": 1
+    },
+    "total_descriptors": 1,
+    "total_entry_terms": 68
+  },
+  "descriptors": [
+    {
+      "code": "D013036",
+      "name_pt": "Espasmos Infantis",
+      "name_en": "Spasms, Infantile",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ],
+      "entry_terms_count": 68,
+      "entry_terms": [
+        "Espasmos Infantis[Spasms, Infantile]",
+        "Síndrome epiléptica caracterizada pela tríade de espasmos infantis, hipsarritmia e interrupção do desenvolvimento psicomotor no início dos ataques. A maioria se manifesta entre os 3 e 12 meses de idade, com espasmos constituídos de combinações de movimentos flexores ou extensores breves da cabeça, tronco e membros. A afecção é dividida em duas formas: criptogênica (idiopática) e sintomática (secundária a um processo de doença conhecido, como infecções intrauterinas, anormalidades do sistema nervoso, DOENÇAS CEREBRAIS METABÓLICAS CONGÊNITAS, prematuridade, asfixia perinatal, ESCLEROSE TUBEROSA, etc.). (Tradução livre do original: Menkes, Textbook of Child Neurology, 5th ed, pp744-8)",
+        "Spasms, Infantile",
+        "NLM (1977)",
+        "ORD (2010)",
+        "Espasmos Infantis",
+        "Infantile Spasm",
+        "Infantile Spasms",
+        "NLM (2000)",
+        "Lightning Attacks",
+        "Attack, Lightning",
+        "Attacks, Lightning",
+        "Lightning Attack",
+        "West Syndrome",
+        "UNK (19XX)",
+        "Syndrome, West",
+        "Crises de Salamaleque",
+        "Espasmos Infantis Sintomáticos",
+        "Espasmos de Aquiescência",
+        "Espasmos em Salame",
+        "Síndrome de West",
+        "Hipsarritmia[Hypsarrhythmia]",
+        "Hypsarrhythmia",
+        "Hipsarritmia",
+        "Hypsarrhythmias",
+        "Espasmos em Canivete[Jackknife Seizures]",
+        "Jackknife Seizures",
+        "NLM (1991)",
+        "Espasmos em Canivete",
+        "Jackknife Seizure",
+        "Seizure, Jackknife",
+        "Seizures, Jackknife",
+        "Espasmos Sintomáticos Infantis[Symptomatic Infantile Spasms]",
+        "Symptomatic Infantile Spasms",
+        "Espasmos Sintomáticos Infantis",
+        "Infantile Spasm, Symptomatic",
+        "Infantile Spasms, Symptomatic",
+        "Spasm, Symptomatic Infantile",
+        "Spasms, Symptomatic Infantile",
+        "Symptomatic Infantile Spasm",
+        "Symptomatic West Syndrome",
+        "Syndrome, Symptomatic West",
+        "West Syndrome, Symptomatic",
+        "Crises de Salaam[Salaam Attacks]",
+        "Salaam Attacks",
+        "Crises de Salaam",
+        "Attacks, Salaam",
+        "Salaam Seizures",
+        "Seizures, Salaam",
+        "Spasmus Nutans[Spasmus Nutans]",
+        "Spasmus Nutans",
+        "Espasmos Criptogênicos[Cryptogenic Infantile Spasms]",
+        "Cryptogenic Infantile Spasms",
+        "Espasmos Criptogênicos",
+        "Cryptogenic Infantile Spasm",
+        "Infantile Spasm, Cryptogenic",
+        "Infantile Spasms, Cryptogenic",
+        "Spasm, Cryptogenic Infantile",
+        "Spasms, Cryptogenic Infantile",
+        "Cryptogenic West Syndrome",
+        "Syndrome, Cryptogenic West",
+        "West Syndrome, Cryptogenic",
+        "Espasmo de Anuência[Nodding Spasm]",
+        "Nodding Spasm",
+        "Espasmo de Anuência",
+        "Nodding Spasms",
+        "Spasm, Nodding",
+        "Spasms, Nodding"
+      ]
+    }
+  ],
+  "term_tree_index": [
+    {
+      "term": "Espasmos Infantis[Spasms, Infantile]",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Síndrome epiléptica caracterizada pela tríade de espasmos infantis, hipsarritmia e interrupção do desenvolvimento psicomotor no início dos ataques. A maioria se manifesta entre os 3 e 12 meses de idade, com espasmos constituídos de combinações de movimentos flexores ou extensores breves da cabeça, tronco e membros. A afecção é dividida em duas formas: criptogênica (idiopática) e sintomática (secundária a um processo de doença conhecido, como infecções intrauterinas, anormalidades do sistema nervoso, DOENÇAS CEREBRAIS METABÓLICAS CONGÊNITAS, prematuridade, asfixia perinatal, ESCLEROSE TUBEROSA, etc.). (Tradução livre do original: Menkes, Textbook of Child Neurology, 5th ed, pp744-8)",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Spasms, Infantile",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "NLM (1977)",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "ORD (2010)",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Espasmos Infantis",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Infantile Spasm",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Infantile Spasms",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "NLM (2000)",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Lightning Attacks",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Attack, Lightning",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Attacks, Lightning",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Lightning Attack",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "West Syndrome",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "UNK (19XX)",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Syndrome, West",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Crises de Salamaleque",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Espasmos Infantis Sintomáticos",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Espasmos de Aquiescência",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Espasmos em Salame",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Síndrome de West",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Hipsarritmia[Hypsarrhythmia]",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Hypsarrhythmia",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Hipsarritmia",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Hypsarrhythmias",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Espasmos em Canivete[Jackknife Seizures]",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Jackknife Seizures",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "NLM (1991)",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Espasmos em Canivete",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Jackknife Seizure",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Seizure, Jackknife",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Seizures, Jackknife",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Espasmos Sintomáticos Infantis[Symptomatic Infantile Spasms]",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Symptomatic Infantile Spasms",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Espasmos Sintomáticos Infantis",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Infantile Spasm, Symptomatic",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Infantile Spasms, Symptomatic",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Spasm, Symptomatic Infantile",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Spasms, Symptomatic Infantile",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Symptomatic Infantile Spasm",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Symptomatic West Syndrome",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Syndrome, Symptomatic West",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "West Syndrome, Symptomatic",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Crises de Salaam[Salaam Attacks]",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Salaam Attacks",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Crises de Salaam",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Attacks, Salaam",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Salaam Seizures",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Seizures, Salaam",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Spasmus Nutans[Spasmus Nutans]",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Spasmus Nutans",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Espasmos Criptogênicos[Cryptogenic Infantile Spasms]",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Cryptogenic Infantile Spasms",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Espasmos Criptogênicos",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Cryptogenic Infantile Spasm",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Infantile Spasm, Cryptogenic",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Infantile Spasms, Cryptogenic",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Spasm, Cryptogenic Infantile",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Spasms, Cryptogenic Infantile",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Cryptogenic West Syndrome",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Syndrome, Cryptogenic West",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "West Syndrome, Cryptogenic",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Espasmo de Anuência[Nodding Spasm]",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Nodding Spasm",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Espasmo de Anuência",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Nodding Spasms",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Spasm, Nodding",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    },
+    {
+      "term": "Spasms, Nodding",
+      "source_code": "D013036",
+      "source_name_pt": "Espasmos Infantis",
+      "tree_ids": [
+        "C10.228.140.490.375.760",
+        "C10.228.140.490.493.875"
+      ],
+      "branches": [
+        {
+          "tree_id": "C10.228.140.490.375.760",
+          "hierarchy_path": "Doenças › C10.228.140.490.375.760"
+        },
+        {
+          "tree_id": "C10.228.140.490.493.875",
+          "hierarchy_path": "Doenças › C10.228.140.490.493.875"
+        }
+      ]
+    }
+  ]
+}

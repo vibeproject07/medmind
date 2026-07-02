@@ -121,7 +121,7 @@ async function fetchDescriptors(pool, args) {
     );
   }
 
-  const limitClause = limit > 0 ? `LIMIT ${params.length + 1}` : '';
+  const limitClause = limit > 0 ? `LIMIT $${params.length + 1}` : '';
   if (limit > 0) params.push(limit);
 
   const { rows } = await pool.query(
