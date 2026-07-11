@@ -22,6 +22,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import pg from 'pg';
 import { loadRuntimeAgents, buildGeminiBody } from './lib/ai-agents-db.mjs';
+import { DECS_MAX_CANDIDATES } from './decs-search-limits.mjs';
 
 // ── Load .env.local ──────────────────────────────────────────────────────────
 function loadEnv(path) {
@@ -61,7 +62,7 @@ const SKIP_CLASSIFIED  = !_hasFlag('--include-classified');
 const OUTPUT_FILE      = _getArg('--output', 'decs_classification_results.json');
 const GEMINI_MODEL     = 'gemini-2.5-flash';
 const DECS_BASE        = 'https://api.bvsalud.org/decs/v2';
-const MAX_CANDIDATES   = 5;   // DeCS records fetched per search term
+const MAX_CANDIDATES   = DECS_MAX_CANDIDATES;   // DeCS records fetched per search term
 const MIN_SIMILARITY   = 0.15; // minimum word-Jaccard to accept a DeCS result
 
 let classifierAgent;
@@ -170,7 +171,7 @@ async function checkLocalDeCS() {
   return localDeCSAvailable;
 }
 
-async function searchDeCSLocal(searchTerm, maxCandidates = 5, minSimilarity = 0.60) {
+async function searchDeCSLocal(searchTerm, maxCandidates = DECS_MAX_CANDIDATES, minSimilarity = 0.60) {
   try {
     if (!await checkLocalDeCS()) return [];
     const embedding = await generateEmbedding(searchTerm);

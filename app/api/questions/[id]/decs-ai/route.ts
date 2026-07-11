@@ -3,7 +3,7 @@ import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { getRuntimeAgent } from '@/lib/ai-agent-runtime';
 import { GoogleGenAI } from '@google/genai';
-import { runDeCSPipeline, type DeCSRecord, type DeCSThemes } from '@/lib/decs-pipeline';
+import { runDeCSPipeline, buildPipelineFrontendExposure, type DeCSRecord, type DeCSThemes } from '@/lib/decs-pipeline';
 import { saveClassificationArtifact } from '@/lib/decs-classification-storage';
 
 export const runtime = 'nodejs';
@@ -106,7 +106,7 @@ export async function POST(
       );
     }
 
-    const { descriptors, dropped_by_filter, dropped_by_gemini } = await runDeCSPipeline(
+    const { descriptors, dropped_by_filter, dropped_by_gemini, term_trace } = await runDeCSPipeline(
       themes,
       questionText,
       decsKey,
@@ -114,9 +114,12 @@ export async function POST(
       classifierAgent.model,
     );
 
+    const pipeline_exposure = buildPipelineFrontendExposure(themes, term_trace);
+
     const artifact = {
       result: descriptors,
       themes_identified: themes,
+      pipeline_exposure,
       pipeline_stats: {
         primary_terms: themes.primary.length,
         secondary_terms: themes.secondary.length,
@@ -132,7 +135,7 @@ export async function POST(
     );
     await saveClassificationArtifact(params.id, 'v1', artifact);
 
-    return NextResponse.json(artifact);
+    return NextResponse.json({ ...artifact, pipeline_exposure });
   } catch (err: unknown) {
     console.error('[decs-ai] error:', err);
     const message = err instanceof Error ? err.message : 'Erro interno';

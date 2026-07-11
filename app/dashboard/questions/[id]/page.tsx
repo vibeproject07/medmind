@@ -6,6 +6,7 @@ import { ArrowLeft, Edit, Image as ImageIcon, X, AlertTriangle, Ban, RotateCcw, 
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import DeCSAutocomplete from '@/components/Common/DeCSAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
+import DeCSPipelineTracePanel, { type DeCSPipelineExposurePayload } from '@/components/Dashboard/DeCSPipelineTracePanel';
 import {
   ASSUNTOS_BY_AREA,
   toDisplayArea,
@@ -137,6 +138,7 @@ export default function QuestionDetailPage() {
   const [togglingAnulada, setTogglingAnulada] = useState(false);
   const [aiDecsLoading, setAiDecsLoading] = useState(false);
   const [aiDecsError, setAiDecsError] = useState<string | null>(null);
+  const [aiDecsPipelineExposure, setAiDecsPipelineExposure] = useState<DeCSPipelineExposurePayload | null>(null);
   const [aiDecsV2Loading, setAiDecsV2Loading] = useState(false);
   const [aiDecsV2Error, setAiDecsV2Error] = useState<string | null>(null);
   const [aiDecsV2Result, setAiDecsV2Result] = useState<DeCSV2Result | null>(null);
@@ -587,6 +589,7 @@ export default function QuestionDetailPage() {
       setQuestion((prev) =>
         prev ? { ...prev, ai_decs_descriptors: data.result } : prev
       );
+      setAiDecsPipelineExposure(data.pipeline_exposure ?? null);
     } catch {
       setAiDecsError('Erro ao conectar com o servidor.');
     } finally {
@@ -1330,6 +1333,8 @@ export default function QuestionDetailPage() {
           {/* Erros */}
           {aiDecsError && <p className="text-red-500 text-sm mb-3">{aiDecsError}</p>}
           {aiDecsV2Error && <p className="text-red-500 text-sm mb-3">{aiDecsV2Error}</p>}
+
+          <DeCSPipelineTracePanel exposure={aiDecsPipelineExposure} />
 
           {/* Loading states */}
           {(aiDecsLoading || aiDecsV2Loading) && (

@@ -35,6 +35,7 @@
 import pg   from 'pg';
 import fs   from 'fs';
 import path from 'path';
+import { DECS_MAX_CANDIDATES } from './decs-search-limits.mjs';
 
 // ══════════════════════════════════════════════════════════════════════════════
 // Configuração
@@ -559,8 +560,8 @@ function parseArgs(argv) {
     text: null,
     minTextSimilarity: 0.5,
     minVectorSimilarity: 0.6,
-    textLimit: 20,
-    vectorLimit: 5,
+    textLimit: DECS_MAX_CANDIDATES,
+    vectorLimit: DECS_MAX_CANDIDATES,
     save: false,
     json: false,
     out: null,
@@ -776,8 +777,8 @@ main().catch((e) => { console.error('\n💥 Fatal:', e.message); process.exit(1)
 //   --text "<texto>"             —        Texto livre da questão (alternativa a --id)
 //   --min-text-similarity <f>    0.5      Jaccard mínimo termo×descritor para aceitar via texto
 //   --min-vector-similarity <f>  0.6      Similaridade coseno mínima para aceitar via vetor
-//   --text-limit <n>             20       Máx. candidatos na busca textual
-//   --vector-limit <n>           5        Máx. candidatos na busca vetorial
+//   --text-limit <n>             200      Máx. candidatos na busca textual
+//   --vector-limit <n>           200      Máx. candidatos na busca vetorial
 //   --save                       (não)    Grava em questions.ai_decs_descriptors + decs_classification_runs (requer --id)
 //   --json                       (não)    Saída em JSON puro (para piping)
 //   --out <arquivo>              auto     Caminho de exportação (padrão: exports/decs-pipeline-v1-run-<id|ts>.json)

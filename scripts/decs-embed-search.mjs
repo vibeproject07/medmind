@@ -10,6 +10,7 @@
  */
 
 import pg from 'pg';
+import { DECS_MAX_CANDIDATES } from './decs-search-limits.mjs';
 
 // ── Configuração ──────────────────────────────────────────────────────────────
 
@@ -140,11 +141,11 @@ async function searchDeCS(pool, embedding, limit, minSimilarity) {
 // ── Parser de argumentos CLI ──────────────────────────────────────────────────
 
 function parseArgs(argv) {
-  const args = { text: '', limit: 5, minSimilarity: 0.15, json: false }; // interessante mudar esses valores;
+  const args = { text: '', limit: DECS_MAX_CANDIDATES, minSimilarity: 0.15, json: false };
 
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
-    if      (a === '--limit'          || a === '-l') args.limit         = parseInt(argv[++i] ?? '5');
+    if      (a === '--limit'          || a === '-l') args.limit         = parseInt(argv[++i] ?? String(DECS_MAX_CANDIDATES));
     else if (a === '--min-similarity' || a === '-s') args.minSimilarity = parseFloat(argv[++i] ?? '0.5');
     else if (a === '--json'           || a === '-j') args.json          = true;
     else if (!a.startsWith('-'))                     args.text         += (args.text ? ' ' : '') + a;

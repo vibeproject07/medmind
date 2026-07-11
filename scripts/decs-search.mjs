@@ -12,6 +12,7 @@
 import pg from 'pg';
 import { readFileSync, existsSync } from 'fs';
 import { resolve } from 'path';
+import { DECS_MAX_CANDIDATES } from './decs-search-limits.mjs';
 
 // ── Helpers de hierarquia DeCS (replicados de lib/decs-pipeline.ts) ───────────
 
@@ -52,7 +53,7 @@ function parseArgs(argv) {
     mode:          'text',
     term:          '',
     vectorFile:    null,
-    limit:         5,
+    limit:         DECS_MAX_CANDIDATES,
     minSimilarity: 0.6,
     json:          false,
   };
@@ -61,7 +62,7 @@ function parseArgs(argv) {
     const a = argv[i];
     if      (a === '--term'           || a === '-t') args.term          = argv[++i] ?? '';
     else if (a === '--vector'         || a === '-v') args.vectorFile    = argv[++i] ?? null;
-    else if (a === '--limit'          || a === '-l') args.limit         = parseInt(argv[++i] ?? '5');
+    else if (a === '--limit'          || a === '-l') args.limit         = parseInt(argv[++i] ?? String(DECS_MAX_CANDIDATES));
     else if (a === '--min-similarity' || a === '-s') args.minSimilarity = parseFloat(argv[++i] ?? '0.6');
     else if (a === '--json'           || a === '-j') args.json          = true;
     else if (!a.startsWith('-') && !args.term)       args.term          = a;

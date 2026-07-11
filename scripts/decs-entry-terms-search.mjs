@@ -14,7 +14,7 @@
  *   node --env-file=.env.local scripts/decs-entry-terms-search.mjs <texto> [opções]
  *
  * Options (texto):
- *   --limit/-l  <n>          Máximo de resultados (padrão: 20)
+ *   --limit/-l  <n>          Máximo de resultados (padrão: 200)
  *   --exact/-e               Correspondência exata (padrão: substring)
  *   --category/-c <letra>    Filtrar por categoria DeCS (ex: C, D, N)
  *   --show-all-terms/-t      Mostrar todos os entry_terms, não só os que casaram
@@ -27,6 +27,7 @@
  */
 
 import pg from 'pg';
+import { DECS_MAX_CANDIDATES } from './decs-search-limits.mjs';
 
 // ── Configuração ──────────────────────────────────────────────────────────────
 
@@ -372,7 +373,7 @@ function printResults(results, args) {
 function parseArgs(argv) {
   const args = {
     text:          '',
-    limit:         20,
+    limit:         DECS_MAX_CANDIDATES,
     exact:         false,
     category:      null,
     showAllTerms:  false,
@@ -384,7 +385,7 @@ function parseArgs(argv) {
 
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
-    if      (a === '--limit'          || a === '-l') args.limit         = parseInt(argv[++i]   ?? '20');
+    if      (a === '--limit'          || a === '-l') args.limit         = parseInt(argv[++i]   ?? String(DECS_MAX_CANDIDATES));
     else if (a === '--exact'          || a === '-e') args.exact         = true;
     else if (a === '--category'       || a === '-c') args.category      = argv[++i]            ?? null;
     else if (a === '--show-all-terms' || a === '-t') args.showAllTerms  = true;
@@ -414,7 +415,7 @@ async function main() {
       console.error(
         'Uso: node --env-file=.env.local scripts/decs-entry-terms-search.mjs <texto> [opções]\n\n' +
         'Opções (modo texto — padrão):\n' +
-        '  --limit/-l  <n>          Máximo de resultados (padrão: 20)\n' +
+        '  --limit/-l  <n>          Máximo de resultados (padrão: 200)\n' +
         '  --exact/-e               Correspondência exata em vez de substring\n' +
         '  --category/-c <letra>    Filtrar por categoria DeCS (ex: C, D, N, SP)\n' +
         '  --show-all-terms/-t      Mostrar todos os entry_terms do descritor\n' +
@@ -472,7 +473,7 @@ main().catch(err => {
 //
 //   Opção                       Atalho  Padrão   Descrição
 //   ────────────────────────────────────────────────────────────────────────────
-//   --limit <n>                 -l      20       Máximo de resultados retornados
+//   --limit <n>                 -l      200      Máximo de resultados retornados
 //   --exact                     -e      (não)    Correspondência exata em vez de substring
 //   --category <letra>          -c      (todos)  Filtrar por categoria DeCS (C, D, N, SP…)
 //   --show-all-terms            -t      (não)    Exibir todos os entry_terms do descritor

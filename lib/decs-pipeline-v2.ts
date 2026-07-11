@@ -10,6 +10,7 @@
  */
 
 import { buildHierarchyPath, isCategoryAcceptable, searchDeCSLocal, searchDeCSCandidates, enrichFromDB, type DeCSRecord } from './decs-pipeline';
+import { DECS_MAX_CANDIDATES } from './decs-search-limits';
 import { getRuntimeAgent } from './ai-agent-runtime';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -117,7 +118,7 @@ async function resolveHierarchy(
  */
 async function searchDeCSByText(
   searchTerm: string,
-  maxCandidates = 5
+  maxCandidates = DECS_MAX_CANDIDATES
 ): Promise<DeCSRecord[]> {
   try {
     const { query } = await import('@/lib/db');
@@ -357,20 +358,20 @@ export async function runDeCSPipelineV2(
 
   const searchConcept = async (term: string): Promise<DeCSRecord[]> => {
     // Try vector search first (only works for descriptors with embeddings)
-    let candidates = await searchDeCSLocal(term, geminiKey, 5, 0.55);
+    let candidates = await searchDeCSLocal(term, geminiKey, DECS_MAX_CANDIDATES, 0.55);
 
     // Filter by category relevance
     candidates = candidates.filter((c) => isCategoryAcceptable(c, questionText));
 
     // If vector search returned nothing, fall back to text search in DB
     if (candidates.length === 0) {
-      candidates = await searchDeCSByText(term, 5);
+      candidates = await searchDeCSByText(term, DECS_MAX_CANDIDATES);
       candidates = candidates.filter((c) => isCategoryAcceptable(c, questionText));
     }
 
     // Last resort: BVS API
     if (candidates.length === 0) {
-      const apiCandidates = await searchDeCSCandidates(term, decsKey, 5);
+      const apiCandidates = await searchDeCSCandidates(term, decsKey, DECS_MAX_CANDIDATES);
       candidates = apiCandidates.filter((c) => isCategoryAcceptable(c, questionText));
     }
 
@@ -380,7 +381,7 @@ export async function runDeCSPipelineV2(
     // Enrich records that came from BVS API (no scope_note)
     candidates = await enrichFromDB(candidates);
 
-    return candidates.slice(0, 5);
+    return candidates.slice(0, DECS_MAX_CANDIDATES);
   };
 
   await Promise.allSettled([

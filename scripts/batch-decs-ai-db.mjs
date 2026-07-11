@@ -26,6 +26,7 @@ import { resolve } from 'path';
 import pg from 'pg';
 import { GoogleGenAI } from '@google/genai';
 import { loadRuntimeAgents, buildGeminiBody } from './lib/ai-agents-db.mjs';
+import { DECS_MAX_CANDIDATES } from './decs-search-limits.mjs';
 
 // ── .env.local ───────────────────────────────────────────────────────────────
 function loadEnv(path) {
@@ -73,7 +74,7 @@ const EMBED_STAGGER_MS = parseInt(_getArg('--embed-stagger-ms', '400'), 10);
 const GEMINI_MAX_RETRIES = parseInt(_getArg('--gemini-retries', '8'), 10);
 
 const DECS_BASE = 'https://api.bvsalud.org/decs/v2';
-const MAX_CANDIDATES = 5;
+const MAX_CANDIDATES = DECS_MAX_CANDIDATES;
 const MIN_SIMILARITY = 0.15;
 const EMBED_BASE = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent';
 
@@ -259,7 +260,7 @@ async function generateEmbedding(text) {
   }
 }
 
-async function searchDeCSLocal(searchTerm, maxCandidates = 5, minSimilarity = 0.6) {
+async function searchDeCSLocal(searchTerm, maxCandidates = DECS_MAX_CANDIDATES, minSimilarity = 0.6) {
   try {
     if (!(await isLocalDeCSAvailable())) return [];
     const embedding = await generateEmbedding(searchTerm);
@@ -433,7 +434,7 @@ async function runDeCSPipeline(themes, questionText) {
     const { term, role } = searchAll[i];
     let rawCandidates = [];
     if (GEMINI_KEY && (await isLocalDeCSAvailable())) {
-      rawCandidates = await searchDeCSLocal(term, 5, 0.6);
+      rawCandidates = await searchDeCSLocal(term, DECS_MAX_CANDIDATES, 0.6);
     }
     if (rawCandidates.length === 0) {
       const apiResults = await searchDeCSCandidates(term);

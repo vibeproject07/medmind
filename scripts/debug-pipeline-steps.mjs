@@ -12,6 +12,7 @@
  */
 
 import pg from 'pg';
+import { DECS_MAX_CANDIDATES } from './decs-search-limits.mjs';
 
 // ── Config ────────────────────────────────────────────────────────────────────
 
@@ -146,7 +147,7 @@ async function loadAgent(key, defaultPrompt, defaultModel = 'gemini-2.5-flash') 
   return { prompt: defaultPrompt, model: defaultModel, source: 'padrão embutido' };
 }
 
-async function searchDeCSLocal(term, minSimilarity = 0.6, limit = 5) {
+async function searchDeCSLocal(term, minSimilarity = 0.6, limit = DECS_MAX_CANDIDATES) {
   try {
     const embedRes = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent?key=${geminiKey}`,
@@ -182,7 +183,7 @@ async function searchDeCSLocal(term, minSimilarity = 0.6, limit = 5) {
   }
 }
 
-async function searchDeCSByText(term, limit = 5) {
+async function searchDeCSByText(term, limit = DECS_MAX_CANDIDATES) {
   try {
     const { rows } = await pool.query(
       `SELECT ui AS code, name_pt AS term, name_en, scope_note, tree_numbers
@@ -202,7 +203,7 @@ async function searchDeCSByText(term, limit = 5) {
   }
 }
 
-async function searchDeCSBVS(term, limit = 5) {
+async function searchDeCSBVS(term, limit = DECS_MAX_CANDIDATES) {
   if (!decsKey) return [];
   try {
     const url = `https://api.bvsalud.org/decs/v2/search-by-words?words=${encodeURIComponent(term)}&lang=pt&format=json`;
@@ -291,13 +292,13 @@ async function runV1Debug(question) {
     let candidates = [];
     let usedSource = '';
 
-    const local = await searchDeCSLocal(term, 0.6, 5);
+    const local = await searchDeCSLocal(term, 0.6, DECS_MAX_CANDIDATES);
     if (local.length > 0) {
       candidates = local;
       usedSource = 'pgvector (vetorial)';
     } else {
       warn('Sem resultados locais — tentando API BVS...');
-      const bvs = await searchDeCSBVS(term, 5);
+      const bvs = await searchDeCSBVS(term, DECS_MAX_CANDIDATES);
       if (bvs.length > 0) {
         candidates = bvs;
         usedSource = 'API BVS (fallback)';
@@ -439,21 +440,21 @@ async function runV2Debug(question) {
     label(`Conceito: "${term}" (${role})`);
     let candidates = [];
 
-    const local = await searchDeCSLocal(term, 0.55, 5);
+    const local = await searchDeCSLocal(term, 0.55, DECS_MAX_CANDIDATES);
     const localFiltered = local.filter(c => isCategoryAcceptable(c, questionText));
     if (localFiltered.length > 0) {
       candidates = localFiltered;
       ok(`${candidates.length} resultado(s) via pgvector:`);
     } else {
       warn('pgvector sem resultados — tentando busca por texto...');
-      const text = await searchDeCSByText(term, 5);
+      const text = await searchDeCSByText(term, DECS_MAX_CANDIDATES);
       const textFiltered = text.filter(c => isCategoryAcceptable(c, questionText));
       if (textFiltered.length > 0) {
         candidates = textFiltered;
         ok(`${candidates.length} resultado(s) via busca textual:`);
       } else {
         warn('Texto sem resultados — tentando API BVS...');
-        const bvs = await searchDeCSBVS(term, 5);
+        const bvs = await searchDeCSBVS(term, DECS_MAX_CANDIDATES);
         candidates = bvs.filter(c => isCategoryAcceptable(c, questionText));
         if (candidates.length > 0) {
           ok(`${candidates.length} resultado(s) via API BVS:`);
