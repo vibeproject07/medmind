@@ -170,7 +170,7 @@ async function searchDeCS(term) {
       ? recordList.record
       : recordList.record ? [recordList.record] : [];
 
-    for (const rec of rawRecords.slice(0, 5)) {
+    for (const rec of rawRecords.slice(0, 200)) {
       const descriptors = Array.isArray(rec.descriptor_list)
         ? rec.descriptor_list.flatMap(d => Array.isArray(d) ? d : [d])
         : rec.descriptor_list ? [rec.descriptor_list] : [];
@@ -260,6 +260,7 @@ async function classifyQuestion(q) {
 
   // ── [1] Gemini: identify primary + secondary DeCS themes ──────────────────
   try {
+    const letter = String(q.correct_answer ?? '').trim().toUpperCase();
     const questionText = [
       'Enunciado:', q.statement, '',
       'Alternativa A: ' + (q.option_a ?? ''),
@@ -267,6 +268,7 @@ async function classifyQuestion(q) {
       q.option_c ? 'Alternativa C: ' + q.option_c : null,
       q.option_d ? 'Alternativa D: ' + q.option_d : null,
       q.option_e ? 'Alternativa E: ' + q.option_e : null,
+      letter ? `Gabarito: ${letter}` : null,
     ].filter(Boolean).join('\n');
 
     result.gemini_themes  = await extractDeCSThemes(questionText);
@@ -318,14 +320,14 @@ async function main() {
   const { rows: questions } = await pool.query(`
     WITH ranked AS (
       SELECT
-        id, statement, option_a, option_b, option_c, option_d, option_e,
+        id, statement, option_a, option_b, option_c, option_d, option_e, correct_answer,
         exam_board, exam_year,
         embedding::text AS embedding,
         ROW_NUMBER() OVER (PARTITION BY COALESCE(exam_board, 'UNKNOWN') ORDER BY RANDOM()) AS rn
       FROM questions
       WHERE embedding IS NOT NULL
     )
-    SELECT id, statement, option_a, option_b, option_c, option_d, option_e,
+    SELECT id, statement, option_a, option_b, option_c, option_d, option_e, correct_answer,
            exam_board, exam_year, embedding
     FROM ranked
     WHERE rn <= 4

@@ -16,6 +16,7 @@ import {
   vectorToString,
 } from '@/lib/embeddings';
 import { classifyNoteDeCS } from '@/lib/note-decs';
+import { DECS_MAX_CANDIDATES } from '@/lib/decs-search-limits';
 
 // ── Text builders ─────────────────────────────────────────────────────────────
 
@@ -52,7 +53,7 @@ interface DeCSMatch {
 
 async function findTopDeCSLocal(
   textEmbedding: number[],
-  limit = 5
+  limit = DECS_MAX_CANDIDATES
 ): Promise<DeCSMatch[]> {
   const res = await query(
     `SELECT ui, name_pt, name_en,
@@ -104,7 +105,7 @@ async function enrichQuestion(questionId: number): Promise<void> {
   const decsReady = parseInt(decsCheck.rows[0].count) > 0;
 
   if (decsReady) {
-    const matches = await findTopDeCSLocal(embedding, 5);
+    const matches = await findTopDeCSLocal(embedding, DECS_MAX_CANDIDATES);
     const relevant = matches.filter((m) => m.score >= 0.75);
     // Always write result (even []) to clear any stale prior terms
     const terms = relevant.map((m) => m.name_pt);
@@ -155,7 +156,7 @@ async function enrichNote(noteId: number): Promise<void> {
     );
     const decsReady = parseInt(decsCheck.rows[0].count, 10) > 0;
     if (decsReady) {
-      const matches = await findTopDeCSLocal(embedding, 5);
+      const matches = await findTopDeCSLocal(embedding, DECS_MAX_CANDIDATES);
       const relevant = matches.filter((m) => m.score >= 0.75);
       const terms = relevant.map((m) => ({
         ui: m.ui,

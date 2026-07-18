@@ -1,12 +1,15 @@
 /**
  * DeCS AI Pipeline — shared classifier logic
  *
- * Three quality layers:
- *   1. Local pgvector search (decs_descriptors table) — fast, offline
- *      Fallback → BVS API when local table is empty
- *   2. Category filter              (reject organism/virus categories unless biomed context)
- *   3. Gemini relevance validation  (one extra call to drop false positives)
+ * Quality layers:
+ *   1. Busca TEXTUAL local (name_pt / name_en / entry_terms)
+ *   2. Fallback → busca VETORIAL local (pgvector)
+ *   3. Fallback final → API pública do BVS
+ *   4. Category filter
+ *   5. Gemini relevance validation (opcional; desativada no Gerar V1 de questões)
  */
+
+import { DECS_MAX_CANDIDATES } from "./decs-search-limits";
 
 export interface DeCSRecord {
   // interface is a way to define the structure of an object!!
@@ -14,16 +17,92 @@ export interface DeCSRecord {
   code: string; //identificador DeCS (index) (UI)
   tree_ids: string[]; // e.g. ["C01.635.500", "C01.635.500.500"] - posição hierárquica
   hierarchy_path: string; // e.g. "Doenças › C01.635.500" - caminho categórico
-  similarity?: number; // score vetorial
+  similarity?: number; // score vetorial / Jaccard
   role?: "primary" | "secondary"; // importância temática
   scope_note?: string; // descrição do conceito
   name_en?: string; // nome em inglês
+  search_method?: "text" | "vector" | "bvs";
+  text_exact_match?: boolean;
 }
 
 export interface DeCSThemes {
   // export (function/const/interface) makes it available to other files!!
   primary: string[];
   secondary: string[];
+}
+
+/** Rastreio por termo parcial (Gemini) — exposição ao frontend. */
+export interface DeCSPipelineTermTrace {
+  gemini_partial_term: string;
+  role: "primary" | "secondary";
+  text_search: {
+    executed: boolean;
+    candidates: Array<{
+      code: string;
+      term: string;
+      name_en?: string;
+      similarity?: number;
+      hierarchy_path?: string;
+      exact_match: boolean;
+    }>;
+    accepted: boolean;
+    accepted_descriptor?: DeCSRecord | null;
+  };
+  vector_search: {
+    executed: boolean;
+    candidates: Array<{
+      code: string;
+      term: string;
+      name_en?: string;
+      similarity?: number;
+      hierarchy_path?: string;
+    }>;
+    accepted: boolean;
+    accepted_descriptor?: DeCSRecord | null;
+  };
+  bvs_search: {
+    executed: boolean;
+    candidates: Array<{
+      code: string;
+      term: string;
+      similarity?: number;
+      hierarchy_path?: string;
+    }>;
+    accepted: boolean;
+    accepted_descriptor?: DeCSRecord | null;
+  };
+  final_method?: "text" | "vector" | "bvs";
+  outcome: "accepted" | "category_filtered" | "no_candidate" | "deduped";
+}
+
+/**
+ * Builds the user message for DeCS classification/validation agents.
+ * Includes statement, alternatives A–E, and the correct-answer letter (gabarito)
+ * without repeating the text of the correct alternative.
+ */
+export function buildDeCSQuestionText(q: {
+  statement?: string | null;
+  option_a?: string | null;
+  option_b?: string | null;
+  option_c?: string | null;
+  option_d?: string | null;
+  option_e?: string | null;
+  correct_answer?: string | null;
+}): string {
+  const letter = String(q.correct_answer ?? "").trim().toUpperCase();
+  return [
+    "Enunciado:",
+    q.statement ?? "",
+    "",
+    "Alternativa A: " + (q.option_a ?? ""),
+    "Alternativa B: " + (q.option_b ?? ""),
+    q.option_c ? "Alternativa C: " + q.option_c : null,
+    q.option_d ? "Alternativa D: " + q.option_d : null,
+    q.option_e ? "Alternativa E: " + q.option_e : null,
+    letter ? `Gabarito: ${letter}` : null,
+  ]
+    .filter(Boolean)
+    .join("\n");
 }
 
 // ── Category metadata ────────────────────────────────────────────────────────
@@ -139,6 +218,105 @@ export function wordJaccard(a: string, b: string): number {
   return union === 0 ? 0 : inter / union;
 }
 
+export function normalizeExact(s: string): string {
+  return (s ?? "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\w\s]/g, "")
+    .trim();
+}
+
+/**
+ * Normalização mínima para a seleção textual booleana.
+ * Preserva letras e acentos; ignora somente caixa, espaços repetidos e
+ * diferenças de composição Unicode. Não permite match por substring.
+ */
+export function normalizeTextualDescriptorMatch(s: string): string {
+  return String(s ?? "")
+    .normalize("NFC")
+    .trim()
+    .replace(/\s+/g, " ")
+    .toLocaleLowerCase("pt-BR");
+}
+
+/**
+ * Converte o JSONB `entry_terms` em lista de strings.
+ * Aceita array já parseado pelo driver ou string JSON; ignora valores inválidos.
+ */
+export function parseEntryTermsJsonb(raw: unknown): string[] {
+  if (raw == null) return [];
+  let value: unknown = raw;
+  if (typeof raw === "string") {
+    const trimmed = raw.trim();
+    if (!trimmed) return [];
+    try {
+      value = JSON.parse(trimmed);
+    } catch {
+      return [trimmed];
+    }
+  }
+  if (!Array.isArray(value)) return [];
+  return value
+    .filter((item): item is string => typeof item === "string")
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+/**
+ * Formas de um entry_term para comparação exata.
+ * Inclui a string completa e, se houver formato `Termo[English]`, as partes
+ * antes e dentro dos colchetes (comuns no DeCS).
+ */
+function entryTermExactVariants(entryTerm: string): string[] {
+  const variants = [entryTerm];
+  const bracket = entryTerm.match(/^(.+?)\s*\[(.+)\]\s*$/);
+  if (bracket) {
+    const before = bracket[1]?.trim();
+    const inside = bracket[2]?.trim();
+    if (before) variants.push(before);
+    if (inside) variants.push(inside);
+  }
+  return variants;
+}
+
+/**
+ * Aceitação textual: igualdade exata (após normalização) com `name_pt`,
+ * `name_en` ou qualquer elemento de `entry_terms`. O descritor retornado
+ * continua sendo o registro oficial (`name_pt`).
+ */
+export function isTextualExactDescriptorMatch(
+  searchTerm: string,
+  namePt: string | null | undefined,
+  nameEn: string | null | undefined,
+  entryTermsRaw: unknown,
+): boolean {
+  const needle = normalizeTextualDescriptorMatch(searchTerm);
+  if (!needle) return false;
+
+  if (
+    namePt &&
+    normalizeTextualDescriptorMatch(namePt) === needle
+  ) {
+    return true;
+  }
+  if (
+    nameEn &&
+    normalizeTextualDescriptorMatch(nameEn) === needle
+  ) {
+    return true;
+  }
+
+  for (const entry of parseEntryTermsJsonb(entryTermsRaw)) {
+    for (const variant of entryTermExactVariants(entry)) {
+      if (normalizeTextualDescriptorMatch(variant) === needle) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 /**
  * Parse a raw DeCS record object into a DeCSRecord.
  * Returns null when it cannot extract a Portuguese term.
@@ -210,7 +388,7 @@ async function isLocalDeCSAvailable(): Promise<boolean> {
 export async function searchDeCSLocal(
   searchTerm: string,
   geminiKey: string,
-  maxCandidates = 5,
+  maxCandidates = DECS_MAX_CANDIDATES,
   minSimilarity = 0.6,
 ): Promise<DeCSRecord[]> {
   try {
@@ -260,6 +438,90 @@ export async function searchDeCSLocal(
   }
 }
 
+/**
+ * Busca textual local em name_pt, name_en e entry_terms (ILIKE).
+ *
+ * Os resultados amplos são mantidos para rastreio, mas `text_exact_match`
+ * só é verdadeiro quando o termo parcial é string igual (após normalização)
+ * a `name_pt`, `name_en` ou a um elemento de `entry_terms` (JSONB array).
+ * Em todos os casos o registro retornado usa o descritor oficial (`name_pt`).
+ * Substrings / Jaccard não autorizam aceitação textual.
+ */
+export async function searchDeCSTextual(
+  searchTerm: string,
+  maxCandidates = DECS_MAX_CANDIDATES,
+): Promise<DeCSRecord[]> {
+  try {
+    const { query } = await import("@/lib/db");
+    const pattern = `%${searchTerm.trim()}%`;
+    const res = await query(
+      `
+      SELECT
+        ui AS code,
+        name_pt AS term,
+        name_en,
+        scope_note,
+        tree_numbers,
+        entry_terms
+      FROM decs_descriptors
+      WHERE name_pt ILIKE $1
+         OR name_en ILIKE $1
+         OR entry_terms::text ILIKE $1
+      ORDER BY
+        CASE
+          WHEN lower(btrim(name_pt)) = lower(btrim($2)) THEN 0
+          WHEN lower(btrim(COALESCE(name_en, ''))) = lower(btrim($2)) THEN 1
+          WHEN EXISTS (
+            SELECT 1
+            FROM jsonb_array_elements_text(
+              CASE
+                WHEN jsonb_typeof(entry_terms) = 'array' THEN entry_terms
+                ELSE '[]'::jsonb
+              END
+            ) AS et(term)
+            WHERE lower(btrim(et.term)) = lower(btrim($2))
+               OR lower(btrim(split_part(et.term, '[', 1))) = lower(btrim($2))
+          ) THEN 2
+          ELSE 3
+        END,
+        length(name_pt),
+        name_pt
+      LIMIT $3
+    `,
+      [pattern, searchTerm.trim(), maxCandidates],
+    );
+
+    return res.rows.map((r) => {
+      const tree_ids: string[] = Array.isArray(r.tree_numbers)
+        ? r.tree_numbers
+        : JSON.parse(r.tree_numbers ?? "[]");
+      const jaccard = Math.max(
+        wordJaccard(searchTerm, r.term ?? ""),
+        r.name_en ? wordJaccard(searchTerm, r.name_en) : 0,
+      );
+      const exact = isTextualExactDescriptorMatch(
+        searchTerm,
+        r.term,
+        r.name_en,
+        r.entry_terms,
+      );
+      return {
+        term: r.term,
+        code: r.code,
+        tree_ids,
+        hierarchy_path: buildHierarchyPath(tree_ids[0] ?? ""),
+        similarity: exact ? 1 : jaccard,
+        scope_note: r.scope_note ?? undefined,
+        name_en: r.name_en ?? undefined,
+        search_method: "text" as const,
+        text_exact_match: exact,
+      };
+    });
+  } catch {
+    return [];
+  }
+}
+
 // ── BVS API (fallback) ────────────────────────────────────────────────────────
 
 const DECS_BASE = "https://api.bvsalud.org/decs/v2";
@@ -271,7 +533,7 @@ const DECS_BASE = "https://api.bvsalud.org/decs/v2";
 export async function searchDeCSCandidates(
   searchTerm: string,
   apiKey: string,
-  maxCandidates = 5,
+  maxCandidates = DECS_MAX_CANDIDATES,
 ): Promise<DeCSRecord[]> {
   try {
     const url = `${DECS_BASE}/search-by-words?words=${encodeURIComponent(searchTerm)}&lang=pt&format=json`;
@@ -315,7 +577,7 @@ export async function findBestDeCSMatch(
   apiKey: string,
   questionText: string,
   minSimilarity = 0.15,
-  maxCandidates = 5, 
+  maxCandidates = DECS_MAX_CANDIDATES, 
   geminiKey?: string,
 ): Promise<DeCSRecord | null> {
   // ── Try local pgvector first ──────────────────────────────────────────────
@@ -395,14 +657,14 @@ export async function enrichFromDB(
  * Returns the subset of `descriptors` that Gemini approved.
  * On any error, returns the original list unchanged (fail-open).
  *
- * Reads the validation prompt from the `decs_validator` agent (DB or default).
+ * Reads the validation prompt from the `question_terms_validator` agent (DB).
  */
 export async function validateDescriptorsWithGemini(
   descriptors: DeCSRecord[],
   questionText: string,
   geminiKey: string,
   model = "gemini-2.5-flash",
-  validatorAgentKey = "decs_validator",
+  validatorAgentKey = "question_terms_validator",
 ): Promise<DeCSRecord[]> {
   if (descriptors.length === 0) return [];
 
@@ -472,15 +734,12 @@ export async function validateDescriptorsWithGemini(
 // ── Full pipeline ────────────────────────────────────────────────────────────
 
 /**
- * Given Gemini-extracted themes (primary + secondary), run the full 3-layer pipeline:
- *   1. Multi-candidate DeCS search + similarity ranking (per theme, tagged with role)
- *   2. Category filter
- *   3. Gemini validation
+ * Given Gemini-extracted themes (primary + secondary), run the full pipeline:
+ *   1. Textual → vector → BVS search (per theme), with category filter
+ *   2. Gemini validation — only if `validatorAgentKey` is a non-empty string
+ *      (Gerar V1 de questões passa null para pular question_terms_validator)
  *
- * Returns a flat, deduplicated, validated list of DeCS records with role tags.
- * Primary descriptors appear first; secondary follow.
- *
- * Also accepts a plain string[] for backward compatibility (all treated as 'primary').
+ * Returns descriptors + term_trace for frontend exposure (in-memory only).
  */
 export async function runDeCSPipeline(
   themes: DeCSThemes | string[],
@@ -488,25 +747,22 @@ export async function runDeCSPipeline(
   decsKey: string,
   geminiKey: string,
   model = "gemini-2.5-flash",
-  validatorAgentKey = "decs_validator",
+  validatorAgentKey: string | null = null,
 ): Promise<{
   descriptors: DeCSRecord[];
   dropped_by_filter: number;
   dropped_by_gemini: number;
+  term_trace: DeCSPipelineTermTrace[];
+  after_search: DeCSRecord[];
 }> {
-  // Normalise input — support legacy string[] call
   const structured: DeCSThemes = Array.isArray(themes)
     ? { primary: themes, secondary: [] }
     : themes;
 
   const seenCodes = new Set<string>();
   const afterSearch: DeCSRecord[] = [];
+  const termTrace: DeCSPipelineTermTrace[] = [];
 
-  // Search primary and secondary terms in parallel, tagging each with its role.
-  // We inline the search so we can distinguish between:
-  //   • dropped_by_filter  — candidates existed but ALL were rejected by isCategoryAcceptable
-  //   • no_candidate       — no candidates returned at all (search failure / too dissimilar)
-  //   • dropped_by_dedup   — best match found but code already in seenCodes
   const searchAll = [
     ...structured.primary.map((term) => ({ term, role: "primary" as const })),
     ...structured.secondary.map((term) => ({
@@ -515,86 +771,150 @@ export async function runDeCSPipeline(
     })),
   ];
 
-  type SearchOutcome =
-    | { status: "accepted"; role: "primary" | "secondary"; match: DeCSRecord }
-    | { status: "category_filtered" }
-    | { status: "no_candidate" }
-    | { status: "deduped" };
+  const MIN_VECTOR_SIMILARITY = 0.6;
+  const MIN_BVS_SIMILARITY = 0.15;
+  let droppedByFilter = 0;
 
-  const outcomes = await Promise.allSettled(
-    searchAll.map(async ({ term, role }): Promise<SearchOutcome> => {
-      const MIN_SIMILARITY = 0.15;
+  // Sequencial — rastreio estável por termo (sem corrida em seenCodes)
+  for (const { term, role } of searchAll) {
+    const trace: DeCSPipelineTermTrace = {
+      gemini_partial_term: term,
+      role,
+      text_search: { executed: false, candidates: [], accepted: false },
+      vector_search: { executed: false, candidates: [], accepted: false },
+      bvs_search: { executed: false, candidates: [], accepted: false },
+      outcome: "no_candidate",
+    };
 
-      // ── 1. Try local pgvector first ────────────────────────────────────────
-      let rawCandidates: DeCSRecord[] = [];
+    let winner: DeCSRecord | null = null;
+    let categoryFilteredOnly = false;
+
+    // ── 1. TEXTUAL ──────────────────────────────────────────────────────────
+    trace.text_search.executed = true;
+    const textRaw = await searchDeCSTextual(term, DECS_MAX_CANDIDATES);
+    trace.text_search.candidates = textRaw.map((c) => ({
+      code: c.code,
+      term: c.term,
+      name_en: c.name_en,
+      similarity: c.similarity,
+      hierarchy_path: c.hierarchy_path,
+      exact_match: c.text_exact_match === true,
+    }));
+    const textExact = textRaw.filter((c) => c.text_exact_match === true);
+    const textEligible = textExact.filter((c) =>
+      isCategoryAcceptable(c, questionText),
+    );
+    if (textExact.length > 0 && textEligible.length === 0) {
+      categoryFilteredOnly = true;
+    }
+    const textBest = textEligible[0];
+    if (textBest) {
+      winner = { ...textBest, role, search_method: "text" };
+      trace.text_search.accepted = true;
+      trace.text_search.accepted_descriptor = winner;
+      trace.final_method = "text";
+    }
+
+    // ── 2. VECTOR ───────────────────────────────────────────────────────────
+    if (!winner) {
+      let rawVector: DeCSRecord[] = [];
       if (geminiKey && (await isLocalDeCSAvailable())) {
-        rawCandidates = await searchDeCSLocal(term, geminiKey, 5, 0.6);
+        trace.vector_search.executed = true;
+        rawVector = await searchDeCSLocal(term, geminiKey, DECS_MAX_CANDIDATES, MIN_VECTOR_SIMILARITY);
       }
-
-      // ── 2. Fallback: BVS API ───────────────────────────────────────────────
-      if (rawCandidates.length === 0) {
-        const apiResults = await searchDeCSCandidates(term, decsKey, 5);
-        rawCandidates = apiResults
-          .map((c) => ({ ...c, similarity: wordJaccard(term, c.term) }))
-          .filter((c) => (c.similarity ?? 0) >= MIN_SIMILARITY)
-          .sort((a, b) => (b.similarity ?? 0) - (a.similarity ?? 0));
+      trace.vector_search.candidates = rawVector.map((c) => ({
+        code: c.code,
+        term: c.term,
+        name_en: c.name_en,
+        similarity: c.similarity,
+        hierarchy_path: c.hierarchy_path,
+      }));
+      const vectorEligible = rawVector
+        .filter((c) => isCategoryAcceptable(c, questionText))
+        .sort((a, b) => (b.similarity ?? 0) - (a.similarity ?? 0));
+      if (rawVector.length > 0 && vectorEligible.length === 0) categoryFilteredOnly = true;
+      if (vectorEligible.length > 0) {
+        winner = { ...vectorEligible[0], role, search_method: "vector" };
+        trace.vector_search.accepted = true;
+        trace.vector_search.accepted_descriptor = winner;
+        trace.final_method = "vector";
+        categoryFilteredOnly = false;
       }
+    }
 
-      // No candidates found at all (search failed or similarity too low)
-      if (rawCandidates.length === 0) return { status: "no_candidate" };
-
-      // ── 3. Category filter — track drops separately ────────────────────────
-      const accepted = rawCandidates.filter((c) =>
+    // ── 3. BVS ──────────────────────────────────────────────────────────────
+    if (!winner) {
+      trace.bvs_search.executed = true;
+      const apiResults = await searchDeCSCandidates(term, decsKey, DECS_MAX_CANDIDATES);
+      const scored = apiResults
+        .map((c) => ({ ...c, similarity: wordJaccard(term, c.term) }))
+        .filter((c) => (c.similarity ?? 0) >= MIN_BVS_SIMILARITY)
+        .sort((a, b) => (b.similarity ?? 0) - (a.similarity ?? 0));
+      trace.bvs_search.candidates = scored.map((c) => ({
+        code: c.code,
+        term: c.term,
+        similarity: c.similarity,
+        hierarchy_path: c.hierarchy_path,
+      }));
+      const bvsEligible = scored.filter((c) =>
         isCategoryAcceptable(c, questionText),
       );
-      if (accepted.length === 0) {
-        // Had candidates, but category B filter rejected all of them
-        return { status: "category_filtered" };
+      if (scored.length > 0 && bvsEligible.length === 0) categoryFilteredOnly = true;
+      if (bvsEligible.length > 0) {
+        winner = { ...bvsEligible[0], role, search_method: "bvs" };
+        trace.bvs_search.accepted = true;
+        trace.bvs_search.accepted_descriptor = winner;
+        trace.final_method = "bvs";
+        categoryFilteredOnly = false;
       }
-
-      // ── 4. Deduplication ───────────────────────────────────────────────────
-      const best = accepted[0];
-      if (seenCodes.has(best.code)) return { status: "deduped" };
-
-      seenCodes.add(best.code);
-      return { status: "accepted", role, match: best };
-    }),
-  );
-
-  // Tally outcomes and build the search result list
-  let droppedByFilter = 0; // terms with candidates that the category filter removed
-  for (const res of outcomes) {
-    if (res.status === "rejected") continue; // unexpected error — skip silently
-    const outcome = res.value;
-    if (outcome.status === "accepted") {
-      afterSearch.push({ ...outcome.match, role: outcome.role });
-    } else if (outcome.status === "category_filtered") {
-      droppedByFilter++;
     }
-    // 'no_candidate' and 'deduped' do not count toward dropped_by_filter
+
+    if (!winner) {
+      if (categoryFilteredOnly) {
+        droppedByFilter++;
+        trace.outcome = "category_filtered";
+      } else {
+        trace.outcome = "no_candidate";
+      }
+      termTrace.push(trace);
+      continue;
+    }
+
+    if (seenCodes.has(winner.code)) {
+      trace.outcome = "deduped";
+      termTrace.push(trace);
+      continue;
+    }
+
+    seenCodes.add(winner.code);
+    afterSearch.push(winner);
+    trace.outcome = "accepted";
+    termTrace.push(trace);
   }
 
-  // Enrich BVS API results with scope_note/name_en from local DB before validation
   const enriched = await enrichFromDB(afterSearch);
 
-  // Step 3: Gemini validation — operates on the flat list, role is preserved
-  const afterValidation = await validateDescriptorsWithGemini(
-    enriched,
-    questionText,
-    geminiKey,
-    model,
-    validatorAgentKey,
-  );
+  // Validação Gemini desativável: Gerar V1 (questões) passa null.
+  // Notas e chamadores que passam um key (ex.: validate_notes_decs_terms) mantêm a etapa.
+  const afterValidation =
+    validatorAgentKey && validatorAgentKey.trim()
+      ? await validateDescriptorsWithGemini(
+          enriched,
+          questionText,
+          geminiKey,
+          model,
+          validatorAgentKey,
+        )
+      : enriched;
 
   const droppedByGemini = afterSearch.length - afterValidation.length;
 
-  // Strip the internal similarity field, keep role; primary first
   const primary = afterValidation
     .filter((d) => d.role === "primary")
-    .map(({ similarity: _s, ...rest }) => rest);
+    .map(({ similarity: _s, text_exact_match: _exact, ...rest }) => rest);
   const secondary = afterValidation
     .filter((d) => d.role !== "primary")
-    .map(({ similarity: _s, ...rest }) => rest);
+    .map(({ similarity: _s, text_exact_match: _exact, ...rest }) => rest);
 
   const descriptors = [...primary, ...secondary];
 
@@ -602,5 +922,7 @@ export async function runDeCSPipeline(
     descriptors,
     dropped_by_filter: droppedByFilter,
     dropped_by_gemini: droppedByGemini,
+    term_trace: termTrace,
+    after_search: enriched,
   };
 }

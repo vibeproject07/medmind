@@ -27,12 +27,23 @@ export async function GET(
     }
 
     await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_decs_descriptors TEXT`);
+    await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_habilities TEXT`);
+    await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_question_themes TEXT`);
 
     const question = (await query('SELECT * FROM questions WHERE id = $1', [params.id])).rows[0];
 
     if (!question) {
       return NextResponse.json({ error: 'Questão não encontrada' }, { status: 404 });
     }
+
+    const parseJsonField = (raw: unknown, fallback: unknown) => {
+      if (raw == null || raw === '') return fallback;
+      try {
+        return typeof raw === 'string' ? JSON.parse(raw) : raw;
+      } catch {
+        return fallback;
+      }
+    };
 
     return NextResponse.json({
       ...question,
@@ -42,6 +53,8 @@ export async function GET(
       assuntos: question.assuntos ? JSON.parse(question.assuntos) : [],
       decs_terms: question.decs_terms ? JSON.parse(question.decs_terms) : [],
       ai_decs_descriptors: question.ai_decs_descriptors ? JSON.parse(question.ai_decs_descriptors) : [],
+      ai_habilities: parseJsonField(question.ai_habilities, null),
+      ai_question_themes: parseJsonField(question.ai_question_themes, null),
     });
   } catch (error) {
     console.error('Erro ao buscar questão:', error);

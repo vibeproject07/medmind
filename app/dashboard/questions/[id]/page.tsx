@@ -6,6 +6,10 @@ import { ArrowLeft, Edit, Image as ImageIcon, X, AlertTriangle, Ban, RotateCcw, 
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import DeCSAutocomplete from '@/components/Common/DeCSAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
+import DeCSPipelineTracePanel from '@/components/Dashboard/DeCSPipelineTracePanel';
+import QuestionHabilitiesSection from '@/components/Dashboard/QuestionHabilitiesSection';
+import QuestionThemesAssignSection from '@/components/Dashboard/QuestionThemesAssignSection';
+import type { DeCSPipelineExposurePayload } from '@/lib/decs-pipeline-exposure';
 import {
   ASSUNTOS_BY_AREA,
   toDisplayArea,
@@ -44,6 +48,12 @@ interface Question {
   anulada?: boolean;
   decs_terms?: string[];
   ai_decs_descriptors?: DeCSRecord[];
+  ai_habilities?: {
+    competencias: Array<{ competencia: string; conteudos: string[] }>;
+  } | null;
+  ai_question_themes?: {
+    temas: Array<{ tema: string; subtemas: string[] }>;
+  } | null;
   created_at: string;
   updated_at: string;
 }
@@ -116,6 +126,7 @@ export default function QuestionDetailPage() {
   const [togglingAnulada, setTogglingAnulada] = useState(false);
   const [aiDecsLoading, setAiDecsLoading] = useState(false);
   const [aiDecsError, setAiDecsError] = useState<string | null>(null);
+  const [aiDecsPipelineExposure, setAiDecsPipelineExposure] = useState<DeCSPipelineExposurePayload | null>(null);
   const [aiDecsV2Loading, setAiDecsV2Loading] = useState(false);
   const [aiDecsV2Error, setAiDecsV2Error] = useState<string | null>(null);
   const [aiDecsV2Result, setAiDecsV2Result] = useState<DeCSV2Result | null>(null);
@@ -171,6 +182,7 @@ export default function QuestionDetailPage() {
 
   useEffect(() => {
     if (questionId) {
+      setAiDecsPipelineExposure(null);
       fetchQuestion();
     }
   }, [questionId]);
@@ -514,8 +526,9 @@ export default function QuestionDetailPage() {
         return;
       }
       setQuestion((prev) =>
-        prev ? { ...prev, ai_decs_descriptors: data.descriptors } : prev
+        prev ? { ...prev, ai_decs_descriptors: data.result ?? data.descriptors ?? [] } : prev
       );
+      setAiDecsPipelineExposure(data.pipeline_exposure ?? null);
     } catch {
       setAiDecsError('Erro ao conectar com o servidor.');
     } finally {
@@ -1260,6 +1273,8 @@ export default function QuestionDetailPage() {
           {aiDecsError && <p className="text-red-500 text-sm mb-3">{aiDecsError}</p>}
           {aiDecsV2Error && <p className="text-red-500 text-sm mb-3">{aiDecsV2Error}</p>}
 
+          <DeCSPipelineTracePanel exposure={aiDecsPipelineExposure} />
+
           {/* Loading states */}
           {(aiDecsLoading || aiDecsV2Loading) && (
             <p className="text-sm text-indigo-500 italic mb-3">
@@ -1400,6 +1415,24 @@ export default function QuestionDetailPage() {
             );
           })()}
         </div>
+      )}
+
+      {/* Competências e conteúdos — IA */}
+      {isAdmin && (
+        <QuestionHabilitiesSection
+          questionId={questionId}
+          isAdmin={isAdmin}
+          initialResult={question.ai_habilities ?? null}
+        />
+      )}
+
+      {/* Temas e subtemas — IA */}
+      {isAdmin && (
+        <QuestionThemesAssignSection
+          questionId={questionId}
+          isAdmin={isAdmin}
+          initialResult={question.ai_question_themes ?? null}
+        />
       )}
 
       {/* Questões Similares (via pgvector) */}

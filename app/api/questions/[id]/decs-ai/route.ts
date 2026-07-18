@@ -3,7 +3,8 @@ import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { getRuntimeAgent } from '@/lib/ai-agent-runtime';
 import { GoogleGenAI } from '@google/genai';
-import { runDeCSPipeline, type DeCSRecord, type DeCSThemes } from '@/lib/decs-pipeline';
+import { runDeCSPipeline, buildDeCSQuestionText, type DeCSRecord, type DeCSThemes } from '@/lib/decs-pipeline';
+import { buildPipelineFrontendExposure } from '@/lib/decs-pipeline-exposure';
 import { saveClassificationArtifact } from '@/lib/decs-classification-storage';
 
 export const runtime = 'nodejs';
@@ -41,23 +42,18 @@ export async function POST(
     }
     const question = qRes.rows[0] as Record<string, unknown>;
 
-    const questionText = [
-      'Enunciado:',
-      question.statement as string,
-      '',
-      'Alternativa A: ' + (question.option_a as string),
-      'Alternativa B: ' + (question.option_b as string),
-      question.option_c ? 'Alternativa C: ' + (question.option_c as string) : null,
-      question.option_d ? 'Alternativa D: ' + (question.option_d as string) : null,
-      question.option_e ? 'Alternativa E: ' + (question.option_e as string) : null,
-    ]
-      .filter(Boolean)
-      .join('\n');
+    const questionText = buildDeCSQuestionText({
+      statement: question.statement as string,
+      option_a: question.option_a as string,
+      option_b: question.option_b as string,
+      option_c: question.option_c as string | null,
+      option_d: question.option_d as string | null,
+      option_e: question.option_e as string | null,
+      correct_answer: question.correct_answer as string | null,
+    });
 
-    const [classifierAgent] = await Promise.all([
-      getRuntimeAgent('decs_classifier'),
-      getRuntimeAgent('decs_validator'),
-    ]);
+    const classifierAgent = await getRuntimeAgent('decs_classifier');
+    // question_terms_validator desativado no Gerar V1 — só classificador + busca DeCS
 
     const ai = new GoogleGenAI({ apiKey: geminiKey, apiVersion: 'v1beta' });
     const response = await ai.models.generateContent({
@@ -108,13 +104,21 @@ export async function POST(
       );
     }
 
-    const { descriptors, dropped_by_filter, dropped_by_gemini } = await runDeCSPipeline(
+    const { descriptors, dropped_by_filter, dropped_by_gemini, term_trace, after_search } =
+      await runDeCSPipeline(
+        themes,
+        questionText,
+        decsKey,
+        geminiKey,
+        classifierAgent.model,
+        null, // sem question_terms_validator no Gerar V1
+      );
+
+    // Exposição para o frontend (sessão em memória). Não é gravada em questions.
+    const pipeline_exposure = buildPipelineFrontendExposure(
       themes,
-      questionText,
-      decsKey,
-      geminiKey,
-      classifierAgent.model,
-      'decs_validator',
+      term_trace,
+      after_search,
     );
 
     const artifact = {
@@ -133,9 +137,10 @@ export async function POST(
       'UPDATE questions SET ai_decs_descriptors = $1, updated_at = NOW() WHERE id = $2',
       [JSON.stringify(descriptors), params.id]
     );
-    await saveClassificationArtifact(params.id, 'v1', artifact);
+    // Artifact no disco/DB pode incluir o rastreio para debug; o frontend não o recarrega.
+    await saveClassificationArtifact(params.id, 'v1', { ...artifact, pipeline_exposure });
 
-    return NextResponse.json(artifact);
+    return NextResponse.json({ ...artifact, pipeline_exposure });
   } catch (err: unknown) {
     console.error('[decs-ai] error:', err);
     const message = err instanceof Error ? err.message : 'Erro interno';

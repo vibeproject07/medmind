@@ -22,6 +22,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import pg from 'pg';
 import { loadRuntimeAgents, buildGeminiBody } from './lib/ai-agents-db.mjs';
+import { DECS_MAX_CANDIDATES } from './decs-search-limits.mjs';
 
 // ── Load .env.local ──────────────────────────────────────────────────────────
 function loadEnv(path) {
@@ -61,7 +62,7 @@ const SKIP_CLASSIFIED  = !_hasFlag('--include-classified');
 const OUTPUT_FILE      = _getArg('--output', 'decs_classification_results.json');
 const GEMINI_MODEL     = 'gemini-2.5-flash';
 const DECS_BASE        = 'https://api.bvsalud.org/decs/v2';
-const MAX_CANDIDATES   = 5;   // DeCS records fetched per search term
+const MAX_CANDIDATES   = DECS_MAX_CANDIDATES;   // DeCS records fetched per search term
 const MIN_SIMILARITY   = 0.15; // minimum word-Jaccard to accept a DeCS result
 
 let classifierAgent;
@@ -71,10 +72,10 @@ let validatorAgent;
 const pool = new pg.Pool({ connectionString: DB_URL });
 
 async function loadAgentsFromDb() {
-  const map = await loadRuntimeAgents(pool, ['decs_classifier', 'decs_validator']);
+  const map = await loadRuntimeAgents(pool, ['decs_classifier', 'question_terms_validator']);
   classifierAgent = map.get('decs_classifier');
-  validatorAgent = map.get('decs_validator');
-  console.log(`   ✓ Agentes DB: decs_classifier (${classifierAgent.model}), decs_validator (${validatorAgent.model})`);
+  validatorAgent = map.get('question_terms_validator');
+  console.log(`   ✓ Agentes DB: decs_classifier (${classifierAgent.model}), question_terms_validator (${validatorAgent.model})`);
 }
 
 async function fetchQuestions() {
@@ -84,7 +85,7 @@ async function fetchQuestions() {
   if (MAX_ID !== null) conditions.push(`id <= ${MAX_ID}`);
   const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
   const res = await pool.query(
-    `SELECT id, statement, option_a, option_b, option_c, option_d, option_e
+    `SELECT id, statement, option_a, option_b, option_c, option_d, option_e, correct_answer
      FROM questions ${whereClause} ORDER BY id ASC LIMIT $1 OFFSET $2`,
     [LIMIT, OFFSET]
   );
@@ -170,7 +171,7 @@ async function checkLocalDeCS() {
   return localDeCSAvailable;
 }
 
-async function searchDeCSLocal(searchTerm, maxCandidates = 5, minSimilarity = 0.60) {
+async function searchDeCSLocal(searchTerm, maxCandidates = DECS_MAX_CANDIDATES, minSimilarity = 0.60) {
   try {
     if (!await checkLocalDeCS()) return [];
     const embedding = await generateEmbedding(searchTerm);
@@ -317,6 +318,7 @@ async function validateDescriptors(descriptors, questionText) {
 
 // ── Process one question ──────────────────────────────────────────────────────
 async function processQuestion(q, idx, total) {
+  const letter = String(q.correct_answer ?? '').trim().toUpperCase();
   const questionText = [
     'Enunciado:', q.statement, '',
     'Alternativa A: ' + (q.option_a ?? ''),
@@ -324,6 +326,7 @@ async function processQuestion(q, idx, total) {
     q.option_c ? 'Alternativa C: ' + q.option_c : null,
     q.option_d ? 'Alternativa D: ' + q.option_d : null,
     q.option_e ? 'Alternativa E: ' + q.option_e : null,
+    letter ? `Gabarito: ${letter}` : null,
   ].filter(Boolean).join('\n');
 
   let descriptors = [];

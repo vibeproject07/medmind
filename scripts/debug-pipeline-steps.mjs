@@ -12,6 +12,7 @@
  */
 
 import pg from 'pg';
+import { DECS_MAX_CANDIDATES } from './decs-search-limits.mjs';
 
 // ── Config ────────────────────────────────────────────────────────────────────
 
@@ -102,6 +103,7 @@ function timer(ms) {
 // ── Helpers compartilhados ────────────────────────────────────────────────────
 
 function buildQuestionText(q) {
+  const letter = String(q.correct_answer ?? '').trim().toUpperCase();
   return [
     'Enunciado:', q.statement, '',
     'Alternativa A: ' + (q.option_a || ''),
@@ -109,6 +111,7 @@ function buildQuestionText(q) {
     q.option_c ? 'Alternativa C: ' + q.option_c : null,
     q.option_d ? 'Alternativa D: ' + q.option_d : null,
     q.option_e ? 'Alternativa E: ' + q.option_e : null,
+    letter ? `Gabarito: ${letter}` : null,
   ].filter(Boolean).join('\n');
 }
 
@@ -146,7 +149,7 @@ async function loadAgent(key, defaultPrompt, defaultModel = 'gemini-2.5-flash') 
   return { prompt: defaultPrompt, model: defaultModel, source: 'padrão embutido' };
 }
 
-async function searchDeCSLocal(term, minSimilarity = 0.6, limit = 5) {
+async function searchDeCSLocal(term, minSimilarity = 0.6, limit = DECS_MAX_CANDIDATES) {
   try {
     const embedRes = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent?key=${geminiKey}`,
@@ -182,7 +185,7 @@ async function searchDeCSLocal(term, minSimilarity = 0.6, limit = 5) {
   }
 }
 
-async function searchDeCSByText(term, limit = 5) {
+async function searchDeCSByText(term, limit = DECS_MAX_CANDIDATES) {
   try {
     const { rows } = await pool.query(
       `SELECT ui AS code, name_pt AS term, name_en, scope_note, tree_numbers
@@ -202,7 +205,7 @@ async function searchDeCSByText(term, limit = 5) {
   }
 }
 
-async function searchDeCSBVS(term, limit = 5) {
+async function searchDeCSBVS(term, limit = DECS_MAX_CANDIDATES) {
   if (!decsKey) return [];
   try {
     const url = `https://api.bvsalud.org/decs/v2/search-by-words?words=${encodeURIComponent(term)}&lang=pt&format=json`;
@@ -291,13 +294,13 @@ async function runV1Debug(question) {
     let candidates = [];
     let usedSource = '';
 
-    const local = await searchDeCSLocal(term, 0.6, 5);
+    const local = await searchDeCSLocal(term, 0.6, DECS_MAX_CANDIDATES);
     if (local.length > 0) {
       candidates = local;
       usedSource = 'pgvector (vetorial)';
     } else {
       warn('Sem resultados locais — tentando API BVS...');
-      const bvs = await searchDeCSBVS(term, 5);
+      const bvs = await searchDeCSBVS(term, DECS_MAX_CANDIDATES);
       if (bvs.length > 0) {
         candidates = bvs;
         usedSource = 'API BVS (fallback)';
@@ -349,10 +352,10 @@ async function runV1Debug(question) {
   ok(`Candidatos após deduplicação: ${deduped.length}`);
   stepEnd();
 
-  // ── ETAPA 4: Validação Gemini (decs_validator) ────────────────────────────
-  step(4, 'Validação pelo Gemini (decs_validator)');
-  label('Carregando agente decs_validator...');
-  const validator = await loadAgent('decs_validator', '');
+  // ── ETAPA 4: Validação Gemini (question_terms_validator) ───────────────────
+  step(4, 'Validação pelo Gemini (question_terms_validator)');
+  label('Carregando agente question_terms_validator...');
+  const validator = await loadAgent('question_terms_validator', '');
   ok(`Fonte: ${validator.source} | Modelo: ${validator.model}`);
 
   const candidateList = deduped.map(d => ({
@@ -439,21 +442,21 @@ async function runV2Debug(question) {
     label(`Conceito: "${term}" (${role})`);
     let candidates = [];
 
-    const local = await searchDeCSLocal(term, 0.55, 5);
+    const local = await searchDeCSLocal(term, 0.55, DECS_MAX_CANDIDATES);
     const localFiltered = local.filter(c => isCategoryAcceptable(c, questionText));
     if (localFiltered.length > 0) {
       candidates = localFiltered;
       ok(`${candidates.length} resultado(s) via pgvector:`);
     } else {
       warn('pgvector sem resultados — tentando busca por texto...');
-      const text = await searchDeCSByText(term, 5);
+      const text = await searchDeCSByText(term, DECS_MAX_CANDIDATES);
       const textFiltered = text.filter(c => isCategoryAcceptable(c, questionText));
       if (textFiltered.length > 0) {
         candidates = textFiltered;
         ok(`${candidates.length} resultado(s) via busca textual:`);
       } else {
         warn('Texto sem resultados — tentando API BVS...');
-        const bvs = await searchDeCSBVS(term, 5);
+        const bvs = await searchDeCSBVS(term, DECS_MAX_CANDIDATES);
         candidates = bvs.filter(c => isCategoryAcceptable(c, questionText));
         if (candidates.length > 0) {
           ok(`${candidates.length} resultado(s) via API BVS:`);
@@ -577,7 +580,7 @@ async function main() {
 
   const { rows } = await pool.query(
     `SELECT id, statement, option_a, option_b, option_c, option_d, option_e,
-            exam_board, exam_year, exam_institution
+            correct_answer, exam_board, exam_year, exam_institution
      FROM questions WHERE id = $1`, [questionId]
   );
 

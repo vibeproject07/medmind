@@ -9,7 +9,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
-import { runDeCSPipeline, type DeCSThemes } from '@/lib/decs-pipeline';
+import { runDeCSPipeline, buildDeCSQuestionText, type DeCSThemes } from '@/lib/decs-pipeline';
 import { runDeCSPipelineV2 } from '@/lib/decs-pipeline-v2';
 
 export const runtime = 'nodejs';
@@ -54,16 +54,15 @@ function getUser(req: NextRequest) {
 // ── Question text builder ──────────────────────────────────────────────────────
 
 function buildQuestionText(q: Record<string, unknown>): string {
-  return [
-    'Enunciado:',
-    q.statement as string,
-    '',
-    'Alternativa A: ' + (q.option_a as string),
-    'Alternativa B: ' + (q.option_b as string),
-    q.option_c ? 'Alternativa C: ' + (q.option_c as string) : null,
-    q.option_d ? 'Alternativa D: ' + (q.option_d as string) : null,
-    q.option_e ? 'Alternativa E: ' + (q.option_e as string) : null,
-  ].filter(Boolean).join('\n');
+  return buildDeCSQuestionText({
+    statement: q.statement as string,
+    option_a: q.option_a as string,
+    option_b: q.option_b as string,
+    option_c: q.option_c as string | null,
+    option_d: q.option_d as string | null,
+    option_e: q.option_e as string | null,
+    correct_answer: q.correct_answer as string | null,
+  });
 }
 
 // ── V1 full pipeline (theme extraction + runDeCSPipeline) ─────────────────────

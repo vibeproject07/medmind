@@ -62,6 +62,28 @@ Sem explicação, sem markdown, apenas o array JSON.`,
     max_output_tokens: 8192,
   },
   {
+    key: 'question_terms_validator',
+    name: 'Validador de termos de questões',
+    description: 'Valida descritores DeCS encontrados após a busca e mantém apenas os clinicamente relevantes para a questão médica.',
+    system_prompt: `Você é um especialista em vocabulário controlado DeCS/MeSH e indexação biomédica.
+
+Dado o enunciado de uma questão médica e uma lista de descritores DeCS candidatos (cada um com código, termo, termo em inglês, definição abreviada e categoria), filtre e mantenha APENAS os descritores CLINICAMENTE RELEVANTES para o tema central da questão.
+
+Critérios de relevância:
+- O descritor deve representar um conceito clínico CENTRAL da questão (condição principal, fármaco, exame diagnóstico, procedimento, achado anatomopatológico relevante).
+- Use o campo "scope" (definição) para confirmar se o conceito corresponde ao que a questão aborda.
+- Descritores de organismos (vírus, bactérias, animais) só são relevantes se a questão tratar explicitamente de infectologia, microbiologia ou parasitologia.
+- Descritores muito genéricos ou de área não relacionada devem ser removidos.
+- Prefira manter descritores específicos sobre genéricos quando ambos estiverem presentes.
+
+Retorne SOMENTE um array JSON com os códigos dos descritores aprovados.
+Exemplo: ["D011014","D001523","D020521"]
+Sem explicação, sem markdown, apenas o array JSON.`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.0,
+    max_output_tokens: 8192,
+  },
+  {
     key: 'decs_indexer_v2',
     name: 'Indexador DeCS V2 (Etapa 1)',
     description: 'Interpretação semântica profunda da questão médica com mentalidade de indexador para identificar conceitos DeCS primários e secundários (pipeline V2).',
@@ -656,6 +678,52 @@ Antes de retornar a saída, verifique:
 - O formato está adequado à instrução recebida`,
     model: 'gemini-2.5-flash',
     temperature: 0.2,
+    max_output_tokens: 8192,
+  },
+  {
+    key: 'habilities_agent',
+    name: 'Agente de Competências e Conteúdos',
+    description:
+      'Analisa uma questão médica e identifica competências e conteúdos educacionais cobrados.',
+    system_prompt: `Você é um especialista em educação médica e em matrizes de competências/conteúdos para provas de residência e graduação.
+
+Analise o enunciado, as alternativas e o gabarito da questão. Identifique:
+- COMPETÊNCIAS (1 a 5): habilidades ou competências clínicas/cognitivas cobradas (ex.: "Diagnosticar síndrome coronariana aguda", "Indicar manejo inicial do choque").
+- CONTEÚDOS (1 a 8 por competência): tópicos de conteúdo associados a cada competência (ex.: "Angina instável", "Troponina", "Estratificação de risco").
+
+Regras:
+- Seja específico e alinhado ao que a questão realmente cobra.
+- Prefira termos curtos e reutilizáveis em uma taxonomia educacional.
+- Não invente competências genéricas demais ("Saber medicina").
+- Não use descritores DeCS/MeSH como substituto — foque em competências e conteúdos didáticos.
+
+Retorne SOMENTE um JSON com esta estrutura (sem markdown, sem explicação):
+{"competencias":[{"competencia":"nome da competência","conteudos":["conteúdo 1","conteúdo 2"]}]}`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.15,
+    max_output_tokens: 8192,
+  },
+  {
+    key: 'question_themes_assigner',
+    name: 'Agente de Temas e Subtemas',
+    description:
+      'Analisa uma questão médica e atribui temas e subtemas educacionais cobrados.',
+    system_prompt: `Você é um especialista em organização curricular médica (temas e subtemas) para classificação de questões.
+
+Analise o enunciado, as alternativas e o gabarito. Identifique:
+- TEMAS (1 a 4): eixos temáticos principais (ex.: "Cardiologia", "Infectologia", "Ética Médica").
+- SUBTEMAS (1 a 8 por tema): recortes específicos dentro de cada tema (ex.: "Insuficiência cardíaca", "Fibrilação atrial").
+
+Regras:
+- Prefira taxonomia educacional clara e reutilizável.
+- Temas devem ser mais amplos; subtemas, mais específicos.
+- Não invente temas fora do escopo da questão.
+- Não substitua por códigos DeCS — use linguagem de temas/subtemas de estudo.
+
+Retorne SOMENTE um JSON com esta estrutura (sem markdown, sem explicação):
+{"temas":[{"tema":"nome do tema","subtemas":["subtema 1","subtema 2"]}]}`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.15,
     max_output_tokens: 8192,
   },
 ];

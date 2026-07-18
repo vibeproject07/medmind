@@ -10,6 +10,7 @@
 import pg from 'pg';
 import fs from 'fs';
 import { loadRuntimeAgents, buildGeminiBody } from './lib/ai-agents-db.mjs';
+import { DECS_MAX_CANDIDATES } from './decs-search-limits.mjs';
 
 const args = process.argv.slice(2);
 const getArg = (name, def) => {
@@ -25,7 +26,7 @@ const MIN_SCORE = parseFloat(getArg('min-score', '0.75'));
 
 const EMBEDDING_MODEL = 'gemini-embedding-001';
 const RESULTS_FILE = 'decs_notes_classification_results.json';
-const MAX_DECS = 5;
+const MAX_DECS = DECS_MAX_CANDIDATES;
 
 const { Pool } = pg;
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
