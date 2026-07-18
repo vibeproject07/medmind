@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
       sql += ` WHERE origin = $1`;
       params.push(origin);
     }
-    sql += ` ORDER BY competencia ASC, conteudo ASC`;
+    sql += ` ORDER BY id ASC`;
     const res = await query(sql, params);
     return NextResponse.json({ items: res.rows });
   } catch (e) {
