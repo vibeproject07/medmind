@@ -101,7 +101,14 @@ export async function GET(
       return NextResponse.json({ error: 'Questão não encontrada' }, { status: 404 });
     }
     const raw = qRes.rows[0].ai_decs_v2 as string | null;
-    const parsed = raw ? JSON.parse(raw) : {};
+    let parsed: Record<string, unknown> = {};
+    if (raw) {
+      try {
+        parsed = JSON.parse(raw);
+      } catch {
+        parsed = {};
+      }
+    }
     const result = parsed.result ?? {
       decs_primary: parsed.decs_primary ?? [],
       decs_secondary: parsed.decs_secondary ?? [],

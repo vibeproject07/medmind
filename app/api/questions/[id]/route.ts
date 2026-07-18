@@ -52,7 +52,7 @@ export async function GET(
       areas_conhecimento: question.areas_conhecimento ? JSON.parse(question.areas_conhecimento) : [],
       assuntos: question.assuntos ? JSON.parse(question.assuntos) : [],
       decs_terms: question.decs_terms ? JSON.parse(question.decs_terms) : [],
-      ai_decs_descriptors: question.ai_decs_descriptors ? JSON.parse(question.ai_decs_descriptors) : [],
+      ai_decs_descriptors: parseJsonField(question.ai_decs_descriptors, []),
       ai_habilities: parseJsonField(question.ai_habilities, null),
       ai_question_themes: parseJsonField(question.ai_question_themes, null),
     });

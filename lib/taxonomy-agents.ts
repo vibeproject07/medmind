@@ -50,7 +50,14 @@ function stripJsonFences(raw: string): string {
 
 function safeParseJsonObject(rawText: string): Record<string, unknown> {
   const cleaned = stripJsonFences(rawText);
-  const parsed = JSON.parse(cleaned);
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(cleaned);
+  } catch {
+    throw new Error(
+      'O agente retornou JSON inválido ou incompleto. Tente novamente.',
+    );
+  }
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
     throw new Error('Resposta do agente não é um objeto JSON');
   }

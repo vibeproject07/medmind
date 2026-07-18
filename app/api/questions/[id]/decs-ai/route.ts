@@ -167,7 +167,14 @@ export async function GET(
       return NextResponse.json({ error: 'Questão não encontrada' }, { status: 404 });
     }
     const raw = qRes.rows[0].ai_decs_descriptors as string | null;
-    const descriptors: DeCSRecord[] = raw ? JSON.parse(raw) : [];
+    let descriptors: DeCSRecord[] = [];
+    if (raw) {
+      try {
+        descriptors = JSON.parse(raw);
+      } catch {
+        descriptors = [];
+      }
+    }
     return NextResponse.json({ descriptors });
   } catch (err: unknown) {
     console.error('[decs-ai] GET error:', err);

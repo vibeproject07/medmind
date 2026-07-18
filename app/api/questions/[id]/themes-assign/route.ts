@@ -25,9 +25,15 @@ export async function GET(
       return NextResponse.json({ error: 'Questão não encontrada' }, { status: 404 });
     }
     const raw = res.rows[0].ai_question_themes as string | null;
-    return NextResponse.json({
-      result: raw ? JSON.parse(raw) : null,
-    });
+    let result = null;
+    if (raw) {
+      try {
+        result = JSON.parse(raw);
+      } catch {
+        result = null;
+      }
+    }
+    return NextResponse.json({ result });
   } catch (e) {
     console.error(e);
     return NextResponse.json({ error: 'Erro ao buscar classificação' }, { status: 500 });
