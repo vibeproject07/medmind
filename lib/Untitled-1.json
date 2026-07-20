@@ -1,0 +1,506 @@
+[
+  {
+    term: "Epilepsia Mioclônica Juvenil",  TERMO: "ESSE SIM",
+    code: "D020190",
+    tree_ids: [
+      "C10.228.140.490.375.130.670",
+      "C10.228.140.490.493.063.670",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.375.130.670",
+    similarity: 0.8322778601427703,
+    scope_note: "Transtorno caracterizado pelo início de mioclonia na adolescência, um aumento marcante na incidência de ataques tipo ausência (ver EPILEPSIA TIPO AUSÊNCIA), e ataques motores maiores generalizados (ver EPILEPSIA TÔNICO-CLÔNICA). Os episódios mioclônicos tendem a ocorrer logo após o despertar. Os ataques tendem a se agravar pela privação do sono e consumo de álcool. Foram identificadas as formas hereditária e esporádica.",
+    name_en: "Myoclonic Epilepsy, Juvenile",
+  },
+  {
+    term: "Epilepsias Mioclônicas",   TERMO: "ESSE SIM",
+    code: "D004831",
+    tree_ids: [
+      "C10.228.140.490.375.130",
+      "C10.228.140.490.493.063",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.375.130",
+    similarity: 0.7697273897686898,
+    scope_note: "Grupo clinicamente diverso de síndromes epilépticas caracterizadas tanto por convulsões mioclônicas ou por mioclonia em associação com outros tipos de convulsões. As síndromes epilépticas mioclônicas dividem-se em três subtipos, baseados na etiologia: familiar, criptogênica e sintomática.",
+    name_en: "Epilepsies, Myoclonic",
+  },
+  {
+    term: "Epilepsia Tipo Ausência",  TERMO: "ESSE SIM",
+    code: "D004832",
+    tree_ids: [
+      "C10.228.140.490.375.260",
+      "C10.228.140.490.493.125",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.375.260",
+    similarity: 0.7611618349888198,
+    scope_note: "Transtorno de convulsão que geralmente ocorre na infância caracterizado por descargas cerebrais elétricas rítmicas de início generalizado. Os sinais clínicos incluem cessação súbita de atividades rotineiras, normalmente sem perda do tônus postural. O piscar rítmico das pálpebras ou mordiscar dos lábios frequentemente acompanham as CONVULSÕES. A duração normal é de 5 a 10 segundos e podem ocorrer muitos episódios por dia. A epilepsia do tipo ausência juvenil é caracterizada pelo início na fase juvenil de ataques do tipo ausência e um aumento na incidência de mioclonia e de ataques tônico-clônicos. (Tradução livre do original: Menkes, Textbook of Child Neurology, 5th ed, p736)",
+    name_en: "Epilepsy, Absence",
+  },
+  {
+    term: "Mioclonia",  TERMO: "ESSE SIM",
+    code: "D009207",
+    tree_ids: [
+      "C10.597.350.500",
+      "C23.888.592.350.500",
+    ],
+    hierarchy_path: "Doenças › C10.597.350.500",
+    similarity: 0.7395078282153816,
+    scope_note: "Contrações involuntárias semelhantes a choque, irregulares no ritmo e na amplitude, seguidas por relaxamento de um músculo ou grupo de músculos. Esta afecção pode ser uma característica de algumas DOENÇAS DO SISTEMA NERVOSO CENTRAL (ex., EPILEPSIA MIOCLÔNICA). A mioclonia noturna é a principal característica da SÍNDROME DA MIOCLONIA NOTURNA. (Tradução livre do original: Adams et al., Principles of Neurology, 6th ed, pp102-3)",
+    name_en: "Myoclonus",
+  },
+  {
+    term: "Epilepsias Mioclônicas Progressivas",  TERMO: "ESSE SIM",
+    code: "D020191",
+    tree_ids: [
+      "C10.228.140.490.375.130.650",
+      "C10.228.140.490.493.063.650",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.375.130.650",
+    similarity: 0.7371253318634675,
+    scope_note: "Grupo heterogêneo de transtornos principalmente familiares, caracterizados por crises mioclônicas, tônico-clônicos, ataxia, deterioração intelectual progressiva e degeneração neuronal. Estão incluídos: DOENÇA DE LAFORA; SÍNDROME DE MERRF; LIPOFUSCINOSE CEROIDE NEURONAL; sialidose (ver MUCOLIPIDOSES) e SÍNDROME DE UNVERRICHT-LUNDBORG.",
+    name_en: "Myoclonic Epilepsies, Progressive",
+  },
+]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[
+  {
+    term: "Síndrome de Lennox-Gastaut",  TERMO: "ESSE SIM",
+    code: "D065768",
+    tree_ids: [
+      "C10.228.140.490.493.750",
+      "C16.320.495",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.493.750",
+    similarity: 0.7162904773883562,
+    scope_note: "Síndrome epiléptica de início na infância.",
+    name_en: "Lennox Gastaut Syndrome",
+  },
+  {
+    term: "Síndromes Epilépticas",  TERMO: "ESSE SIM",
+    code: "D000073376",
+    tree_ids: [
+      "C10.228.140.490.493",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.493",
+    similarity: 0.7072002961745038,
+    scope_note: "CRISES EPILÉPTICAS semelhantes em tipo e idade de início que possuem outras características semelhantes (por exemplo, curso clínico, achados de EEG, associação genética e neuropatologia).",
+    name_en: "Epileptic Syndromes",
+  },
+  {
+    term: "Canal de Sódio Disparado por Voltagem NAV1.1",  TERMO: "ESSE SIM",
+    code: "D062550",
+    tree_ids: [
+      "D12.776.157.530.400.875.750.100",
+      "D12.776.543.550.450.875.750.100",
+      "D12.776.543.585.400.875.750.100",
+      "D12.776.631.960.100",
+    ],
+    hierarchy_path: "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100",
+    similarity: 0.6978204722673164,
+    scope_note: "Subtipo de canal de sódio disparado por voltagem predominantemente expresso no SISTEMA NERVOSO CENTRAL. Defeitos no gene SCN1A que codifica para a subunidade alfa deste canal de sódio estão associados com a síndrome de Dravet (ver EPILEPSIAS MIOCLÔNICAS), epilepsia generalizada com CONVULSÕES FEBRIS mais tipo 2 (GEFS+2) e enxaqueca hemiplégica familiar tipo 3.",
+    name_en: "NAV1.1 Voltage-Gated Sodium Channel",
+  },
+  {
+    term: "Epilepsia Resistente a Medicamentos",  TERMO: "ESSE SIM",
+    code: "D000069279",
+    tree_ids: [
+      "C10.228.140.490.125",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.125",
+    similarity: 0.6923544198007375,
+    scope_note: "Afecção epiléptica em que falharam os protocolos com escolha de dois ANTICONVULSIVANTES tolerados para a aquisição de intervalo livre de crises convulsivas sustentado.",
+    name_en: "Drug Resistant Epilepsy",
+  },
+  {
+    term: "Espasmos Infantis",   TERMO: "ESSE SIM",
+    code: "D013036",
+    tree_ids: [
+      "C10.228.140.490.375.760",
+      "C10.228.140.490.493.875",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.375.760",
+    similarity: 0.6837051978743159,
+    scope_note: "Síndrome epiléptica caracterizada pela tríade de espasmos infantis, hipsarritmia e interrupção do desenvolvimento psicomotor no início dos ataques. A maioria se manifesta entre os 3 e 12 meses de idade, com espasmos constituídos de combinações de movimentos flexores ou extensores breves da cabeça, tronco e membros. A afecção é dividida em duas formas: criptogênica (idiopática) e sintomática (secundária a um processo de doença conhecido, como infecções intrauterinas, anormalidades do sistema nervoso, DOENÇAS CEREBRAIS METABÓLICAS CONGÊNITAS, prematuridade, asfixia perinatal, ESCLEROSE TUBEROSA, etc.). (Tradução livre do original: Menkes, Textbook of Child Neurology, 5th ed, pp744-8)",
+    name_en: "Spasms, Infantile",
+  },
+]
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+[
+  {
+    term: "Síndrome de Lennox-Gastaut",   TERMO: "ESSE SIM",
+    code: "D065768",
+    tree_ids: [
+      "C10.228.140.490.493.750",
+      "C16.320.495",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.493.750",
+    similarity: 0.7249976337350447,
+    scope_note: "Síndrome epiléptica de início na infância.",
+    name_en: "Lennox Gastaut Syndrome",
+  },
+  {
+    term: "Espasmos Infantis",  TERMO: "ESSE SIM",
+    code: "D013036",
+    tree_ids: [
+      "C10.228.140.490.375.760",
+      "C10.228.140.490.493.875",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.375.760",
+    similarity: 0.7134987256343531,
+    scope_note: "Síndrome epiléptica caracterizada pela tríade de espasmos infantis, hipsarritmia e interrupção do desenvolvimento psicomotor no início dos ataques. A maioria se manifesta entre os 3 e 12 meses de idade, com espasmos constituídos de combinações de movimentos flexores ou extensores breves da cabeça, tronco e membros. A afecção é dividida em duas formas: criptogênica (idiopática) e sintomática (secundária a um processo de doença conhecido, como infecções intrauterinas, anormalidades do sistema nervoso, DOENÇAS CEREBRAIS METABÓLICAS CONGÊNITAS, prematuridade, asfixia perinatal, ESCLEROSE TUBEROSA, etc.). (Tradução livre do original: Menkes, Textbook of Child Neurology, 5th ed, pp744-8)",
+    name_en: "Spasms, Infantile",
+  },
+  {
+    term: "Síndromes Epilépticas",  TERMO: "ESSE SIM",
+    code: "D000073376",
+    tree_ids: [
+      "C10.228.140.490.493",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.493",
+    similarity: 0.6989022702788605,
+    scope_note: "CRISES EPILÉPTICAS semelhantes em tipo e idade de início que possuem outras características semelhantes (por exemplo, curso clínico, achados de EEG, associação genética e neuropatologia).",
+    name_en: "Epileptic Syndromes",
+  },
+  {
+    term: "Síndrome do Cabeceio",  TERMO: "ESSE SIM",
+    code: "D064128",
+    tree_ids: [
+      "C10.228.140.490.375.525",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.375.525",
+    similarity: 0.6890710854952377,
+    scope_note: "Afecção neurológica inexplicada caracterizada por episódios de convulsões atônicas ou crises de ausência com posterior declínio cognitivo.",
+    name_en: "Nodding Syndrome",
+  },
+  {
+    term: "Epilepsia Neonatal Benigna",   TERMO: "ESSE SIM",
+    code: "D020936",
+    tree_ids: [
+      "C10.228.140.490.370",
+      "C16.614.258",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.370",
+    similarity: 0.6771302111625241,
+    scope_note: "Afecção marcada por ataques recidivantes que ocorrem durante as primeiras 4-6 semanas de vida, apesar de um curso neonatal outrora benigno. Foram identificadas as formas autossômica dominante familiar e esporádica. Os ataques geralmente consistem de breves episódios de postura tônica e outros movimentos, apneia, desvio dos olhos e flutuações da pressão arterial. Estes episódios tendem a desaparecer após a sexta semana de vida. O risco de desenvolver epilepsia em uma idade mais avançada é moderadamente maior na forma familiar deste transtorno.",
+    name_en: "Epilepsy, Benign Neonatal",
+  },
+]
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+[
+  {
+    term: "Eletroencefalografia",  TERMO: "ESSE SIM",
+    code: "D004569",
+    tree_ids: [
+      "E01.370.376.300",
+      "E01.370.405.245",
+    ],
+    hierarchy_path: "Técnicas e Equipamentos Analíticos › E01.370.376.300",
+    similarity: 0.8092639658279782,
+    scope_note: "Registro de correntes elétricas produzidas no cérebro, pela medida de eletrodos adaptados ao couro cabeludo, na superfície do cérebro, ou colocados no cérebro.",
+    name_en: "Electroencephalography",
+  },
+  {
+    term: "Eletrocorticografia",   TERMO: "ESSE SIM",
+    code: "D000069280",
+    tree_ids: [
+      "E01.370.376.150",
+      "E01.370.405.243",
+    ],
+    hierarchy_path: "Técnicas e Equipamentos Analíticos › E01.370.376.150",
+    similarity: 0.7481992874304564,
+    scope_note: "Registro de atividades elétricas encefálicas em que os eletrodos estão posicionados diretamente no CÓRTEX CEREBRAL.",
+    name_en: "Electrocorticography",
+  },
+  {
+    term: "Magnetoencefalografia",  TERMO: "ESSE SIM",
+    code: "D015225",
+    tree_ids: [
+      "E01.370.376.500",
+      "E01.370.405.440",
+      "E05.540.500",
+    ],
+    hierarchy_path: "Técnicas e Equipamentos Analíticos › E01.370.376.500",
+    similarity: 0.7464070609507242,
+    scope_note: "Medida dos campos magnéticos da cabeça, geradas por correntes elétricas no encéfalo. Assim como em um condutor elétrico, os campos elétricos no encéfalo são acompanhados por campos magnéticos ortogonais. A medida desses campos provê informação sobre a localização da atividade encefálica que é complementar àquela proveniente da ELETROENCEFALOGRAFIA. A magnetoencefalografia pode ser utilizada sozinha ou em conjunto com a eletroencefalografia, para a medida da atividade espontânea ou evocada, e para propósitos clínicos ou de pesquisa.",
+    name_en: "Magnetoencephalography",
+  },
+  {
+    term: "Sincronização de Fases em Eletroencefalografia",  TERMO: "ESSE SIM",
+    code: "D058407",
+    tree_ids: [
+      "E01.370.376.300.437",
+      "E01.370.405.245.575",
+      "G07.265.256",
+    ],
+    hierarchy_path: "Técnicas e Equipamentos Analíticos › E01.370.376.300.437",
+    similarity: 0.7363077582443104,
+    scope_note: "Ajuste das ONDAS ENCEFÁLICAS de dois ou mais grupos de neurônios de dentro de uma estrutura encefálica ou que a atravessam (por exemplo, estruturas encefálicas corticais e límbicas), a fim de torná-las uniformes quanto aos padrões de oscilação em resposta a um estímulo. É interpretada como um sinal de integração encefálica durante muitos processos tais como aprendizado, memória e percepção e envolve conexões nervosas recíprocas.",
+    name_en: "Electroencephalography Phase Synchronization",
+  },
+  {
+    term: "Ondas Encefálicas",   TERMO: "ESSE SIM",
+    code: "D058256",
+    tree_ids: [
+      "E01.370.376.300.150",
+      "E01.370.405.245.287",
+      "G07.265.087",
+      "G11.561.127",
+    ],
+    hierarchy_path: "Técnicas e Equipamentos Analíticos › E01.370.376.300.150",
+    similarity: 0.732017179107057,
+    scope_note: "Oscilações semelhantes a ondas da diferença de potencial elétrico entre as partes do cérebro gravadas por eletroencefalografia.",
+    name_en: "Brain Waves",
+  },
+]
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+[
+  {
+    term: "Síndrome de Lennox-Gastaut",   TERMO: "ESSE SIM",
+    code: "D065768",
+    tree_ids: [
+      "C10.228.140.490.493.750",
+      "C16.320.495",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.493.750",
+    similarity: 0.7999742508420007,
+    scope_note: "Síndrome epiléptica de início na infância.",
+    name_en: "Lennox Gastaut Syndrome",
+  },
+  {
+    term: "Síndromes Epilépticas",   TERMO: "ESSE SIM",
+    code: "D000073376",
+    tree_ids: [
+      "C10.228.140.490.493",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.493",
+    similarity: 0.7133726499621095,
+    scope_note: "CRISES EPILÉPTICAS semelhantes em tipo e idade de início que possuem outras características semelhantes (por exemplo, curso clínico, achados de EEG, associação genética e neuropatologia).",
+    name_en: "Epileptic Syndromes",
+  },
+  {
+    term: "Síndrome de Landau-Kleffner",  TERMO: "ESSE SIM",
+    code: "D018887",
+    tree_ids: [
+      "C10.228.140.490.493.500",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.493.500",
+    similarity: 0.7042947100155617,
+    scope_note: "Síndrome caracterizada pela manifestação isolada de disfunção de linguagem em crianças consideradas até então normais (início entre os 4 e 7 anos de idade) e descargas epileptiformes diagnosticadas por ELETROENCEFALOGRAMA. Podem ocorrer convulsões, incluindo ausência atípica (EPILEPSIA TIPO AUSÊNCIA), parcial complexa (EPILEPSIA PARCIAL COMPLEXA) e outros tipos. As anormalidades eletroencefalográficas e as crises tendem a desaparecer na puberdade. O transtorno de linguagem pode também desaparecer, embora alguns indivíduos permanecem com disfunção severa de linguagem, incluindo AFASIA e AGNOSIA auditiva. (Tradução livre do original: Menkes, Textbook of Child Neurology, 5th ed, pp749-50; J Child Neurol 1997 Nov;12(8):489-495)",
+    name_en: "Landau-Kleffner Syndrome",
+  },
+  {
+    term: "Epilepsia Rolândica",   TERMO: "ESSE SIM",
+    code: "D019305",
+    tree_ids: [
+      "C10.228.140.490.360.280",
+      "C10.228.140.490.493.250",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.360.280",
+    similarity: 0.699568825388973,
+    scope_note: "Síndrome epiléptica parcial, de herança autossômica dominante, com início entre os 3 e 13 anos de idade. Os surtos são caracterizados por PARESTESIA e atividade tônica ou clônica da face inferior associada com hipersalivação e DISARTRIA. Na maioria dos casos, as crianças afetadas são normais quanto à parte neurológica e a de desenvolvimento. (Tradução livre do original: Epilepsia 1998 39;Suppl 4:S32-S41)",
+    name_en: "Epilepsy, Rolandic",
+  },
+  {
+    term: "Epilepsia Generalizada",   TERMO: "ESSE SIM",
+    code: "D004829",
+    tree_ids: [
+      "C10.228.140.490.375",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.375",
+    similarity: 0.6978690059065901,
+    scope_note: "Afecções recorrentes caracterizadas por crises epilépticas que surgem difusa e simultaneamente dos dois hemisférios do cérebro. A classificação geralmente é baseada nas manifestações motoras da crise (ex. convulsiva, não convulsiva, acinética, atônica, etc.) ou na etiologia (ex., idiopática, criptogênica e sintomática). (Tradução livre do original: Mayo Clin Proc, 1996 Apr;71(4):405-14)",
+    name_en: "Epilepsy, Generalized",
+  },
+]
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+[
+  {
+    term: "Arritmias Cardíacas",   TERMO: "ESSE NÃO",
+    code: "D001145",
+    tree_ids: [
+      "C14.280.067",
+      "C23.550.073",
+    ],
+    hierarchy_path: "Doenças › C14.280.067",
+    similarity: 0.6673668898128449,
+    scope_note: "Quaisquer distúrbios da pulsação rítmica normal do coração ou CONTRAÇÃO MIOCÁRDICA. As arritmias cardíacas podem ser classificadas pelas anormalidades da FREQUÊNCIA CARDÍACA, transtornos de geração de impulsos elétricos, ou condução de impulso.",
+    name_en: "Arrhythmias, Cardiac",
+  },
+  {
+    term: "Arritmia Sinusal",   TERMO: "ESSE NÃO",
+    code: "D001146",
+    tree_ids: [
+      "C14.280.067.093",
+      "C23.550.073.093",
+    ],
+    hierarchy_path: "Doenças › C14.280.067.093",
+    similarity: 0.6594425851079772,
+    scope_note: "FREQUÊNCIA CARDÍACA irregular causada por função anormal do NÓ SINOATRIAL. Caracteriza-se por alteração maior que 10 por cento entre o comprimento do ciclo sinusal máximo e mínimo ou 120 milissegundos.",
+    name_en: "Arrhythmia, Sinus",
+  },
+  {
+    term: "Parassístole",   TERMO: "ESSE NÃO",
+    code: "D017574", 
+    tree_ids: [
+      "C14.280.067.672",
+      "C23.550.073.670",
+    ],
+    hierarchy_path: "Doenças › C14.280.067.672",
+    similarity: 0.6581077613130817,
+    scope_note: "Arritmia cardíaca causada por interação de dois impulsos cardíacos, iniciados independentemente de frequências diferentes de dois focos separados. Geralmente, um dos focos é o NÓ SINOATRIAL (o marca-passo normal). O foco ectópico, normalmente ocorre no VENTRÍCULO DO CORAÇÃO, mas pode ser nos ÁTRIOS DO CORAÇÃO ou NÓ ATRIOVENTRICULAR. A modulação do ritmo parassistólico pelo ritmo do seio depende da integridade da entrada do bloqueio ao redor do foco parassistólico.",
+    name_en: "Parasystole",
+  },
+  {
+    term: "Fibrilação Atrial",   TERMO: "ESSE NÃO",
+    code: "D001281",
+    tree_ids: [
+      "C14.280.067.198",
+      "C23.550.073.198",
+    ],
+    hierarchy_path: "Doenças › C14.280.067.198",
+    similarity: 0.6492565709678699,
+    scope_note: "Ritmo cardíaco anormal caracterizado por descargas de impulsos elétricos descoordenados e rápidos, nas câmaras superiores do coração (ÁTRIOS DO CORAÇÃO). Em tal caso, o sangue não pode ser eficazmente bombeado nas câmaras inferiores do coração (VENTRÍCULOS DO CORAÇÃO). É causado por geração de impulso anormal.",
+    name_en: "Atrial Fibrillation",
+  },
+  {
+    term: "Parada Sinusal Cardíaca",    TERMO: "ESSE NÃO",
+    code: "D054138",
+    tree_ids: [
+      "C14.280.067.093.500",
+      "C23.550.073.093.500",
+    ],
+    hierarchy_path: "Doenças › C14.280.067.093.500",
+    similarity: 0.6382778859765003,
+    scope_note: "Omissão da ativação atrial causada por cessação transitória na geração de impulso no NÓ SINOATRIAL. Caracteriza-se por uma pausa prolongada sem a onda P em um ELETROCARDIOGRAMA. A parada sinusal tem sido associada com apneia do sono (PARADA SINUSAL RELACIONADA AO SONO REM).",
+    name_en: "Sinus Arrest, Cardiac",
+  },
+]
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+[
+  {
+    term: "Arritmias Cardíacas",   TERMO: "ESSE NÃO",
+    code: "D001145",
+    tree_ids: [
+      "C14.280.067",
+      "C23.550.073",
+    ],
+    hierarchy_path: "Doenças › C14.280.067",
+    similarity: 0.6673668898128449,
+    scope_note: "Quaisquer distúrbios da pulsação rítmica normal do coração ou CONTRAÇÃO MIOCÁRDICA. As arritmias cardíacas podem ser classificadas pelas anormalidades da FREQUÊNCIA CARDÍACA, transtornos de geração de impulsos elétricos, ou condução de impulso.",
+    name_en: "Arrhythmias, Cardiac",
+  },
+  {
+    term: "Arritmia Sinusal",   TERMO: "ESSE NÃO",
+    code: "D001146",
+    tree_ids: [
+      "C14.280.067.093",
+      "C23.550.073.093",
+    ],
+    hierarchy_path: "Doenças › C14.280.067.093",
+    similarity: 0.6594425851079772,
+    scope_note: "FREQUÊNCIA CARDÍACA irregular causada por função anormal do NÓ SINOATRIAL. Caracteriza-se por alteração maior que 10 por cento entre o comprimento do ciclo sinusal máximo e mínimo ou 120 milissegundos.",
+    name_en: "Arrhythmia, Sinus",
+  },
+  {
+    term: "Parassístole",   TERMO: "ESSE NÃO",
+    code: "D017574",
+    tree_ids: [
+      "C14.280.067.672",
+      "C23.550.073.670",
+    ],
+    hierarchy_path: "Doenças › C14.280.067.672",
+    similarity: 0.6581077613130817,
+    scope_note: "Arritmia cardíaca causada por interação de dois impulsos cardíacos, iniciados independentemente de frequências diferentes de dois focos separados. Geralmente, um dos focos é o NÓ SINOATRIAL (o marca-passo normal). O foco ectópico, normalmente ocorre no VENTRÍCULO DO CORAÇÃO, mas pode ser nos ÁTRIOS DO CORAÇÃO ou NÓ ATRIOVENTRICULAR. A modulação do ritmo parassistólico pelo ritmo do seio depende da integridade da entrada do bloqueio ao redor do foco parassistólico.",
+    name_en: "Parasystole",
+  },
+  {
+    term: "Fibrilação Atrial",   TERMO: "ESSE NÃO",
+    code: "D001281",
+    tree_ids: [
+      "C14.280.067.198",
+      "C23.550.073.198",
+    ],
+    hierarchy_path: "Doenças › C14.280.067.198",
+    similarity: 0.6492565709678699,
+    scope_note: "Ritmo cardíaco anormal caracterizado por descargas de impulsos elétricos descoordenados e rápidos, nas câmaras superiores do coração (ÁTRIOS DO CORAÇÃO). Em tal caso, o sangue não pode ser eficazmente bombeado nas câmaras inferiores do coração (VENTRÍCULOS DO CORAÇÃO). É causado por geração de impulso anormal.",
+    name_en: "Atrial Fibrillation",
+  },
+  {
+    term: "Parada Sinusal Cardíaca",   TERMO: "ESSE SIM",
+    code: "D054138",
+    tree_ids: [
+      "C14.280.067.093.500",
+      "C23.550.073.093.500",
+    ],
+    hierarchy_path: "Doenças › C14.280.067.093.500",
+    similarity: 0.6382778859765003,
+    scope_note: "Omissão da ativação atrial causada por cessação transitória na geração de impulso no NÓ SINOATRIAL. Caracteriza-se por uma pausa prolongada sem a onda P em um ELETROCARDIOGRAMA. A parada sinusal tem sido associada com apneia do sono (PARADA SINUSAL RELACIONADA AO SONO REM).",
+    name_en: "Sinus Arrest, Cardiac",
+  },
+]
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+[
+  {
+    term: "Síndrome de Lennox-Gastaut",   TERMO: "ESSE SIM",
+    code: "D065768",
+    tree_ids: [
+      "C10.228.140.490.493.750",
+      "C16.320.495",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.493.750",
+    similarity: 0.7162904773883562,
+    scope_note: "Síndrome epiléptica de início na infância.",
+    name_en: "Lennox Gastaut Syndrome",
+  },
+  {
+    term: "Síndromes Epilépticas",   TERMO: "ESSE SIM",
+    code: "D000073376",
+    tree_ids: [
+      "C10.228.140.490.493",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.493",
+    similarity: 0.7072002961745038,
+    scope_note: "CRISES EPILÉPTICAS semelhantes em tipo e idade de início que possuem outras características semelhantes (por exemplo, curso clínico, achados de EEG, associação genética e neuropatologia).",
+    name_en: "Epileptic Syndromes",
+  },
+  {
+    term: "Canal de Sódio Disparado por Voltagem NAV1.1",   TERMO: "ESSE SIM",
+    code: "D062550",
+    tree_ids: [
+      "D12.776.157.530.400.875.750.100",
+      "D12.776.543.550.450.875.750.100",
+      "D12.776.543.585.400.875.750.100",
+      "D12.776.631.960.100",
+    ],
+    hierarchy_path: "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100",
+    similarity: 0.6978204722673164,
+    scope_note: "Subtipo de canal de sódio disparado por voltagem predominantemente expresso no SISTEMA NERVOSO CENTRAL. Defeitos no gene SCN1A que codifica para a subunidade alfa deste canal de sódio estão associados com a síndrome de Dravet (ver EPILEPSIAS MIOCLÔNICAS), epilepsia generalizada com CONVULSÕES FEBRIS mais tipo 2 (GEFS+2) e enxaqueca hemiplégica familiar tipo 3.",
+    name_en: "NAV1.1 Voltage-Gated Sodium Channel",
+  },
+  {
+    term: "Epilepsia Resistente a Medicamentos",   TERMO: "ESSE SIM",
+    code: "D000069279",
+    tree_ids: [
+      "C10.228.140.490.125",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.125",
+    similarity: 0.6923544198007375,
+    scope_note: "Afecção epiléptica em que falharam os protocolos com escolha de dois ANTICONVULSIVANTES tolerados para a aquisição de intervalo livre de crises convulsivas sustentado.",
+    name_en: "Drug Resistant Epilepsy",
+  },
+  {
+    term: "Espasmos Infantis",   TERMO: "ESSE SIM",
+    code: "D013036",
+    tree_ids: [
+      "C10.228.140.490.375.760",
+      "C10.228.140.490.493.875",
+    ],
+    hierarchy_path: "Doenças › C10.228.140.490.375.760",
+    similarity: 0.6837051978743159,
+    scope_note: "Síndrome epiléptica caracterizada pela tríade de espasmos infantis, hipsarritmia e interrupção do desenvolvimento psicomotor no início dos ataques. A maioria se manifesta entre os 3 e 12 meses de idade, com espasmos constituídos de combinações de movimentos flexores ou extensores breves da cabeça, tronco e membros. A afecção é dividida em duas formas: criptogênica (idiopática) e sintomática (secundária a um processo de doença conhecido, como infecções intrauterinas, anormalidades do sistema nervoso, DOENÇAS CEREBRAIS METABÓLICAS CONGÊNITAS, prematuridade, asfixia perinatal, ESCLEROSE TUBEROSA, etc.). (Tradução livre do original: Menkes, Textbook of Child Neurology, 5th ed, pp744-8)",
+    name_en: "Spasms, Infantile",
+  },
+]

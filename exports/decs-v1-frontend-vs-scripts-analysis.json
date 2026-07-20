@@ -1,0 +1,105 @@
+{
+  "generated_at": "2026-07-03",
+  "question": "O que fazer para que clicar em 'Gerar V1' no frontend produza um resultado equivalente ao gerado por scripts/decs-pipeline-v1-run.mjs + scripts/decs-entry-terms-tree-map.mjs?",
+
+  "files_explained": [
+    {
+      "file": "scripts/decs-embed-search.mjs",
+      "type": "script de diagnóstico (standalone)",
+      "wired_into_frontend": false,
+      "what_it_does": "Gera o embedding de um termo de busca via Gemini REST (generateEmbedding, sem taskType => SEMANTIC_SIMILARITY) e roda uma busca por similaridade coseno (halfvec) direto em decs_descriptors, imprimindo os top-N candidatos no terminal. Usado para inspecionar manualmente a qualidade da busca vetorial isolada."
+    },
+    {
+      "file": "scripts/decs-entry-terms-search.mjs",
+      "type": "script de diagnóstico (standalone)",
+      "wired_into_frontend": false,
+      "what_it_does": "Busca descritores por correspondência textual (ILIKE) em name_pt e entry_terms (searchEntryTerms) e, opcionalmente com a flag --vector, também roda a busca vetorial (searchByVector) para comparar os dois métodos lado a lado no mesmo termo."
+    },
+    {
+      "file": "scripts/decs-vectorize-20.mjs",
+      "type": "script utilitário de lote (standalone)",
+      "wired_into_frontend": false,
+      "what_it_does": "Vetoriza um lote de 20 descritores pendentes (embedding NULL) em decs_descriptors, servindo de padrão de CLI args / createPool / export JSON reaproveitado por outros scripts da família decs-*."
+    },
+    {
+      "file": "scripts/embed-decs-descriptors.mjs",
+      "type": "script utilitário de lote (standalone)",
+      "wired_into_frontend": false,
+      "what_it_does": "Versão completa do vetorizador: percorre todos os descritores sem embedding, monta o texto de indexação (buildDeCSText: nome + scope_note + entry_terms) e grava o vetor em decs_descriptors.embedding. Roda em produção via cron/manual, não é chamado pela API do Next.js."
+    },
+    {
+      "file": "scripts/decs-entry-terms-tree-map.mjs",
+      "type": "script de diagnóstico (novo, corrigido nesta sessão)",
+      "wired_into_frontend": false,
+      "what_it_does": "Mapeia, para um termo de busca (--search) ou para todos os descritores, a relação entry_terms -> tree_numbers -> hierarchy_path (branches completas, não só a primeira). Bug corrigido: cláusula LIMIT sem o prefixo '$' no parâmetro (era 'LIMIT ${params.length+1}', devia ser 'LIMIT $${params.length+1}'), causando erro de bind do Postgres. Serve como referência de como expor TODAS as ramificações de um descritor (branches), algo que o pipeline V1 já replica via buildBranches()."
+    },
+    {
+      "file": "scripts/decs-pipeline-v1-run.mjs",
+      "type": "script de referência do pipeline completo (standalone)",
+      "wired_into_frontend": false,
+      "what_it_does": "Réplica standalone do botão 'Gerar V1' (POST /api/questions/[id]/decs-ai), mas com o ORDENAMENTO DE BUSCA INVERTIDO por pedido explícito do usuário: para cada termo (primary/secondary) extraído pelo decs_classifier, tenta 1) busca TEXTUAL (ILIKE em name_pt/entry_terms) primeiro, 2) cai para busca VETORIAL (embedding + cosseno) só se o texto não achar um bom match, 3) cai para API pública do BVS como último recurso. Loga o motivo de aceite/rejeição de cada camada (text_search/vector_search/bvs_search) e o search_method vencedor por descritor. Inclui branches completas em cada resultado."
+    },
+    {
+      "file": "lib/decs-pipeline.ts + app/api/questions/[id]/decs-ai/route.ts",
+      "type": "código de produção (o que roda de fato ao clicar 'Gerar V1')",
+      "wired_into_frontend": true,
+      "what_it_does": "A rota chama o agente decs_classifier (Gemini) para extrair {primary, secondary}, depois chama runDeCSPipeline() que, PARA CADA TERMO: 1) tenta pgvector local (searchDeCSLocal, threshold fixo 0.6, sem busca textual alguma), 2) aplica filtro de categoria (isCategoryAcceptable), 3) deduplica por código, e opcionalmente monta um artifact salvo em ai_decs_descriptors + saveClassificationArtifact. NÃO existe nenhuma etapa de busca textual (ILIKE) neste caminho — diferente do script de referência."
+    }
+  ],
+
+  "key_discrepancy_found": {
+    "location": "lib/decs-pipeline.ts, dentro de runDeCSPipeline(), por volta da linha 561",
+    "bug": "A condição do fallback para a API do BVS está invertida: 'if (rawCandidates.length != 0) { ...chama BVS... }' — o comentário acima diz '// Fallback: BVS API', mas a condição só executa a chamada à API pública quando JÁ existem candidatos locais (rawCandidates.length != 0), e nesse caso SOBRESCREVE os candidatos vetoriais bons pelos resultados da API do BVS, filtrados por MIN_SIMILARITY = 1 (Jaccard de palavras == 1, ou seja, praticamente exige correspondência exata de todas as palavras) — o que descarta quase tudo. Quando a busca vetorial local NÃO encontra nada (rawCandidates.length === 0, o caso em que o fallback deveria acontecer), a API do BVS NUNCA é chamada.",
+    "impact": "Termos com bom candidato vetorial local frequentemente perdem esse candidato para um filtro de BVS quase impossível de passar (MIN_SIMILARITY = 1), e termos sem candidato vetorial local nunca chegam a tentar o BVS — resultando em muito mais 'no_candidate' / descritores faltando no botão 'Gerar V1' frontend do que nos scripts de referência."
+  },
+
+  "differences_summary": [
+    {
+      "aspect": "Ordem de busca por termo",
+      "script_referencia": "TEXTO (ILIKE em name_pt/entry_terms) -> VETOR (cosseno local) -> BVS (API pública)",
+      "frontend_atual": "Apenas VETOR (cosseno local) -> BVS com condição invertida (ver bug acima); nenhuma busca textual"
+    },
+    {
+      "aspect": "Etapa de busca textual (ILIKE)",
+      "script_referencia": "Existe (searchTextual), com avaliação de match exato em entry_terms + Jaccard",
+      "frontend_atual": "Não existe em runDeCSPipeline()"
+    },
+    {
+      "aspect": "Fallback BVS",
+      "script_referencia": "Correto: só tenta BVS quando texto E vetor falham, sem sobrescrever candidato local bom",
+      "frontend_atual": "Invertido/bugado (ver key_discrepancy_found)"
+    },
+    {
+      "aspect": "Limiar de similaridade vetorial",
+      "script_referencia": "Configurável via CLI (opts.minVectorSimilarity)",
+      "frontend_atual": "Fixo em 0.6 (searchDeCSLocal) e MIN_SIMILARITY = 1 no ramo de BVS"
+    },
+    {
+      "aspect": "Campo search_method (texto/vetor/bvs) no resultado",
+      "script_referencia": "Presente em cada descritor + log detalhado por termo (text_search/vector_search/bvs_search)",
+      "frontend_atual": "Ausente — DeCSRecord não tem search_method, e não há log de motivo de aceite/rejeição por camada"
+    },
+    {
+      "aspect": "branches (todas as ramificações tree_ids)",
+      "script_referencia": "Presente (buildBranches)",
+      "frontend_atual": "Já presente — já implementado na tarefa anterior, sem diferença aqui"
+    },
+    {
+      "aspect": "Função findBestDeCSMatch (exportada em lib/decs-pipeline.ts)",
+      "script_referencia": "Não usada como base do script (script tem sua própria orquestração resolveTerm)",
+      "frontend_atual": "Exportada mas NÃO é chamada por runDeCSPipeline (código morto/duplicado — a lógica de busca é reimplementada inline dentro de runDeCSPipeline)"
+    }
+  ],
+
+  "changes_needed_to_align_frontend_with_scripts": [
+    "1. Corrigir o bug de condição invertida no fallback BVS dentro de runDeCSPipeline (lib/decs-pipeline.ts, ~linha 561): trocar 'if (rawCandidates.length != 0)' por 'if (rawCandidates.length === 0)', e não sobrescrever candidatos vetoriais válidos com resultados de BVS — só usar BVS quando não houver nada local.",
+    "2. Adicionar uma etapa de busca TEXTUAL (ILIKE em name_pt + entry_terms, igual a searchTextual do script) ANTES da busca vetorial dentro de runDeCSPipeline, com a mesma lógica de aceite (match exato em entry_terms OU Jaccard >= limiar).",
+    "3. Reordenar o pipeline por termo para: TEXTO -> VETOR -> BVS (hoje é só VETOR -> BVS-bugado), replicando resolveTerm() do script de referência.",
+    "4. Tornar os limiares de similaridade (texto e vetor) configuráveis/alinhados aos valores usados no script, em vez do 0.6 fixo e do MIN_SIMILARITY = 1 (praticamente inatingível) usados hoje no ramo de BVS.",
+    "5. Adicionar o campo search_method ('text' | 'vector' | 'bvs') a cada DeCSRecord retornado, e opcionalmente persistir o log de decisão por termo (como em pipeline_stats do artifact) para paridade com a saída do script.",
+    "6. Remover ou reconciliar a função findBestDeCSMatch não utilizada (hoje duplica lógica com um comportamento diferente de runDeCSPipeline) para evitar confusão futura sobre qual é o caminho real de produção.",
+    "7. Após os ajustes, branches e a estrutura geral do artifact (result/themes_identified/pipeline_stats) já ficam equivalentes ao que decs-pipeline-v1-run.mjs produz — não são necessárias mudanças ali, pois branches já foi adicionado na tarefa anterior."
+  ],
+
+  "note_on_tree_map_script": "scripts/decs-entry-terms-tree-map.mjs não faz parte do pipeline de classificação em si (não gera themes nem escolhe descritores para uma questão) — é uma ferramenta de inspeção/relatório de como entry_terms se relacionam com tree_numbers. Sua 'equivalência' já está coberta pelo uso de buildBranches() nos resultados do V1 (tanto no script quanto, após a tarefa anterior, no lib/decs-pipeline.ts). Nenhuma mudança adicional é necessária além do que já foi feito para branches."
+}

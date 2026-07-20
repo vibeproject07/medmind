@@ -1,0 +1,441 @@
+{
+  "metadata": {
+    "generated_at": "2026-07-01T19:23:18.002Z",
+    "description": "Busca vetorial por similaridade coseno a partir dos 4 termos revetorizados em edge-cases-after-revectorization.json",
+    "search_mode": "vector (SEMANTIC_SIMILARITY, halfvec coseno)",
+    "embedding_model": "gemini-embedding-001",
+    "limit_per_query": 6,
+    "min_similarity": 0.15,
+    "source_file": "exports/edge-cases-after-revectorization.json"
+  },
+  "queries": [
+    {
+      "slot": 1,
+      "query_text": "Diabetes Mellitus",
+      "origin_ui": "D003920",
+      "origin_label": "Termo 1 — edge-cases-after-revectorization.json",
+      "result_count": 6,
+      "results": [
+        {
+          "rank": 1,
+          "ui": "D003920",
+          "name_pt": "Diabetes Mellitus",
+          "name_en": "Diabetes Mellitus",
+          "similarity": 0.7154070693298267,
+          "hierarchy_path": "Doenças › C18.452.394.750",
+          "tree_ids": [
+            "C18.452.394.750", "C19.246"
+          ],
+          "total_entry_terms": 8,
+          "scope_note": "Grupo de transtornos heterogêneos caracterizados por HIPERGLICEMIA e INTOLERÂNCIA À GLUCOSE.",
+          "all_entry_terms": [
+            "Diabetes Mellitus[Diabetes Mellitus]", "Grupo de transtornos heterogêneos caracterizados por HIPERGLICEMIA e INTOLERÂNCIA À GLUCOSE.", "Diabetes Mellitus", "NLM (1963)",
+            "Diabete", "Diabete Melito", "Diabetes", "Diabetes Melito"
+          ]
+        },
+        {
+          "rank": 2,
+          "ui": "D003929",
+          "name_pt": "Neuropatias Diabéticas",
+          "name_en": "Diabetic Neuropathies",
+          "similarity": 0.6707574879146007,
+          "hierarchy_path": "Doenças › C10.668.829.300",
+          "tree_ids": [
+            "C10.668.829.300", "C19.246.099.937"
+          ],
+          "total_entry_terms": 43,
+          "scope_note": "Transtornos periféricos autônomos do nervo craniano associados com DIABETES MELLITUS. Estas afecções normalmente resultam de lesão microvascular diabética envolvendo pequenos vasos sanguíneos que nutrem os nervos (VASA NERVORUM). Entre as afecções relativamente comuns que podem estar associadas com a doença diabética estão paralisia do terceiro nervo (v. DOENÇAS DO NERVO OCULOMOTOR), MONONEUROPATIA, mononeuropatia múltipla, amiotrofia diabética, POLINEUROPATIA dolorosa, neuropatia autônoma e neuropatia toracoabdominal. (Tradução livre do original: Adams et al., Principles of Neurology, 6th ed, p1325)",
+          "all_entry_terms": [
+            "Neuropatias Diabéticas[Diabetic Neuropathies]", "Transtornos periféricos autônomos do nervo craniano associados com DIABETES MELLITUS. Estas afecções normalmente resultam de lesão microvascular diabética envolvendo pequenos vasos sanguíneos que nutrem os nervos (VASA NERVORUM). Entre as afecções relativamente comuns que podem estar associadas com a doença diabética estão paralisia do terceiro nervo (v. DOENÇAS DO NERVO OCULOMOTOR), MONONEUROPATIA, mononeuropatia múltipla, amiotrofia diabética, POLINEUROPATIA dolorosa, neuropatia autônoma e neuropatia toracoabdominal. (Tradução livre do original: Adams et al., Principles of Neurology, 6th ed, p1325)", "Diabetic Neuropathies", "NLM (1966)",
+            "Neuropatias Diabéticas", "Diabetic Neuropathy", "Neuropathies, Diabetic", "Neuropathy, Diabetic",
+            "Acropatia Diabética Ulceromutilante", "Neuropatia Diabética", "Neuropatia Autônoma Diabética[Diabetic Autonomic Neuropathy]", "Diabetic Autonomic Neuropathy",
+            "NLM (2000)", "Neuropatia Autônoma Diabética", "Autonomic Neuropathies, Diabetic", "Autonomic Neuropathy, Diabetic",
+            "Diabetic Autonomic Neuropathies", "Neuropathies, Diabetic Autonomic", "Neuropathy, Diabetic Autonomic", "Nevralgia Diabética[Diabetic Neuralgia]",
+            "Diabetic Neuralgia", "Nevralgia Diabética", "Diabetic Neuralgias", "Neuralgias, Diabetic",
+            "Diabetic Neuropathy, Painful", "Diabetic Neuropathies, Painful", "Neuropathies, Painful Diabetic", "Neuropathy, Painful Diabetic",
+            "Painful Diabetic Neuropathies", "Painful Diabetic Neuropathy", "Neuralgia, Diabetic", "Amiotrofia Diabética[Diabetic Amyotrophy]",
+            "Diabetic Amyotrophy", "Amiotrofia Diabética", "Amyotrophies, Diabetic", "Amyotrophy, Diabetic",
+            "Diabetic Amyotrophies", "Polineuropatia Diabética[Diabetic Polyneuropathy]", "Diabetic Polyneuropathy", "Polineuropatia Diabética",
+            "Diabetic Polyneuropathies", "Polyneuropathies, Diabetic", "Polyneuropathy, Diabetic"
+          ]
+        },
+        {
+          "rank": 3,
+          "ui": "D048909",
+          "name_pt": "Complicações do Diabetes",
+          "name_en": "Diabetes Complications",
+          "similarity": 0.6632313377602836,
+          "hierarchy_path": "Doenças › C19.246.099",
+          "tree_ids": [
+            "C19.246.099"
+          ],
+          "total_entry_terms": 20,
+          "scope_note": "Afecções ou processos mórbidos associados com diabetes melito. Devido ao controle deficiente do nível de GLICEMIA em pacientes diabéticos, desenvolvem-se processos doentios em vários tecidos e órgãos, incluindo o OLHO, RIM, VASOS SANGUÍNEOS e TECIDO NERVOSO.",
+          "all_entry_terms": [
+            "Complicações do Diabetes[Diabetes Complications]", "Afecções ou processos mórbidos associados com diabetes melito. Devido ao controle deficiente do nível de GLICEMIA em pacientes diabéticos, desenvolvem-se processos doentios em vários tecidos e órgãos, incluindo o OLHO, RIM, VASOS SANGUÍNEOS e TECIDO NERVOSO.", "Diabetes Complications", "DIABETES COMPL",
+            "NLM (2005)", "Complicações do Diabetes", "Diabetes Complication", "Diabetes-Related Complications",
+            "DIABETES RELAT COMPL", "Diabetes Related Complications", "Diabetes-Related Complication", "Diabetic Complications",
+            "DIABETIC COML", "Diabetic Complication", "Complications of Diabetes Mellitus", "COMPL DIABETES MELLITUS",
+            "Diabetes Mellitus Complication", "Diabetes Mellitus Complications", "Complicações Diabéticas", "Complicações da Diabetes"
+          ]
+        },
+        {
+          "rank": 4,
+          "ui": "D003922",
+          "name_pt": "Diabetes Mellitus Tipo 1",
+          "name_en": "Diabetes Mellitus, Type 1",
+          "similarity": 0.662903052861399,
+          "hierarchy_path": "Doenças › C18.452.394.750.124",
+          "tree_ids": [
+            "C18.452.394.750.124", "C19.246.267", "C20.111.327"
+          ],
+          "total_entry_terms": 54,
+          "scope_note": "Subtipo de DIABETES MELLITUS caracterizada por deficiência de INSULINA. Manifesta-se por um início repentino de intensa HIPERGLICEMIA, progressão rápida a CETOACIDOSE DIABÉTICA e MORTE, a menos que tratada com insulina. A doença pode ocorrer em qualquer idade, mas é mais comum durante a infância ou adolescência.",
+          "all_entry_terms": [
+            "Diabetes Mellitus Tipo 1[Diabetes Mellitus, Type 1]", "Subtipo de DIABETES MELLITUS caracterizada por deficiência de INSULINA. Manifesta-se por um início repentino de intensa HIPERGLICEMIA, progressão rápida a CETOACIDOSE DIABÉTICA e MORTE, a menos que tratada com insulina. A doença pode ocorrer em qualquer idade, mas é mais comum durante a infância ou adolescência.", "Diabetes Mellitus, Type 1", "UNK (19XX)",
+            "Diabetes Mellitus Tipo 1", "Type 1 Diabetes Mellitus", "NLM (2005)", "Diabetes Mellitus, Type I",
+            "NLM (1993)", "OMIM (2013)", "Type 1 Diabetes", "NLM (2017)",
+            "Diabetes, Type 1", "Diabetes Mellitus, Juvenile-Onset", "Juvenile-Onset Diabetes", "Diabetes Mellitus, Insulin-Dependent",
+            "NLM (1966)", "IDDM", "Diabetes Mellitus, Insulin-Dependent, 1", "Insulin-Dependent Diabetes Mellitus 1",
+            "Diabetes Mellitus, Sudden-Onset", "NLM (1998)", "Diabetes Mellitus, Insulin Dependent", "Insulin-Dependent Diabetes Mellitus",
+            "Diabetes Mellitus, Juvenile Onset", "Diabetes, Juvenile-Onset", "Juvenile Onset Diabetes", "Juvenile-Onset Diabetes Mellitus",
+            "Diabetes Mellitus, Sudden Onset", "Sudden-Onset Diabetes Mellitus", "Insulin Dependent Diabetes Mellitus 1", "Diabetes Tipo 1",
+            "Diabetes do Tipo 1", "DMID", "Diabetes Mellitus Insulinodependente", "Diabetes Mellitus de Início na Juventude",
+            "Diabetes Mellitus de Início Súbito", "Diabetes Mellitus 1 Dependente de Insulina", "Diabetes Mellitus Tipo I", "Diabetes Mellitus com Tendência à Cetose[Diabetes Mellitus, Ketosis-Prone]",
+            "Diabetes Mellitus, Ketosis-Prone", "Diabetes Mellitus com Tendência à Cetose", "Diabetes Mellitus, Ketosis Prone", "Ketosis-Prone Diabetes Mellitus",
+            "Diabetes Autoimune[Diabetes, Autoimmune]", "Diabetes, Autoimmune", "NLM (1994)", "Diabetes Autoimune",
+            "Autoimmune Diabetes", "NLM (2004)", "Diabetes Mellitus Instável[Diabetes Mellitus, Brittle]", "Diabetes Mellitus, Brittle",
+            "Diabetes Mellitus Instável", "Brittle Diabetes Mellitus"
+          ]
+        },
+        {
+          "rank": 5,
+          "ui": "D003924",
+          "name_pt": "Diabetes Mellitus Tipo 2",
+          "name_en": "Diabetes Mellitus, Type 2",
+          "similarity": 0.6553983258050862,
+          "hierarchy_path": "Doenças › C18.452.394.750.149",
+          "tree_ids": [
+            "C18.452.394.750.149", "C19.246.300"
+          ],
+          "total_entry_terms": 57,
+          "scope_note": "Subclasse de DIABETES MELLITUS que não é responsiva ou dependente de INSULINA (DMNID). Inicialmente, caracteriza-se por RESISTÊNCIA À INSULINA e HIPERINSULINEMIA e finalmente, por INTOLERÂNCIA À GLUCOSE, HIPERGLICEMIA e obviamente diabetes. O diabetes mellitus tipo 2 não é mais considerado uma doença encontrada exclusivamente em adultos. Os pacientes, raramente desenvolvem CETOSE, porém com frequência exibem OBESIDADE.",
+          "all_entry_terms": [
+            "Diabetes Mellitus Tipo 2[Diabetes Mellitus, Type 2]", "Subclasse de DIABETES MELLITUS que não é responsiva ou dependente de INSULINA (DMNID). Inicialmente, caracteriza-se por RESISTÊNCIA À INSULINA e HIPERINSULINEMIA e finalmente, por INTOLERÂNCIA À GLUCOSE, HIPERGLICEMIA e obviamente diabetes. O diabetes mellitus tipo 2 não é mais considerado uma doença encontrada exclusivamente em adultos. Os pacientes, raramente desenvolvem CETOSE, porém com frequência exibem OBESIDADE.", "Diabetes Mellitus, Type 2", "UNK (19XX)",
+            "Diabetes Mellitus Tipo 2", "Diabetes Mellitus, Noninsulin-Dependent", "OMIM (2013)", "Diabetes Mellitus, Ketosis-Resistant",
+            "Diabetes Mellitus, Ketosis Resistant", "Ketosis-Resistant Diabetes Mellitus", "Diabetes Mellitus, Non Insulin Dependent", "Diabetes Mellitus, Non-Insulin-Dependent",
+            "NLM (1984)", "Non-Insulin-Dependent Diabetes Mellitus", "Diabetes Mellitus, Stable", "Stable Diabetes Mellitus",
+            "Diabetes Mellitus, Type II", "NLM (1993)", "NIDDM", "Diabetes Mellitus, Noninsulin Dependent",
+            "Diabetes Mellitus, Maturity-Onset", "NLM (1995)", "Diabetes Mellitus, Maturity Onset", "Maturity-Onset Diabetes Mellitus",
+            "Maturity Onset Diabetes Mellitus", "Diabetes Mellitus, Slow-Onset", "NLM (1998)", "Diabetes Mellitus, Slow Onset",
+            "Slow-Onset Diabetes Mellitus", "Type 2 Diabetes Mellitus", "NLM (2005)", "Noninsulin-Dependent Diabetes Mellitus",
+            "Noninsulin Dependent Diabetes Mellitus", "Maturity-Onset Diabetes", "Diabetes, Maturity-Onset", "Maturity Onset Diabetes",
+            "Type 2 Diabetes", "NLM (2017)", "Diabetes, Type 2", "Diabetes Mellitus, Adult-Onset",
+            "Adult-Onset Diabetes Mellitus", "Diabetes Mellitus, Adult Onset", "MODY (Maturity-onset diabetes of the young)", "DMNID",
+            "Diabetes Mellitus Estável", "Diabetes Mellitus Resistente a Cetose", "Diabetes Mellitus de Início Gradativo", "Diabetes Mellitus de Início na Maturidade",
+            "Diabetes Mellitus de Início no Adulto", "Diabetes Mellitus não Dependente de Insulina", "Diabetes Mellitus não Insulino-Dependente", "Diabetes Mellitus não Insulinodependente",
+            "Diabetes Tipo 2", "Diabetes do Tipo 2", "MODY", "Diabetes Mellitus Tipo II",
+            "Diabetes Mellitus do Tipo MODY"
+          ]
+        },
+        {
+          "rank": 6,
+          "ui": "D003923",
+          "name_pt": "Diabetes Mellitus Lipoatrófica",
+          "name_en": "Diabetes Mellitus, Lipoatrophic",
+          "similarity": 0.6529690833796508,
+          "hierarchy_path": "Doenças › C18.452.394.750.149.500",
+          "tree_ids": [
+            "C18.452.394.750.149.500", "C19.246.300.500"
+          ],
+          "total_entry_terms": 11,
+          "scope_note": "Tipo de diabetes mellitus caracterizado pela grave RESISTÊNCIA À INSULINA e LIPODISTROFIA. A lipodistrofia pode ser generalizada, parcial adquirida ou congênita (LIPODISTROFIA GENERALIZADA CONGÊNITA.",
+          "all_entry_terms": [
+            "Diabetes Mellitus Lipoatrófica[Diabetes Mellitus, Lipoatrophic]", "Tipo de diabetes mellitus caracterizado pela grave RESISTÊNCIA À INSULINA e LIPODISTROFIA. A lipodistrofia pode ser generalizada, parcial adquirida ou congênita (LIPODISTROFIA GENERALIZADA CONGÊNITA.", "Diabetes Mellitus, Lipoatrophic", "NLM (1979)",
+            "Diabetes Mellitus Lipoatrófica", "Lipoatrophic Diabetes Mellitus", "Lipoatrophic Diabetes", "OMIM (2013)",
+            "Diabete, Lipoatrophic", "Diabetes, Lipoatrophic", "Lipoatrophic Diabete"
+          ]
+        }
+      ]
+    },
+    {
+      "slot": 2,
+      "query_text": "Convulsões",
+      "origin_ui": "D012640",
+      "origin_label": "Termo 2 — edge-cases-after-revectorization.json (245 entry_terms)",
+      "result_count": 6,
+      "results": [
+        {
+          "rank": 1,
+          "ui": "D012640",
+          "name_pt": "Convulsões",
+          "name_en": "Seizures",
+          "similarity": 0.7892457382220571,
+          "hierarchy_path": "Doenças › C10.597.742",
+          "tree_ids": [
+            "C10.597.742", "C23.888.592.742"
+          ],
+          "total_entry_terms": 245,
+          "scope_note": "Distúrbios clínicos ou subclínicos da função cortical, devidos à descarga súbita, anormal, excessiva e desorganizada de células cerebrais. As manifestações clínicas incluem fenômenos motores, sensoriais e psíquicos. Crises convulsivas recorrentes são normalmente chamadas de EPILEPSIA ou transtorno convulsivo.",
+          "all_entry_terms": []
+        },
+        {
+          "rank": 2,
+          "ui": "D004830",
+          "name_pt": "Epilepsia Tônico-Clônica",
+          "name_en": "Epilepsy, Tonic-Clonic",
+          "similarity": 0.7575761432237446,
+          "hierarchy_path": "Doenças › C10.228.140.490.375.290",
+          "tree_ids": [
+            "C10.228.140.490.375.290"
+          ],
+          "total_entry_terms": 73,
+          "scope_note": "Transtorno convulsivo generalizado caracterizado por convulsões motoras maiores recidivantes. A fase tônica breve inicial é marcada por flexão do tronco, seguida de extensão difusa do tronco e extremidades. A fase clônica caracteriza-se por contrações flexoras rítmicas do tronco e membros, dilatação pupilar, elevação da pressão arterial e pulso, incontinência urinária e mordida da língua. Esta fase é seguida de um estado profundo de depressão da consciência (estado pós-ictal), progredindo gradualmente de minutos a horas. O transtorno pode ser criptogênico, familiar ou sintomático (causado por um processo de doença identificado).",
+          "all_entry_terms": []
+        },
+        {
+          "rank": 3,
+          "ui": "D004829",
+          "name_pt": "Epilepsia Generalizada",
+          "name_en": "Epilepsy, Generalized",
+          "similarity": 0.7526671273054338,
+          "hierarchy_path": "Doenças › C10.228.140.490.375",
+          "tree_ids": [
+            "C10.228.140.490.375"
+          ],
+          "total_entry_terms": 62,
+          "scope_note": "Afecções recorrentes caracterizadas por crises epilépticas que surgem difusa e simultaneamente dos dois hemisférios do cérebro. A classificação geralmente é baseada nas manifestações motoras da crise (ex. convulsiva, não convulsiva, acinética, atônica, etc.) ou na etiologia (ex., idiopática, criptogênica e sintomática). (Tradução livre do original: Mayo Clin Proc, 1996 Apr;71(4):405-14)",
+          "all_entry_terms": []
+        },
+        {
+          "rank": 4,
+          "ui": "D004827",
+          "name_pt": "Epilepsia",
+          "name_en": "Epilepsy",
+          "similarity": 0.749493174248563,
+          "hierarchy_path": "Doenças › C10.228.140.490",
+          "tree_ids": [
+            "C10.228.140.490"
+          ],
+          "total_entry_terms": 30,
+          "scope_note": "Transtorno caracterizado por episódios recorrentes de disfunção cerebral paroxística, devido a súbita descarga neuronal excessiva e desordenada. Os sistemas de classificação da epilepsia geralmente se baseiam em (1) sinais clínicos dos episódios de ataques (ex. ataque motor), (2) etiologia (ex. pós-traumático), (3) localização anatômica da origem do ataque (ex. ataque do lobo frontal), (4) tendência em se alastrar para outras estruturas encefálicas, e (5) padrões temporais (ex. epilepsia noturna). (Tradução livre do original: Adams et al., Principles of Neurology, 6th ed, p313)",
+          "all_entry_terms": []
+        },
+        {
+          "rank": 5,
+          "ui": "D004832",
+          "name_pt": "Epilepsia Tipo Ausência",
+          "name_en": "Epilepsy, Absence",
+          "similarity": 0.7483807303183311,
+          "hierarchy_path": "Doenças › C10.228.140.490.375.260",
+          "tree_ids": [
+            "C10.228.140.490.375.260", "C10.228.140.490.493.125"
+          ],
+          "total_entry_terms": 58,
+          "scope_note": "Transtorno de convulsão que geralmente ocorre na infância caracterizado por descargas cerebrais elétricas rítmicas de início generalizado. Os sinais clínicos incluem cessação súbita de atividades rotineiras, normalmente sem perda do tônus postural. O piscar rítmico das pálpebras ou mordiscar dos lábios frequentemente acompanham as CONVULSÕES. A duração normal é de 5 a 10 segundos e podem ocorrer muitos episódios por dia. A epilepsia do tipo ausência juvenil é caracterizada pelo início na fase juvenil de ataques do tipo ausência e um aumento na incidência de mioclonia e de ataques tônico-clônicos. (Tradução livre do original: Menkes, Textbook of Child Neurology, 5th ed, p736)",
+          "all_entry_terms": []
+        },
+        {
+          "rank": 6,
+          "ui": "D003294",
+          "name_pt": "Convulsões Febris",
+          "name_en": "Seizures, Febrile",
+          "similarity": 0.7470724897843595,
+          "hierarchy_path": "Doenças › C10.597.742.571",
+          "tree_ids": [
+            "C10.597.742.571", "C23.888.592.742.571"
+          ],
+          "total_entry_terms": 43,
+          "scope_note": "Ataques que ocorrem durante um episódio febril. É uma condição comum que afeta 2-5 por cento das crianças entre os 3 meses e cinco anos de idade. Um padrão de herança autossômica dominante foi identificado em algumas famílias. A maioria dos ataques é do tipo febril simples (geralmente definido pelo início generalizado e por apresentar-se como ataque único com duração de menos de 30 minutos). Os ataques febris complexos são caracterizados pelo início focal, duração maior que 30 minutos, e/ou mais de um ataque em um período de 24 horas. A verossimilhança da epilepsia desenvolvida (i. é, um transtorno de ataque não febril) seguida a ataques febris simples é baixa. Os ataques febris complexos estão associados com um aumento moderado na incidência de epilepsia.",
+          "all_entry_terms": []
+        }
+      ]
+    },
+    {
+      "slot": 3,
+      "query_text": "Lasers de Estado Sólido",
+      "origin_ui": "D053844",
+      "origin_label": "Termo 3 — edge-cases-after-revectorization.json (179 entry_terms, 2º maior)",
+      "result_count": 6,
+      "results": [
+        {
+          "rank": 1,
+          "ui": "D053844",
+          "name_pt": "Lasers de Estado Sólido",
+          "name_en": "Lasers, Solid-State",
+          "similarity": 0.7800704662301552,
+          "hierarchy_path": "Técnicas e Equipamentos Analíticos › E07.632.490.490",
+          "tree_ids": [
+            "E07.632.490.490", "E07.710.520.490"
+          ],
+          "total_entry_terms": 179,
+          "scope_note": "Lasers que usam um sólido, em vez de líquido ou gás, como meio físico. Os materiais comuns usados são cristais, como YAG (Granada de ÍTRIO e Alumínio), alexandrita e CORINDON (corindo), dopados com um elemento terroso raro, como NEODÍMIO, ÉRBIO ou HÓLMIO. Às vezes, a saída é ainda modificada por adição de materiais ópticos não lineares, como o cristal de fosfato titanil de potássio, que por exemplo é usado com lasers YAG de neodímio para converter a luz emergente à faixa visível.",
+          "all_entry_terms": []
+        },
+        {
+          "rank": 2,
+          "ui": "D054025",
+          "name_pt": "Lasers de Corante",
+          "name_en": "Lasers, Dye",
+          "similarity": 0.7177388169249955,
+          "hierarchy_path": "Técnicas e Equipamentos Analíticos › E07.632.490.230",
+          "tree_ids": [
+            "E07.632.490.230", "E07.710.520.230"
+          ],
+          "total_entry_terms": 23,
+          "scope_note": "Lasers líquidos homogêneos com compostos orgânicos (ou seja, corante) que possuem uma banda de absorção forte, utilizada como um agente ativo. Durante a emissão o corante tem que ser opticamente excitado por outra fonte de luz (ex. outro laser ou luminária de flash). A faixa de emissão do comprimento de onda pode ser em qualquer lugar do ultravioleta até próximo do infravermelho (i.é, de 180 a 1100 nm). Estes lasers são operados em ondas contínuas e de modos pulsados (UMDNS,2005).",
+          "all_entry_terms": []
+        },
+        {
+          "rank": 3,
+          "ui": "D007834",
+          "name_pt": "Lasers",
+          "name_en": "Lasers",
+          "similarity": 0.7069251239211387,
+          "hierarchy_path": "Técnicas e Equipamentos Analíticos › E07.632.490",
+          "tree_ids": [
+            "E07.632.490", "E07.710.520", "VS2.006.002.009"
+          ],
+          "total_entry_terms": 10,
+          "scope_note": "Fonte óptica que emite fótons por um feixe coerente. A Amplificação da luz por Emissão de Radiação Estimulada (LASER) trouxe o uso de dispositivos que transformam a luz de várias frequências em uma única intensa, próxima do feixe não divergente de radiação monocromática. Os lasers operam nas regiões do espectro [dos comprimentos de onda] visível, infravermelho, ultravioleta ou de raios X.",
+          "all_entry_terms": []
+        },
+        {
+          "rank": 4,
+          "ui": "D054023",
+          "name_pt": "Lasers Semicondutores",
+          "name_en": "Lasers, Semiconductor",
+          "similarity": 0.7048020405810204,
+          "hierarchy_path": "Técnicas e Equipamentos Analíticos › E07.632.490.480",
+          "tree_ids": [
+            "E07.632.490.480", "E07.710.520.480"
+          ],
+          "total_entry_terms": 39,
+          "scope_note": "Lasers com um diodo semicondutor como meio ativo. Lasers a diodo transformam energia elétrica em luz usando o mesmo princípio do diodo emissor de luz (LED), mas com capacidade de reflexão interna, formando assim um ressonador onde uma luz estimulada pode refletir para trás e para frente permitindo apenas um certo comprimento de onda para ser emitido. A emissão de um dado dispositivo é determinada pelo composto ativo usado (ex. cristais de arsenieto de gálio dopados com alumínio ou índio). Os comprimentos de ondas típicos são 810, 1.060 e 1.300 nm. (Tradução livre do original: UMDNS, 2005).",
+          "all_entry_terms": []
+        },
+        {
+          "rank": 5,
+          "ui": "D054020",
+          "name_pt": "Lasers de Gás",
+          "name_en": "Lasers, Gas",
+          "similarity": 0.6889567860638848,
+          "hierarchy_path": "Técnicas e Equipamentos Analíticos › E07.632.490.367",
+          "tree_ids": [
+            "E07.632.490.367", "E07.710.520.367"
+          ],
+          "total_entry_terms": 81,
+          "scope_note": "Lasers em que um meio gasoso é estimulado e emite luz por meio de uma corrente elétrica ou um oscilador de alta frequência.",
+          "all_entry_terms": []
+        },
+        {
+          "rank": 6,
+          "ui": "D054018",
+          "name_pt": "Lasers de Excimer",
+          "name_en": "Lasers, Excimer",
+          "similarity": 0.6825450467172557,
+          "hierarchy_path": "Técnicas e Equipamentos Analíticos › E07.632.490.244",
+          "tree_ids": [
+            "E07.632.490.244", "E07.710.520.244"
+          ],
+          "total_entry_terms": 71,
+          "scope_note": "Lasers a gás com dímeros excitados (ex. excimers) como meio ativo. Geralmente os mais utilizados são os monohaletos de gases raros (ex. fluoreto de argônio, cloreto de xenônio). Seus principais comprimentos de onda de emissão estão na faixa do ultravioleta e dependem do monolaleto usado (ex. 193 nm para o ArF, 308 nm para o XeCl). Estes lasers são operados nos modos pulsados e 'Q-switched' e utilizados em decomposição fotoablativa envolvendo a remoção efetiva de tecido.",
+          "all_entry_terms": []
+        }
+      ]
+    },
+    {
+      "slot": 4,
+      "query_text": "Sociedade Receptora de Migrantes",
+      "origin_ui": "DDCS057413",
+      "origin_label": "Termo 4 — edge-cases-after-revectorization.json (maior scope_note: 2136 chars)",
+      "result_count": 6,
+      "results": [
+        {
+          "rank": 1,
+          "ui": "DDCS057413",
+          "name_pt": "Sociedade Receptora de Migrantes",
+          "name_en": "Migrant-Receiving Society",
+          "similarity": 0.7967521771247362,
+          "hierarchy_path": "Saúde Pública › SP3.522.644",
+          "tree_ids": [
+            "SP3.522.644"
+          ],
+          "total_entry_terms": 36,
+          "scope_note": "País receptor: País de destino ou país terceiro. No caso do retorno ou do repatriamento também se refere ao país de origem. País que aceitou receber um determinado número de refugiados ou migrantes anualmente por decisão presidencial, ministerial ou parlamentar. País de destino: País que é destino de fluxos migratórios (legais ou ilegais). País terceiro: País que não o país de origem da pessoa. País terceiro neutro: Um país terceiro neutro é considerado por um país receptor qualquer outro país excepto o país de origem, onde o requerente de asilo encontrou ou poderá ter encontrado protecção. A noção de país terceiro neutro (protecção noutro lugar/princípio do asilo primário) é frequentemente usada como critério de admissibilidade para o procedimento de determinação de refugiado. O mesmo que país terceiro seguro. (Fonte: Glossário sobre Migração. Organização Internacional para as Migrações. Genebra. 2009. Disponível em: http://publications.iom.int/system/files/pdf/iml22.pdf) Sociedade de Acolhimento: No contexto da UE, refere-se aos residentes (nacionais ou estrangeiros) de uma determinada comunidade (nacional/regional/local) localizada num Estado-Membro. País de Acolhimento: No contexto da UE, reporta-se ao Estado-Membro no qual o nacional do país terceiro tem residência legal. O mesmo que país de recepção. País terceiro: País ou território não pertencente à União Europeia, bem como o país ou território cujos cidadãos não beneficiem do direito de livre circulação na UE, como definido no artigo 2, n.º 5, do Código de Fronteiras Schengen. País terceiro seguro: Qualquer país terceiro, que não seja o país de origem de um requerente de asilo, no qual este encontrou, ou poderá ter encontrado, protecção. Nota: A noção de país terceiro seguro é muitas vezes utilizada como critério de aferição de admissibilidade do processo de determinação do estatuto de refugiado. (Fonte: Glossário 2.0 de Migração e Asilo. Uma ferramenta para a melhoria da comparabilidade. Rede Europeia das Migrações. Comissão Europeia. 2012. Disponível em: https://rem.sef.pt/PagesPT/DocsPT/GlossarioThesaurus/Gloss%C3%A1rio%202.0%202012.pdf)",
+          "all_entry_terms": []
+        },
+        {
+          "rank": 2,
+          "ui": "DDCS060376",
+          "name_pt": "Saúde de Migrantes",
+          "name_en": "Migrant Health",
+          "similarity": 0.6714109193139922,
+          "hierarchy_path": "Saúde Pública › SP2.770.750.405",
+          "tree_ids": [
+            "SP2.770.750.405"
+          ],
+          "total_entry_terms": 5,
+          "scope_note": null,
+          "all_entry_terms": []
+        },
+        {
+          "rank": 3,
+          "ui": "D054242",
+          "name_pt": "Emigrantes e Imigrantes",
+          "name_en": "Emigrants and Immigrants",
+          "similarity": 0.6635181056861479,
+          "hierarchy_path": "Grupos Identificados › M01.189",
+          "tree_ids": [
+            "M01.189"
+          ],
+          "total_entry_terms": 27,
+          "scope_note": "Povo que deixa suas residência em um país e estabelece em um país diferente.",
+          "all_entry_terms": []
+        },
+        {
+          "rank": 4,
+          "ui": "D014171",
+          "name_pt": "Migrantes",
+          "name_en": "Transients and Migrants",
+          "similarity": 0.6455710279019041,
+          "hierarchy_path": "Grupos Identificados › M01.920",
+          "tree_ids": [
+            "M01.920", "SP3.522.561.200.504", "SP8.665.912.601"
+          ],
+          "total_entry_terms": 42,
+          "scope_note": "Pessoas que frequentemente mudam seu lugar de residência, como os nômades de certos povos rurais que não vivem continuadamente na mesma área, mas se mudam de maneira cíclica ou periódica, geralmente em busca de terras para plantar ou caçar e lugares que tenham água, estando bem adaptados à mudança de ambiente. (Tradução livre do original: Material V - Gunn, S.W.A. Multilingual Dictionary of Disaster Medicine and International Relief, 1990)",
+          "all_entry_terms": []
+        },
+        {
+          "rank": 5,
+          "ui": "DDCS050228",
+          "name_pt": "Imigração Ilegal",
+          "name_en": "Illegal Immigration",
+          "similarity": 0.6441975896697951,
+          "hierarchy_path": "Saúde Pública › SP3.522.561.050.473.354.555",
+          "tree_ids": [
+            "SP3.522.561.050.473.354.555"
+          ],
+          "total_entry_terms": 4,
+          "scope_note": "Situação caracterizada pelo não atendimento às formalidades exigidas pelo país de destino onde estrangeiros pretendem residir e trabalhar.",
+          "all_entry_terms": []
+        },
+        {
+          "rank": 6,
+          "ui": "DDCS016098",
+          "name_pt": "Migração Interna",
+          "name_en": "Internal Migration",
+          "similarity": 0.6352496070125762,
+          "hierarchy_path": "Saúde Pública › SP3.522.561.050.473.566",
+          "tree_ids": [
+            "SP3.522.561.050.473.566"
+          ],
+          "total_entry_terms": 9,
+          "scope_note": "Movimentos de população dentro de um país.",
+          "all_entry_terms": []
+        }
+      ]
+    }
+  ]
+}

@@ -10,9 +10,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
-import { buildDeCSQuestionText } from '@/lib/decs-pipeline';
 import { DECS_MAX_CANDIDATES } from '@/lib/decs-search-limits';
-import { resolveSystemInstruction } from '@/lib/ai-agent-runtime';
 
 export const runtime = 'nodejs';
 export const maxDuration = 120;
@@ -33,16 +31,19 @@ function getUser(req: NextRequest) {
 // ── Shared helpers ──────────────────────────────────────────────────────────
 
 function buildQuestionText(q: Record<string, unknown>): string {
-  return buildDeCSQuestionText({
-    statement: q.statement as string,
-    option_a: q.option_a as string,
-    option_b: q.option_b as string,
-    option_c: q.option_c as string | null,
-    option_d: q.option_d as string | null,
-    option_e: q.option_e as string | null,
-    correct_answer: q.correct_answer as string | null,
-  });
+  return [
+    'Enunciado:',
+    q.statement as string,
+    '',
+    'Alternativa A: ' + (q.option_a as string || ''),
+    'Alternativa B: ' + (q.option_b as string || ''),
+    q.option_c ? 'Alternativa C: ' + (q.option_c as string) : null,
+    q.option_d ? 'Alternativa D: ' + (q.option_d as string) : null,
+    q.option_e ? 'Alternativa E: ' + (q.option_e as string) : null,
+  ].filter(Boolean).join('\n');
 }
+
+import { resolveSystemInstruction } from '@/lib/ai-agent-runtime';
 
 async function loadAgent(key: string) {
   const res = await query(
@@ -326,7 +327,7 @@ async function runV1Trace(question: Record<string, unknown>, geminiKey: string, 
   });
 
   // Step 4 — Gemini validation
-  const validatorAgent = await loadAgent('question_terms_validator');
+  const validatorAgent = await loadAgent('decs_validator');
   const candidateList = deduped.map((d: Record<string, unknown>) => ({
     code: d.code, term: d.term,
     scope: (d as { scope_note?: string }).scope_note ? (d.scope_note as string).slice(0, 180) : undefined,
@@ -354,8 +355,8 @@ async function runV1Trace(question: Record<string, unknown>, geminiKey: string, 
   }
   steps.push({
     step: 4,
-    title: 'Validação pelo Gemini (question_terms_validator)',
-    agent: { key: 'question_terms_validator', model: validatorAgent.model, source: validatorAgent.source },
+    title: 'Validação pelo Gemini (decs_validator)',
+    agent: { key: 'decs_validator', model: validatorAgent.model, source: validatorAgent.source },
     input: { candidates_sent: candidateList.length },
     output: {
       approved_codes: approvedCodes,

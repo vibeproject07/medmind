@@ -6,10 +6,9 @@ import { ArrowLeft, Edit, Image as ImageIcon, X, AlertTriangle, Ban, RotateCcw, 
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import DeCSAutocomplete from '@/components/Common/DeCSAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
-import DeCSPipelineTracePanel from '@/components/Dashboard/DeCSPipelineTracePanel';
+import DeCSPipelineTracePanel, { type DeCSPipelineExposurePayload } from '@/components/Dashboard/DeCSPipelineTracePanel';
 import QuestionHabilitiesSection from '@/components/Dashboard/QuestionHabilitiesSection';
 import QuestionThemesAssignSection from '@/components/Dashboard/QuestionThemesAssignSection';
-import type { DeCSPipelineExposurePayload } from '@/lib/decs-pipeline-exposure';
 import {
   ASSUNTOS_BY_AREA,
   toDisplayArea,
@@ -58,11 +57,17 @@ interface Question {
   updated_at: string;
 }
 
+interface DeCSBranch {
+  tree_id: string;
+  hierarchy_path: string;
+}
+
 interface DeCSRecord {
   term: string;
   code: string;
   tree_ids: string[];
   hierarchy_path: string;
+  branches?: DeCSBranch[];
   role?: 'primary' | 'secondary';
   scope_note?: string;
   name_en?: string;
@@ -263,6 +268,7 @@ export default function QuestionDetailPage() {
       setGeneratingEmbedding(false);
     }
   };
+
 
   // Ajustar resposta correta quando alternativas opcionais são removidas durante edição
   useEffect(() => {
@@ -1341,9 +1347,17 @@ export default function QuestionDetailPage() {
                                 {d1p.code && (
                                   <span className="block text-xs text-indigo-400 font-mono mt-0.5">{d1p.code}</span>
                                 )}
-                                {d1p.hierarchy_path && (
+                                {d1p.branches && d1p.branches.length > 0 ? (
+                                  <div className="mt-0.5 space-y-0.5">
+                                    {d1p.branches.map((b) => (
+                                      <span key={b.tree_id} className="block text-xs text-indigo-300">
+                                        {b.hierarchy_path} <span className="font-mono text-indigo-200">({b.tree_id})</span>
+                                      </span>
+                                    ))}
+                                  </div>
+                                ) : d1p.hierarchy_path ? (
                                   <span className="block text-xs text-indigo-300 mt-0.5">{d1p.hierarchy_path}</span>
-                                )}
+                                ) : null}
                               </div>
                             ) : <span className="text-gray-300">—</span>}
                           </td>
@@ -1355,9 +1369,17 @@ export default function QuestionDetailPage() {
                                 {d1s.code && (
                                   <span className="block text-xs text-slate-400 font-mono mt-0.5">{d1s.code}</span>
                                 )}
-                                {d1s.hierarchy_path && (
+                                {d1s.branches && d1s.branches.length > 0 ? (
+                                  <div className="mt-0.5 space-y-0.5">
+                                    {d1s.branches.map((b) => (
+                                      <span key={b.tree_id} className="block text-xs text-slate-300">
+                                        {b.hierarchy_path} <span className="font-mono text-slate-200">({b.tree_id})</span>
+                                      </span>
+                                    ))}
+                                  </div>
+                                ) : d1s.hierarchy_path ? (
                                   <span className="block text-xs text-slate-300 mt-0.5">{d1s.hierarchy_path}</span>
-                                )}
+                                ) : null}
                               </div>
                             ) : <span className="text-gray-300">—</span>}
                           </td>

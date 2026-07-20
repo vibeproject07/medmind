@@ -73,12 +73,23 @@ interface Question {
   decs_terms?: string[];
   ai_decs_descriptors?: AiDeCSRecord[];
   ai_decs_v2?: AiDeCSV2Result | null;
+  competencias?: CompetenciasResult | null;
+  temas?: TemasResult | null;
   created_at: string;
   updated_at: string;
 }
 
+interface AiDeCSBranch {
+  tree_id: string;
+  hierarchy_path: string;
+}
+
 interface AiDeCSRecord {
   term: string;
+  code?: string;
+  tree_ids?: string[];
+  hierarchy_path?: string;
+  branches?: AiDeCSBranch[];
   role?: 'primary' | 'secondary';
 }
 
@@ -93,6 +104,19 @@ interface AiDeCSV2Result {
     decs_primary?: AiDeCSV2Item[];
     decs_secondary?: AiDeCSV2Item[];
   };
+}
+
+interface CompetenciasResult {
+  competencias: string[];
+  habilidades: string[];
+  nivel_cognitivo: string;
+  dominio: string;
+}
+
+interface TemasResult {
+  temas: string[];
+  subtemas: string[];
+  tema_principal: string;
 }
 
 export default function QuestionsPage() {
@@ -140,6 +164,10 @@ export default function QuestionsPage() {
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [aiDecsLoadingIds, setAiDecsLoadingIds] = useState<Set<number>>(new Set());
   const [aiDecsErrors, setAiDecsErrors] = useState<Record<number, string>>({});
+  const [habilitiesLoadingIds, setHabilitiesLoadingIds] = useState<Set<number>>(new Set());
+  const [habilitiesErrors, setHabilitiesErrors] = useState<Record<number, string>>({});
+  const [temasLoadingIds, setTemasLoadingIds] = useState<Set<number>>(new Set());
+  const [temasErrors, setTemasErrors] = useState<Record<number, string>>({});
   const [showFilters, setShowFilters] = useState(false);
 
   // ── Semantic search ────────────────────────────────────────────────────────
@@ -524,13 +552,67 @@ export default function QuestionsPage() {
       }
       setQuestions((prev) =>
         prev.map((q) =>
-          q.id === questionId ? { ...q, ai_decs_descriptors: data.descriptors } : q
+          q.id === questionId ? { ...q, ai_decs_descriptors: data.result } : q
         )
       );
     } catch {
       setAiDecsErrors((prev) => ({ ...prev, [questionId]: 'Erro ao conectar com o servidor.' }));
     } finally {
       setAiDecsLoadingIds((prev) => { const next = new Set(prev); next.delete(questionId); return next; });
+    }
+  };
+
+  const handleGenerateTemas = async (questionId: number) => {
+    setTemasLoadingIds((prev) => new Set(prev).add(questionId));
+    setTemasErrors((prev) => { const next = { ...prev }; delete next[questionId]; return next; });
+    try {
+      const token = getToken();
+      if (!token) return;
+      const res = await fetch(`/api/questions/${questionId}/themes`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setTemasErrors((prev) => ({ ...prev, [questionId]: data.error || 'Erro ao gerar temas.' }));
+        return;
+      }
+      setQuestions((prev) =>
+        prev.map((q) =>
+          q.id === questionId ? { ...q, temas: data.result } : q
+        )
+      );
+    } catch {
+      setTemasErrors((prev) => ({ ...prev, [questionId]: 'Erro ao conectar com o servidor.' }));
+    } finally {
+      setTemasLoadingIds((prev) => { const next = new Set(prev); next.delete(questionId); return next; });
+    }
+  };
+
+  const handleGenerateHabilities = async (questionId: number) => {
+    setHabilitiesLoadingIds((prev) => new Set(prev).add(questionId));
+    setHabilitiesErrors((prev) => { const next = { ...prev }; delete next[questionId]; return next; });
+    try {
+      const token = getToken();
+      if (!token) return;
+      const res = await fetch(`/api/questions/${questionId}/habilities`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setHabilitiesErrors((prev) => ({ ...prev, [questionId]: data.error || 'Erro ao gerar competências.' }));
+        return;
+      }
+      setQuestions((prev) =>
+        prev.map((q) =>
+          q.id === questionId ? { ...q, competencias: data.result } : q
+        )
+      );
+    } catch {
+      setHabilitiesErrors((prev) => ({ ...prev, [questionId]: 'Erro ao conectar com o servidor.' }));
+    } finally {
+      setHabilitiesLoadingIds((prev) => { const next = new Set(prev); next.delete(questionId); return next; });
     }
   };
 
@@ -1110,14 +1192,52 @@ export default function QuestionsPage() {
                             </tr>
                           </thead>
                           <tbody>
-                            {Array.from({ length: maxRows }).map((_, i) => (
+                            {Array.from({ length: maxRows }).map((_, i) => {
+                              const v1p = v1Primary[i];
+                              const v1s = v1Secondary[i];
+                              return (
                               <tr key={i} className="align-top">
-                                <td className="py-2 px-3 border border-indigo-100 bg-indigo-50/40 font-semibold text-indigo-800">{v1Primary[i]?.term ?? '—'}</td>
-                                <td className="py-2 px-3 border border-slate-100 bg-slate-50/40 font-medium text-slate-700">{v1Secondary[i]?.term ?? '—'}</td>
+                                <td className="py-2 px-3 border border-indigo-100 bg-indigo-50/40">
+                                  {v1p ? (
+                                    <div>
+                                      <span className="font-semibold text-indigo-800">{v1p.term}</span>
+                                      {v1p.branches && v1p.branches.length > 0 ? (
+                                        <div className="mt-0.5 space-y-0.5">
+                                          {v1p.branches.map((b) => (
+                                            <span key={b.tree_id} className="block text-xs text-indigo-300">
+                                              {b.hierarchy_path} <span className="font-mono text-indigo-200">({b.tree_id})</span>
+                                            </span>
+                                          ))}
+                                        </div>
+                                      ) : v1p.hierarchy_path ? (
+                                        <span className="block text-xs text-indigo-300 mt-0.5">{v1p.hierarchy_path}</span>
+                                      ) : null}
+                                    </div>
+                                  ) : '—'}
+                                </td>
+                                <td className="py-2 px-3 border border-slate-100 bg-slate-50/40">
+                                  {v1s ? (
+                                    <div>
+                                      <span className="font-medium text-slate-700">{v1s.term}</span>
+                                      {v1s.branches && v1s.branches.length > 0 ? (
+                                        <div className="mt-0.5 space-y-0.5">
+                                          {v1s.branches.map((b) => (
+                                            <span key={b.tree_id} className="block text-xs text-slate-300">
+                                              {b.hierarchy_path} <span className="font-mono text-slate-200">({b.tree_id})</span>
+                                            </span>
+                                          ))}
+                                        </div>
+                                      ) : v1s.hierarchy_path ? (
+                                        <span className="block text-xs text-slate-300 mt-0.5">{v1s.hierarchy_path}</span>
+                                      ) : null}
+                                    </div>
+                                  ) : '—'}
+                                </td>
                                 <td className="py-2 px-3 border border-emerald-100 bg-emerald-50/40 font-semibold text-emerald-800">{v2Primary[i]?.term ?? '—'}</td>
                                 <td className="py-2 px-3 border border-teal-100 bg-teal-50/40 font-medium text-teal-800">{v2Secondary[i]?.term ?? '—'}</td>
                               </tr>
-                            ))}
+                              );
+                            })}
                           </tbody>
                         </table>
                       );
@@ -1128,6 +1248,115 @@ export default function QuestionsPage() {
                     )
                   )}
                 </div>
+              )}
+
+              {isAdmin && (
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="flex items-center gap-2 mb-2">
+                  <Brain className="h-3.5 w-3.5 text-amber-400" />
+                  <span className="text-xs font-medium text-gray-500">Competências / Habilidades — IA</span>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); handleGenerateHabilities(question.id); }}
+                    disabled={habilitiesLoadingIds.has(question.id)}
+                    className="ml-auto flex items-center gap-1 px-2 py-1 text-xs font-medium bg-amber-50 text-amber-600 border border-amber-200 rounded-lg hover:bg-amber-100 disabled:opacity-50 transition"
+                  >
+                    <Sparkles className="h-3 w-3" />
+                    {habilitiesLoadingIds.has(question.id) ? 'Gerando…' : 'Gerar com IA'}
+                  </button>
+                </div>
+                {habilitiesErrors[question.id] && (
+                  <p className="text-xs text-red-500 mb-1">{habilitiesErrors[question.id]}</p>
+                )}
+                {question.competencias ? (
+                  <div className="space-y-2">
+                    <div className="flex flex-wrap gap-1 items-center">
+                      {question.competencias.dominio && (
+                        <span className="px-2 py-0.5 text-xs font-medium bg-amber-100 text-amber-800 rounded-full">
+                          {question.competencias.dominio}
+                        </span>
+                      )}
+                      {question.competencias.nivel_cognitivo && (
+                        <span className="px-2 py-0.5 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
+                          {question.competencias.nivel_cognitivo}
+                        </span>
+                      )}
+                      {question.competencias.competencias.map((c, i) => (
+                        <span key={i} className="px-2 py-0.5 text-xs bg-amber-50 border border-amber-200 text-amber-700 rounded-full">
+                          {c}
+                        </span>
+                      ))}
+                    </div>
+                    {question.competencias.habilidades.length > 0 && (
+                      <ul className="mt-1 space-y-0.5">
+                        {question.competencias.habilidades.map((h, i) => (
+                          <li key={i} className="flex items-start gap-1.5 text-xs text-gray-600">
+                            <span className="mt-1 h-1 w-1 rounded-full bg-amber-400 flex-shrink-0" />
+                            {h}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ) : (
+                  !habilitiesLoadingIds.has(question.id) && (
+                    <p className="text-xs text-gray-400 italic">Nenhuma competência gerada.</p>
+                  )
+                )}
+              </div>
+              )}
+
+              {isAdmin && (
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="flex items-center gap-2 mb-2">
+                  <Sparkles className="h-3.5 w-3.5 text-teal-400" />
+                  <span className="text-xs font-medium text-gray-500">Temas e Subtemas — IA</span>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); handleGenerateTemas(question.id); }}
+                    disabled={temasLoadingIds.has(question.id)}
+                    className="ml-auto flex items-center gap-1 px-2 py-1 text-xs font-medium bg-teal-50 text-teal-600 border border-teal-200 rounded-lg hover:bg-teal-100 disabled:opacity-50 transition"
+                  >
+                    <Sparkles className="h-3 w-3" />
+                    {temasLoadingIds.has(question.id) ? 'Gerando…' : 'Gerar com IA'}
+                  </button>
+                </div>
+                {temasErrors[question.id] && (
+                  <p className="text-xs text-red-500 mb-1">{temasErrors[question.id]}</p>
+                )}
+                {question.temas ? (
+                  <div className="space-y-1.5">
+                    {question.temas.tema_principal && (
+                      <div className="flex items-center gap-1 flex-wrap">
+                        <span className="text-xs text-gray-400 mr-1">Principal:</span>
+                        <span className="px-2 py-0.5 text-xs font-semibold bg-teal-600 text-white rounded-full">
+                          {question.temas.tema_principal}
+                        </span>
+                      </div>
+                    )}
+                    {question.temas.temas.length > 0 && (
+                      <div className="flex flex-wrap gap-1">
+                        {question.temas.temas.map((t, i) => (
+                          <span key={i} className="px-2 py-0.5 text-xs bg-teal-50 border border-teal-200 text-teal-700 rounded-full">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    {question.temas.subtemas.length > 0 && (
+                      <div className="flex flex-wrap gap-1">
+                        {question.temas.subtemas.map((s, i) => (
+                          <span key={i} className="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 border border-gray-200 rounded-full">
+                            {s}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  !temasLoadingIds.has(question.id) && (
+                    <p className="text-xs text-gray-400 italic">Nenhum tema gerado.</p>
+                  )
+                )}
+              </div>
               )}
 
               <p className="text-xs text-gray-400 mt-4">

@@ -1,0 +1,1126 @@
+~/workspace$ node scripts/decs-embed-search.mjs "Síndrome de West" --limit 8
+⏳ Vetorizando: "Síndrome de West"
+✓ Embedding gerado (3072 dims)
+✓ 8 resultado(s) [min-sim: 0.15]
+
+
+[1] Síndrome de Lennox-Gastaut  (sim: 0.7250)
+    Código:     D065768
+    Hierarquia: Doenças › C10.228.140.490.493.750
+    Tree IDs:   C10.228.140.490.493.750, C16.320.495
+    EN:         Lennox Gastaut Syndrome
+    Nota:       Síndrome epiléptica de início na infância.
+
+[2] Espasmos Infantis  (sim: 0.7135)
+    Código:     D013036
+    Hierarquia: Doenças › C10.228.140.490.375.760
+    Tree IDs:   C10.228.140.490.375.760, C10.228.140.490.493.875
+    EN:         Spasms, Infantile
+    Nota:       Síndrome epiléptica caracterizada pela tríade de espasmos infantis, hipsarritmia e interrupção do desenvolvimento psicomotor no início dos a…
+
+[3] Síndromes Epilépticas  (sim: 0.6989)
+    Código:     D000073376
+    Hierarquia: Doenças › C10.228.140.490.493
+    Tree IDs:   C10.228.140.490.493
+    EN:         Epileptic Syndromes
+    Nota:       CRISES EPILÉPTICAS semelhantes em tipo e idade de início que possuem outras características semelhantes (por exemplo, curso clínico, achados…
+
+[4] Síndrome do Cabeceio  (sim: 0.6891)
+    Código:     D064128
+    Hierarquia: Doenças › C10.228.140.490.375.525
+    Tree IDs:   C10.228.140.490.375.525
+    EN:         Nodding Syndrome
+    Nota:       Afecção neurológica inexplicada caracterizada por episódios de convulsões atônicas ou crises de ausência com posterior declínio cognitivo.
+
+[5] Epilepsia Neonatal Benigna  (sim: 0.6771)
+    Código:     D020936
+    Hierarquia: Doenças › C10.228.140.490.370
+    Tree IDs:   C10.228.140.490.370, C16.614.258
+    EN:         Epilepsy, Benign Neonatal
+    Nota:       Afecção marcada por ataques recidivantes que ocorrem durante as primeiras 4-6 semanas de vida, apesar de um curso neonatal outrora benigno. …
+
+[6] Epilepsia Tipo Ausência  (sim: 0.6750)
+    Código:     D004832
+    Hierarquia: Doenças › C10.228.140.490.375.260
+    Tree IDs:   C10.228.140.490.375.260, C10.228.140.490.493.125
+    EN:         Epilepsy, Absence
+    Nota:       Transtorno de convulsão que geralmente ocorre na infância caracterizado por descargas cerebrais elétricas rítmicas de início generalizado. O…
+
+[7] Epilepsia Rolândica  (sim: 0.6727)
+    Código:     D019305
+    Hierarquia: Doenças › C10.228.140.490.360.280
+    Tree IDs:   C10.228.140.490.360.280, C10.228.140.490.493.250
+    EN:         Epilepsy, Rolandic
+    Nota:       Síndrome epiléptica parcial, de herança autossômica dominante, com início entre os 3 e 13 anos de idade. Os surtos são caracterizados por PA…
+
+[8] Síndrome de Landau-Kleffner  (sim: 0.6723)
+    Código:     D018887
+    Hierarquia: Doenças › C10.228.140.490.493.500
+    Tree IDs:   C10.228.140.490.493.500
+    EN:         Landau-Kleffner Syndrome
+    Nota:       Síndrome caracterizada pela manifestação isolada de disfunção de linguagem em crianças consideradas até então normais (início entre os 4 e 7…
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    ~/workspace$ node scripts/decs-embed-search.mjs "Hipsarritmia" --limit 8
+    ⏳ Vetorizando: "Hipsarritmia"
+    ✓ Embedding gerado (3072 dims)
+    ✓ 8 resultado(s) [min-sim: 0.15]
+
+
+    [1] Arritmias Cardíacas  (sim: 0.6674)
+        Código:     D001145
+        Hierarquia: Doenças › C14.280.067
+        Tree IDs:   C14.280.067, C23.550.073
+        EN:         Arrhythmias, Cardiac
+        Nota:       Quaisquer distúrbios da pulsação rítmica normal do coração ou CONTRAÇÃO MIOCÁRDICA. As arritmias cardíacas podem ser classificadas pelas ano…
+
+    [2] Arritmia Sinusal  (sim: 0.6594)
+        Código:     D001146
+        Hierarquia: Doenças › C14.280.067.093
+        Tree IDs:   C14.280.067.093, C23.550.073.093
+        EN:         Arrhythmia, Sinus
+        Nota:       FREQUÊNCIA CARDÍACA irregular causada por função anormal do NÓ SINOATRIAL. Caracteriza-se por alteração maior que 10 por cento entre o compr…
+
+    [3] Parassístole  (sim: 0.6581)
+        Código:     D017574
+        Hierarquia: Doenças › C14.280.067.672
+        Tree IDs:   C14.280.067.672, C23.550.073.670
+        EN:         Parasystole
+        Nota:       Arritmia cardíaca causada por interação de dois impulsos cardíacos, iniciados independentemente de frequências diferentes de dois focos sepa…
+
+    [4] Fibrilação Atrial  (sim: 0.6493)
+        Código:     D001281
+        Hierarquia: Doenças › C14.280.067.198
+        Tree IDs:   C14.280.067.198, C23.550.073.198
+        EN:         Atrial Fibrillation
+        Nota:       Ritmo cardíaco anormal caracterizado por descargas de impulsos elétricos descoordenados e rápidos, nas câmaras superiores do coração (ÁTRIOS…
+
+    [5] Parada Sinusal Cardíaca  (sim: 0.6383)
+        Código:     D054138
+        Hierarquia: Doenças › C14.280.067.093.500
+        Tree IDs:   C14.280.067.093.500, C23.550.073.093.500
+        EN:         Sinus Arrest, Cardiac
+        Nota:       Omissão da ativação atrial causada por cessação transitória na geração de impulso no NÓ SINOATRIAL. Caracteriza-se por uma pausa prolongada …
+
+    [6] Taquicardia  (sim: 0.6357)
+        Código:     D013610
+        Hierarquia: Doenças › C14.280.067.845
+        Tree IDs:   C14.280.067.845, C14.280.123.875, C23.550.073.845
+        EN:         Tachycardia
+        Nota:       Batimentos cardíacos anormalmente rápidos, geralmente com FREQUÊNCIA CARDÍACA acima de 100 batimentos por minuto para adultos. A taquicardia…
+
+    [7] Taquicardia Atrial Ectópica  (sim: 0.6325)
+        Código:     D013612
+        Hierarquia: Doenças › C14.280.067.845.880.315
+        Tree IDs:   C14.280.067.845.880.315, C14.280.123.875.880.315, C23.550.073.845.880.315
+        EN:         Tachycardia, Ectopic Atrial
+        Nota:       Batimentos cardíacos anormalmente rápidos originando um ou mais focos automáticos (marca-passos não sinusais) nos ÁTRIOS DO CORAÇÃO, mas for…
+
+    [8] Paralisia Periódica Hipopotassêmica  (sim: 0.6325)
+        Código:     D020514
+        Hierarquia: Doenças › C05.651.701.450
+        Tree IDs:   C05.651.701.450, C10.668.491.650.450, C16.320.565.618.711.550, C18.452.648.618.711.550
+        EN:         Hypokalemic Periodic Paralysis
+        Nota:       Transtorno familiar autossômico dominante caracterizado por episódios recorrentes de fraqueza muscular associada com quedas nas concentraçõe…
+        
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        ~/workspace$ node scripts/decs-embed-search.mjs "Eletroencefalografia" --limit 8
+        ⏳ Vetorizando: "Eletroencefalografia"
+        ✓ Embedding gerado (3072 dims)
+        ✓ 8 resultado(s) [min-sim: 0.15]
+
+
+        [1] Eletroencefalografia  (sim: 0.8093)
+            Código:     D004569
+            Hierarquia: Técnicas e Equipamentos Analíticos › E01.370.376.300
+            Tree IDs:   E01.370.376.300, E01.370.405.245
+            EN:         Electroencephalography
+            Nota:       Registro de correntes elétricas produzidas no cérebro, pela medida de eletrodos adaptados ao couro cabeludo, na superfície do cérebro, ou co…
+
+        [2] Eletrocorticografia  (sim: 0.7482)
+            Código:     D000069280
+            Hierarquia: Técnicas e Equipamentos Analíticos › E01.370.376.150
+            Tree IDs:   E01.370.376.150, E01.370.405.243
+            EN:         Electrocorticography
+            Nota:       Registro de atividades elétricas encefálicas em que os eletrodos estão posicionados diretamente no CÓRTEX CEREBRAL.
+
+        [3] Magnetoencefalografia  (sim: 0.7464)
+            Código:     D015225
+            Hierarquia: Técnicas e Equipamentos Analíticos › E01.370.376.500
+            Tree IDs:   E01.370.376.500, E01.370.405.440, E05.540.500
+            EN:         Magnetoencephalography
+            Nota:       Medida dos campos magnéticos da cabeça, geradas por correntes elétricas no encéfalo. Assim como em um condutor elétrico, os campos elétricos…
+
+        [4] Sincronização de Fases em Eletroencefalografia  (sim: 0.7363)
+            Código:     D058407
+            Hierarquia: Técnicas e Equipamentos Analíticos › E01.370.376.300.437
+            Tree IDs:   E01.370.376.300.437, E01.370.405.245.575, G07.265.256
+            EN:         Electroencephalography Phase Synchronization
+            Nota:       Ajuste das ONDAS ENCEFÁLICAS de dois ou mais grupos de neurônios de dentro de uma estrutura encefálica ou que a atravessam (por exemplo, est…
+
+        [5] Ondas Encefálicas  (sim: 0.7320)
+            Código:     D058256
+            Hierarquia: Técnicas e Equipamentos Analíticos › E01.370.376.300.150
+            Tree IDs:   E01.370.376.300.150, E01.370.405.245.287, G07.265.087, G11.561.127
+            EN:         Brain Waves
+            Nota:       Oscilações semelhantes a ondas da diferença de potencial elétrico entre as partes do cérebro gravadas por eletroencefalografia.
+
+        [6] Eletroculografia  (sim: 0.7230)
+            Código:     D004585
+            Hierarquia: Técnicas e Equipamentos Analíticos › E01.370.380.230.285
+            Tree IDs:   E01.370.380.230.285, E01.370.405.312.285
+            EN:         Electrooculography
+            Nota:       Registro da amplitude média do potencial de repouso, começando entre a córnea e a retina, nas adaptações dos olhos à luz e ao escuridão, à m…
+
+        [7] Ecoencefalografia  (sim: 0.7220)
+            Código:     D004453
+            Hierarquia: Técnicas e Equipamentos Analíticos › E01.370.350.578.937.260
+            Tree IDs:   E01.370.350.578.937.260, E01.370.350.700.560.260, E01.370.350.850.260, E01.370.376.537.750.260, E05.629.937.260
+            EN:         Echoencephalography
+            Nota:       Utilização de ultrassom refletido no diagnóstico de processos patológicos intracranianos.
+
+        [8] Eletronistagmografia  (sim: 0.7149)
+            Código:     D004584
+            Hierarquia: Técnicas e Equipamentos Analíticos › E01.370.380.230.280
+            Tree IDs:   E01.370.380.230.280, E01.370.382.900.280, E01.370.405.260, E01.370.405.312.280
+            EN:         Electronystagmography
+            Nota:       Registro do nistagmo, baseado nas alterações no campo elétrico que envolve o olho, produzido pela diferença de potencial entre a córnea e a …
+
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+            ~/workspace$ node scripts/decs-embed-search.mjs "Síndromde de Lennox-Gastaut" --limit 8
+            ⏳ Vetorizando: "Síndromde de Lennox-Gastaut"
+            ✓ Embedding gerado (3072 dims)
+            ✓ 8 resultado(s) [min-sim: 0.15]
+
+
+            [1] Síndrome de Lennox-Gastaut  (sim: 0.7850)
+                Código:     D065768
+                Hierarquia: Doenças › C10.228.140.490.493.750
+                Tree IDs:   C10.228.140.490.493.750, C16.320.495
+                EN:         Lennox Gastaut Syndrome
+                Nota:       Síndrome epiléptica de início na infância.
+
+            [2] Síndromes Epilépticas  (sim: 0.7192)
+                Código:     D000073376
+                Hierarquia: Doenças › C10.228.140.490.493
+                Tree IDs:   C10.228.140.490.493
+                EN:         Epileptic Syndromes
+                Nota:       CRISES EPILÉPTICAS semelhantes em tipo e idade de início que possuem outras características semelhantes (por exemplo, curso clínico, achados…
+
+            [3] Síndrome de Landau-Kleffner  (sim: 0.7051)
+                Código:     D018887
+                Hierarquia: Doenças › C10.228.140.490.493.500
+                Tree IDs:   C10.228.140.490.493.500
+                EN:         Landau-Kleffner Syndrome
+                Nota:       Síndrome caracterizada pela manifestação isolada de disfunção de linguagem em crianças consideradas até então normais (início entre os 4 e 7…
+
+            [4] Epilepsia Generalizada  (sim: 0.6991)
+                Código:     D004829
+                Hierarquia: Doenças › C10.228.140.490.375
+                Tree IDs:   C10.228.140.490.375
+                EN:         Epilepsy, Generalized
+                Nota:       Afecções recorrentes caracterizadas por crises epilépticas que surgem difusa e simultaneamente dos dois hemisférios do cérebro. A classifica…
+
+            [5] Epilepsia Rolândica  (sim: 0.6982)
+                Código:     D019305
+                Hierarquia: Doenças › C10.228.140.490.360.280
+                Tree IDs:   C10.228.140.490.360.280, C10.228.140.490.493.250
+                EN:         Epilepsy, Rolandic
+                Nota:       Síndrome epiléptica parcial, de herança autossômica dominante, com início entre os 3 e 13 anos de idade. Os surtos são caracterizados por PA…
+
+            [6] Espasmos Infantis  (sim: 0.6951)
+                Código:     D013036
+                Hierarquia: Doenças › C10.228.140.490.375.760
+                Tree IDs:   C10.228.140.490.375.760, C10.228.140.490.493.875
+                EN:         Spasms, Infantile
+                Nota:       Síndrome epiléptica caracterizada pela tríade de espasmos infantis, hipsarritmia e interrupção do desenvolvimento psicomotor no início dos a…
+
+            [7] Síndrome do Cabeceio  (sim: 0.6943)
+                Código:     D064128
+                Hierarquia: Doenças › C10.228.140.490.375.525
+                Tree IDs:   C10.228.140.490.375.525
+                EN:         Nodding Syndrome
+                Nota:       Afecção neurológica inexplicada caracterizada por episódios de convulsões atônicas ou crises de ausência com posterior declínio cognitivo.
+
+            [8] Epilepsias Mioclônicas  (sim: 0.6858)
+                Código:     D004831
+                Hierarquia: Doenças › C10.228.140.490.375.130
+                Tree IDs:   C10.228.140.490.375.130, C10.228.140.490.493.063
+                EN:         Epilepsies, Myoclonic
+                Nota:       Grupo clinicamente diverso de síndromes epilépticas caracterizadas tanto por convulsões mioclônicas ou por mioclonia em associação com outro…
+
+                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+                ~/workspace$ node scripts/decs-embed-search.mjs "Síndromde de Dravet" --limit 8
+                ⏳ Vetorizando: "Síndromde de Dravet"
+                ✓ Embedding gerado (3072 dims)
+                ✓ 8 resultado(s) [min-sim: 0.15]
+
+
+                [1] Síndrome de Lennox-Gastaut  (sim: 0.7157)
+                    Código:     D065768
+                    Hierarquia: Doenças › C10.228.140.490.493.750
+                    Tree IDs:   C10.228.140.490.493.750, C16.320.495
+                    EN:         Lennox Gastaut Syndrome
+                    Nota:       Síndrome epiléptica de início na infância.
+
+                [2] Síndromes Epilépticas  (sim: 0.7126)
+                    Código:     D000073376
+                    Hierarquia: Doenças › C10.228.140.490.493
+                    Tree IDs:   C10.228.140.490.493
+                    EN:         Epileptic Syndromes
+                    Nota:       CRISES EPILÉPTICAS semelhantes em tipo e idade de início que possuem outras características semelhantes (por exemplo, curso clínico, achados…
+
+                [3] Canal de Sódio Disparado por Voltagem NAV1.1  (sim: 0.7031)
+                    Código:     D062550
+                    Hierarquia: Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100
+                    Tree IDs:   D12.776.157.530.400.875.750.100, D12.776.543.550.450.875.750.100, D12.776.543.585.400.875.750.100, D12.776.631.960.100
+                    EN:         NAV1.1 Voltage-Gated Sodium Channel
+                    Nota:       Subtipo de canal de sódio disparado por voltagem predominantemente expresso no SISTEMA NERVOSO CENTRAL. Defeitos no gene SCN1A que codifica …
+
+                [4] Epilepsia Resistente a Medicamentos  (sim: 0.6954)
+                    Código:     D000069279
+                    Hierarquia: Doenças › C10.228.140.490.125
+                    Tree IDs:   C10.228.140.490.125
+                    EN:         Drug Resistant Epilepsy
+                    Nota:       Afecção epiléptica em que falharam os protocolos com escolha de dois ANTICONVULSIVANTES tolerados para a aquisição de intervalo livre de cri…
+
+                [5] Espasmos Infantis  (sim: 0.6896)
+                    Código:     D013036
+                    Hierarquia: Doenças › C10.228.140.490.375.760
+                    Tree IDs:   C10.228.140.490.375.760, C10.228.140.490.493.875
+                    EN:         Spasms, Infantile
+                    Nota:       Síndrome epiléptica caracterizada pela tríade de espasmos infantis, hipsarritmia e interrupção do desenvolvimento psicomotor no início dos a…
+
+                [6] Morte Súbita Inesperada na Epilepsia  (sim: 0.6823)
+                    Código:     D000080485
+                    Hierarquia: Doenças › C10.228.140.490.746
+                    Tree IDs:   C10.228.140.490.746, C23.550.260.322.812
+                    EN:         Sudden Unexpected Death in Epilepsy
+                    Nota:       Morte súbita em um paciente com EPILEPSIA associada com CONVULSÕES e sintomas relacionados a convulsões (exemplo, APNEIA, HIPOXEMIA) sem out…
+
+                [7] Epilepsia Rolândica  (sim: 0.6805)
+                    Código:     D019305
+                    Hierarquia: Doenças › C10.228.140.490.360.280
+                    Tree IDs:   C10.228.140.490.360.280, C10.228.140.490.493.250
+                    EN:         Epilepsy, Rolandic
+                    Nota:       Síndrome epiléptica parcial, de herança autossômica dominante, com início entre os 3 e 13 anos de idade. Os surtos são caracterizados por PA…
+
+                [8] Epilepsias Mioclônicas  (sim: 0.6802)
+                    Código:     D004831
+                    Hierarquia: Doenças › C10.228.140.490.375.130
+                    Tree IDs:   C10.228.140.490.375.130, C10.228.140.490.493.063
+                    EN:         Epilepsies, Myoclonic
+                    Nota:       Grupo clinicamente diverso de síndromes epilépticas caracterizadas tanto por convulsões mioclônicas ou por mioclonia em associação com outro…
+
+                    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+                    ~/workspace$ node scripts/decs-embed-search.mjs "Epilepsia Mioclônica Juvenil" --limit 8
+                    ⏳ Vetorizando: "Epilepsia Mioclônica Juvenil"
+                    ✓ Embedding gerado (3072 dims)
+                    ✓ 8 resultado(s) [min-sim: 0.15]
+
+
+                    [1] Epilepsia Mioclônica Juvenil  (sim: 0.8323)
+                        Código:     D020190
+                        Hierarquia: Doenças › C10.228.140.490.375.130.670
+                        Tree IDs:   C10.228.140.490.375.130.670, C10.228.140.490.493.063.670
+                        EN:         Myoclonic Epilepsy, Juvenile
+                        Nota:       Transtorno caracterizado pelo início de mioclonia na adolescência, um aumento marcante na incidência de ataques tipo ausência (ver EPILEPSIA…
+
+                    [2] Epilepsias Mioclônicas  (sim: 0.7697)
+                        Código:     D004831
+                        Hierarquia: Doenças › C10.228.140.490.375.130
+                        Tree IDs:   C10.228.140.490.375.130, C10.228.140.490.493.063
+                        EN:         Epilepsies, Myoclonic
+                        Nota:       Grupo clinicamente diverso de síndromes epilépticas caracterizadas tanto por convulsões mioclônicas ou por mioclonia em associação com outro…
+
+                    [3] Epilepsia Tipo Ausência  (sim: 0.7612)
+                        Código:     D004832
+                        Hierarquia: Doenças › C10.228.140.490.375.260
+                        Tree IDs:   C10.228.140.490.375.260, C10.228.140.490.493.125
+                        EN:         Epilepsy, Absence
+                        Nota:       Transtorno de convulsão que geralmente ocorre na infância caracterizado por descargas cerebrais elétricas rítmicas de início generalizado. O…
+
+                    [4] Mioclonia  (sim: 0.7395)
+                        Código:     D009207
+                        Hierarquia: Doenças › C10.597.350.500
+                        Tree IDs:   C10.597.350.500, C23.888.592.350.500
+                        EN:         Myoclonus
+                        Nota:       Contrações involuntárias semelhantes a choque, irregulares no ritmo e na amplitude, seguidas por relaxamento de um músculo ou grupo de múscu…
+
+                    [5] Epilepsias Mioclônicas Progressivas  (sim: 0.7371)
+                        Código:     D020191
+                        Hierarquia: Doenças › C10.228.140.490.375.130.650
+                        Tree IDs:   C10.228.140.490.375.130.650, C10.228.140.490.493.063.650
+                        EN:         Myoclonic Epilepsies, Progressive
+                        Nota:       Grupo heterogêneo de transtornos principalmente familiares, caracterizados por crises mioclônicas, tônico-clônicos, ataxia, deterioração int…
+
+                    [6] Doença de Lafora  (sim: 0.7292)
+                        Código:     D020192
+                        Hierarquia: Doenças › C10.228.140.490.375.130.650.500
+                        Tree IDs:   C10.228.140.490.375.130.650.500, C10.228.140.490.493.063.650.500, C10.574.500.529, C16.320.400.480
+                        EN:         Lafora Disease
+                        Nota:       Forma de EPILEPSIA MIOCLÔNICA sensível a estímulos, herdada como uma caráter autossômico recessivo. O sinal mais comum é um único ataque na …
+
+                    [7] Epilepsia Generalizada  (sim: 0.7209)
+                        Código:     D004829
+                        Hierarquia: Doenças › C10.228.140.490.375
+                        Tree IDs:   C10.228.140.490.375
+                        EN:         Epilepsy, Generalized
+                        Nota:       Afecções recorrentes caracterizadas por crises epilépticas que surgem difusa e simultaneamente dos dois hemisférios do cérebro. A classifica…
+
+                    [8] Epilepsia Rolândica  (sim: 0.7155)
+                        Código:     D019305
+                        Hierarquia: Doenças › C10.228.140.490.360.280
+                        Tree IDs:   C10.228.140.490.360.280, C10.228.140.490.493.250
+                        EN:         Epilepsy, Rolandic
+                        Nota:       Síndrome epiléptica parcial, de herança autossômica dominante, com início entre os 3 e 13 anos de idade. Os surtos são caracterizados por PA…
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+                        ~/workspace$ node scripts/decs-embed-search.mjs "Epilepsias Mioclônicas" --limit 8
+                        ⏳ Vetorizando: "Epilepsias Mioclônicas"
+                        ✓ Embedding gerado (3072 dims)
+                        ✓ 8 resultado(s) [min-sim: 0.15]
+
+
+                        [1] Epilepsias Mioclônicas  (sim: 0.8247)
+                            Código:     D004831
+                            Hierarquia: Doenças › C10.228.140.490.375.130
+                            Tree IDs:   C10.228.140.490.375.130, C10.228.140.490.493.063
+                            EN:         Epilepsies, Myoclonic
+                            Nota:       Grupo clinicamente diverso de síndromes epilépticas caracterizadas tanto por convulsões mioclônicas ou por mioclonia em associação com outro…
+
+                        [2] Epilepsia Mioclônica Juvenil  (sim: 0.7928)
+                            Código:     D020190
+                            Hierarquia: Doenças › C10.228.140.490.375.130.670
+                            Tree IDs:   C10.228.140.490.375.130.670, C10.228.140.490.493.063.670
+                            EN:         Myoclonic Epilepsy, Juvenile
+                            Nota:       Transtorno caracterizado pelo início de mioclonia na adolescência, um aumento marcante na incidência de ataques tipo ausência (ver EPILEPSIA…
+
+                        [3] Mioclonia  (sim: 0.7829)
+                            Código:     D009207
+                            Hierarquia: Doenças › C10.597.350.500
+                            Tree IDs:   C10.597.350.500, C23.888.592.350.500
+                            EN:         Myoclonus
+                            Nota:       Contrações involuntárias semelhantes a choque, irregulares no ritmo e na amplitude, seguidas por relaxamento de um músculo ou grupo de múscu…
+
+                        [4] Epilepsias Mioclônicas Progressivas  (sim: 0.7813)
+                            Código:     D020191
+                            Hierarquia: Doenças › C10.228.140.490.375.130.650
+                            Tree IDs:   C10.228.140.490.375.130.650, C10.228.140.490.493.063.650
+                            EN:         Myoclonic Epilepsies, Progressive
+                            Nota:       Grupo heterogêneo de transtornos principalmente familiares, caracterizados por crises mioclônicas, tônico-clônicos, ataxia, deterioração int…
+
+                        [5] Epilepsia Tipo Ausência  (sim: 0.7582)
+                            Código:     D004832
+                            Hierarquia: Doenças › C10.228.140.490.375.260
+                            Tree IDs:   C10.228.140.490.375.260, C10.228.140.490.493.125
+                            EN:         Epilepsy, Absence
+                            Nota:       Transtorno de convulsão que geralmente ocorre na infância caracterizado por descargas cerebrais elétricas rítmicas de início generalizado. O…
+
+                        [6] Epilepsia Generalizada  (sim: 0.7472)
+                            Código:     D004829
+                            Hierarquia: Doenças › C10.228.140.490.375
+                            Tree IDs:   C10.228.140.490.375
+                            EN:         Epilepsy, Generalized
+                            Nota:       Afecções recorrentes caracterizadas por crises epilépticas que surgem difusa e simultaneamente dos dois hemisférios do cérebro. A classifica…
+
+                        [7] Doença de Lafora  (sim: 0.7402)
+                            Código:     D020192
+                            Hierarquia: Doenças › C10.228.140.490.375.130.650.500
+                            Tree IDs:   C10.228.140.490.375.130.650.500, C10.228.140.490.493.063.650.500, C10.574.500.529, C16.320.400.480
+                            EN:         Lafora Disease
+                            Nota:       Forma de EPILEPSIA MIOCLÔNICA sensível a estímulos, herdada como uma caráter autossômico recessivo. O sinal mais comum é um único ataque na …
+
+                        [8] Epilepsia Motora Parcial  (sim: 0.7395)
+                            Código:     D020938
+                            Hierarquia: Doenças › C10.228.140.490.360.272
+                            Tree IDs:   C10.228.140.490.360.272
+                            EN:         Epilepsy, Partial, Motor
+                            Nota:       Transtorno caracterizado por descargas paroxísticas locais, recidivantes, de neurônios cerebrais, produzindo ataques com manifestações motor…
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+~/workspace$ node scripts/decs-embed-search.mjs "Epilepsias Mioclônicas Progressivas" --limit 8
+⏳ Vetorizando: "Epilepsias Mioclônicas Progressivas"
+✓ Embedding gerado (3072 dims)
+✓ 8 resultado(s) [min-sim: 0.15]
+
+
+[1] Epilepsias Mioclônicas Progressivas  (sim: 0.8337)
+    Código:     D020191
+    Hierarquia: Doenças › C10.228.140.490.375.130.650
+    Tree IDs:   C10.228.140.490.375.130.650, C10.228.140.490.493.063.650
+    EN:         Myoclonic Epilepsies, Progressive
+    Nota:       Grupo heterogêneo de transtornos principalmente familiares, caracterizados por crises mioclônicas, tônico-clônicos, ataxia, deterioração int…
+
+[2] Epilepsias Mioclônicas  (sim: 0.7927)
+    Código:     D004831
+    Hierarquia: Doenças › C10.228.140.490.375.130
+    Tree IDs:   C10.228.140.490.375.130, C10.228.140.490.493.063
+    EN:         Epilepsies, Myoclonic
+    Nota:       Grupo clinicamente diverso de síndromes epilépticas caracterizadas tanto por convulsões mioclônicas ou por mioclonia em associação com outro…
+
+[3] Epilepsia Mioclônica Juvenil  (sim: 0.7700)
+    Código:     D020190
+    Hierarquia: Doenças › C10.228.140.490.375.130.670
+    Tree IDs:   C10.228.140.490.375.130.670, C10.228.140.490.493.063.670
+    EN:         Myoclonic Epilepsy, Juvenile
+    Nota:       Transtorno caracterizado pelo início de mioclonia na adolescência, um aumento marcante na incidência de ataques tipo ausência (ver EPILEPSIA…
+
+[4] Doença de Lafora  (sim: 0.7611)
+    Código:     D020192
+    Hierarquia: Doenças › C10.228.140.490.375.130.650.500
+    Tree IDs:   C10.228.140.490.375.130.650.500, C10.228.140.490.493.063.650.500, C10.574.500.529, C16.320.400.480
+    EN:         Lafora Disease
+    Nota:       Forma de EPILEPSIA MIOCLÔNICA sensível a estímulos, herdada como uma caráter autossômico recessivo. O sinal mais comum é um único ataque na …
+
+[5] Síndromes Epilépticas  (sim: 0.7420)
+    Código:     D000073376
+    Hierarquia: Doenças › C10.228.140.490.493
+    Tree IDs:   C10.228.140.490.493
+    EN:         Epileptic Syndromes
+    Nota:       CRISES EPILÉPTICAS semelhantes em tipo e idade de início que possuem outras características semelhantes (por exemplo, curso clínico, achados…
+
+[6] Síndrome MERRF  (sim: 0.7405)
+    Código:     D017243
+    Hierarquia: Doenças › C05.651.460.620.530
+    Tree IDs:   C05.651.460.620.530, C10.228.140.163.100.545, C10.228.140.490.375.130.650.700, C10.228.140.490.493.063.650.700, C10.668.491.500.500.550, C16.320.565.189.545, C18.452.132.100.545, C18.452.648.189.545, C18.452.660.560.620.530
+    EN:         MERRF Syndrome
+    Nota:       Encefalomiopatia mitocondrial caracterizada clinicamente por um transtorno convulsivo misto, mioclonia, ataxia progressiva, espasticidade e …
+
+[7] Epilepsia Tipo Ausência  (sim: 0.7403)
+    Código:     D004832
+    Hierarquia: Doenças › C10.228.140.490.375.260
+    Tree IDs:   C10.228.140.490.375.260, C10.228.140.490.493.125
+    EN:         Epilepsy, Absence
+    Nota:       Transtorno de convulsão que geralmente ocorre na infância caracterizado por descargas cerebrais elétricas rítmicas de início generalizado. O…
+
+[8] Epilepsia Generalizada  (sim: 0.7353)
+    Código:     D004829
+    Hierarquia: Doenças › C10.228.140.490.375
+    Tree IDs:   C10.228.140.490.375
+    EN:         Epilepsy, Generalized
+    Nota:       Afecções recorrentes caracterizadas por crises epilépticas que surgem difusa e simultaneamente dos dois hemisférios do cérebro. A classifica…
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    /workspace$ node scripts/decs-embed-search.mjs "Epilepsia tipo ausência" --limit 8
+    ⏳ Vetorizando: "Epilepsia tipo ausência"
+    ✓ Embedding gerado (3072 dims)
+    ✓ 8 resultado(s) [min-sim: 0.15]
+
+
+    [1] Epilepsia Tipo Ausência  (sim: 0.8305)
+        Código:     D004832
+        Hierarquia: Doenças › C10.228.140.490.375.260
+        Tree IDs:   C10.228.140.490.375.260, C10.228.140.490.493.125
+        EN:         Epilepsy, Absence
+        Nota:       Transtorno de convulsão que geralmente ocorre na infância caracterizado por descargas cerebrais elétricas rítmicas de início generalizado. O…
+
+    [2] Epilepsia Generalizada  (sim: 0.7497)
+        Código:     D004829
+        Hierarquia: Doenças › C10.228.140.490.375
+        Tree IDs:   C10.228.140.490.375
+        EN:         Epilepsy, Generalized
+        Nota:       Afecções recorrentes caracterizadas por crises epilépticas que surgem difusa e simultaneamente dos dois hemisférios do cérebro. A classifica…
+
+    [3] Epilepsia Rolândica  (sim: 0.7415)
+        Código:     D019305
+        Hierarquia: Doenças › C10.228.140.490.360.280
+        Tree IDs:   C10.228.140.490.360.280, C10.228.140.490.493.250
+        EN:         Epilepsy, Rolandic
+        Nota:       Síndrome epiléptica parcial, de herança autossômica dominante, com início entre os 3 e 13 anos de idade. Os surtos são caracterizados por PA…
+
+    [4] Estado Epiléptico  (sim: 0.7356)
+        Código:     D013226
+        Hierarquia: Doenças › C10.597.742.785
+        Tree IDs:   C10.597.742.785, C23.888.592.742.785
+        EN:         Status Epilepticus
+        Nota:       Ataque prolongado ou ataques repetidos com frequência suficiente para evitar a recuperação entre os episódios, que ocorrem por um período de…
+
+    [5] Epilepsia Parcial Complexa  (sim: 0.7354)
+        Código:     D017029
+        Hierarquia: Doenças › C10.228.140.490.360.260
+        Tree IDs:   C10.228.140.490.360.260
+        EN:         Epilepsy, Complex Partial
+        Nota:       Transtorno caracterizado por ataques parciais recorrentes marcados por deficiência cognitiva. Durante o ataque, o indivíduo pode vivenciar u…
+
+    [6] Epilepsia  (sim: 0.7333)
+        Código:     D004827
+        Hierarquia: Doenças › C10.228.140.490
+        Tree IDs:   C10.228.140.490
+        EN:         Epilepsy
+        Nota:       Transtorno caracterizado por episódios recorrentes de disfunção cerebral paroxística, devido a súbita descarga neuronal excessiva e desorden…
+
+    [7] Epilepsia do Lobo Temporal  (sim: 0.7332)
+        Código:     D004833
+        Hierarquia: Doenças › C10.228.140.490.360.290
+        Tree IDs:   C10.228.140.490.360.290, C10.228.140.490.493.375
+        EN:         Epilepsy, Temporal Lobe
+        Nota:       Forma de epilepsia relacionada à localização (focal), caracterizada por ataques recidivantes que surgem de focos dentro do lobo temporal, ma…
+
+    [8] Epilepsia Mioclônica Juvenil  (sim: 0.7273)
+        Código:     D020190
+        Hierarquia: Doenças › C10.228.140.490.375.130.670
+        Tree IDs:   C10.228.140.490.375.130.670, C10.228.140.490.493.063.670
+        EN:         Myoclonic Epilepsy, Juvenile
+        Nota:       Transtorno caracterizado pelo início de mioclonia na adolescência, um aumento marcante na incidência de ataques tipo ausência (ver EPILEPSIA…
+
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        ~/workspace$ node scripts/decs-embed-search.mjs "Epilepsia resistente a medicamentos" --limit 8
+        ⏳ Vetorizando: "Epilepsia resistente a medicamentos"
+        ✓ Embedding gerado (3072 dims)
+        ✓ 8 resultado(s) [min-sim: 0.15]
+
+
+        [1] Epilepsia Resistente a Medicamentos  (sim: 0.8073)
+            Código:     D000069279
+            Hierarquia: Doenças › C10.228.140.490.125
+            Tree IDs:   C10.228.140.490.125
+            EN:         Drug Resistant Epilepsy
+            Nota:       Afecção epiléptica em que falharam os protocolos com escolha de dois ANTICONVULSIVANTES tolerados para a aquisição de intervalo livre de cri…
+
+        [2] Epilepsia  (sim: 0.6974)
+            Código:     D004827
+            Hierarquia: Doenças › C10.228.140.490
+            Tree IDs:   C10.228.140.490
+            EN:         Epilepsy
+            Nota:       Transtorno caracterizado por episódios recorrentes de disfunção cerebral paroxística, devido a súbita descarga neuronal excessiva e desorden…
+
+        [3] Estado Epiléptico  (sim: 0.6957)
+            Código:     D013226
+            Hierarquia: Doenças › C10.597.742.785
+            Tree IDs:   C10.597.742.785, C23.888.592.742.785
+            EN:         Status Epilepticus
+            Nota:       Ataque prolongado ou ataques repetidos com frequência suficiente para evitar a recuperação entre os episódios, que ocorrem por um período de…
+
+        [4] Epilepsia Generalizada  (sim: 0.6924)
+            Código:     D004829
+            Hierarquia: Doenças › C10.228.140.490.375
+            Tree IDs:   C10.228.140.490.375
+            EN:         Epilepsy, Generalized
+            Nota:       Afecções recorrentes caracterizadas por crises epilépticas que surgem difusa e simultaneamente dos dois hemisférios do cérebro. A classifica…
+
+        [5] Epilepsia do Lobo Temporal  (sim: 0.6922)
+            Código:     D004833
+            Hierarquia: Doenças › C10.228.140.490.360.290
+            Tree IDs:   C10.228.140.490.360.290, C10.228.140.490.493.375
+            EN:         Epilepsy, Temporal Lobe
+            Nota:       Forma de epilepsia relacionada à localização (focal), caracterizada por ataques recidivantes que surgem de focos dentro do lobo temporal, ma…
+
+        [6] Epilepsia Reflexa  (sim: 0.6896)
+            Código:     D020195
+            Hierarquia: Doenças › C10.228.140.490.450
+            Tree IDs:   C10.228.140.490.450
+            EN:         Epilepsy, Reflex
+            Nota:       Subtipo de epilepsia caracterizado por ataques consistentemente provocados por determinados estímulos específicos. Estímulos auditoriais, vi…
+
+        [7] Síndromes Epilépticas  (sim: 0.6856)
+            Código:     D000073376
+            Hierarquia: Doenças › C10.228.140.490.493
+            Tree IDs:   C10.228.140.490.493
+            EN:         Epileptic Syndromes
+            Nota:       CRISES EPILÉPTICAS semelhantes em tipo e idade de início que possuem outras características semelhantes (por exemplo, curso clínico, achados…
+
+        [8] Epilepsia Parcial Contínua  (sim: 0.6850)
+            Código:     D017036
+            Hierarquia: Doenças › C10.597.742.785.260
+            Tree IDs:   C10.597.742.785.260, C23.888.592.742.785.260
+            EN:         Epilepsia Partialis Continua
+            Nota:       Variante de EPILEPSIA caracterizada por um movimento espasmódico focal contínuo de uma parte do corpo por um período de horas, dias, ou mesm…
+
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+            ~/workspace$ node scripts/decs-embed-search.mjs "Mioclonia" --limit 8
+            ⏳ Vetorizando: "Mioclonia"
+            ✓ Embedding gerado (3072 dims)
+            ✓ 8 resultado(s) [min-sim: 0.15]
+
+
+            [1] Mioclonia  (sim: 0.7504)
+                Código:     D009207
+                Hierarquia: Doenças › C10.597.350.500
+                Tree IDs:   C10.597.350.500, C23.888.592.350.500
+                EN:         Myoclonus
+                Nota:       Contrações involuntárias semelhantes a choque, irregulares no ritmo e na amplitude, seguidas por relaxamento de um músculo ou grupo de múscu…
+
+            [2] Epilepsias Mioclônicas  (sim: 0.7461)
+                Código:     D004831
+                Hierarquia: Doenças › C10.228.140.490.375.130
+                Tree IDs:   C10.228.140.490.375.130, C10.228.140.490.493.063
+                EN:         Epilepsies, Myoclonic
+                Nota:       Grupo clinicamente diverso de síndromes epilépticas caracterizadas tanto por convulsões mioclônicas ou por mioclonia em associação com outro…
+
+            [3] Epilepsia Mioclônica Juvenil  (sim: 0.7341)
+                Código:     D020190
+                Hierarquia: Doenças › C10.228.140.490.375.130.670
+                Tree IDs:   C10.228.140.490.375.130.670, C10.228.140.490.493.063.670
+                EN:         Myoclonic Epilepsy, Juvenile
+                Nota:       Transtorno caracterizado pelo início de mioclonia na adolescência, um aumento marcante na incidência de ataques tipo ausência (ver EPILEPSIA…
+
+            [4] Hiperecplexia  (sim: 0.7030)
+                Código:     D000071017
+                Hierarquia: Doenças › C10.228.590
+                Tree IDs:   C10.228.590
+                EN:         Hyperekplexia
+                Nota:       Distúrbio neurológico caracterizado por uma reação sobressaltada excessiva com REFLEXO ANORMAL, ABALOS MIOCLÔNICOS e HIPERTONIA MUSCULAR.
+
+            [5] Epilepsias Mioclônicas Progressivas  (sim: 0.7025)
+                Código:     D020191
+                Hierarquia: Doenças › C10.228.140.490.375.130.650
+                Tree IDs:   C10.228.140.490.375.130.650, C10.228.140.490.493.063.650
+                EN:         Myoclonic Epilepsies, Progressive
+                Nota:       Grupo heterogêneo de transtornos principalmente familiares, caracterizados por crises mioclônicas, tônico-clônicos, ataxia, deterioração int…
+
+            [6] Dissinergia Cerebelar Mioclônica  (sim: 0.6972)
+                Código:     D002527
+                Hierarquia: Doenças › C10.228.140.252.700.250
+                Tree IDs:   C10.228.140.252.700.250, C10.228.854.787.500, C10.574.500.825.250, C16.320.400.780.500
+                EN:         Myoclonic Cerebellar Dyssynergia
+                Nota:       Afecção caracterizada por ATAXIA CEREBELAR progressiva combinada com MIOCLONIA, normalmente se apresentando na terceira década de vida ou ma…
+
+            [7] Epilepsia Tipo Ausência  (sim: 0.6939)
+                Código:     D004832
+                Hierarquia: Doenças › C10.228.140.490.375.260
+                Tree IDs:   C10.228.140.490.375.260, C10.228.140.490.493.125
+                EN:         Epilepsy, Absence
+                Nota:       Transtorno de convulsão que geralmente ocorre na infância caracterizado por descargas cerebrais elétricas rítmicas de início generalizado. O…
+
+            [8] Mioquimia  (sim: 0.6875)
+                Código:     D020385
+                Hierarquia: Doenças › C10.597.613.650
+                Tree IDs:   C10.597.613.650, C23.888.592.608.650
+                EN:         Myokymia
+                Nota:       Contrações rápidas e sucessivas das unidades motoras associadas com lesão nervosa crônica. As descargas provêm dos aspectos periféricos dos …
+
+                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+                ~/workspace$ node scripts/decs-embed-search.mjs "Espasmos Infantis" --limit 8
+                ⏳ Vetorizando: "Espasmos Infantis"
+                ✓ Embedding gerado (3072 dims)
+                ✓ 8 resultado(s) [min-sim: 0.15]
+
+
+                [1] Espasmos Infantis  (sim: 0.7802)
+                    Código:     D013036
+                    Hierarquia: Doenças › C10.228.140.490.375.760
+                    Tree IDs:   C10.228.140.490.375.760, C10.228.140.490.493.875
+                    EN:         Spasms, Infantile
+                    Nota:       Síndrome epiléptica caracterizada pela tríade de espasmos infantis, hipsarritmia e interrupção do desenvolvimento psicomotor no início dos a…
+
+                [2] Espasmo  (sim: 0.6945)
+                    Código:     D013035
+                    Hierarquia: Doenças › C10.597.613.750
+                    Tree IDs:   C10.597.613.750, C23.888.592.608.750
+                    EN:         Spasm
+                    Nota:       Contração involuntária de um músculo ou grupo muscular. Os espasmos podem envolver os tipos de MÚSCULO ESQUELÉTICO ou de MÚSCULO LISO.
+
+                [3] Tetania  (sim: 0.6944)
+                    Código:     D013746
+                    Hierarquia: Doenças › C10.597.613.875
+                    Tree IDs:   C10.597.613.875, C18.452.174.509.700, C23.888.592.608.875
+                    EN:         Tetany
+                    Nota:       Transtorno caracterizado por puxões musculares, cãibras e espasmo carpopedal e, quando grave, laringoespasmo e convulsões. Este estado está …
+
+                [4] Epilepsia Neonatal Benigna  (sim: 0.6942)
+                    Código:     D020936
+                    Hierarquia: Doenças › C10.228.140.490.370
+                    Tree IDs:   C10.228.140.490.370, C16.614.258
+                    EN:         Epilepsy, Benign Neonatal
+                    Nota:       Afecção marcada por ataques recidivantes que ocorrem durante as primeiras 4-6 semanas de vida, apesar de um curso neonatal outrora benigno. …
+
+                [5] Paralisia Cerebral  (sim: 0.6938)
+                    Código:     D002547
+                    Hierarquia: Doenças › C10.228.140.140.254
+                    Tree IDs:   C10.228.140.140.254
+                    EN:         Cerebral Palsy
+                    Nota:       Grupo heterogêneo de transtornos motores não progressivos causados por lesões cerebrais crônicas, que se originam no período pré-natal, perí…
+
+                [6] Epilepsia Tipo Ausência  (sim: 0.6800)
+                    Código:     D004832
+                    Hierarquia: Doenças › C10.228.140.490.375.260
+                    Tree IDs:   C10.228.140.490.375.260, C10.228.140.490.493.125
+                    EN:         Epilepsy, Absence
+                    Nota:       Transtorno de convulsão que geralmente ocorre na infância caracterizado por descargas cerebrais elétricas rítmicas de início generalizado. O…
+
+                [7] Espasticidade Muscular  (sim: 0.6783)
+                    Código:     D009128
+                    Hierarquia: Doenças › C05.651.512
+                    Tree IDs:   C05.651.512, C10.597.613.550.550, C23.888.592.608.550.550
+                    EN:         Muscle Spasticity
+                    Nota:       Forma de hipertonia muscular associada com DOENÇA DOS NEURÔNIOS MOTORES superiores. A resistência ao estiramento passivo de um músculo espás…
+
+                [8] Laringismo  (sim: 0.6770)
+                    Código:     D007826
+                    Hierarquia: Doenças › C08.360.895.500
+                    Tree IDs:   C08.360.895.500, C08.618.980.500, C09.400.895.500
+                    EN:         Laryngismus
+                    Nota:       Distúrbio em que os músculos adutores das PREGAS VOCAIS apresentam atividade aumentada, o que leva a espasmo laringeo. O laringismo causa o …
+
+                    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+                    ~/workspace$ node scripts/decs-embed-search.mjs "Síndromes Epilépticas" --limit 8
+                    ⏳ Vetorizando: "Síndromes Epilépticas"
+                    ✓ Embedding gerado (3072 dims)
+                    ✓ 8 resultado(s) [min-sim: 0.15]
+
+
+                    [1] Síndromes Epilépticas  (sim: 0.8288)
+                        Código:     D000073376
+                        Hierarquia: Doenças › C10.228.140.490.493
+                        Tree IDs:   C10.228.140.490.493
+                        EN:         Epileptic Syndromes
+                        Nota:       CRISES EPILÉPTICAS semelhantes em tipo e idade de início que possuem outras características semelhantes (por exemplo, curso clínico, achados…
+
+                    [2] Epilepsias Mioclônicas  (sim: 0.7622)
+                        Código:     D004831
+                        Hierarquia: Doenças › C10.228.140.490.375.130
+                        Tree IDs:   C10.228.140.490.375.130, C10.228.140.490.493.063
+                        EN:         Epilepsies, Myoclonic
+                        Nota:       Grupo clinicamente diverso de síndromes epilépticas caracterizadas tanto por convulsões mioclônicas ou por mioclonia em associação com outro…
+
+                    [3] Síndrome de Lennox-Gastaut  (sim: 0.7554)
+                        Código:     D065768
+                        Hierarquia: Doenças › C10.228.140.490.493.750
+                        Tree IDs:   C10.228.140.490.493.750, C16.320.495
+                        EN:         Lennox Gastaut Syndrome
+                        Nota:       Síndrome epiléptica de início na infância.
+
+                    [4] Convulsões  (sim: 0.7549)
+                        Código:     D012640
+                        Hierarquia: Doenças › C10.597.742
+                        Tree IDs:   C10.597.742, C23.888.592.742
+                        EN:         Seizures
+                        Nota:       Distúrbios clínicos ou subclínicos da função cortical, devidos à descarga súbita, anormal, excessiva e desorganizada de células cerebrais. A…
+
+                    [5] Epilepsia Generalizada  (sim: 0.7512)
+                        Código:     D004829
+                        Hierarquia: Doenças › C10.228.140.490.375
+                        Tree IDs:   C10.228.140.490.375
+                        EN:         Epilepsy, Generalized
+                        Nota:       Afecções recorrentes caracterizadas por crises epilépticas que surgem difusa e simultaneamente dos dois hemisférios do cérebro. A classifica…
+
+                    [6] Epilepsia  (sim: 0.7478)
+                        Código:     D004827
+                        Hierarquia: Doenças › C10.228.140.490
+                        Tree IDs:   C10.228.140.490
+                        EN:         Epilepsy
+                        Nota:       Transtorno caracterizado por episódios recorrentes de disfunção cerebral paroxística, devido a súbita descarga neuronal excessiva e desorden…
+
+                    [7] Epilepsia Rolândica  (sim: 0.7434)
+                        Código:     D019305
+                        Hierarquia: Doenças › C10.228.140.490.360.280
+                        Tree IDs:   C10.228.140.490.360.280, C10.228.140.490.493.250
+                        EN:         Epilepsy, Rolandic
+                        Nota:       Síndrome epiléptica parcial, de herança autossômica dominante, com início entre os 3 e 13 anos de idade. Os surtos são caracterizados por PA…
+
+                    [8] Estado Epiléptico  (sim: 0.7408)
+                        Código:     D013226
+                        Hierarquia: Doenças › C10.597.742.785
+                        Tree IDs:   C10.597.742.785, C23.888.592.742.785
+                        EN:         Status Epilepticus
+                        Nota:       Ataque prolongado ou ataques repetidos com frequência suficiente para evitar a recuperação entre os episódios, que ocorrem por um período de…
+
+                        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+                        ~/workspace$ node scripts/decs-embed-search.mjs "Canal de sódio disparado por voltagem NAV1.1" --limit 8
+                        ⏳ Vetorizando: "Canal de sódio disparado por voltagem NAV1.1"
+                        ✓ Embedding gerado (3072 dims)
+                        ✓ 8 resultado(s) [min-sim: 0.15]
+
+
+                        [1] Canal de Sódio Disparado por Voltagem NAV1.1  (sim: 0.8140)
+                            Código:     D062550
+                            Hierarquia: Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100
+                            Tree IDs:   D12.776.157.530.400.875.750.100, D12.776.543.550.450.875.750.100, D12.776.543.585.400.875.750.100, D12.776.631.960.100
+                            EN:         NAV1.1 Voltage-Gated Sodium Channel
+                            Nota:       Subtipo de canal de sódio disparado por voltagem predominantemente expresso no SISTEMA NERVOSO CENTRAL. Defeitos no gene SCN1A que codifica …
+
+                        [2] Canal de Sódio Disparado por Voltagem NAV1.3  (sim: 0.7813)
+                            Código:     D062552
+                            Hierarquia: Compostos Químicos e Drogas › D12.776.157.530.400.875.750.300
+                            Tree IDs:   D12.776.157.530.400.875.750.300, D12.776.543.550.450.875.750.300, D12.776.543.585.400.875.750.300, D12.776.631.960.300
+                            EN:         NAV1.3 Voltage-Gated Sodium Channel
+                            Nota:       Subtipo de canal de sódio disparado por voltagem encontrado em tecido neural que medeia a PERMEABILIDADE de membranas excitáveis ao íon sódi…
+
+                        [3] Canal de Sódio Disparado por Voltagem NAV1.9  (sim: 0.7804)
+                            Código:     D062558
+                            Hierarquia: Compostos Químicos e Drogas › D12.776.157.530.400.875.750.900
+                            Tree IDs:   D12.776.157.530.400.875.750.900, D12.776.543.550.450.875.750.900, D12.776.543.585.400.875.750.900, D12.776.631.960.900
+                            EN:         NAV1.9 Voltage-Gated Sodium Channel
+                            Nota:       Subtipo de canal de sódio disparado por sódio encontrado em neurônios do SISTEMA NERVOSO e gânglios da raiz dorsal (ver GÂNGLIOS ESPINAIS). …
+
+                        [4] Canal de Sódio Disparado por Voltagem NAV1.2  (sim: 0.7712)
+                            Código:     D062551
+                            Hierarquia: Compostos Químicos e Drogas › D12.776.157.530.400.875.750.200
+                            Tree IDs:   D12.776.157.530.400.875.750.200, D12.776.543.550.450.875.750.200, D12.776.543.585.400.875.750.200, D12.776.631.960.200
+                            EN:         NAV1.2 Voltage-Gated Sodium Channel
+                            Nota:       Subtipo de canal de sódio disparado por voltagem que medeia a permeabilidade de membranas excitáveis ao íon sódio. Defeitos no gene SCN2A qu…
+
+                        [5] Canais de Sódio Disparados por Voltagem  (sim: 0.7597)
+                            Código:     D061566
+                            Hierarquia: Compostos Químicos e Drogas › D12.776.157.530.400.875.750
+                            Tree IDs:   D12.776.157.530.400.875.750, D12.776.543.550.450.875.750, D12.776.543.585.400.875.750, D12.776.631.960
+                            EN:         Voltage-Gated Sodium Channels
+                            Nota:       Família de proteínas de membrana que conduzem íons SÓDIO seletivamente devido a alterações na diferença de POTENCIAIS DA MEMBRANA. Possuem c…
+
+                        [6] Canal de Sódio Disparado por Voltagem NAV1.4  (sim: 0.7586)
+                            Código:     D062553
+                            Hierarquia: Compostos Químicos e Drogas › D12.776.157.530.400.875.750.400
+                            Tree IDs:   D12.776.157.530.400.875.750.400, D12.776.210.500.675, D12.776.543.550.450.875.750.400, D12.776.543.585.400.875.750.400
+                            EN:         NAV1.4 Voltage-Gated Sodium Channel
+                            Nota:       Subtipo de canal de sódio disparado por voltagem que medeia a PERMEABILIDADE de FIBRAS MUSCULARES ESQUELÉTICOS. Defeitos no gene SCN4A que c…
+
+                        [7] Canal de Sódio Disparado por Voltagem NAV1.7  (sim: 0.7575)
+                            Código:     D062556
+                            Hierarquia: Compostos Químicos e Drogas › D12.776.157.530.400.875.750.700
+                            Tree IDs:   D12.776.157.530.400.875.750.700, D12.776.543.550.450.875.750.700, D12.776.543.585.400.875.750.700, D12.776.631.960.700
+                            EN:         NAV1.7 Voltage-Gated Sodium Channel
+                            Nota:       Subtipo de canal de sódio encontrado amplamente expresso em neurônios nociceptivos sensoriais primários. Defeitos no gene SCN9A, que codific…
+
+                        [8] Canal de Sódio Disparado por Voltagem NAV1.8  (sim: 0.7560)
+                            Código:     D062559
+                            Hierarquia: Compostos Químicos e Drogas › D12.776.157.530.400.875.750.800
+                            Tree IDs:   D12.776.157.530.400.875.750.800, D12.776.543.550.450.875.750.800, D12.776.543.585.400.875.750.800, D12.776.631.960.800
+                            EN:         NAV1.8 Voltage-Gated Sodium Channel
+                            Nota:       Subtipo de canal de sódio disparado por voltagem expresso em nociceptores, inclusive nos neurônios sensoriais espinais e trigêmeos. Desempen…
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+~/workspace$ node --env-file=.env.local scripts/decs-entry-terms-search.mjs "Síndrome de West"
+⏳ Buscando entry_terms [substring]: "Síndrome de West"
+✓ 1 descritor(es) encontrado(s) [limit: 20]
+
+
+[1] Espasmos Infantis  [D013036]
+    EN:           Spasms, Infantile
+    Hierarquia:   Doenças › C10.228.140.490.375.760
+    Tree IDs:     C10.228.140.490.375.760, C10.228.140.490.493.875
+    Casou em:     "«Síndrome de West»"
+    Total termos: 68
+    Nota:         Síndrome epiléptica caracterizada pela tríade de espasmos infantis, hipsarritmia e interrupção do desenvolvimento psicomotor no início dos ataques. A maioria se…
+~/workspace$ node --env-file=.env.local scripts/decs-entry-terms-search.mjs "Hipsarritmia"
+⏳ Buscando entry_terms [substring]: "Hipsarritmia"
+✓ 1 descritor(es) encontrado(s) [limit: 20]
+
+
+[1] Espasmos Infantis  [D013036]
+    EN:           Spasms, Infantile
+    Hierarquia:   Doenças › C10.228.140.490.375.760
+    Tree IDs:     C10.228.140.490.375.760, C10.228.140.490.493.875
+    Casou em:     "Síndrome epiléptica caracterizada pela tríade de espasmos infantis, «hipsarritmia» e interrupção do desenvolvimento psicomotor no início dos ataques. A maioria se manifesta entre os 3 e 12 meses de idade, com espasmos constituídos de combinações de movimentos flexores ou extensores breves da cabeça, tronco e membros. A afecção é dividida em duas formas: criptogênica (idiopática) e sintomática (secundária a um processo de doença conhecido, como infecções intrauterinas, anormalidades do sistema nervoso, DOENÇAS CEREBRAIS METABÓLICAS CONGÊNITAS, prematuridade, asfixia perinatal, ESCLEROSE TUBEROSA, etc.). (Tradução livre do original: Menkes, Textbook of Child Neurology, 5th ed, pp744-8)", "«Hipsarritmia»[Hypsarrhythmia]", "«Hipsarritmia»"
+    Total termos: 68
+    Nota:         Síndrome epiléptica caracterizada pela tríade de espasmos infantis, hipsarritmia e interrupção do desenvolvimento psicomotor no início dos ataques. A maioria se…
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% JSON ARQUIVOS DE EMBEDDING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{
+  "embedding_files": {
+    "lib": [
+      {
+        "path": "lib/embeddings.ts",
+        "role": "Central de embeddings",
+        "exports": ["generateEmbedding", "buildQuestionText", "semanticSearchQuestions", "findSimilarQuestions", "vectorToString", "ensureVectorExtension", "ensureEmbeddingColumn", "ensureEmbeddingIndex"],
+        "model": "gemini-embedding-001",
+        "dims": 3072,
+        "backend": "pgvector",
+        "relevance": "EXTREMELLY HIGH"
+      },
+      {
+        "path": "lib/pinecone.ts",
+        "role": "Integração com Pinecone (backend gerenciado)",
+        "exports": ["upsertQuestionEmbedding", "queryPineconeSimilar", "getPineconeIndexStats"],
+        "index": "medmind-questions",
+        "backend": "pinecone",
+        "relevance": "EXTREMELLY LOW"
+      },
+      {
+        "path": "lib/decs-pipeline.ts",
+        "role": "Pipeline de classificação DeCS — inclui busca vetorial local nos descritores",
+        "exports": ["searchDeCSLocal", "searchDeCSCandidates", "buildHierarchyPath", "runDeCSPipeline"],
+        "backend": "pgvector (decs_descriptors)",
+        "relevance": "EXTREMELLY HIGH"
+      },
+      {
+        "path": "lib/decs-pipeline-v2.ts",
+        "role": "Pipeline DeCS v2 com RAG — busca vetorial por conceito individualmente",
+        "exports": ["runDeCSPipelineV2"],
+        "backend": "pgvector (decs_descriptors)",
+        "relevance": "HIGH"
+      },
+      {
+        "path": "lib/enrichment.ts",
+        "role": "Pipeline de enriquecimento de questões e notas",
+        "backend": "pgvector",
+        "relevance": "PROBABLY HIGH"
+      }
+    ],
+    "api_routes": [
+      {
+        "path": "app/api/admin/embed-batch/route.ts",
+        "methods": ["GET", "POST"],
+        "get": "Progresso do batch (contagem pgvector + Pinecone)",
+        "post": "Dispara scripts/batch-embed-questions.mjs como processo detached",
+        "relevance" : "DANGEROUS to the workflow (and the wallet)"
+      },
+      {
+        "path": "app/api/admin/embed-notes/route.ts",
+        "methods": ["POST"],
+        "post": "Gera embeddings para notas do usuário"
+      },
+      {
+        "path": "app/api/admin/embed-decs/route.ts",
+        "methods": ["POST"],
+        "post": "Gera embeddings para descritores DeCS",
+        "relevance": "EXTREMELLY HIGH"
+      },
+      {
+        "path": "app/api/questions/[id]/embedding/route.ts",
+        "methods": ["GET", "POST"],
+        "get": "Verifica se a questão tem embedding",
+        "post": "Gera e salva embedding de uma questão específica (RETRIEVAL_DOCUMENT)",
+        "relevance": "EXTREMELLY HIGH"
+      },
+      {
+        "path": "app/api/questions/[id]/similar/route.ts",
+        "methods": ["GET"],
+        "get": "Questões similares — Pinecone como primário, pgvector como fallback"
+      },
+      {
+        "path": "app/api/questions/semantic-search/route.ts",
+        "methods": ["GET"],
+        "get": "Busca semântica com expansão de query via Gemini Flash antes de vetorizar"
+      },
+      {
+        "path": "app/api/notes/[id]/similar/route.ts",
+        "methods": ["GET"],
+        "get": "Questões semanticamente similares a uma nota"
+      },
+      {
+        "path": "app/api/pinecone/status/route.ts",
+        "methods": ["GET"],
+        "get": "Stats do índice Pinecone (admin only)"
+      },
+      {
+        "path": "app/api/admin/decs-diagnose/route.ts",
+        "methods": ["GET"],
+        "get": "Diagnóstico do pipeline DeCS incluindo status de embeddings",
+        "relevance": "EXTREMELLY HIGH"
+      }
+    ],
+    "scripts": [
+      {
+        "path": "scripts/batch-embed-questions.mjs",
+        "role": "Batch principal — embeda todas as questões",
+        "task_type": "RETRIEVAL_DOCUMENT",
+        "backends": ["pgvector", "pinecone"],
+        "options": ["--limit N", "--concurrency N", "--delay N", "--no-resume", "--pinecone-batch N"],
+        "run": "node --env-file=.env.local scripts/batch-embed-questions.mjs"
+      },
+      {
+        "path": "scripts/embed-decs-descriptors.mjs",
+        "role": "Embeda os 35.033 descritores DeCS",
+        "task_type": "SEMANTIC_SIMILARITY",
+        "backends": ["pgvector (decs_descriptors)"],
+        "options": ["--limit N", "--concurrency N", "--delay N", "--no-resume"],
+        "run": "node --env-file=.env.local scripts/embed-decs-descriptors.mjs",
+        'relevance': 'EXTREMELY HIGH'
+      },
+      {
+        "path": "scripts/embed-notes.mjs",
+        "role": "Embeda notas do usuário",
+        "backends": ["pgvector"],
+        "run": "node --env-file=.env.local scripts/embed-notes.mjs"
+      },
+      {
+        "path": "scripts/decs-embed-search.mjs",
+        "role": "Busca semântica DeCS — recebe texto, vetoriza e retorna descritores",
+        "task_type": "SEMANTIC_SIMILARITY",
+        "requires_env": ["DATABASE_URL", "GEMINI_API_KEY"],
+        "run": "node scripts/decs-embed-search.mjs \"<texto>\"",
+        "options": ["--limit N", "--min-similarity F", "--json"]
+      },
+      {
+        "path": "scripts/decs-search.mjs",
+        "role": "Busca DeCS por texto (ILIKE) ou vetor pré-computado (sem API)",
+        "requires_env": ["DATABASE_URL"],
+        "run": "node scripts/decs-search.mjs --term \"<texto>\"",
+        "options": ["--term", "--vector <arquivo.json>", "--limit N", "--min-similarity F", "--json"]
+      },
+      {
+        "path": "scripts/test-embedding-backends.mjs",
+        "role": "Testa pgvector e Pinecone lado a lado"
+      },
+      {
+        "path": "scripts/compute-similarities.mjs",
+        "role": "Calcula e persiste links de similaridade entre questões"
+      },
+      {
+        "path": "scripts/bootstrap-decs-similarity-readiness.mjs",
+        "role": "Verifica pré-condições para rodar similarity no DeCS"
+      },
+      {
+        "path": "scripts/debug-pipeline-steps.mjs",
+        "role": "Debug passo a passo do pipeline de classificação DeCS"
+      },
+      {
+        "path": "scripts/batch-decs-classify.mjs",
+        "role": "Classifica questões via DeCS em batch"
+      },
+      {
+        "path": "scripts/batch-decs-classify-notes.mjs",
+        "role": "Classifica notas via DeCS em batch"
+      },
+      {
+        "path": "scripts/batch-decs-ai-db.mjs",
+        "role": "Classifica questões DeCS usando agentes de IA"
+      },
+      {
+        "path": "scripts/batch-notes-decs-agents.mjs",
+        "role": "Classifica notas via agentes DeCS"
+      },
+      {
+        "path": "scripts/test-classification-sample.mjs",
+        "role": "Testa classificação em amostra de questões"
+      }
+    ],
+    "admin_pages": [
+      {
+        "path": "app/dashboard/admin/vectorization/page.tsx",
+        "role": "Painel de controle do batch de embeddings",
+        "features": ["progresso pgvector", "progresso Pinecone", "botão iniciar batch", "estatísticas do índice"]
+      },
+      {
+        "path": "app/dashboard/admin/decs-diagnose/page.tsx",
+        "role": "Diagnóstico do pipeline DeCS incluindo status de embeddings"
+      }
+    ],
+    "consumer_pages": [
+      {
+        "path": "app/dashboard/questions/page.tsx",
+        "uses": "Barra de busca semântica → /api/questions/semantic-search"
+      },
+      {
+        "path": "app/dashboard/questions/[id]/page.tsx",
+        "uses": "Seção Questões Similares → /api/questions/[id]/similar"
+      },
+      {
+        "path": "app/dashboard/notes/[id]/page.tsx",
+        "uses": "Questões similares à nota → /api/notes/[id]/similar"
+      }
+    ]
+  }
+}

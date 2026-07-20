@@ -170,10 +170,15 @@ export async function GET(request: NextRequest) {
     const filterRegiao = url.searchParams.get('regiao') ?? '';
     const filterAno    = url.searchParams.get('ano')    ?? '';
     const filterTipo   = url.searchParams.get('tipo')   ?? '';
+    const filterSearch = (url.searchParams.get('q') ?? url.searchParams.get('search') ?? '').trim();
 
     // Build WHERE clause
     const conditions: string[] = [];
     const params: unknown[] = [];
+    if (filterSearch) {
+      params.push(`%${filterSearch}%`);
+      conditions.push(`LOWER(nome) LIKE LOWER($${params.length})`);
+    }
     if (filterBanca)  { params.push(filterBanca);  conditions.push(`LOWER(banca)  = LOWER($${params.length})`); }
     if (filterRegiao) { params.push(filterRegiao); conditions.push(`regiao = $${params.length}`); }
     if (filterAno)    { params.push(filterAno);    conditions.push(`ano = $${params.length}`); }
@@ -252,76 +257,85 @@ export async function POST(request: NextRequest) {
     }
 
     const result: { id: number; nome: string; banca: string | null; regiao: string | null; ano: string | null; tipo: string | null; questions: { id: number; numero_na_prova: number }[]; skipped?: boolean }[] = [];
+    const provaErrors: { nome: string; reason: string }[] = [];
     let totalQuestoesImportadas = 0;
     let totalProvasIgnoradas = 0;
 
     for (const p of rawProvas) {
       const nome = String((p as { nome: string }).nome || 'Prova sem nome').trim();
-      const parsed = parseNomeProva(nome);
-      const pAny = p as Record<string, unknown>;
-      const banca = (pAny.banca != null && pAny.banca !== '') ? String(pAny.banca).trim() : (parsed.banca ?? null);
-      const regiao = (pAny.regiao != null && pAny.regiao !== '') ? String(pAny.regiao).trim() : (parsed.regiao ?? null);
-      const ano = (pAny.ano != null && pAny.ano !== '') ? String(pAny.ano).trim() : ((pAny.exam_year != null && pAny.exam_year !== '') ? String(pAny.exam_year).trim() : (parsed.ano ?? null));
-      const tipo = (pAny.tipo != null && pAny.tipo !== '') ? String(pAny.tipo).trim() : (pAny.exam_type != null && pAny.exam_type !== '' ? String(pAny.exam_type).trim() : (parsed.tipo ?? null));
+      try {
+        const parsed = parseNomeProva(nome);
+        const pAny = p as Record<string, unknown>;
+        const banca = (pAny.banca != null && pAny.banca !== '') ? String(pAny.banca).trim() : (parsed.banca ?? null);
+        const regiao = (pAny.regiao != null && pAny.regiao !== '') ? String(pAny.regiao).trim() : (parsed.regiao ?? null);
+        const ano = (pAny.ano != null && pAny.ano !== '') ? String(pAny.ano).trim() : ((pAny.exam_year != null && pAny.exam_year !== '') ? String(pAny.exam_year).trim() : (parsed.ano ?? null));
+        const tipo = (pAny.tipo != null && pAny.tipo !== '') ? String(pAny.tipo).trim() : (pAny.exam_type != null && pAny.exam_type !== '' ? String(pAny.exam_type).trim() : (parsed.tipo ?? null));
 
-      const existingProva = await query('SELECT id FROM provas WHERE nome = $1 LIMIT 1', [nome]);
-      if (existingProva.rows.length > 0) {
-        totalProvasIgnoradas++;
-        result.push({ id: existingProva.rows[0].id, nome, banca, regiao, ano, tipo, questions: [], skipped: true });
-        continue;
-      }
-
-      const provaResult = await query(
-        'INSERT INTO provas (nome, banca, regiao, ano, tipo) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-        [nome, banca, regiao, ano, tipo]
-      );
-      const provaId = provaResult.rows[0].id;
-
-      const questoes = Array.isArray((p as { questoes?: unknown[] }).questoes) ? (p as { questoes: unknown[] }).questoes : (Array.isArray((p as Record<string, unknown>).questions) ? (p as Record<string, unknown>).questions as unknown[] : []);
-      const normalized = mapQuestaoToOptions(questoes);
-      const questionIds: { id: number; numero_na_prova: number }[] = [];
-
-      for (const q of normalized) {
-        const optA = q.option_a || 'Alternativa A';
-        const optB = q.option_b || 'Alternativa B';
-        const imagesJson = q.images?.length ? JSON.stringify(q.images) : null;
-        const imagesMetaJson = q.images_meta?.length ? JSON.stringify(q.images_meta) : null;
-
-        let examYear: number | null = null;
-        if (ano) {
-          const parsedYear = parseInt(ano, 10);
-          examYear = isNaN(parsedYear) ? null : parsedYear;
+        const existingProva = await query('SELECT id FROM provas WHERE nome = $1 LIMIT 1', [nome]);
+        if (existingProva.rows.length > 0) {
+          totalProvasIgnoradas++;
+          result.push({ id: existingProva.rows[0].id, nome, banca, regiao, ano, tipo, questions: [], skipped: true });
+          continue;
         }
 
-        const questionNumber = isNaN(q.numero) ? 0 : q.numero;
-        const safeProvaId = isNaN(provaId) ? null : provaId;
-
-        const qResult = await query(
-          `INSERT INTO questions (statement, option_a, option_b, option_c, option_d, option_e, correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region, exam_type, prova_id, numero_na_prova, anulada, images_meta)
-           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19) RETURNING id`,
-          [
-            q.statement || '(Sem enunciado)',
-            optA, optB, q.option_c, q.option_d, q.option_e,
-            q.correct_answer, null, null, imagesJson, examYear,
-            banca, null, regiao, tipo, safeProvaId, questionNumber, q.anulada ?? false,
-            imagesMetaJson,
-          ]
+        const provaResult = await query(
+          'INSERT INTO provas (nome, banca, regiao, ano, tipo) VALUES ($1, $2, $3, $4, $5) RETURNING id',
+          [nome, banca, regiao, ano, tipo]
         );
-        questionIds.push({ id: qResult.rows[0].id, numero_na_prova: q.numero });
-        totalQuestoesImportadas++;
-      }
+        const provaId = provaResult.rows[0].id;
 
-      result.push({ id: provaId, nome, banca, regiao, ano, tipo, questions: questionIds });
+        const questoes = Array.isArray((p as { questoes?: unknown[] }).questoes) ? (p as { questoes: unknown[] }).questoes : (Array.isArray((p as Record<string, unknown>).questions) ? (p as Record<string, unknown>).questions as unknown[] : []);
+        const normalized = mapQuestaoToOptions(questoes);
+        const questionIds: { id: number; numero_na_prova: number }[] = [];
+
+        for (const q of normalized) {
+          const optA = q.option_a || 'Alternativa A';
+          const optB = q.option_b || 'Alternativa B';
+          const imagesJson = q.images?.length ? JSON.stringify(q.images) : null;
+          const imagesMetaJson = q.images_meta?.length ? JSON.stringify(q.images_meta) : null;
+
+          let examYear: number | null = null;
+          if (ano) {
+            const parsedYear = parseInt(ano, 10);
+            examYear = isNaN(parsedYear) ? null : parsedYear;
+          }
+
+          const questionNumber = isNaN(q.numero) ? 0 : q.numero;
+          const safeProvaId = isNaN(provaId) ? null : provaId;
+
+          const qResult = await query(
+            `INSERT INTO questions (statement, option_a, option_b, option_c, option_d, option_e, correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region, exam_type, prova_id, numero_na_prova, anulada, images_meta)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19) RETURNING id`,
+            [
+              q.statement || '(Sem enunciado)',
+              optA, optB, q.option_c, q.option_d, q.option_e,
+              q.correct_answer, null, null, imagesJson, examYear,
+              banca, null, regiao, tipo, safeProvaId, questionNumber, q.anulada ?? false,
+              imagesMetaJson,
+            ]
+          );
+          questionIds.push({ id: qResult.rows[0].id, numero_na_prova: q.numero });
+          totalQuestoesImportadas++;
+        }
+
+        result.push({ id: provaId, nome, banca, regiao, ano, tipo, questions: questionIds });
+      } catch (provaError) {
+        console.error(`Erro ao importar prova "${nome}":`, provaError);
+        provaErrors.push({ nome, reason: provaError instanceof Error ? provaError.message : String(provaError) });
+      }
     }
 
     const provasNovas = result.filter((p) => !p.skipped).length;
     return NextResponse.json({
       success: true,
+      partial: provaErrors.length > 0,
       provas: result,
+      errors: provaErrors,
       summary: {
         provasImportadas: provasNovas,
         provasIgnoradas: totalProvasIgnoradas,
         questoesImportadas: totalQuestoesImportadas,
+        provasComErro: provaErrors.length,
       },
     });
   } catch (error) {

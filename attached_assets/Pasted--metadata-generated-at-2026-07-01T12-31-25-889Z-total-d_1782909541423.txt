@@ -1,0 +1,48 @@
+{
+  "metadata": {
+    "generated_at": "2026-07-01T12:31:25.889Z",
+    "total_descriptors": 200,
+    "success": 200,
+    "failed": 0,
+    "duration_seconds": 42.9,
+    "embedding_model": "gemini-embedding-001",
+    "embedding_task_type": "RETRIEVAL_DOCUMENT",
+    "embedding_dims": 3072,
+    "mandatory_terms": [
+      "espasmos infantis",  "síndrome de lennox-gastaut", "síndromes epilépticas", "epilepsia mioclônica juvenil",
+      "eletroencefalografia", "epilepsias mioclônicas"
+    ],
+    "mandatory_found": [
+      "Epilepsias Mioclônicas", "Eletroencefalografia", "Espasmos Infantis", 
+      "Epilepsia Mioclônica Juvenil", "Síndromes Epilépticas",
+      "Síndrome de Lennox-Gastaut"
+    ],
+    "errors": []
+  },
+  "descriptors": [
+    {
+      "mandatory": true,
+      "id": 6216,
+      "ui": "D004569",
+      "name_pt": "Eletroencefalografia",
+      "name_en": "Electroencephalography",
+      "scope_note": "Registro de correntes elétricas produzidas no cérebro, pela medida de eletrodos adaptados ao couro cabeludo, na superfície do cérebro, ou colocados no cérebro.",
+      "entry_terms": [
+        "Eletroencefalografia[Electroencephalography]",
+        "Registro de correntes elétricas produzidas no cérebro, pela medida de eletrodos adaptados ao couro cabeludo, na superfície do cérebro, ou colocados no cérebro.",
+        "Electroencephalography", "ELECTROENCEPHALOGR", "NLM (1966)",
+        "Eletroencefalografia", "EEG", "UNK (19XX)",
+        "Eletroencefalograma"
+      ],
+      "tree_numbers": [
+        "E01.370.376.300", "E01.370.405.245"
+      ],
+      "embedding_model": "gemini-embedding-001",
+      "embedding_task_type": "RETRIEVAL_DOCUMENT",
+      "embedding_dims": 3072,
+      "embedding_text_used": "Eletroencefalografia\n[Electroencephalography]\nSinônimos: Eletroencefalografia[Electroencephalography], Registro de correntes elétricas produzidas no cérebro, pela medida de eletrodos adaptados ao couro cabeludo, na superfície do cérebro, ou colocados no cérebro., Electroencephalography, ELECTROENCEPHALOGR, NLM (1966), Eletroencefalografia, EEG, UNK (19XX), Eletroencefalograma\nRegistro de correntes elétricas produzidas no cérebro, pela medida de eletrodos adaptados ao couro cabeludo, na superfície do cérebro, ou colocados no cérebro.\nHierarquia: E01.370.376.300 | E01.370.405.245",
+      "embedding_vector": [
+        0.0061415294, 0.00962699, 0.016399113, -0.05718987, -0.004884678, 0.01850761, 0.010793278, 0.00203015,
+        0.018931348, 0.010373744, 0.009149859, -0.017110767, -0.02936895, 0.023549082, 0.10979064, -0.0008522288,
+        -0.0028128927, 0.019259505, -0.002305931, -0.027054444, 0.033706512, 0.0006936453, -0.031513765, -0.0005935967,
+        -0.012882814, -0.002925789,

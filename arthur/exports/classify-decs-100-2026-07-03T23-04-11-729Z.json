@@ -1,0 +1,331 @@
+{
+  "generated_at": "2026-07-03T23:04:11.728Z",
+  "config": {
+    "limit": 1,
+    "offset": 0,
+    "skipClassified": true,
+    "save": false,
+    "delayMs": 0,
+    "out": null
+  },
+  "summary": {
+    "total_processed": 1,
+    "classified": 1,
+    "skipped_no_themes": 0,
+    "errors": 0,
+    "token_totals": {
+      "classifier_prompt_tokens": 1618,
+      "classifier_output_tokens": 30,
+      "classifier_total_tokens": 3139,
+      "embedding_calls": 0,
+      "embedding_billable_characters": 0,
+      "pipeline_other_prompt_tokens": 1618,
+      "pipeline_other_output_tokens": 30,
+      "pipeline_other_total_tokens": 3139,
+      "grand_total_tokens": 6278
+    }
+  },
+  "classified_questions": [
+    {
+      "question_id": 2195,
+      "statement_preview": "Em consulta de rotina, lactente de 10 meses de idade apresenta dois incisivos centrais inferiores e dois incisivos centr",
+      "descriptor_count": 6,
+      "descriptor_terms": [
+        "Dente Decíduo",
+        "Erupção Dentária",
+        "Bem-Estar do Lactente",
+        "Incisivo",
+        "Dente Canino",
+        "Dente Molar"
+      ],
+      "descriptors": [
+        {
+          "term": "Dente Decíduo",
+          "code": "D014094",
+          "tree_ids": [
+            "A14.549.167.860.700"
+          ],
+          "hierarchy_path": "Anatomia › A14.549.167.860.700",
+          "branches": [
+            {
+              "tree_id": "A14.549.167.860.700",
+              "hierarchy_path": "Anatomia › A14.549.167.860.700"
+            }
+          ],
+          "scope_note": "Os vinte dentes da primeira dentição, os quais caem e são substituídos pelos dentes permanentes, usualmente em torno dos seis anos de idade. Espera-se que a erupção de todos os dentes decíduos normalmente ocorra em torno de dois anos e meio de idade.",
+          "name_en": "Tooth, Deciduous",
+          "search_method": "text",
+          "role": "primary"
+        },
+        {
+          "term": "Erupção Dentária",
+          "code": "D014078",
+          "tree_ids": [
+            "G10.549.810"
+          ],
+          "hierarchy_path": "Fenômenos Biológicos › G10.549.810",
+          "branches": [
+            {
+              "tree_id": "G10.549.810",
+              "hierarchy_path": "Fenômenos Biológicos › G10.549.810"
+            }
+          ],
+          "scope_note": "Emergência de um dente de dentro do seu folículo no PROCESSO ALVEOLAR da MAXILA ou da MANDÍBULA na BOCA. (Tradução livre do original: Boucher's Clinical Dental Terminology, 4th ed)",
+          "name_en": "Tooth Eruption",
+          "search_method": "text",
+          "role": "primary"
+        },
+        {
+          "term": "Bem-Estar do Lactente",
+          "code": "D007229",
+          "tree_ids": [
+            "I01.880.787.539"
+          ],
+          "hierarchy_path": "Antropologia, Educação, Sociologia › I01.880.787.539",
+          "branches": [
+            {
+              "tree_id": "I01.880.787.539",
+              "hierarchy_path": "Antropologia, Educação, Sociologia › I01.880.787.539"
+            }
+          ],
+          "scope_note": "Esforços organizados por comunidades ou organizações para melhoria da saúde e do bem-estar do lactente.",
+          "name_en": "Infant Welfare",
+          "search_method": "text",
+          "role": "secondary"
+        },
+        {
+          "term": "Incisivo",
+          "code": "D007180",
+          "tree_ids": [
+            "A14.549.167.860.425"
+          ],
+          "hierarchy_path": "Anatomia › A14.549.167.860.425",
+          "branches": [
+            {
+              "tree_id": "A14.549.167.860.425",
+              "hierarchy_path": "Anatomia › A14.549.167.860.425"
+            }
+          ],
+          "scope_note": "Qualquer dos oito dentes frontais (quatro maxilares e quatro mandibulares) que apresentam uma lâmina incisiva aguda para o corte do alimento e uma única raiz, os quais são encontrados no homem, tanto nos dentes permanentes quanto nos decíduos.",
+          "name_en": "Incisor",
+          "search_method": "text",
+          "role": "secondary"
+        },
+        {
+          "term": "Dente Canino",
+          "code": "D003481",
+          "tree_ids": [
+            "A14.549.167.860.200"
+          ],
+          "hierarchy_path": "Anatomia › A14.549.167.860.200",
+          "branches": [
+            {
+              "tree_id": "A14.549.167.860.200",
+              "hierarchy_path": "Anatomia › A14.549.167.860.200"
+            }
+          ],
+          "scope_note": "O terceiro dente para a direita e para a esquerda da linha média da maxila e da mandíbula, situado entre o segundo DENTE INCISIVO e DENTE PRÉ-MOLAR. (tradução livre do original: Jablonski, Dictionary of Dentistry, 1992, p817)",
+          "name_en": "Cuspid",
+          "search_method": "text",
+          "role": "secondary"
+        },
+        {
+          "term": "Dente Molar",
+          "code": "D008963",
+          "tree_ids": [
+            "A14.549.167.860.525"
+          ],
+          "hierarchy_path": "Anatomia › A14.549.167.860.525",
+          "branches": [
+            {
+              "tree_id": "A14.549.167.860.525",
+              "hierarchy_path": "Anatomia › A14.549.167.860.525"
+            }
+          ],
+          "scope_note": "Os dentes mais posteriores em cada lado da mandíbula e maxila, totalizando oito na dentição decídua (2 de cada lado, superior e inferiormente), e usualmente doze na dentição permanente (3 de cada lado, superior e inferiormente). São dentes trituradores, apresentando coroas grandes e amplas superfícies de mastigação. (Tradução livre do original: Jablonski, Dictionary of Dentistry, 1992, p821)",
+          "name_en": "Molar",
+          "search_method": "text",
+          "role": "secondary"
+        }
+      ],
+      "themes": {
+        "primary": [
+          "Dentes Decíduos",
+          "Erupção Dentária"
+        ],
+        "secondary": [
+          "Lactente",
+          "Incisivo",
+          "Canino",
+          "Molar"
+        ]
+      },
+      "tokens": {
+        "classifier_prompt_tokens": 1618,
+        "classifier_output_tokens": 30,
+        "classifier_total_tokens": 3139,
+        "embedding_calls": 0,
+        "embedding_billable_characters": 0,
+        "pipeline_other_prompt_tokens": 1618,
+        "pipeline_other_output_tokens": 30,
+        "pipeline_other_total_tokens": 3139,
+        "grand_total_tokens": 6278
+      },
+      "elapsed_ms": 12211
+    }
+  ],
+  "all_results": [
+    {
+      "question_id": 2195,
+      "statement_preview": "Em consulta de rotina, lactente de 10 meses de idade apresenta dois incisivos centrais inferiores e dois incisivos centr",
+      "status": "classified",
+      "themes": {
+        "primary": [
+          "Dentes Decíduos",
+          "Erupção Dentária"
+        ],
+        "secondary": [
+          "Lactente",
+          "Incisivo",
+          "Canino",
+          "Molar"
+        ]
+      },
+      "descriptors": [
+        {
+          "term": "Dente Decíduo",
+          "code": "D014094",
+          "tree_ids": [
+            "A14.549.167.860.700"
+          ],
+          "hierarchy_path": "Anatomia › A14.549.167.860.700",
+          "branches": [
+            {
+              "tree_id": "A14.549.167.860.700",
+              "hierarchy_path": "Anatomia › A14.549.167.860.700"
+            }
+          ],
+          "scope_note": "Os vinte dentes da primeira dentição, os quais caem e são substituídos pelos dentes permanentes, usualmente em torno dos seis anos de idade. Espera-se que a erupção de todos os dentes decíduos normalmente ocorra em torno de dois anos e meio de idade.",
+          "name_en": "Tooth, Deciduous",
+          "search_method": "text",
+          "role": "primary"
+        },
+        {
+          "term": "Erupção Dentária",
+          "code": "D014078",
+          "tree_ids": [
+            "G10.549.810"
+          ],
+          "hierarchy_path": "Fenômenos Biológicos › G10.549.810",
+          "branches": [
+            {
+              "tree_id": "G10.549.810",
+              "hierarchy_path": "Fenômenos Biológicos › G10.549.810"
+            }
+          ],
+          "scope_note": "Emergência de um dente de dentro do seu folículo no PROCESSO ALVEOLAR da MAXILA ou da MANDÍBULA na BOCA. (Tradução livre do original: Boucher's Clinical Dental Terminology, 4th ed)",
+          "name_en": "Tooth Eruption",
+          "search_method": "text",
+          "role": "primary"
+        },
+        {
+          "term": "Bem-Estar do Lactente",
+          "code": "D007229",
+          "tree_ids": [
+            "I01.880.787.539"
+          ],
+          "hierarchy_path": "Antropologia, Educação, Sociologia › I01.880.787.539",
+          "branches": [
+            {
+              "tree_id": "I01.880.787.539",
+              "hierarchy_path": "Antropologia, Educação, Sociologia › I01.880.787.539"
+            }
+          ],
+          "scope_note": "Esforços organizados por comunidades ou organizações para melhoria da saúde e do bem-estar do lactente.",
+          "name_en": "Infant Welfare",
+          "search_method": "text",
+          "role": "secondary"
+        },
+        {
+          "term": "Incisivo",
+          "code": "D007180",
+          "tree_ids": [
+            "A14.549.167.860.425"
+          ],
+          "hierarchy_path": "Anatomia › A14.549.167.860.425",
+          "branches": [
+            {
+              "tree_id": "A14.549.167.860.425",
+              "hierarchy_path": "Anatomia › A14.549.167.860.425"
+            }
+          ],
+          "scope_note": "Qualquer dos oito dentes frontais (quatro maxilares e quatro mandibulares) que apresentam uma lâmina incisiva aguda para o corte do alimento e uma única raiz, os quais são encontrados no homem, tanto nos dentes permanentes quanto nos decíduos.",
+          "name_en": "Incisor",
+          "search_method": "text",
+          "role": "secondary"
+        },
+        {
+          "term": "Dente Canino",
+          "code": "D003481",
+          "tree_ids": [
+            "A14.549.167.860.200"
+          ],
+          "hierarchy_path": "Anatomia › A14.549.167.860.200",
+          "branches": [
+            {
+              "tree_id": "A14.549.167.860.200",
+              "hierarchy_path": "Anatomia › A14.549.167.860.200"
+            }
+          ],
+          "scope_note": "O terceiro dente para a direita e para a esquerda da linha média da maxila e da mandíbula, situado entre o segundo DENTE INCISIVO e DENTE PRÉ-MOLAR. (tradução livre do original: Jablonski, Dictionary of Dentistry, 1992, p817)",
+          "name_en": "Cuspid",
+          "search_method": "text",
+          "role": "secondary"
+        },
+        {
+          "term": "Dente Molar",
+          "code": "D008963",
+          "tree_ids": [
+            "A14.549.167.860.525"
+          ],
+          "hierarchy_path": "Anatomia › A14.549.167.860.525",
+          "branches": [
+            {
+              "tree_id": "A14.549.167.860.525",
+              "hierarchy_path": "Anatomia › A14.549.167.860.525"
+            }
+          ],
+          "scope_note": "Os dentes mais posteriores em cada lado da mandíbula e maxila, totalizando oito na dentição decídua (2 de cada lado, superior e inferiormente), e usualmente doze na dentição permanente (3 de cada lado, superior e inferiormente). São dentes trituradores, apresentando coroas grandes e amplas superfícies de mastigação. (Tradução livre do original: Jablonski, Dictionary of Dentistry, 1992, p821)",
+          "name_en": "Molar",
+          "search_method": "text",
+          "role": "secondary"
+        }
+      ],
+      "descriptor_count": 6,
+      "descriptor_terms": [
+        "Dente Decíduo",
+        "Erupção Dentária",
+        "Bem-Estar do Lactente",
+        "Incisivo",
+        "Dente Canino",
+        "Dente Molar"
+      ],
+      "tokens": {
+        "classifier_prompt_tokens": 1618,
+        "classifier_output_tokens": 30,
+        "classifier_total_tokens": 3139,
+        "embedding_calls": 0,
+        "embedding_billable_characters": 0,
+        "pipeline_other_prompt_tokens": 1618,
+        "pipeline_other_output_tokens": 30,
+        "pipeline_other_total_tokens": 3139,
+        "grand_total_tokens": 6278
+      },
+      "pipeline_stats": {
+        "dropped_by_filter": 0,
+        "dropped_by_gemini": 0
+      },
+      "elapsed_ms": 12211
+    }
+  ]
+}

@@ -1,10 +1,16 @@
 'use client';
 
+export interface NoteDeCSBranch {
+  tree_id: string;
+  hierarchy_path: string;
+}
+
 export interface NoteDeCSRecord {
   term: string;
   code: string;
   tree_ids?: string[];
   hierarchy_path?: string;
+  branches?: NoteDeCSBranch[];
   role?: 'primary' | 'secondary';
   scope_note?: string;
   name_en?: string;
@@ -58,9 +64,17 @@ export default function NoteDeCsDescriptorsTable({
                       {dp.code && (
                         <span className="block text-xs text-indigo-400 font-mono mt-0.5">{dp.code}</span>
                       )}
-                      {dp.hierarchy_path && (
+                      {dp.branches && dp.branches.length > 0 ? (
+                        <span className="block text-xs text-indigo-300 mt-0.5 space-y-0.5">
+                          {dp.branches.map((b) => (
+                            <span key={b.tree_id} className="block">
+                              {b.hierarchy_path} <span className="font-mono text-indigo-200">({b.tree_id})</span>
+                            </span>
+                          ))}
+                        </span>
+                      ) : dp.hierarchy_path ? (
                         <span className="block text-xs text-indigo-300 mt-0.5">{dp.hierarchy_path}</span>
-                      )}
+                      ) : null}
                       {dp.scope_note && (
                         <span className="block text-xs text-gray-400 mt-1 line-clamp-2">{dp.scope_note}</span>
                       )}
@@ -76,9 +90,17 @@ export default function NoteDeCsDescriptorsTable({
                       {ds.code && (
                         <span className="block text-xs text-slate-400 font-mono mt-0.5">{ds.code}</span>
                       )}
-                      {ds.hierarchy_path && (
+                      {ds.branches && ds.branches.length > 0 ? (
+                        <span className="block text-xs text-slate-300 mt-0.5 space-y-0.5">
+                          {ds.branches.map((b) => (
+                            <span key={b.tree_id} className="block">
+                              {b.hierarchy_path} <span className="font-mono text-slate-200">({b.tree_id})</span>
+                            </span>
+                          ))}
+                        </span>
+                      ) : ds.hierarchy_path ? (
                         <span className="block text-xs text-slate-300 mt-0.5">{ds.hierarchy_path}</span>
-                      )}
+                      ) : null}
                       {ds.scope_note && (
                         <span className="block text-xs text-gray-400 mt-1 line-clamp-2">{ds.scope_note}</span>
                       )}

@@ -3,14 +3,39 @@ import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { getRuntimeAgent } from '@/lib/ai-agent-runtime';
 import { GoogleGenAI } from '@google/genai';
-import { runDeCSPipeline, buildDeCSQuestionText, type DeCSRecord, type DeCSThemes } from '@/lib/decs-pipeline';
-import { buildPipelineFrontendExposure } from '@/lib/decs-pipeline-exposure';
+import { runDeCSPipeline, buildPipelineFrontendExposure, type DeCSRecord, type DeCSThemes } from '@/lib/decs-pipeline';
 import { saveClassificationArtifact } from '@/lib/decs-classification-storage';
 
 export const runtime = 'nodejs';
 
 async function ensureColumn() {
   await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_decs_descriptors TEXT`);
+}
+
+/** Monta o texto da questão para o classificador DeCS, incluindo gabarito quando houver. */
+function buildDeCSQuestionText(q: {
+  statement?: string | null;
+  option_a?: string | null;
+  option_b?: string | null;
+  option_c?: string | null;
+  option_d?: string | null;
+  option_e?: string | null;
+  correct_answer?: string | null;
+}): string {
+  const letter = String(q.correct_answer ?? '').trim().toUpperCase();
+  return [
+    'Enunciado:',
+    q.statement ?? '',
+    '',
+    'Alternativa A: ' + (q.option_a ?? ''),
+    'Alternativa B: ' + (q.option_b ?? ''),
+    q.option_c ? 'Alternativa C: ' + q.option_c : null,
+    q.option_d ? 'Alternativa D: ' + q.option_d : null,
+    q.option_e ? 'Alternativa E: ' + q.option_e : null,
+    letter ? `Gabarito: ${letter}` : null,
+  ]
+    .filter(Boolean)
+    .join('\n');
 }
 
 export async function POST(
@@ -52,8 +77,8 @@ export async function POST(
       correct_answer: question.correct_answer as string | null,
     });
 
+    // decs_validator desativado em 18/06/2026 — validação Gemini removida do pipeline V1
     const classifierAgent = await getRuntimeAgent('decs_classifier');
-    // question_terms_validator desativado no Gerar V1 — só classificador + busca DeCS
 
     const ai = new GoogleGenAI({ apiKey: geminiKey, apiVersion: 'v1beta' });
     const response = await ai.models.generateContent({
@@ -104,26 +129,20 @@ export async function POST(
       );
     }
 
-    const { descriptors, dropped_by_filter, dropped_by_gemini, term_trace, after_search } =
-      await runDeCSPipeline(
-        themes,
-        questionText,
-        decsKey,
-        geminiKey,
-        classifierAgent.model,
-        null, // sem question_terms_validator no Gerar V1
-      );
-
-    // Exposição para o frontend (sessão em memória). Não é gravada em questions.
-    const pipeline_exposure = buildPipelineFrontendExposure(
+    const { descriptors, dropped_by_filter, dropped_by_gemini, term_trace } = await runDeCSPipeline(
       themes,
-      term_trace,
-      after_search,
+      questionText,
+      decsKey,
+      geminiKey,
+      classifierAgent.model,
     );
+
+    const pipeline_exposure = buildPipelineFrontendExposure(themes, term_trace);
 
     const artifact = {
       result: descriptors,
       themes_identified: themes,
+      pipeline_exposure,
       pipeline_stats: {
         primary_terms: themes.primary.length,
         secondary_terms: themes.secondary.length,
@@ -137,8 +156,7 @@ export async function POST(
       'UPDATE questions SET ai_decs_descriptors = $1, updated_at = NOW() WHERE id = $2',
       [JSON.stringify(descriptors), params.id]
     );
-    // Artifact no disco/DB pode incluir o rastreio para debug; o frontend não o recarrega.
-    await saveClassificationArtifact(params.id, 'v1', { ...artifact, pipeline_exposure });
+    await saveClassificationArtifact(params.id, 'v1', artifact);
 
     return NextResponse.json({ ...artifact, pipeline_exposure });
   } catch (err: unknown) {
