@@ -50,6 +50,9 @@ export async function POST(
       question.option_c ? 'Alternativa C: ' + (question.option_c as string) : null,
       question.option_d ? 'Alternativa D: ' + (question.option_d as string) : null,
       question.option_e ? 'Alternativa E: ' + (question.option_e as string) : null,
+      question.correct_answer
+        ? `Gabarito: ${String(question.correct_answer).trim().toUpperCase()}`
+        : null,
     ]
       .filter(Boolean)
       .join('\n');

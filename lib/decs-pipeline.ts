@@ -18,6 +18,8 @@ export interface DeCSRecord {
   role?: "primary" | "secondary"; // importância temática
   scope_note?: string; // descrição do conceito
   name_en?: string; // nome em inglês
+  /** Origem da busca: textual, vetorial (pgvector) ou API BVS */
+  search_method?: "text" | "vector" | "bvs";
 }
 
 export interface DeCSThemes {
@@ -529,14 +531,20 @@ export async function runDeCSPipeline(
       // ── 1. Try local pgvector first ────────────────────────────────────────
       let rawCandidates: DeCSRecord[] = [];
       if (geminiKey && (await isLocalDeCSAvailable())) {
-        rawCandidates = await searchDeCSLocal(term, geminiKey, 5, 0.6);
+        rawCandidates = (await searchDeCSLocal(term, geminiKey, 5, 0.6)).map(
+          (c) => ({ ...c, search_method: "vector" as const }),
+        );
       }
 
       // ── 2. Fallback: BVS API ───────────────────────────────────────────────
       if (rawCandidates.length === 0) {
         const apiResults = await searchDeCSCandidates(term, decsKey, 5);
         rawCandidates = apiResults
-          .map((c) => ({ ...c, similarity: wordJaccard(term, c.term) }))
+          .map((c) => ({
+            ...c,
+            similarity: wordJaccard(term, c.term),
+            search_method: "bvs" as const,
+          }))
           .filter((c) => (c.similarity ?? 0) >= MIN_SIMILARITY)
           .sort((a, b) => (b.similarity ?? 0) - (a.similarity ?? 0));
       }

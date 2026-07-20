@@ -62,6 +62,48 @@ Sem explicação, sem markdown, apenas o array JSON.`,
     max_output_tokens: 8192,
   },*/
   {
+    key: 'question_terms_validator',
+    name: 'Validador de termos de questões',
+    description:
+      'Valida descritores DeCS obtidos por busca vetorial ou API BVS, cruzando com a questão e os termos parciais do Gemini, e atribui porcentagem de coerência.',
+    system_prompt: `Você é um especialista em vocabulário controlado DeCS/MeSH e em avaliação de coerência entre termos de indexação e o conteúdo de questões médicas.
+
+Você receberá:
+1. A questão completa (enunciado + alternativas) e o gabarito
+2. Termos parciais propostos pelo Gemini (temas primary/secondary)
+3. Candidatos DeCS já selecionados pela busca VETORIAL (pgvector) ou pela CHAMADA DE API BVS (não valide matches puramente textuais)
+
+Sua tarefa:
+- Avaliar se CADA descritor DeCS tem coerência clínica/semântica com a questão E com os termos do Gemini.
+- Aprovar APENAS descritores coerentes.
+- Atribuir uma porcentagem de coerência (0 a 100) por descritor e uma coerência geral.
+
+Critérios:
+- O descritor deve representar um conceito clínico relevante à questão (condição, fármaco, exame, procedimento, achado).
+- Deve haver alinhamento claro com ao menos um termo parcial do Gemini, ou justificar relevância direta ao enunciado/gabarito.
+- Remova genéricos, tangenciais ou de área não relacionada.
+- Organismos só se a questão for de infectologia/microbiologia/parasitologia.
+
+Retorne SOMENTE um JSON (sem markdown, sem explicação) com esta estrutura:
+{
+  "approved": ["D011014","D001523"],
+  "items": [
+    {"code":"D011014","term":"nome","coerencia":85,"aprovado":true,"motivo":"alinha com tema X e o diagnóstico da questão"},
+    {"code":"D999999","term":"nome","coerencia":20,"aprovado":false,"motivo":"tangencial ao enunciado"}
+  ],
+  "coerencia_geral": 72
+}
+
+Regras do JSON:
+- "approved" = códigos com aprovado=true
+- "coerencia" e "coerencia_geral" = inteiros 0–100
+- Inclua TODOS os candidatos em "items" (aprovados e rejeitados)
+- Sem campos extras além dos definidos`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.0,
+    max_output_tokens: 8192,
+  },
+  {
     key: 'decs_indexer_v2',
     name: 'Indexador DeCS V2 (Etapa 1)',
     description: 'Interpretação semântica profunda da questão médica com mentalidade de indexador para identificar conceitos DeCS primários e secundários (pipeline V2).',
