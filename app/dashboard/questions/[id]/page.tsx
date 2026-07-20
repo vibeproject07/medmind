@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { ArrowLeft, Edit, Image as ImageIcon, X, AlertTriangle, Ban, RotateCcw, Sparkles, Brain, ExternalLink, Loader2, Cpu } from 'lucide-react';
+import { ArrowLeft, Edit, Image as ImageIcon, X, AlertTriangle, Ban, RotateCcw, Sparkles, Brain, ExternalLink, Loader2, Cpu, ShieldCheck } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import DeCSAutocomplete from '@/components/Common/DeCSAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
@@ -71,6 +71,7 @@ interface DeCSRecord {
   role?: 'primary' | 'secondary';
   scope_note?: string;
   name_en?: string;
+  search_method?: 'text' | 'vector' | 'bvs';
 }
 
 interface DeCSV2Descriptor {
@@ -88,6 +89,27 @@ interface DeCSV2Descriptor {
 interface DeCSV2Result {
   decs_primary: DeCSV2Descriptor[];
   decs_secondary: DeCSV2Descriptor[];
+}
+
+interface DecsValidationItem {
+  code: string;
+  term: string;
+  coerencia: number;
+  aprovado: boolean;
+  motivo: string;
+  search_method?: 'text' | 'vector' | 'bvs';
+}
+
+interface DecsValidationResult {
+  coerencia_geral: number;
+  approved: DeCSRecord[];
+  rejected: DeCSRecord[];
+  items: DecsValidationItem[];
+  candidates_considered?: number;
+  skipped_textual?: number;
+  needs_manual_review?: boolean;
+  review_reason?: string;
+  is_coherent?: boolean;
 }
 
 interface SimilarQuestion {
@@ -136,6 +158,10 @@ export default function QuestionDetailPage() {
   const [aiDecsV2Error, setAiDecsV2Error] = useState<string | null>(null);
   const [aiDecsV2Result, setAiDecsV2Result] = useState<DeCSV2Result | null>(null);
   const [showDecsV2, setShowDecsV2] = useState(false);
+  const [aiDecsThemes, setAiDecsThemes] = useState<{ primary: string[]; secondary: string[] } | null>(null);
+  const [decsValidationLoading, setDecsValidationLoading] = useState(false);
+  const [decsValidationError, setDecsValidationError] = useState<string | null>(null);
+  const [decsValidationResult, setDecsValidationResult] = useState<DecsValidationResult | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [similarQuestions, setSimilarQuestions] = useState<SimilarQuestion[]>([]);
@@ -519,6 +545,8 @@ export default function QuestionDetailPage() {
     if (!question) return;
     setAiDecsLoading(true);
     setAiDecsError(null);
+    setDecsValidationResult(null);
+    setDecsValidationError(null);
     try {
       const token = localStorage.getItem('token');
       if (!token) return;
@@ -531,14 +559,61 @@ export default function QuestionDetailPage() {
         setAiDecsError(data.error || 'Erro ao gerar descritores IA.');
         return;
       }
+      const descriptors = data.result ?? data.descriptors ?? [];
       setQuestion((prev) =>
-        prev ? { ...prev, ai_decs_descriptors: data.result ?? data.descriptors ?? [] } : prev
+        prev ? { ...prev, ai_decs_descriptors: descriptors } : prev
       );
       setAiDecsPipelineExposure(data.pipeline_exposure ?? null);
+      if (data.themes_identified) {
+        setAiDecsThemes(data.themes_identified);
+      }
     } catch {
       setAiDecsError('Erro ao conectar com o servidor.');
     } finally {
       setAiDecsLoading(false);
+    }
+  };
+
+  const handleValidateAiDecs = async () => {
+    if (!question) return;
+    const hasV1 = (question.ai_decs_descriptors ?? []).length > 0;
+    if (!hasV1) {
+      setDecsValidationError('Execute "Gerar v1" antes de validar.');
+      return;
+    }
+    setDecsValidationLoading(true);
+    setDecsValidationError(null);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const res = await fetch(`/api/questions/${questionId}/decs-validate`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(aiDecsThemes ? { themes: aiDecsThemes } : {}),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setDecsValidationError(data.error || 'Erro na validação.');
+        return;
+      }
+      setDecsValidationResult({
+        coerencia_geral: data.coerencia_geral ?? data.result?.coerencia_geral ?? 0,
+        approved: data.approved ?? data.result?.approved ?? [],
+        rejected: data.rejected ?? data.result?.rejected ?? [],
+        items: data.items ?? data.result?.items ?? [],
+        candidates_considered: data.result?.candidates_considered,
+        skipped_textual: data.result?.skipped_textual,
+        needs_manual_review: data.result?.needs_manual_review,
+        review_reason: data.result?.review_reason,
+        is_coherent: data.result?.is_coherent,
+      });
+    } catch {
+      setDecsValidationError('Erro ao conectar com o servidor.');
+    } finally {
+      setDecsValidationLoading(false);
     }
   };
 
@@ -1263,6 +1338,23 @@ export default function QuestionDetailPage() {
                   {aiDecsLoading ? 'Gerando…' : 'Gerar v1'}
                 </button>
                 <button
+                  onClick={handleValidateAiDecs}
+                  disabled={
+                    decsValidationLoading ||
+                    aiDecsLoading ||
+                    (question.ai_decs_descriptors ?? []).length === 0
+                  }
+                  title={
+                    (question.ai_decs_descriptors ?? []).length === 0
+                      ? 'Execute Gerar v1 antes de validar'
+                      : 'Valida descritores vetoriais/API com question_terms_validator'
+                  }
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 transition"
+                >
+                  <ShieldCheck className="h-3.5 w-3.5" />
+                  {decsValidationLoading ? 'Validando…' : 'Validação'}
+                </button>
+                <button
                   onClick={handleGenerateAiDecsV2}
                   disabled={aiDecsV2Loading}
                   title="Pipeline v2: interpretação semântica profunda + busca RAG no banco DeCS + hierarquia completa"
@@ -1278,15 +1370,125 @@ export default function QuestionDetailPage() {
           {/* Erros */}
           {aiDecsError && <p className="text-red-500 text-sm mb-3">{aiDecsError}</p>}
           {aiDecsV2Error && <p className="text-red-500 text-sm mb-3">{aiDecsV2Error}</p>}
+          {decsValidationError && <p className="text-red-500 text-sm mb-3">{decsValidationError}</p>}
 
           <DeCSPipelineTracePanel exposure={aiDecsPipelineExposure} />
 
           {/* Loading states */}
-          {(aiDecsLoading || aiDecsV2Loading) && (
+          {(aiDecsLoading || aiDecsV2Loading || decsValidationLoading) && (
             <p className="text-sm text-indigo-500 italic mb-3">
               {aiDecsLoading && 'Executando pipeline v1…'}
               {aiDecsV2Loading && 'Executando pipeline v2 (RAG)…'}
+              {decsValidationLoading && 'Executando question_terms_validator…'}
             </p>
+          )}
+
+          {/* Resultado da validação */}
+          {decsValidationResult && (
+            <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50/60 p-4 space-y-3">
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="h-4 w-4 text-amber-700" />
+                  <h4 className="text-sm font-semibold text-amber-900">Validação — question_terms_validator</h4>
+                </div>
+                <span
+                  className={`inline-flex items-center px-2.5 py-1 rounded-full text-sm font-bold ${
+                    decsValidationResult.coerencia_geral >= 70
+                      ? 'bg-emerald-100 text-emerald-800'
+                      : decsValidationResult.coerencia_geral >= 40
+                        ? 'bg-amber-100 text-amber-900'
+                        : 'bg-red-100 text-red-800'
+                  }`}
+                >
+                  Coerência geral: {decsValidationResult.coerencia_geral}%
+                </span>
+                <span className="text-xs text-amber-800/80">
+                  {decsValidationResult.approved.length} aprovado(s) · {decsValidationResult.rejected.length} rejeitado(s)
+                  {decsValidationResult.skipped_textual
+                    ? ` · ${decsValidationResult.skipped_textual} textual(is) ignorado(s)`
+                    : ''}
+                  {decsValidationResult.is_coherent === true
+                    ? ' · coerente'
+                    : decsValidationResult.is_coherent === false
+                      ? ' · incoerente'
+                      : ''}
+                </span>
+              </div>
+
+              {decsValidationResult.needs_manual_review && (
+                <p className="text-sm text-amber-900 bg-amber-100/80 border border-amber-200 rounded-md px-3 py-2">
+                  Revisão manual sugerida
+                  {decsValidationResult.review_reason
+                    ? `: ${decsValidationResult.review_reason}`
+                    : '.'}
+                </p>
+              )}
+
+              {/* Barra visual */}
+              <div className="w-full h-2 rounded-full bg-amber-100 overflow-hidden">
+                <div
+                  className={`h-full transition-all ${
+                    decsValidationResult.coerencia_geral >= 70
+                      ? 'bg-emerald-500'
+                      : decsValidationResult.coerencia_geral >= 40
+                        ? 'bg-amber-500'
+                        : 'bg-red-500'
+                  }`}
+                  style={{ width: `${decsValidationResult.coerencia_geral}%` }}
+                />
+              </div>
+
+              {decsValidationResult.items.length > 0 && (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm border-collapse">
+                    <thead>
+                      <tr className="bg-white/70 text-left">
+                        <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800">Termo</th>
+                        <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800">Código</th>
+                        <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800">Origem</th>
+                        <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800">Coerência</th>
+                        <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800">Status</th>
+                        <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800">Motivo</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {decsValidationResult.items.map((item) => (
+                        <tr key={item.code} className="align-top bg-white/40">
+                          <td className="px-2 py-1.5 border border-amber-100 font-medium text-gray-800">{item.term}</td>
+                          <td className="px-2 py-1.5 border border-amber-100 font-mono text-xs text-gray-500">{item.code}</td>
+                          <td className="px-2 py-1.5 border border-amber-100 text-xs text-gray-600">
+                            {item.search_method === 'bvs'
+                              ? 'API BVS'
+                              : item.search_method === 'vector'
+                                ? 'Vetorial'
+                                : item.search_method === 'text'
+                                  ? 'Textual'
+                                  : '—'}
+                          </td>
+                          <td className="px-2 py-1.5 border border-amber-100">
+                            <span className="font-semibold text-amber-900">{item.coerencia}%</span>
+                          </td>
+                          <td className="px-2 py-1.5 border border-amber-100">
+                            <span
+                              className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${
+                                item.aprovado
+                                  ? 'bg-emerald-100 text-emerald-800'
+                                  : 'bg-red-100 text-red-700'
+                              }`}
+                            >
+                              {item.aprovado ? 'Aprovado' : 'Rejeitado'}
+                            </span>
+                          </td>
+                          <td className="px-2 py-1.5 border border-amber-100 text-xs text-gray-600">
+                            {item.motivo || '—'}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
           )}
 
           {/* Tabela comparativa — aparece sempre que ao menos um pipeline tem dados */}
