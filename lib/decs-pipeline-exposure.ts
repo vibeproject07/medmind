@@ -25,6 +25,9 @@ export interface TextSearchCandidateExposure {
   /** Preenchido somente quando o candidato é o aceito pela busca textual. */
   hierarchy_path?: string;
   branches?: DeCSRecord['branches'];
+  /** Regras aplicadas na comparação deste candidato. */
+  rules_applied?: string[];
+  accepted_candidate?: boolean;
 }
 
 export interface TextSearchLayerExposure {
@@ -35,6 +38,9 @@ export interface TextSearchLayerExposure {
   accepted: boolean;
   accept_reason?: string;
   accepted_descriptor?: DeCSRecord | null;
+  skipped?: boolean;
+  skip_reason?: string;
+  rules_summary?: string[];
 }
 
 export interface VectorSearchLayerExposure {
@@ -93,6 +99,9 @@ export function exposeTextSearchLayer(trace: DeCSPipelineTermTrace[]): TextSearc
     accepted: t.text_search.accepted,
     accept_reason: t.text_search.accept_reason,
     accepted_descriptor: t.text_search.accepted_descriptor ?? null,
+    skipped: t.text_search.skipped,
+    skip_reason: t.text_search.skip_reason,
+    rules_summary: t.text_search.rules_summary,
   }));
 }
 

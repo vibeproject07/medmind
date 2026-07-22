@@ -165,6 +165,32 @@ export async function PATCH(
     }
 
     const body = await request.json();
+
+    // Atualização parcial de descritores DeCS gerados por IA (ex.: remoção pós-validação)
+    if (Array.isArray(body.ai_decs_descriptors)) {
+      const existing = (await query('SELECT id FROM questions WHERE id = $1', [params.id])).rows[0];
+      if (!existing) return NextResponse.json({ error: 'Questão não encontrada' }, { status: 404 });
+
+      await query(
+        `UPDATE questions
+         SET ai_decs_descriptors = $1, updated_at = NOW()
+         WHERE id = $2`,
+        [JSON.stringify(body.ai_decs_descriptors), params.id],
+      );
+
+      const updated = (await query('SELECT * FROM questions WHERE id = $1', [params.id])).rows[0];
+      return NextResponse.json({
+        ...updated,
+        tags: updated.tags ? JSON.parse(updated.tags) : [],
+        images: updated.images ? JSON.parse(updated.images) : [],
+        areas_conhecimento: updated.areas_conhecimento
+          ? JSON.parse(updated.areas_conhecimento)
+          : [],
+        assuntos: updated.assuntos ? JSON.parse(updated.assuntos) : [],
+        ai_decs_descriptors: body.ai_decs_descriptors,
+      });
+    }
+
     if (typeof body.anulada !== 'boolean') {
       return NextResponse.json({ error: 'Campo "anulada" (boolean) é obrigatório.' }, { status: 400 });
     }

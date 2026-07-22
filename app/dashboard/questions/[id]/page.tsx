@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { ArrowLeft, Edit, Image as ImageIcon, X, AlertTriangle, Ban, RotateCcw, Sparkles, Brain, ExternalLink, Loader2, Cpu, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, Edit, Image as ImageIcon, X, AlertTriangle, Ban, RotateCcw, Sparkles, Brain, ExternalLink, Loader2, Cpu, ShieldCheck, Trash2 } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import DeCSAutocomplete from '@/components/Common/DeCSAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
@@ -162,6 +162,7 @@ export default function QuestionDetailPage() {
   const [decsValidationLoading, setDecsValidationLoading] = useState(false);
   const [decsValidationError, setDecsValidationError] = useState<string | null>(null);
   const [decsValidationResult, setDecsValidationResult] = useState<DecsValidationResult | null>(null);
+  const [removingDecsCode, setRemovingDecsCode] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [similarQuestions, setSimilarQuestions] = useState<SimilarQuestion[]>([]);
@@ -541,58 +542,23 @@ export default function QuestionDetailPage() {
     }
   };
 
-  const handleGenerateAiDecs = async () => {
-    if (!question) return;
-    setAiDecsLoading(true);
-    setAiDecsError(null);
-    setDecsValidationResult(null);
-    setDecsValidationError(null);
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) return;
-      const res = await fetch(`/api/questions/${questionId}/decs-ai`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setAiDecsError(data.error || 'Erro ao gerar descritores IA.');
-        return;
-      }
-      const descriptors = data.result ?? data.descriptors ?? [];
-      setQuestion((prev) =>
-        prev ? { ...prev, ai_decs_descriptors: descriptors } : prev
-      );
-      setAiDecsPipelineExposure(data.pipeline_exposure ?? null);
-      if (data.themes_identified) {
-        setAiDecsThemes(data.themes_identified);
-      }
-    } catch {
-      setAiDecsError('Erro ao conectar com o servidor.');
-    } finally {
-      setAiDecsLoading(false);
-    }
-  };
-
-  const handleValidateAiDecs = async () => {
-    if (!question) return;
-    const hasV1 = (question.ai_decs_descriptors ?? []).length > 0;
-    if (!hasV1) {
-      setDecsValidationError('Execute "Gerar v1" antes de validar.');
-      return;
-    }
+  const runDecsValidation = async (themesOverride?: {
+    primary: string[];
+    secondary: string[];
+  } | null) => {
     setDecsValidationLoading(true);
     setDecsValidationError(null);
     try {
       const token = localStorage.getItem('token');
       if (!token) return;
+      const themesPayload = themesOverride ?? aiDecsThemes;
       const res = await fetch(`/api/questions/${questionId}/decs-validate`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(aiDecsThemes ? { themes: aiDecsThemes } : {}),
+        body: JSON.stringify(themesPayload ? { themes: themesPayload } : {}),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -614,6 +580,100 @@ export default function QuestionDetailPage() {
       setDecsValidationError('Erro ao conectar com o servidor.');
     } finally {
       setDecsValidationLoading(false);
+    }
+  };
+
+  const handleGenerateAiDecs = async () => {
+    if (!question) return;
+    setAiDecsLoading(true);
+    setAiDecsError(null);
+    setDecsValidationResult(null);
+    setDecsValidationError(null);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const res = await fetch(`/api/questions/${questionId}/decs-ai`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setAiDecsError(data.error || 'Erro ao gerar descritores IA.');
+        return;
+      }
+      const descriptors = data.result ?? data.descriptors ?? [];
+      const themes = data.themes_identified ?? null;
+      setQuestion((prev) =>
+        prev ? { ...prev, ai_decs_descriptors: descriptors } : prev
+      );
+      setAiDecsPipelineExposure(data.pipeline_exposure ?? null);
+      if (themes) {
+        setAiDecsThemes(themes);
+      }
+
+      // Sequência automática: após V1, inicia validação sem clique extra
+      if (Array.isArray(descriptors) && descriptors.length > 0) {
+        setAiDecsLoading(false);
+        await runDecsValidation(themes);
+        return;
+      }
+    } catch {
+      setAiDecsError('Erro ao conectar com o servidor.');
+    } finally {
+      setAiDecsLoading(false);
+    }
+  };
+
+  const handleValidateAiDecs = async () => {
+    if (!question) return;
+    const hasV1 = (question.ai_decs_descriptors ?? []).length > 0;
+    if (!hasV1) {
+      setDecsValidationError('Execute "Gerar v1" antes de validar.');
+      return;
+    }
+    await runDecsValidation();
+  };
+
+  const handleRemoveRejectedDecs = async (code: string) => {
+    if (!question) return;
+    const current = question.ai_decs_descriptors ?? [];
+    const next = current.filter((d) => d.code !== code);
+    setRemovingDecsCode(code);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const res = await fetch(`/api/questions/${questionId}`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ai_decs_descriptors: next }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setDecsValidationError(data.error || 'Erro ao remover descritor.');
+        return;
+      }
+      setQuestion((prev) =>
+        prev ? { ...prev, ai_decs_descriptors: next } : prev,
+      );
+      setDecsValidationResult((prev) => {
+        if (!prev) return prev;
+        const items = prev.items.filter((i) => i.code !== code);
+        const approved = prev.approved.filter((d) => d.code !== code);
+        const rejected = prev.rejected.filter((d) => d.code !== code);
+        return {
+          ...prev,
+          items,
+          approved,
+          rejected,
+        };
+      });
+    } catch {
+      setDecsValidationError('Erro ao conectar com o servidor ao remover descritor.');
+    } finally {
+      setRemovingDecsCode(null);
     }
   };
 
@@ -1331,11 +1391,15 @@ export default function QuestionDetailPage() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleGenerateAiDecs}
-                  disabled={aiDecsLoading}
+                  disabled={aiDecsLoading || decsValidationLoading}
                   className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition"
                 >
                   <Sparkles className="h-3.5 w-3.5" />
-                  {aiDecsLoading ? 'Gerando…' : 'Gerar v1'}
+                  {aiDecsLoading
+                    ? 'Gerando…'
+                    : decsValidationLoading
+                      ? 'Validando…'
+                      : 'Gerar v1'}
                 </button>
                 <button
                   onClick={handleValidateAiDecs}
@@ -1344,11 +1408,7 @@ export default function QuestionDetailPage() {
                     aiDecsLoading ||
                     (question.ai_decs_descriptors ?? []).length === 0
                   }
-                  title={
-                    (question.ai_decs_descriptors ?? []).length === 0
-                      ? 'Execute Gerar v1 antes de validar'
-                      : 'Valida descritores vetoriais/API com question_terms_validator'
-                  }
+                  title="Reexecuta a validação (já roda automaticamente após Gerar v1)"
                   className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 transition"
                 >
                   <ShieldCheck className="h-3.5 w-3.5" />
@@ -1449,6 +1509,7 @@ export default function QuestionDetailPage() {
                         <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800">Coerência</th>
                         <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800">Status</th>
                         <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800">Motivo</th>
+                        <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800 w-24">Ação</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -1481,6 +1542,26 @@ export default function QuestionDetailPage() {
                           </td>
                           <td className="px-2 py-1.5 border border-amber-100 text-xs text-gray-600">
                             {item.motivo || '—'}
+                          </td>
+                          <td className="px-2 py-1.5 border border-amber-100">
+                            {!item.aprovado ? (
+                              <button
+                                type="button"
+                                onClick={() => handleRemoveRejectedDecs(item.code)}
+                                disabled={removingDecsCode === item.code}
+                                title="Retirar descritor rejeitado da classificação V1"
+                                className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-red-700 bg-red-50 border border-red-200 rounded-md hover:bg-red-100 disabled:opacity-50"
+                              >
+                                {removingDecsCode === item.code ? (
+                                  <Loader2 className="h-3 w-3 animate-spin" />
+                                ) : (
+                                  <Trash2 className="h-3 w-3" />
+                                )}
+                                Retirar
+                              </button>
+                            ) : (
+                              <span className="text-gray-300 text-xs">—</span>
+                            )}
                           </td>
                         </tr>
                       ))}
