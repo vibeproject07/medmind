@@ -1,0 +1,2048 @@
+{
+  "generated_at": "2026-07-22T20:03:27.184Z",
+  "model": "gemini-2.5-flash",
+  "question_ids": [
+    26719,
+    26718,
+    26716,
+    26712,
+    26710,
+    26702,
+    26698,
+    26696
+  ],
+  "questions_tested": 8,
+  "totals": {
+    "candidates": 25,
+    "prompt1_approved": 9,
+    "prompt1_rejected": 16,
+    "prompt2_approved": 12,
+    "prompt2_rejected": 13,
+    "agreements": 22,
+    "divergences": 3,
+    "prompt2_manual_review_flags": 0
+  },
+  "results": [
+    {
+      "question_id": 26719,
+      "statement_preview": "Jonathan, 2 anos, é levado para consulta de puericultura. Sua mãe, Rosa, relata estar preocupada, pois a vizinha falou que Jonathan precisa operar a hérnia “de umbigo”. A criança está assintomática. Ao exame físico do ab",
+      "gabarito": "A",
+      "themes": {
+        "primary": [
+          "Hérnia Umbilical",
+          "Observação"
+        ],
+        "secondary": [
+          "Criança",
+          "Cirurgia",
+          "Ultrassonografia",
+          "Bandagens"
+        ]
+      },
+      "eligible_count": 5,
+      "textual_count": 1,
+      "textual_terms": [
+        "Hérnia Umbilical"
+      ],
+      "eligible_terms": [
+        {
+          "code": "DDCS032508",
+          "term": "Efeitos da Contaminação Térmica",
+          "role": "primary",
+          "search_method": "vector"
+        },
+        {
+          "code": "D002648",
+          "term": "Criança",
+          "role": "secondary",
+          "search_method": "vector"
+        },
+        {
+          "code": "D002559",
+          "term": "Rinorreia de Líquido Cefalorraquidiano",
+          "role": "secondary",
+          "search_method": "vector"
+        },
+        {
+          "code": "D014463",
+          "term": "Ultrassonografia",
+          "role": "secondary",
+          "search_method": "vector"
+        },
+        {
+          "code": "D001458",
+          "term": "Bandagens",
+          "role": "secondary",
+          "search_method": "vector"
+        }
+      ],
+      "prompt1": {
+        "prompt": "prompt1",
+        "mode": "per_candidate",
+        "items": [
+          {
+            "code": "DDCS032508",
+            "term": "Efeitos da Contaminação Térmica",
+            "partial_term": "Hérnia Umbilical",
+            "search_method": "vector",
+            "role": "primary",
+            "status": "DESCARTADO",
+            "aprovado": false,
+            "raw": "{\"status\":\"DESCARTADO\"}",
+            "error": null
+          },
+          {
+            "code": "D002648",
+            "term": "Criança",
+            "partial_term": "Criança",
+            "search_method": "vector",
+            "role": "secondary",
+            "status": "CERTO",
+            "aprovado": true,
+            "raw": "{\"status\":\"CERTO\"}",
+            "error": null
+          },
+          {
+            "code": "D002559",
+            "term": "Rinorreia de Líquido Cefalorraquidiano",
+            "partial_term": "Hérnia Umbilical",
+            "search_method": "vector",
+            "role": "secondary",
+            "status": "DESCARTADO",
+            "aprovado": false,
+            "raw": "{\"status\":\"DESCARTADO\"}",
+            "error": null
+          },
+          {
+            "code": "D014463",
+            "term": "Ultrassonografia",
+            "partial_term": "Ultrassonografia",
+            "search_method": "vector",
+            "role": "secondary",
+            "status": "DESCARTADO",
+            "aprovado": false,
+            "raw": "{\"status\":\"DESCARTADO\"}",
+            "error": null
+          },
+          {
+            "code": "D001458",
+            "term": "Bandagens",
+            "partial_term": "Bandagens",
+            "search_method": "vector",
+            "role": "secondary",
+            "status": "DESCARTADO",
+            "aprovado": false,
+            "raw": "{\"status\":\"DESCARTADO\"}",
+            "error": null
+          }
+        ],
+        "approved": [
+          {
+            "code": "D002648",
+            "term": "Criança"
+          }
+        ],
+        "rejected": [
+          {
+            "code": "DDCS032508",
+            "term": "Efeitos da Contaminação Térmica",
+            "status": "DESCARTADO"
+          },
+          {
+            "code": "D002559",
+            "term": "Rinorreia de Líquido Cefalorraquidiano",
+            "status": "DESCARTADO"
+          },
+          {
+            "code": "D014463",
+            "term": "Ultrassonografia",
+            "status": "DESCARTADO"
+          },
+          {
+            "code": "D001458",
+            "term": "Bandagens",
+            "status": "DESCARTADO"
+          }
+        ],
+        "needs_manual_review": false
+      },
+      "prompt2": {
+        "prompt": "prompt2",
+        "mode": "batch",
+        "items": [
+          {
+            "code": "DDCS032508",
+            "term": "Efeitos da Contaminação Térmica",
+            "search_method": "vector",
+            "role": "primary",
+            "aprovado": false,
+            "type": null,
+            "justification": null,
+            "status": "REJEITADO"
+          },
+          {
+            "code": "D002648",
+            "term": "Criança",
+            "search_method": "vector",
+            "role": "secondary",
+            "aprovado": true,
+            "type": "SECONDARY",
+            "justification": "Define a faixa etária do paciente, o que é relevante para o prognóstico e manejo da hérnia umbilical.",
+            "status": "APROVADO"
+          },
+          {
+            "code": "D002559",
+            "term": "Rinorreia de Líquido Cefalorraquidiano",
+            "search_method": "vector",
+            "role": "secondary",
+            "aprovado": false,
+            "type": null,
+            "justification": null,
+            "status": "REJEITADO"
+          },
+          {
+            "code": "D014463",
+            "term": "Ultrassonografia",
+            "search_method": "vector",
+            "role": "secondary",
+            "aprovado": true,
+            "type": "SECONDARY",
+            "justification": "Mencionada como uma alternativa de conduta, embora não seja a correta, é um procedimento diagnóstico relevante no contexto de hérnias.",
+            "status": "APROVADO"
+          },
+          {
+            "code": "D001458",
+            "term": "Bandagens",
+            "search_method": "vector",
+            "role": "secondary",
+            "aprovado": false,
+            "type": null,
+            "justification": null,
+            "status": "REJEITADO"
+          }
+        ],
+        "approved": [
+          {
+            "code": "D002648",
+            "term": "Criança",
+            "type": "SECONDARY"
+          },
+          {
+            "code": "D014463",
+            "term": "Ultrassonografia",
+            "type": "SECONDARY"
+          }
+        ],
+        "rejected": [
+          {
+            "code": "DDCS032508",
+            "term": "Efeitos da Contaminação Térmica"
+          },
+          {
+            "code": "D002559",
+            "term": "Rinorreia de Líquido Cefalorraquidiano"
+          },
+          {
+            "code": "D001458",
+            "term": "Bandagens"
+          }
+        ],
+        "validation_status": {
+          "is_coherent": true,
+          "needs_manual_review": false,
+          "missing_primary_terms": false,
+          "review_reason": ""
+        },
+        "taxonomy_audit": {
+          "removed_terms": [
+            "Efeitos da Contaminação Térmica",
+            "Rinorreia de Líquido Cefalorraquidiano",
+            "Cirurgia",
+            "Bandagens"
+          ]
+        },
+        "final_decs_tags": [
+          {
+            "term": "Hérnia Umbilical",
+            "type": "PRIMARY",
+            "justification": "É o diagnóstico central da questão e o foco principal do manejo clínico."
+          },
+          {
+            "term": "Criança",
+            "type": "SECONDARY",
+            "justification": "Define a faixa etária do paciente, o que é relevante para o prognóstico e manejo da hérnia umbilical."
+          },
+          {
+            "term": "Ultrassonografia",
+            "type": "SECONDARY",
+            "justification": "Mencionada como uma alternativa de conduta, embora não seja a correta, é um procedimento diagnóstico relevante no contexto de hérnias."
+          }
+        ],
+        "raw": "{\n  \"validation_status\": {\n    \"is_coherent\": true,\n    \"needs_manual_review\": false,\n    \"missing_primary_terms\": false,\n    \"review_reason\": \"\"\n  },\n  \"taxonomy_audit\": {\n    \"removed_terms\": [\n      \"Efeitos da Contaminação Térmica\",\n      \"Rinorreia de Líquido Cefalorraquidiano\",\n      \"Cirurgia\",\n      \"Bandagens\"\n    ]\n  },\n  \"final_decs_tags\": [\n    {\n      \"term\": \"Hérnia Umbilical\",\n      \"type\": \"PRIMARY\",\n      \"justification\": \"É o diagnóstico central da questão e o foco principal do manejo clínico.\"\n    },\n    {\n      \"term\": \"Criança\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Define a faixa etária do paciente, o que é relevante para o prognóstico e manejo da hérnia umbilical.\"\n    },\n    {\n      \"term\": \"Ultrassonografia\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Mencionada como uma alternativa de conduta, embora não seja a correta, é um procedimento diagnóstico relevante no contexto de hérnias.\"\n    }\n  ]\n}",
+        "error": null,
+        "needs_manual_review": false
+      },
+      "agreement": {
+        "agree": [
+          {
+            "code": "DDCS032508",
+            "term": "Efeitos da Contaminação Térmica",
+            "prompt1": false,
+            "prompt2": false,
+            "prompt1_status": "DESCARTADO",
+            "prompt2_status": "REJEITADO",
+            "prompt1_partial": "Hérnia Umbilical",
+            "prompt2_type": null,
+            "prompt2_justification": null
+          },
+          {
+            "code": "D002648",
+            "term": "Criança",
+            "prompt1": true,
+            "prompt2": true,
+            "prompt1_status": "CERTO",
+            "prompt2_status": "APROVADO",
+            "prompt1_partial": "Criança",
+            "prompt2_type": "SECONDARY",
+            "prompt2_justification": "Define a faixa etária do paciente, o que é relevante para o prognóstico e manejo da hérnia umbilical."
+          },
+          {
+            "code": "D002559",
+            "term": "Rinorreia de Líquido Cefalorraquidiano",
+            "prompt1": false,
+            "prompt2": false,
+            "prompt1_status": "DESCARTADO",
+            "prompt2_status": "REJEITADO",
+            "prompt1_partial": "Hérnia Umbilical",
+            "prompt2_type": null,
+            "prompt2_justification": null
+          },
+          {
+            "code": "D001458",
+            "term": "Bandagens",
+            "prompt1": false,
+            "prompt2": false,
+            "prompt1_status": "DESCARTADO",
+            "prompt2_status": "REJEITADO",
+            "prompt1_partial": "Bandagens",
+            "prompt2_type": null,
+            "prompt2_justification": null
+          }
+        ],
+        "diverge": [
+          {
+            "code": "D014463",
+            "term": "Ultrassonografia",
+            "prompt1": false,
+            "prompt2": true,
+            "prompt1_status": "DESCARTADO",
+            "prompt2_status": "APROVADO",
+            "prompt1_partial": "Ultrassonografia",
+            "prompt2_type": "SECONDARY",
+            "prompt2_justification": "Mencionada como uma alternativa de conduta, embora não seja a correta, é um procedimento diagnóstico relevante no contexto de hérnias."
+          }
+        ],
+        "agree_n": 4,
+        "diverge_n": 1
+      }
+    },
+    {
+      "question_id": 26718,
+      "statement_preview": "Na cicatrização das feridas, muitas vezes, são usados curativos escolhidos conforme as condições específicas de cada ferida. A esse respeito,",
+      "gabarito": "A",
+      "themes": {
+        "primary": [
+          "Cicatrização de Feridas",
+          "Curativos"
+        ],
+        "secondary": [
+          "Curativos de Espuma",
+          "Âmnio",
+          "Gaze",
+          "Curativos Oclusivos",
+          "Aloenxertos"
+        ]
+      },
+      "eligible_count": 5,
+      "textual_count": 1,
+      "textual_terms": [
+        "Cicatrização"
+      ],
+      "eligible_terms": [
+        {
+          "code": "D009779",
+          "term": "Curativos Oclusivos",
+          "role": "primary",
+          "search_method": "vector"
+        },
+        {
+          "code": "D005339",
+          "term": "Espuma de Fibrina",
+          "role": "secondary",
+          "search_method": "vector"
+        },
+        {
+          "code": "D000650",
+          "term": "Âmnio",
+          "role": "secondary",
+          "search_method": "vector"
+        },
+        {
+          "code": "D004948",
+          "term": "Esotropia",
+          "role": "secondary",
+          "search_method": "vector"
+        },
+        {
+          "code": "DDCS025942",
+          "term": "Aloe socotrina",
+          "role": "secondary",
+          "search_method": "vector"
+        }
+      ],
+      "prompt1": {
+        "prompt": "prompt1",
+        "mode": "per_candidate",
+        "items": [
+          {
+            "code": "D009779",
+            "term": "Curativos Oclusivos",
+            "partial_term": "Curativos Oclusivos",
+            "search_method": "vector",
+            "role": "primary",
+            "status": "DESCARTADO",
+            "aprovado": false,
+            "raw": "{\"status\":\"DESCARTADO\"}",
+            "error": null
+          },
+          {
+            "code": "D005339",
+            "term": "Espuma de Fibrina",
+            "partial_term": "Curativos de Espuma",
+            "search_method": "vector",
+            "role": "secondary",
+            "status": "DESCARTADO",
+            "aprovado": false,
+            "raw": "{\"status\":\"DESCARTADO\"}",
+            "error": null
+          },
+          {
+            "code": "D000650",
+            "term": "Âmnio",
+            "partial_term": "Âmnio",
+            "search_method": "vector",
+            "role": "secondary",
+            "status": "DESCARTADO",
+            "aprovado": false,
+            "raw": "{\"status\":\"DESCARTADO\"}",
+            "error": null
+          },
+          {
+            "code": "D004948",
+            "term": "Esotropia",
+            "partial_term": "Cicatrização de Feridas",
+            "search_method": "vector",
+            "role": "secondary",
+            "status": "DESCARTADO",
+            "aprovado": false,
+            "raw": "{\"status\":\"DESCARTADO\"}",
+            "error": null
+          },
+          {
+            "code": "DDCS025942",
+            "term": "Aloe socotrina",
+            "partial_term": "Cicatrização de Feridas",
+            "search_method": "vector",
+            "role": "secondary",
+            "status": "DESCARTADO",
+            "aprovado": false,
+            "raw": "{\"status\":\"DESCARTADO\"}",
+            "error": null
+          }
+        ],
+        "approved": [],
+        "rejected": [
+          {
+            "code": "D009779",
+            "term": "Curativos Oclusivos",
+            "status": "DESCARTADO"
+          },
+          {
+            "code": "D005339",
+            "term": "Espuma de Fibrina",
+            "status": "DESCARTADO"
+          },
+          {
+            "code": "D000650",
+            "term": "Âmnio",
+            "status": "DESCARTADO"
+          },
+          {
+            "code": "D004948",
+            "term": "Esotropia",
+            "status": "DESCARTADO"
+          },
+          {
+            "code": "DDCS025942",
+            "term": "Aloe socotrina",
+            "status": "DESCARTADO"
+          }
+        ],
+        "needs_manual_review": true
+      },
+      "prompt2": {
+        "prompt": "prompt2",
+        "mode": "batch",
+        "items": [
+          {
+            "code": "D009779",
+            "term": "Curativos Oclusivos",
+            "search_method": "vector",
+            "role": "primary",
+            "aprovado": true,
+            "type": "SECONDARY",
+            "justification": "Mencionado como um tipo de curativo na alternativa C, relevante para o contexto.",
+            "status": "APROVADO"
+          },
+          {
+            "code": "D005339",
+            "term": "Espuma de Fibrina",
+            "search_method": "vector",
+            "role": "secondary",
+            "aprovado": false,
+            "type": null,
+            "justification": null,
+            "status": "REJEITADO"
+          },
+          {
+            "code": "D000650",
+            "term": "Âmnio",
+            "search_method": "vector",
+            "role": "secondary",
+            "aprovado": true,
+            "type": "SECONDARY",
+            "justification": "Mencionado como um tipo de curativo na alternativa B, relevante para o contexto.",
+            "status": "APROVADO"
+          },
+          {
+            "code": "D004948",
+            "term": "Esotropia",
+            "search_method": "vector",
+            "role": "secondary",
+            "aprovado": false,
+            "type": null,
+            "justification": null,
+            "status": "REJEITADO"
+          },
+          {
+            "code": "DDCS025942",
+            "term": "Aloe socotrina",
+            "search_method": "vector",
+            "role": "secondary",
+            "aprovado": false,
+            "type": null,
+            "justification": null,
+            "status": "REJEITADO"
+          }
+        ],
+        "approved": [
+          {
+            "code": "D009779",
+            "term": "Curativos Oclusivos",
+            "type": "SECONDARY"
+          },
+          {
+            "code": "D000650",
+            "term": "Âmnio",
+            "type": "SECONDARY"
+          }
+        ],
+        "rejected": [
+          {
+            "code": "D005339",
+            "term": "Espuma de Fibrina"
+          },
+          {
+            "code": "D004948",
+            "term": "Esotropia"
+          },
+          {
+            "code": "DDCS025942",
+            "term": "Aloe socotrina"
+          }
+        ],
+        "validation_status": {
+          "is_coherent": true,
+          "needs_manual_review": false,
+          "missing_primary_terms": false,
+          "review_reason": ""
+        },
+        "taxonomy_audit": {
+          "removed_terms": [
+            "Esotropia",
+            "Aloe socotrina",
+            "Espuma de Fibrina"
+          ]
+        },
+        "final_decs_tags": [
+          {
+            "term": "Cicatrização de Feridas",
+            "type": "PRIMARY",
+            "justification": "Tema central da questão, aborda o processo de reparo tecidual."
+          },
+          {
+            "term": "Curativos",
+            "type": "PRIMARY",
+            "justification": "Principal objeto de discussão da questão, referente aos materiais utilizados no tratamento de feridas."
+          },
+          {
+            "term": "Curativos Oclusivos",
+            "type": "SECONDARY",
+            "justification": "Mencionado como um tipo de curativo na alternativa C, relevante para o contexto."
+          },
+          {
+            "term": "Âmnio",
+            "type": "SECONDARY",
+            "justification": "Mencionado como um tipo de curativo na alternativa B, relevante para o contexto."
+          },
+          {
+            "term": "Aloenxertos",
+            "type": "SECONDARY",
+            "justification": "Mencionado como um tipo de curativo na alternativa A, relevante para o contexto."
+          }
+        ],
+        "raw": "{\n  \"validation_status\": {\n    \"is_coherent\": true,\n    \"needs_manual_review\": false,\n    \"missing_primary_terms\": false,\n    \"review_reason\": \"\"\n  },\n  \"taxonomy_audit\": {\n    \"removed_terms\": [\n      \"Esotropia\",\n      \"Aloe socotrina\",\n      \"Espuma de Fibrina\"\n    ]\n  },\n  \"final_decs_tags\": [\n    {\n      \"term\": \"Cicatrização de Feridas\",\n      \"type\": \"PRIMARY\",\n      \"justification\": \"Tema central da questão, aborda o processo de reparo tecidual.\"\n    },\n    {\n      \"term\": \"Curativos\",\n      \"type\": \"PRIMARY\",\n      \"justification\": \"Principal objeto de discussão da questão, referente aos materiais utilizados no tratamento de feridas.\"\n    },\n    {\n      \"term\": \"Curativos Oclusivos\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Mencionado como um tipo de curativo na alternativa C, relevante para o contexto.\"\n    },\n    {\n      \"term\": \"Âmnio\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Mencionado como um tipo de curativo na alternativa B, relevante para o contexto.\"\n    },\n    {\n      \"term\": \"Aloenxertos\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Mencionado como um tipo de curativo na alternativa A, relevante para o contexto.\"\n    }\n  ]\n}",
+        "error": null,
+        "needs_manual_review": false
+      },
+      "agreement": {
+        "agree": [
+          {
+            "code": "D005339",
+            "term": "Espuma de Fibrina",
+            "prompt1": false,
+            "prompt2": false,
+            "prompt1_status": "DESCARTADO",
+            "prompt2_status": "REJEITADO",
+            "prompt1_partial": "Curativos de Espuma",
+            "prompt2_type": null,
+            "prompt2_justification": null
+          },
+          {
+            "code": "D004948",
+            "term": "Esotropia",
+            "prompt1": false,
+            "prompt2": false,
+            "prompt1_status": "DESCARTADO",
+            "prompt2_status": "REJEITADO",
+            "prompt1_partial": "Cicatrização de Feridas",
+            "prompt2_type": null,
+            "prompt2_justification": null
+          },
+          {
+            "code": "DDCS025942",
+            "term": "Aloe socotrina",
+            "prompt1": false,
+            "prompt2": false,
+            "prompt1_status": "DESCARTADO",
+            "prompt2_status": "REJEITADO",
+            "prompt1_partial": "Cicatrização de Feridas",
+            "prompt2_type": null,
+            "prompt2_justification": null
+          }
+        ],
+        "diverge": [
+          {
+            "code": "D009779",
+            "term": "Curativos Oclusivos",
+            "prompt1": false,
+            "prompt2": true,
+            "prompt1_status": "DESCARTADO",
+            "prompt2_status": "APROVADO",
+            "prompt1_partial": "Curativos Oclusivos",
+            "prompt2_type": "SECONDARY",
+            "prompt2_justification": "Mencionado como um tipo de curativo na alternativa C, relevante para o contexto."
+          },
+          {
+            "code": "D000650",
+            "term": "Âmnio",
+            "prompt1": false,
+            "prompt2": true,
+            "prompt1_status": "DESCARTADO",
+            "prompt2_status": "APROVADO",
+            "prompt1_partial": "Âmnio",
+            "prompt2_type": "SECONDARY",
+            "prompt2_justification": "Mencionado como um tipo de curativo na alternativa B, relevante para o contexto."
+          }
+        ],
+        "agree_n": 3,
+        "diverge_n": 2
+      }
+    },
+    {
+      "question_id": 26716,
+      "statement_preview": "Na avaliação pré-anestésica do paciente que vai se submeter a uma cirurgia não cardíaca, usam-se normas baseadas nas orientações do American College of Cardiology e da American Heart Association. No que se refere às reco",
+      "gabarito": "A",
+      "themes": {
+        "primary": [
+          "Avaliação Pré-Operatória",
+          "Risco Cirúrgico",
+          "Eletrocardiografia"
+        ],
+        "secondary": [
+          "Função Ventricular Esquerda",
+          "Teste de Esforço",
+          "Angiografia Coronária",
+          "Doença da Artéria Coronária",
+          "Capacidade Funcional"
+        ]
+      },
+      "eligible_count": 3,
+      "textual_count": 5,
+      "textual_terms": [
+        "Eletrocardiografia",
+        "Função Ventricular Esquerda",
+        "Teste de Esforço",
+        "Angiografia Coronária",
+        "Estado Funcional"
+      ],
+      "eligible_terms": [
+        {
+          "code": "D057234",
+          "term": "Período Pré-Operatório",
+          "role": "primary",
+          "search_method": "vector"
+        },
+        {
+          "code": "D012773",
+          "term": "Choque Cirúrgico",
+          "role": "primary",
+          "search_method": "vector"
+        },
+        {
+          "code": "D003324",
+          "term": "Doença da Artéria Coronariana",
+          "role": "secondary",
+          "search_method": "vector"
+        }
+      ],
+      "prompt1": {
+        "prompt": "prompt1",
+        "mode": "per_candidate",
+        "items": [
+          {
+            "code": "D057234",
+            "term": "Período Pré-Operatório",
+            "partial_term": "Avaliação Pré-Operatória",
+            "search_method": "vector",
+            "role": "primary",
+            "status": "CERTO",
+            "aprovado": true,
+            "raw": "{\"status\":\"CERTO\"}",
+            "error": null
+          },
+          {
+            "code": "D012773",
+            "term": "Choque Cirúrgico",
+            "partial_term": "Risco Cirúrgico",
+            "search_method": "vector",
+            "role": "primary",
+            "status": "DESCARTADO",
+            "aprovado": false,
+            "raw": "{\"status\":\"DESCARTADO\"}",
+            "error": null
+          },
+          {
+            "code": "D003324",
+            "term": "Doença da Artéria Coronariana",
+            "partial_term": "Doença da Artéria Coronária",
+            "search_method": "vector",
+            "role": "secondary",
+            "status": "CERTO",
+            "aprovado": true,
+            "raw": "{\"status\":\"CERTO\"}",
+            "error": null
+          }
+        ],
+        "approved": [
+          {
+            "code": "D057234",
+            "term": "Período Pré-Operatório"
+          },
+          {
+            "code": "D003324",
+            "term": "Doença da Artéria Coronariana"
+          }
+        ],
+        "rejected": [
+          {
+            "code": "D012773",
+            "term": "Choque Cirúrgico",
+            "status": "DESCARTADO"
+          }
+        ],
+        "needs_manual_review": false
+      },
+      "prompt2": {
+        "prompt": "prompt2",
+        "mode": "batch",
+        "items": [
+          {
+            "code": "D057234",
+            "term": "Período Pré-Operatório",
+            "search_method": "vector",
+            "role": "primary",
+            "aprovado": true,
+            "type": "PRIMARY",
+            "justification": "Termo essencial que define o contexto principal da questão, que aborda a avaliação pré-anestésica e pré-operatória.",
+            "status": "APROVADO"
+          },
+          {
+            "code": "D012773",
+            "term": "Choque Cirúrgico",
+            "search_method": "vector",
+            "role": "primary",
+            "aprovado": false,
+            "type": null,
+            "justification": null,
+            "status": "REJEITADO"
+          },
+          {
+            "code": "D003324",
+            "term": "Doença da Artéria Coronariana",
+            "search_method": "vector",
+            "role": "secondary",
+            "aprovado": true,
+            "type": "SECONDARY",
+            "justification": "Condição cardíaca relevante para a avaliação de risco cirúrgico e mencionada implicitamente nas opções de investigação.",
+            "status": "APROVADO"
+          }
+        ],
+        "approved": [
+          {
+            "code": "D057234",
+            "term": "Período Pré-Operatório",
+            "type": "PRIMARY"
+          },
+          {
+            "code": "D003324",
+            "term": "Doença da Artéria Coronariana",
+            "type": "SECONDARY"
+          }
+        ],
+        "rejected": [
+          {
+            "code": "D012773",
+            "term": "Choque Cirúrgico"
+          }
+        ],
+        "validation_status": {
+          "is_coherent": true,
+          "needs_manual_review": false,
+          "missing_primary_terms": false,
+          "review_reason": ""
+        },
+        "taxonomy_audit": {
+          "removed_terms": [
+            "Choque Cirúrgico"
+          ]
+        },
+        "final_decs_tags": [
+          {
+            "term": "Período Pré-Operatório",
+            "type": "PRIMARY",
+            "justification": "Termo essencial que define o contexto principal da questão, que aborda a avaliação pré-anestésica e pré-operatória."
+          },
+          {
+            "term": "Eletrocardiografia",
+            "type": "PRIMARY",
+            "justification": "O eletrocardiograma é o foco da alternativa correta e um método de avaliação complementar central na questão."
+          },
+          {
+            "term": "Doença da Artéria Coronariana",
+            "type": "SECONDARY",
+            "justification": "Condição cardíaca relevante para a avaliação de risco cirúrgico e mencionada implicitamente nas opções de investigação."
+          },
+          {
+            "term": "Função Ventricular Esquerda",
+            "type": "SECONDARY",
+            "justification": "Mencionada como um critério de avaliação em uma das alternativas, relevante para o risco cardíaco pré-operatório."
+          },
+          {
+            "term": "Teste de Esforço",
+            "type": "SECONDARY",
+            "justification": "Método de rastreio cardiopulmonar mencionado nas alternativas, contribuindo para o contexto de avaliação de risco."
+          },
+          {
+            "term": "Angiografia Coronária",
+            "type": "SECONDARY",
+            "justification": "Exame de investigação mencionado nas alternativas, relacionado à avaliação de risco cardíaco."
+          },
+          {
+            "term": "Capacidade Funcional",
+            "type": "SECONDARY",
+            "justification": "Critério importante na avaliação de risco pré-operatório, mencionado em diversas alternativas."
+          }
+        ],
+        "raw": "{\n  \"validation_status\": {\n    \"is_coherent\": true,\n    \"needs_manual_review\": false,\n    \"missing_primary_terms\": false,\n    \"review_reason\": \"\"\n  },\n  \"taxonomy_audit\": {\n    \"removed_terms\": [\n      \"Choque Cirúrgico\"\n    ]\n  },\n  \"final_decs_tags\": [\n    {\n      \"term\": \"Período Pré-Operatório\",\n      \"type\": \"PRIMARY\",\n      \"justification\": \"Termo essencial que define o contexto principal da questão, que aborda a avaliação pré-anestésica e pré-operatória.\"\n    },\n    {\n      \"term\": \"Eletrocardiografia\",\n      \"type\": \"PRIMARY\",\n      \"justification\": \"O eletrocardiograma é o foco da alternativa correta e um método de avaliação complementar central na questão.\"\n    },\n    {\n      \"term\": \"Doença da Artéria Coronariana\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Condição cardíaca relevante para a avaliação de risco cirúrgico e mencionada implicitamente nas opções de investigação.\"\n    },\n    {\n      \"term\": \"Função Ventricular Esquerda\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Mencionada como um critério de avaliação em uma das alternativas, relevante para o risco cardíaco pré-operatório.\"\n    },\n    {\n      \"term\": \"Teste de Esforço\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Método de rastreio cardiopulmonar mencionado nas alternativas, contribuindo para o contexto de avaliação de risco.\"\n    },\n    {\n      \"term\": \"Angiografia Coronária\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Exame de investigação mencionado nas alternativas, relacionado à avaliação de risco cardíaco.\"\n    },\n    {\n      \"term\": \"Capacidade Funcional\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Critério importante na avaliação de risco pré-operatório, mencionado em diversas alternativas.\"\n    }\n  ]\n}",
+        "error": null,
+        "needs_manual_review": false
+      },
+      "agreement": {
+        "agree": [
+          {
+            "code": "D057234",
+            "term": "Período Pré-Operatório",
+            "prompt1": true,
+            "prompt2": true,
+            "prompt1_status": "CERTO",
+            "prompt2_status": "APROVADO",
+            "prompt1_partial": "Avaliação Pré-Operatória",
+            "prompt2_type": "PRIMARY",
+            "prompt2_justification": "Termo essencial que define o contexto principal da questão, que aborda a avaliação pré-anestésica e pré-operatória."
+          },
+          {
+            "code": "D012773",
+            "term": "Choque Cirúrgico",
+            "prompt1": false,
+            "prompt2": false,
+            "prompt1_status": "DESCARTADO",
+            "prompt2_status": "REJEITADO",
+            "prompt1_partial": "Risco Cirúrgico",
+            "prompt2_type": null,
+            "prompt2_justification": null
+          },
+          {
+            "code": "D003324",
+            "term": "Doença da Artéria Coronariana",
+            "prompt1": true,
+            "prompt2": true,
+            "prompt1_status": "CERTO",
+            "prompt2_status": "APROVADO",
+            "prompt1_partial": "Doença da Artéria Coronária",
+            "prompt2_type": "SECONDARY",
+            "prompt2_justification": "Condição cardíaca relevante para a avaliação de risco cirúrgico e mencionada implicitamente nas opções de investigação."
+          }
+        ],
+        "diverge": [],
+        "agree_n": 3,
+        "diverge_n": 0
+      }
+    },
+    {
+      "question_id": 26712,
+      "statement_preview": "A oclusão arterial aguda de origem embólica é uma causa de doença arterial que pode levar à perda de um membro. Esse tipo de oclusão tem a sua fonte de origem e o local de impactação, respectivamente, em",
+      "gabarito": "A",
+      "themes": {
+        "primary": [
+          "Oclusão Arterial Aguda",
+          "Embolia"
+        ],
+        "secondary": [
+          "Átrio Esquerdo",
+          "Artéria Femoral",
+          "Isquemia",
+          "Ventrículo Esquerdo",
+          "Artéria Carótida"
+        ]
+      },
+      "eligible_count": 1,
+      "textual_count": 4,
+      "textual_terms": [
+        "Embolia",
+        "Átrios do Coração",
+        "Artéria Femoral",
+        "Isquemia"
+      ],
+      "eligible_terms": [
+        {
+          "code": "D002339",
+          "term": "Artérias Carótidas",
+          "role": "secondary",
+          "search_method": "vector"
+        }
+      ],
+      "prompt1": {
+        "prompt": "prompt1",
+        "mode": "per_candidate",
+        "items": [
+          {
+            "code": "D002339",
+            "term": "Artérias Carótidas",
+            "partial_term": "Oclusão Arterial Aguda",
+            "search_method": "vector",
+            "role": "secondary",
+            "status": "DESCARTADO",
+            "aprovado": false,
+            "raw": "{\"status\":\"DESCARTADO\"}",
+            "error": null
+          }
+        ],
+        "approved": [],
+        "rejected": [
+          {
+            "code": "D002339",
+            "term": "Artérias Carótidas",
+            "status": "DESCARTADO"
+          }
+        ],
+        "needs_manual_review": true
+      },
+      "prompt2": {
+        "prompt": "prompt2",
+        "mode": "batch",
+        "items": [
+          {
+            "code": "D002339",
+            "term": "Artérias Carótidas",
+            "search_method": "vector",
+            "role": "secondary",
+            "aprovado": false,
+            "type": null,
+            "justification": null,
+            "status": "REJEITADO"
+          }
+        ],
+        "approved": [],
+        "rejected": [
+          {
+            "code": "D002339",
+            "term": "Artérias Carótidas"
+          }
+        ],
+        "validation_status": {
+          "is_coherent": true,
+          "needs_manual_review": false,
+          "missing_primary_terms": false,
+          "review_reason": ""
+        },
+        "taxonomy_audit": {
+          "removed_terms": [
+            "Ventrículo Esquerdo",
+            "Artéria Braquial Distal",
+            "Trifurcação da Poplítea",
+            "Artérias Carótidas"
+          ]
+        },
+        "final_decs_tags": [
+          {
+            "term": "Oclusão Arterial Aguda",
+            "type": "PRIMARY",
+            "justification": "Termo central que descreve a condição principal abordada na questão."
+          },
+          {
+            "term": "Embolia",
+            "type": "PRIMARY",
+            "justification": "Define a etiologia da oclusão arterial aguda, sendo crucial para a compreensão da questão."
+          },
+          {
+            "term": "Átrios do Coração",
+            "type": "SECONDARY",
+            "justification": "Representa a fonte de origem do êmbolo, conforme o gabarito, fornecendo contexto anatômico."
+          },
+          {
+            "term": "Artéria Femoral",
+            "type": "SECONDARY",
+            "justification": "Indica o local de impactação do êmbolo, conforme o gabarito, fornecendo contexto anatômico."
+          },
+          {
+            "term": "Isquemia",
+            "type": "SECONDARY",
+            "justification": "Consequência fisiopatológica da oclusão arterial, mencionada implicitamente pela 'perda de um membro'."
+          }
+        ],
+        "raw": "{\n  \"validation_status\": {\n    \"is_coherent\": true,\n    \"needs_manual_review\": false,\n    \"missing_primary_terms\": false,\n    \"review_reason\": \"\"\n  },\n  \"taxonomy_audit\": {\n    \"removed_terms\": [\n      \"Ventrículo Esquerdo\",\n      \"Artéria Braquial Distal\",\n      \"Trifurcação da Poplítea\",\n      \"Artérias Carótidas\"\n    ]\n  },\n  \"final_decs_tags\": [\n    {\n      \"term\": \"Oclusão Arterial Aguda\",\n      \"type\": \"PRIMARY\",\n      \"justification\": \"Termo central que descreve a condição principal abordada na questão.\"\n    },\n    {\n      \"term\": \"Embolia\",\n      \"type\": \"PRIMARY\",\n      \"justification\": \"Define a etiologia da oclusão arterial aguda, sendo crucial para a compreensão da questão.\"\n    },\n    {\n      \"term\": \"Átrios do Coração\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Representa a fonte de origem do êmbolo, conforme o gabarito, fornecendo contexto anatômico.\"\n    },\n    {\n      \"term\": \"Artéria Femoral\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Indica o local de impactação do êmbolo, conforme o gabarito, fornecendo contexto anatômico.\"\n    },\n    {\n      \"term\": \"Isquemia\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Consequência fisiopatológica da oclusão arterial, mencionada implicitamente pela 'perda de um membro'.\"\n    }\n  ]\n}",
+        "error": null,
+        "needs_manual_review": false
+      },
+      "agreement": {
+        "agree": [
+          {
+            "code": "D002339",
+            "term": "Artérias Carótidas",
+            "prompt1": false,
+            "prompt2": false,
+            "prompt1_status": "DESCARTADO",
+            "prompt2_status": "REJEITADO",
+            "prompt1_partial": "Oclusão Arterial Aguda",
+            "prompt2_type": null,
+            "prompt2_justification": null
+          }
+        ],
+        "diverge": [],
+        "agree_n": 1,
+        "diverge_n": 0
+      }
+    },
+    {
+      "question_id": 26710,
+      "statement_preview": "O médico de uma UPA atende a uma paciente com 45 anos, diabética, com quadro de dor em região perianal há três dias, massa endurecida e tenesmo retal. A paciente havia sido atendida em uma UBS e estava em uso de analgési",
+      "gabarito": "A",
+      "themes": {
+        "primary": [
+          "Abscesso Perianal",
+          "Drenagem Cirúrgica",
+          "Antibioticoterapia"
+        ],
+        "secondary": [
+          "Diabetes Mellitus",
+          "Dor Perianal",
+          "Tenesmo Retal",
+          "Anti-Inflamatórios",
+          "Analgésicos"
+        ]
+      },
+      "eligible_count": 4,
+      "textual_count": 3,
+      "textual_terms": [
+        "Diabetes Mellitus",
+        "Anti-Inflamatórios",
+        "Analgésicos"
+      ],
+      "eligible_terms": [
+        {
+          "code": "D018784",
+          "term": "Abscesso Abdominal",
+          "role": "primary",
+          "search_method": "vector"
+        },
+        {
+          "code": "D004322",
+          "term": "Drenagem",
+          "role": "primary",
+          "search_method": "vector"
+        },
+        {
+          "code": "D019072",
+          "term": "Antibioticoprofilaxia",
+          "role": "primary",
+          "search_method": "vector"
+        },
+        {
+          "code": "D001342",
+          "term": "Doenças do Sistema Nervoso Autônomo",
+          "role": "secondary",
+          "search_method": "vector"
+        }
+      ],
+      "prompt1": {
+        "prompt": "prompt1",
+        "mode": "per_candidate",
+        "items": [
+          {
+            "code": "D018784",
+            "term": "Abscesso Abdominal",
+            "partial_term": "Abscesso Perianal",
+            "search_method": "vector",
+            "role": "primary",
+            "status": "DESCARTADO",
+            "aprovado": false,
+            "raw": "{\"status\":\"DESCARTADO\"}",
+            "error": null
+          },
+          {
+            "code": "D004322",
+            "term": "Drenagem",
+            "partial_term": "Drenagem Cirúrgica",
+            "search_method": "vector",
+            "role": "primary",
+            "status": "CERTO",
+            "aprovado": true,
+            "raw": "{\"status\":\"CERTO\"}",
+            "error": null
+          },
+          {
+            "code": "D019072",
+            "term": "Antibioticoprofilaxia",
+            "partial_term": "Abscesso Perianal",
+            "search_method": "vector",
+            "role": "primary",
+            "status": "DESCARTADO",
+            "aprovado": false,
+            "raw": "{\"status\":\"DESCARTADO\"}",
+            "error": null
+          },
+          {
+            "code": "D001342",
+            "term": "Doenças do Sistema Nervoso Autônomo",
+            "partial_term": "Abscesso Perianal",
+            "search_method": "vector",
+            "role": "secondary",
+            "status": "DESCARTADO",
+            "aprovado": false,
+            "raw": "{\"status\":\"DESCARTADO\"}",
+            "error": null
+          }
+        ],
+        "approved": [
+          {
+            "code": "D004322",
+            "term": "Drenagem"
+          }
+        ],
+        "rejected": [
+          {
+            "code": "D018784",
+            "term": "Abscesso Abdominal",
+            "status": "DESCARTADO"
+          },
+          {
+            "code": "D019072",
+            "term": "Antibioticoprofilaxia",
+            "status": "DESCARTADO"
+          },
+          {
+            "code": "D001342",
+            "term": "Doenças do Sistema Nervoso Autônomo",
+            "status": "DESCARTADO"
+          }
+        ],
+        "needs_manual_review": false
+      },
+      "prompt2": {
+        "prompt": "prompt2",
+        "mode": "batch",
+        "items": [
+          {
+            "code": "D018784",
+            "term": "Abscesso Abdominal",
+            "search_method": "vector",
+            "role": "primary",
+            "aprovado": false,
+            "type": null,
+            "justification": null,
+            "status": "REJEITADO"
+          },
+          {
+            "code": "D004322",
+            "term": "Drenagem",
+            "search_method": "vector",
+            "role": "primary",
+            "aprovado": true,
+            "type": "PRIMARY",
+            "justification": "A drenagem cirúrgica é a conduta mais indicada e parte essencial do tratamento do abscesso perianal, conforme o gabarito.",
+            "status": "APROVADO"
+          },
+          {
+            "code": "D019072",
+            "term": "Antibioticoprofilaxia",
+            "search_method": "vector",
+            "role": "primary",
+            "aprovado": false,
+            "type": null,
+            "justification": null,
+            "status": "REJEITADO"
+          },
+          {
+            "code": "D001342",
+            "term": "Doenças do Sistema Nervoso Autônomo",
+            "search_method": "vector",
+            "role": "secondary",
+            "aprovado": false,
+            "type": null,
+            "justification": null,
+            "status": "REJEITADO"
+          }
+        ],
+        "approved": [
+          {
+            "code": "D004322",
+            "term": "Drenagem",
+            "type": "PRIMARY"
+          }
+        ],
+        "rejected": [
+          {
+            "code": "D018784",
+            "term": "Abscesso Abdominal"
+          },
+          {
+            "code": "D019072",
+            "term": "Antibioticoprofilaxia"
+          },
+          {
+            "code": "D001342",
+            "term": "Doenças do Sistema Nervoso Autônomo"
+          }
+        ],
+        "validation_status": {
+          "is_coherent": true,
+          "needs_manual_review": false,
+          "missing_primary_terms": false,
+          "review_reason": null
+        },
+        "taxonomy_audit": {
+          "removed_terms": [
+            "Abscesso Abdominal",
+            "Antibioticoprofilaxia",
+            "Doenças do Sistema Nervoso Autônomo"
+          ]
+        },
+        "final_decs_tags": [
+          {
+            "term": "Abscesso Perianal",
+            "type": "PRIMARY",
+            "justification": "O enunciado descreve um quadro clínico clássico de abscesso perianal (dor perianal, massa endurecida, abaulamento e hiperemia), sendo o diagnóstico central da questão."
+          },
+          {
+            "term": "Drenagem",
+            "type": "PRIMARY",
+            "justification": "A drenagem cirúrgica é a conduta mais indicada e parte essencial do tratamento do abscesso perianal, conforme o gabarito."
+          },
+          {
+            "term": "Antibioticoterapia",
+            "type": "PRIMARY",
+            "justification": "A antibioticoterapia é parte do tratamento do abscesso perianal, especialmente em pacientes diabéticos, e está presente na alternativa correta."
+          },
+          {
+            "term": "Diabetes Mellitus",
+            "type": "SECONDARY",
+            "justification": "A diabetes mellitus é uma comorbidade relevante que influencia a conduta e o prognóstico, mas não é o tema principal da questão."
+          },
+          {
+            "term": "Dor Perianal",
+            "type": "SECONDARY",
+            "justification": "Sintoma chave que direciona ao diagnóstico, mas não o diagnóstico em si."
+          },
+          {
+            "term": "Tenesmo Retal",
+            "type": "SECONDARY",
+            "justification": "Sintoma associado ao quadro perianal, contribuindo para o diagnóstico."
+          },
+          {
+            "term": "Anti-Inflamatórios",
+            "type": "SECONDARY",
+            "justification": "Medicação utilizada previamente pela paciente, relevante para o histórico, mas não para o diagnóstico ou tratamento definitivo."
+          },
+          {
+            "term": "Analgésicos",
+            "type": "SECONDARY",
+            "justification": "Medicação utilizada previamente pela paciente, relevante para o histórico, mas não para o diagnóstico ou tratamento definitivo."
+          }
+        ],
+        "raw": "{\n  \"validation_status\": {\n    \"is_coherent\": true,\n    \"needs_manual_review\": false,\n    \"missing_primary_terms\": false,\n    \"review_reason\": null\n  },\n  \"taxonomy_audit\": {\n    \"removed_terms\": [\n      \"Abscesso Abdominal\",\n      \"Antibioticoprofilaxia\",\n      \"Doenças do Sistema Nervoso Autônomo\"\n    ]\n  },\n  \"final_decs_tags\": [\n    {\n      \"term\": \"Abscesso Perianal\",\n      \"type\": \"PRIMARY\",\n      \"justification\": \"O enunciado descreve um quadro clínico clássico de abscesso perianal (dor perianal, massa endurecida, abaulamento e hiperemia), sendo o diagnóstico central da questão.\"\n    },\n    {\n      \"term\": \"Drenagem\",\n      \"type\": \"PRIMARY\",\n      \"justification\": \"A drenagem cirúrgica é a conduta mais indicada e parte essencial do tratamento do abscesso perianal, conforme o gabarito.\"\n    },\n    {\n      \"term\": \"Antibioticoterapia\",\n      \"type\": \"PRIMARY\",\n      \"justification\": \"A antibioticoterapia é parte do tratamento do abscesso perianal, especialmente em pacientes diabéticos, e está presente na alternativa correta.\"\n    },\n    {\n      \"term\": \"Diabetes Mellitus\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"A diabetes mellitus é uma comorbidade relevante que influencia a conduta e o prognóstico, mas não é o tema principal da questão.\"\n    },\n    {\n      \"term\": \"Dor Perianal\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Sintoma chave que direciona ao diagnóstico, mas não o diagnóstico em si.\"\n    },\n    {\n      \"term\": \"Tenesmo Retal\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Sintoma associado ao quadro perianal, contribuindo para o diagnóstico.\"\n    },\n    {\n      \"term\": \"Anti-Inflamatórios\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Medicação utilizada previamente pela paciente, relevante para o histórico, mas não para o diagnóstico ou tratamento definitivo.\"\n    },\n    {\n      \"term\": \"Analgésicos\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Medicação utilizada previamente pela paciente, relevante para o histórico, mas não para o diagnóstico ou tratamento definitivo.\"\n    }\n  ]\n}",
+        "error": null,
+        "needs_manual_review": false
+      },
+      "agreement": {
+        "agree": [
+          {
+            "code": "D018784",
+            "term": "Abscesso Abdominal",
+            "prompt1": false,
+            "prompt2": false,
+            "prompt1_status": "DESCARTADO",
+            "prompt2_status": "REJEITADO",
+            "prompt1_partial": "Abscesso Perianal",
+            "prompt2_type": null,
+            "prompt2_justification": null
+          },
+          {
+            "code": "D004322",
+            "term": "Drenagem",
+            "prompt1": true,
+            "prompt2": true,
+            "prompt1_status": "CERTO",
+            "prompt2_status": "APROVADO",
+            "prompt1_partial": "Drenagem Cirúrgica",
+            "prompt2_type": "PRIMARY",
+            "prompt2_justification": "A drenagem cirúrgica é a conduta mais indicada e parte essencial do tratamento do abscesso perianal, conforme o gabarito."
+          },
+          {
+            "code": "D019072",
+            "term": "Antibioticoprofilaxia",
+            "prompt1": false,
+            "prompt2": false,
+            "prompt1_status": "DESCARTADO",
+            "prompt2_status": "REJEITADO",
+            "prompt1_partial": "Abscesso Perianal",
+            "prompt2_type": null,
+            "prompt2_justification": null
+          },
+          {
+            "code": "D001342",
+            "term": "Doenças do Sistema Nervoso Autônomo",
+            "prompt1": false,
+            "prompt2": false,
+            "prompt1_status": "DESCARTADO",
+            "prompt2_status": "REJEITADO",
+            "prompt1_partial": "Abscesso Perianal",
+            "prompt2_type": null,
+            "prompt2_justification": null
+          }
+        ],
+        "diverge": [],
+        "agree_n": 4,
+        "diverge_n": 0
+      }
+    },
+    {
+      "question_id": 26702,
+      "statement_preview": "Paciente de 28 anos, sexo masculino, dá entrada no pronto-socorro com história de ser portador de abaulamento redutível na região inguinal direita há 2 anos. Alega que, depois de um esforço físico, o abaulamento tornou-s",
+      "gabarito": "A",
+      "themes": {
+        "primary": [
+          "Hérnia Inguinal",
+          "Hérnia Encarcerada",
+          "Laparoscopia"
+        ],
+        "secondary": [
+          "Dor Abdominal",
+          "Vômitos",
+          "Anestesia",
+          "Obstrução Intestinal",
+          "Isquemia"
+        ]
+      },
+      "eligible_count": 2,
+      "textual_count": 6,
+      "textual_terms": [
+        "Hérnia Inguinal",
+        "Laparoscopia",
+        "Dor Abdominal",
+        "Anestesia",
+        "Obstrução Intestinal",
+        "Isquemia"
+      ],
+      "eligible_terms": [
+        {
+          "code": "D006553",
+          "term": "Hérnia do Obturador",
+          "role": "primary",
+          "search_method": "vector"
+        },
+        {
+          "code": "D014839",
+          "term": "Vômito",
+          "role": "secondary",
+          "search_method": "vector"
+        }
+      ],
+      "prompt1": {
+        "prompt": "prompt1",
+        "mode": "per_candidate",
+        "items": [
+          {
+            "code": "D006553",
+            "term": "Hérnia do Obturador",
+            "partial_term": "Hérnia Inguinal",
+            "search_method": "vector",
+            "role": "primary",
+            "status": "DESCARTADO",
+            "aprovado": false,
+            "raw": "{\"status\":\"DESCARTADO\"}",
+            "error": null
+          },
+          {
+            "code": "D014839",
+            "term": "Vômito",
+            "partial_term": "Vômitos",
+            "search_method": "vector",
+            "role": "secondary",
+            "status": "CERTO",
+            "aprovado": true,
+            "raw": "{\"status\":\"CERTO\"}",
+            "error": null
+          }
+        ],
+        "approved": [
+          {
+            "code": "D014839",
+            "term": "Vômito"
+          }
+        ],
+        "rejected": [
+          {
+            "code": "D006553",
+            "term": "Hérnia do Obturador",
+            "status": "DESCARTADO"
+          }
+        ],
+        "needs_manual_review": false
+      },
+      "prompt2": {
+        "prompt": "prompt2",
+        "mode": "batch",
+        "items": [
+          {
+            "code": "D006553",
+            "term": "Hérnia do Obturador",
+            "search_method": "vector",
+            "role": "primary",
+            "aprovado": false,
+            "type": null,
+            "justification": null,
+            "status": "REJEITADO"
+          },
+          {
+            "code": "D014839",
+            "term": "Vômito",
+            "search_method": "vector",
+            "role": "secondary",
+            "aprovado": true,
+            "type": "SECONDARY",
+            "justification": "Sintoma associado ao quadro de encarceramento herniário, fornecendo contexto clínico.",
+            "status": "APROVADO"
+          }
+        ],
+        "approved": [
+          {
+            "code": "D014839",
+            "term": "Vômito",
+            "type": "SECONDARY"
+          }
+        ],
+        "rejected": [
+          {
+            "code": "D006553",
+            "term": "Hérnia do Obturador"
+          }
+        ],
+        "validation_status": {
+          "is_coherent": true,
+          "needs_manual_review": false,
+          "missing_primary_terms": false,
+          "review_reason": ""
+        },
+        "taxonomy_audit": {
+          "removed_terms": [
+            "Hérnia do Obturador"
+          ]
+        },
+        "final_decs_tags": [
+          {
+            "term": "Hérnia Inguinal",
+            "type": "PRIMARY",
+            "justification": "Termo central que descreve a condição principal do paciente e o foco da questão."
+          },
+          {
+            "term": "Hérnia Encarcerada",
+            "type": "PRIMARY",
+            "justification": "Descreve a complicação aguda da hérnia inguinal, sendo crucial para a tomada de decisão clínica abordada na questão."
+          },
+          {
+            "term": "Laparoscopia",
+            "type": "PRIMARY",
+            "justification": "Representa a conduta cirúrgica proposta como gabarito, sendo um procedimento essencial para a resolução do caso."
+          },
+          {
+            "term": "Vômito",
+            "type": "SECONDARY",
+            "justification": "Sintoma associado ao quadro de encarceramento herniário, fornecendo contexto clínico."
+          },
+          {
+            "term": "Dor Abdominal",
+            "type": "SECONDARY",
+            "justification": "Sintoma relevante que acompanha o quadro de hérnia encarcerada, contribuindo para o cenário clínico."
+          },
+          {
+            "term": "Anestesia",
+            "type": "SECONDARY",
+            "justification": "Contexto do momento em que a redução espontânea ocorreu, influenciando a conduta subsequente."
+          },
+          {
+            "term": "Obstrução Intestinal",
+            "type": "SECONDARY",
+            "justification": "Complicação potencial e associada a hérnias encarceradas, relevante para o raciocínio diagnóstico e terapêutico."
+          },
+          {
+            "term": "Isquemia",
+            "type": "SECONDARY",
+            "justification": "Complicação grave e potencial de hérnias encarceradas, justificando a necessidade de exploração cirúrgica mesmo após a redução."
+          }
+        ],
+        "raw": "{\n  \"validation_status\": {\n    \"is_coherent\": true,\n    \"needs_manual_review\": false,\n    \"missing_primary_terms\": false,\n    \"review_reason\": \"\"\n  },\n  \"taxonomy_audit\": {\n    \"removed_terms\": [\n      \"Hérnia do Obturador\"\n    ]\n  },\n  \"final_decs_tags\": [\n    {\n      \"term\": \"Hérnia Inguinal\",\n      \"type\": \"PRIMARY\",\n      \"justification\": \"Termo central que descreve a condição principal do paciente e o foco da questão.\"\n    },\n    {\n      \"term\": \"Hérnia Encarcerada\",\n      \"type\": \"PRIMARY\",\n      \"justification\": \"Descreve a complicação aguda da hérnia inguinal, sendo crucial para a tomada de decisão clínica abordada na questão.\"\n    },\n    {\n      \"term\": \"Laparoscopia\",\n      \"type\": \"PRIMARY\",\n      \"justification\": \"Representa a conduta cirúrgica proposta como gabarito, sendo um procedimento essencial para a resolução do caso.\"\n    },\n    {\n      \"term\": \"Vômito\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Sintoma associado ao quadro de encarceramento herniário, fornecendo contexto clínico.\"\n    },\n    {\n      \"term\": \"Dor Abdominal\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Sintoma relevante que acompanha o quadro de hérnia encarcerada, contribuindo para o cenário clínico.\"\n    },\n    {\n      \"term\": \"Anestesia\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Contexto do momento em que a redução espontânea ocorreu, influenciando a conduta subsequente.\"\n    },\n    {\n      \"term\": \"Obstrução Intestinal\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Complicação potencial e associada a hérnias encarceradas, relevante para o raciocínio diagnóstico e terapêutico.\"\n    },\n    {\n      \"term\": \"Isquemia\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Complicação grave e potencial de hérnias encarceradas, justificando a necessidade de exploração cirúrgica mesmo após a redução.\"\n    }\n  ]\n}",
+        "error": null,
+        "needs_manual_review": false
+      },
+      "agreement": {
+        "agree": [
+          {
+            "code": "D006553",
+            "term": "Hérnia do Obturador",
+            "prompt1": false,
+            "prompt2": false,
+            "prompt1_status": "DESCARTADO",
+            "prompt2_status": "REJEITADO",
+            "prompt1_partial": "Hérnia Inguinal",
+            "prompt2_type": null,
+            "prompt2_justification": null
+          },
+          {
+            "code": "D014839",
+            "term": "Vômito",
+            "prompt1": true,
+            "prompt2": true,
+            "prompt1_status": "CERTO",
+            "prompt2_status": "APROVADO",
+            "prompt1_partial": "Vômitos",
+            "prompt2_type": "SECONDARY",
+            "prompt2_justification": "Sintoma associado ao quadro de encarceramento herniário, fornecendo contexto clínico."
+          }
+        ],
+        "diverge": [],
+        "agree_n": 2,
+        "diverge_n": 0
+      }
+    },
+    {
+      "question_id": 26698,
+      "statement_preview": "Paciente admitido na UTI, proveniente do PS, por quadro de choque séptico de foco urinário foi entubado, sob ventilação mecânica invasiva, em modo controlado, sem esforço ventilatório. É portador de DM tipo 2, ex-tabagis",
+      "gabarito": "A",
+      "themes": {
+        "primary": [
+          "Choque Séptico",
+          "Monitorização Hemodinâmica",
+          "Reanimação Volêmica"
+        ],
+        "secondary": [
+          "Ventilação Mecânica",
+          "Diabetes Mellitus Tipo 2",
+          "Lactato",
+          "Soluções Cristaloides",
+          "Débito Cardíaco",
+          "Pressão Venosa Central"
+        ]
+      },
+      "eligible_count": 1,
+      "textual_count": 8,
+      "textual_terms": [
+        "Choque Séptico",
+        "Monitorização Hemodinâmica",
+        "Respiração Artificial",
+        "Diabetes Mellitus Tipo 2",
+        "Ácido Láctico",
+        "Soluções Cristaloides",
+        "Débito Cardíaco",
+        "Pressão Venosa Central"
+      ],
+      "eligible_terms": [
+        {
+          "code": "D000074388",
+          "term": "Terapia Precoce Guiada por Metas",
+          "role": "primary",
+          "search_method": "vector"
+        }
+      ],
+      "prompt1": {
+        "prompt": "prompt1",
+        "mode": "per_candidate",
+        "items": [
+          {
+            "code": "D000074388",
+            "term": "Terapia Precoce Guiada por Metas",
+            "partial_term": "Choque Séptico",
+            "search_method": "vector",
+            "role": "primary",
+            "status": "DESCARTADO",
+            "aprovado": false,
+            "raw": "{\"status\":\"DESCARTADO\"}",
+            "error": null
+          }
+        ],
+        "approved": [],
+        "rejected": [
+          {
+            "code": "D000074388",
+            "term": "Terapia Precoce Guiada por Metas",
+            "status": "DESCARTADO"
+          }
+        ],
+        "needs_manual_review": true
+      },
+      "prompt2": {
+        "prompt": "prompt2",
+        "mode": "batch",
+        "items": [
+          {
+            "code": "D000074388",
+            "term": "Terapia Precoce Guiada por Metas",
+            "search_method": "vector",
+            "role": "primary",
+            "aprovado": false,
+            "type": null,
+            "justification": null,
+            "status": "REJEITADO"
+          }
+        ],
+        "approved": [],
+        "rejected": [
+          {
+            "code": "D000074388",
+            "term": "Terapia Precoce Guiada por Metas"
+          }
+        ],
+        "validation_status": {
+          "is_coherent": true,
+          "needs_manual_review": false,
+          "missing_primary_terms": false,
+          "review_reason": ""
+        },
+        "taxonomy_audit": {
+          "removed_terms": [
+            "Terapia Precoce Guiada por Metas",
+            "Reanimação Volêmica",
+            "Ventilação Mecânica",
+            "Lactato",
+            "Pressão Venosa Central"
+          ]
+        },
+        "final_decs_tags": [
+          {
+            "term": "Choque Séptico",
+            "type": "PRIMARY",
+            "justification": "É o diagnóstico principal do paciente e o foco central da questão."
+          },
+          {
+            "term": "Monitorização Hemodinâmica",
+            "type": "PRIMARY",
+            "justification": "A questão aborda a avaliação da resposta a fluidos e o benefício hemodinâmico, sendo a monitorização essencial para essa análise."
+          },
+          {
+            "term": "Soluções Cristaloides",
+            "type": "PRIMARY",
+            "justification": "O tema central da questão é a administração e o benefício de um bolus de cristaloide adicional."
+          },
+          {
+            "term": "Débito Cardíaco",
+            "type": "PRIMARY",
+            "justification": "O gabarito e a discussão da questão giram em torno da avaliação do débito cardíaco como indicador de resposta à fluidoterapia."
+          },
+          {
+            "term": "Respiração Artificial",
+            "type": "SECONDARY",
+            "justification": "O paciente está sob ventilação mecânica, o que é um dado contextual relevante para a avaliação hemodinâmica, mas não o foco principal."
+          },
+          {
+            "term": "Diabetes Mellitus Tipo 2",
+            "type": "SECONDARY",
+            "justification": "É uma comorbidade do paciente, relevante para o histórico clínico, mas não diretamente para a resolução da questão sobre fluidoterapia no choque séptico."
+          },
+          {
+            "term": "Ácido Láctico",
+            "type": "SECONDARY",
+            "justification": "O lactato é um marcador de má perfusão e choque, mencionado no enunciado como parte da avaliação inicial, mas não é o descritor principal da intervenção ou do desfecho."
+          }
+        ],
+        "raw": "{\n  \"validation_status\": {\n    \"is_coherent\": true,\n    \"needs_manual_review\": false,\n    \"missing_primary_terms\": false,\n    \"review_reason\": \"\"\n  },\n  \"taxonomy_audit\": {\n    \"removed_terms\": [\n      \"Terapia Precoce Guiada por Metas\",\n      \"Reanimação Volêmica\",\n      \"Ventilação Mecânica\",\n      \"Lactato\",\n      \"Pressão Venosa Central\"\n    ]\n  },\n  \"final_decs_tags\": [\n    {\n      \"term\": \"Choque Séptico\",\n      \"type\": \"PRIMARY\",\n      \"justification\": \"É o diagnóstico principal do paciente e o foco central da questão.\"\n    },\n    {\n      \"term\": \"Monitorização Hemodinâmica\",\n      \"type\": \"PRIMARY\",\n      \"justification\": \"A questão aborda a avaliação da resposta a fluidos e o benefício hemodinâmico, sendo a monitorização essencial para essa análise.\"\n    },\n    {\n      \"term\": \"Soluções Cristaloides\",\n      \"type\": \"PRIMARY\",\n      \"justification\": \"O tema central da questão é a administração e o benefício de um bolus de cristaloide adicional.\"\n    },\n    {\n      \"term\": \"Débito Cardíaco\",\n      \"type\": \"PRIMARY\",\n      \"justification\": \"O gabarito e a discussão da questão giram em torno da avaliação do débito cardíaco como indicador de resposta à fluidoterapia.\"\n    },\n    {\n      \"term\": \"Respiração Artificial\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"O paciente está sob ventilação mecânica, o que é um dado contextual relevante para a avaliação hemodinâmica, mas não o foco principal.\"\n    },\n    {\n      \"term\": \"Diabetes Mellitus Tipo 2\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"É uma comorbidade do paciente, relevante para o histórico clínico, mas não diretamente para a resolução da questão sobre fluidoterapia no choque séptico.\"\n    },\n    {\n      \"term\": \"Ácido Láctico\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"O lactato é um marcador de má perfusão e choque, mencionado no enunciado como parte da avaliação inicial, mas não é o descritor principal da intervenção ou do desfecho.\"\n    }\n  ]\n}",
+        "error": null,
+        "needs_manual_review": false
+      },
+      "agreement": {
+        "agree": [
+          {
+            "code": "D000074388",
+            "term": "Terapia Precoce Guiada por Metas",
+            "prompt1": false,
+            "prompt2": false,
+            "prompt1_status": "DESCARTADO",
+            "prompt2_status": "REJEITADO",
+            "prompt1_partial": "Choque Séptico",
+            "prompt2_type": null,
+            "prompt2_justification": null
+          }
+        ],
+        "diverge": [],
+        "agree_n": 1,
+        "diverge_n": 0
+      }
+    },
+    {
+      "question_id": 26696,
+      "statement_preview": "Homem de 70 anos, obeso e hipertenso, apresentou dispneia súbita, dor torácica e palpitações, três dias após uma cirurgia para correção de fratura no colo do fêmur direito. Uma angiotomografia computadorizada de tórax fo",
+      "gabarito": "A",
+      "themes": {
+        "primary": [
+          "Embolia Pulmonar",
+          "Gravidade da Doença"
+        ],
+        "secondary": [
+          "Obesidade",
+          "Hipertensão",
+          "Fraturas do Fêmur",
+          "Angiografia por Tomografia Computadorizada",
+          "Ecocardiografia",
+          "Troponina"
+        ]
+      },
+      "eligible_count": 4,
+      "textual_count": 4,
+      "textual_terms": [
+        "Embolia Pulmonar",
+        "Gravidade do Paciente",
+        "Fraturas do Fêmur",
+        "Angiografia por Tomografia Computadorizada"
+      ],
+      "eligible_terms": [
+        {
+          "code": "D009765",
+          "term": "Obesidade",
+          "role": "secondary",
+          "search_method": "vector"
+        },
+        {
+          "code": "D006973",
+          "term": "Hipertensão",
+          "role": "secondary",
+          "search_method": "vector"
+        },
+        {
+          "code": "D004452",
+          "term": "Ecocardiografia",
+          "role": "secondary",
+          "search_method": "vector"
+        },
+        {
+          "code": "D014336",
+          "term": "Troponina",
+          "role": "secondary",
+          "search_method": "vector"
+        }
+      ],
+      "prompt1": {
+        "prompt": "prompt1",
+        "mode": "per_candidate",
+        "items": [
+          {
+            "code": "D009765",
+            "term": "Obesidade",
+            "partial_term": "Obesidade",
+            "search_method": "vector",
+            "role": "secondary",
+            "status": "CERTO",
+            "aprovado": true,
+            "raw": "{\"status\":\"CERTO\"}",
+            "error": null
+          },
+          {
+            "code": "D006973",
+            "term": "Hipertensão",
+            "partial_term": "Hipertensão",
+            "search_method": "vector",
+            "role": "secondary",
+            "status": "CERTO",
+            "aprovado": true,
+            "raw": "{\"status\":\"CERTO\"}",
+            "error": null
+          },
+          {
+            "code": "D004452",
+            "term": "Ecocardiografia",
+            "partial_term": "Ecocardiografia",
+            "search_method": "vector",
+            "role": "secondary",
+            "status": "CERTO",
+            "aprovado": true,
+            "raw": "{\"status\":\"CERTO\"}",
+            "error": null
+          },
+          {
+            "code": "D014336",
+            "term": "Troponina",
+            "partial_term": "Troponina",
+            "search_method": "vector",
+            "role": "secondary",
+            "status": "CERTO",
+            "aprovado": true,
+            "raw": "{\"status\":\"CERTO\"}",
+            "error": null
+          }
+        ],
+        "approved": [
+          {
+            "code": "D009765",
+            "term": "Obesidade"
+          },
+          {
+            "code": "D006973",
+            "term": "Hipertensão"
+          },
+          {
+            "code": "D004452",
+            "term": "Ecocardiografia"
+          },
+          {
+            "code": "D014336",
+            "term": "Troponina"
+          }
+        ],
+        "rejected": [],
+        "needs_manual_review": false
+      },
+      "prompt2": {
+        "prompt": "prompt2",
+        "mode": "batch",
+        "items": [
+          {
+            "code": "D009765",
+            "term": "Obesidade",
+            "search_method": "vector",
+            "role": "secondary",
+            "aprovado": true,
+            "type": "SECONDARY",
+            "justification": "Comorbidade do paciente, relevante como fator de risco para TEP.",
+            "status": "APROVADO"
+          },
+          {
+            "code": "D006973",
+            "term": "Hipertensão",
+            "search_method": "vector",
+            "role": "secondary",
+            "aprovado": true,
+            "type": "SECONDARY",
+            "justification": "Comorbidade do paciente, relevante para o perfil clínico geral.",
+            "status": "APROVADO"
+          },
+          {
+            "code": "D004452",
+            "term": "Ecocardiografia",
+            "search_method": "vector",
+            "role": "secondary",
+            "aprovado": true,
+            "type": "SECONDARY",
+            "justification": "Exame complementar utilizado para avaliar a função do ventrículo direito na TEP.",
+            "status": "APROVADO"
+          },
+          {
+            "code": "D014336",
+            "term": "Troponina",
+            "search_method": "vector",
+            "role": "secondary",
+            "aprovado": true,
+            "type": "SECONDARY",
+            "justification": "Marcador bioquímico elevado, utilizado na estratificação de risco da TEP.",
+            "status": "APROVADO"
+          }
+        ],
+        "approved": [
+          {
+            "code": "D009765",
+            "term": "Obesidade",
+            "type": "SECONDARY"
+          },
+          {
+            "code": "D006973",
+            "term": "Hipertensão",
+            "type": "SECONDARY"
+          },
+          {
+            "code": "D004452",
+            "term": "Ecocardiografia",
+            "type": "SECONDARY"
+          },
+          {
+            "code": "D014336",
+            "term": "Troponina",
+            "type": "SECONDARY"
+          }
+        ],
+        "rejected": [],
+        "validation_status": {
+          "is_coherent": true,
+          "needs_manual_review": false,
+          "missing_primary_terms": false,
+          "review_reason": ""
+        },
+        "taxonomy_audit": {
+          "removed_terms": []
+        },
+        "final_decs_tags": [
+          {
+            "term": "Embolia Pulmonar",
+            "type": "PRIMARY",
+            "justification": "É o diagnóstico central e tema principal da questão."
+          },
+          {
+            "term": "Gravidade da Doença",
+            "type": "PRIMARY",
+            "justification": "A questão aborda diretamente a classificação de risco e severidade da TEP, utilizando o escore PESI."
+          },
+          {
+            "term": "Fraturas do Fêmur",
+            "type": "SECONDARY",
+            "justification": "Condição preexistente que atua como fator de risco para a TEP, fornecendo contexto clínico."
+          },
+          {
+            "term": "Angiografia por Tomografia Computadorizada",
+            "type": "SECONDARY",
+            "justification": "Método diagnóstico utilizado para confirmar a TEP."
+          },
+          {
+            "term": "Obesidade",
+            "type": "SECONDARY",
+            "justification": "Comorbidade do paciente, relevante como fator de risco para TEP."
+          },
+          {
+            "term": "Hipertensão",
+            "type": "SECONDARY",
+            "justification": "Comorbidade do paciente, relevante para o perfil clínico geral."
+          },
+          {
+            "term": "Ecocardiografia",
+            "type": "SECONDARY",
+            "justification": "Exame complementar utilizado para avaliar a função do ventrículo direito na TEP."
+          },
+          {
+            "term": "Troponina",
+            "type": "SECONDARY",
+            "justification": "Marcador bioquímico elevado, utilizado na estratificação de risco da TEP."
+          }
+        ],
+        "raw": "{\n  \"validation_status\": {\n    \"is_coherent\": true,\n    \"needs_manual_review\": false,\n    \"missing_primary_terms\": false,\n    \"review_reason\": \"\"\n  },\n  \"taxonomy_audit\": {\n    \"removed_terms\": []\n  },\n  \"final_decs_tags\": [\n    {\n      \"term\": \"Embolia Pulmonar\",\n      \"type\": \"PRIMARY\",\n      \"justification\": \"É o diagnóstico central e tema principal da questão.\"\n    },\n    {\n      \"term\": \"Gravidade da Doença\",\n      \"type\": \"PRIMARY\",\n      \"justification\": \"A questão aborda diretamente a classificação de risco e severidade da TEP, utilizando o escore PESI.\"\n    },\n    {\n      \"term\": \"Fraturas do Fêmur\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Condição preexistente que atua como fator de risco para a TEP, fornecendo contexto clínico.\"\n    },\n    {\n      \"term\": \"Angiografia por Tomografia Computadorizada\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Método diagnóstico utilizado para confirmar a TEP.\"\n    },\n    {\n      \"term\": \"Obesidade\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Comorbidade do paciente, relevante como fator de risco para TEP.\"\n    },\n    {\n      \"term\": \"Hipertensão\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Comorbidade do paciente, relevante para o perfil clínico geral.\"\n    },\n    {\n      \"term\": \"Ecocardiografia\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Exame complementar utilizado para avaliar a função do ventrículo direito na TEP.\"\n    },\n    {\n      \"term\": \"Troponina\",\n      \"type\": \"SECONDARY\",\n      \"justification\": \"Marcador bioquímico elevado, utilizado na estratificação de risco da TEP.\"\n    }\n  ]\n}",
+        "error": null,
+        "needs_manual_review": false
+      },
+      "agreement": {
+        "agree": [
+          {
+            "code": "D009765",
+            "term": "Obesidade",
+            "prompt1": true,
+            "prompt2": true,
+            "prompt1_status": "CERTO",
+            "prompt2_status": "APROVADO",
+            "prompt1_partial": "Obesidade",
+            "prompt2_type": "SECONDARY",
+            "prompt2_justification": "Comorbidade do paciente, relevante como fator de risco para TEP."
+          },
+          {
+            "code": "D006973",
+            "term": "Hipertensão",
+            "prompt1": true,
+            "prompt2": true,
+            "prompt1_status": "CERTO",
+            "prompt2_status": "APROVADO",
+            "prompt1_partial": "Hipertensão",
+            "prompt2_type": "SECONDARY",
+            "prompt2_justification": "Comorbidade do paciente, relevante para o perfil clínico geral."
+          },
+          {
+            "code": "D004452",
+            "term": "Ecocardiografia",
+            "prompt1": true,
+            "prompt2": true,
+            "prompt1_status": "CERTO",
+            "prompt2_status": "APROVADO",
+            "prompt1_partial": "Ecocardiografia",
+            "prompt2_type": "SECONDARY",
+            "prompt2_justification": "Exame complementar utilizado para avaliar a função do ventrículo direito na TEP."
+          },
+          {
+            "code": "D014336",
+            "term": "Troponina",
+            "prompt1": true,
+            "prompt2": true,
+            "prompt1_status": "CERTO",
+            "prompt2_status": "APROVADO",
+            "prompt1_partial": "Troponina",
+            "prompt2_type": "SECONDARY",
+            "prompt2_justification": "Marcador bioquímico elevado, utilizado na estratificação de risco da TEP."
+          }
+        ],
+        "diverge": [],
+        "agree_n": 4,
+        "diverge_n": 0
+      }
+    }
+  ]
+}
