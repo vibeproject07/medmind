@@ -75,6 +75,7 @@ interface Question {
   ai_decs_v2?: AiDeCSV2Result | null;
   competencias?: CompetenciasResult | null;
   temas?: TemasResult | null;
+  ai_question_themes?: TemasResult | null;
   created_at: string;
   updated_at: string;
 }
@@ -114,9 +115,34 @@ interface CompetenciasResult {
 }
 
 interface TemasResult {
+  temas: string[] | Array<{ tema: string; subtemas?: string[]; principal?: boolean }>;
+  subtemas?: string[];
+  tema_principal?: string;
+}
+
+function displayTemasFlat(temas: TemasResult | null | undefined): {
+  principal: string;
   temas: string[];
   subtemas: string[];
-  tema_principal: string;
+} | null {
+  if (!temas) return null;
+  if (Array.isArray(temas.temas) && temas.temas.length > 0 && typeof temas.temas[0] === 'object') {
+    const groups = temas.temas as Array<{ tema: string; subtemas?: string[]; principal?: boolean }>;
+    return {
+      principal:
+        temas.tema_principal ||
+        groups.find((g) => g.principal)?.tema ||
+        groups[0]?.tema ||
+        '',
+      temas: groups.map((g) => g.tema),
+      subtemas: groups.flatMap((g) => g.subtemas ?? []),
+    };
+  }
+  return {
+    principal: temas.tema_principal || '',
+    temas: (temas.temas as string[]) || [],
+    subtemas: temas.subtemas || [],
+  };
 }
 
 export default function QuestionsPage() {
@@ -568,7 +594,7 @@ export default function QuestionsPage() {
     try {
       const token = getToken();
       if (!token) return;
-      const res = await fetch(`/api/questions/${questionId}/themes`, {
+      const res = await fetch(`/api/questions/${questionId}/themes-assign`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -579,7 +605,9 @@ export default function QuestionsPage() {
       }
       setQuestions((prev) =>
         prev.map((q) =>
-          q.id === questionId ? { ...q, temas: data.result } : q
+          q.id === questionId
+            ? { ...q, temas: data.result, ai_question_themes: data.result }
+            : q
         )
       );
     } catch {
@@ -1322,28 +1350,37 @@ export default function QuestionsPage() {
                 {temasErrors[question.id] && (
                   <p className="text-xs text-red-500 mb-1">{temasErrors[question.id]}</p>
                 )}
-                {question.temas ? (
+                {(() => {
+                  const shown = displayTemasFlat(question.ai_question_themes ?? question.temas);
+                  if (!shown) {
+                    return (
+                      !temasLoadingIds.has(question.id) && (
+                        <p className="text-xs text-gray-400 italic">Nenhum tema gerado.</p>
+                      )
+                    );
+                  }
+                  return (
                   <div className="space-y-1.5">
-                    {question.temas.tema_principal && (
+                    {shown.principal && (
                       <div className="flex items-center gap-1 flex-wrap">
                         <span className="text-xs text-gray-400 mr-1">Principal:</span>
                         <span className="px-2 py-0.5 text-xs font-semibold bg-teal-600 text-white rounded-full">
-                          {question.temas.tema_principal}
+                          {shown.principal}
                         </span>
                       </div>
                     )}
-                    {question.temas.temas.length > 0 && (
+                    {shown.temas.length > 0 && (
                       <div className="flex flex-wrap gap-1">
-                        {question.temas.temas.map((t, i) => (
+                        {shown.temas.map((t, i) => (
                           <span key={i} className="px-2 py-0.5 text-xs bg-teal-50 border border-teal-200 text-teal-700 rounded-full">
                             {t}
                           </span>
                         ))}
                       </div>
                     )}
-                    {question.temas.subtemas.length > 0 && (
+                    {shown.subtemas.length > 0 && (
                       <div className="flex flex-wrap gap-1">
-                        {question.temas.subtemas.map((s, i) => (
+                        {shown.subtemas.map((s, i) => (
                           <span key={i} className="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 border border-gray-200 rounded-full">
                             {s}
                           </span>
@@ -1351,11 +1388,8 @@ export default function QuestionsPage() {
                       </div>
                     )}
                   </div>
-                ) : (
-                  !temasLoadingIds.has(question.id) && (
-                    <p className="text-xs text-gray-400 italic">Nenhum tema gerado.</p>
-                  )
-                )}
+                  );
+                })()}
               </div>
               )}
 

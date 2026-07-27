@@ -24,6 +24,7 @@ export async function GET(request: NextRequest) {
     }
 
     await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_decs_descriptors TEXT`);
+    await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_question_themes TEXT`);
 
     const { searchParams } = new URL(request.url);
     const examYear = searchParams.get('exam_year');
@@ -40,7 +41,7 @@ export async function GET(request: NextRequest) {
     let questions = (await query(`
       SELECT id, statement, option_a, option_b, option_c, option_d, option_e,
              correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region,
-             areas_conhecimento, assuntos, decs_terms, ai_decs_descriptors, ai_decs_v2, competencias, temas, anulada, created_at, updated_at
+             areas_conhecimento, assuntos, decs_terms, ai_decs_descriptors, ai_decs_v2, competencias, temas, ai_question_themes, anulada, created_at, updated_at
       FROM questions
       ORDER BY created_at DESC
     `)).rows;
@@ -78,6 +79,9 @@ export async function GET(request: NextRequest) {
       ai_decs_v2: question.ai_decs_v2 ? JSON.parse(question.ai_decs_v2) : null,
       competencias: question.competencias ? JSON.parse(question.competencias) : null,
       temas: question.temas ? JSON.parse(question.temas) : null,
+      ai_question_themes: question.ai_question_themes
+        ? JSON.parse(question.ai_question_themes)
+        : null,
     }));
 
     if (filterTags) {

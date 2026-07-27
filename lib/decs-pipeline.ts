@@ -101,6 +101,32 @@ export type DeCSPipelineRunResult = {
   term_trace: DeCSPipelineTermTrace[];
 };
 
+/** Monta o texto da questão para agentes (DeCS, competências, temas). */
+export function buildDeCSQuestionText(q: {
+  statement?: string | null;
+  option_a?: string | null;
+  option_b?: string | null;
+  option_c?: string | null;
+  option_d?: string | null;
+  option_e?: string | null;
+  correct_answer?: string | null;
+}): string {
+  const letter = String(q.correct_answer ?? '').trim().toUpperCase();
+  return [
+    'Enunciado:',
+    q.statement ?? '',
+    '',
+    'Alternativa A: ' + (q.option_a ?? ''),
+    'Alternativa B: ' + (q.option_b ?? ''),
+    q.option_c ? 'Alternativa C: ' + q.option_c : null,
+    q.option_d ? 'Alternativa D: ' + q.option_d : null,
+    q.option_e ? 'Alternativa E: ' + q.option_e : null,
+    letter ? `Gabarito: ${letter}` : null,
+  ]
+    .filter(Boolean)
+    .join('\n');
+}
+
 // ── Category metadata ────────────────────────────────────────────────────────
 
 export const DECS_CATEGORY_LABELS: Record<string, string> = {

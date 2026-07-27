@@ -139,16 +139,33 @@ export function parseThemesAssignResult(rawText: string): ThemesAssignResult {
     for (const g of parsed.temas as Array<Record<string, unknown>>) {
       const tema = normalizeTaxonomyLabel(String(g?.tema ?? ''));
       if (!tema) continue;
-      const subtemas = (Array.isArray(g?.subtemas) ? g.subtemas : [])
+      const subtemasRaw = (Array.isArray(g?.subtemas) ? g.subtemas : [])
         .map((s: unknown) => normalizeTaxonomyLabel(String(s ?? '')))
         .filter(Boolean);
-      if (subtemas.length === 0) continue;
-      temas.push({ tema, subtemas: [...new Set(subtemas)] });
+      const subtemas =
+        subtemasRaw.length > 0 ? [...new Set(subtemasRaw)] : [tema];
+      temas.push({
+        tema,
+        subtemas,
+        principal: g?.principal === true,
+      });
     }
-    return { temas };
+    const principalName =
+      normalizeTaxonomyLabel(String(parsed.tema_principal ?? '')) ||
+      temas.find((t) => t.principal)?.tema ||
+      temas[0]?.tema;
+    if (principalName) {
+      for (const t of temas) {
+        t.principal = t.tema === principalName;
+      }
+    }
+    return {
+      temas,
+      tema_principal: principalName || undefined,
+    };
   }
 
-  // Formato do agente em produção:
+  // Formato flat legado:
   // { temas: string[], subtemas: string[], tema_principal: string }
   const temaNames = (Array.isArray(parsed.temas) ? parsed.temas : [])
     .map((t) => normalizeTaxonomyLabel(String(t ?? '')))
@@ -180,6 +197,26 @@ export function parseThemesAssignResult(rawText: string): ThemesAssignResult {
   };
 }
 
+/** Agrupa themes_catalog em [{ tema, subtemas[] }] para injeção eficiente. */
+export function groupThemesCatalog(
+  rows: Array<{ tema: string; subtema: string }>,
+): Array<{ tema: string; subtemas: string[] }> {
+  const map = new Map<string, string[]>();
+  for (const r of rows) {
+    const tema = normalizeTaxonomyLabel(String(r.tema ?? ''));
+    const subtema = normalizeTaxonomyLabel(String(r.subtema ?? ''));
+    if (!tema) continue;
+    if (!map.has(tema)) map.set(tema, []);
+    if (subtema) {
+      const list = map.get(tema)!;
+      if (!list.some((s) => s.toLowerCase() === subtema.toLowerCase())) {
+        list.push(subtema);
+      }
+    }
+  }
+  return [...map.entries()].map(([tema, subtemas]) => ({ tema, subtemas }));
+}
+
 async function callTaxonomyAgent(
   agentKey: string,
   userMessage: string,
@@ -203,20 +240,23 @@ async function callTaxonomyAgent(
       temperature: agent.temperature,
       maxOutputTokens: agent.max_output_tokens,
       responseMimeType: 'application/json',
-    },
+      thinkingConfig: { thinkingBudget: 0 },
+    } as Record<string, unknown>,
   });
 
   const resp = response as {
     text?: string;
-    candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
+    candidates?: Array<{
+      content?: { parts?: Array<{ text?: string; thought?: boolean }> };
+    }>;
   };
-  return (
-    (typeof resp?.text === 'string' ? resp.text : '') ||
-    (resp?.candidates?.[0]?.content?.parts
+  const fromParts =
+    resp?.candidates?.[0]?.content?.parts
+      ?.filter((p) => !p?.thought)
       ?.map((p) => p?.text)
       .filter(Boolean)
-      .join('') ?? '')
-  );
+      .join('') ?? '';
+  return (typeof resp?.text === 'string' ? resp.text : '') || fromParts;
 }
 
 function fillPromptPlaceholders(
@@ -394,23 +434,41 @@ export async function classifyQuestionThemes(
   });
 
   const catalog = await query(
-    `SELECT tema, subtema FROM themes_catalog ORDER BY tema, subtema`,
+    `SELECT tema, subtema FROM themes_catalog ORDER BY tema ASC, subtema ASC`,
   );
-  const listaTemas = catalog.rows.map((r) => ({
-    tema: r.tema,
-    subtema: r.subtema,
-  }));
+  const listaTemas = groupThemesCatalog(
+    catalog.rows as Array<{ tema: string; subtema: string }>,
+  );
 
-  const userMessage = [
-    questionText,
-    '',
-    'Catálogo de temas/subtemas existentes (prefira estes quando cabíveis):',
-    JSON.stringify(listaTemas, null, 2),
-  ].join('\n');
+  const agent = await getRuntimeAgent('question_themes_assigner');
+  const hasPlaceholders =
+    agent.system_instruction.includes('{{QUESTAO}}') ||
+    agent.system_instruction.includes('{{LISTA_TEMAS}}');
+
+  let systemInstruction = agent.system_instruction;
+  let userMessage = questionText;
+
+  if (hasPlaceholders) {
+    systemInstruction = fillPromptPlaceholders(agent.system_instruction, {
+      QUESTAO: questionText,
+      RESPOSTA_CORRETA: String(question.correct_answer ?? ''),
+      LISTA_TEMAS: JSON.stringify(listaTemas, null, 2),
+    });
+    userMessage =
+      'Classifique os temas e subtemas desta questão conforme as instruções do sistema. Retorne apenas o JSON.';
+  } else {
+    userMessage = [
+      questionText,
+      '',
+      'Catálogo de temas/subtemas existentes (prefira estes rótulos quando cabíveis):',
+      JSON.stringify(listaTemas, null, 2),
+    ].join('\n');
+  }
 
   const rawText = await callTaxonomyAgent(
     'question_themes_assigner',
     userMessage,
+    systemInstruction,
   );
   const result = parseThemesAssignResult(rawText);
   if (result.temas.length === 0) {
@@ -425,21 +483,37 @@ export async function classifyQuestionThemes(
 
   let pendingInserted = 0;
   for (const group of result.temas) {
-    for (const subtema of group.subtemas) {
+    const pairs =
+      group.subtemas.length > 0
+        ? group.subtemas.map((s) => ({ tema: group.tema, subtema: s }))
+        : [{ tema: group.tema, subtema: group.tema }];
+
+    for (const pair of pairs) {
       const exists = await query(
         `SELECT 1 FROM themes_catalog
          WHERE lower(tema) = lower($1) AND lower(subtema) = lower($2)
          LIMIT 1`,
-        [group.tema, subtema],
+        [pair.tema, pair.subtema],
       );
       if (exists.rows.length > 0) continue;
+
+      const temaExists = await query(
+        `SELECT 1 FROM themes_catalog WHERE lower(tema) = lower($1) LIMIT 1`,
+        [pair.tema],
+      );
+      if (
+        temaExists.rows.length > 0 &&
+        pair.subtema.toLowerCase() === pair.tema.toLowerCase()
+      ) {
+        continue;
+      }
 
       const alreadyPending = await query(
         `SELECT 1 FROM themes_pending
          WHERE lower(tema) = lower($1) AND lower(subtema) = lower($2)
            AND status = 'pending'
          LIMIT 1`,
-        [group.tema, subtema],
+        [pair.tema, pair.subtema],
       );
       if (alreadyPending.rows.length > 0) continue;
 
@@ -447,12 +521,7 @@ export async function classifyQuestionThemes(
         `INSERT INTO themes_pending
            (tema, subtema, question_id, status, raw_payload)
          VALUES ($1, $2, $3, 'pending', $4::jsonb)`,
-        [
-          group.tema,
-          subtema,
-          questionId,
-          JSON.stringify({ tema: group.tema, subtema }),
-        ],
+        [pair.tema, pair.subtema, questionId, JSON.stringify(pair)],
       );
       pendingInserted += 1;
     }

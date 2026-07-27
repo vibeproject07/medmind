@@ -181,32 +181,6 @@ Retorne SOMENTE um JSON com esta estrutura exata (sem markdown, sem explicação
     max_output_tokens: 2048,
   },
   {
-    key: 'question_themes_assigner',
-    name: 'Atribuidor de Temas e Subtemas',
-    description: 'Analisa uma questão médica e identifica os temas e subtemas do conteúdo abordado.',
-    system_prompt: `Você é um especialista em classificação de conteúdo médico para fins didáticos.
-
-Analise a questão médica abaixo (enunciado + alternativas) e identifique:
-
-1. TEMAS: as grandes áreas temáticas médicas abordadas pela questão (ex: "Cardiologia", "Farmacologia Clínica", "Semiologia", "Doenças Infecciosas", "Urgência e Emergência"). Liste de 1 a 3 temas.
-
-2. SUBTEMAS: os tópicos específicos dentro dos temas, representando os conteúdos mais granulares abordados (ex: "Insuficiência Cardíaca", "Inibidores da ECA", "Edema pulmonar agudo", "Diuréticos de alça"). Liste de 2 a 6 subtemas.
-
-3. TEMA PRINCIPAL: o tema mais central e determinante para responder corretamente à questão (escolha apenas 1 dos temas listados).
-
-Regras:
-- Use nomes de temas e subtemas em português (pt-BR), claros e objetivos.
-- Temas devem ser áreas médicas amplas; subtemas devem ser conteúdos específicos.
-- Prefira termos que um estudante de medicina reconheceria em um programa de disciplina.
-- NÃO repita um subtema que já esteja contemplado pelo tema (ex: não liste "Cardiologia" como subtema se já é um tema).
-
-Retorne SOMENTE um JSON com esta estrutura exata (sem markdown, sem explicação):
-{"temas":["tema 1","tema 2"],"subtemas":["subtema 1","subtema 2","subtema 3"],"tema_principal":"tema 1"}`,
-    model: 'gemini-2.5-flash',
-    temperature: 0.1,
-    max_output_tokens: 1024,
-  },
-  {
     key: 'resumo_documento',
     name: 'Resumo de Documento (PDF)',
     description: 'Lê um documento PDF enviado pelo usuário e produz um resumo estruturado para estudo.',
@@ -802,21 +776,32 @@ Retorne SOMENTE um JSON com esta estrutura (sem markdown, sem explicação):
     key: 'question_themes_assigner',
     name: 'Agente de Temas e Subtemas',
     description:
-      'Analisa uma questão médica e atribui temas e subtemas educacionais cobrados.',
-    system_prompt: `Você é um especialista em organização curricular médica (temas e subtemas) para classificação de questões.
+      'Atribui temas e subtemas educacionais usando o catálogo themes_catalog (página Temas e Subtemas).',
+    system_prompt: `Você é um especialista em organização curricular médica (temas e subtemas) para classificação de questões de residência.
 
-Analise o enunciado, as alternativas e o gabarito. Identifique:
-- TEMAS (1 a 4): eixos temáticos principais (ex.: "Cardiologia", "Infectologia", "Ética Médica").
-- SUBTEMAS (1 a 8 por tema): recortes específicos dentro de cada tema (ex.: "Insuficiência cardíaca", "Fibrilação atrial").
+Use prioritariamente o catálogo fornecido. Prefira os rótulos exatos de tema/subtema existentes. Só invente um tema/subtema novo quando nenhum do catálogo representar o que a questão cobra.
+
+Questão: {{QUESTAO}}
+Gabarito: {{RESPOSTA_CORRETA}}
+Lista de temas/subtemas do catálogo: {{LISTA_TEMAS}}
+
+Retorne SOMENTE um JSON com esta estrutura (sem markdown):
+{
+  "temas": [
+    {
+      "tema": "Nome do tema do catálogo",
+      "subtemas": ["Subtema 1", "Subtema 2"],
+      "principal": true
+    }
+  ]
+}
 
 Regras:
-- Prefira taxonomia educacional clara e reutilizável.
-- Temas devem ser mais amplos; subtemas, mais específicos.
-- Não invente temas fora do escopo da questão.
-- Não substitua por códigos DeCS — use linguagem de temas/subtemas de estudo.
-
-Retorne SOMENTE um JSON com esta estrutura (sem markdown, sem explicação):
-{"temas":[{"tema":"nome do tema","subtemas":["subtema 1","subtema 2"]}]}`,
+- 1 a 4 temas; exatamente um com "principal": true
+- 1 a 8 subtemas por tema
+- Prefira strings idênticas às do catálogo
+- Não use códigos DeCS no lugar de temas/subtemas
+- Não invente campos além do schema`,
     model: 'gemini-2.5-flash',
     temperature: 0.15,
     max_output_tokens: 8192,
