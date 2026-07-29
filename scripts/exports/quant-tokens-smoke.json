@@ -1,0 +1,208 @@
+{
+  "generated_at": "2026-07-29T19:01:51.702Z",
+  "started_at": "2026-07-29T19:01:37.605Z",
+  "config": {
+    "limit": 2,
+    "offset": 0,
+    "delayMs": 200,
+    "agents": [
+      "classifier",
+      "themes",
+      "habilities"
+    ],
+    "out": "scripts/exports/quant-tokens-smoke.json",
+    "checkpointEvery": 25,
+    "pricing_usd_per_1m_tokens": {
+      "input": 0.3,
+      "output": 2.5
+    },
+    "persist_to_db": false
+  },
+  "summary": {
+    "total_questions": 2,
+    "questions_ok": 2,
+    "questions_partial": 0,
+    "questions_error": 0,
+    "questions_with_images": 0,
+    "questions_without_images": 2,
+    "token_totals": {
+      "input_tokens": 44621,
+      "output_tokens": 791,
+      "total_tokens": 45412,
+      "thoughts_tokens": 0,
+      "by_agent": {
+        "decs_classifier": {
+          "input_tokens": 3275,
+          "output_tokens": 71,
+          "total_tokens": 3346,
+          "calls": 2
+        },
+        "question_themes_assigner": {
+          "input_tokens": 25653,
+          "output_tokens": 126,
+          "total_tokens": 25779,
+          "calls": 2
+        },
+        "habilities_agent": {
+          "input_tokens": 15693,
+          "output_tokens": 594,
+          "total_tokens": 16287,
+          "calls": 2
+        }
+      }
+    },
+    "estimated_cost_usd_total": {
+      "input_usd": 0.013386,
+      "output_usd": 0.001978,
+      "total_usd": 0.015364
+    },
+    "image_cost_impact": {
+      "questions_with_images": 0,
+      "questions_without_images": 2,
+      "avg_input_tokens_with_images": 0,
+      "avg_input_tokens_without_images": 22311,
+      "avg_output_tokens_with_images": 0,
+      "avg_output_tokens_without_images": 396,
+      "avg_total_tokens_with_images": 0,
+      "avg_total_tokens_without_images": 22706,
+      "avg_estimated_cost_usd_with_images": 0,
+      "avg_estimated_cost_usd_without_images": 0.007682,
+      "input_token_delta_avg_with_vs_without": -22311,
+      "total_token_delta_avg_with_vs_without": -22706,
+      "cost_delta_avg_usd_with_vs_without": -0.007682,
+      "note": "Imagens multimodais aumentam principalmente input_tokens (prompt). O delta médio with vs without estima o impacto de custo por questão. Taxas usadas: input $0.3/1M, output $2.5/1M (Gemini 2.5 Flash, aproximado)."
+    }
+  },
+  "questions": [
+    {
+      "question_id": 1695,
+      "has_images": false,
+      "image_count": 0,
+      "status": "ok",
+      "statement_preview": "Uma paciente, 28 anos, com histórico de múltiplos episódios de dor pélvica e febre, é diagnosticada com doença inflamató",
+      "operations": [
+        {
+          "agent": "decs_classifier",
+          "model": "gemini-2.5-flash",
+          "status": "ok",
+          "input_tokens": 1649,
+          "output_tokens": 34,
+          "total_tokens": 1683,
+          "thoughts_tokens": 0,
+          "estimated_cost_usd": {
+            "input_usd": 0.000495,
+            "output_usd": 0.000085,
+            "total_usd": 0.00058
+          },
+          "elapsed_ms": 1005
+        },
+        {
+          "agent": "question_themes_assigner",
+          "model": "gemini-2.5-flash",
+          "status": "ok",
+          "input_tokens": 12838,
+          "output_tokens": 79,
+          "total_tokens": 12917,
+          "thoughts_tokens": 0,
+          "estimated_cost_usd": {
+            "input_usd": 0.003851,
+            "output_usd": 0.000197,
+            "total_usd": 0.004049
+          },
+          "elapsed_ms": 1418
+        },
+        {
+          "agent": "habilities_agent",
+          "model": "gemini-2.5-flash",
+          "status": "ok",
+          "input_tokens": 7858,
+          "output_tokens": 191,
+          "total_tokens": 8049,
+          "thoughts_tokens": 0,
+          "estimated_cost_usd": {
+            "input_usd": 0.002357,
+            "output_usd": 0.000478,
+            "total_usd": 0.002835
+          },
+          "elapsed_ms": 1467
+        }
+      ],
+      "question_totals": {
+        "input_tokens": 22345,
+        "output_tokens": 304,
+        "total_tokens": 22649,
+        "estimated_cost_usd": {
+          "input_usd": 0.006704,
+          "output_usd": 0.00076,
+          "total_usd": 0.007464
+        }
+      },
+      "elapsed_ms": 4266
+    },
+    {
+      "question_id": 1696,
+      "has_images": false,
+      "image_count": 0,
+      "status": "ok",
+      "statement_preview": "Uma paciente com diagnóstico de endometriose apresenta sintomas de dor crônica e alterações intestinais cíclicas, sugeri",
+      "operations": [
+        {
+          "agent": "decs_classifier",
+          "model": "gemini-2.5-flash",
+          "status": "ok",
+          "input_tokens": 1626,
+          "output_tokens": 37,
+          "total_tokens": 1663,
+          "thoughts_tokens": 0,
+          "estimated_cost_usd": {
+            "input_usd": 0.000488,
+            "output_usd": 0.000093,
+            "total_usd": 0.00058
+          },
+          "elapsed_ms": 684
+        },
+        {
+          "agent": "question_themes_assigner",
+          "model": "gemini-2.5-flash",
+          "status": "ok",
+          "input_tokens": 12815,
+          "output_tokens": 47,
+          "total_tokens": 12862,
+          "thoughts_tokens": 0,
+          "estimated_cost_usd": {
+            "input_usd": 0.003845,
+            "output_usd": 0.000118,
+            "total_usd": 0.003962
+          },
+          "elapsed_ms": 1245
+        },
+        {
+          "agent": "habilities_agent",
+          "model": "gemini-2.5-flash",
+          "status": "ok",
+          "input_tokens": 7835,
+          "output_tokens": 403,
+          "total_tokens": 8238,
+          "thoughts_tokens": 0,
+          "estimated_cost_usd": {
+            "input_usd": 0.00235,
+            "output_usd": 0.001007,
+            "total_usd": 0.003358
+          },
+          "elapsed_ms": 2465
+        }
+      ],
+      "question_totals": {
+        "input_tokens": 22276,
+        "output_tokens": 487,
+        "total_tokens": 22763,
+        "estimated_cost_usd": {
+          "input_usd": 0.006683,
+          "output_usd": 0.001218,
+          "total_usd": 0.0079
+        }
+      },
+      "elapsed_ms": 4419
+    }
+  ]
+}
