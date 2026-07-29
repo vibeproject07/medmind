@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { ArrowLeft, Edit, Image as ImageIcon, X, AlertTriangle, Ban, RotateCcw, Sparkles, Brain, ExternalLink, Loader2, Cpu, ShieldCheck, Trash2 } from 'lucide-react';
+import { ArrowLeft, Edit, Image as ImageIcon, X, AlertTriangle, Ban, RotateCcw, Sparkles, Brain, ExternalLink, Loader2, Cpu, ShieldCheck, Plus } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import DeCSAutocomplete from '@/components/Common/DeCSAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
@@ -162,7 +162,7 @@ export default function QuestionDetailPage() {
   const [decsValidationLoading, setDecsValidationLoading] = useState(false);
   const [decsValidationError, setDecsValidationError] = useState<string | null>(null);
   const [decsValidationResult, setDecsValidationResult] = useState<DecsValidationResult | null>(null);
-  const [removingDecsCode, setRemovingDecsCode] = useState<string | null>(null);
+  const [addingDecsCode, setAddingDecsCode] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [similarQuestions, setSimilarQuestions] = useState<SimilarQuestion[]>([]);
@@ -576,6 +576,12 @@ export default function QuestionDetailPage() {
         review_reason: data.result?.review_reason,
         is_coherent: data.result?.is_coherent,
       });
+      // Resultado final V1 já sem reprovados (persistido no servidor)
+      if (Array.isArray(data.ai_decs_descriptors)) {
+        setQuestion((prev) =>
+          prev ? { ...prev, ai_decs_descriptors: data.ai_decs_descriptors } : prev,
+        );
+      }
     } catch {
       setDecsValidationError('Erro ao conectar com o servidor.');
     } finally {
@@ -634,11 +640,22 @@ export default function QuestionDetailPage() {
     await runDecsValidation();
   };
 
-  const handleRemoveRejectedDecs = async (code: string) => {
-    if (!question) return;
+  const handleAddValidatedDecs = async (code: string) => {
+    if (!question || !decsValidationResult) return;
     const current = question.ai_decs_descriptors ?? [];
-    const next = current.filter((d) => d.code !== code);
-    setRemovingDecsCode(code);
+    if (current.some((d) => d.code === code)) return;
+
+    const fromApproved = decsValidationResult.approved.find((d) => d.code === code);
+    const fromRejected = decsValidationResult.rejected.find((d) => d.code === code);
+    const record = fromApproved ?? fromRejected;
+    if (!record) {
+      setDecsValidationError('Descritor não encontrado nos resultados da validação.');
+      return;
+    }
+
+    const next = [...current, record];
+    setAddingDecsCode(code);
+    setDecsValidationError(null);
     try {
       const token = localStorage.getItem('token');
       if (!token) return;
@@ -652,28 +669,16 @@ export default function QuestionDetailPage() {
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        setDecsValidationError(data.error || 'Erro ao remover descritor.');
+        setDecsValidationError(data.error || 'Erro ao adicionar descritor.');
         return;
       }
       setQuestion((prev) =>
         prev ? { ...prev, ai_decs_descriptors: next } : prev,
       );
-      setDecsValidationResult((prev) => {
-        if (!prev) return prev;
-        const items = prev.items.filter((i) => i.code !== code);
-        const approved = prev.approved.filter((d) => d.code !== code);
-        const rejected = prev.rejected.filter((d) => d.code !== code);
-        return {
-          ...prev,
-          items,
-          approved,
-          rejected,
-        };
-      });
     } catch {
-      setDecsValidationError('Erro ao conectar com o servidor ao remover descritor.');
+      setDecsValidationError('Erro ao conectar com o servidor ao adicionar descritor.');
     } finally {
-      setRemovingDecsCode(null);
+      setAddingDecsCode(null);
     }
   };
 
@@ -1464,8 +1469,11 @@ export default function QuestionDetailPage() {
                 </span>
                 <span className="text-xs text-amber-800/80">
                   {decsValidationResult.approved.length} aprovado(s) · {decsValidationResult.rejected.length} rejeitado(s)
+                  {decsValidationResult.rejected.length > 0
+                    ? ' · rejeitados removidos do resultado V1'
+                    : ''}
                   {decsValidationResult.skipped_textual
-                    ? ` · ${decsValidationResult.skipped_textual} textual(is) ignorado(s)`
+                    ? ` · ${decsValidationResult.skipped_textual} textual(is) mantido(s)`
                     : ''}
                   {decsValidationResult.is_coherent === true
                     ? ' · coerente'
@@ -1509,11 +1517,15 @@ export default function QuestionDetailPage() {
                         <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800">Coerência</th>
                         <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800">Status</th>
                         <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800">Motivo</th>
-                        <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800 w-24">Ação</th>
+                        <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800 w-28">Ação</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {decsValidationResult.items.map((item) => (
+                      {decsValidationResult.items.map((item) => {
+                        const alreadyInResult = (question.ai_decs_descriptors ?? []).some(
+                          (d) => d.code === item.code,
+                        );
+                        return (
                         <tr key={item.code} className="align-top bg-white/40">
                           <td className="px-2 py-1.5 border border-amber-100 font-medium text-gray-800">{item.term}</td>
                           <td className="px-2 py-1.5 border border-amber-100 font-mono text-xs text-gray-500">{item.code}</td>
@@ -1537,34 +1549,39 @@ export default function QuestionDetailPage() {
                                   : 'bg-red-100 text-red-700'
                               }`}
                             >
-                              {item.aprovado ? 'Aprovado' : 'Rejeitado'}
+                              {item.aprovado
+                                ? 'Aprovado'
+                                : alreadyInResult
+                                  ? 'Rejeitado (reinserido)'
+                                  : 'Rejeitado (removido)'}
                             </span>
                           </td>
                           <td className="px-2 py-1.5 border border-amber-100 text-xs text-gray-600">
                             {item.motivo || '—'}
                           </td>
                           <td className="px-2 py-1.5 border border-amber-100">
-                            {!item.aprovado ? (
-                              <button
-                                type="button"
-                                onClick={() => handleRemoveRejectedDecs(item.code)}
-                                disabled={removingDecsCode === item.code}
-                                title="Retirar descritor rejeitado da classificação V1"
-                                className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-red-700 bg-red-50 border border-red-200 rounded-md hover:bg-red-100 disabled:opacity-50"
-                              >
-                                {removingDecsCode === item.code ? (
-                                  <Loader2 className="h-3 w-3 animate-spin" />
-                                ) : (
-                                  <Trash2 className="h-3 w-3" />
-                                )}
-                                Retirar
-                              </button>
-                            ) : (
-                              <span className="text-gray-300 text-xs">—</span>
-                            )}
+                            <button
+                              type="button"
+                              onClick={() => handleAddValidatedDecs(item.code)}
+                              disabled={alreadyInResult || addingDecsCode === item.code}
+                              title={
+                                alreadyInResult
+                                  ? 'Já está no resultado V1'
+                                  : 'Adicionar ao resultado final V1'
+                              }
+                              className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-md hover:bg-emerald-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                              {addingDecsCode === item.code ? (
+                                <Loader2 className="h-3 w-3 animate-spin" />
+                              ) : (
+                                <Plus className="h-3 w-3" />
+                              )}
+                              {alreadyInResult ? 'No resultado' : 'Adicionar'}
+                            </button>
                           </td>
                         </tr>
-                      ))}
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>

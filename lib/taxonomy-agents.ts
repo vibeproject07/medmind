@@ -2,6 +2,7 @@ import { GoogleGenAI } from '@google/genai';
 import { getRuntimeAgent } from '@/lib/ai-agent-runtime';
 import { buildDeCSQuestionText } from '@/lib/decs-pipeline';
 import { query } from '@/lib/db';
+import { buildGeminiSdkUserParts } from '@/lib/gemini-question-images';
 import {
   ensureTaxonomyTables,
   normalizeTaxonomyLabel,
@@ -221,6 +222,7 @@ async function callTaxonomyAgent(
   agentKey: string,
   userMessage: string,
   systemInstructionOverride?: string,
+  imagesRaw?: unknown,
 ): Promise<string> {
   const geminiKey = (
     process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY
@@ -231,10 +233,12 @@ async function callTaxonomyAgent(
   const systemInstruction =
     systemInstructionOverride?.trim() || agent.system_instruction;
 
+  const parts = buildGeminiSdkUserParts(userMessage, imagesRaw);
+
   const ai = new GoogleGenAI({ apiKey: geminiKey, apiVersion: 'v1beta' });
   const response = await ai.models.generateContent({
     model: agent.model,
-    contents: [{ role: 'user', parts: [{ text: userMessage }] }],
+    contents: [{ role: 'user', parts }],
     config: {
       systemInstruction,
       temperature: agent.temperature,
@@ -327,6 +331,7 @@ export async function classifyQuestionHabilities(
     'habilities_agent',
     userMessage,
     systemInstruction,
+    question.images,
   );
   const result = parseHabilitiesResult(rawText);
   if (
@@ -469,6 +474,7 @@ export async function classifyQuestionThemes(
     'question_themes_assigner',
     userMessage,
     systemInstruction,
+    question.images,
   );
   const result = parseThemesAssignResult(rawText);
   if (result.temas.length === 0) {

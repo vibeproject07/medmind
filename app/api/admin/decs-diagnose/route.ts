@@ -11,6 +11,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { DECS_MAX_CANDIDATES } from '@/lib/decs-search-limits';
+import { buildGeminiRestUserParts } from '@/lib/gemini-question-images';
 
 export const runtime = 'nodejs';
 export const maxDuration = 120;
@@ -63,7 +64,13 @@ async function loadAgent(key: string) {
   throw new Error(`Agente "${key}" não encontrado ou sem instrução em ai_agents`);
 }
 
-async function callGemini(model: string, systemPrompt: string, userMessage: string, geminiKey: string) {
+async function callGemini(
+  model: string,
+  systemPrompt: string,
+  userMessage: string,
+  geminiKey: string,
+  images?: unknown,
+) {
   const t0 = Date.now();
   const url = `${GEMINI_BASE}/${model}:generateContent?key=${geminiKey}`;
   const res = await fetch(url, {
@@ -71,7 +78,12 @@ async function callGemini(model: string, systemPrompt: string, userMessage: stri
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       system_instruction: { parts: [{ text: systemPrompt }] },
-      contents: [{ role: 'user', parts: [{ text: userMessage }] }],
+      contents: [
+        {
+          role: 'user',
+          parts: buildGeminiRestUserParts(userMessage, images),
+        },
+      ],
       generationConfig: { temperature: 0.1, maxOutputTokens: 8192, responseMimeType: 'application/json' },
     }),
   });
@@ -199,7 +211,13 @@ async function runV1Trace(question: Record<string, unknown>, geminiKey: string, 
   let step1Error: string | null = null;
   let step1Ms = 0;
   try {
-    const { parsed, elapsed_ms } = await callGemini(classifierAgent.model, classifierAgent.prompt, questionText, geminiKey);
+    const { parsed, elapsed_ms } = await callGemini(
+      classifierAgent.model,
+      classifierAgent.prompt,
+      questionText,
+      geminiKey,
+      question.images,
+    );
     step1Ms = elapsed_ms;
     themes.primary = (Array.isArray(parsed?.primary) ? parsed.primary as string[] : []).filter(t => typeof t === 'string').slice(0, 3);
     themes.secondary = (Array.isArray(parsed?.secondary) ? parsed.secondary as string[] : []).filter(t => typeof t === 'string').slice(0, 6);
@@ -341,7 +359,13 @@ async function runV1Trace(question: Record<string, unknown>, geminiKey: string, 
   let rejectedCodes: string[] = [];
   try {
     const userMsg = `Questão:\n${questionText}\n\nCandidatos:\n${JSON.stringify(candidateList, null, 2)}`;
-    const { parsed, elapsed_ms } = await callGemini(validatorAgent.model, validatorAgent.prompt, userMsg, geminiKey);
+    const { parsed, elapsed_ms } = await callGemini(
+      validatorAgent.model,
+      validatorAgent.prompt,
+      userMsg,
+      geminiKey,
+      question.images,
+    );
     step4Ms = elapsed_ms;
     if (Array.isArray(parsed)) {
       const approvedSet = new Set(parsed.map(String));
@@ -389,7 +413,13 @@ async function runV2Trace(question: Record<string, unknown>, geminiKey: string, 
   let step1Error: string | null = null;
   let step1Ms = 0;
   try {
-    const { parsed, elapsed_ms } = await callGemini(indexerAgent.model, indexerAgent.prompt, questionText, geminiKey);
+    const { parsed, elapsed_ms } = await callGemini(
+      indexerAgent.model,
+      indexerAgent.prompt,
+      questionText,
+      geminiKey,
+      question.images,
+    );
     step1Ms = elapsed_ms;
     themes.primary = (Array.isArray(parsed?.primary) ? parsed.primary as string[] : []).filter(t => typeof t === 'string').slice(0, 3);
     themes.secondary = (Array.isArray(parsed?.secondary) ? parsed.secondary as string[] : []).filter(t => typeof t === 'string').slice(0, 6);
@@ -492,7 +522,13 @@ async function runV2Trace(question: Record<string, unknown>, geminiKey: string, 
   let step3Ms = 0;
   let rawSelectorOutput: unknown = null;
   try {
-    const { parsed, elapsed_ms } = await callGemini(selectorAgent.model, selectorAgent.prompt, JSON.stringify(contextInput, null, 2), geminiKey);
+    const { parsed, elapsed_ms } = await callGemini(
+      selectorAgent.model,
+      selectorAgent.prompt,
+      JSON.stringify(contextInput, null, 2),
+      geminiKey,
+      question.images,
+    );
     step3Ms = elapsed_ms;
     rawSelectorOutput = parsed;
     const allCandMap = new Map(conceptResults.flatMap(cr => cr.candidates).map((c: Record<string, unknown>) => [c.code, c]));

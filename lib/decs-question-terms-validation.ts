@@ -1,4 +1,5 @@
 import { buildHierarchyPath, wordJaccard, type DeCSRecord, type DeCSThemes } from '@/lib/decs-pipeline';
+import { buildGeminiRestUserParts } from '@/lib/gemini-question-images';
 
 export interface ValidationItemScore {
   code: string;
@@ -21,6 +22,7 @@ export interface QuestionTermsValidationResult {
   needs_manual_review?: boolean;
   review_reason?: string;
   is_coherent?: boolean;
+  missing_primary_terms?: boolean;
 }
 
 function clampPct(n: unknown): number {
@@ -78,6 +80,7 @@ function parseValidatorPayload(
   needs_manual_review?: boolean;
   review_reason?: string;
   is_coherent?: boolean;
+  missing_primary_terms?: boolean;
 } {
   const cleaned = rawText
     .trim()
@@ -212,21 +215,33 @@ function parseValidatorPayload(
           : 0;
       coerencia_geral = clampPct(coerencia_geral * 0.7 + approvalRate * 0.3);
 
+      const hasPrimaryTag = finalTags.some(
+        (t) => String(t.type ?? '').toUpperCase() === 'PRIMARY',
+      );
+      const missingPrimary =
+        status.missing_primary_terms === true ||
+        (finalTags.length === 0 && candidates.length > 0) ||
+        (finalTags.length > 0 && !hasPrimaryTag);
+
       return {
         items,
         approvedCodes,
         coerencia_geral,
-        needs_manual_review: status.needs_manual_review === true,
+        needs_manual_review:
+          status.needs_manual_review === true || missingPrimary,
         review_reason:
           status.review_reason != null
             ? String(status.review_reason)
-            : undefined,
+            : missingPrimary
+              ? 'Ausência de termos primários após validação.'
+              : undefined,
         is_coherent:
           status.is_coherent === true
             ? true
             : status.is_coherent === false
               ? false
               : undefined,
+        missing_primary_terms: missingPrimary,
       };
     }
 
@@ -318,6 +333,8 @@ export async function runQuestionTermsValidation(opts: {
   themes: DeCSThemes;
   descriptors: DeCSRecord[];
   geminiKey: string;
+  /** Imagens da questão (data URLs / base64), quando houver. */
+  images?: unknown;
 }): Promise<QuestionTermsValidationResult> {
   const { eligible, skipped_textual } = filterVectorOrApiDescriptors(
     opts.descriptors,
@@ -370,7 +387,12 @@ export async function runQuestionTermsValidation(opts: {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${validator.model}:generateContent?key=${opts.geminiKey}`;
   const body = {
     system_instruction: { parts: [{ text: validator.system_instruction }] },
-    contents: [{ role: 'user', parts: [{ text: userMessage }] }],
+    contents: [
+      {
+        role: 'user',
+        parts: buildGeminiRestUserParts(userMessage, opts.images),
+      },
+    ],
     generationConfig: {
       temperature: validator.temperature,
       maxOutputTokens: validator.max_output_tokens,
@@ -400,11 +422,13 @@ export async function runQuestionTermsValidation(opts: {
       .filter(Boolean)
       .join('') ?? '';
 
-  const { items, approvedCodes, coerencia_geral, needs_manual_review, review_reason, is_coherent } =
+  const { items, approvedCodes, coerencia_geral, needs_manual_review, review_reason, is_coherent, missing_primary_terms } =
     parseValidatorPayload(rawText, eligible, opts.themes);
 
   const approved = eligible.filter((d) => approvedCodes.has(d.code));
   const rejected = eligible.filter((d) => !approvedCodes.has(d.code));
+
+  const missingPrimary = missing_primary_terms === true;
 
   return {
     approved,
@@ -415,8 +439,13 @@ export async function runQuestionTermsValidation(opts: {
     candidates_considered: eligible.length,
     skipped_textual: skipped_textual.length,
     agent: 'question_terms_validator',
-    needs_manual_review,
-    review_reason,
+    needs_manual_review: needs_manual_review === true || missingPrimary,
+    review_reason:
+      review_reason ||
+      (missingPrimary
+        ? 'Ausência de termos primários após validação.'
+        : undefined),
     is_coherent,
+    missing_primary_terms: missingPrimary,
   };
 }

@@ -59,7 +59,8 @@ export async function POST(
       questionText,
       decsKey,
       geminiKey,
-      v2Model
+      v2Model,
+      question.images,
     );
 
     await query(
