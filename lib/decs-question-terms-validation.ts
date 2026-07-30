@@ -1,5 +1,9 @@
 import { buildHierarchyPath, wordJaccard, type DeCSRecord, type DeCSThemes } from '@/lib/decs-pipeline';
 import { buildGeminiRestUserParts } from '@/lib/gemini-question-images';
+import {
+  buildAgentTokenUsage,
+  type AgentTokenUsage,
+} from '@/lib/gemini-token-usage';
 
 export interface ValidationItemScore {
   code: string;
@@ -23,6 +27,7 @@ export interface QuestionTermsValidationResult {
   review_reason?: string;
   is_coherent?: boolean;
   missing_primary_terms?: boolean;
+  token_usage?: AgentTokenUsage;
 }
 
 function clampPct(n: unknown): number {
@@ -415,6 +420,11 @@ export async function runQuestionTermsValidation(opts: {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const data = (await res.json()) as any;
+  const token_usage = buildAgentTokenUsage(
+    'question_terms_validator',
+    validator.model,
+    data,
+  );
   const rawText: string =
     data?.candidates?.[0]?.content?.parts
       ?.filter((p: Record<string, unknown>) => !p?.thought)
@@ -447,5 +457,6 @@ export async function runQuestionTermsValidation(opts: {
         : undefined),
     is_coherent,
     missing_primary_terms: missingPrimary,
+    token_usage,
   };
 }

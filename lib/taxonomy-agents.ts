@@ -4,6 +4,10 @@ import { buildDeCSQuestionText } from '@/lib/decs-pipeline';
 import { query } from '@/lib/db';
 import { buildGeminiSdkUserParts } from '@/lib/gemini-question-images';
 import {
+  buildAgentTokenUsage,
+  type AgentTokenUsage,
+} from '@/lib/gemini-token-usage';
+import {
   ensureTaxonomyTables,
   normalizeTaxonomyLabel,
 } from '@/lib/taxonomy-schema';
@@ -223,7 +227,7 @@ async function callTaxonomyAgent(
   userMessage: string,
   systemInstructionOverride?: string,
   imagesRaw?: unknown,
-): Promise<string> {
+): Promise<{ text: string; token_usage: AgentTokenUsage }> {
   const geminiKey = (
     process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY
   )?.trim();
@@ -250,6 +254,7 @@ async function callTaxonomyAgent(
 
   const resp = response as {
     text?: string;
+    usageMetadata?: Record<string, number>;
     candidates?: Array<{
       content?: { parts?: Array<{ text?: string; thought?: boolean }> };
     }>;
@@ -260,7 +265,11 @@ async function callTaxonomyAgent(
       ?.map((p) => p?.text)
       .filter(Boolean)
       .join('') ?? '';
-  return (typeof resp?.text === 'string' ? resp.text : '') || fromParts;
+  const text = (typeof resp?.text === 'string' ? resp.text : '') || fromParts;
+  return {
+    text,
+    token_usage: buildAgentTokenUsage(agentKey, agent.model, resp),
+  };
 }
 
 function fillPromptPlaceholders(
@@ -327,7 +336,7 @@ export async function classifyQuestionHabilities(
     ].join('\n');
   }
 
-  const rawText = await callTaxonomyAgent(
+  const { text: rawText, token_usage } = await callTaxonomyAgent(
     'habilities_agent',
     userMessage,
     systemInstruction,
@@ -421,7 +430,7 @@ export async function classifyQuestionHabilities(
     }
   }
 
-  return { result, pendingInserted };
+  return { result, pendingInserted, token_usage };
 }
 
 export async function classifyQuestionThemes(
@@ -470,7 +479,7 @@ export async function classifyQuestionThemes(
     ].join('\n');
   }
 
-  const rawText = await callTaxonomyAgent(
+  const { text: rawText, token_usage } = await callTaxonomyAgent(
     'question_themes_assigner',
     userMessage,
     systemInstruction,
@@ -533,7 +542,7 @@ export async function classifyQuestionThemes(
     }
   }
 
-  return { result, pendingInserted };
+  return { result, pendingInserted, token_usage };
 }
 
 function flattenHabilities(result: HabilitiesResult | null): string[] {

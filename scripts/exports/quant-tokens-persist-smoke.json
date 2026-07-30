@@ -1,0 +1,132 @@
+{
+  "generated_at": "2026-07-30T18:05:25.311Z",
+  "started_at": "2026-07-30T18:04:48.544Z",
+  "config": {
+    "limit": 1,
+    "offset": 0,
+    "delayMs": 200,
+    "checkpointEvery": 10,
+    "out": "scripts/exports/quant-tokens-persist-smoke.json",
+    "idsFile": "/home/runner/workspace/scripts/exports/quant-tokens-1000-ids.json",
+    "persist_to_db": true,
+    "question_ids": [
+      2242
+    ]
+  },
+  "summary": {
+    "total_questions": 1,
+    "ok": 1,
+    "partial": 0,
+    "error": 0,
+    "questions_with_images": 1,
+    "questions_without_images": 0,
+    "token_totals": {
+      "input_tokens": 25545,
+      "output_tokens": 540,
+      "total_tokens": 28137,
+      "thoughts_tokens": 2052,
+      "by_agent": {
+        "decs_classifier": {
+          "input_tokens": 1644,
+          "output_tokens": 40,
+          "total_tokens": 2536,
+          "calls": 1
+        },
+        "question_terms_validator": {
+          "input_tokens": 2704,
+          "output_tokens": 166,
+          "total_tokens": 4070,
+          "calls": 1
+        },
+        "question_themes_assigner": {
+          "input_tokens": 12833,
+          "output_tokens": 59,
+          "total_tokens": 12892,
+          "calls": 1
+        },
+        "habilities_agent": {
+          "input_tokens": 8364,
+          "output_tokens": 275,
+          "total_tokens": 8639,
+          "calls": 1
+        }
+      }
+    },
+    "estimated_cost_usd_total": {
+      "input_usd": 0.007664,
+      "output_usd": 0.00135,
+      "total_usd": 0.009014
+    },
+    "image_cost_impact": {
+      "avg_input_with_images": 25545,
+      "avg_input_without_images": 0,
+      "avg_output_with_images": 540,
+      "avg_output_without_images": 0,
+      "input_delta": 25545
+    },
+    "persisted_counts": {
+      "with_decs": 1,
+      "with_validation": 1,
+      "with_themes": 1,
+      "with_habilities": 1
+    }
+  },
+  "questions": [
+    {
+      "question_id": 2242,
+      "has_images": true,
+      "image_count": 1,
+      "status": "ok",
+      "errors": [],
+      "persisted": {
+        "ai_decs_descriptors": 7,
+        "validation": true,
+        "themes": true,
+        "habilities": true
+      },
+      "operations": [
+        {
+          "agent": "decs_classifier",
+          "model": "gemini-2.5-flash",
+          "input_tokens": 1644,
+          "output_tokens": 40,
+          "total_tokens": 2536,
+          "thoughts_tokens": 852
+        },
+        {
+          "agent": "question_terms_validator",
+          "model": "gemini-2.5-flash",
+          "input_tokens": 2704,
+          "output_tokens": 166,
+          "total_tokens": 4070,
+          "thoughts_tokens": 1200
+        },
+        {
+          "agent": "question_themes_assigner",
+          "model": "gemini-2.5-flash",
+          "input_tokens": 12833,
+          "output_tokens": 59,
+          "total_tokens": 12892
+        },
+        {
+          "agent": "habilities_agent",
+          "model": "gemini-2.5-flash",
+          "input_tokens": 8364,
+          "output_tokens": 275,
+          "total_tokens": 8639
+        }
+      ],
+      "question_totals": {
+        "input_tokens": 25545,
+        "output_tokens": 540,
+        "total_tokens": 28137,
+        "estimated_cost_usd": {
+          "input_usd": 0.007664,
+          "output_usd": 0.00135,
+          "total_usd": 0.009014
+        }
+      },
+      "elapsed_ms": 35728
+    }
+  ]
+}
