@@ -12,6 +12,7 @@ import {
   FileText,
   HelpCircle,
   ClipboardList,
+  ClipboardCheck,
   BookOpen,
   X,
   FlaskConical,
@@ -70,6 +71,7 @@ export default function Sidebar() {
     { href: '/dashboard/admin/images', icon: ImagePlus, label: 'Upload de Imagens', roles: ['admin'] as UserRole[] },
     { href: '/dashboard/admin/competencias', icon: Target, label: 'Competências e conteúdos', roles: ['admin'] as UserRole[] },
     { href: '/dashboard/admin/temas', icon: Layers, label: 'Temas e Subtemas', roles: ['admin'] as UserRole[] },
+    { href: '/dashboard/admin/revisao-questoes', icon: ClipboardCheck, label: 'Revisão de Questões', roles: ['admin'] as UserRole[] },
   ];
 
   const getMenuItems = () => {
