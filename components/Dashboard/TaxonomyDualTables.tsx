@@ -158,9 +158,13 @@ export default function TaxonomyDualTables({
   const [editId, setEditId] = useState<number | null>(null);
   const [actionId, setActionId] = useState<number | null>(null);
   const [catalogPage, setCatalogPage] = useState(1);
+  const [pendingPage, setPendingPage] = useState(1);
 
   const totalPages = Math.max(1, Math.ceil(catalog.length / PAGE_SIZE));
   const pageItems = catalog.slice((catalogPage - 1) * PAGE_SIZE, catalogPage * PAGE_SIZE);
+
+  const pendingTotalPages = Math.max(1, Math.ceil(pending.length / PAGE_SIZE));
+  const pendingPageItems = pending.slice((pendingPage - 1) * PAGE_SIZE, pendingPage * PAGE_SIZE);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -177,6 +181,7 @@ export default function TaxonomyDualTables({
       setCatalog((cData.items ?? []).map(mapCatalogRow));
       setPending((pData.items ?? []).map(mapPendingRow));
       setCatalogPage(1);
+      setPendingPage(1);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Erro ao carregar');
     } finally {
@@ -475,9 +480,22 @@ export default function TaxonomyDualTables({
 
       {/* Pending validation */}
       <section className="bg-white rounded-lg border border-gray-200 shadow-sm p-5">
-        <h2 className="text-lg font-semibold text-gray-800 mb-1">
-          Tabela IA — validação manual
-        </h2>
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
+          <h2 className="text-lg font-semibold text-gray-800">
+            Tabela IA — validação manual
+          </h2>
+          {!loading && (
+            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
+              pending.length === 0
+                ? 'bg-gray-100 text-gray-500'
+                : 'bg-amber-100 text-amber-800'
+            }`}>
+              {pending.length === 1
+                ? '1 novo termo'
+                : `${pending.length} novos termos`}
+            </span>
+          )}
+        </div>
         <p className="text-sm text-gray-500 mb-4">
           Termos gerados pelos agentes. Ao aprovar, entram no catálogo com origem <strong>gerado</strong>.
         </p>
@@ -501,7 +519,7 @@ export default function TaxonomyDualTables({
                   </td>
                 </tr>
               ) : (
-                pending.map((row) => (
+                pendingPageItems.map((row) => (
                   <tr key={row.id}>
                     <td className="px-3 py-2 border border-gray-200 text-gray-500 font-mono text-xs">{row.id}</td>
                     <td className="px-3 py-2 border border-gray-200">{row.parent}</td>
@@ -540,6 +558,15 @@ export default function TaxonomyDualTables({
             </tbody>
           </table>
         </div>
+
+        <Pagination
+          page={pendingPage}
+          totalPages={pendingTotalPages}
+          total={pending.length}
+          onPrev={() => setPendingPage((p) => Math.max(1, p - 1))}
+          onNext={() => setPendingPage((p) => Math.min(pendingTotalPages, p + 1))}
+          onPage={setPendingPage}
+        />
       </section>
     </div>
   );
