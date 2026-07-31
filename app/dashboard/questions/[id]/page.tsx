@@ -51,7 +51,9 @@ interface Question {
     competencias: Array<{ competencia: string; conteudos: string[] }>;
   } | null;
   ai_question_themes?: {
-    temas: Array<{ tema: string; subtemas: string[] }>;
+    grande_area?: string | null;
+    temas: Array<{ tema: string; subtemas: string[]; principal?: boolean }>;
+    tema_principal?: string;
   } | null;
   created_at: string;
   updated_at: string;

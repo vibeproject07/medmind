@@ -3,6 +3,12 @@ import { getRuntimeAgent } from '@/lib/ai-agent-runtime';
 import { buildDeCSQuestionText } from '@/lib/decs-pipeline';
 import { query } from '@/lib/db';
 import {
+  GRANDE_AREA_TO_AREAS_CONHECIMENTO,
+  grandeAreaToAreasConhecimento,
+  normalizeGrandeArea,
+  type GrandeArea,
+} from '@/lib/grande-area';
+import {
   ensureTaxonomyTables,
   normalizeTaxonomyLabel,
 } from '@/lib/taxonomy-schema';
@@ -35,6 +41,7 @@ export interface TemaGroup {
 }
 
 export interface ThemesAssignResult {
+  grande_area?: GrandeArea | null;
   temas: TemaGroup[];
   tema_principal?: string;
 }
@@ -127,6 +134,7 @@ export function parseHabilitiesResult(rawText: string): HabilitiesResult {
 
 export function parseThemesAssignResult(rawText: string): ThemesAssignResult {
   const parsed = safeParseJsonObject(rawText);
+  const grande_area = normalizeGrandeArea(parsed.grande_area);
 
   // Formato aninhado: { temas: [{ tema, subtemas }] }
   if (
@@ -143,25 +151,32 @@ export function parseThemesAssignResult(rawText: string): ThemesAssignResult {
         .map((s: unknown) => normalizeTaxonomyLabel(String(s ?? '')))
         .filter(Boolean);
       const subtemas =
-        subtemasRaw.length > 0 ? [...new Set(subtemasRaw)] : [tema];
+        subtemasRaw.length > 0 ? [...new Set(subtemasRaw)].slice(0, 8) : [tema];
       temas.push({
         tema,
         subtemas,
         principal: g?.principal === true,
       });
     }
+
+    // 1–4 temas
+    const limited = temas.slice(0, 4);
     const principalName =
       normalizeTaxonomyLabel(String(parsed.tema_principal ?? '')) ||
-      temas.find((t) => t.principal)?.tema ||
-      temas[0]?.tema;
+      limited.find((t) => t.principal)?.tema ||
+      limited[0]?.tema;
     if (principalName) {
-      for (const t of temas) {
+      for (const t of limited) {
         t.principal = t.tema === principalName;
       }
+    } else if (limited[0]) {
+      limited[0].principal = true;
     }
+
     return {
-      temas,
-      tema_principal: principalName || undefined,
+      grande_area,
+      temas: limited,
+      tema_principal: principalName || limited[0]?.tema || undefined,
     };
   }
 
@@ -169,10 +184,12 @@ export function parseThemesAssignResult(rawText: string): ThemesAssignResult {
   // { temas: string[], subtemas: string[], tema_principal: string }
   const temaNames = (Array.isArray(parsed.temas) ? parsed.temas : [])
     .map((t) => normalizeTaxonomyLabel(String(t ?? '')))
-    .filter(Boolean);
+    .filter(Boolean)
+    .slice(0, 4);
   const subtemas = (Array.isArray(parsed.subtemas) ? parsed.subtemas : [])
     .map((s) => normalizeTaxonomyLabel(String(s ?? '')))
-    .filter(Boolean);
+    .filter(Boolean)
+    .slice(0, 8);
   const temaPrincipal =
     normalizeTaxonomyLabel(String(parsed.tema_principal ?? '')) ||
     temaNames[0] ||
@@ -188,10 +205,12 @@ export function parseThemesAssignResult(rawText: string): ThemesAssignResult {
   }
   for (const t of temaNames) {
     if (t === temaPrincipal) continue;
+    if (temas.length >= 4) break;
     temas.push({ tema: t, subtemas: [t], principal: false });
   }
 
   return {
+    grande_area,
     temas,
     tema_principal: temaPrincipal || undefined,
   };
@@ -480,6 +499,35 @@ export async function classifyQuestionThemes(
     `UPDATE questions SET ai_question_themes = $1, updated_at = NOW() WHERE id = $2`,
     [JSON.stringify(result), questionId],
   );
+
+  // Sincroniza grande_area → areas_conhecimento (rótulo canônico do produto)
+  const areaLabel = grandeAreaToAreasConhecimento(result.grande_area ?? null);
+  if (areaLabel) {
+    let existing: string[] = [];
+    try {
+      const raw = question.areas_conhecimento;
+      if (typeof raw === 'string' && raw.trim()) existing = JSON.parse(raw);
+      else if (Array.isArray(raw)) existing = raw.map(String);
+    } catch {
+      existing = [];
+    }
+    const canonSet = new Set(
+      Object.values(GRANDE_AREA_TO_AREAS_CONHECIMENTO).map((x) =>
+        x.toLowerCase(),
+      ),
+    );
+    const withoutOtherGrandes = existing.filter(
+      (a) => !canonSet.has(normalizeTaxonomyLabel(a).toLowerCase()),
+    );
+    const next = [
+      areaLabel,
+      ...withoutOtherGrandes.filter((a) => a !== areaLabel),
+    ];
+    await query(
+      `UPDATE questions SET areas_conhecimento = $1, updated_at = NOW() WHERE id = $2`,
+      [JSON.stringify(next), questionId],
+    );
+  }
 
   let pendingInserted = 0;
   for (const group of result.temas) {

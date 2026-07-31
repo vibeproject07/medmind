@@ -13,10 +13,13 @@ import {
 interface TemaGroup {
   tema: string;
   subtemas: string[];
+  principal?: boolean;
 }
 
 interface ThemesResult {
+  grande_area?: string | null;
   temas: TemaGroup[];
+  tema_principal?: string;
 }
 
 interface SimilarQuestion {
@@ -149,7 +152,23 @@ export default function QuestionThemesAssignSection({
           {isAdmin ? ' Use o botão acima para classificar esta questão.' : ''}
         </p>
       ) : (
-        <div className="overflow-x-auto">
+        <div className="space-y-3">
+          {result.grande_area && (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Grande área
+              </span>
+              <span className="inline-flex items-center px-2.5 py-1 text-xs font-semibold rounded-full bg-indigo-50 text-indigo-800 border border-indigo-100">
+                {result.grande_area}
+              </span>
+              {result.tema_principal && (
+                <span className="text-xs text-gray-500">
+                  · tema principal: <strong className="text-sky-800">{result.tema_principal}</strong>
+                </span>
+              )}
+            </div>
+          )}
+          <div className="overflow-x-auto">
           <table className="w-full text-sm border-collapse">
             <thead>
               <tr>
@@ -165,7 +184,14 @@ export default function QuestionThemesAssignSection({
               {result.temas.map((g, i) => (
                 <tr key={`${g.tema}-${i}`} className="align-top">
                   <td className="py-2 px-3 border border-sky-100 bg-sky-50/40 font-semibold text-sky-900">
-                    {g.tema}
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span>{g.tema}</span>
+                      {g.principal && (
+                        <span className="text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-200">
+                          principal
+                        </span>
+                      )}
+                    </div>
                   </td>
                   <td className="py-2 px-3 border border-cyan-100 bg-cyan-50/30">
                     <div className="flex flex-wrap gap-1.5">
@@ -183,6 +209,7 @@ export default function QuestionThemesAssignSection({
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
 
