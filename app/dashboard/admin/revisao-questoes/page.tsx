@@ -159,7 +159,8 @@ export default function RevisaoQuestoesPage() {
           <p className="font-medium">Critério da fila</p>
           <p className="mt-0.5 text-amber-800/90">
             Entram questões com <code className="text-xs bg-amber-100 px-1 rounded">missing_primary_terms</code> após
-            a validação DeCS — tipicamente quando não resta nenhum descritor com papel primário no resultado V1.
+            a validação DeCS — quando não resta nenhum descritor com <code className="text-xs bg-amber-100 px-1 rounded">role=primary</code> no resultado V1
+            (o sinal do agente LLM sozinho não coloca na fila).
           </p>
         </div>
       </div>

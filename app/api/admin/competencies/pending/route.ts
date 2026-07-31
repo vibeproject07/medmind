@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/api-auth';
 import { query } from '@/lib/db';
 import { ensureTaxonomyTables, normalizeTaxonomyLabel } from '@/lib/taxonomy-schema';
+import {
+  deleteCompetencyPendingAndPurge,
+  purgeCompetencyPair,
+} from '@/lib/taxonomy-term-removal';
 
 export const runtime = 'nodejs';
 
@@ -49,13 +53,11 @@ export async function POST(req: NextRequest) {
     }
 
     if (action === 'reject') {
-      await query(
-        `UPDATE competencies_pending
-         SET status = 'rejected', updated_at = NOW()
-         WHERE id = $1`,
-        [id],
+      const purge = await purgeCompetencyPair(
+        String(pending.competencia),
+        String(pending.conteudo),
       );
-      return NextResponse.json({ ok: true, status: 'rejected' });
+      return NextResponse.json({ ok: true, status: 'rejected', purge });
     }
 
     const competencia = normalizeTaxonomyLabel(String(pending.competencia));
@@ -98,8 +100,11 @@ export async function DELETE(req: NextRequest) {
     if (!id) {
       return NextResponse.json({ error: 'id obrigatório' }, { status: 400 });
     }
-    await query(`DELETE FROM competencies_pending WHERE id = $1`, [id]);
-    return NextResponse.json({ ok: true });
+    const result = await deleteCompetencyPendingAndPurge(id);
+    if (!result.ok) {
+      return NextResponse.json({ error: 'Pendente não encontrado' }, { status: 404 });
+    }
+    return NextResponse.json({ ok: true, purge: result.purge });
   } catch (e) {
     console.error(e);
     return NextResponse.json({ error: 'Erro ao excluir pendente' }, { status: 500 });

@@ -1,10 +1,12 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   Check,
   ChevronLeft,
   ChevronRight,
+  ExternalLink,
   Loader2,
   Pencil,
   Plus,
@@ -145,6 +147,7 @@ export default function TaxonomyDualTables({
   buildCatalogBody,
   buildImportBody,
 }: TaxonomyDualTablesProps) {
+  const router = useRouter();
   const [catalog, setCatalog] = useState<CatalogRow[]>([]);
   const [pending, setPending] = useState<PendingRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -498,6 +501,7 @@ export default function TaxonomyDualTables({
         </div>
         <p className="text-sm text-gray-500 mb-4">
           Termos gerados pelos agentes. Ao aprovar, entram no catálogo com origem <strong>gerado</strong>.
+          Ao rejeitar ou excluir, o termo sai da fila e também é removido das questões onde aparece.
         </p>
 
         <div className="overflow-x-auto">
@@ -508,7 +512,7 @@ export default function TaxonomyDualTables({
                 <th className="px-3 py-2 border border-amber-100 font-semibold text-amber-800">{parentLabel}</th>
                 <th className="px-3 py-2 border border-amber-100 font-semibold text-amber-800">{childLabel}</th>
                 <th className="px-3 py-2 border border-amber-100 font-semibold text-amber-800">Questão</th>
-                <th className="px-3 py-2 border border-amber-100 font-semibold text-amber-800 w-40">Validação</th>
+                <th className="px-3 py-2 border border-amber-100 font-semibold text-amber-800 w-56">Validação</th>
               </tr>
             </thead>
             <tbody>
@@ -528,7 +532,19 @@ export default function TaxonomyDualTables({
                       {row.question_id ? `#${row.question_id}` : '—'}
                     </td>
                     <td className="px-3 py-2 border border-gray-200">
-                      <div className="flex gap-2">
+                      <div className="flex flex-wrap gap-2">
+                        {row.question_id ? (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              router.push(`/dashboard/questions/${row.question_id}`)
+                            }
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                          >
+                            <ExternalLink className="h-3 w-3" />
+                            Abrir
+                          </button>
+                        ) : null}
                         <button
                           type="button"
                           onClick={() => handleApprove(row.id)}

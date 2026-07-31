@@ -91,7 +91,7 @@ export async function GET(req: NextRequest) {
         primary_count: Array.isArray(descriptors)
           ? descriptors.filter(
               (d: { role?: string }) =>
-                d?.role === 'primary' || d?.role == null,
+                String(d?.role ?? '').toLowerCase() === 'primary',
             ).length
           : 0,
         decs_validation_meta: meta,

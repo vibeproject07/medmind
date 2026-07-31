@@ -6,6 +6,7 @@ import {
   normalizeTaxonomyLabel,
   type TaxonomyOrigin,
 } from '@/lib/taxonomy-schema';
+import { purgeThemePair } from '@/lib/taxonomy-term-removal';
 
 export const runtime = 'nodejs';
 
@@ -145,8 +146,14 @@ export async function DELETE(req: NextRequest) {
     if (!id) {
       return NextResponse.json({ error: 'id obrigatório' }, { status: 400 });
     }
+    const existing = await query(`SELECT * FROM themes_catalog WHERE id = $1`, [id]);
+    const row = existing.rows[0] as { tema: string; subtema: string } | undefined;
+    if (!row) {
+      return NextResponse.json({ error: 'Registro não encontrado' }, { status: 404 });
+    }
+    const purge = await purgeThemePair(row.tema, row.subtema);
     await query(`DELETE FROM themes_catalog WHERE id = $1`, [id]);
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, purge });
   } catch (e) {
     console.error(e);
     return NextResponse.json({ error: 'Erro ao excluir' }, { status: 500 });

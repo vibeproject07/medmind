@@ -6,6 +6,7 @@ import {
   normalizeTaxonomyLabel,
   type TaxonomyOrigin,
 } from '@/lib/taxonomy-schema';
+import { purgeCompetencyPair } from '@/lib/taxonomy-term-removal';
 
 export const runtime = 'nodejs';
 
@@ -147,8 +148,19 @@ export async function DELETE(req: NextRequest) {
     if (!id) {
       return NextResponse.json({ error: 'id obrigatório' }, { status: 400 });
     }
+    const existing = await query(
+      `SELECT * FROM competencies_catalog WHERE id = $1`,
+      [id],
+    );
+    const row = existing.rows[0] as
+      | { competencia: string; conteudo: string }
+      | undefined;
+    if (!row) {
+      return NextResponse.json({ error: 'Registro não encontrado' }, { status: 404 });
+    }
+    const purge = await purgeCompetencyPair(row.competencia, row.conteudo);
     await query(`DELETE FROM competencies_catalog WHERE id = $1`, [id]);
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, purge });
   } catch (e) {
     console.error(e);
     return NextResponse.json({ error: 'Erro ao excluir' }, { status: 500 });

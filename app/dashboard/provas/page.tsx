@@ -27,10 +27,24 @@ interface ListingResponse {
 }
 
 interface ImportSummary {
-  provasImportadas: number;
-  provasIgnoradas: number;
-  questoesImportadas: number;
-  provasComErro: number;
+  provas_criadas: number;
+  provas_ja_existentes: number;
+  provas_incompletas: number;
+  provas_completas: number;
+  provas_com_erro: number;
+  questoes_inseridas: number;
+  questoes_ja_existentes: number;
+  questoes_atualizadas: number;
+  questoes_faltando: number;
+  questoes_esperadas: number;
+  incompletas: {
+    id: number;
+    nome: string;
+    esperado: number;
+    atual: number;
+    faltando: number;
+    faltando_numeros?: number[];
+  }[];
   erros: { nome: string; reason: string }[];
 }
 
@@ -429,11 +443,40 @@ export default function ProvasPage() {
         }
 
         const BATCH_SIZE = 10;
-        let totalImportadas = 0;
-        let totalIgnoradas = 0;
-        let totalQuestoes = 0;
-        let totalComErro = 0;
+        let provasCriadas = 0;
+        let provasJaExistentes = 0;
+        let provasIncompletas = 0;
+        let provasCompletas = 0;
+        let provasComErro = 0;
+        let questoesInseridas = 0;
+        let questoesJaExistentes = 0;
+        let questoesAtualizadas = 0;
+        let questoesFaltando = 0;
+        let questoesEsperadas = 0;
         const todosErros: { nome: string; reason: string }[] = [];
+        const todasIncompletas: ImportSummary['incompletas'] = [];
+
+        const mergeSummary = (body: Record<string, unknown>) => {
+          const s = (body.summary ?? {}) as Record<string, number>;
+          provasCriadas += s.provas_criadas ?? s.provasImportadas ?? 0;
+          provasJaExistentes += s.provas_ja_existentes ?? s.provasIgnoradas ?? 0;
+          provasIncompletas += s.provas_incompletas ?? 0;
+          provasCompletas += s.provas_completas ?? 0;
+          provasComErro += s.provas_com_erro ?? s.provasComErro ?? 0;
+          questoesInseridas += s.questoes_inseridas ?? s.questoesImportadas ?? 0;
+          questoesJaExistentes += s.questoes_ja_existentes ?? 0;
+          questoesAtualizadas += s.questoes_atualizadas ?? 0;
+          questoesFaltando += s.questoes_faltando ?? 0;
+          questoesEsperadas += s.questoes_esperadas ?? 0;
+          if (Array.isArray(body.errors)) {
+            todosErros.push(...(body.errors as { nome: string; reason: string }[]));
+          }
+          if (Array.isArray(body.provas_incompletas)) {
+            todasIncompletas.push(
+              ...(body.provas_incompletas as ImportSummary['incompletas']),
+            );
+          }
+        };
 
         const runBatches = async (items: unknown[], batchSize: number, key: string) => {
           const batches: unknown[][] = [];
@@ -447,28 +490,15 @@ export default function ProvasPage() {
               body: JSON.stringify({ [key]: batches[i] }),
             });
             const body = await res.json();
-            if (!res.ok) {
+            if (!res.ok && !body.summary) {
               if (res.status === 401 || res.status === 403) { setSessionExpired(true); return false; }
-              // Partial failure with saved provas — show as warning, not fatal error
-              if (body.summary) {
-                totalImportadas += body.summary.provasImportadas ?? 0;
-                totalIgnoradas  += body.summary.provasIgnoradas  ?? 0;
-                totalQuestoes   += body.summary.questoesImportadas ?? 0;
-                totalComErro    += body.summary.provasComErro ?? 0;
-                if (Array.isArray(body.errors)) todosErros.push(...body.errors);
-              } else {
-                setJsonError(body.error || 'Erro ao importar lote.');
-                setLoadingJson(false);
-                setImportProgress(null);
-                return false;
-              }
-              continue;
+              setJsonError(body.error || 'Erro ao importar lote.');
+              setLoadingJson(false);
+              setImportProgress(null);
+              return false;
             }
-            totalImportadas += body.summary?.provasImportadas ?? 0;
-            totalIgnoradas  += body.summary?.provasIgnoradas  ?? 0;
-            totalQuestoes   += body.summary?.questoesImportadas ?? 0;
-            totalComErro    += body.summary?.provasComErro ?? 0;
-            if (Array.isArray(body.errors)) todosErros.push(...body.errors);
+            if (res.status === 401 || res.status === 403) { setSessionExpired(true); return false; }
+            mergeSummary(body);
           }
           return true;
         };
@@ -481,7 +511,20 @@ export default function ProvasPage() {
 
         setImportProgress(null);
         setShowFileModal(false);
-        setImportSummary({ provasImportadas: totalImportadas, provasIgnoradas: totalIgnoradas, questoesImportadas: totalQuestoes, provasComErro: totalComErro, erros: todosErros });
+        setImportSummary({
+          provas_criadas: provasCriadas,
+          provas_ja_existentes: provasJaExistentes,
+          provas_incompletas: provasIncompletas || todasIncompletas.length,
+          provas_completas: provasCompletas,
+          provas_com_erro: provasComErro,
+          questoes_inseridas: questoesInseridas,
+          questoes_ja_existentes: questoesJaExistentes,
+          questoes_atualizadas: questoesAtualizadas,
+          questoes_faltando: questoesFaltando,
+          questoes_esperadas: questoesEsperadas,
+          incompletas: todasIncompletas,
+          erros: todosErros,
+        });
         await fetchProvas(1);
         setCurrentPage(1);
         setAdminCrudPage(1);
@@ -569,30 +612,60 @@ export default function ProvasPage() {
 
       {/* Feedback de importação */}
       {importSummary && (
-        <div className={`flex items-start gap-3 p-4 rounded-lg border ${importSummary.provasComErro > 0 && importSummary.provasImportadas === 0 ? 'bg-red-50 border-red-200 text-red-800' : importSummary.provasComErro > 0 ? 'bg-amber-50 border-amber-200 text-amber-800' : 'bg-green-50 border-green-200 text-green-800'}`}>
-          <CheckCircle className={`w-5 h-5 mt-0.5 flex-shrink-0 ${importSummary.provasComErro > 0 && importSummary.provasImportadas === 0 ? 'text-red-500' : importSummary.provasComErro > 0 ? 'text-amber-500' : 'text-green-600'}`} />
+        <div className={`flex items-start gap-3 p-4 rounded-lg border ${
+          importSummary.provas_com_erro > 0 && importSummary.provas_criadas === 0 && importSummary.questoes_inseridas === 0
+            ? 'bg-red-50 border-red-200 text-red-800'
+            : importSummary.provas_incompletas > 0 || importSummary.provas_com_erro > 0 || importSummary.questoes_faltando > 0
+              ? 'bg-amber-50 border-amber-200 text-amber-800'
+              : 'bg-green-50 border-green-200 text-green-800'
+        }`}>
+          <CheckCircle className={`w-5 h-5 mt-0.5 flex-shrink-0 ${
+            importSummary.provas_com_erro > 0 && importSummary.questoes_inseridas === 0
+              ? 'text-red-500'
+              : importSummary.provas_incompletas > 0 || importSummary.provas_com_erro > 0
+                ? 'text-amber-500'
+                : 'text-green-600'
+          }`} />
           <div className="flex-1 min-w-0">
             <p className="font-semibold">
-              {importSummary.provasComErro > 0 && importSummary.provasImportadas === 0
-                ? 'Nenhuma prova foi importada'
-                : importSummary.provasComErro > 0
-                ? 'Importação parcialmente concluída'
-                : 'Importação concluída!'}
+              {importSummary.provas_incompletas > 0 || importSummary.questoes_faltando > 0
+                ? 'Importação retomável concluída com provas incompletas'
+                : importSummary.provas_com_erro > 0
+                  ? 'Importação parcialmente concluída'
+                  : 'Importação concluída!'}
             </p>
             <ul className="text-sm mt-1 space-y-0.5">
               <li>
-                <strong>{importSummary.provasImportadas}</strong> prova(s) novas adicionadas
-                {importSummary.provasImportadas > 0 && <> ({importSummary.questoesImportadas} questão(ões))</>}.
+                <strong>{importSummary.provas_criadas}</strong> prova(s) criadas ·{' '}
+                <strong>{importSummary.provas_ja_existentes}</strong> já existentes ·{' '}
+                <strong>{importSummary.provas_completas}</strong> completas ·{' '}
+                <strong>{importSummary.provas_incompletas}</strong> incompletas
               </li>
               <li>
-                <strong>{importSummary.provasIgnoradas}</strong> prova(s) já existiam e foram ignoradas.
+                Questões: <strong>{importSummary.questoes_inseridas}</strong> inseridas ·{' '}
+                <strong>{importSummary.questoes_ja_existentes}</strong> já existiam ·{' '}
+                <strong>{importSummary.questoes_atualizadas}</strong> atualizadas ·{' '}
+                esperado <strong>{importSummary.questoes_esperadas}</strong>
+                {importSummary.questoes_faltando > 0 && (
+                  <> · <strong>{importSummary.questoes_faltando}</strong> faltando</>
+                )}
               </li>
-              {importSummary.provasComErro > 0 && (
+              {importSummary.provas_com_erro > 0 && (
                 <li>
-                  <strong>{importSummary.provasComErro}</strong> prova(s) não puderam ser processadas.
+                  <strong>{importSummary.provas_com_erro}</strong> prova(s) com erro de processamento.
                 </li>
               )}
             </ul>
+            {importSummary.incompletas.length > 0 && (
+              <ul className="mt-2 space-y-0.5 max-h-40 overflow-y-auto">
+                {importSummary.incompletas.map((p) => (
+                  <li key={`${p.id}-${p.nome}`} className="text-xs opacity-90">
+                    <strong>{p.nome}</strong>: esperado {p.esperado}, no banco {p.atual}
+                    {p.faltando > 0 ? ` (${p.faltando} faltando)` : ''}
+                  </li>
+                ))}
+              </ul>
+            )}
             {importSummary.erros.length > 0 && (
               <ul className="mt-2 space-y-0.5">
                 {importSummary.erros.map((e, i) => (
@@ -1043,7 +1116,7 @@ export default function ProvasPage() {
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-gray-500">
-            Selecione um arquivo JSON para importar provas e questões. Provas com o mesmo nome serão ignoradas automaticamente.
+            Selecione um arquivo JSON para importar provas e questões. Reimportar completa provas incompletas (só insere questões faltantes).
           </p>
           <button
             type="button"
@@ -1170,7 +1243,7 @@ export default function ProvasPage() {
                 Formatos aceitos: <strong>array de questões</strong>, objeto com chave <strong>provas</strong>, <strong>questoes</strong> ou <strong>paginas</strong> (crawler antigo).
               </p>
               <p className="text-xs text-gray-500 bg-blue-50 border border-blue-100 rounded-lg p-3">
-                Provas com o mesmo nome serão ignoradas (sem duplicatas). Arquivos grandes são importados automaticamente em lotes.
+                Import idempotente: provas existentes são retomadas (questões faltantes inseridas). Arquivos grandes vão em lotes.
               </p>
               <input
                 ref={fileInputRef}

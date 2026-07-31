@@ -8,8 +8,10 @@ import {
   type AgentTokenUsage,
 } from '@/lib/gemini-token-usage';
 import {
+  competencyPairExistsInCatalogOrPending,
   ensureTaxonomyTables,
   normalizeTaxonomyLabel,
+  themePairExistsInCatalogOrPending,
 } from '@/lib/taxonomy-schema';
 
 export interface CompetenciaGroup {
@@ -366,22 +368,9 @@ export async function classifyQuestionHabilities(
       normalizeTaxonomyLabel(nova.descricao || '') ||
       '—';
 
-    const exists = await query(
-      `SELECT 1 FROM competencies_catalog
-       WHERE lower(competencia) = lower($1) AND lower(conteudo) = lower($2)
-       LIMIT 1`,
-      [competencia, conteudo],
-    );
-    if (exists.rows.length > 0) continue;
-
-    const alreadyPending = await query(
-      `SELECT 1 FROM competencies_pending
-       WHERE lower(competencia) = lower($1) AND lower(conteudo) = lower($2)
-         AND status = 'pending'
-       LIMIT 1`,
-      [competencia, conteudo],
-    );
-    if (alreadyPending.rows.length > 0) continue;
+    if (await competencyPairExistsInCatalogOrPending(competencia, conteudo)) {
+      continue;
+    }
 
     await query(
       `INSERT INTO competencies_pending
@@ -395,22 +384,14 @@ export async function classifyQuestionHabilities(
   // Pares competência+conteúdo do formato aninhado ainda não catalogados
   for (const group of result.competencias) {
     for (const conteudo of group.conteudos) {
-      const exists = await query(
-        `SELECT 1 FROM competencies_catalog
-         WHERE lower(competencia) = lower($1) AND lower(conteudo) = lower($2)
-         LIMIT 1`,
-        [group.competencia, conteudo],
-      );
-      if (exists.rows.length > 0) continue;
-
-      const alreadyPending = await query(
-        `SELECT 1 FROM competencies_pending
-         WHERE lower(competencia) = lower($1) AND lower(conteudo) = lower($2)
-           AND status = 'pending'
-         LIMIT 1`,
-        [group.competencia, conteudo],
-      );
-      if (alreadyPending.rows.length > 0) continue;
+      if (
+        await competencyPairExistsInCatalogOrPending(
+          group.competencia,
+          conteudo,
+        )
+      ) {
+        continue;
+      }
 
       await query(
         `INSERT INTO competencies_pending
@@ -504,33 +485,9 @@ export async function classifyQuestionThemes(
         : [{ tema: group.tema, subtema: group.tema }];
 
     for (const pair of pairs) {
-      const exists = await query(
-        `SELECT 1 FROM themes_catalog
-         WHERE lower(tema) = lower($1) AND lower(subtema) = lower($2)
-         LIMIT 1`,
-        [pair.tema, pair.subtema],
-      );
-      if (exists.rows.length > 0) continue;
-
-      const temaExists = await query(
-        `SELECT 1 FROM themes_catalog WHERE lower(tema) = lower($1) LIMIT 1`,
-        [pair.tema],
-      );
-      if (
-        temaExists.rows.length > 0 &&
-        pair.subtema.toLowerCase() === pair.tema.toLowerCase()
-      ) {
+      if (await themePairExistsInCatalogOrPending(pair.tema, pair.subtema)) {
         continue;
       }
-
-      const alreadyPending = await query(
-        `SELECT 1 FROM themes_pending
-         WHERE lower(tema) = lower($1) AND lower(subtema) = lower($2)
-           AND status = 'pending'
-         LIMIT 1`,
-        [pair.tema, pair.subtema],
-      );
-      if (alreadyPending.rows.length > 0) continue;
 
       await query(
         `INSERT INTO themes_pending

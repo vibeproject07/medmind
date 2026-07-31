@@ -29,6 +29,7 @@ import {
 } from '@/lib/decs-pipeline';
 import { saveClassificationArtifact } from '@/lib/decs-classification-storage';
 import { runQuestionTermsValidation } from '@/lib/decs-question-terms-validation';
+import { buildDeCSValidationMeta } from '@/lib/decs-primary';
 import {
   classifyQuestionHabilities,
   classifyQuestionThemes,
@@ -73,6 +74,10 @@ interface CliArgs {
   checkpointEvery: number;
   out: string | null;
   idsFile: string;
+  /** JSON de corrida anterior: mescla resultados e pula IDs já ok/partial. */
+  resume: string | null;
+  /** Denominador no progresso (ex.: 1000 ao retomar um lote). */
+  progressTotal: number | null;
 }
 
 function parseArgs(argv: string[]): CliArgs {
@@ -88,6 +93,8 @@ function parseArgs(argv: string[]): CliArgs {
       'exports',
       'quant-tokens-1000-ids.json',
     ),
+    resume: null,
+    progressTotal: null,
   };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -98,10 +105,14 @@ function parseArgs(argv: string[]): CliArgs {
       args.checkpointEvery = parseInt(argv[++i], 10);
     else if (a === '--out') args.out = argv[++i];
     else if (a === '--ids-file') args.idsFile = argv[++i];
+    else if (a === '--resume') args.resume = argv[++i];
+    else if (a === '--progress-total')
+      args.progressTotal = parseInt(argv[++i], 10);
     else if (a === '--help' || a === '-h') {
       console.log(`Uso: node scripts/run-quant-tokens-1000-persist.mjs [opções]
   --limit <n>  --offset <n>  --delay-ms <n>  --checkpoint-every <n>
-  --ids-file <json>  --out <json>`);
+  --ids-file <json>  --out <json>
+  --resume <json>  --progress-total <n>`);
       process.exit(0);
     }
   }
@@ -159,6 +170,16 @@ interface QuestionPersistReport {
     estimated_cost_usd: ReturnType<typeof estimateUsdCost>;
   };
   elapsed_ms: number;
+}
+
+function loadResumeResults(resumePath: string): QuestionPersistReport[] {
+  if (!existsSync(resumePath)) {
+    throw new Error(`Arquivo --resume não encontrado: ${resumePath}`);
+  }
+  const raw = JSON.parse(readFileSync(resumePath, 'utf8')) as {
+    questions?: QuestionPersistReport[];
+  };
+  return Array.isArray(raw.questions) ? raw.questions : [];
 }
 
 function parseThemes(rawText: string): DeCSThemes {
@@ -367,30 +388,17 @@ async function processOne(
 
       const rejectedCodes = new Set(validation.rejected.map((d) => d.code));
       const descriptorsKept = descriptors.filter((d) => !rejectedCodes.has(d.code));
-      const hasPrimary = descriptorsKept.some(
-        (d) => d.role === 'primary' || d.role == null || d.role === undefined,
-      );
-      const missingPrimary =
-        descriptorsKept.length === 0 ||
-        !hasPrimary ||
-        validation.missing_primary_terms === true;
 
-      const validationMeta = {
-        missing_primary_terms: missingPrimary,
-        needs_manual_review:
-          validation.needs_manual_review === true || missingPrimary,
-        review_reason:
-          validation.review_reason ||
-          (missingPrimary
-            ? 'Questão sem descritor DeCS primário após a validação — revisão manual necessária.'
-            : null),
+      const validationMeta = buildDeCSValidationMeta({
+        descriptorsKept,
+        agentNeedsManualReview: validation.needs_manual_review === true,
+        agentMissingPrimaryHint: validation.missing_primary_terms === true,
+        agentReviewReason: validation.review_reason,
         coerencia_geral: validation.coerencia_geral,
-        validated_at: new Date().toISOString(),
         removed_count: rejectedCodes.size,
-        kept_count: descriptorsKept.length,
-        dismissed_at: null as string | null,
+        dismissed_at: null,
         source: 'quant-tokens-1000-persist',
-      };
+      });
 
       await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS decs_validation_meta JSONB`);
       await query(
@@ -475,7 +483,13 @@ function buildReport(
 ) {
   const totals = emptyTokenTotals();
   for (const r of results) {
-    for (const op of r.operations) addTokenUsage(totals, op);
+    if (r.operations.length > 0) {
+      for (const op of r.operations) addTokenUsage(totals, op);
+    } else {
+      totals.input_tokens += r.question_totals.input_tokens;
+      totals.output_tokens += r.question_totals.output_tokens;
+      totals.total_tokens += r.question_totals.total_tokens;
+    }
   }
   const withImg = results.filter((r) => r.has_images);
   const withoutImg = results.filter((r) => !r.has_images);
@@ -536,8 +550,82 @@ async function main(): Promise<void> {
   await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_question_themes TEXT`);
   await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS decs_validation_meta JSONB`);
 
-  const ids = loadQuestionIds(args.idsFile, args.limit, args.offset);
-  if (ids.length === 0) throw new Error('Nenhum ID de questão para processar');
+  const allIds = loadQuestionIds(args.idsFile, args.limit, args.offset);
+  if (allIds.length === 0) throw new Error('Nenhum ID de questão para processar');
+
+  const outPath =
+    args.out ??
+    args.resume ??
+    path.join(
+      process.cwd(),
+      'scripts',
+      'exports',
+      `quant-tokens-1000-persist-${new Date().toISOString().replace(/[:.]/g, '-')}.json`,
+    );
+  mkdirSync(path.dirname(outPath), { recursive: true });
+
+  const priorResults: QuestionPersistReport[] = args.resume
+    ? loadResumeResults(args.resume)
+    : existsSync(outPath)
+      ? loadResumeResults(outPath)
+      : [];
+  const byPrior = new Map<number, QuestionPersistReport>();
+  for (const r of priorResults) {
+    if (r.status === 'ok' || r.status === 'partial') {
+      byPrior.set(Number(r.question_id), r);
+    }
+  }
+  // IDs concluídos no log após o último checkpoint — stubs mínimos p/ o relatório.
+  const logPath = path.join(
+    process.cwd(),
+    'scripts',
+    'exports',
+    'quant-tokens-1000-persist-run.log',
+  );
+  if (existsSync(logPath)) {
+    const logText = readFileSync(logPath, 'utf8');
+    for (const m of logText.matchAll(
+      /\[\d+\/\d+\] id=(\d+) imgs=(\d+)[^\n]*\b(ok|partial|error)\b[^\n]*in=(\d+)\s+out=(\d+)[^\n]*\|\s+\$([0-9.]+)\s+\|\s+(\d+)ms/g,
+    )) {
+      const qid = Number(m[1]);
+      if (byPrior.has(qid)) continue;
+      const input = Number(m[4]);
+      const output = Number(m[5]);
+      byPrior.set(qid, {
+        question_id: qid,
+        has_images: Number(m[2]) > 0,
+        image_count: Number(m[2]),
+        status: m[3] as 'ok' | 'partial' | 'error',
+        errors: [],
+        persisted: {
+          ai_decs_descriptors: 1,
+          validation: true,
+          themes: true,
+          habilities: true,
+        },
+        operations: [],
+        question_totals: {
+          input_tokens: input,
+          output_tokens: output,
+          total_tokens: input + output,
+          estimated_cost_usd: estimateUsdCost(input, output),
+        },
+        elapsed_ms: Number(m[7]),
+      });
+    }
+  }
+
+  const results: QuestionPersistReport[] = [...byPrior.values()];
+  const doneIds = new Set<number>(byPrior.keys());
+  const ids = allIds.filter((id) => !doneIds.has(id));
+  const displayTotal = args.progressTotal ?? allIds.length;
+
+  if (ids.length === 0) {
+    const report = buildReport(args, results, startedAt, allIds);
+    writeFileSync(outPath, JSON.stringify(report, null, 2) + '\n');
+    console.log(`\n▶ Nada a processar — ${results.length} já concluídas. JSON: ${outPath}\n`);
+    return;
+  }
 
   const qRes = await query(
     `SELECT id, statement, option_a, option_b, option_c, option_d, option_e,
@@ -551,26 +639,24 @@ async function main(): Promise<void> {
   );
   const questions = ids.map((id) => byId.get(id)).filter(Boolean) as QuestionRow[];
 
-  console.log(`\n▶ Persistência + tokens — ${questions.length} questão(ões) (mesmas IDs do lote anterior)`);
+  console.log(
+    `\n▶ Persistência + tokens — retomando ${questions.length} restante(s) (já ok: ${results.length}/${displayTotal})`,
+  );
   console.log(`  Persistência DB: SIM (DeCS + validação + temas + competências + tokens)`);
   console.log(`  Delay: ${args.delayMs}ms\n`);
 
-  const outPath =
-    args.out ??
-    path.join(
-      process.cwd(),
-      'scripts',
-      'exports',
-      `quant-tokens-1000-persist-${new Date().toISOString().replace(/[:.]/g, '-')}.json`,
-    );
-  mkdirSync(path.dirname(outPath), { recursive: true });
-
-  const results: QuestionPersistReport[] = [];
+  const reportIds = [
+    ...new Set([
+      ...results.map((r) => Number(r.question_id)),
+      ...allIds,
+    ]),
+  ];
 
   for (let i = 0; i < questions.length; i++) {
     const row = questions[i]!;
     const imgN = parseQuestionImages(row.images).length;
-    process.stdout.write(`[${i + 1}/${questions.length}] id=${row.id} imgs=${imgN} … `);
+    const idx = results.length + 1;
+    process.stdout.write(`[${idx}/${displayTotal}] id=${row.id} imgs=${imgN} … `);
 
     const result = await processOne(row, geminiKey, decsKey);
     results.push(result);
@@ -583,7 +669,8 @@ async function main(): Promise<void> {
     if (args.checkpointEvery > 0 && (i + 1) % args.checkpointEvery === 0) {
       writeFileSync(
         outPath,
-        JSON.stringify(buildReport(args, results, startedAt, ids), null, 2) + '\n',
+        JSON.stringify(buildReport(args, results, startedAt, reportIds), null, 2) +
+          '\n',
       );
       console.log(`  ↳ checkpoint (${results.length}) → ${outPath}`);
     }
@@ -591,7 +678,7 @@ async function main(): Promise<void> {
     if (i < questions.length - 1 && args.delayMs > 0) await sleep(args.delayMs);
   }
 
-  const report = buildReport(args, results, startedAt, ids);
+  const report = buildReport(args, results, startedAt, reportIds);
   writeFileSync(outPath, JSON.stringify(report, null, 2) + '\n');
 
   const s = report.summary;
