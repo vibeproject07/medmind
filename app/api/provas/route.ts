@@ -46,6 +46,7 @@ function mapQuestaoToOptions(questoes: {
     const finalCorrect = ['A', 'B', 'C', 'D', 'E'].includes(correct) ? correct : 'A';
     if (!byLetter['A']) byLetter['A'] = 'Alternativa A';
     if (!byLetter['B']) byLetter['B'] = 'Alternativa B';
+    // Apenas A/B são NOT NULL; C/D/E podem ser null se ausentes no JSON
 
     const rawImagens = Array.isArray(q.imagens) ? q.imagens : [];
     const hasMetadata = rawImagens.length > 0 && typeof rawImagens[0] === 'object' && rawImagens[0] !== null;
@@ -58,11 +59,11 @@ function mapQuestaoToOptions(questoes: {
         return isNaN(num) ? 0 : num;
       })(),
       statement: String(q.titulo ?? q.enunciado ?? '').trim() || '(Sem enunciado)',
-      option_a: byLetter['A'] || '',
-      option_b: byLetter['B'] || '',
-      option_c: byLetter['C'] || null,
-      option_d: byLetter['D'] || null,
-      option_e: byLetter['E'] || null,
+      option_a: byLetter['A'] || 'Alternativa A',
+      option_b: byLetter['B'] || 'Alternativa B',
+      option_c: byLetter['C']?.trim() ? byLetter['C'] : null,
+      option_d: byLetter['D']?.trim() ? byLetter['D'] : null,
+      option_e: byLetter['E']?.trim() ? byLetter['E'] : null,
       correct_answer: finalCorrect,
       images: imagesBase64,
       images_meta: imagesMeta,
@@ -250,6 +251,9 @@ export async function POST(request: NextRequest) {
     const updateExisting = body.update_existing !== false;
 
     await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS images_meta TEXT`);
+    // Só A/B são obrigatórias; C/D podem ser nulas (questões com 2 alternativas)
+    await query(`ALTER TABLE questions ALTER COLUMN option_c DROP NOT NULL`);
+    await query(`ALTER TABLE questions ALTER COLUMN option_d DROP NOT NULL`);
 
     const rawProvas = normalizeImportPayload(body);
     if (rawProvas.length === 0) {
@@ -401,6 +405,9 @@ export async function POST(request: NextRequest) {
         for (const q of uniqueQuestions) {
           const optA = q.option_a || 'Alternativa A';
           const optB = q.option_b || 'Alternativa B';
+          const optC = q.option_c?.trim() ? q.option_c : null;
+          const optD = q.option_d?.trim() ? q.option_d : null;
+          const optE = q.option_e?.trim() ? q.option_e : null;
           const imagesJson = q.images?.length ? JSON.stringify(q.images) : null;
           const imagesMetaJson = q.images_meta?.length
             ? JSON.stringify(q.images_meta)
@@ -433,9 +440,9 @@ export async function POST(request: NextRequest) {
                   q.statement || '(Sem enunciado)',
                   optA,
                   optB,
-                  q.option_c,
-                  q.option_d,
-                  q.option_e,
+                  optC,
+                  optD,
+                  optE,
                   q.correct_answer,
                   imagesJson,
                   imagesMetaJson,
@@ -466,9 +473,9 @@ export async function POST(request: NextRequest) {
               q.statement || '(Sem enunciado)',
               optA,
               optB,
-              q.option_c,
-              q.option_d,
-              q.option_e,
+              optC,
+              optD,
+              optE,
               q.correct_answer,
               null,
               null,
