@@ -4,7 +4,8 @@ import { useEffect, useState, useCallback } from 'react';
 import {
   Database, Zap, Play, RefreshCw, CheckCircle2,
   Clock, AlertCircle, ChevronRight, ExternalLink,
-  Code2, Layers, Activity, BookOpen,
+  Code2, Layers, Activity, BookOpen, BarChart2,
+  ChevronLeft,
 } from 'lucide-react';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -116,6 +117,9 @@ export default function VectorizationPage() {
     noResume: false,
   });
 
+  const [statsPage, setStatsPage] = useState(1);
+  const STATS_PAGE_SIZE = 10;
+
   const fetchStatus = useCallback(async () => {
     try {
       const res = await fetch('/api/admin/embed-batch', {
@@ -226,6 +230,136 @@ export default function VectorizationPage() {
           e armazena nos dois backends configurados.
         </p>
       </div>
+
+      {/* ── Tabela de resumo ── */}
+      {(() => {
+        const statsRows = [
+          {
+            label: 'Vetorizadas',
+            value: pg?.withEmbedding ?? null,
+            total: pg?.total ?? null,
+            color: 'text-blue-700',
+            dot: 'bg-blue-500',
+            ready: true,   // sempre pronto — só precisa carregar
+            comingSoon: false,
+          },
+          { label: 'Classificadas',           value: null, total: null, color: 'text-gray-400', dot: 'bg-gray-300', ready: false, comingSoon: true },
+          { label: 'Validadas',               value: null, total: null, color: 'text-gray-400', dot: 'bg-gray-300', ready: false, comingSoon: true },
+          { label: 'Competências atribuídas', value: null, total: null, color: 'text-gray-400', dot: 'bg-gray-300', ready: false, comingSoon: true },
+          { label: 'Temas atribuídos',        value: null, total: null, color: 'text-gray-400', dot: 'bg-gray-300', ready: false, comingSoon: true },
+        ];
+        const totalPages = Math.ceil(statsRows.length / STATS_PAGE_SIZE);
+        const pageRows   = statsRows.slice((statsPage - 1) * STATS_PAGE_SIZE, statsPage * STATS_PAGE_SIZE);
+
+        return (
+          <div className="border border-gray-200 rounded-xl bg-white shadow-sm overflow-hidden">
+            {/* cabeçalho */}
+            <div className="px-5 py-4 border-b border-gray-100 flex items-center gap-2">
+              <BarChart2 className="w-4 h-4 text-indigo-500" />
+              <p className="font-semibold text-gray-900 text-sm">Resumo do Banco de Questões</p>
+              <span className="ml-auto text-xs text-gray-400">
+                {statsRows.length} {statsRows.length === 1 ? 'categoria' : 'categorias'}
+              </span>
+            </div>
+
+            {/* tabela */}
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-gray-50 border-b border-gray-100">
+                  <th className="px-5 py-2.5 text-left text-xs font-semibold text-gray-500 w-8">#</th>
+                  <th className="px-5 py-2.5 text-left text-xs font-semibold text-gray-500">Categoria</th>
+                  <th className="px-5 py-2.5 text-right text-xs font-semibold text-gray-500">Quantidade</th>
+                  <th className="px-5 py-2.5 text-right text-xs font-semibold text-gray-500">Total</th>
+                  <th className="px-5 py-2.5 text-right text-xs font-semibold text-gray-500 w-20">%</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-50">
+                {pageRows.map((row, i) => {
+                  const idx      = (statsPage - 1) * STATS_PAGE_SIZE + i + 1;
+                  const pct      = row.value != null && row.total ? Math.round((row.value / row.total) * 1000) / 10 : null;
+                  return (
+                    <tr key={row.label} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-5 py-3 text-xs text-gray-400">{idx}</td>
+                      <td className="px-5 py-3">
+                        <div className="flex items-center gap-2">
+                          <span className={`w-2 h-2 rounded-full flex-shrink-0 ${row.dot}`} />
+                          <span className={`font-medium ${row.comingSoon ? 'text-gray-400' : 'text-gray-800'}`}>
+                            {row.label}
+                          </span>
+                          {row.comingSoon && (
+                            <span className="text-[10px] bg-gray-100 text-gray-400 px-1.5 py-0.5 rounded-full">
+                              em breve
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-5 py-3 text-right">
+                        {loading && row.label === 'Vetorizadas' ? (
+                          <span className="inline-block w-16 h-4 bg-gray-100 animate-pulse rounded" />
+                        ) : row.value != null ? (
+                          <span className={`font-semibold tabular-nums ${row.color}`}>
+                            {fmtNum(row.value)}
+                          </span>
+                        ) : (
+                          <span className="text-gray-300">—</span>
+                        )}
+                      </td>
+                      <td className="px-5 py-3 text-right text-xs text-gray-400 tabular-nums">
+                        {loading && row.label === 'Vetorizadas' ? (
+                          <span className="inline-block w-12 h-3 bg-gray-100 animate-pulse rounded" />
+                        ) : row.total != null ? fmtNum(row.total) : (
+                          <span className="text-gray-200">—</span>
+                        )}
+                      </td>
+                      <td className="px-5 py-3 text-right tabular-nums">
+                        {loading && row.label === 'Vetorizadas' ? (
+                          <span className="inline-block w-8 h-3 bg-gray-100 animate-pulse rounded" />
+                        ) : pct != null ? (
+                          <span className="text-xs font-medium text-gray-600">{pct}%</span>
+                        ) : (
+                          <span className="text-gray-200 text-xs">—</span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+
+            {/* paginação */}
+            {totalPages > 1 && (
+              <div className="px-5 py-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+                <span>
+                  Exibindo {(statsPage - 1) * STATS_PAGE_SIZE + 1}–
+                  {Math.min(statsPage * STATS_PAGE_SIZE, statsRows.length)} de {statsRows.length}
+                </span>
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={() => setStatsPage((p) => Math.max(1, p - 1))}
+                    disabled={statsPage === 1}
+                    className="p-1 rounded hover:bg-gray-100 disabled:opacity-30 transition-colors"
+                  >
+                    <ChevronLeft className="w-3.5 h-3.5" />
+                  </button>
+                  <span className="px-2 font-medium">{statsPage} / {totalPages}</span>
+                  <button
+                    onClick={() => setStatsPage((p) => Math.min(totalPages, p + 1))}
+                    disabled={statsPage === totalPages}
+                    className="p-1 rounded hover:bg-gray-100 disabled:opacity-30 transition-colors"
+                  >
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* rodapé informativo */}
+            <div className="px-5 py-2.5 border-t border-gray-50 bg-gray-50 text-[11px] text-gray-400">
+              Classificadas, Validadas, Competências e Temas serão preenchidas após atualização do banco de dados.
+            </div>
+          </div>
+        );
+      })()}
 
       {error && (
         <div className="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
