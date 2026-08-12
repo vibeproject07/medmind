@@ -12,6 +12,7 @@
 import { buildHierarchyPath, isCategoryAcceptable, searchDeCSLocal, searchDeCSCandidates, enrichFromDB, type DeCSRecord } from './decs-pipeline';
 import { DECS_MAX_CANDIDATES } from './decs-search-limits';
 import { getRuntimeAgent } from './ai-agent-runtime';
+import { buildGeminiRestUserParts } from './gemini-question-images';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -170,7 +171,8 @@ async function selectDescriptorsWithGemini(
   primaryCandidates: Map<string, DeCSRecord[]>,
   secondaryCandidates: Map<string, DeCSRecord[]>,
   geminiKey: string,
-  model = 'gemini-2.5-flash'
+  model = 'gemini-2.5-flash',
+  images?: unknown,
 ): Promise<{ primary: DeCSRecord[]; secondary: DeCSRecord[] }> {
   const buildCandidateBlock = (
     label: string,
@@ -205,7 +207,15 @@ async function selectDescriptorsWithGemini(
     const url = `${GEMINI_BASE}/${selectorAgent.model}:generateContent?key=${geminiKey}`;
     const body = {
       system_instruction: { parts: [{ text: selectorAgent.system_instruction }] },
-      contents: [{ role: 'user', parts: [{ text: JSON.stringify(contextInput, null, 2) }] }],
+      contents: [
+        {
+          role: 'user',
+          parts: buildGeminiRestUserParts(
+            JSON.stringify(contextInput, null, 2),
+            images,
+          ),
+        },
+      ],
       generationConfig: {
         temperature: selectorAgent.temperature,
         maxOutputTokens: selectorAgent.max_output_tokens,
@@ -284,7 +294,8 @@ export async function runDeCSPipelineV2(
   questionText: string,
   decsKey: string,
   geminiKey: string,
-  model = 'gemini-2.5-flash'
+  model = 'gemini-2.5-flash',
+  images?: unknown,
 ): Promise<{
   result: DeCSV2Result;
   themes_identified: { primary: string[]; secondary: string[] };
@@ -306,7 +317,12 @@ export async function runDeCSPipelineV2(
     const url = `${GEMINI_BASE}/${indexerAgent.model}:generateContent?key=${geminiKey}`;
     const body = {
       system_instruction: { parts: [{ text: indexerAgent.system_instruction }] },
-      contents: [{ role: 'user', parts: [{ text: questionText }] }],
+      contents: [
+        {
+          role: 'user',
+          parts: buildGeminiRestUserParts(questionText, images),
+        },
+      ],
       generationConfig: {
         temperature: indexerAgent.temperature,
         maxOutputTokens: indexerAgent.max_output_tokens,
@@ -412,7 +428,8 @@ export async function runDeCSPipelineV2(
       primaryCandidates,
       secondaryCandidates,
       geminiKey,
-      model
+      model,
+      images,
     );
 
   // ── Step 5: Resolve hierarchy (parents + children) from DB ────────────────

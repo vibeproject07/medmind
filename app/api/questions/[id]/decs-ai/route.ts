@@ -5,6 +5,7 @@ import { getRuntimeAgent } from '@/lib/ai-agent-runtime';
 import { GoogleGenAI } from '@google/genai';
 import { runDeCSPipeline, buildPipelineFrontendExposure, type DeCSRecord, type DeCSThemes } from '@/lib/decs-pipeline';
 import { saveClassificationArtifact } from '@/lib/decs-classification-storage';
+import { buildGeminiSdkUserParts } from '@/lib/gemini-question-images';
 
 export const runtime = 'nodejs';
 
@@ -80,10 +81,15 @@ export async function POST(
     // decs_validator desativado em 18/06/2026 — validação Gemini removida do pipeline V1
     const classifierAgent = await getRuntimeAgent('decs_classifier');
 
+    const classifierParts = buildGeminiSdkUserParts(
+      questionText,
+      question.images,
+    );
+
     const ai = new GoogleGenAI({ apiKey: geminiKey, apiVersion: 'v1beta' });
     const response = await ai.models.generateContent({
       model: classifierAgent.model,
-      contents: [{ role: 'user', parts: [{ text: questionText }] }],
+      contents: [{ role: 'user', parts: classifierParts }],
       config: {
         systemInstruction: classifierAgent.system_instruction,
         temperature: classifierAgent.temperature,

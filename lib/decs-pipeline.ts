@@ -1,4 +1,5 @@
 import { DECS_MAX_CANDIDATES } from "./decs-search-limits";
+import { buildGeminiRestUserParts } from "./gemini-question-images";
 
 /**
  * DeCS AI Pipeline — shared classifier logic
@@ -972,6 +973,7 @@ export async function validateDescriptorsWithGemini(
   geminiKey: string,
   model = "gemini-2.5-flash",
   validatorAgentKey = "decs_validator",
+  images?: unknown,
 ): Promise<DeCSRecord[]> {
   if (descriptors.length === 0) return [];
 
@@ -998,7 +1000,12 @@ export async function validateDescriptorsWithGemini(
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${validator.model}:generateContent?key=${geminiKey}`;
     const body = {
       system_instruction: { parts: [{ text: validator.system_instruction }] },
-      contents: [{ role: "user", parts: [{ text: userMessage }] }],
+      contents: [
+        {
+          role: "user",
+          parts: buildGeminiRestUserParts(userMessage, images),
+        },
+      ],
       generationConfig: {
         temperature: validator.temperature,
         maxOutputTokens: validator.max_output_tokens,

@@ -17,6 +17,11 @@ export const AI_AGENT_DEFAULTS: AiAgentDefault[] = [
 
 Analise o enunciado e as alternativas da questão médica abaixo. Compreenda o contexto clínico completo.
 
+Quando houver imagens anexadas à questão:
+- Interprete o conteúdo visual (exame de imagem, ECG, lesão, gráfico, figura diagnóstica etc.) e o papel dele no contexto da questão.
+- Use essa interpretação para identificar conceitos clínicos relevantes à indexação DeCS.
+- NÃO resolva a questão nem escolha a alternativa correta — o foco é indexação, não o gabarito.
+
 Identifique:
 - TEMAS PRINCIPAIS (1 a 3): os conceitos médicos CENTRAIS da questão — diagnóstico principal, condição tratada, fármaco central ou procedimento chave.
 - TEMAS SECUNDÁRIOS (0 a 6, se aplicável): conceitos médicos relevantes mas não centrais — fisiopatologia associada, complicações, achados diagnósticos secundários, contexto clínico.
@@ -72,15 +77,17 @@ Você receberá:
 1. A questão completa (enunciado + alternativas) e o gabarito
 2. Termos parciais propostos pelo Gemini (temas primary/secondary)
 3. Candidatos DeCS já selecionados pela busca VETORIAL (pgvector) ou pela CHAMADA DE API BVS (não valide matches puramente textuais)
+4. Opcionalmente, imagens anexadas à questão
 
 Sua tarefa:
 - Avaliar se CADA descritor DeCS tem coerência clínica/semântica com a questão E com os termos do Gemini.
+- Quando houver imagens, use-as como evidência diagnóstica/clínica do contexto da questão (o que o exame mostra), sem resolver a questão.
 - Aprovar APENAS descritores coerentes.
 - Atribuir uma porcentagem de coerência (0 a 100) por descritor e uma coerência geral.
 
 Critérios:
 - O descritor deve representar um conceito clínico relevante à questão (condição, fármaco, exame, procedimento, achado).
-- Deve haver alinhamento claro com ao menos um termo parcial do Gemini, ou justificar relevância direta ao enunciado/gabarito.
+- Deve haver alinhamento claro com ao menos um termo parcial do Gemini, ou justificar relevância direta ao enunciado/gabarito/imagem.
 - Remova genéricos, tangenciais ou de área não relacionada.
 - Organismos só se a questão for de infectologia/microbiologia/parasitologia.
 
@@ -111,6 +118,10 @@ Regras do JSON:
 
 Sua função é analisar questões médicas com mentalidade de indexador — não de clínico — para identificar todos os conceitos biomédicos que precisam ser representados no índice.
 
+Quando houver imagens anexadas:
+- Interprete o conteúdo visual e o papel dele no contexto da questão para apoiar a indexação.
+- NÃO resolva a questão nem escolha a alternativa correta.
+
 Para cada questão, identifique:
 - CONCEITOS PRIMÁRIOS (1 a 3): os descritores DeCS/MeSH centrais que melhor representam o tema principal da questão para fins de indexação. Inclua o diagnóstico central, fármaco principal ou procedimento-chave.
 - CONCEITOS SECUNDÁRIOS (0 a 6): conceitos DeCS/MeSH secundários que complementam a indexação — fisiopatologia, complicações, exames diagnósticos, contexto clínico relevante.
@@ -137,6 +148,7 @@ Retorne SOMENTE um JSON com esta estrutura exata (sem markdown, sem explicação
 Você receberá:
 1. O texto completo de uma questão médica
 2. Uma lista de conceitos primários e secundários identificados, cada um com candidatos reais do vocabulário DeCS (id, termo, tradução em inglês, definição abreviada, categoria hierárquica)
+3. Opcionalmente, imagens anexadas à questão (use-as só como contexto clínico/diagnóstico para escolher o descritor — não resolva a questão)
 
 Sua tarefa é selecionar o MELHOR descritor DeCS para cada conceito, usando o campo "scope" (definição) para confirmar a correspondência semântica com o que a questão realmente trata.
 
@@ -160,6 +172,11 @@ Retorne SOMENTE um JSON com esta estrutura (sem markdown, sem explicação):
     system_prompt: `Você é um especialista em educação médica e avaliação por competências.
 
 Analise a questão médica abaixo (enunciado + alternativas) e identifique:
+
+Quando houver imagens anexadas:
+- Interprete o conteúdo visual e o que ele representa no contexto da questão (ex.: interpretação de ECG, RX, lesão).
+- Use isso para identificar competências/habilidades cobradas (ex.: "Interpretar alterações no ECG").
+- NÃO resolva a questão nem escolha a alternativa correta.
 
 1. COMPETÊNCIAS: os domínios de competência médica avaliados (ex: "Diagnóstico clínico", "Conduta terapêutica", "Interpretação de exames", "Raciocínio fisiopatológico", "Prevenção e promoção da saúde", "Urgência e emergência", "Comunicação e bioética").
 
@@ -759,6 +776,10 @@ Antes de retornar a saída, verifique:
 Analise o enunciado, as alternativas e o gabarito da questão. Identifique:
 - COMPETÊNCIAS (1 a 5): habilidades ou competências clínicas/cognitivas cobradas (ex.: "Diagnosticar síndrome coronariana aguda", "Indicar manejo inicial do choque").
 - CONTEÚDOS (1 a 8 por competência): tópicos de conteúdo associados a cada competência (ex.: "Angina instável", "Troponina", "Estratificação de risco").
+
+Quando houver imagens anexadas:
+- Interprete o conteúdo visual e o papel dele no contexto da questão para apoiar a classificação de competências/conteúdos.
+- NÃO resolva a questão nem escolha a alternativa correta.
 
 Regras:
 - Seja específico e alinhado ao que a questão realmente cobra.

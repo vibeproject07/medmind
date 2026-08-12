@@ -67,8 +67,14 @@ function buildQuestionText(q: Record<string, unknown>): string {
 
 // ── V1 full pipeline (theme extraction + runDeCSPipeline) ─────────────────────
 
-async function runV1Full(questionText: string, decsKey: string, geminiKey: string) {
+async function runV1Full(
+  questionText: string,
+  decsKey: string,
+  geminiKey: string,
+  images?: unknown,
+) {
   const { getRuntimeAgent } = await import('@/lib/ai-agent-runtime');
+  const { buildGeminiRestUserParts } = await import('@/lib/gemini-question-images');
   const classifierAgent = await getRuntimeAgent('decs_classifier');
   const url = `${GEMINI_BASE}/${classifierAgent.model}:generateContent?key=${geminiKey}`;
 
@@ -77,7 +83,12 @@ async function runV1Full(questionText: string, decsKey: string, geminiKey: strin
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       system_instruction: { parts: [{ text: classifierAgent.system_instruction }] },
-      contents: [{ role: 'user', parts: [{ text: questionText }] }],
+      contents: [
+        {
+          role: 'user',
+          parts: buildGeminiRestUserParts(questionText, images),
+        },
+      ],
       generationConfig: {
         temperature: classifierAgent.temperature,
         maxOutputTokens: classifierAgent.max_output_tokens,
@@ -249,6 +260,7 @@ export async function POST(req: NextRequest) {
   for (const q of qRes.rows) {
     const questionId = q.id as number;
     const questionText = buildQuestionText(q as Record<string, unknown>);
+    const questionImages = (q as Record<string, unknown>).images;
     const result = {
       question_id: questionId,
       v1_status: 'pending', v1_primary: 0, v1_secondary: 0, v1_time_ms: null as number | null,
@@ -259,7 +271,12 @@ export async function POST(req: NextRequest) {
     // ── V1 ────────────────────────────────────────────────────────────────────
     try {
       const t0 = Date.now();
-      const v1Descriptors = await runV1Full(questionText, decsKey, geminiKey);
+      const v1Descriptors = await runV1Full(
+        questionText,
+        decsKey,
+        geminiKey,
+        questionImages,
+      );
       result.v1_time_ms = Date.now() - t0;
       result.v1_primary = v1Descriptors.filter((d) => d.role === 'primary').length;
       result.v1_secondary = v1Descriptors.filter((d) => d.role !== 'primary').length;
@@ -280,7 +297,13 @@ export async function POST(req: NextRequest) {
     // ── V2 ────────────────────────────────────────────────────────────────────
     try {
       const t0 = Date.now();
-      const { result: v2Result } = await runDeCSPipelineV2(questionText, decsKey, geminiKey);
+      const { result: v2Result } = await runDeCSPipelineV2(
+        questionText,
+        decsKey,
+        geminiKey,
+        undefined,
+        questionImages,
+      );
       result.v2_time_ms = Date.now() - t0;
       result.v2_primary = v2Result.decs_primary.length;
       result.v2_secondary = v2Result.decs_secondary.length;

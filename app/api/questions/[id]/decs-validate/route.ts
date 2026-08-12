@@ -126,14 +126,68 @@ export async function POST(
       themes,
       descriptors,
       geminiKey,
+      images: question.images,
     });
 
+    // Remove reprovados do resultado final V1 (mantém textuais + aprovados).
+    const rejectedCodes = new Set(result.rejected.map((d) => d.code));
+    const descriptorsKept = descriptors.filter((d) => !rejectedCodes.has(d.code));
+
+    const hasPrimary = descriptorsKept.some(
+      (d) => d.role === 'primary' || d.role == null || d.role === undefined,
+    );
+    const missingPrimary =
+      descriptorsKept.length === 0 ||
+      !hasPrimary ||
+      result.missing_primary_terms === true;
+
+    const needsManualReview =
+      result.needs_manual_review === true || missingPrimary;
+
+    const reviewReason =
+      result.review_reason ||
+      (missingPrimary
+        ? 'Questão sem descritor DeCS primário após a validação — revisão manual necessária.'
+        : undefined);
+
+    await query(
+      `ALTER TABLE questions ADD COLUMN IF NOT EXISTS decs_validation_meta JSONB`,
+    );
+
+    const validationMeta = {
+      missing_primary_terms: missingPrimary,
+      needs_manual_review: needsManualReview,
+      review_reason: reviewReason ?? null,
+      coerencia_geral: result.coerencia_geral,
+      validated_at: new Date().toISOString(),
+      removed_count: rejectedCodes.size,
+      kept_count: descriptorsKept.length,
+      dismissed_at: null as string | null,
+    };
+
+    await query(
+      `UPDATE questions
+       SET ai_decs_descriptors = $1,
+           decs_validation_meta = $2::jsonb,
+           updated_at = NOW()
+       WHERE id = $3`,
+      [JSON.stringify(descriptorsKept), JSON.stringify(validationMeta), params.id],
+    );
+
     return NextResponse.json({
-      result,
+      result: {
+        ...result,
+        needs_manual_review: needsManualReview,
+        review_reason: reviewReason,
+        missing_primary_terms: missingPrimary,
+      },
       coerencia_geral: result.coerencia_geral,
       approved: result.approved,
       rejected: result.rejected,
       items: result.items,
+      ai_decs_descriptors: descriptorsKept,
+      removed_count: rejectedCodes.size,
+      decs_validation_meta: validationMeta,
     });
   } catch (err: unknown) {
     console.error('[decs-validate] error:', err);
