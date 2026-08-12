@@ -6,6 +6,29 @@ export const runtime = 'nodejs';
 
 type Alternativa = { letra?: string; descricao?: string; texto?: string };
 
+/** PostgreSQL rejeita U+0000 em campos text/utf8. */
+function stripNullBytes(value: string): string {
+  return value.replace(/\u0000/g, '');
+}
+
+/** Remove \\u0000 de todas as strings de um payload JSON (recursivo). */
+function sanitizeJsonNullBytes<T>(value: T): T {
+  if (typeof value === 'string') {
+    return stripNullBytes(value) as T;
+  }
+  if (Array.isArray(value)) {
+    return value.map((item) => sanitizeJsonNullBytes(item)) as T;
+  }
+  if (value && typeof value === 'object') {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+      out[k] = sanitizeJsonNullBytes(v);
+    }
+    return out as T;
+  }
+  return value;
+}
+
 const CATEGORIAS_NOME_PROVA = ['banca', 'regiao', 'ano', 'tipo'] as const;
 
 function parseNomeProva(nome: string): { banca: string | null; regiao: string | null; ano: string | null; tipo: string | null } {
@@ -34,15 +57,15 @@ function mapQuestaoToOptions(questoes: {
     const alternativas = q.alternativas || [];
     const byLetter: Record<string, string> = {};
     alternativas.forEach((alt) => {
-      const letra = (alt.letra || '').toUpperCase().trim();
-      const texto = String(alt.descricao ?? alt.texto ?? '').trim();
+      const letra = stripNullBytes(alt.letra || '').toUpperCase().trim();
+      const texto = stripNullBytes(String(alt.descricao ?? alt.texto ?? '')).trim();
       if (letra && letra >= 'A' && letra <= 'E') byLetter[letra] = texto;
     });
     const rawCorrect = q.alternativa_correta ?? q.letra_correta;
     const correctStr = typeof rawCorrect === 'object' && rawCorrect !== null && 'letra' in rawCorrect
       ? String((rawCorrect as { letra?: string }).letra || 'A')
       : String(rawCorrect || 'A');
-    const correct = correctStr.toUpperCase().trim()[0] || 'A';
+    const correct = stripNullBytes(correctStr).toUpperCase().trim()[0] || 'A';
     const finalCorrect = ['A', 'B', 'C', 'D', 'E'].includes(correct) ? correct : 'A';
     if (!byLetter['A']) byLetter['A'] = 'Alternativa A';
     if (!byLetter['B']) byLetter['B'] = 'Alternativa B';
@@ -50,15 +73,21 @@ function mapQuestaoToOptions(questoes: {
 
     const rawImagens = Array.isArray(q.imagens) ? q.imagens : [];
     const hasMetadata = rawImagens.length > 0 && typeof rawImagens[0] === 'object' && rawImagens[0] !== null;
-    const imagesMeta: unknown[] = hasMetadata ? rawImagens : [];
-    const imagesBase64: string[] = hasMetadata ? [] : rawImagens.filter((i) => typeof i === 'string') as string[];
+    const imagesMeta: unknown[] = hasMetadata
+      ? (sanitizeJsonNullBytes(rawImagens) as unknown[])
+      : [];
+    const imagesBase64: string[] = hasMetadata
+      ? []
+      : (rawImagens.filter((i) => typeof i === 'string') as string[]).map(stripNullBytes);
 
     return {
       numero: (() => {
         const num = typeof q.numero === 'number' ? q.numero : parseInt(String(q.numero ?? ''), 10);
         return isNaN(num) ? 0 : num;
       })(),
-      statement: String(q.titulo ?? q.enunciado ?? '').trim() || '(Sem enunciado)',
+      statement:
+        stripNullBytes(String(q.titulo ?? q.enunciado ?? '')).trim() ||
+        '(Sem enunciado)',
       option_a: byLetter['A'] || 'Alternativa A',
       option_b: byLetter['B'] || 'Alternativa B',
       option_c: byLetter['C']?.trim() ? byLetter['C'] : null,
@@ -247,7 +276,9 @@ export async function POST(request: NextRequest) {
     const user = verifyToken(token);
     if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
 
-    const body = await request.json() as Record<string, unknown>;
+    const body = sanitizeJsonNullBytes(
+      (await request.json()) as Record<string, unknown>,
+    );
     const updateExisting = body.update_existing !== false;
 
     await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS images_meta TEXT`);

@@ -110,7 +110,11 @@ export async function PUT(
     }
 
     const tagsJson = tags && Array.isArray(tags) ? JSON.stringify(tags) : null;
-    const imagesJson = images && Array.isArray(images) ? JSON.stringify(images) : null;
+    // Só altera images se o cliente enviar o campo (evita apagar imagens em saves parciais)
+    const imagesProvided = Object.prototype.hasOwnProperty.call(body, 'images');
+    const imagesJson = imagesProvided
+      ? (images && Array.isArray(images) ? JSON.stringify(images) : JSON.stringify([]))
+      : null;
     const areasConhecimentoJson = areas_conhecimento && Array.isArray(areas_conhecimento) ? JSON.stringify(areas_conhecimento) : null;
     const assuntosJson = assuntos && Array.isArray(assuntos) ? JSON.stringify(assuntos) : null;
     const decsTermsJson = decs_terms && Array.isArray(decs_terms) ? JSON.stringify(decs_terms) : null;
@@ -123,11 +127,17 @@ export async function PUT(
     await query(`
       UPDATE questions
       SET statement = $1, option_a = $2, option_b = $3, option_c = $4, option_d = $5,
-          option_e = $6, correct_answer = $7, explanation = $8, tags = $9, images = $10,
-          exam_year = $11, exam_board = $12, exam_institution = $13, exam_region = $14,
-          areas_conhecimento = $15, assuntos = $16, decs_terms = $17, updated_at = NOW()
-      WHERE id = $18
-    `, [statement, option_a, option_b, option_c, option_d, option_e || null, correct_answer, explanation || null, tagsJson, imagesJson, exam_year || null, exam_board || null, exam_institution || null, exam_region || null, areasConhecimentoJson, assuntosJson, decsTermsJson, params.id]);
+          option_e = $6, correct_answer = $7, explanation = $8, tags = $9,
+          images = CASE WHEN $10::boolean THEN $11 ELSE images END,
+          exam_year = $12, exam_board = $13, exam_institution = $14, exam_region = $15,
+          areas_conhecimento = $16, assuntos = $17, decs_terms = $18, updated_at = NOW()
+      WHERE id = $19
+    `, [
+      statement, option_a, option_b, option_c, option_d, option_e || null, correct_answer,
+      explanation || null, tagsJson, imagesProvided, imagesJson,
+      exam_year || null, exam_board || null, exam_institution || null, exam_region || null,
+      areasConhecimentoJson, assuntosJson, decsTermsJson, params.id,
+    ]);
 
     triggerEnrichment('question', parseInt(params.id));
 

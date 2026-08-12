@@ -148,6 +148,25 @@ CREATE TABLE questions (
 
 CREATE INDEX IF NOT EXISTS idx_questions_created_at ON questions(created_at);
 CREATE INDEX IF NOT EXISTS idx_questions_prova_id ON questions(prova_id);
+
+-- Lista oculta: questões removidas de provas (soft-unlink; a linha em questions permanece)
+CREATE TABLE IF NOT EXISTS prova_questions_removed (
+  id SERIAL PRIMARY KEY,
+  question_id INTEGER NOT NULL REFERENCES questions(id) ON DELETE CASCADE,
+  prova_id INTEGER NOT NULL,
+  prova_nome TEXT,
+  banca TEXT,
+  regiao TEXT,
+  ano TEXT,
+  tipo TEXT,
+  numero_na_prova INTEGER,
+  removed_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  removed_by INTEGER
+);
+
+CREATE INDEX IF NOT EXISTS idx_prova_questions_removed_prova_id ON prova_questions_removed(prova_id);
+CREATE INDEX IF NOT EXISTS idx_prova_questions_removed_question_id ON prova_questions_removed(question_id);
+
 -- pgvector 0.8+: use halfvec cast for HNSW on dimensions > 2000
 CREATE INDEX IF NOT EXISTS questions_embedding_hnsw_idx ON questions USING hnsw ((embedding::halfvec(3072)) halfvec_cosine_ops) WHERE embedding IS NOT NULL;
 

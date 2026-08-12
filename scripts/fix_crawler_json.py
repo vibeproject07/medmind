@@ -40,6 +40,17 @@ def sanitizar_controle(text: str) -> str:
     return re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f]', ' ', text)
 
 
+def remover_null_bytes(value):
+    """Remove U+0000 de strings (PostgreSQL rejeita). Sobrevive a JSON via \\u0000."""
+    if isinstance(value, str):
+        return value.replace("\x00", "")
+    if isinstance(value, list):
+        return [remover_null_bytes(item) for item in value]
+    if isinstance(value, dict):
+        return {k: remover_null_bytes(v) for k, v in value.items()}
+    return value
+
+
 def remover_virgulas_trailing(text: str) -> str:
     """Remove vírgulas finais antes de ] ou } (trailing commas), inválidas em JSON."""
     return re.sub(r',(\s*[}\]])', r'\1', text)
@@ -245,6 +256,9 @@ def reparar_arquivo(caminho_entrada: str, caminho_saida: str, tamanho_lote: int)
             data = {"provas": provas_recuperadas}
             total_recuperado = sum(len(p.get('questoes', [])) for p in provas_recuperadas)
             print(f"  Recuperadas {len(provas_recuperadas)} provas ({total_recuperado} questões) antes do ponto de truncamento.")
+
+    print("Removendo bytes nulos (U+0000) das strings...")
+    data = remover_null_bytes(data)
 
     provas = data.get('provas', [])
     total_q = sum(len(p.get('questoes', [])) for p in provas)

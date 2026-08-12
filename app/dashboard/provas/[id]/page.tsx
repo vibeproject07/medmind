@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import {
   ChevronLeft,
@@ -22,6 +22,7 @@ import {
   Edit,
   Save,
   RotateCcw,
+  ImageIcon,
 } from 'lucide-react';
 import ImageLightbox from '@/components/Common/ImageLightbox';
 
@@ -380,6 +381,8 @@ export default function ProvaExamPage() {
     correct_answer: 'A',
     explanation: '',
   });
+  const [editImages, setEditImages] = useState<string[]>([]);
+  const editImageInputRef = useRef<HTMLInputElement>(null);
   const [savingEdit, setSavingEdit] = useState(false);
   const [togglingAnulada, setTogglingAnulada] = useState(false);
 
@@ -663,10 +666,34 @@ export default function ProvaExamPage() {
       correct_answer: (currentQuestion.correct_answer as 'A' | 'B' | 'C' | 'D' | 'E') ?? 'A',
       explanation: currentQuestion.explanation ?? '',
     });
+    setEditImages(Array.isArray(currentQuestion.images) ? [...currentQuestion.images] : []);
   };
 
   const cancelEditCurrentQuestion = () => {
     setEditingQuestionId(null);
+    setEditImages([]);
+  };
+
+  const handleEditImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+    Array.from(files).forEach((file) => {
+      if (!file.type.startsWith('image/')) {
+        alert('Apenas arquivos de imagem são permitidos');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const base64 = event.target?.result as string;
+        setEditImages((prev) => [...prev, base64]);
+      };
+      reader.readAsDataURL(file);
+    });
+    if (editImageInputRef.current) editImageInputRef.current.value = '';
+  };
+
+  const removeEditImage = (index: number) => {
+    setEditImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   const saveEditCurrentQuestion = async () => {
@@ -693,6 +720,7 @@ export default function ProvaExamPage() {
         option_d: editForm.option_d.trim() || null,
         option_e: editForm.option_e.trim() || null,
         explanation: editForm.explanation.trim() || null,
+        images: editImages,
       };
 
       const res = await fetch(`/api/questions/${currentQuestion.id}`, {
@@ -723,6 +751,7 @@ export default function ProvaExamPage() {
                 option_e: updated.option_e ?? null,
                 correct_answer: updated.correct_answer ?? q.correct_answer,
                 explanation: updated.explanation ?? null,
+                images: Array.isArray(updated.images) ? updated.images : editImages,
               }
             : q,
         );
@@ -732,6 +761,7 @@ export default function ProvaExamPage() {
       });
 
       setEditingQuestionId(null);
+      setEditImages([]);
     } catch {
       alert('Erro ao salvar questão.');
     } finally {
@@ -942,12 +972,53 @@ export default function ProvaExamPage() {
                 )}
               </div>
 
-              {currentQuestion.images && currentQuestion.images.length > 0 && (
-                <div className="flex flex-wrap justify-center gap-4">
-                  {currentQuestion.images.map((image: string, idx: number) => (
-                    <ImageLightbox key={idx} src={image} alt={`Imagem ${idx + 1}`} className="h-48 w-auto max-w-xs" />
-                  ))}
+              {isEditingCurrent ? (
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <label className="text-xs font-semibold text-gray-500">Imagens (opcional)</label>
+                    <label className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-dashed border-gray-300 text-xs text-gray-600 hover:border-primary-400 hover:text-primary-700 cursor-pointer transition">
+                      <ImageIcon className="w-3.5 h-3.5" />
+                      Adicionar
+                      <input
+                        ref={editImageInputRef}
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        onChange={handleEditImageUpload}
+                        className="hidden"
+                      />
+                    </label>
+                  </div>
+                  {editImages.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {editImages.map((image, idx) => (
+                        <div key={idx} className="relative group">
+                          <img
+                            src={image}
+                            alt={`Preview ${idx + 1}`}
+                            className="h-24 w-auto max-w-[10rem] object-contain rounded-lg border border-gray-200 bg-gray-50"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => removeEditImage(idx)}
+                            className="absolute -top-1.5 -right-1.5 p-0.5 bg-red-500 text-white rounded-full opacity-90 hover:opacity-100"
+                            aria-label="Remover imagem"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
+              ) : (
+                currentQuestion.images && currentQuestion.images.length > 0 && (
+                  <div className="flex flex-wrap justify-center gap-4">
+                    {currentQuestion.images.map((image: string, idx: number) => (
+                      <ImageLightbox key={idx} src={image} alt={`Imagem ${idx + 1}`} className="h-48 w-auto max-w-xs" />
+                    ))}
+                  </div>
+                )
               )}
 
               <div className="space-y-2.5">
