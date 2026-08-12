@@ -3,6 +3,7 @@ import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import type { DeCSRecord, DeCSThemes } from '@/lib/decs-pipeline';
 import { runQuestionTermsValidation } from '@/lib/decs-question-terms-validation';
+import { buildDeCSValidationMeta } from '@/lib/decs-primary';
 
 export const runtime = 'nodejs';
 
@@ -133,37 +134,26 @@ export async function POST(
     const rejectedCodes = new Set(result.rejected.map((d) => d.code));
     const descriptorsKept = descriptors.filter((d) => !rejectedCodes.has(d.code));
 
-    const hasPrimary = descriptorsKept.some(
-      (d) => d.role === 'primary' || d.role == null || d.role === undefined,
-    );
-    const missingPrimary =
-      descriptorsKept.length === 0 ||
-      !hasPrimary ||
-      result.missing_primary_terms === true;
+    const validationMeta = buildDeCSValidationMeta({
+      descriptorsKept,
+      agentNeedsManualReview: result.needs_manual_review === true,
+      agentMissingPrimaryHint: result.missing_primary_terms === true,
+      agentReviewReason: result.review_reason,
+      coerencia_geral: result.coerencia_geral,
+      removed_count: rejectedCodes.size,
+      dismissed_at: null,
+    });
 
-    const needsManualReview =
-      result.needs_manual_review === true || missingPrimary;
-
+    const missingPrimary = validationMeta.missing_primary_terms === true;
+    const needsManualReview = validationMeta.needs_manual_review === true;
     const reviewReason =
-      result.review_reason ||
-      (missingPrimary
-        ? 'Questão sem descritor DeCS primário após a validação — revisão manual necessária.'
-        : undefined);
+      typeof validationMeta.review_reason === 'string'
+        ? validationMeta.review_reason
+        : undefined;
 
     await query(
       `ALTER TABLE questions ADD COLUMN IF NOT EXISTS decs_validation_meta JSONB`,
     );
-
-    const validationMeta = {
-      missing_primary_terms: missingPrimary,
-      needs_manual_review: needsManualReview,
-      review_reason: reviewReason ?? null,
-      coerencia_geral: result.coerencia_geral,
-      validated_at: new Date().toISOString(),
-      removed_count: rejectedCodes.size,
-      kept_count: descriptorsKept.length,
-      dismissed_at: null as string | null,
-    };
 
     await query(
       `UPDATE questions

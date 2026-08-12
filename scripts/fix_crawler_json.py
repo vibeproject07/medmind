@@ -40,6 +40,22 @@ def sanitizar_controle(text: str) -> str:
     return re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f]', ' ', text)
 
 
+def remover_virgulas_trailing(text: str) -> str:
+    """Remove vírgulas finais antes de ] ou } (trailing commas), inválidas em JSON."""
+    return re.sub(r',(\s*[}\]])', r'\1', text)
+
+
+def remover_elementos_vazios(text: str) -> str:
+    """Remove elementos vazios em arrays: ['a', , 'b'] → ['a', 'b']."""
+    # Repete até não haver mais ocorrências (pode haver múltiplas seguidas)
+    prev = None
+    while prev != text:
+        prev = text
+        text = re.sub(r',(\s*),', r',\1', text)
+        text = re.sub(r'\[(\s*),', r'[\1', text)
+    return text
+
+
 def reparar_aspas_nao_escapadas(text: str) -> str:
     """
     Percorre o texto JSON caractere a caractere.
@@ -126,6 +142,70 @@ def salvar_lotes(provas: list, pasta_lotes: str, tamanho_lote: int) -> None:
     print(f"Dica: comece pelo lote_{'1'.zfill(digits)}.json e avance sequencialmente.")
 
 
+def recuperar_provas_truncado(text: str) -> list:
+    """
+    Tenta recuperar provas individuais de um JSON truncado.
+    Procura todos os blocos {"nome": ...} completos dentro do array "provas".
+    """
+    # Localiza o início do array de provas
+    match = re.search(r'"provas"\s*:\s*\[', text)
+    if not match:
+        return []
+
+    array_start = match.end()
+    provas = []
+    i = array_start
+
+    # Percorre o array tentando extrair objetos JSON completos
+    while i < len(text):
+        # Pula espaços/vírgulas entre elementos
+        while i < len(text) and text[i] in ' \t\r\n,':
+            i += 1
+
+        if i >= len(text) or text[i] == ']':
+            break
+        if text[i] != '{':
+            break
+
+        # Tenta extrair um objeto completo contando chaves
+        depth = 0
+        j = i
+        in_str = False
+        escape = False
+        while j < len(text):
+            c = text[j]
+            if escape:
+                escape = False
+            elif c == '\\' and in_str:
+                escape = True
+            elif c == '"':
+                in_str = not in_str
+            elif not in_str:
+                if c == '{':
+                    depth += 1
+                elif c == '}':
+                    depth -= 1
+                    if depth == 0:
+                        j += 1
+                        break
+            j += 1
+
+        if depth != 0:
+            # Objeto incompleto — arquivo truncado aqui, para de tentar
+            break
+
+        candidate = text[i:j]
+        try:
+            obj = json.loads(candidate)
+            provas.append(obj)
+        except json.JSONDecodeError:
+            pass  # ignora objetos inválidos individualmente
+
+        i = j
+
+    return provas
+
+
 def reparar_arquivo(caminho_entrada: str, caminho_saida: str, tamanho_lote: int) -> None:
     print(f"Lendo: {caminho_entrada} ({os.path.getsize(caminho_entrada):,} bytes)")
 
@@ -139,6 +219,12 @@ def reparar_arquivo(caminho_entrada: str, caminho_saida: str, tamanho_lote: int)
     print("Sanitizando caracteres de controle...")
     text = sanitizar_controle(text)
 
+    print("Removendo vírgulas finais (trailing commas)...")
+    text = remover_virgulas_trailing(text)
+
+    print("Removendo elementos vazios em arrays (vírgulas duplas)...")
+    text = remover_elementos_vazios(text)
+
     print("Verificando JSON...")
     try:
         data = json.loads(text)
@@ -150,9 +236,15 @@ def reparar_arquivo(caminho_entrada: str, caminho_saida: str, tamanho_lote: int)
             data = json.loads(text)
             print("  Reparo bem-sucedido!")
         except json.JSONDecodeError as e2:
-            print(f"ERRO: Não foi possível reparar o JSON: {e2}")
-            print("Dica: abra o arquivo em um editor de texto e procure por aspas não-escapadas.")
-            sys.exit(1)
+            print(f"  Reparo de aspas falhou ({e2.msg} em char {e2.pos})")
+            print("  Tentando recuperação de arquivo truncado...")
+            provas_recuperadas = recuperar_provas_truncado(text)
+            if not provas_recuperadas:
+                print("ERRO: Nenhuma prova pôde ser recuperada.")
+                sys.exit(1)
+            data = {"provas": provas_recuperadas}
+            total_recuperado = sum(len(p.get('questoes', [])) for p in provas_recuperadas)
+            print(f"  Recuperadas {len(provas_recuperadas)} provas ({total_recuperado} questões) antes do ponto de truncamento.")
 
     provas = data.get('provas', [])
     total_q = sum(len(p.get('questoes', [])) for p in provas)

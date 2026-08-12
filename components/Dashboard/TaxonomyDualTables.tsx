@@ -1,10 +1,12 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   Check,
   ChevronLeft,
   ChevronRight,
+  ExternalLink,
   Loader2,
   Pencil,
   Plus,
@@ -145,6 +147,7 @@ export default function TaxonomyDualTables({
   buildCatalogBody,
   buildImportBody,
 }: TaxonomyDualTablesProps) {
+  const router = useRouter();
   const [catalog, setCatalog] = useState<CatalogRow[]>([]);
   const [pending, setPending] = useState<PendingRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -158,9 +161,13 @@ export default function TaxonomyDualTables({
   const [editId, setEditId] = useState<number | null>(null);
   const [actionId, setActionId] = useState<number | null>(null);
   const [catalogPage, setCatalogPage] = useState(1);
+  const [pendingPage, setPendingPage] = useState(1);
 
   const totalPages = Math.max(1, Math.ceil(catalog.length / PAGE_SIZE));
   const pageItems = catalog.slice((catalogPage - 1) * PAGE_SIZE, catalogPage * PAGE_SIZE);
+
+  const pendingTotalPages = Math.max(1, Math.ceil(pending.length / PAGE_SIZE));
+  const pendingPageItems = pending.slice((pendingPage - 1) * PAGE_SIZE, pendingPage * PAGE_SIZE);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -177,6 +184,7 @@ export default function TaxonomyDualTables({
       setCatalog((cData.items ?? []).map(mapCatalogRow));
       setPending((pData.items ?? []).map(mapPendingRow));
       setCatalogPage(1);
+      setPendingPage(1);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Erro ao carregar');
     } finally {
@@ -475,11 +483,25 @@ export default function TaxonomyDualTables({
 
       {/* Pending validation */}
       <section className="bg-white rounded-lg border border-gray-200 shadow-sm p-5">
-        <h2 className="text-lg font-semibold text-gray-800 mb-1">
-          Tabela IA — validação manual
-        </h2>
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
+          <h2 className="text-lg font-semibold text-gray-800">
+            Tabela IA — validação manual
+          </h2>
+          {!loading && (
+            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
+              pending.length === 0
+                ? 'bg-gray-100 text-gray-500'
+                : 'bg-amber-100 text-amber-800'
+            }`}>
+              {pending.length === 1
+                ? '1 novo termo'
+                : `${pending.length} novos termos`}
+            </span>
+          )}
+        </div>
         <p className="text-sm text-gray-500 mb-4">
           Termos gerados pelos agentes. Ao aprovar, entram no catálogo com origem <strong>gerado</strong>.
+          Ao rejeitar ou excluir, o termo sai da fila e também é removido das questões onde aparece.
         </p>
 
         <div className="overflow-x-auto">
@@ -490,7 +512,7 @@ export default function TaxonomyDualTables({
                 <th className="px-3 py-2 border border-amber-100 font-semibold text-amber-800">{parentLabel}</th>
                 <th className="px-3 py-2 border border-amber-100 font-semibold text-amber-800">{childLabel}</th>
                 <th className="px-3 py-2 border border-amber-100 font-semibold text-amber-800">Questão</th>
-                <th className="px-3 py-2 border border-amber-100 font-semibold text-amber-800 w-40">Validação</th>
+                <th className="px-3 py-2 border border-amber-100 font-semibold text-amber-800 w-56">Validação</th>
               </tr>
             </thead>
             <tbody>
@@ -501,7 +523,7 @@ export default function TaxonomyDualTables({
                   </td>
                 </tr>
               ) : (
-                pending.map((row) => (
+                pendingPageItems.map((row) => (
                   <tr key={row.id}>
                     <td className="px-3 py-2 border border-gray-200 text-gray-500 font-mono text-xs">{row.id}</td>
                     <td className="px-3 py-2 border border-gray-200">{row.parent}</td>
@@ -510,7 +532,19 @@ export default function TaxonomyDualTables({
                       {row.question_id ? `#${row.question_id}` : '—'}
                     </td>
                     <td className="px-3 py-2 border border-gray-200">
-                      <div className="flex gap-2">
+                      <div className="flex flex-wrap gap-2">
+                        {row.question_id ? (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              router.push(`/dashboard/questions/${row.question_id}`)
+                            }
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                          >
+                            <ExternalLink className="h-3 w-3" />
+                            Abrir
+                          </button>
+                        ) : null}
                         <button
                           type="button"
                           onClick={() => handleApprove(row.id)}
@@ -540,6 +574,15 @@ export default function TaxonomyDualTables({
             </tbody>
           </table>
         </div>
+
+        <Pagination
+          page={pendingPage}
+          totalPages={pendingTotalPages}
+          total={pending.length}
+          onPrev={() => setPendingPage((p) => Math.max(1, p - 1))}
+          onNext={() => setPendingPage((p) => Math.min(pendingTotalPages, p + 1))}
+          onPage={setPendingPage}
+        />
       </section>
     </div>
   );

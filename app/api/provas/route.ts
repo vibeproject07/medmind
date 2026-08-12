@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { query } from '@/lib/db';
+import { getPool, query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 
 export const runtime = 'nodejs';
@@ -46,6 +46,7 @@ function mapQuestaoToOptions(questoes: {
     const finalCorrect = ['A', 'B', 'C', 'D', 'E'].includes(correct) ? correct : 'A';
     if (!byLetter['A']) byLetter['A'] = 'Alternativa A';
     if (!byLetter['B']) byLetter['B'] = 'Alternativa B';
+    // Apenas A/B são NOT NULL; C/D/E podem ser null se ausentes no JSON
 
     const rawImagens = Array.isArray(q.imagens) ? q.imagens : [];
     const hasMetadata = rawImagens.length > 0 && typeof rawImagens[0] === 'object' && rawImagens[0] !== null;
@@ -58,11 +59,11 @@ function mapQuestaoToOptions(questoes: {
         return isNaN(num) ? 0 : num;
       })(),
       statement: String(q.titulo ?? q.enunciado ?? '').trim() || '(Sem enunciado)',
-      option_a: byLetter['A'] || '',
-      option_b: byLetter['B'] || '',
-      option_c: byLetter['C'] || null,
-      option_d: byLetter['D'] || null,
-      option_e: byLetter['E'] || null,
+      option_a: byLetter['A'] || 'Alternativa A',
+      option_b: byLetter['B'] || 'Alternativa B',
+      option_c: byLetter['C']?.trim() ? byLetter['C'] : null,
+      option_d: byLetter['D']?.trim() ? byLetter['D'] : null,
+      option_e: byLetter['E']?.trim() ? byLetter['E'] : null,
       correct_answer: finalCorrect,
       images: imagesBase64,
       images_meta: imagesMeta,
@@ -236,7 +237,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// ── POST /api/provas — import ───────────────────────────────────────────────
+// ── POST /api/provas — import idempotente + retomável ───────────────────────
 export async function POST(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization');
@@ -247,7 +248,12 @@ export async function POST(request: NextRequest) {
     if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
 
     const body = await request.json() as Record<string, unknown>;
+    const updateExisting = body.update_existing !== false;
+
     await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS images_meta TEXT`);
+    // Só A/B são obrigatórias; C/D podem ser nulas (questões com 2 alternativas)
+    await query(`ALTER TABLE questions ALTER COLUMN option_c DROP NOT NULL`);
+    await query(`ALTER TABLE questions ALTER COLUMN option_d DROP NOT NULL`);
 
     const rawProvas = normalizeImportPayload(body);
     if (rawProvas.length === 0) {
@@ -256,90 +262,346 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
-    const result: { id: number; nome: string; banca: string | null; regiao: string | null; ano: string | null; tipo: string | null; questions: { id: number; numero_na_prova: number }[]; skipped?: boolean }[] = [];
+    type ProvaImportRow = {
+      id: number;
+      nome: string;
+      banca: string | null;
+      regiao: string | null;
+      ano: string | null;
+      tipo: string | null;
+      created: boolean;
+      expected: number;
+      actual: number;
+      inserted: number;
+      already_existed: number;
+      updated: number;
+      missing_numbers: number[];
+      complete: boolean;
+      questions: { id: number; numero_na_prova: number }[];
+    };
+
+    const result: ProvaImportRow[] = [];
     const provaErrors: { nome: string; reason: string }[] = [];
-    let totalQuestoesImportadas = 0;
-    let totalProvasIgnoradas = 0;
+    let provasCriadas = 0;
+    let provasJaExistentes = 0;
+    let questoesInseridas = 0;
+    let questoesJaExistentes = 0;
+    let questoesAtualizadas = 0;
+    let questoesEsperadas = 0;
+
+    const pool = getPool();
 
     for (const p of rawProvas) {
       const nome = String((p as { nome: string }).nome || 'Prova sem nome').trim();
+      const client = await pool.connect();
       try {
         const parsed = parseNomeProva(nome);
         const pAny = p as Record<string, unknown>;
-        const banca = (pAny.banca != null && pAny.banca !== '') ? String(pAny.banca).trim() : (parsed.banca ?? null);
-        const regiao = (pAny.regiao != null && pAny.regiao !== '') ? String(pAny.regiao).trim() : (parsed.regiao ?? null);
-        const ano = (pAny.ano != null && pAny.ano !== '') ? String(pAny.ano).trim() : ((pAny.exam_year != null && pAny.exam_year !== '') ? String(pAny.exam_year).trim() : (parsed.ano ?? null));
-        const tipo = (pAny.tipo != null && pAny.tipo !== '') ? String(pAny.tipo).trim() : (pAny.exam_type != null && pAny.exam_type !== '' ? String(pAny.exam_type).trim() : (parsed.tipo ?? null));
+        const banca =
+          pAny.banca != null && pAny.banca !== ''
+            ? String(pAny.banca).trim()
+            : pAny.exam_board != null && pAny.exam_board !== ''
+              ? String(pAny.exam_board).trim()
+              : (parsed.banca ?? null);
+        const regiao =
+          pAny.regiao != null && pAny.regiao !== ''
+            ? String(pAny.regiao).trim()
+            : pAny.exam_region != null && pAny.exam_region !== ''
+              ? String(pAny.exam_region).trim()
+              : (parsed.regiao ?? null);
+        const ano =
+          pAny.ano != null && pAny.ano !== ''
+            ? String(pAny.ano).trim()
+            : pAny.exam_year != null && pAny.exam_year !== ''
+              ? String(pAny.exam_year).trim()
+              : (parsed.ano ?? null);
+        const tipo =
+          pAny.tipo != null && pAny.tipo !== ''
+            ? String(pAny.tipo).trim()
+            : pAny.exam_type != null && pAny.exam_type !== ''
+              ? String(pAny.exam_type).trim()
+              : (parsed.tipo ?? null);
 
-        const existingProva = await query('SELECT id FROM provas WHERE nome = $1 LIMIT 1', [nome]);
-        if (existingProva.rows.length > 0) {
-          totalProvasIgnoradas++;
-          result.push({ id: existingProva.rows[0].id, nome, banca, regiao, ano, tipo, questions: [], skipped: true });
-          continue;
+        const questoesRaw = Array.isArray((p as { questoes?: unknown[] }).questoes)
+          ? (p as { questoes: unknown[] }).questoes
+          : Array.isArray((p as Record<string, unknown>).questions)
+            ? ((p as Record<string, unknown>).questions as unknown[])
+            : [];
+        const normalized = mapQuestaoToOptions(
+          questoesRaw as Parameters<typeof mapQuestaoToOptions>[0],
+        );
+
+        // Deduplicar por numero_na_prova (última ocorrência vence)
+        const byNumero = new Map<number, (typeof normalized)[number]>();
+        for (const q of normalized) {
+          const n = isNaN(q.numero) ? 0 : q.numero;
+          byNumero.set(n, { ...q, numero: n });
+        }
+        const uniqueQuestions = Array.from(byNumero.values()).sort(
+          (a, b) => a.numero - b.numero,
+        );
+        const expected = uniqueQuestions.length;
+        questoesEsperadas += expected;
+
+        await client.query('BEGIN');
+
+        // Chave natural da prova: nome (contém banca/ano no padrão atual) + fallback banca+ano+regiao+tipo
+        let provaId: number | null = null;
+        let created = false;
+
+        const byNome = await client.query(
+          `SELECT id FROM provas WHERE lower(trim(nome)) = lower(trim($1)) LIMIT 1`,
+          [nome],
+        );
+        if (byNome.rows[0]) {
+          provaId = Number(byNome.rows[0].id);
+        } else if (banca || ano) {
+          const byMeta = await client.query(
+            `SELECT id FROM provas
+             WHERE lower(trim(coalesce(banca, ''))) = lower(trim(coalesce($1, '')))
+               AND trim(coalesce(ano, '')) = trim(coalesce($2, ''))
+               AND lower(trim(coalesce(regiao, ''))) = lower(trim(coalesce($3, '')))
+               AND lower(trim(coalesce(tipo, ''))) = lower(trim(coalesce($4, '')))
+             LIMIT 1`,
+            [banca, ano, regiao, tipo],
+          );
+          if (byMeta.rows[0]) provaId = Number(byMeta.rows[0].id);
         }
 
-        const provaResult = await query(
-          'INSERT INTO provas (nome, banca, regiao, ano, tipo) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-          [nome, banca, regiao, ano, tipo]
+        if (provaId == null) {
+          const inserted = await client.query(
+            `INSERT INTO provas (nome, banca, regiao, ano, tipo)
+             VALUES ($1, $2, $3, $4, $5) RETURNING id`,
+            [nome, banca, regiao, ano, tipo],
+          );
+          provaId = Number(inserted.rows[0].id);
+          created = true;
+          provasCriadas += 1;
+        } else {
+          provasJaExistentes += 1;
+        }
+
+        const existingRes = await client.query(
+          `SELECT id, numero_na_prova FROM questions
+           WHERE prova_id = $1 AND numero_na_prova IS NOT NULL`,
+          [provaId],
         );
-        const provaId = provaResult.rows[0].id;
+        const existingByNumero = new Map<number, number>();
+        for (const row of existingRes.rows as Array<{ id: number; numero_na_prova: number }>) {
+          existingByNumero.set(Number(row.numero_na_prova), Number(row.id));
+        }
 
-        const questoes = Array.isArray((p as { questoes?: unknown[] }).questoes) ? (p as { questoes: unknown[] }).questoes : (Array.isArray((p as Record<string, unknown>).questions) ? (p as Record<string, unknown>).questions as unknown[] : []);
-        const normalized = mapQuestaoToOptions(questoes);
+        let examYear: number | null = null;
+        if (ano) {
+          const parsedYear = parseInt(ano, 10);
+          examYear = Number.isNaN(parsedYear) ? null : parsedYear;
+        }
+
         const questionIds: { id: number; numero_na_prova: number }[] = [];
+        let inserted = 0;
+        let already = 0;
+        let updated = 0;
 
-        for (const q of normalized) {
+        for (const q of uniqueQuestions) {
           const optA = q.option_a || 'Alternativa A';
           const optB = q.option_b || 'Alternativa B';
+          const optC = q.option_c?.trim() ? q.option_c : null;
+          const optD = q.option_d?.trim() ? q.option_d : null;
+          const optE = q.option_e?.trim() ? q.option_e : null;
           const imagesJson = q.images?.length ? JSON.stringify(q.images) : null;
-          const imagesMetaJson = q.images_meta?.length ? JSON.stringify(q.images_meta) : null;
+          const imagesMetaJson = q.images_meta?.length
+            ? JSON.stringify(q.images_meta)
+            : null;
+          const questionNumber = q.numero;
+          const existingId = existingByNumero.get(questionNumber);
 
-          let examYear: number | null = null;
-          if (ano) {
-            const parsedYear = parseInt(ano, 10);
-            examYear = isNaN(parsedYear) ? null : parsedYear;
+          if (existingId != null) {
+            already += 1;
+            if (updateExisting) {
+              await client.query(
+                `UPDATE questions SET
+                   statement = $1,
+                   option_a = $2,
+                   option_b = $3,
+                   option_c = $4,
+                   option_d = $5,
+                   option_e = $6,
+                   correct_answer = $7,
+                   images = COALESCE($8, images),
+                   images_meta = COALESCE($9, images_meta),
+                   anulada = $10,
+                   exam_year = COALESCE($11, exam_year),
+                   exam_board = COALESCE($12, exam_board),
+                   exam_region = COALESCE($13, exam_region),
+                   exam_type = COALESCE($14, exam_type),
+                   updated_at = NOW()
+                 WHERE id = $15`,
+                [
+                  q.statement || '(Sem enunciado)',
+                  optA,
+                  optB,
+                  optC,
+                  optD,
+                  optE,
+                  q.correct_answer,
+                  imagesJson,
+                  imagesMetaJson,
+                  q.anulada ?? false,
+                  examYear,
+                  banca,
+                  regiao,
+                  tipo,
+                  existingId,
+                ],
+              );
+              updated += 1;
+            }
+            questionIds.push({ id: existingId, numero_na_prova: questionNumber });
+            continue;
           }
 
-          const questionNumber = isNaN(q.numero) ? 0 : q.numero;
-          const safeProvaId = isNaN(provaId) ? null : provaId;
-
-          const qResult = await query(
-            `INSERT INTO questions (statement, option_a, option_b, option_c, option_d, option_e, correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region, exam_type, prova_id, numero_na_prova, anulada, images_meta)
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19) RETURNING id`,
+          const qResult = await client.query(
+            `INSERT INTO questions (
+               statement, option_a, option_b, option_c, option_d, option_e,
+               correct_answer, explanation, tags, images, exam_year, exam_board,
+               exam_institution, exam_region, exam_type, prova_id, numero_na_prova,
+               anulada, images_meta
+             ) VALUES (
+               $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19
+             ) RETURNING id`,
             [
               q.statement || '(Sem enunciado)',
-              optA, optB, q.option_c, q.option_d, q.option_e,
-              q.correct_answer, null, null, imagesJson, examYear,
-              banca, null, regiao, tipo, safeProvaId, questionNumber, q.anulada ?? false,
+              optA,
+              optB,
+              optC,
+              optD,
+              optE,
+              q.correct_answer,
+              null,
+              null,
+              imagesJson,
+              examYear,
+              banca,
+              null,
+              regiao,
+              tipo,
+              provaId,
+              questionNumber,
+              q.anulada ?? false,
               imagesMetaJson,
-            ]
+            ],
           );
-          questionIds.push({ id: qResult.rows[0].id, numero_na_prova: q.numero });
-          totalQuestoesImportadas++;
+          const newId = Number(qResult.rows[0].id);
+          existingByNumero.set(questionNumber, newId);
+          questionIds.push({ id: newId, numero_na_prova: questionNumber });
+          inserted += 1;
         }
 
-        result.push({ id: provaId, nome, banca, regiao, ano, tipo, questions: questionIds });
+        await client.query('COMMIT');
+
+        const countRes = await query(
+          `SELECT COUNT(*)::int AS n FROM questions WHERE prova_id = $1`,
+          [provaId],
+        );
+        const actual = Number(countRes.rows[0]?.n ?? 0);
+        const dbNumsRes = await query(
+          `SELECT numero_na_prova FROM questions
+           WHERE prova_id = $1 AND numero_na_prova IS NOT NULL`,
+          [provaId],
+        );
+        const dbNums = new Set(
+          (dbNumsRes.rows as Array<{ numero_na_prova: number }>).map((r) =>
+            Number(r.numero_na_prova),
+          ),
+        );
+        const missingAfter = uniqueQuestions
+          .map((q) => q.numero)
+          .filter((n) => !dbNums.has(n));
+        const complete = missingAfter.length === 0 && actual >= expected;
+
+        questoesInseridas += inserted;
+        questoesJaExistentes += already;
+        questoesAtualizadas += updated;
+
+        result.push({
+          id: provaId,
+          nome,
+          banca,
+          regiao,
+          ano,
+          tipo,
+          created,
+          expected,
+          actual,
+          inserted,
+          already_existed: already,
+          updated,
+          missing_numbers: missingAfter,
+          complete,
+          questions: questionIds,
+        });
       } catch (provaError) {
+        try {
+          await client.query('ROLLBACK');
+        } catch {
+          /* ignore */
+        }
         console.error(`Erro ao importar prova "${nome}":`, provaError);
-        provaErrors.push({ nome, reason: provaError instanceof Error ? provaError.message : String(provaError) });
+        provaErrors.push({
+          nome,
+          reason:
+            provaError instanceof Error ? provaError.message : String(provaError),
+        });
+      } finally {
+        client.release();
       }
     }
 
-    const provasNovas = result.filter((p) => !p.skipped).length;
+    const incompletas = result.filter((p) => !p.complete);
+    const questoesFaltando = incompletas.reduce(
+      (s, p) => s + p.missing_numbers.length,
+      0,
+    );
+    const allComplete =
+      incompletas.length === 0 && provaErrors.length === 0 && result.length > 0;
+
+    const summary = {
+      // Nomes canônicos (ideia 1)
+      provas_criadas: provasCriadas,
+      provas_ja_existentes: provasJaExistentes,
+      provas_incompletas: incompletas.length,
+      provas_completas: result.filter((p) => p.complete).length,
+      provas_com_erro: provaErrors.length,
+      questoes_inseridas: questoesInseridas,
+      questoes_ja_existentes: questoesJaExistentes,
+      questoes_atualizadas: questoesAtualizadas,
+      questoes_faltando: questoesFaltando,
+      questoes_esperadas: questoesEsperadas,
+      // Aliases legados (UI antiga)
+      provasImportadas: provasCriadas,
+      provasIgnoradas: provasJaExistentes,
+      questoesImportadas: questoesInseridas,
+      provasComErro: provaErrors.length,
+    };
+
     return NextResponse.json({
-      success: true,
-      partial: provaErrors.length > 0,
+      success: allComplete,
+      partial: !allComplete && (result.length > 0 || provaErrors.length > 0),
       provas: result,
+      provas_incompletas: incompletas.map((p) => ({
+        id: p.id,
+        nome: p.nome,
+        esperado: p.expected,
+        atual: p.actual,
+        faltando: p.missing_numbers.length,
+        faltando_numeros: p.missing_numbers,
+      })),
       errors: provaErrors,
-      summary: {
-        provasImportadas: provasNovas,
-        provasIgnoradas: totalProvasIgnoradas,
-        questoesImportadas: totalQuestoesImportadas,
-        provasComErro: provaErrors.length,
-      },
+      summary,
     });
   } catch (error) {
     console.error('Erro ao importar provas:', error);
     return NextResponse.json({ error: 'Erro ao importar provas' }, { status: 500 });
   }
 }
+

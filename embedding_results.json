@@ -1,10 +1,15 @@
 {
-  "timestamp": "2026-06-19T13:52:46.659Z",
-  "total": 23944,
-  "success": 23944,
-  "failed": 0,
-  "failures": [],
-  "duration_s": "4742.9",
+  "timestamp": "2026-08-07T22:04:45.262Z",
+  "total": 28715,
+  "success": 28714,
+  "failed": 1,
+  "failures": [
+    {
+      "id": 61968,
+      "error": "API error 503: {\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"The service is currently unavailable.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n"
+    }
+  ],
+  "duration_s": "6351.4",
   "backends": [
     "pgvector"
   ]

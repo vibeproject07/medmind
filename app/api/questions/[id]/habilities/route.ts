@@ -53,7 +53,7 @@ export async function POST(
       return NextResponse.json({ error: 'Questão não encontrada' }, { status: 404 });
     }
 
-    const { result, pendingInserted } = await classifyQuestionHabilities(
+    const { result, pendingInserted, token_usage } = await classifyQuestionHabilities(
       qRes.rows[0] as Record<string, unknown>,
     );
 
@@ -61,6 +61,7 @@ export async function POST(
       result,
       pending_inserted: pendingInserted,
       agent: 'habilities_agent',
+      token_usage,
     });
   } catch (e) {
     const message = e instanceof Error ? e.message : 'Erro na classificação';

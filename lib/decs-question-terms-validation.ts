@@ -1,5 +1,9 @@
 import { buildHierarchyPath, wordJaccard, type DeCSRecord, type DeCSThemes } from '@/lib/decs-pipeline';
 import { buildGeminiRestUserParts } from '@/lib/gemini-question-images';
+import {
+  buildAgentTokenUsage,
+  type AgentTokenUsage,
+} from '@/lib/gemini-token-usage';
 
 export interface ValidationItemScore {
   code: string;
@@ -23,6 +27,7 @@ export interface QuestionTermsValidationResult {
   review_reason?: string;
   is_coherent?: boolean;
   missing_primary_terms?: boolean;
+  token_usage?: AgentTokenUsage;
 }
 
 function clampPct(n: unknown): number {
@@ -218,7 +223,9 @@ function parseValidatorPayload(
       const hasPrimaryTag = finalTags.some(
         (t) => String(t.type ?? '').toUpperCase() === 'PRIMARY',
       );
-      const missingPrimary =
+      // Sinais do agente → só revisão manual; missing_primary_terms real é
+      // calculado depois a partir dos descritores DeCS (role=primary).
+      const agentMissingPrimaryHint =
         status.missing_primary_terms === true ||
         (finalTags.length === 0 && candidates.length > 0) ||
         (finalTags.length > 0 && !hasPrimaryTag);
@@ -228,12 +235,12 @@ function parseValidatorPayload(
         approvedCodes,
         coerencia_geral,
         needs_manual_review:
-          status.needs_manual_review === true || missingPrimary,
+          status.needs_manual_review === true || agentMissingPrimaryHint,
         review_reason:
           status.review_reason != null
             ? String(status.review_reason)
-            : missingPrimary
-              ? 'Ausência de termos primários após validação.'
+            : agentMissingPrimaryHint
+              ? 'Validador sinalizou ausência/fragilidade de termos primários nas tags.'
               : undefined,
         is_coherent:
           status.is_coherent === true
@@ -241,7 +248,8 @@ function parseValidatorPayload(
             : status.is_coherent === false
               ? false
               : undefined,
-        missing_primary_terms: missingPrimary,
+        // Não propagar como fato estrutural — override no persist/API
+        missing_primary_terms: undefined,
       };
     }
 
@@ -415,6 +423,11 @@ export async function runQuestionTermsValidation(opts: {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const data = (await res.json()) as any;
+  const token_usage = buildAgentTokenUsage(
+    'question_terms_validator',
+    validator.model,
+    data,
+  );
   const rawText: string =
     data?.candidates?.[0]?.content?.parts
       ?.filter((p: Record<string, unknown>) => !p?.thought)
@@ -422,13 +435,11 @@ export async function runQuestionTermsValidation(opts: {
       .filter(Boolean)
       .join('') ?? '';
 
-  const { items, approvedCodes, coerencia_geral, needs_manual_review, review_reason, is_coherent, missing_primary_terms } =
+  const { items, approvedCodes, coerencia_geral, needs_manual_review, review_reason, is_coherent } =
     parseValidatorPayload(rawText, eligible, opts.themes);
 
   const approved = eligible.filter((d) => approvedCodes.has(d.code));
   const rejected = eligible.filter((d) => !approvedCodes.has(d.code));
-
-  const missingPrimary = missing_primary_terms === true;
 
   return {
     approved,
@@ -439,13 +450,11 @@ export async function runQuestionTermsValidation(opts: {
     candidates_considered: eligible.length,
     skipped_textual: skipped_textual.length,
     agent: 'question_terms_validator',
-    needs_manual_review: needs_manual_review === true || missingPrimary,
-    review_reason:
-      review_reason ||
-      (missingPrimary
-        ? 'Ausência de termos primários após validação.'
-        : undefined),
+    needs_manual_review: needs_manual_review === true,
+    review_reason,
     is_coherent,
-    missing_primary_terms: missingPrimary,
+    // Fato estrutural calculado na persistência/API a partir de role=primary
+    missing_primary_terms: undefined,
+    token_usage,
   };
 }

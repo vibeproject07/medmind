@@ -1,0 +1,186 @@
+{
+  "provas": [
+    {
+      "nome": "HCG - GO - 2011 - R1 - 1",
+      "questoes": [
+        {
+          "id_questao": "18750",
+          "url": "https://www.provaderesidencia.com.br/premium/questao/18750/",
+          "numero": 1,
+          "titulo": "Paciente com 35 anos de idade, do sexo feminino, cabeleireira, procurou atendimento médico com queixa de “cansaço nas pernas”. O exame físico demonstrou apenas a presença de dilatações venosas de médio calibre nos membros inferiores, mais acentuadas nas faces mediais das pernas, com ausência de edemas, hiperpigmentação e/ou lesões tróficas. Com base no diagnóstico de varizes primárias e na classificação clínica do CEAP, conclui-se que esta paciente encontra-se na classe:",
+          "imagens": [],
+          "alternativas": [
+            {
+              "letra": "A",
+              "descricao": " 1"
+            },
+            {
+              "letra": "B",
+              "descricao": " 2"
+            },
+            {
+              "letra": "C",
+              "descricao": " 3"
+            },
+            {
+              "letra": "D",
+              "descricao": " 4"
+            }
+          ],
+          "alternativa_correta": "B",
+          "estado": false,
+          "aviso": {
+            "original": "",
+            "upper": "",
+            "lower": "",
+            "title": "",
+            "sentence": ""
+          },
+          "comentarios": []
+        },
+        {
+          "id_questao": "18751",
+          "url": "https://www.provaderesidencia.com.br/premium/questao/18751/",
+          "numero": 2,
+          "titulo": "Paciente com 35 anos de idade, do sexo feminino, cabeleireira, procurou atendimento médico com queixa de “cansaço nas pernas”. O exame físico demonstrou apenas a presença de dilatações venosas de médio calibre nos membros inferiores, mais acentuadas nas faces mediais das pernas, com ausência de edemas, hiperpigmentação e/ou lesões tróficas. Considerando a classificação clínica dessa paciente, a melhor indicação de tratamento é:",
+          "imagens": [],
+          "alternativas": [
+            {
+              "letra": "A",
+              "descricao": " cirurgia convencional."
+            },
+            {
+              "letra": "B",
+              "descricao": " escleroterapia com glicose 75%."
+            },
+            {
+              "letra": "C",
+              "descricao": " escleroterapia com laser pulsado."
+            },
+            {
+              "letra": "D",
+              "descricao": " meia elástica com 10 a 15 mmHg de compressão."
+            }
+          ],
+          "alternativa_correta": "A",
+          "estado": false,
+          "aviso": {
+            "original": "",
+            "upper": "",
+            "lower": "",
+            "title": "",
+            "sentence": ""
+          },
+          "comentarios": []
+        },
+        {
+          "id_questao": "18752",
+          "url": "https://www.provaderesidencia.com.br/premium/questao/18752/",
+          "numero": 3,
+          "titulo": "Uma vítima de acidente automobilístico é submetida a tratamento operatório por lesões abdominais e recebe dez unidades de concentrados de hemácias nas primeiras horas de internação hospitalar. As complicações que podem resultar desta hemotransfusão maciça são as seguintes:",
+          "imagens": [],
+          "alternativas": [
+            {
+              "letra": "A",
+              "descricao": " hipotermia, alcalose metabólica, hipocalcemia, hipercalemia."
+            },
+            {
+              "letra": "B",
+              "descricao": " hipertermia, acidose metabólica, hipercalemia, hipercalcemia."
+            },
+            {
+              "letra": "C",
+              "descricao": " hipertermia, acidose respiratória, hipocalcemia, hipocalemia."
+            },
+            {
+              "letra": "D",
+              "descricao": " hipotermia, alcalose respiratória, hipercalemia, hipercalcemia."
+            }
+          ],
+          "alternativa_correta": "A",
+          "estado": false,
+          "aviso": {
+            "original": "",
+            "upper": "",
+            "lower": "",
+            "title": "",
+            "sentence": ""
+          },
+          "comentarios": []
+        },
+        {
+          "id_questao": "18753",
+          "url": "https://www.provaderesidencia.com.br/premium/questao/18753/",
+          "numero": 4,
+          "titulo": "Um paciente submetido à colecistectomia videolaparoscópica queixa-se de dor intensa no ombro direito nas primeiras horas de pós-operatório. Esta complicação:",
+          "imagens": [],
+          "alternativas": [
+            {
+              "letra": "A",
+              "descricao": " está relacionada ao pneumoperitônio, não demanda tratamento clínico e pode ser evitada pela promoção do pneumoperitônio com óxido nitroso."
+            },
+            {
+              "letra": "B",
+              "descricao": " não está relacionada ao pneumoperitônio, demanda tratamento clínico com analgésicos e pode ser evitada pelo bloqueio peridural durante a indução anestésica."
+            },
+            {
+              "letra": "C",
+              "descricao": " está relacionada ao pneumoperitônio, demanda tratamento clínico com analgésicos e pode ser evitada pela infusão lenta do gás carbônico durante a promoção do pneumoperitônio."
+            },
+            {
+              "letra": "D",
+              "descricao": " não está relacionada ao pneumoperitônio, demanda tratamento clínico com antidepressivos e pode ser evitada pela infusão rápida do gás carbônico para a promoção do pneumoperitônio."
+            }
+          ],
+          "alternativa_correta": "C",
+          "estado": false,
+          "aviso": {
+            "original": "",
+            "upper": "",
+            "lower": "",
+            "title": "",
+            "sentence": ""
+          },
+          "comentarios": []
+        },
+        {
+          "id_questao": "18754",
+          "url": "https://www.provaderesidencia.com.br/premium/questao/18754/",
+          "numero": 5,
+          "titulo": "Analise o sistema de classificação de lesões das vias biliares, ilustrado (Ver Imagem). Esse sistema representa a classificação de:",
+          "imagens": [
+            "https://pdres.s3.amazonaws.com/imgs/6a3ef765355a3a3165ba16850d8ac9a188cc225c.jpg"
+          ],
+          "alternativas": [
+            {
+              "letra": "A",
+              "descricao": " Hannover."
+            },
+            {
+              "letra": "B",
+              "descricao": " Stewart-Way."
+            },
+            {
+              "letra": "C",
+              "descricao": " Bismuth."
+            },
+            {
+              "letra": "D",
+              "descricao": " Strasberg."
+            }
+          ],
+          "alternativa_correta": "D",
+          "estado": false,
+          "aviso": {
+            "original": "",
+            "upper": "",
+            "lower": "",
+            "title": "",
+            "sentence": ""
+          },
+          "comentarios": []
+        }
+      ]
+    }
+  ]
+}
