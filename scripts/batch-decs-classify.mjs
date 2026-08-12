@@ -72,10 +72,10 @@ let validatorAgent;
 const pool = new pg.Pool({ connectionString: DB_URL });
 
 async function loadAgentsFromDb() {
-  const map = await loadRuntimeAgents(pool, ['decs_classifier', 'decs_validator']);
+  const map = await loadRuntimeAgents(pool, ['decs_classifier', 'question_terms_validator']);
   classifierAgent = map.get('decs_classifier');
-  validatorAgent = map.get('decs_validator');
-  console.log(`   ✓ Agentes DB: decs_classifier (${classifierAgent.model}), decs_validator (${validatorAgent.model})`);
+  validatorAgent = map.get('question_terms_validator');
+  console.log(`   ✓ Agentes DB: decs_classifier (${classifierAgent.model}), question_terms_validator (${validatorAgent.model})`);
 }
 
 async function fetchQuestions() {
@@ -85,7 +85,7 @@ async function fetchQuestions() {
   if (MAX_ID !== null) conditions.push(`id <= ${MAX_ID}`);
   const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
   const res = await pool.query(
-    `SELECT id, statement, option_a, option_b, option_c, option_d, option_e
+    `SELECT id, statement, option_a, option_b, option_c, option_d, option_e, correct_answer
      FROM questions ${whereClause} ORDER BY id ASC LIMIT $1 OFFSET $2`,
     [LIMIT, OFFSET]
   );
@@ -318,6 +318,7 @@ async function validateDescriptors(descriptors, questionText) {
 
 // ── Process one question ──────────────────────────────────────────────────────
 async function processQuestion(q, idx, total) {
+  const letter = String(q.correct_answer ?? '').trim().toUpperCase();
   const questionText = [
     'Enunciado:', q.statement, '',
     'Alternativa A: ' + (q.option_a ?? ''),
@@ -325,6 +326,7 @@ async function processQuestion(q, idx, total) {
     q.option_c ? 'Alternativa C: ' + q.option_c : null,
     q.option_d ? 'Alternativa D: ' + q.option_d : null,
     q.option_e ? 'Alternativa E: ' + q.option_e : null,
+    letter ? `Gabarito: ${letter}` : null,
   ].filter(Boolean).join('\n');
 
   let descriptors = [];

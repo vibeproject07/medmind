@@ -1,4 +1,5 @@
 import { DECS_MAX_CANDIDATES } from "./decs-search-limits";
+import { buildGeminiRestUserParts } from "./gemini-question-images";
 
 /**
  * DeCS AI Pipeline — shared classifier logic
@@ -45,6 +46,8 @@ export interface DeCSPipelineTermTrace {
   gemini_partial_term: string;
   role: 'primary' | 'secondary';
   text_search: {
+    skipped?: boolean;
+    skip_reason?: string;
     candidates: Array<{
       code: string;
       official_term_pt: string;
@@ -55,10 +58,15 @@ export interface DeCSPipelineTermTrace {
       exact_entry_term_match?: boolean;
       hierarchy_path?: string;
       branches?: DeCSBranch[];
+      /** Regras aplicadas na comparação deste candidato (exposição em memória). */
+      rules_applied?: string[];
+      accepted_candidate?: boolean;
     }>;
     accepted: boolean;
     accept_reason?: string;
     accepted_descriptor?: DeCSRecord | null;
+    /** Regras de negócio consideradas nesta busca textual (nível do termo Gemini). */
+    rules_summary?: string[];
   };
   vector_search: {
     candidates: Array<{
@@ -93,6 +101,32 @@ export type DeCSPipelineRunResult = {
   dropped_by_gemini: number;
   term_trace: DeCSPipelineTermTrace[];
 };
+
+/** Monta o texto da questão para agentes (DeCS, competências, temas). */
+export function buildDeCSQuestionText(q: {
+  statement?: string | null;
+  option_a?: string | null;
+  option_b?: string | null;
+  option_c?: string | null;
+  option_d?: string | null;
+  option_e?: string | null;
+  correct_answer?: string | null;
+}): string {
+  const letter = String(q.correct_answer ?? '').trim().toUpperCase();
+  return [
+    'Enunciado:',
+    q.statement ?? '',
+    '',
+    'Alternativa A: ' + (q.option_a ?? ''),
+    'Alternativa B: ' + (q.option_b ?? ''),
+    q.option_c ? 'Alternativa C: ' + q.option_c : null,
+    q.option_d ? 'Alternativa D: ' + q.option_d : null,
+    q.option_e ? 'Alternativa E: ' + q.option_e : null,
+    letter ? `Gabarito: ${letter}` : null,
+  ]
+    .filter(Boolean)
+    .join('\n');
+}
 
 // ── Category metadata ────────────────────────────────────────────────────────
 
@@ -360,6 +394,53 @@ export async function searchDeCSLocal(
 
 // ── Layer 0 (priority): Local textual search (entry_terms / name_pt) ─────────
 
+/** Margem máxima de diferença de comprimento absoluto entre termo e descritor. */
+export const TEXTUAL_LENGTH_MARGIN = 5;
+
+/**
+ * Conectores gramaticais que, se presentes no termo Gemini (junto com hífens),
+ * autorizam a permanência na busca textual. Ausência → pula direto para vetorial
+ * quando o termo também não for composto (multi-palavra).
+ */
+export const TEXTUAL_CONNECTORS = new Set([
+  'a',
+  'o',
+  'as',
+  'os',
+  'um',
+  'uma',
+  'uns',
+  'umas',
+  'de',
+  'da',
+  'do',
+  'das',
+  'dos',
+  'ao',
+  'aos',
+  'à',
+  'às',
+  'e',
+  'ou',
+  'em',
+  'no',
+  'na',
+  'nos',
+  'nas',
+  'por',
+  'para',
+  'com',
+  'sem',
+  'sob',
+  'sobre',
+  'entre',
+  'dentre',
+  'pelo',
+  'pela',
+  'pelos',
+  'pelas',
+]);
+
 /**
  * DeCSRecord extended with the descriptor's full entry_terms list, needed to
  * detect exact synonym matches during textual search evaluation.
@@ -370,28 +451,200 @@ export type DeCSTextCandidate = DeCSRecord & {
   exact_entry_term_match?: boolean;
   matched_via?: 'name_pt' | 'name_en' | 'entry_terms' | null;
   matched_entry_term?: string;
+  rules_applied?: string[];
+  accepted_candidate?: boolean;
 };
+
+/** Trim nas bordas e colapsa espaços internos, preservando espaços entre palavras. */
+export function normalizeTextualSpacing(s: string): string {
+  return String(s ?? '')
+    .replace(/^\s+|\s+$/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+/**
+ * Normalização para comparação textual: espaçamento + caixa (case-insensitive).
+ * Preserva letras/acentos; não remove hífens (relevantes à regra de conectores).
+ */
+export function normalizeTextualCompare(s: string): string {
+  return normalizeTextualSpacing(s).toLocaleLowerCase('pt-BR').normalize('NFC');
+}
+
+/** Remove sufixo DeCS `Termo[English]` para comparação alternativa do entry_term. */
+function stripDeCSBracketSuffix(s: string): string {
+  const m = s.match(/^(.+?)\s*\[.+\]\s*$/);
+  return m ? m[1].trim() : s;
+}
+
+export function textualWordCount(s: string): number {
+  const t = normalizeTextualSpacing(s);
+  if (!t) return 0;
+  return t.split(/\s+/).filter(Boolean).length;
+}
+
+export function hasTextualHyphen(s: string): boolean {
+  return normalizeTextualSpacing(s).includes('-');
+}
+
+export function hasTextualConnector(s: string): boolean {
+  const words = normalizeTextualSpacing(s)
+    .toLocaleLowerCase('pt-BR')
+    .split(/\s+/)
+    .filter(Boolean);
+  return words.some((w) => TEXTUAL_CONNECTORS.has(w));
+}
+
+/**
+ * Gate textual: qualquer termo não vazio tenta busca textual.
+ * Simples (1 palavra, sem hífen/conector) exigem igualdade exata
+ * (ex.: "embolia" aceita "embolia", rejeita "embolia pulmonar").
+ * Só cai na vetorial se não houver match textual aceito.
+ */
+export function shouldAttemptTextualSearch(geminiTerm: string): {
+  attempt: boolean;
+  reasons: string[];
+} {
+  const trimmed = normalizeTextualSpacing(geminiTerm);
+  const reasons: string[] = [
+    'trim nas bordas; espaços internos colapsados (1.2.2)',
+  ];
+  if (!trimmed) {
+    reasons.push('termo vazio após trim — pula textual');
+    return { attempt: false, reasons };
+  }
+
+  const multi = textualWordCount(trimmed) > 1;
+  const hyphen = hasTextualHyphen(trimmed);
+  const connector = hasTextualConnector(trimmed);
+
+  if (multi) {
+    reasons.push('termo composto (multi-palavra) — permanece na textual (1.4)');
+  }
+  if (hyphen) {
+    reasons.push('hífen presente no termo Gemini — permanece na textual (1.2.1)');
+  }
+  if (connector) {
+    reasons.push('conector gramatical presente no termo Gemini — permanece na textual (1.2.1)');
+  }
+  if (!multi && !hyphen && !connector) {
+    reasons.push(
+      'termo simples (1 palavra, sem hífen/conector) — busca textual com igualdade exata (ex.: embolia ≠ embolia pulmonar)',
+    );
+  }
+
+  // Termos simples também tentam textual; só caem na vetorial se não houver match exato.
+  return { attempt: true, reasons };
+}
+
+export function lengthWithinMargin(
+  a: string,
+  b: string,
+  margin = TEXTUAL_LENGTH_MARGIN,
+): boolean {
+  return Math.abs(a.length - b.length) <= margin;
+}
+
+/**
+ * Compara termo Gemini com um rótulo de descritor (name_pt / name_en / entry_term).
+ * Multi-palavra: somente igualdade exata (case-insensitive).
+ * Simples: igualdade exata + margem de tamanho ≤ 5.
+ */
+export function compareTextualLabels(
+  geminiTerm: string,
+  descriptorLabel: string,
+): { match: boolean; rules: string[] } {
+  const rules: string[] = [];
+  const rawTerm = normalizeTextualSpacing(geminiTerm);
+  const rawDesc = normalizeTextualSpacing(descriptorLabel);
+  rules.push('trim bordas + espaços internos colapsados (1.2.2)');
+
+  const term = normalizeTextualCompare(rawTerm);
+  const desc = normalizeTextualCompare(rawDesc);
+  rules.push('comparação case-insensitive (não restringe por Camel Case)');
+
+  const delta = Math.abs(term.length - desc.length);
+  const lengthOk = delta <= TEXTUAL_LENGTH_MARGIN;
+  rules.push(
+    lengthOk
+      ? `tamanho absoluto |Δlen|=${delta} ≤ ${TEXTUAL_LENGTH_MARGIN} (1.1)`
+      : `tamanho absoluto |Δlen|=${delta} > ${TEXTUAL_LENGTH_MARGIN} — rejeitado (1.1)`,
+  );
+
+  const multi =
+    textualWordCount(rawTerm) > 1 || textualWordCount(rawDesc) > 1;
+
+  if (multi) {
+    rules.push(
+      'termo/descritor composto: somente igualdade exata após normalização (1.4)',
+    );
+    if (term === desc && lengthOk) {
+      rules.push('igualdade exata OK');
+      return { match: true, rules };
+    }
+    if (term !== desc) {
+      rules.push(
+        'rejeitado: não é igualdade exata (ex.: "Diabetes Mellitus" ≠ "Diabetes Mellitus Tipo 1")',
+      );
+    }
+    return { match: false, rules };
+  }
+
+  rules.push(
+    'termo simples: igualdade exata + margem de tamanho (ex.: "embolia" aceita "embolia", rejeita "embolia pulmonar")',
+  );
+  if (!lengthOk) return { match: false, rules };
+  if (term === desc) {
+    rules.push('igualdade exata OK');
+    return { match: true, rules };
+  }
+  rules.push('rejeitado: strings diferentes após normalização');
+  return { match: false, rules };
+}
 
 function detectTextMatchField(
   searchTerm: string,
   row: { name_pt: string; name_en?: string | null; entry_terms: string[] },
-): { matched_via: 'name_pt' | 'name_en' | 'entry_terms' | null; matched_entry_term?: string } {
-  const norm = normalizeExact(searchTerm);
-  const pattern = norm.length > 0 ? norm : '';
-  if (!pattern) return { matched_via: null };
-
-  if (normalizeExact(row.name_pt).includes(pattern) || pattern.includes(normalizeExact(row.name_pt))) {
-    return { matched_via: 'name_pt' };
-  }
-  if (row.name_en && normalizeExact(row.name_en).includes(pattern)) {
-    return { matched_via: 'name_en' };
-  }
+): {
+  matched_via: 'name_pt' | 'name_en' | 'entry_terms' | null;
+  matched_entry_term?: string;
+  rules_applied: string[];
+  accepted: boolean;
+} {
+  const attempts: Array<{
+    via: 'name_pt' | 'name_en' | 'entry_terms';
+    label: string;
+    entry?: string;
+  }> = [
+    { via: 'name_pt', label: row.name_pt },
+  ];
+  if (row.name_en) attempts.push({ via: 'name_en', label: row.name_en });
   for (const et of row.entry_terms) {
-    if (normalizeExact(et).includes(pattern) && pattern.length > 3) {
-      return { matched_via: 'entry_terms', matched_entry_term: et };
+    attempts.push({ via: 'entry_terms', label: et, entry: et });
+    const stripped = stripDeCSBracketSuffix(et);
+    if (stripped !== et) {
+      attempts.push({ via: 'entry_terms', label: stripped, entry: et });
     }
   }
-  return { matched_via: null };
+
+  let bestRejectRules: string[] = ['nenhuma comparação positiva'];
+  for (const a of attempts) {
+    const { match, rules } = compareTextualLabels(searchTerm, a.label);
+    if (match) {
+      return {
+        matched_via: a.via,
+        matched_entry_term: a.entry,
+        rules_applied: [...rules, `campo comparado: ${a.via}`],
+        accepted: true,
+      };
+    }
+    bestRejectRules = rules;
+  }
+
+  return {
+    matched_via: null,
+    rules_applied: bestRejectRules,
+    accepted: false,
+  };
 }
 
 /** Carrega tree_numbers do banco e associa hierarchy_path/branches após match textual aceito. */
@@ -449,7 +702,8 @@ export async function searchDeCSTextual(
 ): Promise<DeCSTextCandidate[]> {
   try {
     const { query } = await import("@/lib/db");
-    const pattern = `%${searchTerm}%`;
+    const trimmed = normalizeTextualSpacing(searchTerm);
+    const pattern = `%${trimmed}%`;
 
     const res = await query(
       `
@@ -458,8 +712,6 @@ export async function searchDeCSTextual(
         d.name_pt,
         d.name_en,
         d.entry_terms
-        -- scope_note: Parâmetro desconsiderado para fins de testes
-        -- tree_numbers: Parâmetro desconsiderado para fins de testes (hierarquia só após match textual)
       FROM decs_descriptors d
       WHERE d.name_pt ILIKE $1
          OR d.name_en ILIKE $1
@@ -476,7 +728,7 @@ export async function searchDeCSTextual(
       const all_entry_terms: string[] = Array.isArray(r.entry_terms)
         ? r.entry_terms
         : JSON.parse(r.entry_terms ?? "[]");
-      const match = detectTextMatchField(searchTerm, {
+      const match = detectTextMatchField(trimmed, {
         name_pt: r.name_pt,
         name_en: r.name_en,
         entry_terms: all_entry_terms,
@@ -492,6 +744,10 @@ export async function searchDeCSTextual(
         all_entry_terms,
         matched_via: match.matched_via,
         matched_entry_term: match.matched_entry_term,
+        rules_applied: match.rules_applied,
+        accepted_candidate: match.accepted,
+        exact_entry_term_match: match.accepted,
+        similarity: match.accepted ? 1 : 0,
       };
     });
   } catch {
@@ -500,48 +756,78 @@ export async function searchDeCSTextual(
 }
 
 /**
- * Rank textual candidates and decide whether the best one is a "good match"
- * (exact synonym/name match, or Jaccard similarity above minSimilarity).
- * Mirrors evaluateTextual() in scripts/decs-pipeline-v1-run.mjs.
+ * Rank textual candidates with the new business rules.
+ * Multi-word: exact equality only. Single-word: exact + length margin ≤ 5.
+ * Jaccard substring acceptance was removed for multi-word terms (1.4).
  */
 export function evaluateTextualMatch(
   term: string,
   candidates: DeCSTextCandidate[],
   questionText: string,
-  minSimilarity = 0.3,
-): { accepted: boolean; best: DeCSTextCandidate | null } {
+  _minSimilarity = 0.3,
+): {
+  accepted: boolean;
+  best: DeCSTextCandidate | null;
+  scored: DeCSTextCandidate[];
+  rules_summary: string[];
+} {
+  const gate = shouldAttemptTextualSearch(term);
+  const rules_summary = [...gate.reasons];
+
+  if (!gate.attempt) {
+    return {
+      accepted: false,
+      best: null,
+      scored: [],
+      rules_summary,
+    };
+  }
+
+  rules_summary.push(
+    'aceitação textual: igualdade exata (case-insensitive); multi-palavra sem substring (1.4)',
+  );
+  rules_summary.push(
+    `margem de tamanho absoluto ≤ ${TEXTUAL_LENGTH_MARGIN} caracteres (1.1)`,
+  );
+
   const scored = candidates.map((c) => {
-    const jaccard = Math.max(
-      wordJaccard(term, c.term),
-      c.name_en ? wordJaccard(term, c.name_en) : 0,
-    );
-    const exact =
-      normalizeExact(term) === normalizeExact(c.term) ||
-      (c.name_en ? normalizeExact(term) === normalizeExact(c.name_en) : false) ||
-      (c.all_entry_terms ?? []).some(
-        (t) =>
-          normalizeExact(t).includes(normalizeExact(term)) &&
-          normalizeExact(term).length > 3,
-      );
-    return { ...c, similarity: jaccard, exact_entry_term_match: exact };
+    // Reavalia com a função canônica (garante rules_applied mesmo se veio do SQL)
+    const match = detectTextMatchField(term, {
+      name_pt: c.official_term_pt ?? c.term,
+      name_en: c.name_en,
+      entry_terms: c.all_entry_terms ?? [],
+    });
+    return {
+      ...c,
+      matched_via: match.matched_via,
+      matched_entry_term: match.matched_entry_term,
+      rules_applied: match.rules_applied,
+      accepted_candidate: match.accepted,
+      exact_entry_term_match: match.accepted,
+      similarity: match.accepted ? 1 : 0,
+    };
   });
 
   const eligible = scored
+    .filter((c) => c.accepted_candidate)
     .filter((c) => isCategoryAcceptable(c, questionText))
     .sort((a, b) => {
-      if (a.exact_entry_term_match !== b.exact_entry_term_match) {
-        return a.exact_entry_term_match ? -1 : 1;
-      }
-      return (b.similarity ?? 0) - (a.similarity ?? 0);
+      // Prefer name_pt > name_en > entry_terms
+      const rank = (v: string | null | undefined) =>
+        v === 'name_pt' ? 0 : v === 'name_en' ? 1 : 2;
+      return rank(a.matched_via) - rank(b.matched_via);
     });
 
-  if (eligible.length === 0) return { accepted: false, best: null };
+  if (eligible.length === 0) {
+    rules_summary.push('nenhum candidato passou nas regras de igualdade/tamanho/categoria');
+    return { accepted: false, best: null, scored, rules_summary };
+  }
 
   const best = eligible[0];
-  const goodMatch =
-    best.exact_entry_term_match || (best.similarity ?? 0) >= minSimilarity;
-
-  return { accepted: goodMatch, best };
+  rules_summary.push(
+    `aceito via ${best.matched_via ?? '?'}: "${best.official_term_pt ?? best.term}"`,
+  );
+  return { accepted: true, best, scored, rules_summary };
 }
 
 // ── BVS API (fallback) ────────────────────────────────────────────────────────
@@ -687,6 +973,7 @@ export async function validateDescriptorsWithGemini(
   geminiKey: string,
   model = "gemini-2.5-flash",
   validatorAgentKey = "decs_validator",
+  images?: unknown,
 ): Promise<DeCSRecord[]> {
   if (descriptors.length === 0) return [];
 
@@ -713,7 +1000,12 @@ export async function validateDescriptorsWithGemini(
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${validator.model}:generateContent?key=${geminiKey}`;
     const body = {
       system_instruction: { parts: [{ text: validator.system_instruction }] },
-      contents: [{ role: "user", parts: [{ text: userMessage }] }],
+      contents: [
+        {
+          role: "user",
+          parts: buildGeminiRestUserParts(userMessage, images),
+        },
+      ],
       generationConfig: {
         temperature: validator.temperature,
         maxOutputTokens: validator.max_output_tokens,
@@ -811,47 +1103,62 @@ export async function runDeCSPipeline(
     let method: "text" | "vector" | "bvs" | null = null;
     let categoryFilteredOnly = false;
 
-    // ── 1. TEXTO — apenas name_pt, name_en, entry_terms ─────────────────────
-    const textCandidates = await searchDeCSTextual(term, DECS_MAX_CANDIDATES);
-    traceEntry.text_search.candidates = textCandidates.map((c) => ({
-      code: c.code,
-      official_term_pt: c.official_term_pt ?? c.term,
-      name_en: c.name_en,
-      matched_via: c.matched_via ?? null,
-      matched_entry_term: c.matched_entry_term,
-      similarity: c.similarity,
-      exact_entry_term_match: c.exact_entry_term_match,
-    }));
+    // ── 1. TEXTO — gate 1.2.1 + igualdade exata / margem de tamanho ──────────
+    const textGate = shouldAttemptTextualSearch(term);
+    if (!textGate.attempt) {
+      traceEntry.text_search.skipped = true;
+      traceEntry.text_search.skip_reason = textGate.reasons.join('; ');
+      traceEntry.text_search.rules_summary = textGate.reasons;
+      traceEntry.text_search.accept_reason = textGate.reasons.join('; ');
+    } else {
+      const textCandidates = await searchDeCSTextual(term, DECS_MAX_CANDIDATES);
+      const textEval = evaluateTextualMatch(
+        term,
+        textCandidates,
+        questionText,
+        MIN_TEXT_SIMILARITY,
+      );
+      const scoredList = textEval.scored.length > 0 ? textEval.scored : textCandidates;
+      traceEntry.text_search.rules_summary = textEval.rules_summary;
+      traceEntry.text_search.candidates = scoredList.map((c) => ({
+        code: c.code,
+        official_term_pt: c.official_term_pt ?? c.term,
+        name_en: c.name_en,
+        matched_via: c.matched_via ?? null,
+        matched_entry_term: c.matched_entry_term,
+        similarity: c.similarity,
+        exact_entry_term_match: c.exact_entry_term_match,
+        rules_applied: c.rules_applied,
+        accepted_candidate: c.accepted_candidate,
+      }));
 
-    const textEval = evaluateTextualMatch(
-      term,
-      textCandidates,
-      questionText,
-      MIN_TEXT_SIMILARITY,
-    );
-    if (textCandidates.length > 0 && !textEval.best) categoryFilteredOnly = true;
+      if (scoredList.length > 0 && !textEval.best) categoryFilteredOnly = true;
 
-    if (textEval.accepted && textEval.best) {
-      const withHierarchy = await attachTextMatchHierarchy(textEval.best);
-      traceEntry.text_search.accepted = true;
-      traceEntry.text_search.accept_reason = textEval.best.exact_entry_term_match
-        ? 'match exato em name_pt, name_en ou entry_terms'
-        : `similaridade Jaccard ≥ ${MIN_TEXT_SIMILARITY}`;
-      traceEntry.text_search.accepted_descriptor = {
-        ...withHierarchy,
-        similarity: textEval.best.similarity,
-        search_method: 'text',
-      };
-      const idx = traceEntry.text_search.candidates.findIndex((c) => c.code === withHierarchy.code);
-      if (idx >= 0) {
-        traceEntry.text_search.candidates[idx] = {
-          ...traceEntry.text_search.candidates[idx],
-          hierarchy_path: withHierarchy.hierarchy_path,
-          branches: withHierarchy.branches,
+      if (textEval.accepted && textEval.best) {
+        const withHierarchy = await attachTextMatchHierarchy(textEval.best);
+        traceEntry.text_search.accepted = true;
+        traceEntry.text_search.accept_reason =
+          textEval.rules_summary.slice(-1)[0] ??
+          'match textual exato (name_pt / name_en / entry_terms)';
+        traceEntry.text_search.accepted_descriptor = {
+          ...withHierarchy,
+          similarity: textEval.best.similarity,
+          search_method: 'text',
         };
+        const idx = traceEntry.text_search.candidates.findIndex(
+          (c) => c.code === withHierarchy.code,
+        );
+        if (idx >= 0) {
+          traceEntry.text_search.candidates[idx] = {
+            ...traceEntry.text_search.candidates[idx],
+            hierarchy_path: withHierarchy.hierarchy_path,
+            branches: withHierarchy.branches,
+            accepted_candidate: true,
+          };
+        }
+        winner = traceEntry.text_search.accepted_descriptor;
+        method = 'text';
       }
-      winner = traceEntry.text_search.accepted_descriptor;
-      method = 'text';
     }
 
     // ── 2. VETOR ────────────────────────────────────────────────────────────

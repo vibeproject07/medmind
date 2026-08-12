@@ -103,6 +103,7 @@ function timer(ms) {
 // ── Helpers compartilhados ────────────────────────────────────────────────────
 
 function buildQuestionText(q) {
+  const letter = String(q.correct_answer ?? '').trim().toUpperCase();
   return [
     'Enunciado:', q.statement, '',
     'Alternativa A: ' + (q.option_a || ''),
@@ -110,6 +111,7 @@ function buildQuestionText(q) {
     q.option_c ? 'Alternativa C: ' + q.option_c : null,
     q.option_d ? 'Alternativa D: ' + q.option_d : null,
     q.option_e ? 'Alternativa E: ' + q.option_e : null,
+    letter ? `Gabarito: ${letter}` : null,
   ].filter(Boolean).join('\n');
 }
 
@@ -350,10 +352,10 @@ async function runV1Debug(question) {
   ok(`Candidatos após deduplicação: ${deduped.length}`);
   stepEnd();
 
-  // ── ETAPA 4: Validação Gemini (decs_validator) ────────────────────────────
-  step(4, 'Validação pelo Gemini (decs_validator)');
-  label('Carregando agente decs_validator...');
-  const validator = await loadAgent('decs_validator', '');
+  // ── ETAPA 4: Validação Gemini (question_terms_validator) ───────────────────
+  step(4, 'Validação pelo Gemini (question_terms_validator)');
+  label('Carregando agente question_terms_validator...');
+  const validator = await loadAgent('question_terms_validator', '');
   ok(`Fonte: ${validator.source} | Modelo: ${validator.model}`);
 
   const candidateList = deduped.map(d => ({
@@ -578,7 +580,7 @@ async function main() {
 
   const { rows } = await pool.query(
     `SELECT id, statement, option_a, option_b, option_c, option_d, option_e,
-            exam_board, exam_year, exam_institution
+            correct_answer, exam_board, exam_year, exam_institution
      FROM questions WHERE id = $1`, [questionId]
   );
 

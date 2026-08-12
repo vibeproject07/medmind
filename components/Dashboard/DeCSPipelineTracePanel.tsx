@@ -73,33 +73,87 @@ export default function DeCSPipelineTracePanel({ exposure }: Props) {
         <div className="space-y-3">
           {text_search.map((row) => (
             <div key={`text-${row.gemini_query_term}`} className="rounded-lg border border-sky-100 bg-white p-3">
-              <div className="flex items-center gap-2 mb-1">
+              <div className="flex items-center gap-2 mb-1 flex-wrap">
                 <span className="font-medium text-sky-900">Query: {row.gemini_query_term}</span>
                 <span className="text-xs text-gray-400">({row.role})</span>
+                {row.skipped && (
+                  <span className="text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">
+                    pulado → vetor
+                  </span>
+                )}
                 {row.accepted && <LayerBadge method="text" />}
               </div>
-              {row.candidates.length === 0 ? (
+
+              {(row.rules_summary?.length ?? 0) > 0 && (
+                <div className="mb-2 rounded-md bg-sky-50 border border-sky-100 px-2 py-1.5">
+                  <p className="text-[10px] font-semibold uppercase tracking-wide text-sky-700 mb-1">
+                    Regras (termo Gemini)
+                  </p>
+                  <ul className="text-[11px] text-sky-900/80 space-y-0.5 list-disc list-inside">
+                    {row.rules_summary!.map((r, i) => (
+                      <li key={`${row.gemini_query_term}-rule-${i}`}>{r}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {row.skipped ? (
+                <p className="text-xs text-slate-500 italic">
+                  {row.skip_reason || 'Busca textual não executada para este termo.'}
+                </p>
+              ) : row.candidates.length === 0 ? (
                 <p className="text-xs text-gray-400 italic">Sem candidatos</p>
               ) : (
-                <ul className="text-xs space-y-1 mt-2">
+                <ul className="text-xs space-y-2 mt-2">
                   {row.candidates.map((c) => (
-                    <li key={c.code} className="border-l-2 border-sky-200 pl-2">
-                      <span className="font-semibold">{c.official_term_pt}</span>
-                      <span className="text-gray-400 font-mono ml-1">({c.code})</span>
-                      {c.matched_via && (
-                        <span className="ml-1 text-sky-600">via {c.matched_via}</span>
-                      )}
-                      {c.matched_entry_term && (
-                        <span className="block text-gray-500">entry_term: {c.matched_entry_term}</span>
-                      )}
-                      {c.hierarchy_path && (
-                        <span className="block text-indigo-500 mt-0.5">{c.hierarchy_path}</span>
-                      )}
+                    <li
+                      key={c.code}
+                      className={`border-l-2 pl-2 ${
+                        c.accepted_candidate ? 'border-green-400' : 'border-sky-200'
+                      }`}
+                    >
+                      <div className="flex flex-wrap items-start gap-x-2 gap-y-1">
+                        <div className="min-w-0 flex-1">
+                          <span className="font-semibold">{c.official_term_pt}</span>
+                          <span className="text-gray-400 font-mono ml-1">({c.code})</span>
+                          {c.matched_via && (
+                            <span className="ml-1 text-sky-600">via {c.matched_via}</span>
+                          )}
+                          {c.accepted_candidate === false && (
+                            <span className="ml-1 text-[10px] uppercase text-red-500 font-semibold">
+                              rejeitado
+                            </span>
+                          )}
+                          {c.accepted_candidate === true && (
+                            <span className="ml-1 text-[10px] uppercase text-green-600 font-semibold">
+                              elegível
+                            </span>
+                          )}
+                          {c.matched_entry_term && (
+                            <span className="block text-gray-500">entry_term: {c.matched_entry_term}</span>
+                          )}
+                          {c.hierarchy_path && (
+                            <span className="block text-indigo-500 mt-0.5">{c.hierarchy_path}</span>
+                          )}
+                        </div>
+                        {(c.rules_applied?.length ?? 0) > 0 && (
+                          <div className="w-full sm:w-auto sm:max-w-xs rounded bg-slate-50 border border-slate-100 px-2 py-1">
+                            <p className="text-[10px] font-semibold text-slate-600 uppercase mb-0.5">
+                              Regras aplicadas
+                            </p>
+                            <ul className="text-[10px] text-slate-600 space-y-0.5 list-disc list-inside">
+                              {c.rules_applied!.map((r, i) => (
+                                <li key={`${c.code}-r-${i}`}>{r}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
                     </li>
                   ))}
                 </ul>
               )}
-              {row.accept_reason && (
+              {row.accept_reason && !row.skipped && (
                 <p className="text-xs text-green-700 mt-1">✓ {row.accept_reason}</p>
               )}
             </div>

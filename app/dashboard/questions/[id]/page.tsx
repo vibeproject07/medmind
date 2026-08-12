@@ -2,11 +2,13 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { ArrowLeft, Edit, Image as ImageIcon, X, AlertTriangle, Ban, RotateCcw, Sparkles, Brain, ExternalLink, Loader2, Cpu } from 'lucide-react';
+import { ArrowLeft, Edit, Image as ImageIcon, X, AlertTriangle, Ban, RotateCcw, Sparkles, Brain, ExternalLink, Loader2, Cpu, ShieldCheck, Plus } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import DeCSAutocomplete from '@/components/Common/DeCSAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
 import DeCSPipelineTracePanel, { type DeCSPipelineExposurePayload } from '@/components/Dashboard/DeCSPipelineTracePanel';
+import QuestionHabilitiesSection from '@/components/Dashboard/QuestionHabilitiesSection';
+import QuestionThemesAssignSection from '@/components/Dashboard/QuestionThemesAssignSection';
 import {
   ASSUNTOS_BY_AREA,
   toDisplayArea,
@@ -45,8 +47,12 @@ interface Question {
   anulada?: boolean;
   decs_terms?: string[];
   ai_decs_descriptors?: DeCSRecord[];
-  competencias?: CompetenciasResult | null;
-  temas?: TemasResult | null;
+  ai_habilities?: {
+    competencias: Array<{ competencia: string; conteudos: string[] }>;
+  } | null;
+  ai_question_themes?: {
+    temas: Array<{ tema: string; subtemas: string[] }>;
+  } | null;
   created_at: string;
   updated_at: string;
 }
@@ -65,6 +71,7 @@ interface DeCSRecord {
   role?: 'primary' | 'secondary';
   scope_note?: string;
   name_en?: string;
+  search_method?: 'text' | 'vector' | 'bvs';
 }
 
 interface DeCSV2Descriptor {
@@ -84,17 +91,25 @@ interface DeCSV2Result {
   decs_secondary: DeCSV2Descriptor[];
 }
 
-interface CompetenciasResult {
-  competencias: string[];
-  habilidades: string[];
-  nivel_cognitivo: string;
-  dominio: string;
+interface DecsValidationItem {
+  code: string;
+  term: string;
+  coerencia: number;
+  aprovado: boolean;
+  motivo: string;
+  search_method?: 'text' | 'vector' | 'bvs';
 }
 
-interface TemasResult {
-  temas: string[];
-  subtemas: string[];
-  tema_principal: string;
+interface DecsValidationResult {
+  coerencia_geral: number;
+  approved: DeCSRecord[];
+  rejected: DeCSRecord[];
+  items: DecsValidationItem[];
+  candidates_considered?: number;
+  skipped_textual?: number;
+  needs_manual_review?: boolean;
+  review_reason?: string;
+  is_coherent?: boolean;
 }
 
 interface SimilarQuestion {
@@ -143,10 +158,11 @@ export default function QuestionDetailPage() {
   const [aiDecsV2Error, setAiDecsV2Error] = useState<string | null>(null);
   const [aiDecsV2Result, setAiDecsV2Result] = useState<DeCSV2Result | null>(null);
   const [showDecsV2, setShowDecsV2] = useState(false);
-  const [habilitiesLoading, setHabilitiesLoading] = useState(false);
-  const [habilitiesError, setHabilitiesError] = useState<string | null>(null);
-  const [temasLoading, setTemasLoading] = useState(false);
-  const [temasError, setTemasError] = useState<string | null>(null);
+  const [aiDecsThemes, setAiDecsThemes] = useState<{ primary: string[]; secondary: string[] } | null>(null);
+  const [decsValidationLoading, setDecsValidationLoading] = useState(false);
+  const [decsValidationError, setDecsValidationError] = useState<string | null>(null);
+  const [decsValidationResult, setDecsValidationResult] = useState<DecsValidationResult | null>(null);
+  const [addingDecsCode, setAddingDecsCode] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [similarQuestions, setSimilarQuestions] = useState<SimilarQuestion[]>([]);
@@ -198,6 +214,7 @@ export default function QuestionDetailPage() {
 
   useEffect(() => {
     if (questionId) {
+      setAiDecsPipelineExposure(null);
       fetchQuestion();
     }
   }, [questionId]);
@@ -279,51 +296,6 @@ export default function QuestionDetailPage() {
     }
   };
 
-  const handleGenerateTemas = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) return;
-    setTemasLoading(true);
-    setTemasError(null);
-    try {
-      const res = await fetch(`/api/questions/${questionId}/themes`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setTemasError(data.error || 'Erro ao gerar temas.');
-        return;
-      }
-      setQuestion((prev) => prev ? { ...prev, temas: data.result } : prev);
-    } catch {
-      setTemasError('Erro ao conectar com o servidor.');
-    } finally {
-      setTemasLoading(false);
-    }
-  };
-
-  const handleGenerateHabilities = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) return;
-    setHabilitiesLoading(true);
-    setHabilitiesError(null);
-    try {
-      const res = await fetch(`/api/questions/${questionId}/habilities`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setHabilitiesError(data.error || 'Erro ao gerar competências.');
-        return;
-      }
-      setQuestion((prev) => prev ? { ...prev, competencias: data.result } : prev);
-    } catch {
-      setHabilitiesError('Erro ao conectar com o servidor.');
-    } finally {
-      setHabilitiesLoading(false);
-    }
-  };
 
   // Ajustar resposta correta quando alternativas opcionais são removidas durante edição
   useEffect(() => {
@@ -570,10 +542,59 @@ export default function QuestionDetailPage() {
     }
   };
 
+  const runDecsValidation = async (themesOverride?: {
+    primary: string[];
+    secondary: string[];
+  } | null) => {
+    setDecsValidationLoading(true);
+    setDecsValidationError(null);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const themesPayload = themesOverride ?? aiDecsThemes;
+      const res = await fetch(`/api/questions/${questionId}/decs-validate`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(themesPayload ? { themes: themesPayload } : {}),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setDecsValidationError(data.error || 'Erro na validação.');
+        return;
+      }
+      setDecsValidationResult({
+        coerencia_geral: data.coerencia_geral ?? data.result?.coerencia_geral ?? 0,
+        approved: data.approved ?? data.result?.approved ?? [],
+        rejected: data.rejected ?? data.result?.rejected ?? [],
+        items: data.items ?? data.result?.items ?? [],
+        candidates_considered: data.result?.candidates_considered,
+        skipped_textual: data.result?.skipped_textual,
+        needs_manual_review: data.result?.needs_manual_review,
+        review_reason: data.result?.review_reason,
+        is_coherent: data.result?.is_coherent,
+      });
+      // Resultado final V1 já sem reprovados (persistido no servidor)
+      if (Array.isArray(data.ai_decs_descriptors)) {
+        setQuestion((prev) =>
+          prev ? { ...prev, ai_decs_descriptors: data.ai_decs_descriptors } : prev,
+        );
+      }
+    } catch {
+      setDecsValidationError('Erro ao conectar com o servidor.');
+    } finally {
+      setDecsValidationLoading(false);
+    }
+  };
+
   const handleGenerateAiDecs = async () => {
     if (!question) return;
     setAiDecsLoading(true);
     setAiDecsError(null);
+    setDecsValidationResult(null);
+    setDecsValidationError(null);
     try {
       const token = localStorage.getItem('token');
       if (!token) return;
@@ -586,14 +607,78 @@ export default function QuestionDetailPage() {
         setAiDecsError(data.error || 'Erro ao gerar descritores IA.');
         return;
       }
+      const descriptors = data.result ?? data.descriptors ?? [];
+      const themes = data.themes_identified ?? null;
       setQuestion((prev) =>
-        prev ? { ...prev, ai_decs_descriptors: data.result } : prev
+        prev ? { ...prev, ai_decs_descriptors: descriptors } : prev
       );
       setAiDecsPipelineExposure(data.pipeline_exposure ?? null);
+      if (themes) {
+        setAiDecsThemes(themes);
+      }
+
+      // Sequência automática: após V1, inicia validação sem clique extra
+      if (Array.isArray(descriptors) && descriptors.length > 0) {
+        setAiDecsLoading(false);
+        await runDecsValidation(themes);
+        return;
+      }
     } catch {
       setAiDecsError('Erro ao conectar com o servidor.');
     } finally {
       setAiDecsLoading(false);
+    }
+  };
+
+  const handleValidateAiDecs = async () => {
+    if (!question) return;
+    const hasV1 = (question.ai_decs_descriptors ?? []).length > 0;
+    if (!hasV1) {
+      setDecsValidationError('Execute "Gerar v1" antes de validar.');
+      return;
+    }
+    await runDecsValidation();
+  };
+
+  const handleAddValidatedDecs = async (code: string) => {
+    if (!question || !decsValidationResult) return;
+    const current = question.ai_decs_descriptors ?? [];
+    if (current.some((d) => d.code === code)) return;
+
+    const fromApproved = decsValidationResult.approved.find((d) => d.code === code);
+    const fromRejected = decsValidationResult.rejected.find((d) => d.code === code);
+    const record = fromApproved ?? fromRejected;
+    if (!record) {
+      setDecsValidationError('Descritor não encontrado nos resultados da validação.');
+      return;
+    }
+
+    const next = [...current, record];
+    setAddingDecsCode(code);
+    setDecsValidationError(null);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const res = await fetch(`/api/questions/${questionId}`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ai_decs_descriptors: next }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setDecsValidationError(data.error || 'Erro ao adicionar descritor.');
+        return;
+      }
+      setQuestion((prev) =>
+        prev ? { ...prev, ai_decs_descriptors: next } : prev,
+      );
+    } catch {
+      setDecsValidationError('Erro ao conectar com o servidor ao adicionar descritor.');
+    } finally {
+      setAddingDecsCode(null);
     }
   };
 
@@ -1311,11 +1396,28 @@ export default function QuestionDetailPage() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleGenerateAiDecs}
-                  disabled={aiDecsLoading}
+                  disabled={aiDecsLoading || decsValidationLoading}
                   className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition"
                 >
                   <Sparkles className="h-3.5 w-3.5" />
-                  {aiDecsLoading ? 'Gerando…' : 'Gerar v1'}
+                  {aiDecsLoading
+                    ? 'Gerando…'
+                    : decsValidationLoading
+                      ? 'Validando…'
+                      : 'Gerar v1'}
+                </button>
+                <button
+                  onClick={handleValidateAiDecs}
+                  disabled={
+                    decsValidationLoading ||
+                    aiDecsLoading ||
+                    (question.ai_decs_descriptors ?? []).length === 0
+                  }
+                  title="Reexecuta a validação (já roda automaticamente após Gerar v1)"
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 transition"
+                >
+                  <ShieldCheck className="h-3.5 w-3.5" />
+                  {decsValidationLoading ? 'Validando…' : 'Validação'}
                 </button>
                 <button
                   onClick={handleGenerateAiDecsV2}
@@ -1333,15 +1435,158 @@ export default function QuestionDetailPage() {
           {/* Erros */}
           {aiDecsError && <p className="text-red-500 text-sm mb-3">{aiDecsError}</p>}
           {aiDecsV2Error && <p className="text-red-500 text-sm mb-3">{aiDecsV2Error}</p>}
+          {decsValidationError && <p className="text-red-500 text-sm mb-3">{decsValidationError}</p>}
 
           <DeCSPipelineTracePanel exposure={aiDecsPipelineExposure} />
 
           {/* Loading states */}
-          {(aiDecsLoading || aiDecsV2Loading) && (
+          {(aiDecsLoading || aiDecsV2Loading || decsValidationLoading) && (
             <p className="text-sm text-indigo-500 italic mb-3">
               {aiDecsLoading && 'Executando pipeline v1…'}
               {aiDecsV2Loading && 'Executando pipeline v2 (RAG)…'}
+              {decsValidationLoading && 'Executando question_terms_validator…'}
             </p>
+          )}
+
+          {/* Resultado da validação */}
+          {decsValidationResult && (
+            <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50/60 p-4 space-y-3">
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="h-4 w-4 text-amber-700" />
+                  <h4 className="text-sm font-semibold text-amber-900">Validação — question_terms_validator</h4>
+                </div>
+                <span
+                  className={`inline-flex items-center px-2.5 py-1 rounded-full text-sm font-bold ${
+                    decsValidationResult.coerencia_geral >= 70
+                      ? 'bg-emerald-100 text-emerald-800'
+                      : decsValidationResult.coerencia_geral >= 40
+                        ? 'bg-amber-100 text-amber-900'
+                        : 'bg-red-100 text-red-800'
+                  }`}
+                >
+                  Coerência geral: {decsValidationResult.coerencia_geral}%
+                </span>
+                <span className="text-xs text-amber-800/80">
+                  {decsValidationResult.approved.length} aprovado(s) · {decsValidationResult.rejected.length} rejeitado(s)
+                  {decsValidationResult.rejected.length > 0
+                    ? ' · rejeitados removidos do resultado V1'
+                    : ''}
+                  {decsValidationResult.skipped_textual
+                    ? ` · ${decsValidationResult.skipped_textual} textual(is) mantido(s)`
+                    : ''}
+                  {decsValidationResult.is_coherent === true
+                    ? ' · coerente'
+                    : decsValidationResult.is_coherent === false
+                      ? ' · incoerente'
+                      : ''}
+                </span>
+              </div>
+
+              {decsValidationResult.needs_manual_review && (
+                <p className="text-sm text-amber-900 bg-amber-100/80 border border-amber-200 rounded-md px-3 py-2">
+                  Revisão manual sugerida
+                  {decsValidationResult.review_reason
+                    ? `: ${decsValidationResult.review_reason}`
+                    : '.'}
+                </p>
+              )}
+
+              {/* Barra visual */}
+              <div className="w-full h-2 rounded-full bg-amber-100 overflow-hidden">
+                <div
+                  className={`h-full transition-all ${
+                    decsValidationResult.coerencia_geral >= 70
+                      ? 'bg-emerald-500'
+                      : decsValidationResult.coerencia_geral >= 40
+                        ? 'bg-amber-500'
+                        : 'bg-red-500'
+                  }`}
+                  style={{ width: `${decsValidationResult.coerencia_geral}%` }}
+                />
+              </div>
+
+              {decsValidationResult.items.length > 0 && (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm border-collapse">
+                    <thead>
+                      <tr className="bg-white/70 text-left">
+                        <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800">Termo</th>
+                        <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800">Código</th>
+                        <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800">Origem</th>
+                        <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800">Coerência</th>
+                        <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800">Status</th>
+                        <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800">Motivo</th>
+                        <th className="px-2 py-1.5 border border-amber-100 text-xs font-semibold text-amber-800 w-28">Ação</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {decsValidationResult.items.map((item) => {
+                        const alreadyInResult = (question.ai_decs_descriptors ?? []).some(
+                          (d) => d.code === item.code,
+                        );
+                        return (
+                        <tr key={item.code} className="align-top bg-white/40">
+                          <td className="px-2 py-1.5 border border-amber-100 font-medium text-gray-800">{item.term}</td>
+                          <td className="px-2 py-1.5 border border-amber-100 font-mono text-xs text-gray-500">{item.code}</td>
+                          <td className="px-2 py-1.5 border border-amber-100 text-xs text-gray-600">
+                            {item.search_method === 'bvs'
+                              ? 'API BVS'
+                              : item.search_method === 'vector'
+                                ? 'Vetorial'
+                                : item.search_method === 'text'
+                                  ? 'Textual'
+                                  : '—'}
+                          </td>
+                          <td className="px-2 py-1.5 border border-amber-100">
+                            <span className="font-semibold text-amber-900">{item.coerencia}%</span>
+                          </td>
+                          <td className="px-2 py-1.5 border border-amber-100">
+                            <span
+                              className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${
+                                item.aprovado
+                                  ? 'bg-emerald-100 text-emerald-800'
+                                  : 'bg-red-100 text-red-700'
+                              }`}
+                            >
+                              {item.aprovado
+                                ? 'Aprovado'
+                                : alreadyInResult
+                                  ? 'Rejeitado (reinserido)'
+                                  : 'Rejeitado (removido)'}
+                            </span>
+                          </td>
+                          <td className="px-2 py-1.5 border border-amber-100 text-xs text-gray-600">
+                            {item.motivo || '—'}
+                          </td>
+                          <td className="px-2 py-1.5 border border-amber-100">
+                            <button
+                              type="button"
+                              onClick={() => handleAddValidatedDecs(item.code)}
+                              disabled={alreadyInResult || addingDecsCode === item.code}
+                              title={
+                                alreadyInResult
+                                  ? 'Já está no resultado V1'
+                                  : 'Adicionar ao resultado final V1'
+                              }
+                              className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-md hover:bg-emerald-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                              {addingDecsCode === item.code ? (
+                                <Loader2 className="h-3 w-3 animate-spin" />
+                              ) : (
+                                <Plus className="h-3 w-3" />
+                              )}
+                              {alreadyInResult ? 'No resultado' : 'Adicionar'}
+                            </button>
+                          </td>
+                        </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
           )}
 
           {/* Tabela comparativa — aparece sempre que ao menos um pipeline tem dados */}
@@ -1494,156 +1739,22 @@ export default function QuestionDetailPage() {
         </div>
       )}
 
-      {/* Competências e Habilidades — IA */}
+      {/* Competências e conteúdos — IA */}
       {isAdmin && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <Brain className="h-4 w-4 text-amber-500" />
-              <h3 className="text-lg font-semibold text-gray-800">Competências e Habilidades</h3>
-              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">gerado por IA</span>
-            </div>
-            {!isEditing && (
-              <button
-                onClick={handleGenerateHabilities}
-                disabled={habilitiesLoading}
-                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 transition"
-              >
-                <Sparkles className="h-3.5 w-3.5" />
-                {habilitiesLoading ? 'Gerando…' : 'Gerar com IA'}
-              </button>
-            )}
-          </div>
-
-          {habilitiesError && <p className="text-red-500 text-sm mb-3">{habilitiesError}</p>}
-          {habilitiesLoading && (
-            <p className="text-sm text-amber-500 italic mb-3">Analisando competências…</p>
-          )}
-
-          {question.competencias ? (
-            <div className="space-y-4">
-              {question.competencias.dominio && (
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">Domínio</span>
-                  <span className="px-3 py-1 text-sm font-medium bg-amber-100 text-amber-800 rounded-full">
-                    {question.competencias.dominio}
-                  </span>
-                  {question.competencias.nivel_cognitivo && (
-                    <span className="px-3 py-1 text-sm font-medium bg-blue-100 text-blue-800 rounded-full">
-                      Bloom: {question.competencias.nivel_cognitivo}
-                    </span>
-                  )}
-                </div>
-              )}
-
-              {question.competencias.competencias.length > 0 && (
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Competências</p>
-                  <div className="flex flex-wrap gap-2">
-                    {question.competencias.competencias.map((c, i) => (
-                      <span key={i} className="inline-block px-3 py-1 text-sm font-medium bg-amber-50 border border-amber-200 text-amber-800 rounded-full">
-                        {c}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {question.competencias.habilidades.length > 0 && (
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Habilidades</p>
-                  <ul className="space-y-1">
-                    {question.competencias.habilidades.map((h, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
-                        <span className="mt-1 h-1.5 w-1.5 rounded-full bg-amber-400 flex-shrink-0" />
-                        {h}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          ) : (
-            !habilitiesLoading && (
-              <p className="text-gray-400 italic text-sm">
-                Nenhuma competência gerada ainda. Clique em &quot;Gerar com IA&quot; para classificar esta questão.
-              </p>
-            )
-          )}
-        </div>
+        <QuestionHabilitiesSection
+          questionId={questionId}
+          isAdmin={isAdmin}
+          initialResult={question.ai_habilities ?? null}
+        />
       )}
 
-      {/* Temas e Subtemas — IA */}
+      {/* Temas e subtemas — IA */}
       {isAdmin && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-teal-500" />
-              <h3 className="text-lg font-semibold text-gray-800">Temas e Subtemas</h3>
-              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">gerado por IA</span>
-            </div>
-            {!isEditing && (
-              <button
-                onClick={handleGenerateTemas}
-                disabled={temasLoading}
-                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-teal-600 text-white rounded-lg hover:bg-teal-700 disabled:opacity-50 transition"
-              >
-                <Sparkles className="h-3.5 w-3.5" />
-                {temasLoading ? 'Gerando…' : 'Gerar com IA'}
-              </button>
-            )}
-          </div>
-
-          {temasError && <p className="text-red-500 text-sm mb-3">{temasError}</p>}
-          {temasLoading && (
-            <p className="text-sm text-teal-500 italic mb-3">Identificando temas e subtemas…</p>
-          )}
-
-          {question.temas ? (
-            <div className="space-y-4">
-              {question.temas.tema_principal && (
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">Tema Principal</span>
-                  <span className="px-3 py-1 text-sm font-semibold bg-teal-600 text-white rounded-full">
-                    {question.temas.tema_principal}
-                  </span>
-                </div>
-              )}
-
-              {question.temas.temas.length > 0 && (
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Temas</p>
-                  <div className="flex flex-wrap gap-2">
-                    {question.temas.temas.map((t, i) => (
-                      <span key={i} className="inline-block px-3 py-1 text-sm font-medium bg-teal-50 border border-teal-200 text-teal-800 rounded-full">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {question.temas.subtemas.length > 0 && (
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Subtemas</p>
-                  <div className="flex flex-wrap gap-2">
-                    {question.temas.subtemas.map((s, i) => (
-                      <span key={i} className="inline-block px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200 rounded-full">
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          ) : (
-            !temasLoading && (
-              <p className="text-gray-400 italic text-sm">
-                Nenhum tema gerado ainda. Clique em &quot;Gerar com IA&quot; para classificar esta questão.
-              </p>
-            )
-          )}
-        </div>
+        <QuestionThemesAssignSection
+          questionId={questionId}
+          isAdmin={isAdmin}
+          initialResult={question.ai_question_themes ?? null}
+        />
       )}
 
       {/* Questões Similares (via pgvector) */}

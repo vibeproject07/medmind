@@ -52,11 +52,10 @@ export async function getRuntimeAgent(key: string): Promise<RuntimeAgent> {
   }
 
   const row = res.rows[0] as Record<string, unknown>;
-  //const system_instruction = resolveSystemInstruction({
-  //  system_instruction: row.system_instruction as string | null,
-  //  system_prompt: row.system_prompt as string | null,
-  //});
-  const system_instruction = row.system_prompt;
+  const system_instruction = resolveSystemInstruction({
+    system_instruction: row.system_instruction as string | null,
+    system_prompt: row.system_prompt as string | null,
+  });
   if (!system_instruction) {
     throw new Error(
       `Agente "${key}" existe em ai_agents mas system_instruction e system_prompt estão vazios.`,

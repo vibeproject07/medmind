@@ -222,10 +222,10 @@ async function ensureColumns() {
 }
 
 async function loadAgentsFromDb() {
-  const map = await loadRuntimeAgents(pool, ['decs_classifier', 'decs_validator']);
+  const map = await loadRuntimeAgents(pool, ['decs_classifier', 'question_terms_validator']);
   classifierAgent = map.get('decs_classifier');
-  validatorAgent = map.get('decs_validator');
-  console.log(`Agentes DB: decs_classifier (${classifierAgent.model}), decs_validator (${validatorAgent.model})`);
+  validatorAgent = map.get('question_terms_validator');
+  console.log(`Agentes DB: decs_classifier (${classifierAgent.model}), question_terms_validator (${validatorAgent.model})`);
 }
 
 let localDeCSAvailable = null;
@@ -486,6 +486,7 @@ async function runDeCSPipeline(themes, questionText) {
 }
 
 function buildQuestionText(q) {
+  const letter = String(q.correct_answer ?? '').trim().toUpperCase();
   return [
     'Enunciado:',
     q.statement,
@@ -495,6 +496,7 @@ function buildQuestionText(q) {
     q.option_c ? 'Alternativa C: ' + q.option_c : null,
     q.option_d ? 'Alternativa D: ' + q.option_d : null,
     q.option_e ? 'Alternativa E: ' + q.option_e : null,
+    letter ? `Gabarito: ${letter}` : null,
   ]
     .filter(Boolean)
     .join('\n');
@@ -583,7 +585,7 @@ async function fetchQuestionBatch() {
   const lim = params.length - 1;
   const off = params.length;
   const sql = `
-    SELECT id, statement, option_a, option_b, option_c, option_d, option_e, created_at
+    SELECT id, statement, option_a, option_b, option_c, option_d, option_e, correct_answer, created_at
     FROM questions
     ${whereClause}
     ORDER BY created_at DESC NULLS LAST, id DESC
@@ -602,7 +604,7 @@ async function processOneQuestion(q, index, total) {
     return { ok: false, reason: 'no_classifier_prompt' };
   }
   if (!validatorAgent.system_instruction?.trim()) {
-    console.log(`${label} ✗ Agente decs_validator sem system_instruction/system_prompt no banco`);
+    console.log(`${label} ✗ Agente question_terms_validator sem system_instruction/system_prompt no banco`);
     return { ok: false, reason: 'no_validator_prompt' };
   }
 

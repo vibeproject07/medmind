@@ -20,6 +20,8 @@ import {
   ScanSearch,
   DatabaseZap,
   ImagePlus,
+  Target,
+  Layers,
 } from 'lucide-react';
 import { useSidebar } from '@/contexts/SidebarContext';
 
@@ -66,6 +68,8 @@ export default function Sidebar() {
     { href: '/dashboard/admin/decs-diagnose', icon: ScanSearch, label: 'Diagnóstico DeCS', roles: ['admin'] as UserRole[] },
     { href: '/dashboard/admin/query', icon: DatabaseZap, label: 'Consulta Questões', roles: ['admin'] as UserRole[] },
     { href: '/dashboard/admin/images', icon: ImagePlus, label: 'Upload de Imagens', roles: ['admin'] as UserRole[] },
+    { href: '/dashboard/admin/competencias', icon: Target, label: 'Competências e conteúdos', roles: ['admin'] as UserRole[] },
+    { href: '/dashboard/admin/temas', icon: Layers, label: 'Temas e Subtemas', roles: ['admin'] as UserRole[] },
   ];
 
   const getMenuItems = () => {

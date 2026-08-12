@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireAdmin, getAuthUser } from '@/lib/api-auth';
 import { query } from '@/lib/db';
 import { ensureTaxonomyTables } from '@/lib/taxonomy-schema';
-import { classifyQuestionHabilities } from '@/lib/taxonomy-agents';
+import { classifyQuestionThemes } from '@/lib/taxonomy-agents';
 
 export const runtime = 'nodejs';
 
@@ -17,13 +17,14 @@ export async function GET(
 
   try {
     await ensureTaxonomyTables();
-    const res = await query(`SELECT ai_habilities FROM questions WHERE id = $1`, [
-      params.id,
-    ]);
+    const res = await query(
+      `SELECT ai_question_themes FROM questions WHERE id = $1`,
+      [params.id],
+    );
     if (!res.rows[0]) {
       return NextResponse.json({ error: 'Questão não encontrada' }, { status: 404 });
     }
-    const raw = res.rows[0].ai_habilities as string | null;
+    const raw = res.rows[0].ai_question_themes as string | null;
     let result = null;
     if (raw) {
       try {
@@ -53,14 +54,14 @@ export async function POST(
       return NextResponse.json({ error: 'Questão não encontrada' }, { status: 404 });
     }
 
-    const { result, pendingInserted } = await classifyQuestionHabilities(
+    const { result, pendingInserted } = await classifyQuestionThemes(
       qRes.rows[0] as Record<string, unknown>,
     );
 
     return NextResponse.json({
       result,
       pending_inserted: pendingInserted,
-      agent: 'habilities_agent',
+      agent: 'question_themes_assigner',
     });
   } catch (e) {
     const message = e instanceof Error ? e.message : 'Erro na classificação';

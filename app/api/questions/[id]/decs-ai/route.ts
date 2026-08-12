@@ -5,11 +5,38 @@ import { getRuntimeAgent } from '@/lib/ai-agent-runtime';
 import { GoogleGenAI } from '@google/genai';
 import { runDeCSPipeline, buildPipelineFrontendExposure, type DeCSRecord, type DeCSThemes } from '@/lib/decs-pipeline';
 import { saveClassificationArtifact } from '@/lib/decs-classification-storage';
+import { buildGeminiSdkUserParts } from '@/lib/gemini-question-images';
 
 export const runtime = 'nodejs';
 
 async function ensureColumn() {
   await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_decs_descriptors TEXT`);
+}
+
+/** Monta o texto da questão para o classificador DeCS, incluindo gabarito quando houver. */
+function buildDeCSQuestionText(q: {
+  statement?: string | null;
+  option_a?: string | null;
+  option_b?: string | null;
+  option_c?: string | null;
+  option_d?: string | null;
+  option_e?: string | null;
+  correct_answer?: string | null;
+}): string {
+  const letter = String(q.correct_answer ?? '').trim().toUpperCase();
+  return [
+    'Enunciado:',
+    q.statement ?? '',
+    '',
+    'Alternativa A: ' + (q.option_a ?? ''),
+    'Alternativa B: ' + (q.option_b ?? ''),
+    q.option_c ? 'Alternativa C: ' + q.option_c : null,
+    q.option_d ? 'Alternativa D: ' + q.option_d : null,
+    q.option_e ? 'Alternativa E: ' + q.option_e : null,
+    letter ? `Gabarito: ${letter}` : null,
+  ]
+    .filter(Boolean)
+    .join('\n');
 }
 
 export async function POST(
@@ -41,26 +68,28 @@ export async function POST(
     }
     const question = qRes.rows[0] as Record<string, unknown>;
 
-    const questionText = [
-      'Enunciado:',
-      question.statement as string,
-      '',
-      'Alternativa A: ' + (question.option_a as string),
-      'Alternativa B: ' + (question.option_b as string),
-      question.option_c ? 'Alternativa C: ' + (question.option_c as string) : null,
-      question.option_d ? 'Alternativa D: ' + (question.option_d as string) : null,
-      question.option_e ? 'Alternativa E: ' + (question.option_e as string) : null,
-    ]
-      .filter(Boolean)
-      .join('\n');
+    const questionText = buildDeCSQuestionText({
+      statement: question.statement as string,
+      option_a: question.option_a as string,
+      option_b: question.option_b as string,
+      option_c: question.option_c as string | null,
+      option_d: question.option_d as string | null,
+      option_e: question.option_e as string | null,
+      correct_answer: question.correct_answer as string | null,
+    });
 
     // decs_validator desativado em 18/06/2026 — validação Gemini removida do pipeline V1
     const classifierAgent = await getRuntimeAgent('decs_classifier');
 
+    const classifierParts = buildGeminiSdkUserParts(
+      questionText,
+      question.images,
+    );
+
     const ai = new GoogleGenAI({ apiKey: geminiKey, apiVersion: 'v1beta' });
     const response = await ai.models.generateContent({
       model: classifierAgent.model,
-      contents: [{ role: 'user', parts: [{ text: questionText }] }],
+      contents: [{ role: 'user', parts: classifierParts }],
       config: {
         systemInstruction: classifierAgent.system_instruction,
         temperature: classifierAgent.temperature,
@@ -162,7 +191,14 @@ export async function GET(
       return NextResponse.json({ error: 'Questão não encontrada' }, { status: 404 });
     }
     const raw = qRes.rows[0].ai_decs_descriptors as string | null;
-    const descriptors: DeCSRecord[] = raw ? JSON.parse(raw) : [];
+    let descriptors: DeCSRecord[] = [];
+    if (raw) {
+      try {
+        descriptors = JSON.parse(raw);
+      } catch {
+        descriptors = [];
+      }
+    }
     return NextResponse.json({ descriptors });
   } catch (err: unknown) {
     console.error('[decs-ai] GET error:', err);

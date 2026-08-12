@@ -1,24 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
-import { getRuntimeAgent } from '@/lib/ai-agent-runtime';
-import { GoogleGenAI } from '@google/genai';
+import { classifyQuestionThemes } from '@/lib/taxonomy-agents';
 
 export const runtime = 'nodejs';
 
-async function ensureColumn() {
-  await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS temas TEXT`);
-}
-
-export interface TemasResult {
-  temas: string[];
-  subtemas: string[];
-  tema_principal: string;
-}
-
+/**
+ * Legado: POST /themes.
+ * Agora delega para o fluxo canônico (themes_catalog + ai_question_themes)
+ * e ainda espelha um resumo flat em questions.temas para compatibilidade.
+ */
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const authHeader = req.headers.get('authorization');
   let token = authHeader?.replace('Bearer ', '') || req.cookies.get('token')?.value;
@@ -27,85 +21,51 @@ export async function POST(
 
   const user = verifyToken(token);
   if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
-  if (user.role !== 'admin')
-    return NextResponse.json({ error: 'Apenas administradores podem executar este agente' }, { status: 403 });
-
-  const geminiKey = (process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY)?.trim();
-  if (!geminiKey) return NextResponse.json({ error: 'GEMINI_API_KEY não configurada' }, { status: 500 });
+  if (user.role !== 'admin') {
+    return NextResponse.json(
+      { error: 'Apenas administradores podem executar este agente' },
+      { status: 403 },
+    );
+  }
 
   try {
-    await ensureColumn();
+    await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS temas TEXT`);
+    await query(
+      `ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_question_themes TEXT`,
+    );
 
     const qRes = await query('SELECT * FROM questions WHERE id = $1', [params.id]);
     if (qRes.rows.length === 0) {
       return NextResponse.json({ error: 'Questão não encontrada' }, { status: 404 });
     }
-    const question = qRes.rows[0] as Record<string, unknown>;
 
-    const questionText = [
-      'Enunciado:',
-      question.statement as string,
-      '',
-      'Alternativa A: ' + (question.option_a as string),
-      'Alternativa B: ' + (question.option_b as string),
-      question.option_c ? 'Alternativa C: ' + (question.option_c as string) : null,
-      question.option_d ? 'Alternativa D: ' + (question.option_d as string) : null,
-      question.option_e ? 'Alternativa E: ' + (question.option_e as string) : null,
-    ]
-      .filter(Boolean)
-      .join('\n');
+    const { result, pendingInserted } = await classifyQuestionThemes(qRes.rows[0]);
 
-    const agent = await getRuntimeAgent('question_themes_assigner');
-
-    const ai = new GoogleGenAI({ apiKey: geminiKey, apiVersion: 'v1beta' });
-    const response = await ai.models.generateContent({
-      model: agent.model,
-      contents: [{ role: 'user', parts: [{ text: questionText }] }],
-      config: {
-        systemInstruction: agent.system_instruction,
-        temperature: agent.temperature,
-        maxOutputTokens: agent.max_output_tokens,
-        responseMimeType: 'application/json',
-      },
-    });
-
-    const resp = response as any;
-    const rawText: string =
-      (typeof resp?.text === 'string' ? resp.text : '') ||
-      (resp?.candidates?.[0]?.content?.parts
-        ?.map((p: Record<string, unknown>) => p?.text)
-        .filter(Boolean)
-        .join('') ?? '');
-
-    let result: TemasResult = { temas: [], subtemas: [], tema_principal: '' };
-
-    try {
-      const cleaned = rawText.trim().replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
-      const parsed = JSON.parse(cleaned);
-      result = {
-        temas: Array.isArray(parsed.temas)
-          ? parsed.temas.filter((t: unknown) => typeof t === 'string')
-          : [],
-        subtemas: Array.isArray(parsed.subtemas)
-          ? parsed.subtemas.filter((s: unknown) => typeof s === 'string')
-          : [],
-        tema_principal: typeof parsed.tema_principal === 'string' ? parsed.tema_principal : '',
-      };
-    } catch {
-      return NextResponse.json(
-        { error: 'Resposta do agente não pôde ser interpretada como JSON.' },
-        { status: 422 }
-      );
-    }
+    const flat = {
+      temas: result.temas.map((t) => t.tema),
+      subtemas: result.temas.flatMap((t) => t.subtemas),
+      tema_principal:
+        result.tema_principal ||
+        result.temas.find((t) => t.principal)?.tema ||
+        result.temas[0]?.tema ||
+        '',
+    };
 
     await query(
-      'UPDATE questions SET temas = $1, updated_at = NOW() WHERE id = $2',
-      [JSON.stringify(result), params.id]
+      `UPDATE questions SET temas = $1, updated_at = NOW() WHERE id = $2`,
+      [JSON.stringify(flat), params.id],
     );
 
-    return NextResponse.json({ result });
+    return NextResponse.json({
+      result: flat,
+      ai_question_themes: result,
+      pending_inserted: pendingInserted,
+      deprecated: true,
+      message:
+        'Rota /themes é legado; use /themes-assign. Resultado canônico em ai_question_themes.',
+    });
   } catch (err: unknown) {
-    console.error('[themes] error:', err);
+    console.error('[themes legacy] error:', err);
     const message = err instanceof Error ? err.message : 'Erro interno';
     return NextResponse.json({ error: message }, { status: 500 });
   }
@@ -113,27 +73,36 @@ export async function POST(
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   const authHeader = req.headers.get('authorization');
   let token = authHeader?.replace('Bearer ', '') || req.cookies.get('token')?.value;
   if (token) token = token.trim().replace(/^["']|["']$/g, '');
   if (!token) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
-
-  const user = verifyToken(token);
-  if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
+  if (!verifyToken(token)) {
+    return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
+  }
 
   try {
-    await ensureColumn();
-    const qRes = await query('SELECT temas FROM questions WHERE id = $1', [params.id]);
-    if (qRes.rows.length === 0) {
+    const res = await query(
+      `SELECT temas, ai_question_themes FROM questions WHERE id = $1`,
+      [params.id],
+    );
+    if (!res.rows[0]) {
       return NextResponse.json({ error: 'Questão não encontrada' }, { status: 404 });
     }
-    const raw = qRes.rows[0].temas as string | null;
-    const result: TemasResult | null = raw ? JSON.parse(raw) : null;
+    let result = null;
+    const rawAi = res.rows[0].ai_question_themes as string | null;
+    const rawLegacy = res.rows[0].temas as string | null;
+    try {
+      if (rawAi) result = JSON.parse(rawAi);
+      else if (rawLegacy) result = JSON.parse(rawLegacy);
+    } catch {
+      result = null;
+    }
     return NextResponse.json({ result });
-  } catch (err: unknown) {
-    console.error('[themes] GET error:', err);
-    return NextResponse.json({ error: 'Erro interno' }, { status: 500 });
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({ error: 'Erro ao buscar temas' }, { status: 500 });
   }
 }

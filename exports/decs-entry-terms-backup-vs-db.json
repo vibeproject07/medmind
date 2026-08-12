@@ -1,0 +1,4213 @@
+{
+  "summary": {
+    "generated_at": "2026-07-15T17:37:32.581Z",
+    "backup_path": "/home/runner/workspace/backup_completo.sql",
+    "backup_descriptors": 35033,
+    "db_descriptors": 35033,
+    "only_in_backup": 0,
+    "only_in_db": 0,
+    "rows_with_entry_terms_diff": 34642,
+    "rows_with_only_scope_contamination_missing": 34629,
+    "rows_with_non_scope_terms_missing": 1,
+    "total_missing_terms_classified_as_scope": 34661,
+    "total_missing_terms_NOT_scope": 2,
+    "restored_rows": 0,
+    "restored_terms": 0,
+    "conclusion": "Atenção: 2 termo(s) em 1 descritor(es) estão no backup e não no DB, e NÃO foram classificados como scope_note. Revise o relatório; use --restore-other se quiser recolocá-los."
+  },
+  "top_other_losses": [
+    {
+      "ui": "D016490",
+      "name_pt": "Sistemas Integrados e Avançados de Gestão da Informação",
+      "backup_count": 13,
+      "db_count": 10,
+      "missing_total": 3,
+      "missing_as_scope": 1,
+      "missing_other": 2,
+      "added": 0,
+      "sample_missing_other": [
+        {
+          "length": 107,
+          "preview": "Sistemas Integrados e Avançados de Gestão da Informação[Integrated Advanced Information Management Systems]"
+        },
+        {
+          "length": 105,
+          "preview": "Sistemas Integrados de Gestão da Informação Acadêmica[Integrated Academic Information Management Systems]"
+        }
+      ],
+      "sample_missing_scope": [
+        {
+          "length": 1046,
+          "preview": "Um conceito desenvolvido em 1983 sob a égide e apoiado pela Biblioteca Nacional de Medicina (National Library of Medicine, EUA) sob o nome de Sistemas Integrado"
+        }
+      ]
+    }
+  ],
+  "top_scope_losses": [
+    {
+      "ui": "D006810",
+      "name_pt": "Fraturas do Úmero",
+      "backup_count": 12,
+      "db_count": 10,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 18,
+          "preview": "Fraturas do ÚMERO."
+        },
+        {
+          "length": 17,
+          "preview": "Fraturas do Úmero"
+        }
+      ]
+    },
+    {
+      "ui": "D000073863",
+      "name_pt": "Fumar Charutos",
+      "backup_count": 9,
+      "db_count": 7,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 25,
+          "preview": "Hábito de FUMAR CHARUTOS."
+        },
+        {
+          "length": 24,
+          "preview": "Hábito de Fumar Charutos"
+        }
+      ]
+    },
+    {
+      "ui": "D000074523",
+      "name_pt": "Neurônios do Núcleo Supraquiasmático",
+      "backup_count": 18,
+      "db_count": 16,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 37,
+          "preview": "Neurônios do NÚCLEO SUPRAQUIASMÁTICO."
+        },
+        {
+          "length": 36,
+          "preview": "Neurônios do Núcleo Supraquiasmático"
+        }
+      ]
+    },
+    {
+      "ui": "D000078563",
+      "name_pt": "Proteínas de Nozes",
+      "backup_count": 9,
+      "db_count": 7,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 19,
+          "preview": "Proteínas de NOZES."
+        },
+        {
+          "length": 18,
+          "preview": "Proteínas de Nozes"
+        }
+      ]
+    },
+    {
+      "ui": "D000607",
+      "name_pt": "Aminoacetonitrila",
+      "backup_count": 13,
+      "db_count": 11,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 16,
+          "preview": "Cianometilamina."
+        },
+        {
+          "length": 15,
+          "preview": "Cianometilamina"
+        }
+      ]
+    },
+    {
+      "ui": "D002949",
+      "name_pt": "Anidridos Citracônicos",
+      "backup_count": 18,
+      "db_count": 16,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 24,
+          "preview": "Anidridos metilmaleicos."
+        },
+        {
+          "length": 23,
+          "preview": "Anidridos Metilmaleicos"
+        }
+      ]
+    },
+    {
+      "ui": "D003316",
+      "name_pt": "Doenças da Córnea",
+      "backup_count": 9,
+      "db_count": 7,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 18,
+          "preview": "Doenças da córnea."
+        },
+        {
+          "length": 17,
+          "preview": "Doenças da Córnea"
+        }
+      ]
+    },
+    {
+      "ui": "D012944",
+      "name_pt": "Apoio Social",
+      "backup_count": 40,
+      "db_count": 38,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 321,
+          "preview": "Sistemas de apoio que fornecem assistência e encorajamento para os indivíduos com inaptidão física ou emocional para que eles possam melhor superá-la. O apoio s"
+        },
+        {
+          "length": 327,
+          "preview": "Sistemas de suporte que fornecem assistência e encorajamento para os indivíduos com inaptidão física ou emocional para que eles possam melhor superá-la. O apoio"
+        }
+      ]
+    },
+    {
+      "ui": "D004326",
+      "name_pt": "Ingestão de Líquidos",
+      "backup_count": 13,
+      "db_count": 11,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 20,
+          "preview": "Consumo de líquidos."
+        },
+        {
+          "length": 19,
+          "preview": "Consumo de Líquidos"
+        }
+      ]
+    },
+    {
+      "ui": "D005264",
+      "name_pt": "Fraturas do Fêmur",
+      "backup_count": 10,
+      "db_count": 8,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 18,
+          "preview": "Fraturas do fêmur."
+        },
+        {
+          "length": 17,
+          "preview": "Fraturas do Fêmur"
+        }
+      ]
+    },
+    {
+      "ui": "D029647",
+      "name_pt": "Turnera",
+      "backup_count": 10,
+      "db_count": 8,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 231,
+          "preview": "Gênero de plantas da família Passifloraceae. Turnera diffusa, cujo nome vulgar é Damiana, é também um medicamento homeopático de abreviação \"dam.\". Habitat orig"
+        },
+        {
+          "length": 198,
+          "preview": "Turnera diffusa, conhecida como damiana, também é um medicamento homeopático. Abreviatura: \"dam.\". Origem vegetal. Habitat original: Brasil, Estados Unidos e Mé"
+        }
+      ]
+    },
+    {
+      "ui": "D013978",
+      "name_pt": "Fraturas da Tíbia",
+      "backup_count": 23,
+      "db_count": 21,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 18,
+          "preview": "Fraturas da TÍBIA."
+        },
+        {
+          "length": 17,
+          "preview": "Fraturas da Tíbia"
+        }
+      ]
+    },
+    {
+      "ui": "D014028",
+      "name_pt": "Poluição por Fumaça de Tabaco",
+      "backup_count": 51,
+      "db_count": 49,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 40,
+          "preview": "Contaminação do ar por fumaça de tabaco."
+        },
+        {
+          "length": 39,
+          "preview": "Contaminação do Ar por Fumaça de Tabaco"
+        }
+      ]
+    },
+    {
+      "ui": "D006302",
+      "name_pt": "Pesquisa sobre Serviços de Saúde",
+      "backup_count": 41,
+      "db_count": 39,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 850,
+          "preview": "A integração das ciências epidemiológicas, sociológicas, econômicas e outras ciências analíticas no estudo dos serviços de saúde. A pesquisa de serviços de saúd"
+        },
+        {
+          "length": 253,
+          "preview": "Atividade que recorre a métodos e técnicas de investigação para determinar mais sistemática e objetivamente possível a relevância, efetividade e impacto das ati"
+        }
+      ]
+    },
+    {
+      "ui": "D007766",
+      "name_pt": "Doenças do Aparelho Lacrimal",
+      "backup_count": 15,
+      "db_count": 13,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 29,
+          "preview": "Doenças do APARELHO LACRIMAL."
+        },
+        {
+          "length": 28,
+          "preview": "Doenças do Aparelho Lacrimal"
+        }
+      ]
+    },
+    {
+      "ui": "D010000",
+      "name_pt": "Osteíte",
+      "backup_count": 10,
+      "db_count": 8,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 19,
+          "preview": "Inflamação do osso."
+        },
+        {
+          "length": 18,
+          "preview": "Inflamação do Osso"
+        }
+      ]
+    },
+    {
+      "ui": "D019660",
+      "name_pt": "Malvaceae",
+      "backup_count": 57,
+      "db_count": 55,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 555,
+          "preview": "Família da malva, da ordem MALVALES, subclasse Dilleniidae, classe Magnoliopsida. Os nomes vulgares malva e alteia são utilizados para vários gêneros da Malvace"
+        },
+        {
+          "length": 375,
+          "preview": "Planta da família das malváceas, nativa da Ásia, de folhas alternas, flores de cores variadas, singelas ou dobradas. Conhecida pelos nomes bordão-de-santiago, m"
+        }
+      ]
+    },
+    {
+      "ui": "D011790",
+      "name_pt": "Quarentena",
+      "backup_count": 41,
+      "db_count": 39,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 665,
+          "preview": "Limitação à liberdade de trânsito de pessoas para reduzir o risco de disseminação de uma doença transmissível por aqueles expostos à doença infecciosa ou transm"
+        },
+        {
+          "length": 532,
+          "preview": "Limitação à liberdade de trânsito de pessoas para reduzir o risco de disseminação de uma doença transmissível por aqueles expostos à doença infecciosa ou transm"
+        }
+      ]
+    },
+    {
+      "ui": "D013543",
+      "name_pt": "Doenças das Glândulas Sudoríparas",
+      "backup_count": 9,
+      "db_count": 7,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 34,
+          "preview": "Doenças das GLÂNDULAS SUDORÍPARAS."
+        },
+        {
+          "length": 33,
+          "preview": "Doenças das Glândulas Sudoríparas"
+        }
+      ]
+    },
+    {
+      "ui": "D033701",
+      "name_pt": "Proteínas de Transporte de Nucleobases, Nucleosídeos, Nucleotídeos e Ácidos Nucleicos",
+      "backup_count": 6,
+      "db_count": 4,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 135,
+          "preview": "Ampla classe de proteínas envolvidas no transporte de nucleobases, NUCLEOSÍDEOS, NUCLEOTÍDEOS e ÁCIDOS NUCLEICOS através das membranas."
+        },
+        {
+          "length": 85,
+          "preview": "Proteínas de Transporte de Nucleobases, Nucleosídeos, Nucleotídeos e Ácidos Nucleicos"
+        }
+      ]
+    },
+    {
+      "ui": "D014603",
+      "name_pt": "Doenças da Úvea",
+      "backup_count": 9,
+      "db_count": 7,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 16,
+          "preview": "Doenças da úvea."
+        },
+        {
+          "length": 15,
+          "preview": "Doenças da Úvea"
+        }
+      ]
+    },
+    {
+      "ui": "D016540",
+      "name_pt": "Abandono do Hábito de Fumar",
+      "backup_count": 31,
+      "db_count": 29,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 34,
+          "preview": "Descontinuação do hábito de FUMAR."
+        },
+        {
+          "length": 33,
+          "preview": "Descontinuação do Hábito de Fumar"
+        }
+      ]
+    },
+    {
+      "ui": "D020754",
+      "name_pt": "Ataxias Espinocerebelares",
+      "backup_count": 139,
+      "db_count": 137,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 455,
+          "preview": "Grupo de ataxias cerebelares, de início predominantemente tardio, que foi dividido em múltiplos subtipos baseados nos sinais clínicos e mapeamento genético. A a"
+        },
+        {
+          "length": 477,
+          "preview": "Grupo de ataxias cerebelares predominantemente herdadas e de início tardio que foram divididas em vários subtipos com base em características clínicas e mapeame"
+        }
+      ]
+    },
+    {
+      "ui": "D002669",
+      "name_pt": "Proteção da Criança",
+      "backup_count": 22,
+      "db_count": 20,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 99,
+          "preview": "Esforços organizados por comunidades ou organizações para melhoria da saúde e bem-estar da criança."
+        },
+        {
+          "length": 104,
+          "preview": "Esforços organizados por comunidades ou organizações para melhorar a saúde e o bem-estar do adolescente."
+        }
+      ]
+    },
+    {
+      "ui": "D010559",
+      "name_pt": "Gestão de Recursos Humanos",
+      "backup_count": 31,
+      "db_count": 29,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 85,
+          "preview": "Todas as atividades de administração, planejamento e organização de recursos humanos."
+        },
+        {
+          "length": 102,
+          "preview": "Envolve todas as atividades de administração, planejamento e organização de recursos humanos em saúde."
+        }
+      ]
+    },
+    {
+      "ui": "D000092582",
+      "name_pt": "Febre Medicamentosa",
+      "backup_count": 23,
+      "db_count": 21,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 28,
+          "preview": "Febre induzida por fármacos."
+        },
+        {
+          "length": 27,
+          "preview": "Febre Induzida por Fármacos"
+        }
+      ]
+    },
+    {
+      "ui": "D000086522",
+      "name_pt": "Estresse Financeiro",
+      "backup_count": 49,
+      "db_count": 47,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 134,
+          "preview": "Estresse decorrente de preocupações financeiras pessoais. (www.cancer.gov/publications/dictionaries/cancer-terms/def/financial-stress)"
+        },
+        {
+          "length": 143,
+          "preview": "Estresse decorrente de preocupações financeiras pessoais. (https://www.cancer.gov/publications/dictionaries/cancer-terms/def/financial-stress)."
+        }
+      ]
+    },
+    {
+      "ui": "D057768",
+      "name_pt": "Evento Inexplicável Breve Resolvido",
+      "backup_count": 34,
+      "db_count": 32,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 151,
+          "preview": "Evento, vivenciado por um bebê ou uma criança, caracterizado por alguma combinação de apneia, mudança de cor, alteração no tônus ​​muscular ou engasgo."
+        },
+        {
+          "length": 149,
+          "preview": "Evento vivenciado por um lactente ou criança que é caracterizado por uma combinação de apneia, alteração de cor e de tônus muscular, afogo e engasgo."
+        }
+      ]
+    },
+    {
+      "ui": "D000092504",
+      "name_pt": "Fraturas da Fíbula",
+      "backup_count": 21,
+      "db_count": 19,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 19,
+          "preview": "Fraturas da FÍBULA."
+        },
+        {
+          "length": 18,
+          "preview": "Fraturas da Fíbula"
+        }
+      ]
+    },
+    {
+      "ui": "D002772",
+      "name_pt": "Toxina da Cólera",
+      "backup_count": 49,
+      "db_count": 47,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 674,
+          "preview": "ENTEROTOXINA do VIBRIO CHOLERAE constituída por dois protômeros principais, a subnidade pesada (H) ou A, e o protômero B formado por 5 subunidades leves (L) ou "
+        },
+        {
+          "length": 674,
+          "preview": "ENTEROTOXINA do VIBRIO CHOLERAE constituída por dois protômeros principais, a subnidade pesada (H) ou A, e o protômero B formado por 5 subunidades leves (L) ou "
+        }
+      ]
+    }
+  ],
+  "all_diffs_truncated": [
+    {
+      "ui": "D016490",
+      "name_pt": "Sistemas Integrados e Avançados de Gestão da Informação",
+      "backup_count": 13,
+      "db_count": 10,
+      "missing_total": 3,
+      "missing_as_scope": 1,
+      "missing_other": 2,
+      "added": 0,
+      "sample_missing_other": [
+        {
+          "length": 107,
+          "preview": "Sistemas Integrados e Avançados de Gestão da Informação[Integrated Advanced Information Management Systems]"
+        },
+        {
+          "length": 105,
+          "preview": "Sistemas Integrados de Gestão da Informação Acadêmica[Integrated Academic Information Management Systems]"
+        }
+      ],
+      "sample_missing_scope": [
+        {
+          "length": 1046,
+          "preview": "Um conceito desenvolvido em 1983 sob a égide e apoiado pela Biblioteca Nacional de Medicina (National Library of Medicine, EUA) sob o nome de Sistemas Integrado"
+        }
+      ]
+    },
+    {
+      "ui": "D006810",
+      "name_pt": "Fraturas do Úmero",
+      "backup_count": 12,
+      "db_count": 10,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 18,
+          "preview": "Fraturas do ÚMERO."
+        },
+        {
+          "length": 17,
+          "preview": "Fraturas do Úmero"
+        }
+      ]
+    },
+    {
+      "ui": "D000073863",
+      "name_pt": "Fumar Charutos",
+      "backup_count": 9,
+      "db_count": 7,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 25,
+          "preview": "Hábito de FUMAR CHARUTOS."
+        },
+        {
+          "length": 24,
+          "preview": "Hábito de Fumar Charutos"
+        }
+      ]
+    },
+    {
+      "ui": "D000074523",
+      "name_pt": "Neurônios do Núcleo Supraquiasmático",
+      "backup_count": 18,
+      "db_count": 16,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 37,
+          "preview": "Neurônios do NÚCLEO SUPRAQUIASMÁTICO."
+        },
+        {
+          "length": 36,
+          "preview": "Neurônios do Núcleo Supraquiasmático"
+        }
+      ]
+    },
+    {
+      "ui": "D000078563",
+      "name_pt": "Proteínas de Nozes",
+      "backup_count": 9,
+      "db_count": 7,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 19,
+          "preview": "Proteínas de NOZES."
+        },
+        {
+          "length": 18,
+          "preview": "Proteínas de Nozes"
+        }
+      ]
+    },
+    {
+      "ui": "D000607",
+      "name_pt": "Aminoacetonitrila",
+      "backup_count": 13,
+      "db_count": 11,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 16,
+          "preview": "Cianometilamina."
+        },
+        {
+          "length": 15,
+          "preview": "Cianometilamina"
+        }
+      ]
+    },
+    {
+      "ui": "D002949",
+      "name_pt": "Anidridos Citracônicos",
+      "backup_count": 18,
+      "db_count": 16,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 24,
+          "preview": "Anidridos metilmaleicos."
+        },
+        {
+          "length": 23,
+          "preview": "Anidridos Metilmaleicos"
+        }
+      ]
+    },
+    {
+      "ui": "D003316",
+      "name_pt": "Doenças da Córnea",
+      "backup_count": 9,
+      "db_count": 7,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 18,
+          "preview": "Doenças da córnea."
+        },
+        {
+          "length": 17,
+          "preview": "Doenças da Córnea"
+        }
+      ]
+    },
+    {
+      "ui": "D012944",
+      "name_pt": "Apoio Social",
+      "backup_count": 40,
+      "db_count": 38,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 321,
+          "preview": "Sistemas de apoio que fornecem assistência e encorajamento para os indivíduos com inaptidão física ou emocional para que eles possam melhor superá-la. O apoio s"
+        },
+        {
+          "length": 327,
+          "preview": "Sistemas de suporte que fornecem assistência e encorajamento para os indivíduos com inaptidão física ou emocional para que eles possam melhor superá-la. O apoio"
+        }
+      ]
+    },
+    {
+      "ui": "D004326",
+      "name_pt": "Ingestão de Líquidos",
+      "backup_count": 13,
+      "db_count": 11,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 20,
+          "preview": "Consumo de líquidos."
+        },
+        {
+          "length": 19,
+          "preview": "Consumo de Líquidos"
+        }
+      ]
+    },
+    {
+      "ui": "D005264",
+      "name_pt": "Fraturas do Fêmur",
+      "backup_count": 10,
+      "db_count": 8,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 18,
+          "preview": "Fraturas do fêmur."
+        },
+        {
+          "length": 17,
+          "preview": "Fraturas do Fêmur"
+        }
+      ]
+    },
+    {
+      "ui": "D029647",
+      "name_pt": "Turnera",
+      "backup_count": 10,
+      "db_count": 8,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 231,
+          "preview": "Gênero de plantas da família Passifloraceae. Turnera diffusa, cujo nome vulgar é Damiana, é também um medicamento homeopático de abreviação \"dam.\". Habitat orig"
+        },
+        {
+          "length": 198,
+          "preview": "Turnera diffusa, conhecida como damiana, também é um medicamento homeopático. Abreviatura: \"dam.\". Origem vegetal. Habitat original: Brasil, Estados Unidos e Mé"
+        }
+      ]
+    },
+    {
+      "ui": "D013978",
+      "name_pt": "Fraturas da Tíbia",
+      "backup_count": 23,
+      "db_count": 21,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 18,
+          "preview": "Fraturas da TÍBIA."
+        },
+        {
+          "length": 17,
+          "preview": "Fraturas da Tíbia"
+        }
+      ]
+    },
+    {
+      "ui": "D014028",
+      "name_pt": "Poluição por Fumaça de Tabaco",
+      "backup_count": 51,
+      "db_count": 49,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 40,
+          "preview": "Contaminação do ar por fumaça de tabaco."
+        },
+        {
+          "length": 39,
+          "preview": "Contaminação do Ar por Fumaça de Tabaco"
+        }
+      ]
+    },
+    {
+      "ui": "D006302",
+      "name_pt": "Pesquisa sobre Serviços de Saúde",
+      "backup_count": 41,
+      "db_count": 39,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 850,
+          "preview": "A integração das ciências epidemiológicas, sociológicas, econômicas e outras ciências analíticas no estudo dos serviços de saúde. A pesquisa de serviços de saúd"
+        },
+        {
+          "length": 253,
+          "preview": "Atividade que recorre a métodos e técnicas de investigação para determinar mais sistemática e objetivamente possível a relevância, efetividade e impacto das ati"
+        }
+      ]
+    },
+    {
+      "ui": "D007766",
+      "name_pt": "Doenças do Aparelho Lacrimal",
+      "backup_count": 15,
+      "db_count": 13,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 29,
+          "preview": "Doenças do APARELHO LACRIMAL."
+        },
+        {
+          "length": 28,
+          "preview": "Doenças do Aparelho Lacrimal"
+        }
+      ]
+    },
+    {
+      "ui": "D010000",
+      "name_pt": "Osteíte",
+      "backup_count": 10,
+      "db_count": 8,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 19,
+          "preview": "Inflamação do osso."
+        },
+        {
+          "length": 18,
+          "preview": "Inflamação do Osso"
+        }
+      ]
+    },
+    {
+      "ui": "D019660",
+      "name_pt": "Malvaceae",
+      "backup_count": 57,
+      "db_count": 55,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 555,
+          "preview": "Família da malva, da ordem MALVALES, subclasse Dilleniidae, classe Magnoliopsida. Os nomes vulgares malva e alteia são utilizados para vários gêneros da Malvace"
+        },
+        {
+          "length": 375,
+          "preview": "Planta da família das malváceas, nativa da Ásia, de folhas alternas, flores de cores variadas, singelas ou dobradas. Conhecida pelos nomes bordão-de-santiago, m"
+        }
+      ]
+    },
+    {
+      "ui": "D011790",
+      "name_pt": "Quarentena",
+      "backup_count": 41,
+      "db_count": 39,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 665,
+          "preview": "Limitação à liberdade de trânsito de pessoas para reduzir o risco de disseminação de uma doença transmissível por aqueles expostos à doença infecciosa ou transm"
+        },
+        {
+          "length": 532,
+          "preview": "Limitação à liberdade de trânsito de pessoas para reduzir o risco de disseminação de uma doença transmissível por aqueles expostos à doença infecciosa ou transm"
+        }
+      ]
+    },
+    {
+      "ui": "D013543",
+      "name_pt": "Doenças das Glândulas Sudoríparas",
+      "backup_count": 9,
+      "db_count": 7,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 34,
+          "preview": "Doenças das GLÂNDULAS SUDORÍPARAS."
+        },
+        {
+          "length": 33,
+          "preview": "Doenças das Glândulas Sudoríparas"
+        }
+      ]
+    },
+    {
+      "ui": "D033701",
+      "name_pt": "Proteínas de Transporte de Nucleobases, Nucleosídeos, Nucleotídeos e Ácidos Nucleicos",
+      "backup_count": 6,
+      "db_count": 4,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 135,
+          "preview": "Ampla classe de proteínas envolvidas no transporte de nucleobases, NUCLEOSÍDEOS, NUCLEOTÍDEOS e ÁCIDOS NUCLEICOS através das membranas."
+        },
+        {
+          "length": 85,
+          "preview": "Proteínas de Transporte de Nucleobases, Nucleosídeos, Nucleotídeos e Ácidos Nucleicos"
+        }
+      ]
+    },
+    {
+      "ui": "D014603",
+      "name_pt": "Doenças da Úvea",
+      "backup_count": 9,
+      "db_count": 7,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 16,
+          "preview": "Doenças da úvea."
+        },
+        {
+          "length": 15,
+          "preview": "Doenças da Úvea"
+        }
+      ]
+    },
+    {
+      "ui": "D016540",
+      "name_pt": "Abandono do Hábito de Fumar",
+      "backup_count": 31,
+      "db_count": 29,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 34,
+          "preview": "Descontinuação do hábito de FUMAR."
+        },
+        {
+          "length": 33,
+          "preview": "Descontinuação do Hábito de Fumar"
+        }
+      ]
+    },
+    {
+      "ui": "D020754",
+      "name_pt": "Ataxias Espinocerebelares",
+      "backup_count": 139,
+      "db_count": 137,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 455,
+          "preview": "Grupo de ataxias cerebelares, de início predominantemente tardio, que foi dividido em múltiplos subtipos baseados nos sinais clínicos e mapeamento genético. A a"
+        },
+        {
+          "length": 477,
+          "preview": "Grupo de ataxias cerebelares predominantemente herdadas e de início tardio que foram divididas em vários subtipos com base em características clínicas e mapeame"
+        }
+      ]
+    },
+    {
+      "ui": "D002669",
+      "name_pt": "Proteção da Criança",
+      "backup_count": 22,
+      "db_count": 20,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 99,
+          "preview": "Esforços organizados por comunidades ou organizações para melhoria da saúde e bem-estar da criança."
+        },
+        {
+          "length": 104,
+          "preview": "Esforços organizados por comunidades ou organizações para melhorar a saúde e o bem-estar do adolescente."
+        }
+      ]
+    },
+    {
+      "ui": "D010559",
+      "name_pt": "Gestão de Recursos Humanos",
+      "backup_count": 31,
+      "db_count": 29,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 85,
+          "preview": "Todas as atividades de administração, planejamento e organização de recursos humanos."
+        },
+        {
+          "length": 102,
+          "preview": "Envolve todas as atividades de administração, planejamento e organização de recursos humanos em saúde."
+        }
+      ]
+    },
+    {
+      "ui": "D000092582",
+      "name_pt": "Febre Medicamentosa",
+      "backup_count": 23,
+      "db_count": 21,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 28,
+          "preview": "Febre induzida por fármacos."
+        },
+        {
+          "length": 27,
+          "preview": "Febre Induzida por Fármacos"
+        }
+      ]
+    },
+    {
+      "ui": "D000086522",
+      "name_pt": "Estresse Financeiro",
+      "backup_count": 49,
+      "db_count": 47,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 134,
+          "preview": "Estresse decorrente de preocupações financeiras pessoais. (www.cancer.gov/publications/dictionaries/cancer-terms/def/financial-stress)"
+        },
+        {
+          "length": 143,
+          "preview": "Estresse decorrente de preocupações financeiras pessoais. (https://www.cancer.gov/publications/dictionaries/cancer-terms/def/financial-stress)."
+        }
+      ]
+    },
+    {
+      "ui": "D057768",
+      "name_pt": "Evento Inexplicável Breve Resolvido",
+      "backup_count": 34,
+      "db_count": 32,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 151,
+          "preview": "Evento, vivenciado por um bebê ou uma criança, caracterizado por alguma combinação de apneia, mudança de cor, alteração no tônus ​​muscular ou engasgo."
+        },
+        {
+          "length": 149,
+          "preview": "Evento vivenciado por um lactente ou criança que é caracterizado por uma combinação de apneia, alteração de cor e de tônus muscular, afogo e engasgo."
+        }
+      ]
+    },
+    {
+      "ui": "D000092504",
+      "name_pt": "Fraturas da Fíbula",
+      "backup_count": 21,
+      "db_count": 19,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 19,
+          "preview": "Fraturas da FÍBULA."
+        },
+        {
+          "length": 18,
+          "preview": "Fraturas da Fíbula"
+        }
+      ]
+    },
+    {
+      "ui": "D002772",
+      "name_pt": "Toxina da Cólera",
+      "backup_count": 49,
+      "db_count": 47,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 674,
+          "preview": "ENTEROTOXINA do VIBRIO CHOLERAE constituída por dois protômeros principais, a subnidade pesada (H) ou A, e o protômero B formado por 5 subunidades leves (L) ou "
+        },
+        {
+          "length": 674,
+          "preview": "ENTEROTOXINA do VIBRIO CHOLERAE constituída por dois protômeros principais, a subnidade pesada (H) ou A, e o protômero B formado por 5 subunidades leves (L) ou "
+        }
+      ]
+    },
+    {
+      "ui": "D004412",
+      "name_pt": "Dismenorreia",
+      "backup_count": 17,
+      "db_count": 15,
+      "missing_total": 2,
+      "missing_as_scope": 2,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 21,
+          "preview": "Menstruação dolorosa."
+        },
+        {
+          "length": 20,
+          "preview": "Menstruação Dolorosa"
+        }
+      ]
+    },
+    {
+      "ui": "D005715",
+      "name_pt": "Jogo de Azar",
+      "backup_count": 30,
+      "db_count": 29,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 181,
+          "preview": "Atividade que se distingue primariamente pelo elemento de risco presente na tentativa de atingir o objetivo desejado, como por exemplo, a participação em jogos "
+        }
+      ]
+    },
+    {
+      "ui": "D005720",
+      "name_pt": "Raios gama",
+      "backup_count": 22,
+      "db_count": 21,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 339,
+          "preview": "Radiação eletromagnética de alta energia, penetrante, emitida por núcleos atômicos durante a DESINTEGRAÇÃO NUCLEAR. A faixa de comprimentos de onda da radiação "
+        }
+      ]
+    },
+    {
+      "ui": "D000004",
+      "name_pt": "Abreviaturas como Assunto",
+      "backup_count": 16,
+      "db_count": 15,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 70,
+          "preview": "Formas encurtadas de palavras ou frases escritas usadas para abreviar."
+        }
+      ]
+    },
+    {
+      "ui": "D000003",
+      "name_pt": "Matadouros",
+      "backup_count": 16,
+      "db_count": 15,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 74,
+          "preview": "Lugares onde animais são sacrificados e preparados para a comercialização."
+        }
+      ]
+    },
+    {
+      "ui": "D000005",
+      "name_pt": "Abdome",
+      "backup_count": 8,
+      "db_count": 7,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 56,
+          "preview": "Região do corpo que se localiza entre o TÓRAX e a PELVE."
+        }
+      ]
+    },
+    {
+      "ui": "D000006",
+      "name_pt": "Abdome Agudo",
+      "backup_count": 8,
+      "db_count": 7,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 173,
+          "preview": "Síndrome clínica caracterizada por dor abdominal intensa, localizada e de início rápido. O abdome agudo pode ser causado por uma variedade de transtornos, lesõe"
+        }
+      ]
+    },
+    {
+      "ui": "D000008",
+      "name_pt": "Neoplasias Abdominais",
+      "backup_count": 12,
+      "db_count": 11,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 47,
+          "preview": "Crescimento novo e anormal de tecido no ABDOME."
+        }
+      ]
+    },
+    {
+      "ui": "D005722",
+      "name_pt": "gama-Glutamilciclotransferase",
+      "backup_count": 16,
+      "db_count": 15,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 325,
+          "preview": "Enzima que catalisa a síntese de piroglutamato de um gama-glutamil-aminoácido, liberando também o aminoácido livre. A enzima age em derivados de glutamato, alan"
+        }
+      ]
+    },
+    {
+      "ui": "D005727",
+      "name_pt": "Gânglios Espinais",
+      "backup_count": 17,
+      "db_count": 16,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 369,
+          "preview": "Gânglios sensitivos localizados nas raizes espinhais dorsais no interior da coluna vertebral. As células ganglionares espinhais são pseudounipolares. O ramo pri"
+        }
+      ]
+    },
+    {
+      "ui": "D000010",
+      "name_pt": "Nervo Abducente",
+      "backup_count": 32,
+      "db_count": 31,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 233,
+          "preview": "Sexto par de nervos cranianos que se origina no NÚCLEO DO NERVO ABDUCENTE da PONTE e envia fibras motoras para os músculos retos laterais do OLHO. Danos ao nerv"
+        }
+      ]
+    },
+    {
+      "ui": "D000013",
+      "name_pt": "Anormalidades Congênitas",
+      "backup_count": 42,
+      "db_count": 41,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 77,
+          "preview": "Malformações de órgãos ou partes do corpo durante o desenvolvimento no útero."
+        }
+      ]
+    },
+    {
+      "ui": "D000011",
+      "name_pt": "Vírus da Leucemia Murina de Abelson",
+      "backup_count": 10,
+      "db_count": 9,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 275,
+          "preview": "Cepa de VÍRUS DA LEUCEMIA MURINA com defeito de replicação capaz de transformar células linfoides e produzir uma leucemia linfoide de rápida progressão após sup"
+        }
+      ]
+    },
+    {
+      "ui": "D005721",
+      "name_pt": "Glutamato-Cisteína Ligase",
+      "backup_count": 20,
+      "db_count": 19,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 196,
+          "preview": "Uma das enzimas ativas no ciclo do gama-glutamil. Catalisa a síntese de gama-glutamilcisteína a partir de glutamato e cisteína, na presença de ATP, com a formaç"
+        }
+      ]
+    },
+    {
+      "ui": "D014825",
+      "name_pt": "Vocabulário",
+      "backup_count": 6,
+      "db_count": 5,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 80,
+          "preview": "A soma ou a ação de palavras usadas por uma linguagem, um grupo ou um indivíduo."
+        }
+      ]
+    },
+    {
+      "ui": "D000014",
+      "name_pt": "Anormalidades Induzidas por Medicamentos",
+      "backup_count": 21,
+      "db_count": 20,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 308,
+          "preview": "Anormalidades congênitas causadas por substâncias medicinais ou drogas de abuso dadas ou tomadas pela mãe, ou às quais ela tenha sido inadvertidamente exposta d"
+        }
+      ]
+    },
+    {
+      "ui": "D000018",
+      "name_pt": "Abomaso",
+      "backup_count": 6,
+      "db_count": 5,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 365,
+          "preview": "O quarto estômago de animais ruminantes. É também chamado de estômago verdadeiro. Consiste de um saco alongado, em formato de pera, localizado no assoalho do ab"
+        }
+      ]
+    },
+    {
+      "ui": "D000019",
+      "name_pt": "Abortivos",
+      "backup_count": 23,
+      "db_count": 22,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 67,
+          "preview": "Substâncias químicas que interrompem a gravidez após a implantação."
+        }
+      ]
+    },
+    {
+      "ui": "D000020",
+      "name_pt": "Abortivos não Esteroides",
+      "backup_count": 13,
+      "db_count": 12,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 57,
+          "preview": "Compostos químicos não esteroides com atividade abortiva."
+        }
+      ]
+    },
+    {
+      "ui": "D005719",
+      "name_pt": "gama-Globulinas",
+      "backup_count": 14,
+      "db_count": 13,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 378,
+          "preview": "Globulinas séricas que migram para região gama (positivamente carregada) na ELETROFORESE. Num certo período, as gama-globulinas foram utilizadas como sinônimo p"
+        }
+      ]
+    },
+    {
+      "ui": "D030861",
+      "name_pt": "Capitalismo",
+      "backup_count": 6,
+      "db_count": 5,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 329,
+          "preview": "Sistema político e econômico caracterizado por direitos individuais, por propriedade privada ou incorporada de bens de capital, e por preços, produção e pela di"
+        }
+      ]
+    },
+    {
+      "ui": "D000026",
+      "name_pt": "Aborto Habitual",
+      "backup_count": 21,
+      "db_count": 20,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 46,
+          "preview": "Três ou mais abortos espontâneos consecutivos."
+        }
+      ]
+    },
+    {
+      "ui": "D000025",
+      "name_pt": "Aborto Eugênico",
+      "backup_count": 19,
+      "db_count": 18,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 56,
+          "preview": "Aborto realizado por causa de possíveis defeitos fetais."
+        }
+      ]
+    },
+    {
+      "ui": "D000023",
+      "name_pt": "Aspirantes a Aborto",
+      "backup_count": 34,
+      "db_count": 33,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 44,
+          "preview": "Indivíduos que requisitam abortos induzidos."
+        }
+      ]
+    },
+    {
+      "ui": "D000024",
+      "name_pt": "Aborto Ilegal",
+      "backup_count": 13,
+      "db_count": 12,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 31,
+          "preview": "Interrupção ilegal da gravidez."
+        }
+      ]
+    },
+    {
+      "ui": "D000027",
+      "name_pt": "Aborto Incompleto",
+      "backup_count": 10,
+      "db_count": 9,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 90,
+          "preview": "Perda prematura da GRAVIDEZ, em que nem todos os produtos da FERTILIZAÇÃO foram expelidos."
+        }
+      ]
+    },
+    {
+      "ui": "D000035",
+      "name_pt": "Ab-Reação",
+      "backup_count": 6,
+      "db_count": 5,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 225,
+          "preview": "Processo psicoterápico de dessensibilização de memórias que trazem sofrimento emocional e que são muitas vezes esquecidas (reprimidas), através da experiência d"
+        }
+      ]
+    },
+    {
+      "ui": "D005725",
+      "name_pt": "Gânglios Autônomos",
+      "backup_count": 9,
+      "db_count": 8,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 407,
+          "preview": "Grupamentos de neurônios e seus processos localizados no sistema nervoso autônomo. Nos gânglios autonômicos, as fibras pré-ganglionares vindas do sistema nervos"
+        }
+      ]
+    },
+    {
+      "ui": "D005726",
+      "name_pt": "Gânglios Parassimpáticos",
+      "backup_count": 10,
+      "db_count": 9,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 220,
+          "preview": "Gânglios do sistema nervoso parassimpático, incluindo os gânglios ciliar, pterigopalatino, submandibular e ótico na região do crânio e os gânglios intrínsecos ("
+        }
+      ]
+    },
+    {
+      "ui": "D000033",
+      "name_pt": "Ameaça de Aborto",
+      "backup_count": 13,
+      "db_count": 12,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 269,
+          "preview": "HEMORRAGIA UTERINA em uma GRAVIDEZ com menos de 20 semanas, sem dilatação cervical (ver PRIMEIRA FASE DO TRABALHO DE PARTO). É caracterizado por sangramento vag"
+        }
+      ]
+    },
+    {
+      "ui": "D000032",
+      "name_pt": "Aborto Terapêutico",
+      "backup_count": 11,
+      "db_count": 10,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 149,
+          "preview": "Aborto induzido para salvar a vida ou a saúde, física ou mental, de uma mulher grávida; às vezes efetuado após estupro ou incesto. (Dorland, 28a ed.)"
+        }
+      ]
+    },
+    {
+      "ui": "D000034",
+      "name_pt": "Aborto Animal",
+      "backup_count": 11,
+      "db_count": 10,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 38,
+          "preview": "Expulsão prematura do FETO em animais."
+        }
+      ]
+    },
+    {
+      "ui": "D000031",
+      "name_pt": "Aborto Séptico",
+      "backup_count": 10,
+      "db_count": 9,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 172,
+          "preview": "Qualquer tipo de aborto (induzido ou espontâneo) que está associado com infecção do ÚTERO e seus anexos. Caracteriza-se por FEBRE, sensibilidade uterina e supur"
+        }
+      ]
+    },
+    {
+      "ui": "D000061",
+      "name_pt": "Acidentes Domésticos",
+      "backup_count": 9,
+      "db_count": 8,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 36,
+          "preview": "ACIDENTES que ocorrem dentro do lar."
+        }
+      ]
+    },
+    {
+      "ui": "D005730",
+      "name_pt": "Bloqueadores Ganglionares",
+      "backup_count": 22,
+      "db_count": 21,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 462,
+          "preview": "Agentes cuja ação principal é interromper a transmissão neural nos receptores nicotínicos dos neurônios autonômicos pós-ganglionares. Como suas ações são amplas"
+        }
+      ]
+    },
+    {
+      "ui": "D000038",
+      "name_pt": "Abscesso",
+      "backup_count": 7,
+      "db_count": 6,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 120,
+          "preview": "Acúmulo de material purulento em tecidos, órgãos ou espaços circunscritos, normalmente associado com sinais de infecção."
+        }
+      ]
+    },
+    {
+      "ui": "D000037",
+      "name_pt": "Descolamento Prematuro da Placenta",
+      "backup_count": 13,
+      "db_count": 12,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 222,
+          "preview": "Separação prematura da PLACENTA implantada normalmente no ÚTERO. Entre os sinais com grau variável de gravidade estão sangramento uterino (HEMORRAGIA UTERINA), "
+        }
+      ]
+    },
+    {
+      "ui": "D000039",
+      "name_pt": "Abscesso Peritonsilar",
+      "backup_count": 10,
+      "db_count": 9,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 77,
+          "preview": "Acúmulo de material purulento na área entre a TONSILA PALATINA e sua cápsula."
+        }
+      ]
+    },
+    {
+      "ui": "D000040",
+      "name_pt": "Ácido Abscísico",
+      "backup_count": 11,
+      "db_count": 10,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 199,
+          "preview": "Substância do crescimento vegetal aceleradora da abscisão isolada a partir do fruto jovem do algodão, folhas de plátano, bétula e outras plantas, além da batata"
+        }
+      ]
+    },
+    {
+      "ui": "D000044",
+      "name_pt": "Dente Suporte",
+      "backup_count": 15,
+      "db_count": 14,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 169,
+          "preview": "Dentes naturais ou raizes dentárias utilizadas como ancoragem para uma dentadura fixa ou removível ou outras próteses (tal como um implante) servindo ao mesmo p"
+        }
+      ]
+    },
+    {
+      "ui": "D005733",
+      "name_pt": "Gangliosidoses",
+      "backup_count": 16,
+      "db_count": 15,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 360,
+          "preview": "Grupo de transtornos autossômicos recessivos do armazenamento lisossômico, evidenciados pelo acúmulo de GANGLIOSÍDEOS. São causados por deficiência enzimática o"
+        }
+      ]
+    },
+    {
+      "ui": "D000047",
+      "name_pt": "Academias e Institutos",
+      "backup_count": 39,
+      "db_count": 38,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 218,
+          "preview": "Organizações representativas de áreas especializadas que são aceitas como autoridades; podem ser não governamentais, universidades ou uma organização independen"
+        }
+      ]
+    },
+    {
+      "ui": "D000050",
+      "name_pt": "Acantócitos",
+      "backup_count": 6,
+      "db_count": 5,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 99,
+          "preview": "Eritrócitos que apresentam projeções protoplasmáticas que fornecem um aspecto espinhoso às células."
+        }
+      ]
+    },
+    {
+      "ui": "D000051",
+      "name_pt": "Acantólise",
+      "backup_count": 6,
+      "db_count": 5,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 200,
+          "preview": "Separação de células com espinhos do extrato espinhoso da epiderme, resultando em atrofia da camada de células espinhosas. É encontrada em doenças como pênfigo "
+        }
+      ]
+    },
+    {
+      "ui": "D000049",
+      "name_pt": "Acantocéfalos",
+      "backup_count": 13,
+      "db_count": 12,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 174,
+          "preview": "Filo de vermes parasitas, proximamente relacionados a tênias e que contém dois gêneros: Moniliformis, que pode parasitar o homem, e Macracanthorhynchus, que par"
+        }
+      ]
+    },
+    {
+      "ui": "D000048",
+      "name_pt": "Acanthamoeba",
+      "backup_count": 5,
+      "db_count": 4,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 204,
+          "preview": "Gênero de amebas terrestres de vida livre que não possuem fase flagelada. Seus organismos são patógenos para diversas infecções em humanos e foram encontrados n"
+        }
+      ]
+    },
+    {
+      "ui": "D000776",
+      "name_pt": "Anestesiologia",
+      "backup_count": 6,
+      "db_count": 5,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 67,
+          "preview": "Especialidade voltada para o estudo dos anestésicos e da anestesia."
+        }
+      ]
+    },
+    {
+      "ui": "D005737",
+      "name_pt": "Alho",
+      "backup_count": 9,
+      "db_count": 8,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 383,
+          "preview": "Espécie de Allium usada como tempero (ver TEMPEROS) e remédio tradicional. Contém aliina liase e aliina, que é convertida pela aliina liase em alicina, o ingred"
+        }
+      ]
+    },
+    {
+      "ui": "D005738",
+      "name_pt": "Gangrena Gasosa",
+      "backup_count": 8,
+      "db_count": 7,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 399,
+          "preview": "Afecção grave que resulta da invasão de músculos sadios por bactérias adjacentes a músculo ou tecido mole traumatizados. A infecção origina-se de uma ferida con"
+        }
+      ]
+    },
+    {
+      "ui": "D000054",
+      "name_pt": "Aceleração",
+      "backup_count": 7,
+      "db_count": 6,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 33,
+          "preview": "Um aumento na taxa de velocidade."
+        }
+      ]
+    },
+    {
+      "ui": "D000053",
+      "name_pt": "Ácaros e Carrapatos",
+      "backup_count": 7,
+      "db_count": 6,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 169,
+          "preview": "Grande subclasse de aracnídeos englobando os ÁCAROS e CARRAPATOS, incluindo parasitas de plantas, animais e do homem, assim como diversos vetores de doenças imp"
+        }
+      ]
+    },
+    {
+      "ui": "D000057",
+      "name_pt": "Propensão a Acidentes",
+      "backup_count": 8,
+      "db_count": 7,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 128,
+          "preview": "Tendência a envolver-se em acidentes. Implica em certas características de personalidade que predispõem o indivíduo a acidentes."
+        }
+      ]
+    },
+    {
+      "ui": "D000056",
+      "name_pt": "Prevenção de Acidentes",
+      "backup_count": 13,
+      "db_count": 12,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 116,
+          "preview": "Esforços e projetos para reduzir a incidência de eventos indesejáveis não previstos em vários ambientes e situações."
+        }
+      ]
+    },
+    {
+      "ui": "D000058",
+      "name_pt": "Acidentes por Quedas",
+      "backup_count": 17,
+      "db_count": 16,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 68,
+          "preview": "Quedas devido a escorregões ou tropeços que podem resultar em lesão."
+        }
+      ]
+    },
+    {
+      "ui": "D000059",
+      "name_pt": "Acidentes",
+      "backup_count": 7,
+      "db_count": 6,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 84,
+          "preview": "Eventos inesperados e não intencionais, tipicamente resultando em LESÕES ACIDENTAIS."
+        }
+      ]
+    },
+    {
+      "ui": "D000060",
+      "name_pt": "Acidentes Aeronáuticos",
+      "backup_count": 8,
+      "db_count": 7,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 47,
+          "preview": "Eventos não previstos associados com AERONAVES."
+        }
+      ]
+    },
+    {
+      "ui": "D005739",
+      "name_pt": "Intoxicação por Gás",
+      "backup_count": 12,
+      "db_count": 11,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 111,
+          "preview": "Envenenamento que resulta da exposição a gases como MONÓXIDO DE CARBONO, GASES NOBRES, OXIGÊNIO ou GÁS NATURAL."
+        }
+      ]
+    },
+    {
+      "ui": "D005751",
+      "name_pt": "Lavagem Gástrica",
+      "backup_count": 14,
+      "db_count": 13,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 247,
+          "preview": "Procedimento médico que envolve o esvaziamento do conteúdo do estômago, por meio do uso de um tubo inserido pelo do nariz ou da boca. É realizada para remover a"
+        }
+      ]
+    },
+    {
+      "ui": "D005759",
+      "name_pt": "Gastroenterite",
+      "backup_count": 6,
+      "db_count": 5,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 192,
+          "preview": "INFLAMAÇÃO de qualquer segmento do TRATO GASTROINTESTINAL do ESÔFAGO ao RETO. Entre as várias causas da gastroenterite estão genética, infecção, HIPERSENSIBILID"
+        }
+      ]
+    },
+    {
+      "ui": "D000066",
+      "name_pt": "Contabilidade",
+      "backup_count": 7,
+      "db_count": 6,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 46,
+          "preview": "Sistema de registro de transações financeiras."
+        }
+      ]
+    },
+    {
+      "ui": "D000066388",
+      "name_pt": "Indústria de Petróleo e Gás",
+      "backup_count": 42,
+      "db_count": 41,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 121,
+          "preview": "INDÚSTRIA que lida com a extração, processamento, distribuição, comercialização e estocagem de PETRÓLEO e de GÁS NATURAL."
+        }
+      ]
+    },
+    {
+      "ui": "D000064",
+      "name_pt": "Aclimatação",
+      "backup_count": 8,
+      "db_count": 7,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 72,
+          "preview": "Adaptação a um novo ambiente ou a uma transformação [ocorrida] na velha."
+        }
+      ]
+    },
+    {
+      "ui": "D000065",
+      "name_pt": "Acomodação Ocular",
+      "backup_count": 16,
+      "db_count": 15,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 391,
+          "preview": "Ajuste dióptrico do OLHO (para obter, de um objeto observado, a nitidez máxima da imagem na retina) em relação à capacidade, ao mecanismo ou ao processo. É a ob"
+        }
+      ]
+    },
+    {
+      "ui": "D005736",
+      "name_pt": "Síndrome de Gardner",
+      "backup_count": 16,
+      "db_count": 15,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 344,
+          "preview": "Variante da POLIPOSE ADENOMATOSA DO COLO causada por mutação no gene APC (GENES APC) no CROMOSSOMO 5. Caracteriza-se não somente pela presença de múltiplas colô"
+        }
+      ]
+    },
+    {
+      "ui": "D005752",
+      "name_pt": "Mucinas Gástricas",
+      "backup_count": 11,
+      "db_count": 10,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 144,
+          "preview": "Mucinas que são encontradas na superfície do epitélio gástrico. Desempenham papel na proteção da camada epitelial de danos mecânicos e químicos."
+        }
+      ]
+    },
+    {
+      "ui": "D000066448",
+      "name_pt": "Dirigir sob a Influência",
+      "backup_count": 7,
+      "db_count": 6,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 120,
+          "preview": "Operação de veículos motores enquanto prejudicados por álcool ou outras drogas incluindo aquelas prescritas por médicos."
+        }
+      ]
+    },
+    {
+      "ui": "D000066450",
+      "name_pt": "Células-Tronco Embrionárias Murinas",
+      "backup_count": 15,
+      "db_count": 14,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 120,
+          "preview": "CÉLULAS-TRONCO PLURIPOTENTES derivadas da MASSA CELULAR INTERNA DO BLASTOCISTO de camundongos de 3 dias e meio de idade."
+        }
+      ]
+    },
+    {
+      "ui": "D000066477",
+      "name_pt": "Desempenho Profissional",
+      "backup_count": 18,
+      "db_count": 17,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 73,
+          "preview": "Medida de quão bem alguém executa tarefas dadas em seu local de trabalho."
+        }
+      ]
+    },
+    {
+      "ui": "D000066491",
+      "name_pt": "Tomada de Decisão Clínica",
+      "backup_count": 13,
+      "db_count": 12,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 153,
+          "preview": "Processo de formulação de um diagnóstico baseado no histórico médico-clínico e em exames físicos ou mentais e/ou a escolha de uma intervenção apropriada."
+        }
+      ]
+    },
+    {
+      "ui": "D000066492",
+      "name_pt": "Envelhecimento Cognitivo",
+      "backup_count": 7,
+      "db_count": 6,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 109,
+          "preview": "Fenômeno que ocorre quando as capacidades de aprendizado e de memorização decaem naturalmente devido à idade."
+        }
+      ]
+    },
+    {
+      "ui": "D005742",
+      "name_pt": "Gasolina",
+      "backup_count": 7,
+      "db_count": 6,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 187,
+          "preview": "Combustível volátil inflamável (hidrocarbonetos líquidos) obtido a partir do petróleo bruto através de processos como destilação, [craqueamento], reforma [catal"
+        }
+      ]
+    },
+    {
+      "ui": "D005743",
+      "name_pt": "Gastrectomia",
+      "backup_count": 6,
+      "db_count": 5,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 112,
+          "preview": "Excisão de todo (g. total) ou parte (g. subtotal, g. parcial, ressecção gástrica) do estômago. (Dorland, 28a ed)"
+        }
+      ]
+    },
+    {
+      "ui": "D012503",
+      "name_pt": "Saponinas",
+      "backup_count": 6,
+      "db_count": 5,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 248,
+          "preview": "Tipo de glicosídeo amplamente distribuído em plantas. Cada um consiste de uma sapogenina como fração aglicona e um açúcar. A sapogenina podem ser um esteroide o"
+        }
+      ]
+    },
+    {
+      "ui": "D000066498",
+      "name_pt": "Ajustamento Emocional",
+      "backup_count": 19,
+      "db_count": 18,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 113,
+          "preview": "Processos fisiológicos que ocorrem quando um indivíduo se adapta a um estímulo ou evento emocional significativo."
+        }
+      ]
+    },
+    {
+      "ui": "D000066506",
+      "name_pt": "Heurística",
+      "backup_count": 8,
+      "db_count": 7,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 203,
+          "preview": "Técnicas baseadas em experiência para resolução de problemas, aprendizado e descobertas que encontram uma solução que não é garantidamente ótima, mas suficiente"
+        }
+      ]
+    },
+    {
+      "ui": "D000066502",
+      "name_pt": "Avós",
+      "backup_count": 15,
+      "db_count": 14,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 48,
+          "preview": "Membro de uma família que possui filhos e netos."
+        }
+      ]
+    },
+    {
+      "ui": "D000066505",
+      "name_pt": "Comportamento de Busca de Ajuda",
+      "backup_count": 10,
+      "db_count": 9,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 65,
+          "preview": "Forma de comportamento social em que se procura ajuda dos outros."
+        }
+      ]
+    },
+    {
+      "ui": "D000066511",
+      "name_pt": "Violência por Parceiro Íntimo",
+      "backup_count": 20,
+      "db_count": 19,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 370,
+          "preview": "Abuso entre duas pessoas em um relacionamento próximo, incluindo cônjuges ou namorados atuais e anteriores. Estabelece-se como um padrão de agressão e comportam"
+        }
+      ]
+    },
+    {
+      "ui": "D000066792",
+      "name_pt": "Ortodontistas",
+      "backup_count": 7,
+      "db_count": 6,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 81,
+          "preview": "Dentistas que se especializam no tratamento de DENTE desalinhado e de MÁ OCLUSÃO."
+        }
+      ]
+    },
+    {
+      "ui": "D005749",
+      "name_pt": "Polipeptídeo Inibidor Gástrico",
+      "backup_count": 24,
+      "db_count": 23,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 194,
+          "preview": "Hormônio peptídico gastrintestinal com cerca de 43 aminoácidos. Descobriu-se que é um estimulador potente da secreção de INSULINA e um inibidor relativamente fr"
+        }
+      ]
+    },
+    {
+      "ui": "D005753",
+      "name_pt": "Mucosa Gástrica",
+      "backup_count": 28,
+      "db_count": 27,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 498,
+          "preview": "Revestimento do ESTÔMAGO formado por um EPITÉLIO interno, uma LÂMINA PRÓPRIA média e a MUSCULARIS MUCOSAE externa. As células superficiais produzem o MUCO que p"
+        }
+      ]
+    },
+    {
+      "ui": "D000066530",
+      "name_pt": "Reabilitação Neurológica",
+      "backup_count": 10,
+      "db_count": 9,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 130,
+          "preview": "Programas supervisionados por médicos projetados para reabilitar as pessoas com doenças, traumas ou distúrbios de SISTEMA NERVOSO."
+        }
+      ]
+    },
+    {
+      "ui": "D000066670",
+      "name_pt": "Plasticidade Celular",
+      "backup_count": 12,
+      "db_count": 11,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 85,
+          "preview": "Habilidade de uma célula em mudar de FENÓTIPO como resposta a alterações no ambiente."
+        }
+      ]
+    },
+    {
+      "ui": "D000066673",
+      "name_pt": "Autorrenovação Celular",
+      "backup_count": 30,
+      "db_count": 29,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 205,
+          "preview": "Capacidade de certos tipos celulares, como células progenitoras ou tumorais, de passar por numerosos ciclos de DIVISÃO CELULAR enquanto ainda mantendo um estado"
+        }
+      ]
+    },
+    {
+      "ui": "D000066630",
+      "name_pt": "Expressão Ectópica do Gene",
+      "backup_count": 15,
+      "db_count": 14,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 172,
+          "preview": "Expressão de um gene em um local anormal ou em um tempo anormal num organismo. A expressão gênica ectópica é frequentemente induzida artificialmente por técnica"
+        }
+      ]
+    },
+    {
+      "ui": "D005758",
+      "name_pt": "Gastrite Hipertrófica",
+      "backup_count": 21,
+      "db_count": 20,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 224,
+          "preview": "GASTRITE com HIPERTROFIA da MUCOSA GÁSTRICA. Caracteriza-se por pregas gástricas gigantes, diminuição da secreção ácida, secreção excessiva de MUCO e HIPOPROTEI"
+        }
+      ]
+    },
+    {
+      "ui": "D012695",
+      "name_pt": "L-Serina Desidratase",
+      "backup_count": 25,
+      "db_count": 24,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 160,
+          "preview": "PIRIDOXAL-fosfato contendo uma enzima (inicialmente classificada como EC 4.2.1.13) que catalisa a desidratação e a desaminação da L-serina para formar piruvato."
+        }
+      ]
+    },
+    {
+      "ui": "D000066888",
+      "name_pt": "Alimentos, Dieta e Nutrição",
+      "backup_count": 14,
+      "db_count": 13,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 225,
+          "preview": "Conceitos envolvidos com fisiologia nutricional, incluindo categorias de substâncias ingeridas para processos e fenômenos de sustentação e nutricionais, padrões"
+        }
+      ]
+    },
+    {
+      "ui": "D000066889",
+      "name_pt": "Triticale",
+      "backup_count": 7,
+      "db_count": 6,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 68,
+          "preview": "GRÃO COMESTÍVEL resultante de um cruzamento entre TRITICUM e SECALE."
+        }
+      ]
+    },
+    {
+      "ui": "D000066908",
+      "name_pt": "Treinamento por Simulação",
+      "backup_count": 16,
+      "db_count": 15,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 179,
+          "preview": "Programa interativo altamente personalizado ou meio pelo qual se permite que indivíduos aprendam e pratiquem atividades reais do mundo em um ambiente preciso, r"
+        }
+      ]
+    },
+    {
+      "ui": "D000066928",
+      "name_pt": "Milhetes",
+      "backup_count": 12,
+      "db_count": 11,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 128,
+          "preview": "Grupo agronômico formado especialmente por plantas com sementes pequenas cultivadas principalmente para consumo humano e animal."
+        }
+      ]
+    },
+    {
+      "ui": "D000066949",
+      "name_pt": "Ciências Biocomportamentais",
+      "backup_count": 14,
+      "db_count": 13,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 140,
+          "preview": "Abordagem científica interdisciplinar para o estudo das complexas interações entre fatores biológicos, sociais, comportamentais, ambientais."
+        }
+      ]
+    },
+    {
+      "ui": "D005764",
+      "name_pt": "Refluxo Gastroesofágico",
+      "backup_count": 33,
+      "db_count": 32,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 220,
+          "preview": "Fluxo retrógrado de suco gástrico (ÁCIDO GÁSTRICO) e/ou conteúdos duodenais (ÁCIDOS E SAIS BILIARES, SUCO PANCREÁTICO) para dentro do ESÔFAGO distal, frequentem"
+        }
+      ]
+    },
+    {
+      "ui": "D012703",
+      "name_pt": "Sorotipagem",
+      "backup_count": 7,
+      "db_count": 6,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 110,
+          "preview": "Processo de determinação e de distinção de espécies de bactérias ou vírus baseado em antígenos que apresentam."
+        }
+      ]
+    },
+    {
+      "ui": "D000067011",
+      "name_pt": "Desnutrição Aguda Grave",
+      "backup_count": 7,
+      "db_count": 6,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 475,
+          "preview": "Forma aguda de DESNUTRIÇÃO que geralmente afeta crianças, caracterizada por um peso muito baixo para a altura (abaixo da pontuação média aceita pelos padrões da"
+        }
+      ]
+    },
+    {
+      "ui": "D000067009",
+      "name_pt": "Esportes Juvenis",
+      "backup_count": 19,
+      "db_count": 18,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 108,
+          "preview": "Atividades esportivas (ver ESPORTES) planejados e/ou organizados para CRIANÇAS ou jovens (ver ADOLESCENTES)."
+        }
+      ]
+    },
+    {
+      "ui": "D000067010",
+      "name_pt": "Alfabetização",
+      "backup_count": 11,
+      "db_count": 10,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 29,
+          "preview": "Capacidade de ler e escrever."
+        }
+      ]
+    },
+    {
+      "ui": "D000067012",
+      "name_pt": "Conta Bancária",
+      "backup_count": 31,
+      "db_count": 30,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 221,
+          "preview": "Conta financeira estabelecida entre uma instituição financeira (como um banco comercial) e um cliente (indivíduo, grupo ou comércio), em que o último pode depos"
+        }
+      ]
+    },
+    {
+      "ui": "D000067408",
+      "name_pt": "Serviços Jurídicos",
+      "backup_count": 9,
+      "db_count": 8,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 64,
+          "preview": "Serviços fornecidos por ADVOGADOS e pessoal do setor judiciário."
+        }
+      ]
+    },
+    {
+      "ui": "D005768",
+      "name_pt": "Hormônios Gastrointestinais",
+      "backup_count": 26,
+      "db_count": 25,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 183,
+          "preview": "HORMÔNIOS secretados pela mucosa gastrointestinal que afetam o período ou a qualidade da secreção nas enzimas digestivas e regulam a atividade motora dos órgãos"
+        }
+      ]
+    },
+    {
+      "ui": "D005770",
+      "name_pt": "Neoplasias Gastrointestinais",
+      "backup_count": 24,
+      "db_count": 23,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 75,
+          "preview": "Tumores ou câncer do TRATO GASTROINTESTINAL, desde a BOCA até o CANAL ANAL."
+        }
+      ]
+    },
+    {
+      "ui": "D000067048",
+      "name_pt": "Ghee",
+      "backup_count": 20,
+      "db_count": 19,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 170,
+          "preview": "Porção clara do leite, creme ou manteiga obtida pela remoção dos constituintes não gordurosos. (Tradução livre do original: Dictionary of Food Ingredients, 4th "
+        }
+      ]
+    },
+    {
+      "ui": "D000067029",
+      "name_pt": "Aparência Física",
+      "backup_count": 18,
+      "db_count": 17,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 58,
+          "preview": "Características físicas externamente visíveis de um corpo."
+        }
+      ]
+    },
+    {
+      "ui": "D000067071",
+      "name_pt": "Fraturamento Hidráulico",
+      "backup_count": 13,
+      "db_count": 12,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 439,
+          "preview": "Tecnologia de perfuração em que o GÁS NATURAL é extraído de grandes depósitos de formações rochosas impermeáveis conhecidas como xisto nas profundezas da crosta"
+        }
+      ]
+    },
+    {
+      "ui": "D000067268",
+      "name_pt": "Preparação de Coração Isolado",
+      "backup_count": 10,
+      "db_count": 9,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 181,
+          "preview": "Método de isolamento e manutenção de um coração funcionante durante várias medidas cardíacas. O modelo permite a separação de variáveis cardíacas e sistêmicas n"
+        }
+      ]
+    },
+    {
+      "ui": "D005767",
+      "name_pt": "Gastroenteropatias",
+      "backup_count": 21,
+      "db_count": 20,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 79,
+          "preview": "Doenças em qualquer segmento do TRATO GASTROINTESTINAL desde o ESÔFAGO ao RETO."
+        }
+      ]
+    },
+    {
+      "ui": "D005772",
+      "name_pt": "Trânsito Gastrointestinal",
+      "backup_count": 15,
+      "db_count": 14,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 214,
+          "preview": "Passagem de alimento (algumas vezes na forma de um alimento teste) através do trato gastrointestinal medida em minutos ou horas. A velocidade de passagem pelo i"
+        }
+      ]
+    },
+    {
+      "ui": "D005781",
+      "name_pt": "Esponja de Gelatina Absorvível",
+      "backup_count": 10,
+      "db_count": 9,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 239,
+          "preview": "Esponja cirúrgica a base de gelatina estéril aplicada topicamente como um auxiliar para a hemostase quando o controle de sangramento pelos procedimentos convenc"
+        }
+      ]
+    },
+    {
+      "ui": "D000067088",
+      "name_pt": "Publicidade Direta ao Consumidor",
+      "backup_count": 11,
+      "db_count": 10,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 100,
+          "preview": "Propaganda que se destina diretamente a consumidores de certos produtos como produtos farmacêuticos."
+        }
+      ]
+    },
+    {
+      "ui": "D000067128",
+      "name_pt": "Vesículas Extracelulares",
+      "backup_count": 8,
+      "db_count": 7,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 337,
+          "preview": "Estruturas delimitadas por membranas derivadas de membranas celulares e de material citoplasmático liberados no ESPAÇO EXTRACELULAR. Circulam por meio do LÍQUID"
+        }
+      ]
+    },
+    {
+      "ui": "D000067148",
+      "name_pt": "Micovírus",
+      "backup_count": 12,
+      "db_count": 11,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 38,
+          "preview": "Vírus que infectam espécies de FUNGOS."
+        }
+      ]
+    },
+    {
+      "ui": "D000067170",
+      "name_pt": "Telócitos",
+      "backup_count": 20,
+      "db_count": 19,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 115,
+          "preview": "Tipo de células intersticiais que possuem EXTENSÕES DA SUPERFÍCIE CELULAR muito longas e finas chamados TELOPÓDIOS."
+        }
+      ]
+    },
+    {
+      "ui": "D005773",
+      "name_pt": "Gastroscopia",
+      "backup_count": 23,
+      "db_count": 22,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 63,
+          "preview": "Exame endoscópico, terapia ou cirurgia do interior do estômago."
+        }
+      ]
+    },
+    {
+      "ui": "D005784",
+      "name_pt": "Amplificação de Genes",
+      "backup_count": 6,
+      "db_count": 5,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 723,
+          "preview": "Aumento seletivo no número de cópias de um gene codificado por uma proteína específica sem um aumento proporcional nos outros genes. Ocorre naturalmente através"
+        }
+      ]
+    },
+    {
+      "ui": "D013036",
+      "name_pt": "Espasmos Infantis",
+      "backup_count": 68,
+      "db_count": 67,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 690,
+          "preview": "Síndrome epiléptica caracterizada pela tríade de espasmos infantis, hipsarritmia e interrupção do desenvolvimento psicomotor no início dos ataques. A maioria se"
+        }
+      ]
+    },
+    {
+      "ui": "D000067251",
+      "name_pt": "Exacerbação dos Sintomas",
+      "backup_count": 46,
+      "db_count": 45,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 70,
+          "preview": "Exacerbação transiente de sintomas de uma afecção ou doença existente."
+        }
+      ]
+    },
+    {
+      "ui": "D000067250",
+      "name_pt": "Reabilitação Psiquiátrica",
+      "backup_count": 28,
+      "db_count": 27,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 236,
+          "preview": "Campo de especialização que promove a recuperação, a participação comunitária e o aumento do bem-estar de indivíduos diagnosticados com transtornos mentais que "
+        }
+      ]
+    },
+    {
+      "ui": "D000067269",
+      "name_pt": "Dieta Vegana",
+      "backup_count": 11,
+      "db_count": 10,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 63,
+          "preview": "Prática dietética de evitar produtos animais de qualquer forma."
+        }
+      ]
+    },
+    {
+      "ui": "D005780",
+      "name_pt": "Gelatina",
+      "backup_count": 7,
+      "db_count": 6,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 255,
+          "preview": "Produto formado da pele, tecido conjuntivo branco, ou COLÁGENO dos ossos. É utilizado como alimento proteico adjuvante, substituto do plasma, agente hemostático"
+        }
+      ]
+    },
+    {
+      "ui": "D005803",
+      "name_pt": "Genes de Imunoglobulinas",
+      "backup_count": 17,
+      "db_count": 16,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 654,
+          "preview": "Genes codificadores das subunidades diferentes das IMUNOGLOBULINAS, por exemplo, GENES DE CADEIA LEVE DE IMUNOGLUBULINAS e GENES DE CADEIA PESADA DE IMUNOGLOBUL"
+        }
+      ]
+    },
+    {
+      "ui": "D013038",
+      "name_pt": "Especialização",
+      "backup_count": 18,
+      "db_count": 17,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 66,
+          "preview": "Ocupação limitada em escopo a uma subseção de um campo mais amplo."
+        }
+      ]
+    },
+    {
+      "ui": "D000067292",
+      "name_pt": "Consumo de Álcool na Faculdade",
+      "backup_count": 19,
+      "db_count": 18,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 48,
+          "preview": "Consumo de álcool entre estudantes de faculdade."
+        }
+      ]
+    },
+    {
+      "ui": "D000067368",
+      "name_pt": "Cirurgia Endoscópica Transanal",
+      "backup_count": 16,
+      "db_count": 15,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 76,
+          "preview": "Procedimentos cirúrgicos executados através do anus usando-se PROCTOSCÓPIOS."
+        }
+      ]
+    },
+    {
+      "ui": "D000067369",
+      "name_pt": "Microcirurgia Endoscópica Transanal",
+      "backup_count": 10,
+      "db_count": 9,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 107,
+          "preview": "Forma especializada de cirurgia endoscópica transanal para operações microscopicamente controladas no RETO."
+        }
+      ]
+    },
+    {
+      "ui": "D000067348",
+      "name_pt": "Grãos Integrais",
+      "backup_count": 20,
+      "db_count": 19,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 94,
+          "preview": "Sementes comestíveis que contêm todos os componentes da sementes: gérmen, farelo e ENDOSPERMA."
+        }
+      ]
+    },
+    {
+      "ui": "D005786",
+      "name_pt": "Regulação da Expressão Gênica",
+      "backup_count": 18,
+      "db_count": 17,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 203,
+          "preview": "Qualquer dos processos pelos quais os fatores nucleares, citoplasmáticos ou intercelulares influenciam o controle diferencial (indução ou repressão) da ação gên"
+        }
+      ]
+    },
+    {
+      "ui": "D005797",
+      "name_pt": "Genes araC",
+      "backup_count": 18,
+      "db_count": 17,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 201,
+          "preview": "Genes reguladores que codificam a proteína receptora do AMP cíclico para utilização da L-arabinose na E coli. É um exemplo de controle positivo ou de regulação "
+        }
+      ]
+    },
+    {
+      "ui": "DDCS025350",
+      "name_pt": "Lodos de Tratamento de Água",
+      "backup_count": 6,
+      "db_count": 5,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 247,
+          "preview": "Sólidos acumulados e separados dos líquidos, como a água ou águas residuárias, durante um processo de tratamento ou depositados no fundo dos rios ou de outros c"
+        }
+      ]
+    },
+    {
+      "ui": "D000067397",
+      "name_pt": "Agentes Neurotóxicos",
+      "backup_count": 60,
+      "db_count": 59,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 91,
+          "preview": "Classe de compostos que afetam adversamente a transmissão de impulsos pelo SISTEMA NERVOSO."
+        }
+      ]
+    },
+    {
+      "ui": "D000067399",
+      "name_pt": "Escala de Movimento Involuntário Anormal",
+      "backup_count": 6,
+      "db_count": 5,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 143,
+          "preview": "Escala de classificação que mede movimentos involuntários (ver DISCINESIAS) conhecidos como discinesias tardias (ver TRANSTORNOS DO MOVIMENTO)."
+        }
+      ]
+    },
+    {
+      "ui": "D000067398",
+      "name_pt": "Lesões Relacionadas à Guerra",
+      "backup_count": 9,
+      "db_count": 8,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 69,
+          "preview": "FERIMENTOS E LESÕES e traumas psicológicos adquiridos durante GUERRA."
+        }
+      ]
+    },
+    {
+      "ui": "D000067404",
+      "name_pt": "Transtorno de Comunicação Social",
+      "backup_count": 16,
+      "db_count": 15,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 112,
+          "preview": "Dificuldades persistentes no uso social de comunicação verbal e não verbal. (Tradução livre do original: DSM-IV)"
+        }
+      ]
+    },
+    {
+      "ui": "D000067401",
+      "name_pt": "Concentração Alcoólica no Sangue",
+      "backup_count": 17,
+      "db_count": 16,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 48,
+          "preview": "Massa de álcool por unidade de volume de SANGUE."
+        }
+      ]
+    },
+    {
+      "ui": "D005801",
+      "name_pt": "Genes Homeobox",
+      "backup_count": 43,
+      "db_count": 42,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 502,
+          "preview": "Genes que codificam FATORES DE TRANSCRIÇÃO altamente conservados, que controlam a identidade posicional das células (PADRONIZAÇÃO CORPORAL) e a MORFOGÊNESE ao l"
+        }
+      ]
+    },
+    {
+      "ui": "D005805",
+      "name_pt": "Genes MHC Classe I",
+      "backup_count": 38,
+      "db_count": 37,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 327,
+          "preview": "Loci genéticos dos complexos de histocompatibilidade principal de vertebrados, que codificam características polimórficas não relacionadas com a responsividade "
+        }
+      ]
+    },
+    {
+      "ui": "D000067453",
+      "name_pt": "Exposição à Guerra",
+      "backup_count": 8,
+      "db_count": 7,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 68,
+          "preview": "Saúde ou outras ramificações da exposição civil ou militar à GUERRA."
+        }
+      ]
+    },
+    {
+      "ui": "D000067450",
+      "name_pt": "Psicologia do Esporte",
+      "backup_count": 9,
+      "db_count": 8,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 111,
+          "preview": "Campo de pesquisa que estuda fatores mentais que influenciam a aquisição de habilidades e desempenho atléticos."
+        }
+      ]
+    },
+    {
+      "ui": "D000067470",
+      "name_pt": "Técnicas de Reprogramação Celular",
+      "backup_count": 22,
+      "db_count": 21,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 240,
+          "preview": "Procedimentos usados para a indução de REPROGRAMAÇÃO CELULAR para alterar o fenótipo final de uma célula, como a geração de CÉLULAS-TRONCO PLURIPOTENTES INDUZID"
+        }
+      ]
+    },
+    {
+      "ui": "D000067455",
+      "name_pt": "Pacientes não Comparecentes",
+      "backup_count": 19,
+      "db_count": 18,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 108,
+          "preview": "PACIENTES que não comparecem a agendamentos de saúde. Não confundir com PACIENTES DESISTENTES DO TRATAMENTO."
+        }
+      ]
+    },
+    {
+      "ui": "D000067548",
+      "name_pt": "Preenchedores Dérmicos",
+      "backup_count": 17,
+      "db_count": 16,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 122,
+          "preview": "Materiais como COLÁGENO ou ÁCIDO HIALURÔNICO que são injetados ou depositados na DERME com o propósito de aumento da pele."
+        }
+      ]
+    },
+    {
+      "ui": "D005804",
+      "name_pt": "Genes Letais",
+      "backup_count": 9,
+      "db_count": 8,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 336,
+          "preview": "Genes cuja MUTAÇÃO de perda de função ou ganho de função leva à morte do portador antes da maturidade. Podem ser genes essenciais (GENES ESSENCIAIS) necessários"
+        }
+      ]
+    },
+    {
+      "ui": "D005810",
+      "name_pt": "Família Multigênica",
+      "backup_count": 22,
+      "db_count": 21,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 673,
+          "preview": "Conjunto de genes originados por duplicação e variação de algum gene ancestral. Estes genes podem estar reunidos nos mesmo cromossomo ou dispersos em cromossomo"
+        }
+      ]
+    },
+    {
+      "ui": "D000067489",
+      "name_pt": "Metacognição",
+      "backup_count": 37,
+      "db_count": 36,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 65,
+          "preview": "Consciência e compreensão de processos dos pensamentos de alguém."
+        }
+      ]
+    },
+    {
+      "ui": "D000067493",
+      "name_pt": "Difusão Dinâmica da Luz",
+      "backup_count": 17,
+      "db_count": 16,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 147,
+          "preview": "Técnica analítica para medir o tamanho de partículas moleculares dissolvidas ou dispersas em um líquido e que são menores que 1 mícron de diâmetro."
+        }
+      ]
+    },
+    {
+      "ui": "D000067491",
+      "name_pt": "Near Miss",
+      "backup_count": 25,
+      "db_count": 24,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 73,
+          "preview": "Evento que desencadeou um risco, mas não resultou em um dano no paciente."
+        }
+      ]
+    },
+    {
+      "ui": "D000068097",
+      "name_pt": "Saúde Materna",
+      "backup_count": 7,
+      "db_count": 6,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 68,
+          "preview": "Saúde de mulheres durante a GESTAÇÃO, o parto e o PERÍODO PÓS-PARTO."
+        }
+      ]
+    },
+    {
+      "ui": "D005815",
+      "name_pt": "Código Genético",
+      "backup_count": 11,
+      "db_count": 10,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 251,
+          "preview": "Significado atribuído à SEQUÊNCIA DE BASES, com respeito a como é traduzido na SEQUÊNCIA DE AMINOÁCIDOS. O início, término e ordem dos aminoácidos de uma proteí"
+        }
+      ]
+    },
+    {
+      "ui": "D005818",
+      "name_pt": "Engenharia Genética",
+      "backup_count": 17,
+      "db_count": 16,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 232,
+          "preview": "Modificação dirigida do gene complementar de um organismo vivo por técnicas como alteração do DNA, substituição de material genético por meio de um vírus, trans"
+        }
+      ]
+    },
+    {
+      "ui": "D005823",
+      "name_pt": "Genética",
+      "backup_count": 7,
+      "db_count": 6,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 163,
+          "preview": "Campo das ciências biológicas que lida com os fenômenos e os mecanismos da hereditariedade. Problemas genéticos podem ocorrer após desastres tóxicos e radioativ"
+        }
+      ]
+    },
+    {
+      "ui": "D005832",
+      "name_pt": "Doenças dos Genitais Masculinos",
+      "backup_count": 14,
+      "db_count": 13,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 86,
+          "preview": "Processos patológicos envolvendo o sistema reprodutor masculino (GENITÁLIA MASCULINA)."
+        }
+      ]
+    },
+    {
+      "ui": "D000067496",
+      "name_pt": "Possessão Espiritual",
+      "backup_count": 17,
+      "db_count": 16,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 275,
+          "preview": "Ideia de que um comportamento anormal ou uma afecção médica é evidência de que uma pessoa está sob controle de uma força ou espírito sobrenatural. Esta crença f"
+        }
+      ]
+    },
+    {
+      "ui": "D000067508",
+      "name_pt": "Heurística Computacional",
+      "backup_count": 12,
+      "db_count": 11,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 111,
+          "preview": "Métodos de tentativa e erro para solucionar problemas usados quando uma abordagem algarítmica não é praticável."
+        }
+      ]
+    },
+    {
+      "ui": "D000067531",
+      "name_pt": "Alarminas",
+      "backup_count": 15,
+      "db_count": 14,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 487,
+          "preview": "Grupo de moléculas multifuncionais endógenas estruturalmente diversas que possuem funções fisiológicas dentro da célula, mas quando liberadas de células que est"
+        }
+      ]
+    },
+    {
+      "ui": "D005819",
+      "name_pt": "Marcadores Genéticos",
+      "backup_count": 26,
+      "db_count": 25,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 159,
+          "preview": "Característica genética fenotipicamente reconhecível, que pode ser usada para identificar um locus gênico, um grupo de \"linkage\", ou um evento de recombinação."
+        }
+      ]
+    },
+    {
+      "ui": "D005816",
+      "name_pt": "Teste de Complementação Genética",
+      "backup_count": 28,
+      "db_count": 27,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 245,
+          "preview": "Teste utilizado para determinar se ocorrerá ou não complementação (compensação na forma de dominância) em uma célula com um dado fenótipo mutante e quando outro"
+        }
+      ]
+    },
+    {
+      "ui": "D005822",
+      "name_pt": "Vetores Genéticos",
+      "backup_count": 24,
+      "db_count": 23,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 415,
+          "preview": "Moléculas de DNA capazes de replicação autônoma dentro de uma célula hospedeira, na qual outras sequências de DNA podem ser inseridas e amplificadas. Muitos são"
+        }
+      ]
+    },
+    {
+      "ui": "D000067551",
+      "name_pt": "Diplomacia",
+      "backup_count": 5,
+      "db_count": 4,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 97,
+          "preview": "Arte e prática de conduzir negociações entre pessoas, nações ou outras partes, como organizações."
+        }
+      ]
+    },
+    {
+      "ui": "D000067556",
+      "name_pt": "Sítios Internos de Entrada Ribossomal",
+      "backup_count": 18,
+      "db_count": 17,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 131,
+          "preview": "Sequências dentro do RNA MENSAGEIRO que permitem a iniciação da BIOSSÍNTESE DE PROTEÍNAS independente dos CAPUZ 5' DO RNA (Cap 5')."
+        }
+      ]
+    },
+    {
+      "ui": "D000067552",
+      "name_pt": "Acúmulo de Mutações",
+      "backup_count": 17,
+      "db_count": 16,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 76,
+          "preview": "Conceito que descreve os efeitos cumulativos da MUTAÇÃO em organismos vivos."
+        }
+      ]
+    },
+    {
+      "ui": "D005821",
+      "name_pt": "Técnicas Genéticas",
+      "backup_count": 23,
+      "db_count": 22,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 93,
+          "preview": "Métodos cromossômicos, bioquímicos, intracelulares e outros, utilizados em estudos genéticos."
+        }
+      ]
+    },
+    {
+      "ui": "D005831",
+      "name_pt": "Doenças dos Genitais Femininos",
+      "backup_count": 18,
+      "db_count": 17,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 83,
+          "preview": "Processos patológicos envolvendo o trato reprodutivo feminino (GENITÁLIA FEMININA)."
+        }
+      ]
+    },
+    {
+      "ui": "D000067565",
+      "name_pt": "Fazendeiros",
+      "backup_count": 30,
+      "db_count": 29,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 43,
+          "preview": "Pessoas que cultivam a terra ou criam GADO."
+        }
+      ]
+    },
+    {
+      "ui": "D000067563",
+      "name_pt": "Phakopsora pachyrhizi",
+      "backup_count": 13,
+      "db_count": 12,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 93,
+          "preview": "Patógenos fúngicos que causam a doença conhecida por ferrugem asiática na soja (Glycine max)."
+        }
+      ]
+    },
+    {
+      "ui": "D000067572",
+      "name_pt": "Mineradores",
+      "backup_count": 14,
+      "db_count": 13,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 73,
+          "preview": "Pessoas que trabalham em minas para extrair minério ou MINERAIS da terra."
+        }
+      ]
+    },
+    {
+      "ui": "D000067571",
+      "name_pt": "Declarações Financeiras",
+      "backup_count": 8,
+      "db_count": 7,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 97,
+          "preview": "Registro estruturado e formal de atividades financeiras de um comércio, pessoa ou outra entidade."
+        }
+      ]
+    },
+    {
+      "ui": "D000067570",
+      "name_pt": "Aprendizagem Social",
+      "backup_count": 18,
+      "db_count": 17,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 92,
+          "preview": "Conceito de aquisição de novo conhecimento por meio da observação e interação com os outros."
+        }
+      ]
+    },
+    {
+      "ui": "D000067573",
+      "name_pt": "Cronofarmacocinética",
+      "backup_count": 6,
+      "db_count": 5,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 171,
+          "preview": "Absorção, metabolismo e eliminação de medicamentos em relação à hora do dia em que são administrados, bem como os mecanismos responsáveis pelas variações cronod"
+        }
+      ]
+    },
+    {
+      "ui": "D000072437",
+      "name_pt": "Calendários como Assunto",
+      "backup_count": 6,
+      "db_count": 5,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 93,
+          "preview": "Trabalhos sobre documentos ou planilhas que mostram os dias, as semanas e os meses de um ano."
+        }
+      ]
+    },
+    {
+      "ui": "D005830",
+      "name_pt": "Gânglio Geniculado",
+      "backup_count": 42,
+      "db_count": 41,
+      "missing_total": 1,
+      "missing_as_scope": 1,
+      "missing_other": 0,
+      "added": 0,
+      "sample_missing_other": [],
+      "sample_missing_scope": [
+        {
+          "length": 286,
+          "preview": "Gânglio sensitivo do nervo facial (VII par craniano). As células do gânglio geniculado enviam processos centrais para o tronco encefálico e processos periférico"
+        }
+      ]
+    }
+  ]
+}

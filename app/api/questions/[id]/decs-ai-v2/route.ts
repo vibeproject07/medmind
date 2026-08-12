@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { getRuntimeAgent } from '@/lib/ai-agent-runtime';
+import { buildDeCSQuestionText } from '@/lib/decs-pipeline';
 import { runDeCSPipelineV2, type DeCSV2Result, type DeCSV2CandidateGroup } from '@/lib/decs-pipeline-v2';
 import { saveClassificationArtifact } from '@/lib/decs-classification-storage';
 
@@ -40,18 +41,15 @@ export async function POST(
     }
     const question = qRes.rows[0] as Record<string, unknown>;
 
-    const questionText = [
-      'Enunciado:',
-      question.statement as string,
-      '',
-      'Alternativa A: ' + (question.option_a as string),
-      'Alternativa B: ' + (question.option_b as string),
-      question.option_c ? 'Alternativa C: ' + (question.option_c as string) : null,
-      question.option_d ? 'Alternativa D: ' + (question.option_d as string) : null,
-      question.option_e ? 'Alternativa E: ' + (question.option_e as string) : null,
-    ]
-      .filter(Boolean)
-      .join('\n');
+    const questionText = buildDeCSQuestionText({
+      statement: question.statement as string,
+      option_a: question.option_a as string,
+      option_b: question.option_b as string,
+      option_c: question.option_c as string | null,
+      option_d: question.option_d as string | null,
+      option_e: question.option_e as string | null,
+      correct_answer: question.correct_answer as string | null,
+    });
 
     const indexerAgent = await getRuntimeAgent('decs_indexer_v2');
     await getRuntimeAgent('decs_selector_v2');
@@ -61,7 +59,8 @@ export async function POST(
       questionText,
       decsKey,
       geminiKey,
-      v2Model
+      v2Model,
+      question.images,
     );
 
     await query(
@@ -103,7 +102,14 @@ export async function GET(
       return NextResponse.json({ error: 'Questão não encontrada' }, { status: 404 });
     }
     const raw = qRes.rows[0].ai_decs_v2 as string | null;
-    const parsed = raw ? JSON.parse(raw) : {};
+    let parsed: Record<string, unknown> = {};
+    if (raw) {
+      try {
+        parsed = JSON.parse(raw);
+      } catch {
+        parsed = {};
+      }
+    }
     const result = parsed.result ?? {
       decs_primary: parsed.decs_primary ?? [],
       decs_secondary: parsed.decs_secondary ?? [],
