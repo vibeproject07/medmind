@@ -10,6 +10,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
+import { DECS_MAX_CANDIDATES } from '@/lib/decs-search-limits';
 
 export const runtime = 'nodejs';
 export const maxDuration = 120;
@@ -94,7 +95,7 @@ function isCategoryAcceptable(treeIds: string[], questionText: string): boolean 
   return BIO_RE.test(questionText);
 }
 
-async function searchDeCSLocal(term: string, geminiKey: string, minSimilarity = 0.6, limit = 5) {
+async function searchDeCSLocal(term: string, geminiKey: string, minSimilarity = 0.6, limit = DECS_MAX_CANDIDATES) {
   try {
     const embedRes = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent?key=${geminiKey}`,
@@ -134,7 +135,7 @@ async function searchDeCSLocal(term: string, geminiKey: string, minSimilarity = 
   }
 }
 
-async function searchDeCSByText(term: string, limit = 5) {
+async function searchDeCSByText(term: string, limit = DECS_MAX_CANDIDATES) {
   try {
     const res = await query(
       `SELECT ui AS code, name_pt AS term, name_en, scope_note, tree_numbers
@@ -157,7 +158,7 @@ async function searchDeCSByText(term: string, limit = 5) {
   }
 }
 
-async function searchDeCSBVS(term: string, decsKey: string, limit = 5) {
+async function searchDeCSBVS(term: string, decsKey: string, limit = DECS_MAX_CANDIDATES) {
   if (!decsKey) return [];
   try {
     const url = `https://api.bvsalud.org/decs/v2/search-by-words?words=${encodeURIComponent(term)}&lang=pt&format=json`;
@@ -258,7 +259,7 @@ async function runV1Trace(question: Record<string, unknown>, geminiKey: string, 
     let searchSource = '';
     let filterRemoved = 0;
 
-    const local = await searchDeCSLocal(term, geminiKey, 0.6, 5);
+    const local = await searchDeCSLocal(term, geminiKey, 0.6, DECS_MAX_CANDIDATES);
     const localFiltered = local.filter(c => isCategoryAcceptable(c.tree_ids, questionText));
     filterRemoved += local.length - localFiltered.length;
 
@@ -266,7 +267,7 @@ async function runV1Trace(question: Record<string, unknown>, geminiKey: string, 
       candidates = localFiltered;
       searchSource = 'pgvector';
     } else {
-      const bvs = await searchDeCSBVS(term, decsKey, 5);
+      const bvs = await searchDeCSBVS(term, decsKey, DECS_MAX_CANDIDATES);
       const bvsFiltered = bvs.filter(c => isCategoryAcceptable(c.tree_ids, questionText));
       filterRemoved += bvs.length - bvsFiltered.length;
       candidates = bvsFiltered as unknown as typeof candidates;
@@ -422,19 +423,19 @@ async function runV2Trace(question: Record<string, unknown>, geminiKey: string, 
     let candidates: Array<{ code: string; term: string; name_en?: string; scope_note?: string; tree_ids: string[]; source: string; similarity?: number }> = [];
     let searchPath = '';
 
-    const local = await searchDeCSLocal(term, geminiKey, 0.55, 5);
+    const local = await searchDeCSLocal(term, geminiKey, 0.55, DECS_MAX_CANDIDATES);
     const localFiltered = local.filter(c => isCategoryAcceptable(c.tree_ids, questionText));
     if (localFiltered.length > 0) {
       candidates = localFiltered;
       searchPath = 'pgvector';
     } else {
-      const text = await searchDeCSByText(term, 5);
+      const text = await searchDeCSByText(term, DECS_MAX_CANDIDATES);
       const textFiltered = text.filter(c => isCategoryAcceptable(c.tree_ids, questionText));
       if (textFiltered.length > 0) {
         candidates = textFiltered;
         searchPath = 'texto';
       } else {
-        const bvs = await searchDeCSBVS(term, decsKey, 5);
+        const bvs = await searchDeCSBVS(term, decsKey, DECS_MAX_CANDIDATES);
         candidates = bvs.filter(c => isCategoryAcceptable(c.tree_ids, questionText));
         searchPath = candidates.length > 0 ? 'API BVS' : 'nenhum';
       }
@@ -454,7 +455,7 @@ async function runV2Trace(question: Record<string, unknown>, geminiKey: string, 
       term, role, search_path: searchPath,
       local_found: local.length,
       local_after_filter: localFiltered.length,
-      candidates: candidates.slice(0, 5).map(c => ({
+      candidates: candidates.slice(0, DECS_MAX_CANDIDATES).map(c => ({
         code: c.code, term: c.term, source: c.source,
         similarity: c.similarity,
         has_scope_note: !!c.scope_note,

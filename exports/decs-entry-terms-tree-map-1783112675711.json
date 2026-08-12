@@ -1,0 +1,680 @@
+{
+  "metadata": {
+    "generated_at": "2026-07-03T21:04:35.710Z",
+    "filters": {
+      "search": "Canal de Sódio disparado por voltagem NAV1.1",
+      "ui": null,
+      "category": null,
+      "limit": 50,
+      "min_terms": 1
+    },
+    "total_descriptors": 1,
+    "total_entry_terms": 21
+  },
+  "descriptors": [
+    {
+      "code": "D062550",
+      "name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "name_en": "NAV1.1 Voltage-Gated Sodium Channel",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ],
+      "entry_terms_count": 21,
+      "entry_terms": [
+        "Canal de Sódio Disparado por Voltagem NAV1.1[NAV1.1 Voltage-Gated Sodium Channel]",
+        "0",
+        "Subtipo de canal de sódio disparado por voltagem predominantemente expresso no SISTEMA NERVOSO CENTRAL. Defeitos no gene SCN1A que codifica para a subunidade alfa deste canal de sódio estão associados com a síndrome de Dravet (ver EPILEPSIAS MIOCLÔNICAS), epilepsia generalizada com CONVULSÕES FEBRIS mais tipo 2 (GEFS+2) e enxaqueca hemiplégica familiar tipo 3.",
+        "NAV1.1 Voltage-Gated Sodium Channel",
+        "NLM (2013)",
+        "Canal de Sódio Disparado por Voltagem NAV1.1",
+        "NAV1.1 Voltage Gated Sodium Channel",
+        "Voltage-Gated Sodium Channel Type 1",
+        "Voltage Gated Sodium Channel Type 1",
+        "Type 1 Voltage-Gated Sodium Channel",
+        "Type 1 Voltage Gated Sodium Channel",
+        "Subunidade alfa do Canal de Sódio Disparado por Voltagem Tipo 1[Voltage-Gated Sodium Channel Type 1 Subunit alpha]",
+        "Voltage-Gated Sodium Channel Type 1 Subunit alpha",
+        "Subunidade alfa do Canal de Sódio Disparado por Voltagem Tipo 1",
+        "Voltage Gated Sodium Channel Type 1 Subunit alpha",
+        "Sodium Channel, Voltage-Gated, Type I, alpha Protein",
+        "SCN1A Sodium Channel alpha Subunit",
+        "Voltage-Gated Sodium Channel Type 1 alpha Subunit",
+        "Voltage Gated Sodium Channel Type 1 alpha Subunit",
+        "NAV1.1 alpha Subunit",
+        "alpha Subunit, NAV1.1"
+      ]
+    }
+  ],
+  "term_tree_index": [
+    {
+      "term": "Canal de Sódio Disparado por Voltagem NAV1.1[NAV1.1 Voltage-Gated Sodium Channel]",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    },
+    {
+      "term": "0",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    },
+    {
+      "term": "Subtipo de canal de sódio disparado por voltagem predominantemente expresso no SISTEMA NERVOSO CENTRAL. Defeitos no gene SCN1A que codifica para a subunidade alfa deste canal de sódio estão associados com a síndrome de Dravet (ver EPILEPSIAS MIOCLÔNICAS), epilepsia generalizada com CONVULSÕES FEBRIS mais tipo 2 (GEFS+2) e enxaqueca hemiplégica familiar tipo 3.",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    },
+    {
+      "term": "NAV1.1 Voltage-Gated Sodium Channel",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    },
+    {
+      "term": "NLM (2013)",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    },
+    {
+      "term": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    },
+    {
+      "term": "NAV1.1 Voltage Gated Sodium Channel",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    },
+    {
+      "term": "Voltage-Gated Sodium Channel Type 1",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    },
+    {
+      "term": "Voltage Gated Sodium Channel Type 1",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    },
+    {
+      "term": "Type 1 Voltage-Gated Sodium Channel",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    },
+    {
+      "term": "Type 1 Voltage Gated Sodium Channel",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    },
+    {
+      "term": "Subunidade alfa do Canal de Sódio Disparado por Voltagem Tipo 1[Voltage-Gated Sodium Channel Type 1 Subunit alpha]",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    },
+    {
+      "term": "Voltage-Gated Sodium Channel Type 1 Subunit alpha",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    },
+    {
+      "term": "Subunidade alfa do Canal de Sódio Disparado por Voltagem Tipo 1",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    },
+    {
+      "term": "Voltage Gated Sodium Channel Type 1 Subunit alpha",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    },
+    {
+      "term": "Sodium Channel, Voltage-Gated, Type I, alpha Protein",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    },
+    {
+      "term": "SCN1A Sodium Channel alpha Subunit",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    },
+    {
+      "term": "Voltage-Gated Sodium Channel Type 1 alpha Subunit",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    },
+    {
+      "term": "Voltage Gated Sodium Channel Type 1 alpha Subunit",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    },
+    {
+      "term": "NAV1.1 alpha Subunit",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    },
+    {
+      "term": "alpha Subunit, NAV1.1",
+      "source_code": "D062550",
+      "source_name_pt": "Canal de Sódio Disparado por Voltagem NAV1.1",
+      "tree_ids": [
+        "D12.776.157.530.400.875.750.100",
+        "D12.776.543.550.450.875.750.100",
+        "D12.776.543.585.400.875.750.100",
+        "D12.776.631.960.100"
+      ],
+      "branches": [
+        {
+          "tree_id": "D12.776.157.530.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.157.530.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.550.450.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.550.450.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.543.585.400.875.750.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.543.585.400.875.750.100"
+        },
+        {
+          "tree_id": "D12.776.631.960.100",
+          "hierarchy_path": "Compostos Químicos e Drogas › D12.776.631.960.100"
+        }
+      ]
+    }
+  ]
+}

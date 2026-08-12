@@ -60,3 +60,39 @@ id = "CNnA5Q7ggl92zyKofRKG4"
 uri = "file://questoes_recentes_200.csv"
 type = "table"
 title = "200 questões mais recentes"
+
+[[outputs]]
+id = "mH-sMZxuVOYBJmEUDgWc1"
+uri = "file://exports/decs-vectorization-200.json"
+type = "unspecified"
+title = "DeCS — Vetorização 200 descritores"
+
+[[outputs]]
+id = "Ui04c2e7xG6_vN-bgxX1_"
+uri = "file://exports/decs-vectorization-200-compact.json"
+type = "unspecified"
+title = "DeCS — Vetorização 200 descritores (compacto)"
+
+[[outputs]]
+id = "CPPk2ipWD9WxfeybGZw2S"
+uri = "file://exports/edge-cases-before-revectorization.json"
+type = "unspecified"
+title = "Edge Cases — Estado ANTES da revetorização"
+
+[[outputs]]
+id = "ZawvgRI6ZS0_dzfwAXzAX"
+uri = "file://exports/edge-cases-after-revectorization.json"
+type = "unspecified"
+title = "Edge Cases — Estado APÓS revetorização"
+
+[[outputs]]
+id = "glbnTA4_zbz3qwTxnSZUD"
+uri = "file://exports/edge-cases-vector-search-results.json"
+type = "unspecified"
+title = "Resultados de busca vetorial — 4 termos edge-case"
+
+[[outputs]]
+id = "o8JxcoWzWVLXF4I0C6Xjy"
+uri = "file://exports/decs-embedding-text-audit.json"
+type = "unspecified"
+title = "Auditoria de texto de embedding — 5 termos de epilepsia"

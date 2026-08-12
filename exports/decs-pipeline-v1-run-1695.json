@@ -1,0 +1,222 @@
+{
+  "metadata": {
+    "generated_at": "2026-07-02T19:07:26.548Z",
+    "question_id": 1695,
+    "question_text": "Enunciado:\nUma paciente, 28 anos, com histórico de múltiplos episódios de dor pélvica e febre, é diagnosticada com doença inflamatória pélvica (DIP). Ela manifesta preocupação com sua fertilidade futura. Qual é o principal fator relacionado à DIP que pode comprometer a fertilidade dessa paciente?\nAlternativa A: Formação de abscessos ovarianos que prejudicam a ovulação.\nAlternativa B: Aumento do risco de gravidez ectópica, devido à obstrução tubária.\nAlternativa C: Redução da reserva ovariana causada pela inflamação crônica.\nAlternativa D: Comprometimento endometrial pela destruição dos receptores hormonais.",
+    "classifier_model": "gemini-2.5-flash",
+    "search_order": "texto (entry_terms/name_pt) → vetor (cosseno, gemini-embedding-001) → BVS API (se DECS_API_KEY definida)",
+    "thresholds": {
+      "min_text_similarity": 0.5,
+      "min_vector_similarity": 0.6,
+      "text_limit": 20,
+      "vector_limit": 5
+    }
+  },
+  "themes_identified": {
+    "primary": [
+      "Doença Inflamatória Pélvica"
+    ],
+    "secondary": [
+      "Gravidez Ectópica",
+      "Infertilidade Feminina",
+      "Obstrução das Trompas Uterinas",
+      "Dor Pélvica",
+      "Febre"
+    ]
+  },
+  "term_resolution_log": [
+    {
+      "term": "Doença Inflamatória Pélvica",
+      "role": "primary",
+      "text_search": {
+        "candidates_found": 1,
+        "accepted": true,
+        "reason": "match exato em entry_terms/nome",
+        "best_candidate": {
+          "code": "D000292",
+          "term": "Doença Inflamatória Pélvica",
+          "similarity": 1
+        }
+      },
+      "outcome": "accepted",
+      "search_method": "text"
+    },
+    {
+      "term": "Gravidez Ectópica",
+      "role": "secondary",
+      "text_search": {
+        "candidates_found": 6,
+        "accepted": true,
+        "reason": "match exato em entry_terms/nome",
+        "best_candidate": {
+          "code": "D011271",
+          "term": "Gravidez Ectópica",
+          "similarity": 1
+        }
+      },
+      "outcome": "accepted",
+      "search_method": "text"
+    },
+    {
+      "term": "Infertilidade Feminina",
+      "role": "secondary",
+      "text_search": {
+        "candidates_found": 2,
+        "accepted": true,
+        "reason": "match exato em entry_terms/nome",
+        "best_candidate": {
+          "code": "D007247",
+          "term": "Infertilidade Feminina",
+          "similarity": 1
+        }
+      },
+      "outcome": "accepted",
+      "search_method": "text"
+    },
+    {
+      "term": "Obstrução das Trompas Uterinas",
+      "role": "secondary",
+      "text_search": {
+        "candidates_found": 0,
+        "accepted": false,
+        "reason": "nenhum candidato textual encontrado",
+        "best_candidate": null
+      },
+      "vector_search": {
+        "candidates_found": 5,
+        "accepted": true,
+        "reason": "similaridade coseno 0.7512",
+        "best_candidate": {
+          "code": "D005184",
+          "term": "Doenças das Tubas Uterinas",
+          "similarity": 0.7512217489690861
+        }
+      },
+      "outcome": "accepted",
+      "search_method": "vector"
+    },
+    {
+      "term": "Dor Pélvica",
+      "role": "secondary",
+      "text_search": {
+        "candidates_found": 2,
+        "accepted": true,
+        "reason": "match exato em entry_terms/nome",
+        "best_candidate": {
+          "code": "D017699",
+          "term": "Dor Pélvica",
+          "similarity": 1
+        }
+      },
+      "outcome": "accepted",
+      "search_method": "text"
+    },
+    {
+      "term": "Febre",
+      "role": "secondary",
+      "text_search": {
+        "candidates_found": 20,
+        "accepted": true,
+        "reason": "match exato em entry_terms/nome",
+        "best_candidate": {
+          "code": "D005334",
+          "term": "Febre",
+          "similarity": 1
+        }
+      },
+      "outcome": "accepted",
+      "search_method": "text"
+    }
+  ],
+  "pipeline_stats": {
+    "primary_terms": 1,
+    "secondary_terms": 5,
+    "accepted_by_text": 5,
+    "accepted_by_vector": 1,
+    "accepted_by_bvs": 0,
+    "no_candidate": 0,
+    "deduped": 0,
+    "final_count": 6
+  },
+  "result": [
+    {
+      "term": "Doença Inflamatória Pélvica",
+      "code": "D000292",
+      "tree_ids": [
+        "C01.635.500",
+        "C12.050.351.500.056.750",
+        "C12.100.250.056.750"
+      ],
+      "hierarchy_path": "Doenças › C01.635.500",
+      "role": "primary",
+      "search_method": "text",
+      "scope_note": "Espectro inflamatório envolvendo o trato genital superior feminino e os tecidos de sustentação. Geralmente é devida à infecção ascendente por organismos a partir da endocérvix. A infecção pode estar limitada ao útero (ENDOMETRITE), às TUBAS UTERINAS (SALPINGITE), aos ovários (OOFORITE), aos ligamentos de sustentação (PARAMETRITE) ou afetar vários dos apêndices uterinos acima. Esta inflamação pode provocar alteração funcional e infertilidade.",
+      "name_en": "Pelvic Inflammatory Disease"
+    },
+    {
+      "term": "Gravidez Ectópica",
+      "code": "D011271",
+      "tree_ids": [
+        "C12.050.703.733"
+      ],
+      "hierarchy_path": "Doenças › C12.050.703.733",
+      "role": "secondary",
+      "search_method": "text",
+      "scope_note": "Afecção com risco de morte materna na qual a IMPLANTAÇÃO DO EMBRIÃO ocorre fora da cavidade do ÚTERO. A maioria das gestações ectópicas (mais de 96 por cento) ocorre nas TUBAS UTERINAS e é conhecida como GRAVIDEZ TUBÁRIA. Podem ocorrer em outros locais, como no COLO DO ÚTERO, OVÁRIO e cavidade abdominal (GRAVIDEZ ABDOMINAL).",
+      "name_en": "Pregnancy, Ectopic"
+    },
+    {
+      "term": "Infertilidade Feminina",
+      "code": "D007247",
+      "tree_ids": [
+        "C12.050.351.500.498",
+        "C12.100.250.498",
+        "C12.100.750.350"
+      ],
+      "hierarchy_path": "Doenças › C12.050.351.500.498",
+      "role": "secondary",
+      "search_method": "text",
+      "scope_note": "Habilidade diminuída ou ausente da fêmea concluir a concepção.",
+      "name_en": "Infertility, Female"
+    },
+    {
+      "term": "Doenças das Tubas Uterinas",
+      "code": "D005184",
+      "tree_ids": [
+        "C12.050.351.500.056.390",
+        "C12.100.250.056.390"
+      ],
+      "hierarchy_path": "Doenças › C12.050.351.500.056.390",
+      "role": "secondary",
+      "search_method": "vector",
+      "scope_note": "Doenças envolvendo as TUBAS UTERINAS, inclusive neoplasias (NEOPLASIAS DAS TUBAS UTERINAS), SALPINGITE, abscesso e bloqueio tubo-ovariano.",
+      "name_en": "Fallopian Tube Diseases"
+    },
+    {
+      "term": "Dor Pélvica",
+      "code": "D017699",
+      "tree_ids": [
+        "C23.888.592.612.944",
+        "F02.830.816.444.841",
+        "G11.561.790.444.841"
+      ],
+      "hierarchy_path": "Doenças › C23.888.592.612.944",
+      "role": "secondary",
+      "search_method": "text",
+      "scope_note": "Dor na região pélvica de origem genital e não genital.",
+      "name_en": "Pelvic Pain"
+    },
+    {
+      "term": "Febre",
+      "code": "D005334",
+      "tree_ids": [
+        "C23.888.119.344"
+      ],
+      "hierarchy_path": "Doenças › C23.888.119.344",
+      "role": "secondary",
+      "search_method": "text",
+      "scope_note": "Elevação anormal da temperatura corporal, geralmente como resultado de um processo patológico.",
+      "name_en": "Fever"
+    }
+  ]
+}

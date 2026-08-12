@@ -1,0 +1,183 @@
+{
+  "metadata": {
+    "generated_at": "2026-07-01T20:14:40.136Z",
+    "target_terms": [
+      "espasmos infantis", "síndrome de lennox-gastaut", "síndromes epilépticas", "epilepsias mioclônicas",
+      "epilepsia mioclônica juvenil"
+    ],
+    "found": 5,
+    "not_found": [],
+    "embedding_model": "gemini-embedding-001",
+    "build_function": "buildDeCSText (slice entry_terms 0–245, scope_note 0–5000, total 0–8000)",
+    "description": "Auditoria do texto de embedding: texto atual vs. texto ideal por descritor"
+  },
+  "descriptors": [
+    {
+      "ui": "D020190",
+      "name_pt": "Epilepsia Mioclônica Juvenil",
+      "name_en": "Myoclonic Epilepsy, Juvenile",
+      "has_embedding": true,
+      "stats": {
+        "entry_terms_total": 37,
+        "entry_terms_in_current": 37,
+        "entry_terms_lost": 0,
+        "scope_note_total_chars": 423,
+        "scope_note_used_chars": 423,
+        "scope_note_truncated": false,
+        "current_text_total_chars": 2040,
+        "current_text_truncated": false,
+        "ideal_text_total_chars": 1918,
+        "ancestor_terms_resolved": 7
+      },
+      "information_loss": {
+        "issues": [],
+        "missing_from_db": [
+          "Nome completo dos termos PAI na hierarquia (só temos os códigos, ex. \"C10.228.140.490\")", "Termos FILHOS (narrower terms) — conceitos mais específicos que ampliariam o contexto", "Termos RELACIONADOS (see also / related) — associações laterais entre descritores"
+        ],
+        "quality_score_current": 90,
+        "quality_score_ideal": 100
+      },
+      "current_embedding_text": "Epilepsia Mioclônica Juvenil\n[Myoclonic Epilepsy, Juvenile]\nSinônimos: Epilepsia Mioclônica Juvenil[Myoclonic Epilepsy, Juvenile], Transtorno caracterizado pelo início de mioclonia na adolescência, um aumento marcante na incidência de ataques tipo ausência (ver EPILEPSIA TIPO AUSÊNCIA), e ataques motores maiores generalizados (ver EPILEPSIA TÔNICO-CLÔNICA). Os episódios mioclônicos tendem a ocorrer logo após o despertar. Os ataques tendem a se agravar pela privação do sono e consumo de álcool. Foram identificadas as formas hereditária e esporádica., Myoclonic Epilepsy, Juvenile, NLM (2000), OMIM (2013), Epilepsia Mioclônica Juvenil, Epilepsy, Juvenile Myoclonic, Epilepsy, Myoclonic Juvenile, Juvenile Epilepsy, Myoclonic, Myoclonic Juvenile Epilepsy, JME (Juvenile Myoclonic Epilepsy), JMEs (Juvenile Myoclonic Epilepsy), Epilepsy, Myoclonic, Juvenile, Juvenile Myoclonic Epilepsy, GHR (2014), ORD (2010), Juvenile Myoclonic Epilepsy of Janz, Janz Syndrome, Petit Mal, Impulsive, Janz, Janz Juvenile Myoclonic Epilepsy, Impulsive Petit Mal, Janz, Janz Impulsive Petit Mal, Impulsive Petit Mal Epilepsy, Petit Mal, Impulsive, NLM (2011), Myoclonic Epilepsy, Juvenile, 1, Myoclonic Epilepsy, Adolescent, Adolescent Myoclonic Epilepsy, Epilepsy, Adolescent Myoclonic, Epilepsia Juvenil Mioclônica, Epilepsia Mioclônica do Adolescente, Epilepsia Juvenil Mioclônica 1, Epilepsia do Pequeno Mal Impulsivo, Epilepsia de Janz, Pequeno Mal Impulsivo de Janz, Síndrome de Janz, Síndrome de Apneia do Sono por Resistência das Vias Aéreas Superiores\nTranstorno caracterizado pelo início de mioclonia na adolescência, um aumento marcante na incidência de ataques tipo ausência (ver EPILEPSIA TIPO AUSÊNCIA), e ataques motores maiores generalizados (ver EPILEPSIA TÔNICO-CLÔNICA). Os episódios mioclônicos tendem a ocorrer logo após o despertar. Os ataques tendem a se agravar pela privação do sono e consumo de álcool. Foram identificadas as formas hereditária e esporádica.\nHierarquia: C10.228.140.490.375.130.670 | C10.228.140.490.493.063.670",
+      "ideal_embedding_text": "Conceito: Epilepsia Mioclônica Juvenil\nNome em inglês: Myoclonic Epilepsy, Juvenile\nSinônimos e termos alternativos: Epilepsy, Juvenile Myoclonic, Epilepsy, Myoclonic Juvenile, Juvenile Epilepsy, Myoclonic, Myoclonic Juvenile Epilepsy, JME (Juvenile Myoclonic Epilepsy), JMEs (Juvenile Myoclonic Epilepsy), Epilepsy, Myoclonic, Juvenile, Juvenile Myoclonic Epilepsy, Juvenile Myoclonic Epilepsy of Janz, Janz Syndrome, Petit Mal, Impulsive, Janz, Janz Juvenile Myoclonic Epilepsy, Impulsive Petit Mal, Janz, Janz Impulsive Petit Mal, Impulsive Petit Mal Epilepsy, Petit Mal, Impulsive, Myoclonic Epilepsy, Juvenile, 1, Myoclonic Epilepsy, Adolescent, Adolescent Myoclonic Epilepsy, Epilepsy, Adolescent Myoclonic, Epilepsia Juvenil Mioclônica, Epilepsia Mioclônica do Adolescente, Epilepsia Juvenil Mioclônica 1, Epilepsia do Pequeno Mal Impulsivo, Epilepsia de Janz, Pequeno Mal Impulsivo de Janz, Síndrome de Janz, Síndrome de Apneia do Sono por Resistência das Vias Aéreas Superiores\nDefinição clínica: Transtorno caracterizado pelo início de mioclonia na adolescência, um aumento marcante na incidência de ataques tipo ausência (ver EPILEPSIA TIPO AUSÊNCIA), e ataques motores maiores generalizados (ver EPILEPSIA TÔNICO-CLÔNICA). Os episódios mioclônicos tendem a ocorrer logo após o despertar. Os ataques tendem a se agravar pela privação do sono e consumo de álcool. Foram identificadas as formas hereditária e esporádica.\nHierarquia (do mais geral ao mais específico): Doenças do Sistema Nervoso (D009422) > Doenças do Sistema Nervoso Central (D002493) > Encefalopatias (D001927) > Epilepsia (D004827) > Epilepsia Generalizada (D004829) > Epilepsias Mioclônicas (D004831) > Síndromes Epilépticas (D000073376)\n[LACUNA: termos filhos (narrower terms) não disponíveis no banco — ampliariam cobertura semântica]\n[LACUNA: termos relacionados (see also) não disponíveis no banco — enriqueceriam associações laterais]",
+      "ideal_text_explanation": [
+        "O texto ideal para embedding de um descritor DeCS médico deve conter:", "1. Nome principal em PT e EN — ancora o conceito em ambos os idiomas", "2. Todos os sinônimos filtrados (sem ruído de datas NLM/OMIM) — maximiza cobertura lexical", "3. scope_note completa sem truncamento — é a definição semântica central do conceito",
+        "4. Hierarquia com NOMES resolvidos (não apenas códigos) — contextualiza o conceito na taxonomia", "5. Termos filhos (narrower terms) — ampliam a cobertura para buscas top-down", "6. Termos relacionados (see also) — capturam associações laterais não hierárquicas", "Lacunas identificadas neste banco: filhos e relacionados não estão armazenados em decs_descriptors.",
+        "Solução recomendada: enriquecer via BVS API (get-tree) ou importação do arquivo MeSH/DeCS completo."
+      ]
+    },
+    {
+      "ui": "D004831",
+      "name_pt": "Epilepsias Mioclônicas",
+      "name_en": "Epilepsies, Myoclonic",
+      "has_embedding": true,
+      "stats": {
+        "entry_terms_total": 67,
+        "entry_terms_in_current": 67,
+        "entry_terms_lost": 0,
+        "scope_note_total_chars": 289,
+        "scope_note_used_chars": 289,
+        "scope_note_truncated": false,
+        "current_text_total_chars": 2776,
+        "current_text_truncated": false,
+        "ideal_text_total_chars": 2811,
+        "ancestor_terms_resolved": 6
+      },
+      "information_loss": {
+        "issues": [],
+        "missing_from_db": [
+          "Nome completo dos termos PAI na hierarquia (só temos os códigos, ex. \"C10.228.140.490\")", "Termos FILHOS (narrower terms) — conceitos mais específicos que ampliariam o contexto", "Termos RELACIONADOS (see also / related) — associações laterais entre descritores"
+        ],
+        "quality_score_current": 80,
+        "quality_score_ideal": 95
+      },
+      "current_embedding_text": "Epilepsias Mioclônicas\n[Epilepsies, Myoclonic]\nSinônimos: Epilepsias Mioclônicas[Epilepsies, Myoclonic], Grupo clinicamente diverso de síndromes epilépticas caracterizadas tanto por convulsões mioclônicas ou por mioclonia em associação com outros tipos de convulsões. As síndromes epilépticas mioclônicas dividem-se em três subtipos, baseados na etiologia: familiar, criptogênica e sintomática., Epilepsies, Myoclonic, NLM (2000), Epilepsias Mioclônicas, Epilepsy, Myoclonic, Myoclonic Epilepsies, Myoclonic Epilepsy, Myoclonic Seizure Disorder, MYOCLONIC SEIZURE DIS, Myoclonic Seizure Disorders, Seizure Disorder, Myoclonic, Seizure Disorders, Myoclonic, Epilepsy, Myoclonus, NLM (1992), Myoclonus Epilepsies, Myoclonus Epilepsy, Epilepsia Mioclônica, Epilepsia Mioclônica Idiopática[Idiopathic Myoclonic Epilepsy], Idiopathic Myoclonic Epilepsy, Epilepsia Mioclônica Idiopática, Epilepsies, Idiopathic Myoclonic, Epilepsy, Idiopathic Myoclonic, Idiopathic Myoclonic Epilepsies, Myoclonic Epilepsies, Idiopathic, Myoclonic Epilepsy, Idiopathic, Cryptogenic Myoclonic Epilepsy, Cryptogenic Myoclonic Epilepsies, Epilepsies, Cryptogenic Myoclonic, Epilepsy, Cryptogenic Myoclonic, Myoclonic Epilepsies, Cryptogenic, Myoclonic Epilepsy, Cryptogenic, Epilepsia Mioclônica Tipo Ausência[Myoclonic Absence Epilepsy], Myoclonic Absence Epilepsy, Epilepsia Mioclônica Tipo Ausência, Epilepsies, Myoclonic Absence, Epilepsy, Myoclonic Absence, Myoclonic Absence Epilepsies, Encefalopatia Mioclônica[Myoclonic Encephalopathy], Myoclonic Encephalopathy, MYOCLONIC ENCEPH, Encefalopatia Mioclônica, Encephalopathies, Myoclonic, Myoclonic Encephalopathies, Encephalopathy, Myoclonic, ENCEPH MYOCLONIC, Epilepsia Mioclônica Sintomática[Symptomatic Myoclonic Epilepsy], Symptomatic Myoclonic Epilepsy, Epilepsia Mioclônica Sintomática, Epilepsies, Symptomatic Myoclonic, Epilepsy, Symptomatic Myoclonic, Myoclonic Epilepsies, Symptomatic, Myoclonic Epilepsy, Symptomatic, Symptomatic Myoclonic Epilepsies, Síndrome de Doose[Epilepsy, Myoclonic, Infantile, Severe], Epilepsy, Myoclonic, Infantile, Severe, Síndrome de Doose, Myoclonic Epilepsy, Infantile, Severe, Myoclonic Epilepsy, Severe Infantile, Myoclonic Epilepsy, Severe, Of Infancy, OMIM (2013), Severe Myoclonic Epilepsy, Infantile, Severe Myoclonic Epilepsy Of Infancy, Dravet Syndrome, Dravet Syndromes, Infantile Severe Myoclonic Epilepsy, Severe Infantile Myoclonic Epilepsy\nGrupo clinicamente diverso de síndromes epilépticas caracterizadas tanto por convulsões mioclônicas ou por mioclonia em associação com outros tipos de convulsões. As síndromes epilépticas mioclônicas dividem-se em três subtipos, baseados na etiologia: familiar, criptogênica e sintomática.\nHierarquia: C10.228.140.490.375.130 | C10.228.140.490.493.063",
+      "ideal_embedding_text": "Conceito: Epilepsias Mioclônicas\nNome em inglês: Epilepsies, Myoclonic\nSinônimos e termos alternativos: Epilepsy, Myoclonic, Myoclonic Epilepsies, Myoclonic Epilepsy, Myoclonic Seizure Disorder, MYOCLONIC SEIZURE DIS, Myoclonic Seizure Disorders, Seizure Disorder, Myoclonic, Seizure Disorders, Myoclonic, Epilepsy, Myoclonus, Myoclonus Epilepsies, Myoclonus Epilepsy, Epilepsia Mioclônica, Epilepsia Mioclônica Idiopática[Idiopathic Myoclonic Epilepsy], Idiopathic Myoclonic Epilepsy, Epilepsia Mioclônica Idiopática, Epilepsies, Idiopathic Myoclonic, Epilepsy, Idiopathic Myoclonic, Idiopathic Myoclonic Epilepsies, Myoclonic Epilepsies, Idiopathic, Myoclonic Epilepsy, Idiopathic, Cryptogenic Myoclonic Epilepsy, Cryptogenic Myoclonic Epilepsies, Epilepsies, Cryptogenic Myoclonic, Epilepsy, Cryptogenic Myoclonic, Myoclonic Epilepsies, Cryptogenic, Myoclonic Epilepsy, Cryptogenic, Epilepsia Mioclônica Tipo Ausência[Myoclonic Absence Epilepsy], Myoclonic Absence Epilepsy, Epilepsia Mioclônica Tipo Ausência, Epilepsies, Myoclonic Absence, Epilepsy, Myoclonic Absence, Myoclonic Absence Epilepsies, Encefalopatia Mioclônica[Myoclonic Encephalopathy], Myoclonic Encephalopathy, MYOCLONIC ENCEPH, Encefalopatia Mioclônica, Encephalopathies, Myoclonic, Myoclonic Encephalopathies, Encephalopathy, Myoclonic, ENCEPH MYOCLONIC, Epilepsia Mioclônica Sintomática[Symptomatic Myoclonic Epilepsy], Symptomatic Myoclonic Epilepsy, Epilepsia Mioclônica Sintomática, Epilepsies, Symptomatic Myoclonic, Epilepsy, Symptomatic Myoclonic, Myoclonic Epilepsies, Symptomatic, Myoclonic Epilepsy, Symptomatic, Symptomatic Myoclonic Epilepsies, Síndrome de Doose[Epilepsy, Myoclonic, Infantile, Severe], Epilepsy, Myoclonic, Infantile, Severe, Síndrome de Doose, Myoclonic Epilepsy, Infantile, Severe, Myoclonic Epilepsy, Severe Infantile, Myoclonic Epilepsy, Severe, Of Infancy, Severe Myoclonic Epilepsy, Infantile, Severe Myoclonic Epilepsy Of Infancy, Dravet Syndrome, Dravet Syndromes, Infantile Severe Myoclonic Epilepsy, Severe Infantile Myoclonic Epilepsy\nDefinição clínica: Grupo clinicamente diverso de síndromes epilépticas caracterizadas tanto por convulsões mioclônicas ou por mioclonia em associação com outros tipos de convulsões. As síndromes epilépticas mioclônicas dividem-se em três subtipos, baseados na etiologia: familiar, criptogênica e sintomática.\nHierarquia (do mais geral ao mais específico): Doenças do Sistema Nervoso (D009422) > Doenças do Sistema Nervoso Central (D002493) > Encefalopatias (D001927) > Epilepsia (D004827) > Epilepsia Generalizada (D004829) > Síndromes Epilépticas (D000073376)\n[LACUNA: termos filhos (narrower terms) não disponíveis no banco — ampliariam cobertura semântica]\n[LACUNA: termos relacionados (see also) não disponíveis no banco — enriqueceriam associações laterais]",
+      "ideal_text_explanation": [
+        "O texto ideal para embedding de um descritor DeCS médico deve conter:", "1. Nome principal em PT e EN — ancora o conceito em ambos os idiomas", "2. Todos os sinônimos filtrados (sem ruído de datas NLM/OMIM) — maximiza cobertura lexical", "3. scope_note completa sem truncamento — é a definição semântica central do conceito",
+        "4. Hierarquia com NOMES resolvidos (não apenas códigos) — contextualiza o conceito na taxonomia", "5. Termos filhos (narrower terms) — ampliam a cobertura para buscas top-down", "6. Termos relacionados (see also) — capturam associações laterais não hierárquicas", "Lacunas identificadas neste banco: filhos e relacionados não estão armazenados em decs_descriptors.",
+        "Solução recomendada: enriquecer via BVS API (get-tree) ou importação do arquivo MeSH/DeCS completo."
+      ]
+    },
+    {
+      "ui": "D013036",
+      "name_pt": "Espasmos Infantis",
+      "name_en": "Spasms, Infantile",
+      "has_embedding": true,
+      "stats": {
+        "entry_terms_total": 68,
+        "entry_terms_in_current": 68,
+        "entry_terms_lost": 0,
+        "scope_note_total_chars": 690,
+        "scope_note_used_chars": 690,
+        "scope_note_truncated": false,
+        "current_text_total_chars": 3099,
+        "current_text_truncated": false,
+        "ideal_text_total_chars": 2728,
+        "ancestor_terms_resolved": 6
+      },
+      "information_loss": {
+        "issues": [],
+        "missing_from_db": [
+          "Nome completo dos termos PAI na hierarquia (só temos os códigos, ex. \"C10.228.140.490\")", "Termos FILHOS (narrower terms) — conceitos mais específicos que ampliariam o contexto", "Termos RELACIONADOS (see also / related) — associações laterais entre descritores"
+        ],
+        "quality_score_current": 90,
+        "quality_score_ideal": 100
+      },
+      "current_embedding_text": "Espasmos Infantis\n[Spasms, Infantile]\nSinônimos: Espasmos Infantis[Spasms, Infantile], Síndrome epiléptica caracterizada pela tríade de espasmos infantis, hipsarritmia e interrupção do desenvolvimento psicomotor no início dos ataques. A maioria se manifesta entre os 3 e 12 meses de idade, com espasmos constituídos de combinações de movimentos flexores ou extensores breves da cabeça, tronco e membros. A afecção é dividida em duas formas: criptogênica (idiopática) e sintomática (secundária a um processo de doença conhecido, como infecções intrauterinas, anormalidades do sistema nervoso, DOENÇAS CEREBRAIS METABÓLICAS CONGÊNITAS, prematuridade, asfixia perinatal, ESCLEROSE TUBEROSA, etc.). (Tradução livre do original: Menkes, Textbook of Child Neurology, 5th ed, pp744-8), Spasms, Infantile, NLM (1977), ORD (2010), Espasmos Infantis, Infantile Spasm, Infantile Spasms, NLM (2000), Lightning Attacks, Attack, Lightning, Attacks, Lightning, Lightning Attack, West Syndrome, UNK (19XX), Syndrome, West, Crises de Salamaleque, Espasmos Infantis Sintomáticos, Espasmos de Aquiescência, Espasmos em Salame, Síndrome de West, Hipsarritmia[Hypsarrhythmia], Hypsarrhythmia, Hipsarritmia, Hypsarrhythmias, Espasmos em Canivete[Jackknife Seizures], Jackknife Seizures, NLM (1991), Espasmos em Canivete, Jackknife Seizure, Seizure, Jackknife, Seizures, Jackknife, Espasmos Sintomáticos Infantis[Symptomatic Infantile Spasms], Symptomatic Infantile Spasms, Espasmos Sintomáticos Infantis, Infantile Spasm, Symptomatic, Infantile Spasms, Symptomatic, Spasm, Symptomatic Infantile, Spasms, Symptomatic Infantile, Symptomatic Infantile Spasm, Symptomatic West Syndrome, Syndrome, Symptomatic West, West Syndrome, Symptomatic, Crises de Salaam[Salaam Attacks], Salaam Attacks, Crises de Salaam, Attacks, Salaam, Salaam Seizures, Seizures, Salaam, Spasmus Nutans[Spasmus Nutans], Spasmus Nutans, Espasmos Criptogênicos[Cryptogenic Infantile Spasms], Cryptogenic Infantile Spasms, Espasmos Criptogênicos, Cryptogenic Infantile Spasm, Infantile Spasm, Cryptogenic, Infantile Spasms, Cryptogenic, Spasm, Cryptogenic Infantile, Spasms, Cryptogenic Infantile, Cryptogenic West Syndrome, Syndrome, Cryptogenic West, West Syndrome, Cryptogenic, Espasmo de Anuência[Nodding Spasm], Nodding Spasm, Espasmo de Anuência, Nodding Spasms, Spasm, Nodding, Spasms, Nodding\nSíndrome epiléptica caracterizada pela tríade de espasmos infantis, hipsarritmia e interrupção do desenvolvimento psicomotor no início dos ataques. A maioria se manifesta entre os 3 e 12 meses de idade, com espasmos constituídos de combinações de movimentos flexores ou extensores breves da cabeça, tronco e membros. A afecção é dividida em duas formas: criptogênica (idiopática) e sintomática (secundária a um processo de doença conhecido, como infecções intrauterinas, anormalidades do sistema nervoso, DOENÇAS CEREBRAIS METABÓLICAS CONGÊNITAS, prematuridade, asfixia perinatal, ESCLEROSE TUBEROSA, etc.). (Tradução livre do original: Menkes, Textbook of Child Neurology, 5th ed, pp744-8)\nHierarquia: C10.228.140.490.375.760 | C10.228.140.490.493.875",
+      "ideal_embedding_text": "Conceito: Espasmos Infantis\nNome em inglês: Spasms, Infantile\nSinônimos e termos alternativos: Infantile Spasm, Infantile Spasms, Lightning Attacks, Attack, Lightning, Attacks, Lightning, Lightning Attack, West Syndrome, Syndrome, West, Crises de Salamaleque, Espasmos Infantis Sintomáticos, Espasmos de Aquiescência, Espasmos em Salame, Síndrome de West, Hipsarritmia[Hypsarrhythmia], Hypsarrhythmia, Hipsarritmia, Hypsarrhythmias, Espasmos em Canivete[Jackknife Seizures], Jackknife Seizures, Espasmos em Canivete, Jackknife Seizure, Seizure, Jackknife, Seizures, Jackknife, Espasmos Sintomáticos Infantis[Symptomatic Infantile Spasms], Symptomatic Infantile Spasms, Espasmos Sintomáticos Infantis, Infantile Spasm, Symptomatic, Infantile Spasms, Symptomatic, Spasm, Symptomatic Infantile, Spasms, Symptomatic Infantile, Symptomatic Infantile Spasm, Symptomatic West Syndrome, Syndrome, Symptomatic West, West Syndrome, Symptomatic, Crises de Salaam[Salaam Attacks], Salaam Attacks, Crises de Salaam, Attacks, Salaam, Salaam Seizures, Seizures, Salaam, Spasmus Nutans[Spasmus Nutans], Spasmus Nutans, Espasmos Criptogênicos[Cryptogenic Infantile Spasms], Cryptogenic Infantile Spasms, Espasmos Criptogênicos, Cryptogenic Infantile Spasm, Infantile Spasm, Cryptogenic, Infantile Spasms, Cryptogenic, Spasm, Cryptogenic Infantile, Spasms, Cryptogenic Infantile, Cryptogenic West Syndrome, Syndrome, Cryptogenic West, West Syndrome, Cryptogenic, Espasmo de Anuência[Nodding Spasm], Nodding Spasm, Espasmo de Anuência, Nodding Spasms, Spasm, Nodding, Spasms, Nodding\nDefinição clínica: Síndrome epiléptica caracterizada pela tríade de espasmos infantis, hipsarritmia e interrupção do desenvolvimento psicomotor no início dos ataques. A maioria se manifesta entre os 3 e 12 meses de idade, com espasmos constituídos de combinações de movimentos flexores ou extensores breves da cabeça, tronco e membros. A afecção é dividida em duas formas: criptogênica (idiopática) e sintomática (secundária a um processo de doença conhecido, como infecções intrauterinas, anormalidades do sistema nervoso, DOENÇAS CEREBRAIS METABÓLICAS CONGÊNITAS, prematuridade, asfixia perinatal, ESCLEROSE TUBEROSA, etc.). (Tradução livre do original: Menkes, Textbook of Child Neurology, 5th ed, pp744-8)\nHierarquia (do mais geral ao mais específico): Doenças do Sistema Nervoso (D009422) > Doenças do Sistema Nervoso Central (D002493) > Encefalopatias (D001927) > Epilepsia (D004827) > Epilepsia Generalizada (D004829) > Síndromes Epilépticas (D000073376)\n[LACUNA: termos filhos (narrower terms) não disponíveis no banco — ampliariam cobertura semântica]\n[LACUNA: termos relacionados (see also) não disponíveis no banco — enriqueceriam associações laterais]",
+      "ideal_text_explanation": [
+        "O texto ideal para embedding de um descritor DeCS médico deve conter:", "1. Nome principal em PT e EN — ancora o conceito em ambos os idiomas", "2. Todos os sinônimos filtrados (sem ruído de datas NLM/OMIM) — maximiza cobertura lexical", "3. scope_note completa sem truncamento — é a definição semântica central do conceito",
+        "4. Hierarquia com NOMES resolvidos (não apenas códigos) — contextualiza o conceito na taxonomia", "5. Termos filhos (narrower terms) — ampliam a cobertura para buscas top-down", "6. Termos relacionados (see also) — capturam associações laterais não hierárquicas", "Lacunas identificadas neste banco: filhos e relacionados não estão armazenados em decs_descriptors.",
+        "Solução recomendada: enriquecer via BVS API (get-tree) ou importação do arquivo MeSH/DeCS completo."
+      ]
+    },
+    {
+      "ui": "D065768",
+      "name_pt": "Síndrome de Lennox-Gastaut",
+      "name_en": "Lennox Gastaut Syndrome",
+      "has_embedding": true,
+      "stats": {
+        "entry_terms_total": 8,
+        "entry_terms_in_current": 8,
+        "entry_terms_lost": 0,
+        "scope_note_total_chars": 42,
+        "scope_note_used_chars": 42,
+        "scope_note_truncated": false,
+        "current_text_total_chars": 396,
+        "current_text_truncated": false,
+        "ideal_text_total_chars": 778,
+        "ancestor_terms_resolved": 7
+      },
+      "information_loss": {
+        "issues": [
+          "scope_note MUITO CURTA (42 chars) — conteúdo clínico insuficiente para discriminar o conceito"
+        ],
+        "missing_from_db": [
+          "Nome completo dos termos PAI na hierarquia (só temos os códigos, ex. \"C10.228.140.490\")", "Termos FILHOS (narrower terms) — conceitos mais específicos que ampliariam o contexto", "Termos RELACIONADOS (see also / related) — associações laterais entre descritores", "Descrição clínica expandida — o scope_note no banco está incompleto para este descritor"
+        ],
+        "quality_score_current": 53,
+        "quality_score_ideal": 68
+      },
+      "current_embedding_text": "Síndrome de Lennox-Gastaut\n[Lennox Gastaut Syndrome]\nSinônimos: Síndrome de Lennox-Gastaut[Lennox Gastaut Syndrome], Síndrome epiléptica de início na infância., Lennox Gastaut Syndrome, NLM (2015), Síndrome de Lennox-Gastaut, Lennox Gastaut Syndromes, Lennox-Gastaut Syndrome, Síndrome de Lennox Gastaut\nSíndrome epiléptica de início na infância.\nHierarquia: C10.228.140.490.493.750 | C16.320.495",
+      "ideal_embedding_text": "Conceito: Síndrome de Lennox-Gastaut\nNome em inglês: Lennox Gastaut Syndrome\nSinônimos e termos alternativos: Lennox Gastaut Syndromes, Lennox-Gastaut Syndrome, Síndrome de Lennox Gastaut\nDefinição clínica: Síndrome epiléptica de início na infância.\nHierarquia (do mais geral ao mais específico): Doenças Genéticas Inatas (D030342) > Doenças do Sistema Nervoso (D009422) > Doenças do Sistema Nervoso Central (D002493) > Doenças e Anormalidades Congênitas, Hereditárias e Neonatais (D009358) > Encefalopatias (D001927) > Epilepsia (D004827) > Síndromes Epilépticas (D000073376)\n[LACUNA: termos filhos (narrower terms) não disponíveis no banco — ampliariam cobertura semântica]\n[LACUNA: termos relacionados (see also) não disponíveis no banco — enriqueceriam associações laterais]",
+      "ideal_text_explanation": [
+        "O texto ideal para embedding de um descritor DeCS médico deve conter:", "1. Nome principal em PT e EN — ancora o conceito em ambos os idiomas", "2. Todos os sinônimos filtrados (sem ruído de datas NLM/OMIM) — maximiza cobertura lexical", "3. scope_note completa sem truncamento — é a definição semântica central do conceito",
+        "4. Hierarquia com NOMES resolvidos (não apenas códigos) — contextualiza o conceito na taxonomia", "5. Termos filhos (narrower terms) — ampliam a cobertura para buscas top-down", "6. Termos relacionados (see also) — capturam associações laterais não hierárquicas", "Lacunas identificadas neste banco: filhos e relacionados não estão armazenados em decs_descriptors.",
+        "Solução recomendada: enriquecer via BVS API (get-tree) ou importação do arquivo MeSH/DeCS completo."
+      ]
+    },
+    {
+      "ui": "D000073376",
+      "name_pt": "Síndromes Epilépticas",
+      "name_en": "Epileptic Syndromes",
+      "has_embedding": true,
+      "stats": {
+        "entry_terms_total": 19,
+        "entry_terms_in_current": 19,
+        "entry_terms_lost": 0,
+        "scope_note_total_chars": 187,
+        "scope_note_used_chars": 187,
+        "scope_note_truncated": false,
+        "current_text_total_chars": 880,
+        "current_text_truncated": false,
+        "ideal_text_total_chars": 1006,
+        "ancestor_terms_resolved": 4
+      },
+      "information_loss": {
+        "issues": [],
+        "missing_from_db": [
+          "Nome completo dos termos PAI na hierarquia (só temos os códigos, ex. \"C10.228.140.490\")", "Termos FILHOS (narrower terms) — conceitos mais específicos que ampliariam o contexto", "Termos RELACIONADOS (see also / related) — associações laterais entre descritores", "Descrição clínica expandida — o scope_note no banco está incompleto para este descritor"
+        ],
+        "quality_score_current": 72,
+        "quality_score_ideal": 87
+      },
+      "current_embedding_text": "Síndromes Epilépticas\n[Epileptic Syndromes]\nSinônimos: Síndromes Epilépticas[Epileptic Syndromes], CRISES EPILÉPTICAS semelhantes em tipo e idade de início que possuem outras características semelhantes (por exemplo, curso clínico, achados de EEG, associação genética e neuropatologia)., Epileptic Syndromes, NLM (2018), Síndromes Epilépticas, Epileptic Syndrome, Epilepsy Syndromes, Epilepsy Syndrome, Syndromic Epilepsies, Epilepsies, Syndromic, Epilepsy, Syndromic, Syndromic Epilepsy, Síndromes de Epilepsia, Epilepsias Familiares[Familial Epilepsies], Familial Epilepsies, Epilepsias Familiares, Epilepsies, Familial, Epilepsy, Familial, Familial Epilepsy\nCRISES EPILÉPTICAS semelhantes em tipo e idade de início que possuem outras características semelhantes (por exemplo, curso clínico, achados de EEG, associação genética e neuropatologia).\nHierarquia: C10.228.140.490.493",
+      "ideal_embedding_text": "Conceito: Síndromes Epilépticas\nNome em inglês: Epileptic Syndromes\nSinônimos e termos alternativos: Epileptic Syndrome, Epilepsy Syndromes, Epilepsy Syndrome, Syndromic Epilepsies, Epilepsies, Syndromic, Epilepsy, Syndromic, Syndromic Epilepsy, Síndromes de Epilepsia, Epilepsias Familiares[Familial Epilepsies], Familial Epilepsies, Epilepsias Familiares, Epilepsies, Familial, Epilepsy, Familial, Familial Epilepsy\nDefinição clínica: CRISES EPILÉPTICAS semelhantes em tipo e idade de início que possuem outras características semelhantes (por exemplo, curso clínico, achados de EEG, associação genética e neuropatologia).\nHierarquia (do mais geral ao mais específico): Doenças do Sistema Nervoso (D009422) > Doenças do Sistema Nervoso Central (D002493) > Encefalopatias (D001927) > Epilepsia (D004827)\n[LACUNA: termos filhos (narrower terms) não disponíveis no banco — ampliariam cobertura semântica]\n[LACUNA: termos relacionados (see also) não disponíveis no banco — enriqueceriam associações laterais]",
+      "ideal_text_explanation": [
+        "O texto ideal para embedding de um descritor DeCS médico deve conter:", "1. Nome principal em PT e EN — ancora o conceito em ambos os idiomas", "2. Todos os sinônimos filtrados (sem ruído de datas NLM/OMIM) — maximiza cobertura lexical", "3. scope_note completa sem truncamento — é a definição semântica central do conceito",
+        "4. Hierarquia com NOMES resolvidos (não apenas códigos) — contextualiza o conceito na taxonomia", "5. Termos filhos (narrower terms) — ampliam a cobertura para buscas top-down", "6. Termos relacionados (see also) — capturam associações laterais não hierárquicas", "Lacunas identificadas neste banco: filhos e relacionados não estão armazenados em decs_descriptors.",
+        "Solução recomendada: enriquecer via BVS API (get-tree) ou importação do arquivo MeSH/DeCS completo."
+      ]
+    }
+  ]
+}

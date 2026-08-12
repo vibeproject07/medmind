@@ -6,6 +6,7 @@ import { ArrowLeft, Edit, Image as ImageIcon, X, AlertTriangle, Ban, RotateCcw, 
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import DeCSAutocomplete from '@/components/Common/DeCSAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
+import DeCSPipelineTracePanel, { type DeCSPipelineExposurePayload } from '@/components/Dashboard/DeCSPipelineTracePanel';
 import {
   ASSUNTOS_BY_AREA,
   toDisplayArea,
@@ -44,8 +45,15 @@ interface Question {
   anulada?: boolean;
   decs_terms?: string[];
   ai_decs_descriptors?: DeCSRecord[];
+  competencias?: CompetenciasResult | null;
+  temas?: TemasResult | null;
   created_at: string;
   updated_at: string;
+}
+
+interface DeCSBranch {
+  tree_id: string;
+  hierarchy_path: string;
 }
 
 interface DeCSRecord {
@@ -53,6 +61,7 @@ interface DeCSRecord {
   code: string;
   tree_ids: string[];
   hierarchy_path: string;
+  branches?: DeCSBranch[];
   role?: 'primary' | 'secondary';
   scope_note?: string;
   name_en?: string;
@@ -73,6 +82,19 @@ interface DeCSV2Descriptor {
 interface DeCSV2Result {
   decs_primary: DeCSV2Descriptor[];
   decs_secondary: DeCSV2Descriptor[];
+}
+
+interface CompetenciasResult {
+  competencias: string[];
+  habilidades: string[];
+  nivel_cognitivo: string;
+  dominio: string;
+}
+
+interface TemasResult {
+  temas: string[];
+  subtemas: string[];
+  tema_principal: string;
 }
 
 interface SimilarQuestion {
@@ -116,10 +138,15 @@ export default function QuestionDetailPage() {
   const [togglingAnulada, setTogglingAnulada] = useState(false);
   const [aiDecsLoading, setAiDecsLoading] = useState(false);
   const [aiDecsError, setAiDecsError] = useState<string | null>(null);
+  const [aiDecsPipelineExposure, setAiDecsPipelineExposure] = useState<DeCSPipelineExposurePayload | null>(null);
   const [aiDecsV2Loading, setAiDecsV2Loading] = useState(false);
   const [aiDecsV2Error, setAiDecsV2Error] = useState<string | null>(null);
   const [aiDecsV2Result, setAiDecsV2Result] = useState<DeCSV2Result | null>(null);
   const [showDecsV2, setShowDecsV2] = useState(false);
+  const [habilitiesLoading, setHabilitiesLoading] = useState(false);
+  const [habilitiesError, setHabilitiesError] = useState<string | null>(null);
+  const [temasLoading, setTemasLoading] = useState(false);
+  const [temasError, setTemasError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [similarQuestions, setSimilarQuestions] = useState<SimilarQuestion[]>([]);
@@ -249,6 +276,52 @@ export default function QuestionDetailPage() {
       console.error('Erro ao gerar embedding', err);
     } finally {
       setGeneratingEmbedding(false);
+    }
+  };
+
+  const handleGenerateTemas = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    setTemasLoading(true);
+    setTemasError(null);
+    try {
+      const res = await fetch(`/api/questions/${questionId}/themes`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setTemasError(data.error || 'Erro ao gerar temas.');
+        return;
+      }
+      setQuestion((prev) => prev ? { ...prev, temas: data.result } : prev);
+    } catch {
+      setTemasError('Erro ao conectar com o servidor.');
+    } finally {
+      setTemasLoading(false);
+    }
+  };
+
+  const handleGenerateHabilities = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    setHabilitiesLoading(true);
+    setHabilitiesError(null);
+    try {
+      const res = await fetch(`/api/questions/${questionId}/habilities`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setHabilitiesError(data.error || 'Erro ao gerar competências.');
+        return;
+      }
+      setQuestion((prev) => prev ? { ...prev, competencias: data.result } : prev);
+    } catch {
+      setHabilitiesError('Erro ao conectar com o servidor.');
+    } finally {
+      setHabilitiesLoading(false);
     }
   };
 
@@ -514,8 +587,9 @@ export default function QuestionDetailPage() {
         return;
       }
       setQuestion((prev) =>
-        prev ? { ...prev, ai_decs_descriptors: data.descriptors } : prev
+        prev ? { ...prev, ai_decs_descriptors: data.result } : prev
       );
+      setAiDecsPipelineExposure(data.pipeline_exposure ?? null);
     } catch {
       setAiDecsError('Erro ao conectar com o servidor.');
     } finally {
@@ -1260,6 +1334,8 @@ export default function QuestionDetailPage() {
           {aiDecsError && <p className="text-red-500 text-sm mb-3">{aiDecsError}</p>}
           {aiDecsV2Error && <p className="text-red-500 text-sm mb-3">{aiDecsV2Error}</p>}
 
+          <DeCSPipelineTracePanel exposure={aiDecsPipelineExposure} />
+
           {/* Loading states */}
           {(aiDecsLoading || aiDecsV2Loading) && (
             <p className="text-sm text-indigo-500 italic mb-3">
@@ -1326,9 +1402,17 @@ export default function QuestionDetailPage() {
                                 {d1p.code && (
                                   <span className="block text-xs text-indigo-400 font-mono mt-0.5">{d1p.code}</span>
                                 )}
-                                {d1p.hierarchy_path && (
+                                {d1p.branches && d1p.branches.length > 0 ? (
+                                  <div className="mt-0.5 space-y-0.5">
+                                    {d1p.branches.map((b) => (
+                                      <span key={b.tree_id} className="block text-xs text-indigo-300">
+                                        {b.hierarchy_path} <span className="font-mono text-indigo-200">({b.tree_id})</span>
+                                      </span>
+                                    ))}
+                                  </div>
+                                ) : d1p.hierarchy_path ? (
                                   <span className="block text-xs text-indigo-300 mt-0.5">{d1p.hierarchy_path}</span>
-                                )}
+                                ) : null}
                               </div>
                             ) : <span className="text-gray-300">—</span>}
                           </td>
@@ -1340,9 +1424,17 @@ export default function QuestionDetailPage() {
                                 {d1s.code && (
                                   <span className="block text-xs text-slate-400 font-mono mt-0.5">{d1s.code}</span>
                                 )}
-                                {d1s.hierarchy_path && (
+                                {d1s.branches && d1s.branches.length > 0 ? (
+                                  <div className="mt-0.5 space-y-0.5">
+                                    {d1s.branches.map((b) => (
+                                      <span key={b.tree_id} className="block text-xs text-slate-300">
+                                        {b.hierarchy_path} <span className="font-mono text-slate-200">({b.tree_id})</span>
+                                      </span>
+                                    ))}
+                                  </div>
+                                ) : d1s.hierarchy_path ? (
                                   <span className="block text-xs text-slate-300 mt-0.5">{d1s.hierarchy_path}</span>
-                                )}
+                                ) : null}
                               </div>
                             ) : <span className="text-gray-300">—</span>}
                           </td>
@@ -1399,6 +1491,158 @@ export default function QuestionDetailPage() {
               </div>
             );
           })()}
+        </div>
+      )}
+
+      {/* Competências e Habilidades — IA */}
+      {isAdmin && (
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Brain className="h-4 w-4 text-amber-500" />
+              <h3 className="text-lg font-semibold text-gray-800">Competências e Habilidades</h3>
+              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">gerado por IA</span>
+            </div>
+            {!isEditing && (
+              <button
+                onClick={handleGenerateHabilities}
+                disabled={habilitiesLoading}
+                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 transition"
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+                {habilitiesLoading ? 'Gerando…' : 'Gerar com IA'}
+              </button>
+            )}
+          </div>
+
+          {habilitiesError && <p className="text-red-500 text-sm mb-3">{habilitiesError}</p>}
+          {habilitiesLoading && (
+            <p className="text-sm text-amber-500 italic mb-3">Analisando competências…</p>
+          )}
+
+          {question.competencias ? (
+            <div className="space-y-4">
+              {question.competencias.dominio && (
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">Domínio</span>
+                  <span className="px-3 py-1 text-sm font-medium bg-amber-100 text-amber-800 rounded-full">
+                    {question.competencias.dominio}
+                  </span>
+                  {question.competencias.nivel_cognitivo && (
+                    <span className="px-3 py-1 text-sm font-medium bg-blue-100 text-blue-800 rounded-full">
+                      Bloom: {question.competencias.nivel_cognitivo}
+                    </span>
+                  )}
+                </div>
+              )}
+
+              {question.competencias.competencias.length > 0 && (
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Competências</p>
+                  <div className="flex flex-wrap gap-2">
+                    {question.competencias.competencias.map((c, i) => (
+                      <span key={i} className="inline-block px-3 py-1 text-sm font-medium bg-amber-50 border border-amber-200 text-amber-800 rounded-full">
+                        {c}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {question.competencias.habilidades.length > 0 && (
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Habilidades</p>
+                  <ul className="space-y-1">
+                    {question.competencias.habilidades.map((h, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                        <span className="mt-1 h-1.5 w-1.5 rounded-full bg-amber-400 flex-shrink-0" />
+                        {h}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          ) : (
+            !habilitiesLoading && (
+              <p className="text-gray-400 italic text-sm">
+                Nenhuma competência gerada ainda. Clique em &quot;Gerar com IA&quot; para classificar esta questão.
+              </p>
+            )
+          )}
+        </div>
+      )}
+
+      {/* Temas e Subtemas — IA */}
+      {isAdmin && (
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-teal-500" />
+              <h3 className="text-lg font-semibold text-gray-800">Temas e Subtemas</h3>
+              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">gerado por IA</span>
+            </div>
+            {!isEditing && (
+              <button
+                onClick={handleGenerateTemas}
+                disabled={temasLoading}
+                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium bg-teal-600 text-white rounded-lg hover:bg-teal-700 disabled:opacity-50 transition"
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+                {temasLoading ? 'Gerando…' : 'Gerar com IA'}
+              </button>
+            )}
+          </div>
+
+          {temasError && <p className="text-red-500 text-sm mb-3">{temasError}</p>}
+          {temasLoading && (
+            <p className="text-sm text-teal-500 italic mb-3">Identificando temas e subtemas…</p>
+          )}
+
+          {question.temas ? (
+            <div className="space-y-4">
+              {question.temas.tema_principal && (
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">Tema Principal</span>
+                  <span className="px-3 py-1 text-sm font-semibold bg-teal-600 text-white rounded-full">
+                    {question.temas.tema_principal}
+                  </span>
+                </div>
+              )}
+
+              {question.temas.temas.length > 0 && (
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Temas</p>
+                  <div className="flex flex-wrap gap-2">
+                    {question.temas.temas.map((t, i) => (
+                      <span key={i} className="inline-block px-3 py-1 text-sm font-medium bg-teal-50 border border-teal-200 text-teal-800 rounded-full">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {question.temas.subtemas.length > 0 && (
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Subtemas</p>
+                  <div className="flex flex-wrap gap-2">
+                    {question.temas.subtemas.map((s, i) => (
+                      <span key={i} className="inline-block px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200 rounded-full">
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            !temasLoading && (
+              <p className="text-gray-400 italic text-sm">
+                Nenhum tema gerado ainda. Clique em &quot;Gerar com IA&quot; para classificar esta questão.
+              </p>
+            )
+          )}
         </div>
       )}
 

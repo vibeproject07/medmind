@@ -3,7 +3,7 @@ import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { getRuntimeAgent } from '@/lib/ai-agent-runtime';
 import { GoogleGenAI } from '@google/genai';
-import { runDeCSPipeline, type DeCSRecord, type DeCSThemes } from '@/lib/decs-pipeline';
+import { runDeCSPipeline, buildPipelineFrontendExposure, type DeCSRecord, type DeCSThemes } from '@/lib/decs-pipeline';
 import { saveClassificationArtifact } from '@/lib/decs-classification-storage';
 
 export const runtime = 'nodejs';
@@ -54,10 +54,8 @@ export async function POST(
       .filter(Boolean)
       .join('\n');
 
-    const [classifierAgent] = await Promise.all([
-      getRuntimeAgent('decs_classifier'),
-      getRuntimeAgent('decs_validator'),
-    ]);
+    // decs_validator desativado em 18/06/2026 — validação Gemini removida do pipeline V1
+    const classifierAgent = await getRuntimeAgent('decs_classifier');
 
     const ai = new GoogleGenAI({ apiKey: geminiKey, apiVersion: 'v1beta' });
     const response = await ai.models.generateContent({
@@ -108,18 +106,20 @@ export async function POST(
       );
     }
 
-    const { descriptors, dropped_by_filter, dropped_by_gemini } = await runDeCSPipeline(
+    const { descriptors, dropped_by_filter, dropped_by_gemini, term_trace } = await runDeCSPipeline(
       themes,
       questionText,
       decsKey,
       geminiKey,
       classifierAgent.model,
-      'decs_validator',
     );
+
+    const pipeline_exposure = buildPipelineFrontendExposure(themes, term_trace);
 
     const artifact = {
       result: descriptors,
       themes_identified: themes,
+      pipeline_exposure,
       pipeline_stats: {
         primary_terms: themes.primary.length,
         secondary_terms: themes.secondary.length,
@@ -135,7 +135,7 @@ export async function POST(
     );
     await saveClassificationArtifact(params.id, 'v1', artifact);
 
-    return NextResponse.json(artifact);
+    return NextResponse.json({ ...artifact, pipeline_exposure });
   } catch (err: unknown) {
     console.error('[decs-ai] error:', err);
     const message = err instanceof Error ? err.message : 'Erro interno';

@@ -39,7 +39,7 @@ Exemplos corretos:
     temperature: 0.1,
     max_output_tokens: 8192,
   },
-  {
+  /*{
     key: 'decs_validator',
     name: 'Validador DeCS (Etapa 3)',
     description: 'Recebe candidatos DeCS pré-filtrados e valida quais são clinicamente relevantes para o tema central da questão médica.',
@@ -60,7 +60,7 @@ Sem explicação, sem markdown, apenas o array JSON.`,
     model: 'gemini-2.5-flash',
     temperature: 0.0,
     max_output_tokens: 8192,
-  },
+  },*/
   {
     key: 'decs_indexer_v2',
     name: 'Indexador DeCS V2 (Etapa 1)',
@@ -110,6 +110,59 @@ Retorne SOMENTE um JSON com esta estrutura (sem markdown, sem explicação):
     model: 'gemini-2.5-flash',
     temperature: 0.05,
     max_output_tokens: 8192,
+  },
+  {
+    key: 'habilities_agent',
+    name: 'Competências e Habilidades',
+    description: 'Analisa uma questão médica e identifica as competências e habilidades avaliadas, o nível cognitivo (Bloom) e o domínio clínico.',
+    system_prompt: `Você é um especialista em educação médica e avaliação por competências.
+
+Analise a questão médica abaixo (enunciado + alternativas) e identifique:
+
+1. COMPETÊNCIAS: os domínios de competência médica avaliados (ex: "Diagnóstico clínico", "Conduta terapêutica", "Interpretação de exames", "Raciocínio fisiopatológico", "Prevenção e promoção da saúde", "Urgência e emergência", "Comunicação e bioética").
+
+2. HABILIDADES: as habilidades específicas que o estudante precisa demonstrar para responder corretamente (ex: "Reconhecer a tríade clínica de X", "Selecionar o antibiótico de escolha para Y", "Interpretar alterações no ECG").
+
+3. NÍVEL COGNITIVO (Taxonomia de Bloom): classifique em UMA das categorias:
+   - "Lembrança" — o estudante apenas precisa recordar um fato
+   - "Compreensão" — o estudante precisa entender e explicar um conceito
+   - "Aplicação" — o estudante aplica conhecimento a uma situação clínica nova
+   - "Análise" — o estudante analisa e decompõe informações para resolver o problema
+   - "Avaliação" — o estudante julga e toma decisões clínicas baseadas em evidências
+
+4. DOMÍNIO: a área médica principal da questão (ex: "Cardiologia", "Infectologia", "Pediatria", "Ginecologia e Obstetrícia", "Clínica Médica").
+
+Retorne SOMENTE um JSON com esta estrutura exata (sem markdown, sem explicação):
+{"competencias":["competência 1","competência 2"],"habilidades":["habilidade específica 1","habilidade específica 2","habilidade específica 3"],"nivel_cognitivo":"Aplicação","dominio":"Cardiologia"}`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.1,
+    max_output_tokens: 2048,
+  },
+  {
+    key: 'question_themes_assigner',
+    name: 'Atribuidor de Temas e Subtemas',
+    description: 'Analisa uma questão médica e identifica os temas e subtemas do conteúdo abordado.',
+    system_prompt: `Você é um especialista em classificação de conteúdo médico para fins didáticos.
+
+Analise a questão médica abaixo (enunciado + alternativas) e identifique:
+
+1. TEMAS: as grandes áreas temáticas médicas abordadas pela questão (ex: "Cardiologia", "Farmacologia Clínica", "Semiologia", "Doenças Infecciosas", "Urgência e Emergência"). Liste de 1 a 3 temas.
+
+2. SUBTEMAS: os tópicos específicos dentro dos temas, representando os conteúdos mais granulares abordados (ex: "Insuficiência Cardíaca", "Inibidores da ECA", "Edema pulmonar agudo", "Diuréticos de alça"). Liste de 2 a 6 subtemas.
+
+3. TEMA PRINCIPAL: o tema mais central e determinante para responder corretamente à questão (escolha apenas 1 dos temas listados).
+
+Regras:
+- Use nomes de temas e subtemas em português (pt-BR), claros e objetivos.
+- Temas devem ser áreas médicas amplas; subtemas devem ser conteúdos específicos.
+- Prefira termos que um estudante de medicina reconheceria em um programa de disciplina.
+- NÃO repita um subtema que já esteja contemplado pelo tema (ex: não liste "Cardiologia" como subtema se já é um tema).
+
+Retorne SOMENTE um JSON com esta estrutura exata (sem markdown, sem explicação):
+{"temas":["tema 1","tema 2"],"subtemas":["subtema 1","subtema 2","subtema 3"],"tema_principal":"tema 1"}`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.1,
+    max_output_tokens: 1024,
   },
   {
     key: 'resumo_documento',
@@ -596,6 +649,28 @@ Sem explicação, sem markdown, apenas o array JSON.`,
     model: 'gemini-2.5-flash',
     temperature: 0.0,
     max_output_tokens: 8192,
+  },
+  {
+    key: 'busca_vetorial',
+    name: 'Agente de Expansão de Busca Vetorial',
+    description: 'Expande uma consulta curta do usuário em texto médico rico antes de gerar o embedding para busca semântica.',
+    system_prompt: `Você é um especialista em medicina clínica e busca bibliográfica.
+
+Sua tarefa é expandir uma consulta de busca curta em um parágrafo médico rico e detalhado (máximo 250 palavras) que capture:
+- O diagnóstico, condição ou procedimento principal mencionado
+- Fisiopatologia e mecanismos relevantes
+- Manifestações clínicas típicas e critérios diagnósticos
+- Diagnósticos diferenciais mais comuns
+- Termos técnicos em pt-BR (inclua equivalentes em inglês/latim quando útil para busca)
+
+Regras:
+- Responda APENAS com o texto expandido, sem título, sem prefixo ("Aqui está:", etc.) e sem formatação markdown.
+- Use linguagem técnica médica densa — o objetivo é maximizar a sobreposição semântica com questões de concursos médicos.
+- Se a consulta já for detalhada, complemente-a sem repetir o que foi dito.
+- Máximo de 250 palavras.`,
+    model: 'gemini-2.5-flash',
+    temperature: 0.3,
+    max_output_tokens: 1024,
   },
   {
     key: 'transform_base',
