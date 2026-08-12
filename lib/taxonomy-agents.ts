@@ -13,6 +13,12 @@ import {
   normalizeTaxonomyLabel,
   themePairExistsInCatalogOrPending,
 } from '@/lib/taxonomy-schema';
+import {
+  grandeAreaToAreasConhecimento,
+  normalizeGrandeArea,
+  type GrandeArea,
+} from '@/lib/grande-area';
+import { AI_AGENT_DEFAULTS } from '@/lib/ai-agents-defaults';
 
 export interface CompetenciaGroup {
   competencia: string;
@@ -42,6 +48,7 @@ export interface TemaGroup {
 }
 
 export interface ThemesAssignResult {
+  grande_area?: GrandeArea | null;
   temas: TemaGroup[];
   tema_principal?: string;
 }
@@ -135,7 +142,10 @@ export function parseHabilitiesResult(rawText: string): HabilitiesResult {
 export function parseThemesAssignResult(rawText: string): ThemesAssignResult {
   const parsed = safeParseJsonObject(rawText);
 
-  // Formato aninhado: { temas: [{ tema, subtemas }] }
+  // Extrai e normaliza grande_area (presente no prompt atualizado)
+  const grande_area = normalizeGrandeArea(parsed.grande_area) ?? undefined;
+
+  // Formato aninhado: { grande_area, temas: [{ tema, subtemas }] }
   if (
     Array.isArray(parsed.temas) &&
     parsed.temas.length > 0 &&
@@ -167,6 +177,7 @@ export function parseThemesAssignResult(rawText: string): ThemesAssignResult {
       }
     }
     return {
+      grande_area,
       temas,
       tema_principal: principalName || undefined,
     };
@@ -199,6 +210,7 @@ export function parseThemesAssignResult(rawText: string): ThemesAssignResult {
   }
 
   return {
+    grande_area,
     temas,
     tema_principal: temaPrincipal || undefined,
   };
@@ -436,6 +448,19 @@ export async function classifyQuestionThemes(
   );
 
   const agent = await getRuntimeAgent('question_themes_assigner');
+
+  // Se o prompt armazenado não inclui ainda o campo grande_area (ex.: instalação
+  // antiga não migrada), usa o default do código APENAS para esta chamada sem
+  // alterar o banco — preserva prompts customizados no Editor de Agentes.
+  if (!agent.system_instruction.includes('grande_area')) {
+    const defaultDef = AI_AGENT_DEFAULTS.find(
+      (d) => d.key === 'question_themes_assigner',
+    );
+    if (defaultDef) {
+      agent.system_instruction = defaultDef.system_prompt;
+    }
+  }
+
   const hasPlaceholders =
     agent.system_instruction.includes('{{QUESTAO}}') ||
     agent.system_instruction.includes('{{LISTA_TEMAS}}');
@@ -470,12 +495,43 @@ export async function classifyQuestionThemes(
   if (result.temas.length === 0) {
     throw new Error('O agente não identificou temas/subtemas.');
   }
+  if (!result.grande_area) {
+    throw new Error(
+      'O agente não identificou a grande área curricular. Tente novamente.',
+    );
+  }
 
   const questionId = Number(question.id);
   await query(
     `UPDATE questions SET ai_question_themes = $1, updated_at = NOW() WHERE id = $2`,
     [JSON.stringify(result), questionId],
   );
+
+  // Sincroniza grande_area → areas_conhecimento (rótulo canônico do produto)
+  const areaLabel = grandeAreaToAreasConhecimento(result.grande_area ?? null);
+  if (areaLabel) {
+    let existing: string[] = [];
+    try {
+      const raw = question.areas_conhecimento;
+      if (typeof raw === 'string' && raw.trim()) existing = JSON.parse(raw);
+      else if (Array.isArray(raw)) existing = raw.map(String);
+    } catch {
+      existing = [];
+    }
+    // Remove qualquer variante de grande área anterior (acento, alias, valor canônico)
+    // usando normalizeGrandeArea — reconhece "Clinica Medica", "GO", "Clínica Médica", etc.
+    const withoutOtherGrandes = existing.filter(
+      (a) => normalizeGrandeArea(a) === null,
+    );
+    const next = [
+      areaLabel,
+      ...withoutOtherGrandes.filter((a) => a !== areaLabel),
+    ];
+    await query(
+      `UPDATE questions SET areas_conhecimento = $1, updated_at = NOW() WHERE id = $2`,
+      [JSON.stringify(next), questionId],
+    );
+  }
 
   let pendingInserted = 0;
   for (const group of result.temas) {

@@ -16,8 +16,17 @@ interface TemaGroup {
 }
 
 interface ThemesResult {
+  grande_area?: string | null;
   temas: TemaGroup[];
 }
+
+const GRANDE_AREA_UI: Record<string, { label: string; badge: string }> = {
+  'Clinica Medica': { label: 'Clínica Médica', badge: 'bg-blue-100 text-blue-800 border-blue-200' },
+  'Cirurgia Geral': { label: 'Cirurgia Geral', badge: 'bg-orange-100 text-orange-800 border-orange-200' },
+  Preventiva: { label: 'Preventiva / MFC', badge: 'bg-green-100 text-green-800 border-green-200' },
+  Pediatria: { label: 'Pediatria', badge: 'bg-purple-100 text-purple-800 border-purple-200' },
+  GO: { label: 'Ginecologia e Obstetrícia', badge: 'bg-pink-100 text-pink-800 border-pink-200' },
+};
 
 interface SimilarQuestion {
   id: number;
@@ -141,6 +150,18 @@ export default function QuestionThemesAssignSection({
         <p className="text-sm text-sky-500 italic flex items-center gap-2">
           <Loader2 className="h-4 w-4 animate-spin" /> Executando question_themes_assigner…
         </p>
+      )}
+
+      {/* Badge de grande área */}
+      {result?.grande_area && GRANDE_AREA_UI[result.grande_area] && (
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-gray-500 font-medium">Grande área:</span>
+          <span
+            className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 text-xs font-semibold rounded-full border ${GRANDE_AREA_UI[result.grande_area].badge}`}
+          >
+            {GRANDE_AREA_UI[result.grande_area].label}
+          </span>
+        </div>
       )}
 
       {!result?.temas?.length ? (
