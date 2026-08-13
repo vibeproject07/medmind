@@ -61,10 +61,12 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup
 
-# ── Carregar .env se existir ──────────────────────────────────────────────────
+# ── Carregar .env da pasta arthur/ (ou cwd) ───────────────────────────────────
 try:
     from dotenv import load_dotenv
-    load_dotenv()
+    _DIR = os.path.dirname(os.path.abspath(__file__))
+    load_dotenv(os.path.join(_DIR, ".env"))
+    load_dotenv()  # fallback: .env no cwd
 except ImportError:
     pass
 
@@ -508,6 +510,7 @@ def salvar_json(resultados: list, caminho: str, tempo_total: float) -> None:
 
     payload = {
         "gerado_em":      datetime.now().isoformat(),
+        "fonte":          "https://www.provaderesidencia.com.br",
         "total_provas":   len(resultados),
         "total_questoes": total_questoes,
         "tempo_segundos": round(tempo_total, 1),
@@ -526,6 +529,15 @@ def salvar_json(resultados: list, caminho: str, tempo_total: float) -> None:
         json.dump(payload, f, ensure_ascii=False, indent=2)
     os.replace(tmp, caminho)
     logger.info(f"[SAÍDA] JSON salvo em: {caminho}")
+
+    # CSV paralelo (só nome + quantidade) para conferência rápida
+    caminho_csv = os.path.splitext(caminho)[0] + ".csv"
+    with open(caminho_csv, "w", encoding="utf-8") as f:
+        f.write("nome,questoes,url\n")
+        for r in resultados:
+            nome = '"' + r["nome"].replace('"', '""') + '"'
+            f.write(f"{nome},{r['questoes']},{r['url']}\n")
+    logger.info(f"[SAÍDA] CSV salvo em: {caminho_csv}")
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -613,9 +625,13 @@ def main(
     # Relatório final
     imprimir_relatorio(resultados, tempo_total)
 
-    # Salvar JSON se solicitado
-    if caminho_saida:
-        salvar_json(resultados, caminho_saida, tempo_total)
+    # Salvar JSON (padrão: arthur/exports/contagem_questoes_<timestamp>.json)
+    if not caminho_saida:
+        exports = os.path.join(os.path.dirname(os.path.abspath(__file__)), "exports")
+        os.makedirs(exports, exist_ok=True)
+        ts = datetime.now().strftime("%Y%m%d-%H%M%S")
+        caminho_saida = os.path.join(exports, f"contagem_questoes_{ts}.json")
+    salvar_json(resultados, caminho_saida, tempo_total)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
