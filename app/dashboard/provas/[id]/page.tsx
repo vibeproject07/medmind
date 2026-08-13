@@ -361,6 +361,8 @@ export default function ProvaExamPage() {
   const [groupSize, setGroupSize] = useState(DESKTOP_GROUP);
   const [groupIndex, setGroupIndex] = useState(0);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [loadingProva, setLoadingProva] = useState(true);
   const [editingQuestionId, setEditingQuestionId] = useState<number | null>(null);
   const [editForm, setEditForm] = useState<{
     statement: string;
@@ -386,6 +388,18 @@ export default function ProvaExamPage() {
   const [savingEdit, setSavingEdit] = useState(false);
   const [togglingAnulada, setTogglingAnulada] = useState(false);
 
+  const cacheProvaLight = (data: Prova) => {
+    try {
+      const light = {
+        ...data,
+        questions: data.questions.map((q) => ({ ...q, images: [] as string[] })),
+      };
+      localStorage.setItem(`examProva_${provaId}`, JSON.stringify(light));
+    } catch {
+      /* QuotaExceeded — API é a fonte da verdade */
+    }
+  };
+
   useEffect(() => {
     const update = () => setGroupSize(window.innerWidth < 640 ? MOBILE_GROUP : DESKTOP_GROUP);
     update();
@@ -398,11 +412,62 @@ export default function ProvaExamPage() {
   }, [examIndex, groupSize]);
 
   useEffect(() => {
-    const raw = localStorage.getItem(`examProva_${provaId}`);
-    if (!raw) { router.replace('/dashboard/provas'); return; }
-    try { setProva(JSON.parse(raw)); }
-    catch { router.replace('/dashboard/provas'); }
-  }, [provaId, router]);
+    let cancelled = false;
+
+    const load = async () => {
+      setLoadingProva(true);
+      setLoadError(null);
+
+      // Cache opcional (sem depender dele — evita QuotaExceeded com imagens base64)
+      try {
+        const raw = localStorage.getItem(`examProva_${provaId}`);
+        if (raw) {
+          const cached = JSON.parse(raw) as Prova;
+          if (!cancelled && cached?.id && Array.isArray(cached.questions)) {
+            setProva(cached);
+            setLoadingProva(false);
+          }
+        }
+      } catch {
+        /* ignore cache */
+      }
+
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          if (!cancelled) {
+            setLoadError('Sessão expirada. Faça login novamente.');
+            setLoadingProva(false);
+          }
+          return;
+        }
+        const res = await fetch(`/api/provas/${provaId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          if (!cancelled) {
+            setLoadError(data.error || `Erro ao carregar prova (${res.status}).`);
+            setLoadingProva(false);
+          }
+          return;
+        }
+        if (cancelled) return;
+        setProva(data);
+        // Cache leve: sem imagens (evita estourar localStorage)
+        cacheProvaLight(data);
+      } catch {
+        if (!cancelled) setLoadError('Erro de rede ao carregar a prova.');
+      } finally {
+        if (!cancelled) setLoadingProva(false);
+      }
+    };
+
+    void load();
+    return () => {
+      cancelled = true;
+    };
+  }, [provaId]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -536,6 +601,30 @@ export default function ProvaExamPage() {
     },
     [groupIndex, groupSize],
   );
+
+  if (loadingProva && !prova) {
+    return (
+      <div className="flex items-center justify-center min-h-64">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600" />
+      </div>
+    );
+  }
+
+  if (loadError && !prova) {
+    return (
+      <div className="max-w-lg mx-auto mt-12 p-6 bg-white border border-red-200 rounded-xl space-y-4">
+        <p className="text-red-700 font-semibold">Não foi possível abrir a prova</p>
+        <p className="text-sm text-gray-600">{loadError}</p>
+        <button
+          type="button"
+          onClick={() => router.push('/dashboard/provas')}
+          className="px-4 py-2 bg-primary-600 text-white rounded-lg text-sm font-medium hover:bg-primary-700"
+        >
+          Voltar às provas
+        </button>
+      </div>
+    );
+  }
 
   if (!prova) {
     return (
@@ -756,7 +845,7 @@ export default function ProvaExamPage() {
             : q,
         );
         const next = { ...prev, questions: nextQuestions };
-        localStorage.setItem(`examProva_${provaId}`, JSON.stringify(next));
+        cacheProvaLight(next);
         return next;
       });
 
@@ -799,7 +888,7 @@ export default function ProvaExamPage() {
           q.id === currentQuestion.id ? { ...q, anulada: raw.anulada } : q,
         );
         const next = { ...prev, questions: nextQuestions };
-        localStorage.setItem(`examProva_${provaId}`, JSON.stringify(next));
+        cacheProvaLight(next);
         return next;
       });
       setEditingQuestionId(null);
