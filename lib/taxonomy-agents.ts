@@ -8,13 +8,12 @@ import {
   type AgentTokenUsage,
 } from '@/lib/gemini-token-usage';
 import {
-  competencyPairExistsInCatalogOrPending,
-  GRANDE_AREA_TO_AREAS_CONHECIMENTO,
   grandeAreaToAreasConhecimento,
   normalizeGrandeArea,
   type GrandeArea,
 } from '@/lib/grande-area';
 import {
+  competencyPairExistsInCatalogOrPending,
   ensureTaxonomyTables,
   normalizeTaxonomyLabel,
   themePairExistsInCatalogOrPending,
@@ -507,13 +506,10 @@ export async function classifyQuestionThemes(
     } catch {
       existing = [];
     }
-    const canonSet = new Set(
-      Object.values(GRANDE_AREA_TO_AREAS_CONHECIMENTO).map((x) =>
-        x.toLowerCase(),
-      ),
-    );
+    // Remove qualquer variante de grande área anterior usando normalizeGrandeArea —
+    // reconhece "Clinica Medica", "GO", "Clínica Médica", aliases, etc.
     const withoutOtherGrandes = existing.filter(
-      (a) => !canonSet.has(normalizeTaxonomyLabel(a).toLowerCase()),
+      (a) => normalizeGrandeArea(a) === null,
     );
     const next = [
       areaLabel,

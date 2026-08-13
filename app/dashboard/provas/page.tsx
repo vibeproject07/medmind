@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChevronDown, ChevronUp, Filter, FolderOpen, Loader2, X, Play, CheckCircle, LogIn, Eye, Edit, Save, Search } from 'lucide-react';
+import { ChevronDown, ChevronUp, Filter, FolderOpen, Loader2, X, Play, CheckCircle, LogIn, Eye, Edit, Save, Search, AlertTriangle } from 'lucide-react';
 import { jsonrepair } from 'jsonrepair';
 
 interface ProvaListing {
@@ -541,24 +541,51 @@ export default function ProvasPage() {
     reader.readAsArrayBuffer(file);
   };
 
-  // ── Realizar prova — fetch full questions on demand ──────────────────────
+  // ── Realizar prova — navega; a página da prova carrega via API (não depende do localStorage)
+  const [realizarError, setRealizarError] = useState<string | null>(null);
+
   const handleRealizarProva = async (provaId: number) => {
     const token = localStorage.getItem('token');
     if (!token) { setSessionExpired(true); return; }
     setRealizandoProvaId(provaId);
+    setRealizarError(null);
     try {
+      // Limpa cache antigo (pode estar corrompido / estourado)
+      try { localStorage.removeItem(`examProva_${provaId}`); } catch { /* ignore */ }
+
       const res = await fetch(`/api/provas/${provaId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      if (res.ok) {
-        const prova = await res.json();
-        localStorage.setItem(`examProva_${provaId}`, JSON.stringify(prova));
-        router.push(`/dashboard/provas/${provaId}`);
-      } else if (res.status === 401 || res.status === 403) {
+      if (res.status === 401 || res.status === 403) {
         setSessionExpired(true);
+        return;
       }
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setRealizarError(
+          (data as { error?: string }).error ||
+            `Não foi possível carregar a prova (HTTP ${res.status}).`,
+        );
+        return;
+      }
+      const prova = await res.json();
+      // Cache leve sem imagens — a página busca a prova completa na API
+      try {
+        const light = {
+          ...prova,
+          questions: (prova.questions ?? []).map((q: { images?: string[] }) => ({
+            ...q,
+            images: [],
+          })),
+        };
+        localStorage.setItem(`examProva_${provaId}`, JSON.stringify(light));
+      } catch {
+        /* QuotaExceeded — navegamos mesmo assim; a página usa a API */
+      }
+      router.push(`/dashboard/provas/${provaId}`);
     } catch (err) {
       console.error('Erro ao carregar prova:', err);
+      setRealizarError('Erro de rede ao carregar a prova. Tente novamente.');
     } finally {
       setRealizandoProvaId(null);
     }
@@ -607,6 +634,24 @@ export default function ProvasPage() {
             <LogIn className="w-4 h-4" />
             Ir para login
           </Link>
+        </div>
+      )}
+
+      {realizarError && (
+        <div className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
+          <AlertTriangle className="w-5 h-5 flex-shrink-0 text-red-600 mt-0.5" />
+          <div className="flex-1">
+            <p className="font-semibold">Não foi possível abrir a prova</p>
+            <p className="text-sm mt-0.5">{realizarError}</p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setRealizarError(null)}
+            className="p-1 text-red-500 hover:bg-red-100 rounded"
+            aria-label="Fechar"
+          >
+            <X className="w-4 h-4" />
+          </button>
         </div>
       )}
 

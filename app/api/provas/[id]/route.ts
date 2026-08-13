@@ -169,3 +169,69 @@ export async function PUT(
     return NextResponse.json({ error: 'Erro ao atualizar prova' }, { status: 500 });
   }
 }
+
+/**
+ * DELETE /api/provas/[id]?mode=delete_questions|unlink_questions
+ * - delete_questions (padrão): apaga as questões da prova e a prova
+ * - unlink_questions: desvincula questões (prova_id=null) e apaga só a prova
+ *
+ * Excluir uma duplicata NÃO conserta a outra se o problema for localStorage/quota —
+ * a correção de acesso é carregar via API. Mas remove o card duplicado da lista.
+ */
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  try {
+    const authHeader = request.headers.get('authorization');
+    let token = authHeader?.replace('Bearer ', '') || request.cookies.get('token')?.value;
+    if (token) token = token.trim().replace(/^["']|["']$/g, '');
+    if (!token) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
+
+    const user = verifyToken(token);
+    if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
+    if (user.role !== 'admin') {
+      return NextResponse.json({ error: 'Acesso negado. Apenas administradores.' }, { status: 403 });
+    }
+
+    const provaId = parseInt(params.id, 10);
+    if (isNaN(provaId)) return NextResponse.json({ error: 'ID inválido' }, { status: 400 });
+
+    const mode = new URL(request.url).searchParams.get('mode') || 'delete_questions';
+
+    const existing = await query('SELECT id, nome FROM provas WHERE id = $1', [provaId]);
+    if (existing.rows.length === 0) {
+      return NextResponse.json({ error: 'Prova não encontrada' }, { status: 404 });
+    }
+
+    const countRes = await query(
+      'SELECT COUNT(*)::int AS n FROM questions WHERE prova_id = $1',
+      [provaId],
+    );
+    const questionCount = countRes.rows[0]?.n ?? 0;
+
+    if (mode === 'unlink_questions') {
+      await query(
+        `UPDATE questions
+         SET prova_id = NULL, numero_na_prova = NULL, updated_at = NOW()
+         WHERE prova_id = $1`,
+        [provaId],
+      );
+    } else {
+      await query('DELETE FROM questions WHERE prova_id = $1', [provaId]);
+    }
+
+    await query('DELETE FROM provas WHERE id = $1', [provaId]);
+
+    return NextResponse.json({
+      ok: true,
+      deleted_prova_id: provaId,
+      nome: existing.rows[0].nome,
+      mode,
+      questions_affected: questionCount,
+    });
+  } catch (error) {
+    console.error('Erro ao excluir prova:', error);
+    return NextResponse.json({ error: 'Erro ao excluir prova' }, { status: 500 });
+  }
+}

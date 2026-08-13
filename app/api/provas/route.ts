@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getPool, query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
+import { computeProvaContentFingerprint } from '@/lib/prova-fingerprint';
+import { ensureProvaFingerprintColumn } from '@/lib/prova-fingerprint-schema';
 
 export const runtime = 'nodejs';
 
@@ -254,6 +256,7 @@ export async function POST(request: NextRequest) {
     // Só A/B são obrigatórias; C/D podem ser nulas (questões com 2 alternativas)
     await query(`ALTER TABLE questions ALTER COLUMN option_c DROP NOT NULL`);
     await query(`ALTER TABLE questions ALTER COLUMN option_d DROP NOT NULL`);
+    await ensureProvaFingerprintColumn();
 
     const rawProvas = normalizeImportPayload(body);
     if (rawProvas.length === 0) {
@@ -270,6 +273,7 @@ export async function POST(request: NextRequest) {
       ano: string | null;
       tipo: string | null;
       created: boolean;
+      matched_by?: string;
       expected: number;
       actual: number;
       inserted: number;
@@ -343,11 +347,23 @@ export async function POST(request: NextRequest) {
         const expected = uniqueQuestions.length;
         questoesEsperadas += expected;
 
+        const contentFingerprint = computeProvaContentFingerprint(
+          uniqueQuestions.map((q) => ({
+            numero: q.numero,
+            statement: q.statement,
+            option_a: q.option_a,
+            option_b: q.option_b,
+            correct_answer: q.correct_answer,
+          })),
+        );
+
         await client.query('BEGIN');
 
-        // Chave natural da prova: nome (contém banca/ano no padrão atual) + fallback banca+ano+regiao+tipo
+        // Match: 1) nome  2) metadados  3) fingerprint da sequência de questões
+        // (mesmas questões na mesma ordem = mesma prova, mesmo com nome diferente)
         let provaId: number | null = null;
         let created = false;
+        let matchedBy: 'nome' | 'meta' | 'conteudo' | 'nova' = 'nova';
 
         const byNome = await client.query(
           `SELECT id FROM provas WHERE lower(trim(nome)) = lower(trim($1)) LIMIT 1`,
@@ -355,6 +371,7 @@ export async function POST(request: NextRequest) {
         );
         if (byNome.rows[0]) {
           provaId = Number(byNome.rows[0].id);
+          matchedBy = 'nome';
         } else if (banca || ano) {
           const byMeta = await client.query(
             `SELECT id FROM provas
@@ -365,20 +382,84 @@ export async function POST(request: NextRequest) {
              LIMIT 1`,
             [banca, ano, regiao, tipo],
           );
-          if (byMeta.rows[0]) provaId = Number(byMeta.rows[0].id);
+          if (byMeta.rows[0]) {
+            provaId = Number(byMeta.rows[0].id);
+            matchedBy = 'meta';
+          }
+        }
+
+        if (provaId == null && contentFingerprint && expected > 0) {
+          const byContent = await client.query(
+            `SELECT id FROM provas WHERE content_fingerprint = $1 LIMIT 1`,
+            [contentFingerprint],
+          );
+          if (byContent.rows[0]) {
+            provaId = Number(byContent.rows[0].id);
+            matchedBy = 'conteudo';
+          } else {
+            // Fallback: provas sem fingerprint ainda — compara sequência pelo mesmo tamanho
+            const candidates = await client.query(
+              `SELECT p.id
+               FROM provas p
+               JOIN questions q ON q.prova_id = p.id AND q.numero_na_prova IS NOT NULL
+               GROUP BY p.id
+               HAVING COUNT(*) = $1`,
+              [expected],
+            );
+            for (const row of candidates.rows as Array<{ id: number }>) {
+              const qsRes = await client.query(
+                `SELECT numero_na_prova AS numero, statement, option_a, option_b, correct_answer
+                 FROM questions
+                 WHERE prova_id = $1 AND numero_na_prova IS NOT NULL
+                 ORDER BY numero_na_prova`,
+                [row.id],
+              );
+              const fp = computeProvaContentFingerprint(
+                (qsRes.rows as Array<{
+                  numero: number;
+                  statement: string;
+                  option_a: string;
+                  option_b: string;
+                  correct_answer: string;
+                }>).map((q) => ({
+                  numero: Number(q.numero),
+                  statement: String(q.statement ?? ''),
+                  option_a: String(q.option_a ?? ''),
+                  option_b: String(q.option_b ?? ''),
+                  correct_answer: String(q.correct_answer ?? 'A'),
+                })),
+              );
+              if (fp === contentFingerprint) {
+                provaId = Number(row.id);
+                matchedBy = 'conteudo';
+                break;
+              }
+            }
+          }
         }
 
         if (provaId == null) {
           const inserted = await client.query(
-            `INSERT INTO provas (nome, banca, regiao, ano, tipo)
-             VALUES ($1, $2, $3, $4, $5) RETURNING id`,
-            [nome, banca, regiao, ano, tipo],
+            `INSERT INTO provas (nome, banca, regiao, ano, tipo, content_fingerprint)
+             VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
+            [nome, banca, regiao, ano, tipo, contentFingerprint || null],
           );
           provaId = Number(inserted.rows[0].id);
           created = true;
+          matchedBy = 'nova';
           provasCriadas += 1;
         } else {
           provasJaExistentes += 1;
+          await client.query(
+            `UPDATE provas
+             SET content_fingerprint = COALESCE(content_fingerprint, $1),
+                 banca = COALESCE(banca, $2),
+                 regiao = COALESCE(regiao, $3),
+                 ano = COALESCE(ano, $4),
+                 tipo = COALESCE(tipo, $5)
+             WHERE id = $6`,
+            [contentFingerprint || null, banca, regiao, ano, tipo, provaId],
+          );
         }
 
         const existingRes = await client.query(
@@ -497,6 +578,12 @@ export async function POST(request: NextRequest) {
           inserted += 1;
         }
 
+        // Sempre grava/atualiza fingerprint após a sequência estar no banco
+        await client.query(
+          `UPDATE provas SET content_fingerprint = $1 WHERE id = $2`,
+          [contentFingerprint || null, provaId],
+        );
+
         await client.query('COMMIT');
 
         const countRes = await query(
@@ -531,6 +618,7 @@ export async function POST(request: NextRequest) {
           ano,
           tipo,
           created,
+          matched_by: matchedBy,
           expected,
           actual,
           inserted,

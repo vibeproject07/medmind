@@ -92,6 +92,10 @@ CREATE TABLE provas (
 );
 
 CREATE INDEX IF NOT EXISTS idx_provas_created_at ON provas(created_at);
+-- Assinatura da sequência de questões (dedup por conteúdo, não só por nome)
+ALTER TABLE provas ADD COLUMN IF NOT EXISTS content_fingerprint TEXT;
+CREATE INDEX IF NOT EXISTS idx_provas_content_fingerprint
+  ON provas(content_fingerprint) WHERE content_fingerprint IS NOT NULL;
 
 -- notes (FK users)
 CREATE TABLE notes (
