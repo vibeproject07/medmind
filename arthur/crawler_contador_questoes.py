@@ -62,11 +62,13 @@ import requests
 from bs4 import BeautifulSoup
 
 # ── Carregar .env da pasta arthur/ (ou cwd) ───────────────────────────────────
+# interpolate=False: cookies do Google Analytics usam "$" (ex: GS2.1.s...$o4$g1)
+# e o dotenv quebraria o valor se expandisse variáveis.
 try:
     from dotenv import load_dotenv
     _DIR = os.path.dirname(os.path.abspath(__file__))
-    load_dotenv(os.path.join(_DIR, ".env"))
-    load_dotenv()  # fallback: .env no cwd
+    load_dotenv(os.path.join(_DIR, ".env"), interpolate=False)
+    load_dotenv(interpolate=False)  # fallback: .env no cwd
 except ImportError:
     pass
 
@@ -159,9 +161,72 @@ _PERFIS_NAVEGADOR = [
 ]
 
 
-# ══════════════════════════════════════════════════════════════════════════════
-# SESSÃO HTTP
-# ══════════════════════════════════════════════════════════════════════════════
+def normalizar_cookie_header(raw: str) -> str:
+    """
+    Limpa a string de cookies colada pelo usuário.
+    - remove aspas externas
+    - junta linhas se colou cookies em múltiplas linhas
+    - remove chaves duplicadas (mantém a última ocorrência — cookie mais recente)
+    """
+    if not raw:
+        return ""
+    text = raw.strip().strip('"').strip("'")
+    # Se colou várias linhas sem CRAWLER_COOKIE_HEADER=, une com "; "
+    text = re.sub(r"[\r\n]+", "; ", text)
+    text = re.sub(r";\s*;+", "; ", text)
+
+    pares: dict[str, str] = {}
+    ordem: list[str] = []
+    for parte in text.split(";"):
+        parte = parte.strip()
+        if not parte or "=" not in parte:
+            continue
+        nome, valor = parte.split("=", 1)
+        nome = nome.strip()
+        valor = valor.strip()
+        if not nome:
+            continue
+        if nome not in pares:
+            ordem.append(nome)
+        pares[nome] = valor  # última ocorrência vence
+
+    return "; ".join(f"{k}={pares[k]}" for k in ordem)
+
+
+def carregar_cookies_do_env() -> str:
+    """Lê CRAWLER_COOKIE_HEADER (e avisos se o usuário colou errado)."""
+    raw = os.environ.get("CRAWLER_COOKIE_HEADER", "") or ""
+    cookies = normalizar_cookie_header(raw)
+
+    # Detecção de erro comum: cookies soltos em variáveis cf_clearance=... no .env
+    if not cookies:
+        soltos = []
+        for key in ("cf_clearance", "sessionid", "csrftoken", "tkpd"):
+            val = os.environ.get(key, "").strip()
+            if val:
+                soltos.append(f"{key}={val}")
+        if soltos:
+            logger.warning(
+                "[COOKIES] Encontrei cookies como variáveis soltas no .env "
+                "(ex: cf_clearance=...). Junte tudo em UMA linha:\n"
+                "  CRAWLER_COOKIE_HEADER=csrftoken=...; sessionid=...; cf_clearance=..."
+            )
+            cookies = normalizar_cookie_header("; ".join(soltos))
+
+    if cookies:
+        nomes = [p.split("=", 1)[0].strip() for p in cookies.split(";") if "=" in p]
+        logger.info(f"[COOKIES] Carregados: {', '.join(nomes)}")
+        if "cf_clearance" not in nomes:
+            logger.warning("[COOKIES] Sem cf_clearance — Cloudflare provavelmente vai bloquear (403).")
+        if "sessionid" not in nomes:
+            logger.warning("[COOKIES] Sem sessionid — área premium pode exigir login.")
+    else:
+        logger.warning(
+            "[COOKIES] Nenhum cookie carregado. Crie arthur/.env com:\n"
+            "  CRAWLER_COOKIE_HEADER=csrftoken=...; sessionid=...; cf_clearance=...\n"
+            "Não cole cookies no .env.example — use o arquivo .env (não versionado)."
+        )
+    return cookies
 
 def criar_sessao(perfil_nav: dict, cookies: str = "") -> tuple:
     """
@@ -178,7 +243,8 @@ def criar_sessao(perfil_nav: dict, cookies: str = "") -> tuple:
         sessao._cookie_header = cookie_str
         sessao.headers.update({
             "accept":             "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "accept-encoding":    "gzip, deflate, br",
+            # Sem br/zstd: sem pacote brotli a resposta chega binária e o parser acha 0 provas
+            "accept-encoding":    "gzip, deflate",
             "accept-language":    "pt-BR,pt;q=0.9,en;q=0.8",
             "user-agent":         perfil_nav["User-Agent"],
             "sec-ch-ua":          perfil_nav["sec-ch-ua"],
@@ -197,7 +263,7 @@ def criar_sessao(perfil_nav: dict, cookies: str = "") -> tuple:
         sessao.headers.update({
             "User-Agent":      perfil_nav["User-Agent"],
             "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8",
-            "Accept-Encoding": "gzip, deflate, br",
+            "Accept-Encoding": "gzip, deflate",
         })
         logger.info("[SESSÃO] Motor: cloudscraper (anti-Cloudflare)")
         return sessao, False
@@ -299,7 +365,8 @@ def _extrair_links_provas(html: str, base_url: str, path_prova: str) -> list:
         # Tenta extrair o nome da prova a partir do texto do link ou atributo title
         nome = (tag.get("title") or tag.get_text(separator=" ")).strip()
         nome = re.sub(r"\s+", " ", nome)
-        # Remove sufixos adicionados pelo site (ex: "Gratuito", "Iniciada")
+        # Remove prefixos/sufixos do site (ex: "Iniciada", "Gratuito", "Premium")
+        nome = re.sub(r"^(iniciada|gratuito|premium)\s+", "", nome, flags=re.IGNORECASE).strip()
         nome = re.sub(r"\s*(gratuito|iniciada|premium)\s*$", "", nome, flags=re.IGNORECASE).strip()
         nome = nome[:120] or url_norm.split("/")[-1]
 
@@ -691,10 +758,12 @@ Exemplos:
 
     args = parser.parse_args()
 
+    cookies = normalizar_cookie_header(args.cookies) or carregar_cookies_do_env()
+
     main(
         url_provas    = args.url,
         perfil_nome   = args.perfil,
-        cookies       = args.cookies,
+        cookies       = cookies,
         max_provas    = args.max_provas,
         delay         = args.delay,
         caminho_saida = args.saida or None,

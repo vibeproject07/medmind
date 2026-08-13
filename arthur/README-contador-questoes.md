@@ -38,8 +38,15 @@ Sem `--saida`, grava automaticamente em `arthur/exports/contagem_questoes_<times
 
 1. Login em https://www.provaderesidencia.com.br  
 2. F12 → Application → Cookies  
-3. Monte `CRAWLER_COOKIE_HEADER` no `.env` (precisa de `cf_clearance` + `sessionid`)  
+3. Crie **`arthur/.env`** (não o `.env.example`) com **uma linha**:
+
+```env
+CRAWLER_COOKIE_HEADER=csrftoken=...; sessionid=...; cf_clearance=...; tkpd=...
+```
+
 4. Rode **na mesma máquina/IP** do login (Cloudflare amarra o `cf_clearance` ao IP)
+
+**Erros comuns:** cookies no `.env.example`; cookies em linhas soltas sem `CRAWLER_COOKIE_HEADER=`; placeholders `SEU_TOKEN`.
 
 ## Saída
 
