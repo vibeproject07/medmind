@@ -129,7 +129,7 @@ export default function ProvasPage() {
     if (!token) return;
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
-      setIsAdmin(payload.role === 'admin');
+      setIsAdmin(payload.role === 'admin' || payload.role === 'manager');
     } catch {
       setIsAdmin(false);
     }

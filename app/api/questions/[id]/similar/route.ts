@@ -3,6 +3,8 @@ import { findSimilarQuestions, getQuestionEmbedding } from '@/lib/embeddings';
 import { isPineconeEnabled, queryPineconeSimilar } from '@/lib/pinecone';
 import { query } from '@/lib/db';
 import { findSimilarByTerms } from '@/lib/term-similarity';
+import { verifyToken } from '@/lib/jwt';
+import { filterActiveQuestionIds } from '@/lib/prova-soft-delete-schema';
 
 export const runtime = 'nodejs';
 
@@ -12,29 +14,59 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    // ── Auth ────────────────────────────────────────────────────────────────
+    const authHeader = req.headers.get('authorization');
+    let token = authHeader?.replace('Bearer ', '') || req.cookies.get('token')?.value;
+    if (token) token = token.trim().replace(/^["']|["']$/g, '');
+    if (!token) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
+    const user = verifyToken(token);
+    if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
+    const isAdmin = user.role === 'admin' || user.role === 'manager';
+
     const { id } = await params;
     const questionId = parseInt(id);
     const limit = Math.min(parseInt(req.nextUrl.searchParams.get('limit') ?? '5'), 20);
 
     // ── Try precomputed content_links first ────────────────────────────────
+    // Non-admins: exclude similar questions that belong to soft-deleted provas
     const precomputed = await query(
-      `SELECT
-         cl.target_id AS id,
-         cl.similarity,
-         q.statement,
-         q.tags,
-         q.areas_conhecimento,
-         q.exam_year,
-         q.exam_board,
-         q.exam_institution
-       FROM content_links cl
-       JOIN questions q ON q.id = cl.target_id
-       WHERE cl.source_type = 'question'
-         AND cl.source_id = $1
-         AND cl.target_type = 'question'
-         AND cl.similarity >= 0.70
-       ORDER BY cl.similarity DESC
-       LIMIT $2`,
+      isAdmin
+        ? `SELECT
+             cl.target_id AS id,
+             cl.similarity,
+             q.statement,
+             q.tags,
+             q.areas_conhecimento,
+             q.exam_year,
+             q.exam_board,
+             q.exam_institution
+           FROM content_links cl
+           JOIN questions q ON q.id = cl.target_id
+           WHERE cl.source_type = 'question'
+             AND cl.source_id = $1
+             AND cl.target_type = 'question'
+             AND cl.similarity >= 0.70
+           ORDER BY cl.similarity DESC
+           LIMIT $2`
+        : `SELECT
+             cl.target_id AS id,
+             cl.similarity,
+             q.statement,
+             q.tags,
+             q.areas_conhecimento,
+             q.exam_year,
+             q.exam_board,
+             q.exam_institution
+           FROM content_links cl
+           JOIN questions q ON q.id = cl.target_id
+           LEFT JOIN provas p ON p.id = q.prova_id
+           WHERE cl.source_type = 'question'
+             AND cl.source_id = $1
+             AND cl.target_type = 'question'
+             AND cl.similarity >= 0.70
+             AND (q.prova_id IS NULL OR p.deleted_at IS NULL)
+           ORDER BY cl.similarity DESC
+           LIMIT $2`,
       [questionId, limit]
     );
 
@@ -55,7 +87,8 @@ export async function GET(
     // ── Term-based similarity fallback (primary/secondary DeCS roles) ──────
     const termHits = await findSimilarByTerms('question', questionId, 'question', limit);
     if (termHits.length > 0) {
-      const ids = termHits.map((h) => h.target_id);
+      const rawIds = termHits.map((h) => h.target_id);
+      const ids = isAdmin ? rawIds : await filterActiveQuestionIds(rawIds);
       const dbRes = await query(
         `SELECT id, statement, tags, areas_conhecimento, exam_year, exam_board, exam_institution
          FROM questions
@@ -106,18 +139,21 @@ export async function GET(
 
       // Enrich with full statement from Postgres
       if (pineconeResults.length > 0) {
-        const ids = pineconeResults.map((r) => r.id);
+        const rawIds = pineconeResults.map((r) => r.id);
+        const activeIds = isAdmin ? rawIds : await filterActiveQuestionIds(rawIds);
         const dbRes = await query(
           `SELECT id, statement, tags, areas_conhecimento, exam_year, exam_board, exam_institution
            FROM questions WHERE id = ANY($1)`,
-          [ids]
+          [activeIds]
         );
         const byId = Object.fromEntries(dbRes.rows.map((r) => [r.id, r]));
 
-        const enriched = pineconeResults.map((r) => ({
-          ...r,
-          statement: byId[r.id]?.statement ?? r.statement_preview,
-        }));
+        const enriched = pineconeResults
+          .filter((r) => activeIds.includes(r.id))
+          .map((r) => ({
+            ...r,
+            statement: byId[r.id]?.statement ?? r.statement_preview,
+          }));
 
         return NextResponse.json({ questions: enriched, backend: 'pinecone' });
       }
@@ -135,7 +171,16 @@ export async function GET(
       });
     }
 
-    return NextResponse.json({ questions: similar, backend: 'pgvector' });
+    // Non-admins: exclude questions from soft-deleted provas
+    const filteredSimilar = isAdmin
+      ? similar
+      : await (async () => {
+          const activeIds = await filterActiveQuestionIds(similar.map((s) => s.id));
+          const activeSet = new Set(activeIds);
+          return similar.filter((s) => activeSet.has(s.id));
+        })();
+
+    return NextResponse.json({ questions: filteredSimilar, backend: 'pgvector' });
   } catch (err) {
     console.error('[similar GET]', err);
     return NextResponse.json({ error: 'Erro ao buscar questões similares' }, { status: 500 });

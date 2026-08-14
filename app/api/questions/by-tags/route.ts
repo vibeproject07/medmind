@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
+import { ensureProvaDeletedAtColumn } from '@/lib/prova-soft-delete-schema';
 
 export const runtime = 'nodejs';
 
@@ -21,6 +22,8 @@ export async function GET(request: NextRequest) {
     if (!user) {
       return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
     }
+
+    const isAdmin = user.role === 'admin' || user.role === 'manager';
 
     const { searchParams } = new URL(request.url);
     const tagsParam = searchParams.get('tags');
@@ -45,7 +48,16 @@ export async function GET(request: NextRequest) {
     const examInstitution = searchParams.get('exam_institution');
     const examRegion = searchParams.get('exam_region');
 
-    const allQuestions = (await query('SELECT * FROM questions ORDER BY created_at DESC')).rows;
+    // Non-admins must not see questions from soft-deleted provas
+    await ensureProvaDeletedAtColumn();
+    const allQuestions = isAdmin
+      ? (await query('SELECT * FROM questions ORDER BY created_at DESC')).rows
+      : (await query(
+          `SELECT q.* FROM questions q
+           LEFT JOIN provas p ON p.id = q.prova_id
+           WHERE (q.prova_id IS NULL OR p.deleted_at IS NULL)
+           ORDER BY q.created_at DESC`,
+        )).rows;
 
     const filteredQuestions = allQuestions.filter((question: any) => {
       // Questões anuladas não entram em simulados
