@@ -58,6 +58,20 @@ const REGIOES_UF = [
   'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO',
 ];
 
+/** Remove null bytes (\u0000) recursivamente de qualquer valor JSON parseado. */
+function sanitizeJsonNullBytes<T>(value: T): T {
+  if (typeof value === 'string') return value.replace(/\u0000/g, '') as T;
+  if (Array.isArray(value)) return value.map((item) => sanitizeJsonNullBytes(item)) as T;
+  if (value && typeof value === 'object') {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+      out[k] = sanitizeJsonNullBytes(v);
+    }
+    return out as T;
+  }
+  return value;
+}
+
 interface ProvaEditForm {
   nome: string;
   banca: string;
@@ -587,6 +601,7 @@ export default function ProvasPage() {
             return;
           }
         }
+        parsed = sanitizeJsonNullBytes(parsed);
 
         const token = localStorage.getItem('token');
         if (!token) { setSessionExpired(true); setLoadingJson(false); return; }
