@@ -53,6 +53,8 @@ interface Prova {
   tipo: string | null;
   created_at: string;
   questions: ProvaQuestion[];
+  deleted?: boolean;
+  deleted_at?: string | null;
 }
 
 type FeedbackState =
@@ -909,6 +911,16 @@ export default function ProvaExamPage() {
           disableNavigation={editingQuestionId !== null}
         />
       </div>
+
+      {/* ── Deleted prova banner (admin only) ────────────────────────────── */}
+      {isAdmin && prova.deleted && (
+        <div className="flex items-center gap-3 px-4 sm:px-6 py-2.5 bg-amber-50 border-b border-amber-200 flex-shrink-0">
+          <AlertTriangle className="w-4 h-4 text-amber-600 flex-shrink-0" />
+          <p className="text-sm text-amber-800 font-medium">
+            Esta prova está excluída — só administradores a veem. Alunos recebem 404 ao tentar acessá-la.
+          </p>
+        </div>
+      )}
 
       {/* ── Scrollable body ───────────────────────────────────────────────── */}
       <div className="flex-1 flex overflow-hidden">

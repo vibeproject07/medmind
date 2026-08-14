@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChevronDown, ChevronUp, Filter, FolderOpen, Loader2, X, Play, CheckCircle, LogIn, Eye, Edit, Save, Search } from 'lucide-react';
+import { ChevronDown, ChevronUp, Filter, FolderOpen, Loader2, X, Play, CheckCircle, LogIn, Eye, Edit, Save, Search, Trash2, RotateCcw } from 'lucide-react';
 import { jsonrepair } from 'jsonrepair';
 
 interface ProvaListing {
@@ -15,6 +15,8 @@ interface ProvaListing {
   tipo: string | null;
   created_at: string;
   question_count: number;
+  deleted?: boolean;
+  deleted_at?: string | null;
 }
 
 interface ListingResponse {
@@ -107,6 +109,8 @@ export default function ProvasPage() {
     nome: '', banca: '', regiao: '', ano: '', tipo: '',
   });
   const [savingProvaId, setSavingProvaId] = useState<number | null>(null);
+  const [softDeletingProvaId, setSoftDeletingProvaId] = useState<number | null>(null);
+  const [restoringProvaId, setRestoringProvaId] = useState<number | null>(null);
   const [adminCrudMsg, setAdminCrudMsg] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [adminCrudFiltrosAbertos, setAdminCrudFiltrosAbertos] = useState(true);
   const [adminCrudSearch, setAdminCrudSearch] = useState('');
@@ -564,6 +568,59 @@ export default function ProvasPage() {
     }
   };
 
+  // ── Soft-delete / restore (admin) ────────────────────────────────────────
+  const softDeleteProva = async (provaId: number) => {
+    const token = localStorage.getItem('token');
+    if (!token) { setSessionExpired(true); return; }
+    setSoftDeletingProvaId(provaId);
+    setAdminCrudMsg(null);
+    try {
+      const res = await fetch(`/api/provas/${provaId}?mode=soft_delete`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        setAdminCrudList((list) =>
+          list.map((p) => p.id === provaId ? { ...p, deleted: true, deleted_at: new Date().toISOString() } : p),
+        );
+        setAdminCrudMsg({ type: 'success', text: 'Prova marcada como excluída. Usuários não a verão mais.' });
+      } else {
+        const body = await res.json().catch(() => ({}));
+        setAdminCrudMsg({ type: 'error', text: body.error || 'Erro ao excluir prova.' });
+      }
+    } catch {
+      setAdminCrudMsg({ type: 'error', text: 'Erro de conexão ao excluir prova.' });
+    } finally {
+      setSoftDeletingProvaId(null);
+    }
+  };
+
+  const restoreProva = async (provaId: number) => {
+    const token = localStorage.getItem('token');
+    if (!token) { setSessionExpired(true); return; }
+    setRestoringProvaId(provaId);
+    setAdminCrudMsg(null);
+    try {
+      const res = await fetch(`/api/provas/${provaId}?mode=restore`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        setAdminCrudList((list) =>
+          list.map((p) => p.id === provaId ? { ...p, deleted: false, deleted_at: null } : p),
+        );
+        setAdminCrudMsg({ type: 'success', text: 'Prova restaurada com sucesso.' });
+      } else {
+        const body = await res.json().catch(() => ({}));
+        setAdminCrudMsg({ type: 'error', text: body.error || 'Erro ao restaurar prova.' });
+      }
+    } catch {
+      setAdminCrudMsg({ type: 'error', text: 'Erro de conexão ao restaurar prova.' });
+    } finally {
+      setRestoringProvaId(null);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <header className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
@@ -851,8 +908,19 @@ export default function ProvasPage() {
                     {adminCrudList.map((prova) => {
                       const isEditing = editingProvaId === prova.id;
                       const isSaving = savingProvaId === prova.id;
+                      const isSoftDeleting = softDeletingProvaId === prova.id;
+                      const isRestoring = restoringProvaId === prova.id;
                       return (
-                        <tr key={prova.id} className={isEditing ? 'bg-primary-50/40' : 'hover:bg-gray-50/60'}>
+                        <tr
+                          key={prova.id}
+                          className={
+                            isEditing
+                              ? 'bg-primary-50/40'
+                              : prova.deleted
+                              ? 'bg-red-50/40 hover:bg-red-50/60 opacity-75'
+                              : 'hover:bg-gray-50/60'
+                          }
+                        >
                           <td className="px-4 py-3 text-gray-500 font-mono text-xs">{prova.id}</td>
                           <td className="px-4 py-3">
                             {isEditing ? (
@@ -863,7 +931,14 @@ export default function ProvasPage() {
                                 className="w-full min-w-[180px] px-2 py-1.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                               />
                             ) : (
-                              <span className="font-medium text-gray-800">{prova.nome}</span>
+                              <span className="flex items-center gap-2 flex-wrap">
+                                <span className={`font-medium ${prova.deleted ? 'text-gray-400 line-through' : 'text-gray-800'}`}>{prova.nome}</span>
+                                {prova.deleted && (
+                                  <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold border border-red-200">
+                                    Excluída
+                                  </span>
+                                )}
+                              </span>
                             )}
                           </td>
                           <td className="px-4 py-3">
@@ -948,16 +1023,37 @@ export default function ProvasPage() {
                                     {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                                   </button>
                                 </>
-                              ) : (
+                              ) : prova.deleted ? (
                                 <button
                                   type="button"
-                                  onClick={() => startEditProva(prova)}
-                                  disabled={editingProvaId !== null}
-                                  className="p-2 rounded-lg border border-primary-200 text-primary-700 hover:bg-primary-50 disabled:opacity-40 disabled:cursor-not-allowed"
-                                  title="Editar prova"
+                                  onClick={() => restoreProva(prova.id)}
+                                  disabled={isRestoring || editingProvaId !== null}
+                                  className="p-2 rounded-lg border border-emerald-200 text-emerald-700 hover:bg-emerald-50 disabled:opacity-40 disabled:cursor-not-allowed"
+                                  title="Restaurar prova"
                                 >
-                                  <Edit className="w-4 h-4" />
+                                  {isRestoring ? <Loader2 className="w-4 h-4 animate-spin" /> : <RotateCcw className="w-4 h-4" />}
                                 </button>
+                              ) : (
+                                <>
+                                  <button
+                                    type="button"
+                                    onClick={() => startEditProva(prova)}
+                                    disabled={editingProvaId !== null}
+                                    className="p-2 rounded-lg border border-primary-200 text-primary-700 hover:bg-primary-50 disabled:opacity-40 disabled:cursor-not-allowed"
+                                    title="Editar prova"
+                                  >
+                                    <Edit className="w-4 h-4" />
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => softDeleteProva(prova.id)}
+                                    disabled={isSoftDeleting || editingProvaId !== null}
+                                    className="p-2 rounded-lg border border-red-200 text-red-600 hover:bg-red-50 disabled:opacity-40 disabled:cursor-not-allowed"
+                                    title="Excluir prova (soft delete)"
+                                  >
+                                    {isSoftDeleting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                                  </button>
+                                </>
                               )}
                             </div>
                           </td>

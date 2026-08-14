@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getPool, query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
+import { ensureProvaDeletedAtColumn } from '@/lib/prova-soft-delete-schema';
 
 export const runtime = 'nodejs';
 
@@ -162,6 +163,9 @@ export async function GET(request: NextRequest) {
     const user = verifyToken(token);
     if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
 
+    await ensureProvaDeletedAtColumn();
+    const isAdmin = user.role === 'admin' || user.role === 'manager';
+
     const url = request.nextUrl;
     const page  = Math.max(1, parseInt(url.searchParams.get('page')  ?? '1',  10));
     const limit = Math.min(100, Math.max(1, parseInt(url.searchParams.get('limit') ?? '20', 10)));
@@ -184,6 +188,8 @@ export async function GET(request: NextRequest) {
     if (filterRegiao) { params.push(filterRegiao); conditions.push(`regiao = $${params.length}`); }
     if (filterAno)    { params.push(filterAno);    conditions.push(`ano = $${params.length}`); }
     if (filterTipo)   { params.push(filterTipo);   conditions.push(`LOWER(tipo) = LOWER($${params.length})`); }
+    // Non-admins never see soft-deleted provas
+    if (!isAdmin) conditions.push('deleted_at IS NULL');
 
     const where = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
 
@@ -197,7 +203,7 @@ export async function GET(request: NextRequest) {
     // Paginated provas with question count (no question content)
     const listParams = [...params, limit, offset];
     const listRes = await query(
-      `SELECT p.id, p.nome, p.banca, p.regiao, p.ano, p.tipo, p.created_at,
+      `SELECT p.id, p.nome, p.banca, p.regiao, p.ano, p.tipo, p.created_at, p.deleted_at,
               COUNT(q.id)::int AS question_count
        FROM provas p
        LEFT JOIN questions q ON q.prova_id = p.id
@@ -208,10 +214,11 @@ export async function GET(request: NextRequest) {
       listParams
     );
 
-    // Available filter options (distinct values, unfiltered)
+    // Available filter options — non-admins only see options from active provas
+    const filterCond = isAdmin ? '' : 'AND deleted_at IS NULL';
     const [bancasRes, tiposRes] = await Promise.all([
-      query(`SELECT DISTINCT banca FROM provas WHERE banca IS NOT NULL AND banca <> '' ORDER BY banca`),
-      query(`SELECT DISTINCT tipo  FROM provas WHERE tipo  IS NOT NULL AND tipo  <> '' ORDER BY tipo`),
+      query(`SELECT DISTINCT banca FROM provas WHERE banca IS NOT NULL AND banca <> '' ${filterCond} ORDER BY banca`),
+      query(`SELECT DISTINCT tipo  FROM provas WHERE tipo  IS NOT NULL AND tipo  <> '' ${filterCond} ORDER BY tipo`),
     ]);
 
     return NextResponse.json({
@@ -224,6 +231,8 @@ export async function GET(request: NextRequest) {
         tipo:           p.tipo,
         created_at:     p.created_at,
         question_count: p.question_count ?? 0,
+        // Admin-only fields
+        ...(isAdmin ? { deleted: !!p.deleted_at, deleted_at: p.deleted_at ?? null } : {}),
       })),
       total,
       page,

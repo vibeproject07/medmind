@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { triggerEnrichment } from '@/lib/enrichment';
+import { ensureProvaDeletedAtColumn } from '@/lib/prova-soft-delete-schema';
 
 export const runtime = 'nodejs';
 
@@ -23,8 +24,12 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
     }
 
+    const isAdmin = user.role === 'admin' || user.role === 'manager';
+
     await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_decs_descriptors TEXT`);
     await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_question_themes TEXT`);
+    // Ensure deleted_at column exists so the LEFT JOIN filter below works
+    await ensureProvaDeletedAtColumn();
 
     const { searchParams } = new URL(request.url);
     const examYear = searchParams.get('exam_year');
@@ -38,13 +43,22 @@ export async function GET(request: NextRequest) {
     const limitParam = searchParams.get('limit');
     const limit = limitParam ? Math.min(500, Math.max(1, parseInt(limitParam, 10))) : 15;
 
-    let questions = (await query(`
-      SELECT id, statement, option_a, option_b, option_c, option_d, option_e,
-             correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region,
-             areas_conhecimento, assuntos, decs_terms, ai_decs_descriptors, ai_decs_v2, competencias, temas, ai_question_themes, anulada, created_at, updated_at
-      FROM questions
-      ORDER BY created_at DESC
-    `)).rows;
+    // Non-admins must not see questions from soft-deleted provas
+    const questionsQuery = isAdmin
+      ? `SELECT id, statement, option_a, option_b, option_c, option_d, option_e,
+                correct_answer, explanation, tags, images, exam_year, exam_board, exam_institution, exam_region,
+                areas_conhecimento, assuntos, decs_terms, ai_decs_descriptors, ai_decs_v2, competencias, temas, ai_question_themes, anulada, created_at, updated_at
+         FROM questions
+         ORDER BY created_at DESC`
+      : `SELECT q.id, q.statement, q.option_a, q.option_b, q.option_c, q.option_d, q.option_e,
+                q.correct_answer, q.explanation, q.tags, q.images, q.exam_year, q.exam_board, q.exam_institution, q.exam_region,
+                q.areas_conhecimento, q.assuntos, q.decs_terms, q.ai_decs_descriptors, q.ai_decs_v2, q.competencias, q.temas, q.ai_question_themes, q.anulada, q.created_at, q.updated_at
+         FROM questions q
+         LEFT JOIN provas p ON p.id = q.prova_id
+         WHERE (q.prova_id IS NULL OR p.deleted_at IS NULL)
+         ORDER BY q.created_at DESC`;
+
+    let questions = (await query(questionsQuery)).rows;
 
     if (examYear || examBoard || examInstitution || examRegion) {
       questions = questions.filter((question: any) => {

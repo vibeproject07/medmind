@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
+import { ensureProvaDeletedAtColumn } from '@/lib/prova-soft-delete-schema';
 
 export const runtime = 'nodejs';
 
@@ -20,14 +21,22 @@ export async function GET(
     const provaId = parseInt(params.id, 10);
     if (isNaN(provaId)) return NextResponse.json({ error: 'ID inválido' }, { status: 400 });
 
+    await ensureProvaDeletedAtColumn();
+    const isAdmin = user.role === 'admin' || user.role === 'manager';
+
     const provaRes = await query(
-      'SELECT id, nome, banca, regiao, ano, tipo, created_at FROM provas WHERE id = $1 LIMIT 1',
+      'SELECT id, nome, banca, regiao, ano, tipo, created_at, deleted_at FROM provas WHERE id = $1 LIMIT 1',
       [provaId]
     );
     if (provaRes.rows.length === 0) {
       return NextResponse.json({ error: 'Prova não encontrada' }, { status: 404 });
     }
     const prova = provaRes.rows[0];
+
+    // Non-admins cannot access soft-deleted provas
+    if (!isAdmin && prova.deleted_at) {
+      return NextResponse.json({ error: 'Prova não encontrada' }, { status: 404 });
+    }
 
     const questionsRes = await query(
       `SELECT id, statement, option_a, option_b, option_c, option_d, option_e,
@@ -47,6 +56,7 @@ export async function GET(
       ano:        prova.ano,
       tipo:       prova.tipo,
       created_at: prova.created_at,
+      ...(isAdmin ? { deleted: !!prova.deleted_at, deleted_at: prova.deleted_at ?? null } : {}),
       questions:  questionsRes.rows.map((q: Record<string, unknown>) => ({
         id:              q.id,
         numero_na_prova: q.numero_na_prova,
@@ -167,5 +177,50 @@ export async function PUT(
   } catch (error) {
     console.error('Erro ao atualizar prova:', error);
     return NextResponse.json({ error: 'Erro ao atualizar prova' }, { status: 500 });
+  }
+}
+
+// DELETE /api/provas/[id]
+//   ?mode=soft_delete — marca deleted_at = NOW() (admin-only)
+//   ?mode=restore     — limpa deleted_at = NULL (admin-only)
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  try {
+    const authHeader = request.headers.get('authorization');
+    let token = authHeader?.replace('Bearer ', '') || request.cookies.get('token')?.value;
+    if (token) token = token.trim().replace(/^["']|["']$/g, '');
+    if (!token) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
+
+    const user = verifyToken(token);
+    if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
+    if (user.role !== 'admin' && user.role !== 'manager') {
+      return NextResponse.json({ error: 'Acesso negado. Apenas administradores.' }, { status: 403 });
+    }
+
+    const provaId = parseInt(params.id, 10);
+    if (isNaN(provaId)) return NextResponse.json({ error: 'ID inválido' }, { status: 400 });
+
+    await ensureProvaDeletedAtColumn();
+
+    const existing = await query('SELECT id FROM provas WHERE id = $1 LIMIT 1', [provaId]);
+    if (existing.rows.length === 0) {
+      return NextResponse.json({ error: 'Prova não encontrada' }, { status: 404 });
+    }
+
+    const mode = request.nextUrl.searchParams.get('mode') ?? 'soft_delete';
+
+    if (mode === 'restore') {
+      await query('UPDATE provas SET deleted_at = NULL WHERE id = $1', [provaId]);
+      return NextResponse.json({ ok: true, deleted: false });
+    }
+
+    // default: soft_delete
+    await query('UPDATE provas SET deleted_at = NOW() WHERE id = $1', [provaId]);
+    return NextResponse.json({ ok: true, deleted: true });
+  } catch (error) {
+    console.error('Erro ao excluir/restaurar prova:', error);
+    return NextResponse.json({ error: 'Erro interno' }, { status: 500 });
   }
 }
