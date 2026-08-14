@@ -3,6 +3,7 @@ import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { findSimilarNotes } from '@/lib/embeddings';
 import { findSimilarByTerms } from '@/lib/term-similarity';
+import { filterActiveQuestionIds } from '@/lib/prova-soft-delete-schema';
 
 export const runtime = 'nodejs';
 
@@ -97,25 +98,45 @@ async function fetchNotesByVector(noteId: number, limit: number): Promise<{ item
   return { items: [], backend: 'none' };
 }
 
-async function fetchQuestionsByVector(noteId: number, limit: number): Promise<{ items: QuestionRow[]; backend: string }> {
+async function fetchQuestionsByVector(noteId: number, limit: number, isAdmin: boolean): Promise<{ items: QuestionRow[]; backend: string }> {
   const similarQuestions = await query(
-    `SELECT
-       cl.target_id AS id,
-       cl.similarity,
-       q.statement,
-       q.tags,
-       q.areas_conhecimento,
-       q.exam_year,
-       q.exam_board,
-       q.exam_institution
-     FROM content_links cl
-     JOIN questions q ON q.id = cl.target_id
-     WHERE cl.source_type = 'note'
-       AND cl.source_id = $1
-       AND cl.target_type = 'question'
-       AND cl.similarity >= 0.70
-     ORDER BY cl.similarity DESC
-     LIMIT $2`,
+    isAdmin
+      ? `SELECT
+           cl.target_id AS id,
+           cl.similarity,
+           q.statement,
+           q.tags,
+           q.areas_conhecimento,
+           q.exam_year,
+           q.exam_board,
+           q.exam_institution
+         FROM content_links cl
+         JOIN questions q ON q.id = cl.target_id
+         WHERE cl.source_type = 'note'
+           AND cl.source_id = $1
+           AND cl.target_type = 'question'
+           AND cl.similarity >= 0.70
+         ORDER BY cl.similarity DESC
+         LIMIT $2`
+      : `SELECT
+           cl.target_id AS id,
+           cl.similarity,
+           q.statement,
+           q.tags,
+           q.areas_conhecimento,
+           q.exam_year,
+           q.exam_board,
+           q.exam_institution
+         FROM content_links cl
+         JOIN questions q ON q.id = cl.target_id
+         LEFT JOIN provas p ON p.id = q.prova_id
+         WHERE cl.source_type = 'note'
+           AND cl.source_id = $1
+           AND cl.target_type = 'question'
+           AND cl.similarity >= 0.70
+           AND (q.prova_id IS NULL OR p.deleted_at IS NULL)
+         ORDER BY cl.similarity DESC
+         LIMIT $2`,
     [noteId, limit],
   );
 
@@ -159,11 +180,14 @@ async function fetchNotesByTerms(noteId: number, limit: number): Promise<NoteRow
     .filter(Boolean) as NoteRow[];
 }
 
-async function fetchQuestionsByTerms(noteId: number, limit: number): Promise<QuestionRow[]> {
+async function fetchQuestionsByTerms(noteId: number, limit: number, isAdmin: boolean): Promise<QuestionRow[]> {
   const termHits = await findSimilarByTerms('note', noteId, 'question', limit);
   if (termHits.length === 0) return [];
 
-  const ids = termHits.map((h) => h.target_id);
+  const rawIds = termHits.map((h) => h.target_id);
+  const ids = isAdmin ? rawIds : await filterActiveQuestionIds(rawIds);
+  if (ids.length === 0) return [];
+
   const dbRes = await query(
     `SELECT id, statement, tags, areas_conhecimento, exam_year, exam_board, exam_institution
      FROM questions WHERE id = ANY($1)`,
@@ -215,7 +239,8 @@ export async function GET(
       return NextResponse.json({ error: 'Nota não encontrada' }, { status: 404 });
     }
     const noteOwnerId = noteCheck.rows[0].user_id;
-    if (user.role !== 'admin' && noteOwnerId !== user.id) {
+    const isAdmin = user.role === 'admin' || user.role === 'manager';
+    if (!isAdmin && noteOwnerId !== user.id) {
       return NextResponse.json({ error: 'Acesso negado' }, { status: 403 });
     }
 
@@ -224,8 +249,8 @@ export async function GET(
     const [notesVector, notesTerms, questionsVector, questionsTerms] = await Promise.all([
       fetchNotesByVector(noteId, limit),
       fetchNotesByTerms(noteId, limit),
-      fetchQuestionsByVector(noteId, limit),
-      fetchQuestionsByTerms(noteId, limit),
+      fetchQuestionsByVector(noteId, limit, isAdmin),
+      fetchQuestionsByTerms(noteId, limit, isAdmin),
     ]);
 
     return NextResponse.json({
