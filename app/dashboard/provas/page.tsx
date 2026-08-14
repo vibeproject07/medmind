@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChevronDown, ChevronUp, Filter, FolderOpen, Loader2, X, Play, CheckCircle, LogIn, Eye, Edit, Save, Search, AlertTriangle } from 'lucide-react';
+import { ChevronDown, ChevronUp, Filter, FolderOpen, Loader2, X, Play, CheckCircle, LogIn, Eye, Edit, Save, Search, AlertTriangle, ImageIcon } from 'lucide-react';
 import { jsonrepair } from 'jsonrepair';
 
 interface ProvaListing {
@@ -117,6 +117,28 @@ export default function ProvasPage() {
   const [adminCrudTipo, setAdminCrudTipo] = useState('');
   const [adminCrudBancas, setAdminCrudBancas] = useState<string[]>([]);
   const [adminCrudTipos, setAdminCrudTipos] = useState<string[]>([]);
+
+  // ── Prova Incompleta modal ───────────────────────────────────────────────
+  type IncompleteStep = 'menu' | 'add' | 'remove';
+  const [incompleteProva, setIncompleteProva] = useState<ProvaListing | null>(null);
+  const [incompleteStep, setIncompleteStep] = useState<IncompleteStep>('menu');
+  const [incompleteLoading, setIncompleteLoading] = useState(false);
+  const [incompleteError, setIncompleteError] = useState<string | null>(null);
+  const [incompleteMsg, setIncompleteMsg] = useState<string | null>(null);
+  const [removeQuestions, setRemoveQuestions] = useState<{ id: number; numero_na_prova: number | null; statement: string }[]>([]);
+  const [removeSelectedId, setRemoveSelectedId] = useState<number | null>(null);
+  const [addForm, setAddForm] = useState({
+    numero_na_prova: '1',
+    statement: '',
+    option_a: '',
+    option_b: '',
+    option_c: '',
+    option_d: '',
+    option_e: '',
+    correct_answer: 'A' as 'A' | 'B' | 'C' | 'D' | 'E',
+  });
+  const [addImages, setAddImages] = useState<string[]>([]);
+  const addImageInputRef = useRef<HTMLInputElement>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -328,6 +350,190 @@ export default function ProvasPage() {
     setAdminCrudRegiao('');
     setAdminCrudAno('');
     setAdminCrudTipo('');
+  };
+
+  // ── Modal Prova Incompleta ───────────────────────────────────────────────
+  const closeIncompleteModal = () => {
+    setIncompleteProva(null);
+    setIncompleteStep('menu');
+    setIncompleteError(null);
+    setIncompleteMsg(null);
+    setRemoveQuestions([]);
+    setRemoveSelectedId(null);
+    setAddImages([]);
+    setIncompleteLoading(false);
+  };
+
+  const openIncompleteModal = (prova: ProvaListing) => {
+    setIncompleteProva(prova);
+    setIncompleteStep('menu');
+    setIncompleteError(null);
+    setIncompleteMsg(null);
+    setRemoveQuestions([]);
+    setRemoveSelectedId(null);
+    setAddForm({
+      numero_na_prova: String(Math.max(1, (prova.question_count ?? 0) + 1)),
+      statement: '',
+      option_a: '',
+      option_b: '',
+      option_c: '',
+      option_d: '',
+      option_e: '',
+      correct_answer: 'A',
+    });
+    setAddImages([]);
+  };
+
+  const addAvailableOptions: Array<'A' | 'B' | 'C' | 'D' | 'E'> = [
+    'A',
+    'B',
+    ...(addForm.option_c.trim() ? (['C'] as const) : []),
+    ...(addForm.option_d.trim() ? (['D'] as const) : []),
+    ...(addForm.option_e.trim() ? (['E'] as const) : []),
+  ];
+
+  const handleAddImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+    Array.from(files).forEach((file) => {
+      if (!file.type.startsWith('image/')) {
+        alert('Apenas arquivos de imagem são permitidos');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const base64 = ev.target?.result as string;
+        setAddImages((prev) => [...prev, base64]);
+      };
+      reader.readAsDataURL(file);
+    });
+    if (addImageInputRef.current) addImageInputRef.current.value = '';
+  };
+
+  const startRemoveStep = async () => {
+    if (!incompleteProva) return;
+    setIncompleteStep('remove');
+    setIncompleteError(null);
+    setIncompleteMsg(null);
+    setIncompleteLoading(true);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const res = await fetch(`/api/provas/${incompleteProva.id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setIncompleteError(data.error || 'Erro ao carregar questões.');
+        return;
+      }
+      const qs = (data.questions ?? []).map((q: { id: number; numero_na_prova: number | null; statement: string }) => ({
+        id: q.id,
+        numero_na_prova: q.numero_na_prova,
+        statement: q.statement,
+      }));
+      setRemoveQuestions(qs);
+      setRemoveSelectedId(qs[0]?.id ?? null);
+    } catch {
+      setIncompleteError('Erro ao carregar questões.');
+    } finally {
+      setIncompleteLoading(false);
+    }
+  };
+
+  const submitAddQuestion = async () => {
+    if (!incompleteProva) return;
+    if (!addForm.statement.trim() || !addForm.option_a.trim() || !addForm.option_b.trim()) {
+      setIncompleteError('Enunciado e alternativas A/B são obrigatórios.');
+      return;
+    }
+    if (!addAvailableOptions.includes(addForm.correct_answer)) {
+      setIncompleteError('Resposta correta deve corresponder a uma alternativa preenchida.');
+      return;
+    }
+    const numero = parseInt(addForm.numero_na_prova, 10);
+    if (isNaN(numero) || numero < 1) {
+      setIncompleteError('Informe a posição (número) da questão na prova (≥ 1).');
+      return;
+    }
+
+    setIncompleteLoading(true);
+    setIncompleteError(null);
+    setIncompleteMsg(null);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const res = await fetch(`/api/provas/${incompleteProva.id}/questions`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          numero_na_prova: numero,
+          statement: addForm.statement.trim(),
+          option_a: addForm.option_a.trim(),
+          option_b: addForm.option_b.trim(),
+          option_c: addForm.option_c.trim() || null,
+          option_d: addForm.option_d.trim() || null,
+          option_e: addForm.option_e.trim() || null,
+          correct_answer: addForm.correct_answer,
+          images: addImages,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setIncompleteError(data.error || 'Erro ao adicionar questão.');
+        return;
+      }
+      setIncompleteMsg(`Questão adicionada na posição ${data.numero_na_prova}. As posteriores foram renumeradas (+1).`);
+      fetchProvas(currentPage);
+      if (showAdminCrud) fetchAdminCrudProvas(adminCrudPage);
+      setTimeout(() => closeIncompleteModal(), 1200);
+    } catch {
+      setIncompleteError('Erro ao adicionar questão.');
+    } finally {
+      setIncompleteLoading(false);
+    }
+  };
+
+  const submitRemoveQuestion = async () => {
+    if (!incompleteProva || !removeSelectedId) {
+      setIncompleteError('Selecione a questão a remover da prova.');
+      return;
+    }
+    if (!confirm('Remover esta questão da prova? Ela não será apagada do banco — irá para a lista oculta de removidas.')) {
+      return;
+    }
+
+    setIncompleteLoading(true);
+    setIncompleteError(null);
+    setIncompleteMsg(null);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+      const res = await fetch(`/api/provas/${incompleteProva.id}/questions/remove`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ question_id: removeSelectedId }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setIncompleteError(data.error || 'Erro ao remover questão.');
+        return;
+      }
+      setIncompleteMsg('Questão removida da prova e enviada à lista oculta. Posteriores renumeradas (−1).');
+      fetchProvas(currentPage);
+      if (showAdminCrud) fetchAdminCrudProvas(adminCrudPage);
+      setTimeout(() => closeIncompleteModal(), 1200);
+    } catch {
+      setIncompleteError('Erro ao remover questão.');
+    } finally {
+      setIncompleteLoading(false);
+    }
   };
 
   // ── Import handlers ──────────────────────────────────────────────────────
@@ -1197,6 +1403,16 @@ export default function ProvasPage() {
               <div key={prova.id} className="bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col">
                 <div className="p-5 flex-1 flex flex-col gap-3">
                   <h2 className="text-base font-semibold text-gray-800 leading-snug">{prova.nome}</h2>
+                  {isAdmin && (
+                    <button
+                      type="button"
+                      onClick={() => openIncompleteModal(prova)}
+                      className="self-start inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-amber-300 bg-amber-50 text-amber-800 text-xs font-semibold hover:bg-amber-100 transition"
+                    >
+                      <AlertTriangle className="w-3.5 h-3.5" />
+                      Prova Incompleta
+                    </button>
+                  )}
                   <div className="flex flex-wrap gap-1.5">
                     {prova.banca && (
                       <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-primary-100 text-primary-700 text-xs font-medium">
@@ -1320,6 +1536,213 @@ export default function ProvasPage() {
                   <p className="text-xs text-gray-500 text-center">
                     Lote {importProgress.current} de {importProgress.total} — arquivos grandes são importados em partes
                   </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Prova Incompleta */}
+      {incompleteProva && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 sticky top-0 bg-white z-10">
+              <div>
+                <h2 className="text-lg font-semibold text-gray-800">Prova incompleta</h2>
+                <p className="text-xs text-gray-500 mt-0.5 line-clamp-1">{incompleteProva.nome}</p>
+              </div>
+              <button
+                type="button"
+                onClick={closeIncompleteModal}
+                className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition"
+                aria-label="Fechar"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-5 space-y-4">
+              {incompleteError && (
+                <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">{incompleteError}</div>
+              )}
+              {incompleteMsg && (
+                <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-800 text-sm">{incompleteMsg}</div>
+              )}
+
+              {incompleteStep === 'menu' && (
+                <div className="space-y-3">
+                  <p className="text-sm font-medium text-gray-800">O que você deseja fazer?</p>
+                  <button
+                    type="button"
+                    onClick={() => { setIncompleteStep('add'); setIncompleteError(null); setIncompleteMsg(null); }}
+                    className="w-full px-4 py-3 rounded-lg bg-primary-600 text-white font-medium text-sm hover:bg-primary-700 transition"
+                  >
+                    Adicionar questão
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => void startRemoveStep()}
+                    className="w-full px-4 py-3 rounded-lg border border-red-300 text-red-700 font-medium text-sm hover:bg-red-50 transition"
+                  >
+                    Excluir questão
+                  </button>
+                  <button
+                    type="button"
+                    onClick={closeIncompleteModal}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 text-gray-700 font-medium text-sm hover:bg-gray-50 transition"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              )}
+
+              {incompleteStep === 'add' && (
+                <div className="space-y-3">
+                  <button
+                    type="button"
+                    onClick={() => { setIncompleteStep('menu'); setIncompleteError(null); }}
+                    className="text-sm text-primary-600 hover:text-primary-700 font-medium"
+                  >
+                    ← Voltar
+                  </button>
+                  <p className="text-sm text-gray-600">
+                    Informe a posição de inserção. Questões com número ≥ essa posição serão deslocadas (+1).
+                  </p>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-500 mb-1">Número na prova *</label>
+                    <input
+                      type="number"
+                      min={1}
+                      value={addForm.numero_na_prova}
+                      onChange={(e) => setAddForm((p) => ({ ...p, numero_na_prova: e.target.value }))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-500 mb-1">Enunciado *</label>
+                    <textarea
+                      rows={4}
+                      value={addForm.statement}
+                      onChange={(e) => setAddForm((p) => ({ ...p, statement: e.target.value }))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-semibold text-gray-500">Imagens (opcional)</label>
+                      <label className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-dashed border-gray-300 text-xs text-gray-600 hover:border-primary-400 cursor-pointer">
+                        <ImageIcon className="w-3.5 h-3.5" />
+                        Adicionar
+                        <input
+                          ref={addImageInputRef}
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          onChange={handleAddImageUpload}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                    {addImages.length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {addImages.map((img, idx) => (
+                          <div key={idx} className="relative">
+                            <img src={img} alt="" className="h-20 w-auto max-w-[8rem] object-contain rounded border border-gray-200" />
+                            <button
+                              type="button"
+                              onClick={() => setAddImages((prev) => prev.filter((_, i) => i !== idx))}
+                              className="absolute -top-1 -right-1 p-0.5 bg-red-500 text-white rounded-full"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  {(['a', 'b', 'c', 'd', 'e'] as const).map((letter) => {
+                    const key = `option_${letter}` as 'option_a' | 'option_b' | 'option_c' | 'option_d' | 'option_e';
+                    const required = letter === 'a' || letter === 'b';
+                    return (
+                      <div key={letter}>
+                        <label className="block text-xs font-semibold text-gray-500 mb-1">
+                          Alternativa {letter.toUpperCase()}{required ? ' *' : ' (opcional)'}
+                        </label>
+                        <input
+                          type="text"
+                          value={addForm[key]}
+                          onChange={(e) => setAddForm((p) => ({ ...p, [key]: e.target.value }))}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                        />
+                      </div>
+                    );
+                  })}
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-500 mb-1">Alternativa correta *</label>
+                    <select
+                      value={addForm.correct_answer}
+                      onChange={(e) => setAddForm((p) => ({ ...p, correct_answer: e.target.value as 'A' | 'B' | 'C' | 'D' | 'E' }))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white"
+                    >
+                      {addAvailableOptions.map((k) => (
+                        <option key={k} value={k}>{k}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => void submitAddQuestion()}
+                    disabled={incompleteLoading}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-600 text-white rounded-lg font-medium text-sm hover:bg-primary-700 disabled:opacity-60"
+                  >
+                    {incompleteLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                    Salvar questão
+                  </button>
+                </div>
+              )}
+
+              {incompleteStep === 'remove' && (
+                <div className="space-y-3">
+                  <button
+                    type="button"
+                    onClick={() => { setIncompleteStep('menu'); setIncompleteError(null); }}
+                    className="text-sm text-primary-600 hover:text-primary-700 font-medium"
+                  >
+                    ← Voltar
+                  </button>
+                  <p className="text-sm text-gray-600">
+                    A questão sai da prova (não é apagada do banco) e as posteriores são renumeradas (−1).
+                  </p>
+                  {incompleteLoading && removeQuestions.length === 0 ? (
+                    <div className="flex justify-center py-6"><Loader2 className="w-6 h-6 animate-spin text-primary-600" /></div>
+                  ) : removeQuestions.length === 0 ? (
+                    <p className="text-sm text-gray-500">Esta prova não tem questões.</p>
+                  ) : (
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-500 mb-1">Questão a excluir da prova</label>
+                      <select
+                        value={removeSelectedId ?? ''}
+                        onChange={(e) => setRemoveSelectedId(parseInt(e.target.value, 10))}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white"
+                      >
+                        {removeQuestions.map((q) => (
+                          <option key={q.id} value={q.id}>
+                            #{q.numero_na_prova ?? '?'} — {q.statement.slice(0, 80)}{q.statement.length > 80 ? '…' : ''}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => void submitRemoveQuestion()}
+                    disabled={incompleteLoading || !removeSelectedId}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-red-600 text-white rounded-lg font-medium text-sm hover:bg-red-700 disabled:opacity-60"
+                  >
+                    {incompleteLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+                    Confirmar exclusão da prova
+                  </button>
                 </div>
               )}
             </div>
