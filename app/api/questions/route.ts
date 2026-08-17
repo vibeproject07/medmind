@@ -208,7 +208,12 @@ export async function POST(request: NextRequest) {
     }
 
     const tagsJson = tags && Array.isArray(tags) ? JSON.stringify(tags) : null;
-    const imagesJson = images && Array.isArray(images) ? JSON.stringify(images) : null;
+    const processedImages = images && Array.isArray(images)
+      ? await (await import('@/lib/s3')).processImagesForStorage(
+          (images as unknown[]).filter((i) => typeof i === 'string') as string[],
+        )
+      : null;
+    const imagesJson = processedImages?.length ? JSON.stringify(processedImages) : null;
     const areasConhecimentoJson = areas_conhecimento && Array.isArray(areas_conhecimento) ? JSON.stringify(areas_conhecimento) : null;
     const assuntosJson = assuntos && Array.isArray(assuntos) ? JSON.stringify(assuntos) : null;
     const decsTermsJson = decs_terms && Array.isArray(decs_terms) ? JSON.stringify(decs_terms) : null;

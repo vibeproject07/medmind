@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getPool, query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { ensureProvaDeletedAtColumn } from '@/lib/prova-soft-delete-schema';
+import { processImagesForStorage } from '@/lib/s3';
 
 export const runtime = 'nodejs';
 
@@ -352,6 +353,14 @@ export async function POST(request: NextRequest) {
         const expected = uniqueQuestions.length;
         questoesEsperadas += expected;
 
+        // Upload any base64 images to S3 before starting the DB transaction
+        const questionsWithImages = await Promise.all(
+          uniqueQuestions.map(async (q) => ({
+            ...q,
+            images: q.images?.length ? await processImagesForStorage(q.images) : [],
+          })),
+        );
+
         await client.query('BEGIN');
 
         // Chave natural da prova: nome (contém banca/ano no padrão atual) + fallback banca+ano+regiao+tipo
@@ -411,7 +420,7 @@ export async function POST(request: NextRequest) {
         let already = 0;
         let updated = 0;
 
-        for (const q of uniqueQuestions) {
+        for (const q of questionsWithImages) {
           const optA = q.option_a || 'Alternativa A';
           const optB = q.option_b || 'Alternativa B';
           const optC = q.option_c?.trim() ? q.option_c : null;
