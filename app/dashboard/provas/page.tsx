@@ -94,8 +94,6 @@ export default function ProvasPage() {
   const [jsonError, setJsonError] = useState<string | null>(null);
   const [importSummary, setImportSummary] = useState<ImportSummary | null>(null);
   const [importProgress, setImportProgress] = useState<{ current: number; total: number } | null>(null);
-  // Per-card loading state when fetching questions before navigating
-  const [realizandoProvaId, setRealizandoProvaId] = useState<number | null>(null);
 
   const [isAdmin, setIsAdmin] = useState(false);
   const [showAdminCrud, setShowAdminCrud] = useState(false);
@@ -752,26 +750,10 @@ export default function ProvasPage() {
   };
 
   // ── Realizar prova — fetch full questions on demand ──────────────────────
-  const handleRealizarProva = async (provaId: number) => {
+  const handleRealizarProva = (provaId: number) => {
     const token = localStorage.getItem('token');
     if (!token) { setSessionExpired(true); return; }
-    setRealizandoProvaId(provaId);
-    try {
-      const res = await fetch(`/api/provas/${provaId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (res.ok) {
-        const prova = await res.json();
-        localStorage.setItem(`examProva_${provaId}`, JSON.stringify(prova));
-        router.push(`/dashboard/provas/${provaId}`);
-      } else if (res.status === 401 || res.status === 403) {
-        setSessionExpired(true);
-      }
-    } catch (err) {
-      console.error('Erro ao carregar prova:', err);
-    } finally {
-      setRealizandoProvaId(null);
-    }
+    router.push(`/dashboard/provas/${provaId}`);
   };
 
   // ── Soft-delete / restore (admin) ────────────────────────────────────────
@@ -1494,13 +1476,9 @@ export default function ProvasPage() {
                   <button
                     type="button"
                     onClick={() => handleRealizarProva(prova.id)}
-                    disabled={realizandoProvaId === prova.id}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-70 disabled:cursor-not-allowed transition font-medium text-sm"
+                    className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition font-medium text-sm"
                   >
-                    {realizandoProvaId === prova.id
-                      ? <><Loader2 className="w-4 h-4 animate-spin" /> Carregando...</>
-                      : <><Play className="w-4 h-4" /> Realizar prova</>
-                    }
+                    <Play className="w-4 h-4" /> Realizar prova
                   </button>
                 </div>
               </div>

@@ -384,6 +384,7 @@ export default function ProvaExamPage() {
   });
   const [savingEdit, setSavingEdit] = useState(false);
   const [togglingAnulada, setTogglingAnulada] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     const update = () => setGroupSize(window.innerWidth < 640 ? MOBILE_GROUP : DESKTOP_GROUP);
@@ -397,22 +398,40 @@ export default function ProvaExamPage() {
   }, [examIndex, groupSize]);
 
   useEffect(() => {
-    const raw = localStorage.getItem(`examProva_${provaId}`);
-    if (!raw) { router.replace('/dashboard/provas'); return; }
-    try { setProva(JSON.parse(raw)); }
-    catch { router.replace('/dashboard/provas'); }
-  }, [provaId, router]);
-
-  useEffect(() => {
+    if (!provaId || isNaN(provaId)) { router.replace('/dashboard/provas'); return; }
     const token = localStorage.getItem('token');
-    if (!token) return;
+    if (!token) { router.replace('/dashboard/provas'); return; }
+
+    // Decode role from token
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
       setIsAdmin(payload.role === 'admin' || payload.role === 'manager');
     } catch {
       setIsAdmin(false);
     }
-  }, []);
+
+    // Fetch prova from API
+    fetch(`/api/provas/${provaId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then(async (res) => {
+        if (res.status === 401 || res.status === 403) {
+          router.replace('/dashboard/provas');
+          return;
+        }
+        if (res.status === 404) {
+          setLoadError('Prova não encontrada.');
+          return;
+        }
+        if (!res.ok) {
+          setLoadError('Erro ao carregar a prova. Tente novamente.');
+          return;
+        }
+        const data = await res.json();
+        setProva(data);
+      })
+      .catch(() => setLoadError('Erro de conexão. Verifique sua internet e tente novamente.'));
+  }, [provaId, router]);
 
   useEffect(() => {
     setAiCommentOpen(false);
@@ -535,6 +554,22 @@ export default function ProvaExamPage() {
     },
     [groupIndex, groupSize],
   );
+
+  if (loadError) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-64 gap-4 text-center px-4">
+        <AlertTriangle className="w-10 h-10 text-red-400" />
+        <p className="text-gray-700 font-medium">{loadError}</p>
+        <button
+          type="button"
+          onClick={() => router.push('/dashboard/provas')}
+          className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition text-sm font-medium"
+        >
+          Voltar para Provas
+        </button>
+      </div>
+    );
+  }
 
   if (!prova) {
     return (
@@ -728,9 +763,7 @@ export default function ProvaExamPage() {
               }
             : q,
         );
-        const next = { ...prev, questions: nextQuestions };
-        localStorage.setItem(`examProva_${provaId}`, JSON.stringify(next));
-        return next;
+        return { ...prev, questions: nextQuestions };
       });
 
       setEditingQuestionId(null);
@@ -770,9 +803,7 @@ export default function ProvaExamPage() {
         const nextQuestions = prev.questions.map((q) =>
           q.id === currentQuestion.id ? { ...q, anulada: raw.anulada } : q,
         );
-        const next = { ...prev, questions: nextQuestions };
-        localStorage.setItem(`examProva_${provaId}`, JSON.stringify(next));
-        return next;
+        return { ...prev, questions: nextQuestions };
       });
       setEditingQuestionId(null);
     } catch {
