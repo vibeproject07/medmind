@@ -96,3 +96,10 @@ id = "o8JxcoWzWVLXF4I0C6Xjy"
 uri = "file://exports/decs-embedding-text-audit.json"
 type = "unspecified"
 title = "Auditoria de texto de embedding — 5 termos de epilepsia"
+
+[[outputs]]
+id = "_Lb0_Z5l5g42PUD9cDTv7"
+uri = "file://reports/questoes_provas_imagens_urls.csv"
+type = "table"
+title = "Lista de questões de provas com URLs de imagens"
+description = "CSV com 10.757 URLs, uma por linha de imagem, incluindo todos os campos da prova, ID e número da questão, enunciado e índice da imagem."
