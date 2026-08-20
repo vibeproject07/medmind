@@ -179,11 +179,11 @@ export async function POST(request: NextRequest) {
     if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
 
     const body = await request.json();
-    const { title, description, tags, images, areas_conhecimento, assuntos,
+    const { title, description, tipo_conteudo, tags, images, areas_conhecimento, assuntos,
             question_ids, fontes_resumo_melhorado, fontes_resumo_original, fontes_arquivos } = body;
 
-    if (!title || !description)
-      return NextResponse.json({ error: 'Título e descrição são obrigatórios' }, { status: 400 });
+    if (!title || !String(title).trim())
+      return NextResponse.json({ error: 'O título é obrigatório' }, { status: 400 });
 
     const tagsJson              = tags               && Array.isArray(tags)               ? JSON.stringify(tags)               : null;
     const imagesJson            = images             && Array.isArray(images)             ? JSON.stringify(images)             : null;
@@ -192,11 +192,12 @@ export async function POST(request: NextRequest) {
     const fontesArquivosJson    = fontes_arquivos    && Array.isArray(fontes_arquivos)    ? JSON.stringify(fontes_arquivos)    : null;
 
     const result = await query(
-      `INSERT INTO notes (user_id, title, description, tags, images, areas_conhecimento, assuntos,
+      `INSERT INTO notes (user_id, title, description, tipo_conteudo, tags, images, areas_conhecimento, assuntos,
                           fontes_resumo_melhorado, fontes_resumo_original, fontes_arquivos)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING id`,
-      [user.id, title, description, tagsJson, imagesJson, areasConhecimentoJson, assuntosJson,
-       fontes_resumo_melhorado ?? null, fontes_resumo_original ?? null, fontesArquivosJson],
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING id`,
+       [user.id, String(title).trim(), typeof description === 'string' ? description : '', tipo_conteudo || null,
+        tagsJson, imagesJson, areasConhecimentoJson, assuntosJson,
+        fontes_resumo_melhorado ?? null, fontes_resumo_original ?? null, fontesArquivosJson],
     );
 
     const noteId = result.rows[0].id;

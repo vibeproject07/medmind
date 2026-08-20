@@ -8,8 +8,17 @@ import {
   Link as LinkIcon, Loader2,
   AlertCircle, CheckCircle2, Save, Trash2, Sparkles, BookOpen,
 } from 'lucide-react';
-import { ASSUNTOS_BY_AREA } from '@/lib/areas-assuntos';
 import { uploadNoteSourceFile } from '@/components/Notes/NoteSourcesPanel';
+import PendingNoteSourcesPreview from '@/components/Notes/PendingNoteSourcesPreview';
+import TagAutocomplete from '@/components/Common/TagAutocomplete';
+import {
+  ASSUNTOS_BY_AREA,
+  AREAS_OPTIONS_DISPLAY,
+  fromDisplay,
+  toDisplayArea,
+  toDisplayAssunto,
+} from '@/lib/areas-assuntos';
+import { consumePendingNoteSources } from '@/lib/pending-note-sources';
 
 const AVAILABLE_TAGS = [
   'Acupuntura','Anestesiologia','Cirurgia Cardiovascular','Cirurgia Geral',
@@ -492,6 +501,14 @@ function NewNotePageContent() {
     if (succeeded) setStep(2);
   };
 
+  // Files selected from the global quick-create modal remain only in client
+  // memory until the user saves the note. This avoids encoding media in web
+  // storage while keeping the original file available for its local preview.
+  useEffect(() => {
+    const stagedFiles = consumePendingNoteSources();
+    if (stagedFiles.length > 0) void processSource(stagedFiles, '');
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const openFilePickerFor = (accept: string) => {
     if (fonteFileInputRef.current) {
       fonteFileInputRef.current.accept = accept;
@@ -522,6 +539,10 @@ function NewNotePageContent() {
   };
 
   const removeImage = (i: number) => setFormData((p) => ({ ...p, images: p.images.filter((_, j) => j !== i) }));
+  const removePendingSourceFile = (index: number) => {
+    setPendingSourceFiles((files) => files.filter((_, currentIndex) => currentIndex !== index));
+    setFontesArquivosNames((names) => names.filter((_, currentIndex) => currentIndex !== index));
+  };
 
   const handleSubmit = async (
     afterSave?: 'note' | 'list' | 'estudio',
@@ -544,6 +565,7 @@ function NewNotePageContent() {
         body: JSON.stringify({
           title: formData.title,
           description: formData.informacoes,
+          tipo_conteudo: formData.tipoConteudo || undefined,
           tags: formData.tags,
           images: formData.images,
           areas_conhecimento: formData.areasConhecimento,
@@ -800,6 +822,101 @@ function NewNotePageContent() {
     </div>
   );
 
+  const renderNoteMetadata = () => (
+    <section className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm space-y-4">
+      <div>
+        <h2 className="text-sm font-semibold text-gray-800">Informações da nota</h2>
+        <p className="mt-0.5 text-xs text-gray-500">Organize a nota para encontrá-la e relacioná-la a questões depois.</p>
+      </div>
+
+      <div>
+        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500">Tipo de conteúdo</label>
+        <input
+          type="text"
+          value={formData.tipoConteudo}
+          onChange={(event) => setFormData({ ...formData, tipoConteudo: event.target.value })}
+          placeholder="Ex.: resumo de aula, caso clínico, artigo"
+          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-700 focus:border-transparent focus:ring-2 focus:ring-primary-500"
+        />
+      </div>
+
+      <TagAutocomplete
+        label="Especialidade / tags"
+        options={availableTags}
+        selectedTags={formData.tags}
+        onChange={(tags) => setFormData({ ...formData, tags })}
+        onSaveNewTag={(tag) => {
+          if (!availableTags.includes(tag)) setAvailableTags((current) => [...current, tag]);
+        }}
+        placeholder="Digite para buscar tags…"
+      />
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500">Área do conhecimento</label>
+          <TagAutocomplete
+            options={AREAS_OPTIONS_DISPLAY}
+            selectedTags={formData.areasConhecimento.map(toDisplayArea)}
+            onChange={(tags) => setFormData({ ...formData, areasConhecimento: tags.map(fromDisplay) })}
+            onSaveNewTag={() => undefined}
+            placeholder="Selecione as áreas…"
+          />
+        </div>
+        <div>
+          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500">Assuntos</label>
+          <TagAutocomplete
+            options={assuntosOptions.map(toDisplayAssunto)}
+            selectedTags={formData.assuntos.map(toDisplayAssunto)}
+            onChange={(tags) => setFormData({ ...formData, assuntos: tags.map(fromDisplay) })}
+            onSaveNewTag={() => undefined}
+            placeholder={formData.areasConhecimento.length ? 'Selecione os assuntos…' : 'Selecione uma área primeiro'}
+          />
+        </div>
+      </div>
+
+      <div>
+        <button
+          type="button"
+          onClick={() => setImagesExpanded((expanded) => !expanded)}
+          className="flex w-full items-center justify-between text-left text-xs font-semibold uppercase tracking-wide text-gray-500"
+          aria-expanded={imagesExpanded}
+        >
+          Imagens complementares
+          <span className="text-primary-600">{imagesExpanded ? 'Ocultar' : 'Adicionar'}</span>
+        </button>
+        {imagesExpanded && (
+          <div className="mt-2">
+            <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={handleImageUpload} className="hidden" />
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="flex w-full items-center justify-center gap-2 rounded-lg border border-dashed border-gray-300 px-3 py-3 text-sm font-medium text-gray-600 hover:border-primary-300 hover:bg-primary-50/30"
+            >
+              <ImageIcon className="h-4 w-4" />Adicionar imagens à nota
+            </button>
+            {formData.images.length > 0 && (
+              <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {formData.images.map((image, index) => (
+                  <div key={`${image.slice(0, 24)}-${index}`} className="group relative overflow-hidden rounded-lg border border-gray-200">
+                    <img src={image} alt={`Imagem complementar ${index + 1}`} className="h-24 w-full object-cover" />
+                    <button
+                      type="button"
+                      onClick={() => removeImage(index)}
+                      className="absolute right-1.5 top-1.5 rounded-full bg-white/90 p-1 text-red-500 opacity-0 shadow-sm transition-opacity group-hover:opacity-100"
+                      aria-label={`Remover imagem complementar ${index + 1}`}
+                    >
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+
   const renderStep2 = () => (
     <div className="flex-1 min-h-0 flex flex-col md:flex-row">
       <div className="flex-1 min-h-0 flex flex-col min-w-0">
@@ -890,13 +1007,25 @@ function NewNotePageContent() {
         {activePanel === 'estudio' ? (
           <div className="flex-1 min-h-0 overflow-y-auto md:hidden bg-white">{renderEstudioPanel()}</div>
         ) : (
-          <div className="flex-1 min-h-0 flex flex-col px-4 sm:px-6 py-3">
-            <textarea
-              value={formData.informacoes}
-              onChange={(e) => setFormData({ ...formData, informacoes: e.target.value })}
-              placeholder="Conteúdo da nota…"
-              className="flex-1 min-h-0 w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm text-gray-700 resize-none leading-relaxed shadow-sm"
-            />
+          <div className="flex-1 min-h-0 overflow-y-auto px-4 py-3 sm:px-6">
+            <div className="mx-auto max-w-4xl space-y-4">
+              {pendingSourceFiles.length > 0 && (
+                <PendingNoteSourcesPreview files={pendingSourceFiles} onRemove={removePendingSourceFile} />
+              )}
+
+              <section className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+                <label className="mb-2 block text-sm font-semibold text-gray-800">Conteúdo da nota</label>
+                <textarea
+                  value={formData.informacoes}
+                  onChange={(e) => setFormData({ ...formData, informacoes: e.target.value })}
+                  placeholder="Escreva observações, contexto, conclusões e o que desejar registrar sobre este material…"
+                  rows={12}
+                  className="min-h-64 w-full resize-y rounded-lg border border-gray-200 px-4 py-3 text-sm leading-relaxed text-gray-700 focus:border-transparent focus:ring-2 focus:ring-primary-500"
+                />
+              </section>
+
+              {renderNoteMetadata()}
+            </div>
           </div>
         )}
       </div>
