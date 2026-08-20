@@ -3,3 +3,5 @@
 3) Como ficará a visualização da nota com fontes não-textuais?
 4) Já existe uma lógica para o armazenamento dos diferentes tipos de arquivos? Ou preciso criar essa lógica em um script e no bucket, conectar elas, para só então ter controle do armazenamento?
 5) Por que sempre que ocorre uma atualização do sistema, e este é reiniciado, o frontend acaba voltando ao HTML cru?
+
+Não consigo visualizar a imagem após salvar a nota. O que está acontecendo? Nesse caso, a imagem deve aparecer como conteúdo da nota. Verifique o que é mais viável: 1) Adicionar imagens, videos, áudios e outras mídias que não possuam texto escrito no campo imagens, podendo subtituir sua label por "mídias diversas"; ou 2) Criar mais um campo de text area com label anotações, para que arquivos audiovisuais sejam entendidos como conteúdo principal da nota, e as anotações possam ser adicionadas pelo usuário depois do arquivo ser adicionado. NÃO CRIE NADA AINDA, apenas comente o que você considera como melhor opção.
