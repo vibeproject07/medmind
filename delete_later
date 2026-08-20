@@ -2,4 +2,4 @@
 2) Já sou capaz de criar fontes/notas com arquivos de diversos tipo? 
 3) Como ficará a visualização da nota com fontes não-textuais?
 4) Já existe uma lógica para o armazenamento dos diferentes tipos de arquivos? Ou preciso criar essa lógica em um script e no bucket, conectar elas, para só então ter controle do armazenamento?
-5) Por que sempre que ocorre uma atualização 
+5) Por que sempre que ocorre uma atualização do sistema, e este é reiniciado, o frontend acaba voltando ao HTML cru?
