@@ -2,8 +2,8 @@
  * lib/s3.ts — Amazon S3 upload helpers for question images.
  *
  * Required environment variables:
- *   AWS_ACCESS_KEY_ID      — IAM access key
- *   AWS_SECRET_ACCESS_KEY  — IAM secret key
+ *   AWS_ACCESS_KEY_ID or IAM_AWS_S3_access_key      — IAM access key
+ *   AWS_SECRET_ACCESS_KEY or IAM_AWS_S3_secret_key  — IAM secret key
  *   AWS_REGION             — e.g. "us-east-1"
  *   AWS_S3_BUCKET          — bucket name (must allow public GetObject via bucket policy)
  *
@@ -18,14 +18,24 @@ import crypto from 'crypto';
 
 let _client: S3Client | null = null;
 
+function getAccessKeyId(): string | undefined {
+  return process.env.AWS_ACCESS_KEY_ID || process.env.IAM_AWS_S3_access_key;
+}
+
+function getSecretAccessKey(): string | undefined {
+  return process.env.AWS_SECRET_ACCESS_KEY || process.env.IAM_AWS_S3_secret_key;
+}
+
 function getClient(): S3Client | null {
-  if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) return null;
+  const accessKeyId = getAccessKeyId();
+  const secretAccessKey = getSecretAccessKey();
+  if (!accessKeyId || !secretAccessKey) return null;
   if (!_client) {
     _client = new S3Client({
       region: process.env.AWS_REGION ?? 'us-east-1',
       credentials: {
-        accessKeyId:     process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        accessKeyId,
+        secretAccessKey,
       },
     });
   }
@@ -39,8 +49,8 @@ export function isS3Configured(): boolean {
   return !!(
     process.env.AWS_S3_BUCKET &&
     process.env.AWS_REGION &&
-    process.env.AWS_ACCESS_KEY_ID &&
-    process.env.AWS_SECRET_ACCESS_KEY
+    getAccessKeyId() &&
+    getSecretAccessKey()
   );
 }
 
@@ -62,7 +72,12 @@ export async function uploadBufferToS3(
   if (!bucket) throw new Error('AWS_S3_BUCKET não configurado');
 
   const client = getClient();
-  if (!client) throw new Error('Credenciais AWS não configuradas (AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY)');
+  if (!client) {
+    throw new Error(
+      'Credenciais AWS não configuradas (AWS_ACCESS_KEY_ID / IAM_AWS_S3_access_key e ' +
+      'AWS_SECRET_ACCESS_KEY / IAM_AWS_S3_secret_key)',
+    );
+  }
 
   const ext = mimeType
     .split('/')[1]
@@ -115,7 +130,7 @@ export async function processImagesForStorage(images: string[]): Promise<string[
 
   if (!isS3Configured()) {
     console.warn(
-      '[s3] S3 não configurado (faltam AWS_S3_BUCKET / AWS_REGION / AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY). ' +
+      '[s3] S3 não configurado (faltam AWS_S3_BUCKET / AWS_REGION / credenciais IAM). ' +
       'Imagens base64 serão mantidas como estão no banco.',
     );
     return images;
