@@ -1,23 +1,21 @@
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload, Secret } from 'jsonwebtoken';
 
-// Garantir que o JWT_SECRET seja sempre o mesmo
-const JWT_SECRET = (() => {
-  const secret = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
-  if (!secret || secret.trim() === '') {
-    console.warn('⚠️ JWT_SECRET não definido, usando padrão');
-    return 'your-secret-key-change-in-production';
+/**
+ * JWTs must never be signed with a public fallback. SESSION_SECRET supports
+ * existing Replit deployments while JWT_SECRET remains the preferred explicit
+ * configuration name.
+ */
+function getJwtSecret(): Secret {
+  const secret = process.env.JWT_SECRET || process.env.SESSION_SECRET;
+  if (!secret || secret.trim().length < 32) {
+    throw new Error(
+      'JWT_SECRET (ou SESSION_SECRET) deve ser configurado com pelo menos 32 caracteres.',
+    );
   }
   return secret;
-})();
-
-// Log apenas uma vez no início (não em cada requisição)
-if (typeof window === 'undefined') {
-  console.log('🔐 JWT_SECRET inicializado:', {
-    length: JWT_SECRET.length,
-    start: JWT_SECRET.substring(0, 10) + '...',
-    isDefault: JWT_SECRET === 'your-secret-key-change-in-production'
-  });
 }
+
+const JWT_SECRET = getJwtSecret();
 
 export type UserRole = 'admin' | 'manager' | 'regular';
 
@@ -48,68 +46,33 @@ export function generateToken(user: User): string {
 export function verifyToken(token: string): User | null {
   try {
     if (!token || typeof token !== 'string' || token.trim() === '') {
-      console.error('❌ Token vazio ou inválido:', { token: token?.substring(0, 20), type: typeof token });
       return null;
     }
-    
-    const cleanToken = token.trim();
-    
-    // Verificar formato básico do JWT antes de tentar verificar
-    const parts = cleanToken.split('.');
-    if (parts.length !== 3) {
-      console.error('❌ Token com formato inválido (não tem 3 partes):', {
-        parts: parts.length,
-        tokenStart: cleanToken.substring(0, 30)
-      });
+
+    const decoded = jwt.verify(token.trim(), JWT_SECRET, {
+      algorithms: ['HS256'],
+    }) as JwtPayload;
+    if (
+      !decoded ||
+      typeof decoded === 'string' ||
+      typeof decoded.id !== 'number' ||
+      !Number.isInteger(decoded.id) ||
+      typeof decoded.email !== 'string' ||
+      !decoded.email ||
+      !['admin', 'manager', 'regular'].includes(String(decoded.role))
+    ) {
       return null;
     }
-    
-    console.log('🔍 Verificando token:', {
-      length: cleanToken.length,
-      start: cleanToken.substring(0, 30),
-      secretLength: JWT_SECRET.length,
-      secretStart: JWT_SECRET.substring(0, 10),
-      parts: parts.length
-    });
-    
-    let decoded: any;
-    try {
-      decoded = jwt.verify(cleanToken, JWT_SECRET) as any;
-    } catch (verifyError: any) {
-      console.error('❌ Erro no jwt.verify:', {
-        name: verifyError.name,
-        message: verifyError.message,
-        tokenStart: cleanToken.substring(0, 30)
-      });
-      throw verifyError; // Re-throw para ser capturado pelo catch externo
-    }
-    
-    console.log('✅ Token decodificado:', {
-      id: decoded?.id,
-      email: decoded?.email,
-      role: decoded?.role
-    });
-    
-    if (!decoded || typeof decoded.id !== 'number' || !decoded.email) {
-      console.error('❌ Token decodificado inválido:', decoded);
-      return null;
-    }
-    
+
     return {
       id: decoded.id,
-      name: decoded.name || '',
-      username: decoded.username || null,
+      name: typeof decoded.name === 'string' ? decoded.name : '',
+      username: typeof decoded.username === 'string' ? decoded.username : null,
       email: decoded.email,
-      role: decoded.role || 'regular',
-      company_id: decoded.company_id || null,
+      role: decoded.role as UserRole,
+      company_id: typeof decoded.company_id === 'number' ? decoded.company_id : null,
     };
-  } catch (error: any) {
-    console.error('❌ Erro ao verificar token:', {
-      name: error.name,
-      message: error.message,
-      tokenLength: token?.length,
-      tokenStart: token?.substring(0, 30)
-    });
+  } catch {
     return null;
   }
 }
