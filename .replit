@@ -74,3 +74,9 @@ externalPort = 4200
 deploymentTarget = "autoscale"
 run = ["npm", "run", "start"]
 build = ["npm", "run", "build"]
+
+[userenv]
+
+[userenv.shared]
+AWS_REGION = "us-east-1"
+AWS_S3_BUCKET = "medmind-bucket-s3"
