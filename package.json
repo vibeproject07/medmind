@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "rm -rf .next && WATCHPACK_POLLING=true CHOKIDAR_USEPOLLING=true next dev -p 5000 -H 0.0.0.0",
+    "dev": "rm -rf .next-dev && WATCHPACK_POLLING=true CHOKIDAR_USEPOLLING=true next dev -p 5000 -H 0.0.0.0",
     "build": "next build",
     "start": "next start -p 5000 -H 0.0.0.0",
     "lint": "next lint",

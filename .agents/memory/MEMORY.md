@@ -1,0 +1,1 @@
+- [Next development assets](next-development-assets.md) — keep development and production build output separate to avoid missing chunks and unstyled previews.
