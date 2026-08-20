@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { triggerEnrichment } from '@/lib/enrichment';
+import { ensureNoteMetadataSchema } from '@/lib/note-schema';
 
 export const runtime = 'nodejs';
 
@@ -190,6 +191,8 @@ export async function POST(request: NextRequest) {
     const areasConhecimentoJson = areas_conhecimento && Array.isArray(areas_conhecimento) ? JSON.stringify(areas_conhecimento) : null;
     const assuntosJson          = assuntos           && Array.isArray(assuntos)           ? JSON.stringify(assuntos)           : null;
     const fontesArquivosJson    = fontes_arquivos    && Array.isArray(fontes_arquivos)    ? JSON.stringify(fontes_arquivos)    : null;
+
+    await ensureNoteMetadataSchema();
 
     const result = await query(
       `INSERT INTO notes (user_id, title, description, tipo_conteudo, tags, images, areas_conhecimento, assuntos,

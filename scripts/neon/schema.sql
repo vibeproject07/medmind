@@ -100,6 +100,7 @@ CREATE TABLE notes (
   user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   title TEXT NOT NULL,
   description TEXT NOT NULL,
+  tipo_conteudo TEXT,
   tags TEXT,
   images TEXT,
   areas_conhecimento TEXT,

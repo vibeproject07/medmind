@@ -921,17 +921,17 @@ function NewNotePageContent() {
     <div className="flex-1 min-h-0 flex flex-col md:flex-row">
       <div className="flex-1 min-h-0 flex flex-col min-w-0">
         {/* Fixed sub-header: title + action buttons */}
-        <div className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 border-b border-gray-200 bg-white">
+        <div className="flex-shrink-0 flex flex-col gap-2 px-4 py-2.5 border-b border-gray-200 bg-white sm:flex-row sm:items-center">
           <input
             type="text"
             value={formData.title}
             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
             placeholder="Título da nota"
             required
-            className="flex-1 min-w-0 text-base font-semibold bg-transparent border-0 focus:outline-none text-gray-800 placeholder:text-gray-300"
+            className="w-full min-w-0 flex-1 rounded-lg border border-gray-200 bg-white px-3 py-2 text-base font-semibold text-gray-800 placeholder:text-gray-400 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 sm:border-0 sm:bg-transparent sm:px-0 sm:py-0"
             style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}
           />
-          <div className="flex items-center gap-1.5 flex-shrink-0">
+          <div className="flex w-full items-center justify-end gap-1.5 sm:w-auto sm:flex-shrink-0">
             <button
               type="button"
               onClick={requestOpenEstudio}

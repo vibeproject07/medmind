@@ -3,6 +3,7 @@ import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { triggerEnrichment } from '@/lib/enrichment';
 import { ensureNoteDeCsColumn, parseNoteAiDeCsDescriptors } from '@/lib/note-decs';
+import { ensureNoteMetadataSchema } from '@/lib/note-schema';
 
 export const runtime = 'nodejs';
 
@@ -91,10 +92,13 @@ export async function PUT(
     }
 
     const body = await request.json();
-    const { title, description, tags, images, areas_conhecimento, assuntos, fontes_resumo_melhorado, fontes_resumo_original, fontes_arquivos } = body;
+    const {
+      title, description, tipo_conteudo, tags, images, areas_conhecimento,
+      assuntos, fontes_resumo_melhorado, fontes_resumo_original, fontes_arquivos,
+    } = body;
 
-    if (!title || !description) {
-      return NextResponse.json({ error: 'Título e descrição são obrigatórios' }, { status: 400 });
+    if (!title || !String(title).trim()) {
+      return NextResponse.json({ error: 'O título é obrigatório' }, { status: 400 });
     }
 
     const tagsJson = tags && Array.isArray(tags) ? JSON.stringify(tags) : null;
@@ -102,6 +106,8 @@ export async function PUT(
     const areasConhecimentoJson = areas_conhecimento && Array.isArray(areas_conhecimento) ? JSON.stringify(areas_conhecimento) : null;
     const assuntosJson = assuntos && Array.isArray(assuntos) ? JSON.stringify(assuntos) : null;
     const fontesArquivosJson = fontes_arquivos && Array.isArray(fontes_arquivos) ? JSON.stringify(fontes_arquivos) : null;
+
+    await ensureNoteMetadataSchema();
 
     let noteCheck;
     if (user.role === 'admin') {
@@ -117,17 +123,21 @@ export async function PUT(
     if (user.role === 'admin') {
       await query(`
         UPDATE notes
-        SET title = $1, description = $2, tags = $3, images = $4, areas_conhecimento = $5, assuntos = $6,
-            fontes_resumo_melhorado = $7, fontes_resumo_original = $8, fontes_arquivos = $9, updated_at = NOW()
-        WHERE id = $10
-      `, [title, description, tagsJson, imagesJson, areasConhecimentoJson, assuntosJson, fontes_resumo_melhorado ?? null, fontes_resumo_original ?? null, fontesArquivosJson, params.id]);
+        SET title = $1, description = $2, tipo_conteudo = $3, tags = $4, images = $5, areas_conhecimento = $6, assuntos = $7,
+            fontes_resumo_melhorado = $8, fontes_resumo_original = $9, fontes_arquivos = $10, updated_at = NOW()
+        WHERE id = $11
+      `, [String(title).trim(), typeof description === 'string' ? description : '', tipo_conteudo || null,
+        tagsJson, imagesJson, areasConhecimentoJson, assuntosJson,
+        fontes_resumo_melhorado ?? null, fontes_resumo_original ?? null, fontesArquivosJson, params.id]);
     } else {
       await query(`
         UPDATE notes
-        SET title = $1, description = $2, tags = $3, images = $4, areas_conhecimento = $5, assuntos = $6,
-            fontes_resumo_melhorado = $7, fontes_resumo_original = $8, fontes_arquivos = $9, updated_at = NOW()
-        WHERE id = $10 AND user_id = $11
-      `, [title, description, tagsJson, imagesJson, areasConhecimentoJson, assuntosJson, fontes_resumo_melhorado ?? null, fontes_resumo_original ?? null, fontesArquivosJson, params.id, user.id]);
+        SET title = $1, description = $2, tipo_conteudo = $3, tags = $4, images = $5, areas_conhecimento = $6, assuntos = $7,
+            fontes_resumo_melhorado = $8, fontes_resumo_original = $9, fontes_arquivos = $10, updated_at = NOW()
+        WHERE id = $11 AND user_id = $12
+      `, [String(title).trim(), typeof description === 'string' ? description : '', tipo_conteudo || null,
+        tagsJson, imagesJson, areasConhecimentoJson, assuntosJson,
+        fontes_resumo_melhorado ?? null, fontes_resumo_original ?? null, fontesArquivosJson, params.id, user.id]);
     }
 
     triggerEnrichment('note', parseInt(params.id));
