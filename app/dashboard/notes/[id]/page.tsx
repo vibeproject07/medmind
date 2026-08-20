@@ -445,7 +445,7 @@ export default function NoteDetailPage() {
               Selecione ★ para usar como conteúdo da nota.
             </p>
           )}
-          <p className="text-xs font-semibold text-gray-600 px-3 pt-2 pb-1">Transformação por IA</p>
+          <p className="text-xs font-semibold text-gray-600 px-3 pt-2 pb-1">Transformação legada por IA</p>
           <div className="flex">
             {(['melhorado', 'original'] as const).map((st) => (
               <button
@@ -482,12 +482,7 @@ export default function NoteDetailPage() {
             </p>
           </div>
         </div>
-      ) : (
-        <div className="text-center py-3 text-gray-400">
-          <BookOpen className="w-8 h-8 mx-auto mb-2 opacity-40" />
-          <p className="text-xs">Os resumos de fontes aparecerão aqui quando houver processamento por IA.</p>
-        </div>
-      )}
+      ) : null}
     </div>
   );
 

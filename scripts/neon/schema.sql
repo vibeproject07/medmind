@@ -130,12 +130,22 @@ CREATE TABLE note_sources (
   size_bytes BIGINT NOT NULL CHECK (size_bytes >= 0),
   category TEXT NOT NULL CHECK (category IN ('document', 'text', 'image', 'audio', 'video')),
   status TEXT NOT NULL DEFAULT 'uploading' CHECK (status IN ('uploading', 'ready')),
+  processing_status TEXT NOT NULL DEFAULT 'idle' CHECK (processing_status IN ('idle', 'queued', 'processing', 'completed', 'failed')),
+  processing_original_text TEXT,
+  processing_result TEXT,
+  processing_error TEXT,
+  processing_attempts INTEGER NOT NULL DEFAULT 0,
+  processing_started_at TIMESTAMPTZ,
+  processing_completed_at TIMESTAMPTZ,
+  processing_claim_id TEXT,
+  processing_lease_expires_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX IF NOT EXISTS idx_note_sources_note_id ON note_sources(note_id);
 CREATE INDEX IF NOT EXISTS idx_note_sources_owner ON note_sources(user_id);
+CREATE INDEX IF NOT EXISTS idx_note_sources_processing ON note_sources(processing_status) WHERE processing_status IN ('queued', 'processing');
 
 -- questions (FK provas opcional)
 CREATE TABLE questions (

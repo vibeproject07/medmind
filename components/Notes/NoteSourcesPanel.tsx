@@ -32,6 +32,13 @@ export type NoteSource = {
   size_bytes: number;
   category: 'document' | 'text' | 'image' | 'audio' | 'video';
   status: 'uploading' | 'ready';
+  processing_status: 'idle' | 'queued' | 'processing' | 'completed' | 'failed';
+  processing_original_text?: string | null;
+  processing_result?: string | null;
+  processing_error?: string | null;
+  processing_attempts: number;
+  processing_started_at?: string | null;
+  processing_completed_at?: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -116,8 +123,22 @@ function formatSize(size: number): string {
   return `${(size / 1024 / 1024).toFixed(size >= 100 * 1024 * 1024 ? 0 : 1)} MB`;
 }
 
-function isPreviewable(source: NoteSource): boolean {
-  return source.category === 'image' || source.category === 'audio' || source.category === 'video';
+function supportsInlineViewer(source: NoteSource): boolean {
+  return source.category === 'image' ||
+    source.category === 'audio' ||
+    source.category === 'video' ||
+    source.category === 'text' ||
+    source.mime_type === 'application/pdf';
+}
+
+function processingLabel(source: NoteSource): string {
+  switch (source.processing_status) {
+    case 'queued': return 'Na fila';
+    case 'processing': return 'Processando';
+    case 'completed': return 'IA concluída';
+    case 'failed': return 'Falhou — tente novamente';
+    default: return 'Sem processamento';
+  }
 }
 
 export default function NoteSourcesPanel({
@@ -135,8 +156,9 @@ export default function NoteSourcesPanel({
   const [error, setError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<number | null>(null);
   const [processingId, setProcessingId] = useState<number | null>(null);
-  const [processedOutput, setProcessedOutput] = useState<{ sourceId: number; text: string } | null>(null);
-  const [preview, setPreview] = useState<{ source: NoteSource; url: string } | null>(null);
+  const [selected, setSelected] = useState<{ source: NoteSource; url: string } | null>(null);
+  const [failedUploads, setFailedUploads] = useState<{ file: File; error: string }[]>([]);
+  const [retryFileNames, setRetryFileNames] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const token = () => localStorage.getItem('token')?.trim().replace(/^["']|["']$/g, '') || '';
@@ -161,6 +183,20 @@ export default function NoteSourcesPanel({
 
   useEffect(() => { void loadSources(); }, [loadSources]);
 
+  useEffect(() => {
+    const raw = sessionStorage.getItem('noteSourceRetryNames');
+    if (!raw) return;
+    try {
+      const pending = JSON.parse(raw) as { noteId?: number; fileNames?: string[] };
+      if (Number(pending.noteId) === noteId && Array.isArray(pending.fileNames)) {
+        setRetryFileNames(pending.fileNames.filter((name) => typeof name === 'string' && name.trim()));
+        sessionStorage.removeItem('noteSourceRetryNames');
+      }
+    } catch {
+      sessionStorage.removeItem('noteSourceRetryNames');
+    }
+  }, [noteId]);
+
   const handleFiles = async (event: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
     if (inputRef.current) inputRef.current.value = '';
@@ -173,8 +209,12 @@ export default function NoteSourcesPanel({
     for (const file of files) {
       try {
         await uploadNoteSourceFile(noteId, file, accessToken);
+        setFailedUploads((current) => current.filter((item) => item.file !== file));
+        setRetryFileNames((current) => current.filter((name) => name !== file.name));
       } catch (err) {
-        setError(err instanceof Error ? `${file.name}: ${err.message}` : `Falha ao enviar ${file.name}.`);
+        const message = err instanceof Error ? err.message : `Falha ao enviar ${file.name}.`;
+        setError(`${file.name}: ${message}`);
+        setFailedUploads((current) => [...current.filter((item) => item.file !== file), { file, error: message }]);
       } finally {
         setUploading((current) => current.filter((name) => name !== file.name));
       }
@@ -194,11 +234,23 @@ export default function NoteSourcesPanel({
     return data.url;
   };
 
+  const selectSource = async (source: NoteSource) => {
+    setBusyId(source.id);
+    try {
+      const url = await requestUrl(source);
+      setSelected({ source, url });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Não foi possível abrir o arquivo.');
+    } finally {
+      setBusyId(null);
+    }
+  };
+
   const openSource = async (source: NoteSource, download = false) => {
     setBusyId(source.id);
     try {
       const url = await requestUrl(source, download);
-      if (isPreviewable(source) && !download) setPreview({ source, url });
+      if (!download) setSelected({ source, url });
       else window.open(url, '_blank', 'noopener,noreferrer');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Não foi possível abrir o arquivo.');
@@ -237,15 +289,35 @@ export default function NoteSourcesPanel({
         method: 'POST',
         headers: { Authorization: `Bearer ${accessToken}` },
       });
-      const data = await readJson<{ text?: string; originalText?: string }>(response);
-      if (!response.ok || !data.text) throw new Error(data.error || 'Não foi possível processar o arquivo.');
-      setProcessedOutput({ sourceId: source.id, text: data.text });
+      const data = await readJson<{ source?: NoteSource }>(response);
+      if (!response.ok || !data.source) throw new Error(data.error || 'Não foi possível colocar o arquivo na fila.');
+      setSources((current) => current.map((item) => item.id === source.id ? data.source! : item));
+      setSelected((current) => current?.source.id === source.id ? { ...current, source: data.source! } : current);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Não foi possível processar o arquivo.');
     } finally {
       setProcessingId(null);
     }
   };
+
+  useEffect(() => {
+    const current = selected?.source;
+    if (!current) return;
+    const replacement = sources.find((source) => source.id === current.id);
+    if (replacement) setSelected((value) => value ? { ...value, source: replacement } : value);
+  }, [sources]); // Keep the selected viewer in sync with poll results.
+
+  useEffect(() => {
+    if (selected || busyId !== null) return;
+    const firstReadySource = sources.find((source) => source.status === 'ready');
+    if (firstReadySource) void selectSource(firstReadySource);
+  }, [sources, selected, busyId]); // Open the original file by default.
+
+  useEffect(() => {
+    if (!sources.some((source) => source.processing_status === 'queued' || source.processing_status === 'processing')) return;
+    const interval = window.setInterval(() => { void loadSources(); }, 3000);
+    return () => window.clearInterval(interval);
+  }, [sources, loadSources]);
 
   return (
     <section className={compact ? '' : 'space-y-3'}>
@@ -281,6 +353,46 @@ export default function NoteSourcesPanel({
         </div>
       )}
 
+      {failedUploads.length > 0 && (
+        <div className="space-y-2 rounded-lg border border-amber-200 bg-amber-50 p-3">
+          <p className="text-xs font-semibold text-amber-900">Alguns arquivos não foram enviados</p>
+          {failedUploads.map(({ file, error: uploadError }) => (
+            <div key={`${file.name}-${file.lastModified}`} className="flex items-center gap-2 text-xs text-amber-800">
+              <span className="min-w-0 flex-1 truncate" title={uploadError}>{file.name}</span>
+              <button
+                type="button"
+                onClick={() => {
+                  const dataTransfer = new DataTransfer();
+                  dataTransfer.items.add(file);
+                  void handleFiles({ target: { files: dataTransfer.files } } as ChangeEvent<HTMLInputElement>);
+                }}
+                className="shrink-0 rounded-md bg-white px-2 py-1 font-semibold text-amber-800 ring-1 ring-amber-300 hover:bg-amber-100"
+              >
+                Tentar novamente
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {retryFileNames.length > 0 && (
+        <div className="space-y-2 rounded-lg border border-amber-200 bg-amber-50 p-3">
+          <p className="text-xs font-semibold text-amber-900">Reenvie os arquivos que falharam</p>
+          {retryFileNames.map((fileName) => (
+            <div key={fileName} className="flex items-center gap-2 text-xs text-amber-800">
+              <span className="min-w-0 flex-1 truncate">{fileName}</span>
+              <button
+                type="button"
+                onClick={() => inputRef.current?.click()}
+                className="shrink-0 rounded-md bg-white px-2 py-1 font-semibold text-amber-800 ring-1 ring-amber-300 hover:bg-amber-100"
+              >
+                Selecionar e reenviar
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
       {loading ? (
         <div className="flex items-center gap-2 py-3 text-sm text-gray-500">
           <Loader2 className="w-4 h-4 animate-spin" />Carregando arquivos…
@@ -288,9 +400,61 @@ export default function NoteSourcesPanel({
       ) : sources.length === 0 ? (
         <p className="py-2 text-sm text-gray-500">Nenhum arquivo privado anexado a esta nota.</p>
       ) : (
-        <ul className="space-y-2">
+        <div className="space-y-3">
+          {selected && (
+            <div className="overflow-hidden rounded-xl border border-primary-100 bg-white">
+              <div className="flex items-center justify-between gap-3 border-b border-gray-100 bg-primary-50/40 px-3 py-2">
+                <div className="min-w-0">
+                  <p className="text-[11px] font-semibold uppercase tracking-wide text-primary-700">Arquivo original</p>
+                  <p className="truncate text-sm font-medium text-gray-700">{selected.source.original_name}</p>
+                </div>
+                <div className="flex shrink-0 items-center gap-1">
+                  <button type="button" title="Abrir em outra guia" onClick={() => window.open(selected.url, '_blank', 'noopener,noreferrer')}
+                    className="rounded p-1.5 text-gray-500 hover:bg-white hover:text-primary-700"><ExternalLink className="w-4 h-4" /></button>
+                  <button type="button" title="Baixar" onClick={() => void openSource(selected.source, true)}
+                    className="rounded p-1.5 text-gray-500 hover:bg-white hover:text-primary-700"><Download className="w-4 h-4" /></button>
+                </div>
+              </div>
+              <div className="bg-gray-50 p-3">
+                {selected.source.category === 'image' && <img src={selected.url} alt={selected.source.original_name} className="mx-auto max-h-[28rem] max-w-full rounded object-contain" />}
+                {selected.source.category === 'audio' && <audio src={selected.url} controls className="w-full" />}
+                {selected.source.category === 'video' && <video src={selected.url} controls className="max-h-[28rem] w-full rounded bg-black" />}
+                {(selected.source.category === 'text' || selected.source.mime_type === 'application/pdf') && (
+                  <iframe src={selected.url} title={selected.source.original_name} className="h-[28rem] w-full rounded border border-gray-200 bg-white" />
+                )}
+                {!supportsInlineViewer(selected.source) && (
+                  <div className="flex min-h-40 flex-col items-center justify-center gap-2 text-center text-sm text-gray-500">
+                    <FileText className="h-8 w-8 text-gray-400" />
+                    <p>Este formato não pode ser exibido aqui, mas continua disponível para abrir ou baixar.</p>
+                  </div>
+                )}
+              </div>
+              {(selected.source.processing_original_text || selected.source.processing_result || selected.source.processing_error || selected.source.processing_status !== 'idle') && (
+                <div className="space-y-3 border-t border-violet-100 bg-violet-50/40 p-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="flex items-center gap-1.5 text-xs font-semibold text-violet-800"><Sparkles className="h-3.5 w-3.5" />Processamento por IA</p>
+                    <span className="text-[11px] font-medium text-violet-700">{processingLabel(selected.source)}</span>
+                  </div>
+                  {selected.source.processing_error && <p className="rounded-md bg-red-50 p-2 text-xs text-red-700">{selected.source.processing_error}</p>}
+                  {selected.source.processing_result && (
+                    <div>
+                      <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-violet-700">Material de estudo</p>
+                      <p className="max-h-52 overflow-y-auto whitespace-pre-wrap text-xs leading-relaxed text-gray-700">{selected.source.processing_result}</p>
+                    </div>
+                  )}
+                  {selected.source.processing_original_text && (
+                    <details>
+                      <summary className="cursor-pointer text-xs font-medium text-violet-700">Ver texto extraído ou transcrição</summary>
+                      <p className="mt-2 max-h-44 overflow-y-auto whitespace-pre-wrap text-xs leading-relaxed text-gray-700">{selected.source.processing_original_text}</p>
+                    </details>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+          <ul className="space-y-2">
           {sources.map((source) => (
-            <li key={source.id} className="flex items-center gap-2 rounded-lg border border-gray-100 bg-white px-2.5 py-2">
+            <li key={source.id} className={`flex items-center gap-2 rounded-lg border px-2.5 py-2 ${selected?.source.id === source.id ? 'border-primary-300 bg-primary-50/40' : 'border-gray-100 bg-white'}`}>
               <span className="shrink-0 text-primary-600">{sourceIcon(source)}</span>
               <button
                 type="button"
@@ -299,8 +463,8 @@ export default function NoteSourcesPanel({
                 className="min-w-0 flex-1 text-left disabled:cursor-default"
               >
                 <span className="block truncate text-sm font-medium text-gray-700 hover:text-primary-700">{source.original_name}</span>
-                <span className="block text-[11px] text-gray-400">
-                  {source.status === 'ready' ? formatSize(Number(source.size_bytes)) : 'Upload pendente'}
+                  <span className="block text-[11px] text-gray-400">
+                   {source.status === 'ready' ? `${formatSize(Number(source.size_bytes))} · ${processingLabel(source)}` : 'Upload pendente'}
                 </span>
               </button>
               {busyId === source.id ? <Loader2 className="w-4 h-4 animate-spin text-primary-500" /> : (
@@ -314,7 +478,12 @@ export default function NoteSourcesPanel({
                     <Download className="w-4 h-4" />
                   </button>
                   <button type="button" title="Processar com IA" onClick={() => void processSource(source)}
-                    disabled={source.status !== 'ready' || processingId !== null} className="rounded p-1.5 text-gray-400 hover:bg-violet-50 hover:text-violet-600 disabled:opacity-40">
+                    disabled={
+                      source.status !== 'ready' ||
+                      processingId !== null ||
+                      source.processing_status === 'queued' ||
+                      source.processing_status === 'processing'
+                    } className="rounded p-1.5 text-gray-400 hover:bg-violet-50 hover:text-violet-600 disabled:opacity-40">
                     {processingId === source.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
                   </button>
                   {canEdit && <button type="button" title="Excluir" onClick={() => void deleteSource(source)}
@@ -325,42 +494,10 @@ export default function NoteSourcesPanel({
               )}
             </li>
           ))}
-        </ul>
-      )}
-
-      {processedOutput && (
-        <div className="rounded-lg border border-violet-100 bg-violet-50/40 p-3">
-          <div className="mb-2 flex items-center justify-between gap-2">
-            <p className="flex items-center gap-1.5 text-xs font-semibold text-violet-800">
-              <Sparkles className="w-3.5 h-3.5" />Resultado do processamento
-            </p>
-            <button
-              type="button"
-              onClick={() => navigator.clipboard.writeText(processedOutput.text).catch(() => setError('Não foi possível copiar o resultado.'))}
-              className="text-xs font-medium text-violet-700 hover:text-violet-900"
-            >
-              Copiar
-            </button>
-          </div>
-          <p className="max-h-52 overflow-y-auto whitespace-pre-wrap text-xs leading-relaxed text-gray-700">
-            {processedOutput.text}
-          </p>
+          </ul>
         </div>
       )}
 
-      {preview && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black/65 p-4" role="dialog" aria-modal="true">
-          <div className="relative max-h-[90vh] w-full max-w-4xl rounded-xl bg-white p-4 shadow-2xl">
-            <button type="button" onClick={() => setPreview(null)} className="absolute right-3 top-3 rounded p-1.5 text-gray-500 hover:bg-gray-100" aria-label="Fechar prévia">
-              <X className="w-5 h-5" />
-            </button>
-            <p className="mb-3 truncate pr-9 text-sm font-semibold text-gray-700">{preview.source.original_name}</p>
-            {preview.source.category === 'image' && <img src={preview.url} alt={preview.source.original_name} className="mx-auto max-h-[76vh] max-w-full rounded object-contain" />}
-            {preview.source.category === 'audio' && <audio src={preview.url} controls className="w-full" />}
-            {preview.source.category === 'video' && <video src={preview.url} controls className="max-h-[76vh] w-full rounded bg-black" />}
-          </div>
-        </div>
-      )}
     </section>
   );
 }

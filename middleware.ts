@@ -11,6 +11,12 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // O worker local não possui sessão de usuário; a rota valida seu segredo
+  // interno antes de executar qualquer trabalho.
+  if (request.nextUrl.pathname === '/api/internal/note-source-worker') {
+    return NextResponse.next();
+  }
+
   // Para rotas protegidas, apenas verificar se há token presente
   // A validação real do token é feita nas rotas da API ou no cliente
   const token = request.cookies.get('token')?.value || 

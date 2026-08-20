@@ -37,7 +37,9 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     if ('error' in access) return access.error;
 
     const result = await query(
-      `SELECT id, note_id, user_id, original_name, mime_type, size_bytes, category, status, created_at, updated_at
+      `SELECT id, note_id, user_id, original_name, mime_type, size_bytes, category, status,
+              processing_status, processing_original_text, processing_result, processing_error,
+              processing_attempts, processing_started_at, processing_completed_at, created_at, updated_at
        FROM note_sources
        WHERE note_id = $1
        ORDER BY created_at DESC`,

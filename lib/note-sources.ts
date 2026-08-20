@@ -5,6 +5,7 @@ import { verifyToken } from '@/lib/jwt';
 export const MAX_SOURCE_FILE_BYTES = 500 * 1024 * 1024;
 
 export type SourceCategory = 'document' | 'text' | 'image' | 'audio' | 'video';
+export type SourceProcessingStatus = 'idle' | 'queued' | 'processing' | 'completed' | 'failed';
 
 export type NoteSource = {
   id: number;
@@ -15,6 +16,13 @@ export type NoteSource = {
   size_bytes: number;
   category: SourceCategory;
   status: 'uploading' | 'ready';
+  processing_status: SourceProcessingStatus;
+  processing_original_text?: string | null;
+  processing_result?: string | null;
+  processing_error?: string | null;
+  processing_attempts: number;
+  processing_started_at?: string | null;
+  processing_completed_at?: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -27,6 +35,8 @@ type AuthUser = {
 type DatabaseSource = NoteSource & {
   object_key: string;
   checksum_sha256: string;
+  processing_claim_id?: string | null;
+  processing_lease_expires_at?: string | null;
 };
 
 const MIME_BY_EXTENSION: Record<string, string> = {
@@ -76,13 +86,32 @@ export async function ensureNoteSourcesSchema(): Promise<void> {
       size_bytes BIGINT NOT NULL CHECK (size_bytes >= 0),
       category TEXT NOT NULL CHECK (category IN ('document', 'text', 'image', 'audio', 'video')),
       status TEXT NOT NULL DEFAULT 'uploading' CHECK (status IN ('uploading', 'ready')),
+       processing_status TEXT NOT NULL DEFAULT 'idle' CHECK (processing_status IN ('idle', 'queued', 'processing', 'completed', 'failed')),
+       processing_original_text TEXT,
+       processing_result TEXT,
+       processing_error TEXT,
+       processing_attempts INTEGER NOT NULL DEFAULT 0,
+       processing_started_at TIMESTAMPTZ,
+       processing_completed_at TIMESTAMPTZ,
+       processing_claim_id TEXT,
+       processing_lease_expires_at TIMESTAMPTZ,
       created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
     )
   `);
   await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS checksum_sha256 TEXT');
+  await query(`ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_status TEXT NOT NULL DEFAULT 'idle'`);
+  await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_original_text TEXT');
+  await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_result TEXT');
+  await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_error TEXT');
+  await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_attempts INTEGER NOT NULL DEFAULT 0');
+  await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_started_at TIMESTAMPTZ');
+  await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_completed_at TIMESTAMPTZ');
+  await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_claim_id TEXT');
+  await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_lease_expires_at TIMESTAMPTZ');
   await query('CREATE INDEX IF NOT EXISTS idx_note_sources_note_id ON note_sources(note_id)');
   await query('CREATE INDEX IF NOT EXISTS idx_note_sources_owner ON note_sources(user_id)');
+  await query('CREATE INDEX IF NOT EXISTS idx_note_sources_processing ON note_sources(processing_status) WHERE processing_status IN (\'queued\', \'processing\')');
 }
 
 export async function getAccessibleNote(
@@ -115,6 +144,8 @@ export function sourceForClient(source: DatabaseSource | NoteSource): NoteSource
   const {
     object_key: _objectKey,
     checksum_sha256: _checksumSha256,
+    processing_claim_id: _processingClaimId,
+    processing_lease_expires_at: _processingLeaseExpiresAt,
     ...safeSource
   } = source as DatabaseSource;
   return safeSource;

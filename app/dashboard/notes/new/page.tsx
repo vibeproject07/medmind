@@ -427,6 +427,23 @@ function NewNotePageContent() {
 
   // ── Inline source processing ─────────────────────────────────────────
   const processSource = async (files: File[], link: string) => {
+    // Arquivos não passam mais por IA antes de a nota existir. Eles são enviados
+    // diretamente ao S3 após o salvamento e podem ser processados depois, por fonte.
+    if (files.length > 0) {
+      const names = files.map((file) => file.name);
+      setProcessingError(null);
+      setPendingSourceFiles(files);
+      setFontesArquivosNames(names);
+      setSourceName(names.join(', '));
+      setFormData((current) => {
+        if (current.title.trim()) return current;
+        const baseName = files[0].name.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ').trim();
+        return { ...current, title: baseName || 'Nova nota' };
+      });
+      setStep(2);
+      return;
+    }
+
     const token = localStorage.getItem('token');
     if (!token) { setMessage({ type: 'error', text: 'Faça login para continuar.' }); return; }
     const name = files.length > 0 ? files.map((f) => f.name).join(', ') : link.trim();
@@ -573,6 +590,10 @@ function NewNotePageContent() {
             'noteSourceUploadWarning',
             `A nota foi salva, mas ${sourceUploadFailures.join(', ')} não pôde ser enviado ao armazenamento privado.`,
           );
+          sessionStorage.setItem(
+            'noteSourceRetryNames',
+            JSON.stringify({ noteId: noteData.id, fileNames: sourceUploadFailures }),
+          );
         }
         if (afterSave === 'list') {
           router.push('/dashboard/notes');
@@ -614,7 +635,7 @@ function NewNotePageContent() {
     <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-6">
       <div className="max-w-xl mx-auto space-y-6">
 
-        {/* ── Processing state ─────────────────────────────────────── */}
+        {/* ── Processing state (links legados) ─────────────────────── */}
         {processing && (
           <div className="rounded-xl border-2 border-primary-100 bg-primary-50/60 p-5 space-y-3">
             <div className="flex items-center gap-3">
@@ -727,15 +748,17 @@ function NewNotePageContent() {
           </div>
         )}
 
-        {/* Previous processed source info (if draft restored) */}
+        {/* Arquivos pendentes para envio após a criação da nota */}
         {!processing && fontesArquivosNames.length > 0 && (
           <div className="rounded-xl border border-primary-100 bg-primary-50/40 p-4 flex items-center gap-3">
             <CheckCircle2 className="w-4 h-4 text-primary-500 flex-shrink-0" />
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold text-primary-700">Fonte já processada</p>
-              <p className="text-xs text-primary-500 truncate">{fontesArquivosNames.join(', ')}</p>
+              <p className="text-xs font-semibold text-primary-700">Arquivos prontos para enviar</p>
+              <p className="text-xs text-primary-500 truncate">
+                {fontesArquivosNames.join(', ')} — serão enviados ao armazenamento privado ao salvar a nota.
+              </p>
             </div>
-            <button type="button" onClick={() => { setFontesArquivosNames([]); setResumoAulas({ melhorado: '', original: '' }); setFormData((p) => ({ ...p, informacoes: '' })); }}
+            <button type="button" onClick={() => { setFontesArquivosNames([]); setPendingSourceFiles([]); }}
               className="text-primary-400 hover:text-primary-600 transition flex-shrink-0" title="Remover fonte">
               <X className="w-4 h-4" />
             </button>
@@ -934,7 +957,7 @@ function NewNotePageContent() {
       {step === 1 && (
         <div className="flex-shrink-0 flex items-center gap-2 px-4 py-2 border-b border-gray-100 bg-gray-50/80">
           <Sparkles className="w-3.5 h-3.5 text-primary-500 flex-shrink-0" />
-          <span className="text-xs text-gray-500">O arquivo será transformado com IA em material de estudo</span>
+          <span className="text-xs text-gray-500">Salve a nota primeiro; depois você poderá processar cada arquivo com IA, se quiser.</span>
         </div>
       )}
 
