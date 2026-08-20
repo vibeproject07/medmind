@@ -8,6 +8,7 @@ CREATE EXTENSION IF NOT EXISTS vector;
 -- Remover tabelas na ordem inversa de dependência (FK)
 DROP TABLE IF EXISTS note_questions;
 DROP TABLE IF EXISTS email_tokens;
+DROP TABLE IF EXISTS note_sources;
 DROP TABLE IF EXISTS notes;
 DROP TABLE IF EXISTS questions;
 DROP TABLE IF EXISTS provas;
@@ -116,6 +117,25 @@ CREATE INDEX IF NOT EXISTS idx_notes_user_id ON notes(user_id);
 CREATE INDEX IF NOT EXISTS idx_notes_created_at ON notes(created_at);
 -- pgvector 0.8+: halfvec cast for HNSW on dims > 2000
 CREATE INDEX IF NOT EXISTS notes_embedding_hnsw_idx ON notes USING hnsw ((embedding::halfvec(3072)) halfvec_cosine_ops) WHERE embedding IS NOT NULL;
+
+-- note_sources: private S3-backed files attached to a note
+CREATE TABLE note_sources (
+  id SERIAL PRIMARY KEY,
+  note_id INTEGER NOT NULL REFERENCES notes(id) ON DELETE CASCADE,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  object_key TEXT NOT NULL UNIQUE,
+  checksum_sha256 TEXT NOT NULL,
+  original_name TEXT NOT NULL,
+  mime_type TEXT NOT NULL,
+  size_bytes BIGINT NOT NULL CHECK (size_bytes >= 0),
+  category TEXT NOT NULL CHECK (category IN ('document', 'text', 'image', 'audio', 'video')),
+  status TEXT NOT NULL DEFAULT 'uploading' CHECK (status IN ('uploading', 'ready')),
+  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_note_sources_note_id ON note_sources(note_id);
+CREATE INDEX IF NOT EXISTS idx_note_sources_owner ON note_sources(user_id);
 
 -- questions (FK provas opcional)
 CREATE TABLE questions (

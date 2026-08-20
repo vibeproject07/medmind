@@ -10,6 +10,7 @@ import {
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
 import NoteDeCsDescriptorsTable, { type NoteDeCSRecord } from '@/components/Notes/NoteDeCsDescriptorsTable';
+import NoteSourcesPanel from '@/components/Notes/NoteSourcesPanel';
 import {
   ASSUNTOS_BY_AREA, toDisplayArea, toDisplayAssunto,
   fromDisplay, AREAS_OPTIONS_DISPLAY,
@@ -117,6 +118,7 @@ export default function NoteDetailPage() {
   const [similarTab, setSimilarTab] = useState<SimilarTab>('notes-vector');
   const [aiDecsLoading, setAiDecsLoading] = useState(false);
   const [aiDecsError, setAiDecsError] = useState<string | null>(null);
+  const [sourceUploadWarning, setSourceUploadWarning] = useState<string | null>(null);
 
   const editAssuntosOptions = useMemo(() => {
     if (editAreasConhecimento.length === 0) return [];
@@ -200,6 +202,14 @@ export default function NoteDetailPage() {
       setActivePanel('estudio');
     }
   }, [noteId]); // eslint-disable-line
+
+  useEffect(() => {
+    const warning = sessionStorage.getItem('noteSourceUploadWarning');
+    if (warning) {
+      sessionStorage.removeItem('noteSourceUploadWarning');
+      setSourceUploadWarning(warning);
+    }
+  }, []);
 
   // Clear topbar title + panel when leaving the note page
   useEffect(() => {
@@ -407,9 +417,16 @@ export default function NoteDetailPage() {
   // ── Fontes panel ─────────────────────────────────────────────────────
   const FontesPanel = () => (
     <div className="space-y-4">
+      {sourceUploadWarning && (
+        <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs leading-relaxed text-amber-800">
+          {sourceUploadWarning}
+        </div>
+      )}
+      <NoteSourcesPanel noteId={Number(noteId)} canEdit={canEdit} />
+
       {(note.fontes_arquivos?.length ?? 0) > 0 && (
         <div>
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Arquivos carregados</p>
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Referências legadas</p>
           <ul className="space-y-1">
             {(note.fontes_arquivos ?? []).map((name, idx) => (
               <li key={idx} className="flex items-center gap-2 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg">
@@ -466,9 +483,9 @@ export default function NoteDetailPage() {
           </div>
         </div>
       ) : (
-        <div className="text-center py-6 text-gray-400">
+        <div className="text-center py-3 text-gray-400">
           <BookOpen className="w-8 h-8 mx-auto mb-2 opacity-40" />
-          <p className="text-xs">O conteúdo das fontes foi incorporado à nota.</p>
+          <p className="text-xs">Os resumos de fontes aparecerão aqui quando houver processamento por IA.</p>
         </div>
       )}
     </div>

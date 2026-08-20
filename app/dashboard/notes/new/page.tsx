@@ -9,6 +9,7 @@ import {
   AlertCircle, CheckCircle2, Save, Trash2, Sparkles, BookOpen,
 } from 'lucide-react';
 import { ASSUNTOS_BY_AREA } from '@/lib/areas-assuntos';
+import { uploadNoteSourceFile } from '@/components/Notes/NoteSourcesPanel';
 
 const AVAILABLE_TAGS = [
   'Acupuntura','Anestesiologia','Cirurgia Cardiovascular','Cirurgia Geral',
@@ -297,6 +298,7 @@ function NewNotePageContent() {
   });
   const [resumoAulas, setResumoAulas] = useState({ melhorado: '', original: '' });
   const [fontesArquivosNames, setFontesArquivosNames] = useState<string[]>([]);
+  const [pendingSourceFiles, setPendingSourceFiles] = useState<File[]>([]);
   const [classifExpanded, setClassifExpanded] = useState(true);
   const [imagesExpanded, setImagesExpanded]   = useState(false);
   const [formLoading, setFormLoading]         = useState(false);
@@ -438,6 +440,7 @@ function NewNotePageContent() {
       const result = await runSourceTransformation(files, link, token, setProcessingStatus);
       setResumoAulas({ melhorado: result.melhorado, original: result.original });
       setFontesArquivosNames(result.fileNames);
+      setPendingSourceFiles(files);
 
       // ── Generate AI title from processed content ─────────────────────
       if (result.melhorado.trim() || result.original.trim()) {
@@ -530,11 +533,26 @@ function NewNotePageContent() {
           assuntos: formData.assuntos,
           fontes_resumo_melhorado: resumoAulas.melhorado || undefined,
           fontes_resumo_original: resumoAulas.original || undefined,
-          fontes_arquivos: fontesArquivosNames.length > 0 ? fontesArquivosNames : undefined,
+          // New files are persisted in note_sources after the note exists. Keep this
+          // legacy field only for a non-file source such as an external link.
+          fontes_arquivos: pendingSourceFiles.length === 0 && fontesArquivosNames.length > 0
+            ? fontesArquivosNames
+            : undefined,
         }),
       });
       if (response.ok) {
         const noteData = await response.json();
+        // The note must exist before private source objects can be safely linked to it.
+        // A source failure never rolls back the saved note; the detail screen lets users retry.
+        const sourceUploadFailures: string[] = [];
+        for (const file of pendingSourceFiles) {
+          try {
+            await uploadNoteSourceFile(noteData.id, file, token);
+          } catch (sourceError) {
+            console.error('[notes] Falha ao salvar fonte no S3:', sourceError);
+            sourceUploadFailures.push(file.name);
+          }
+        }
         const selIds = localStorage.getItem('selectedQuestionIds');
         if (selIds) {
           try {
@@ -550,6 +568,12 @@ function NewNotePageContent() {
           } catch { /* ignore */ }
         }
         localStorage.removeItem('draftNote');
+        if (sourceUploadFailures.length > 0) {
+          sessionStorage.setItem(
+            'noteSourceUploadWarning',
+            `A nota foi salva, mas ${sourceUploadFailures.join(', ')} não pôde ser enviado ao armazenamento privado.`,
+          );
+        }
         if (afterSave === 'list') {
           router.push('/dashboard/notes');
         } else {

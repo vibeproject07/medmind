@@ -11,7 +11,16 @@
  * stored as-is (base64 strings remain in the DB). Set all four vars to enable S3.
  */
 
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import {
+  DeleteObjectCommand,
+  CopyObjectCommand,
+  GetObjectCommand,
+  HeadObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { createPresignedPost } from '@aws-sdk/s3-presigned-post';
 import crypto from 'crypto';
 
 // ── S3 client (lazy, singleton per process) ───────────────────────────────────
@@ -42,6 +51,28 @@ function getClient(): S3Client | null {
   return _client;
 }
 
+function getConfiguredBucket(): string {
+  const bucket = process.env.AWS_S3_BUCKET;
+  if (!bucket) throw new Error('AWS_S3_BUCKET não configurado');
+  return bucket;
+}
+
+function requireClient(): S3Client {
+  const client = getClient();
+  if (!client) {
+    throw new Error(
+      'Credenciais AWS não configuradas (AWS_ACCESS_KEY_ID / IAM_AWS_S3_access_key e ' +
+      'AWS_SECRET_ACCESS_KEY / IAM_AWS_S3_secret_key)',
+    );
+  }
+  return client;
+}
+
+function extensionFromFileName(fileName: string): string {
+  const match = fileName.toLowerCase().match(/\.([a-z0-9]{1,12})$/);
+  return match ? `.${match[1]}` : '';
+}
+
 // ── Public helpers ────────────────────────────────────────────────────────────
 
 /** Returns true when all four required env vars are present. */
@@ -68,16 +99,8 @@ export async function uploadBufferToS3(
   mimeType: string,
   prefix = 'questions',
 ): Promise<string> {
-  const bucket = process.env.AWS_S3_BUCKET;
-  if (!bucket) throw new Error('AWS_S3_BUCKET não configurado');
-
-  const client = getClient();
-  if (!client) {
-    throw new Error(
-      'Credenciais AWS não configuradas (AWS_ACCESS_KEY_ID / IAM_AWS_S3_access_key e ' +
-      'AWS_SECRET_ACCESS_KEY / IAM_AWS_S3_secret_key)',
-    );
-  }
+  const bucket = getConfiguredBucket();
+  const client = requireClient();
 
   const ext = mimeType
     .split('/')[1]
@@ -97,6 +120,132 @@ export async function uploadBufferToS3(
 
   const region = process.env.AWS_REGION ?? 'us-east-1';
   return `https://${bucket}.s3.${region}.amazonaws.com/${key}`;
+}
+
+/**
+ * Create an object key for a private source file. The generated key never uses
+ * the original name as a path, so names cannot escape their user's folder.
+ */
+export function createSourceObjectKey(
+  ownerUserId: number,
+  noteId: number,
+  originalName: string,
+): string {
+  const extension = extensionFromFileName(originalName);
+  return `sources/user-${ownerUserId}/note-${noteId}/${crypto.randomUUID()}${extension}`;
+}
+
+/** Object keys signed for upload are temporary and promoted after validation. */
+export function createSourceStagingObjectKey(
+  ownerUserId: number,
+  noteId: number,
+  originalName: string,
+): string {
+  const extension = extensionFromFileName(originalName);
+  return `sources/staging/user-${ownerUserId}/note-${noteId}/${crypto.randomUUID()}${extension}`;
+}
+
+/**
+ * Create a browser form POST that S3 itself constrains to the validated size,
+ * content type and checksum. The staging key is never used for reads.
+ */
+export async function createSourceUploadPost(
+  key: string,
+  mimeType: string,
+  sizeBytes: number,
+  checksumSha256: string,
+  expiresInSeconds = 15 * 60,
+): Promise<{ url: string; fields: Record<string, string> }> {
+  return createPresignedPost(requireClient(), {
+    Bucket: getConfiguredBucket(),
+    Key: key,
+    Expires: expiresInSeconds,
+    Fields: {
+      'Content-Type': mimeType,
+      'x-amz-checksum-sha256': checksumSha256,
+    },
+    Conditions: [
+      // The POST body includes multipart field overhead. Completion still requires
+      // the stored object's exact byte size, while this cap blocks large abuse.
+      ['content-length-range', sizeBytes, sizeBytes + 64 * 1024],
+      { 'Content-Type': mimeType },
+      { 'x-amz-checksum-sha256': checksumSha256 },
+    ],
+  });
+}
+
+/** Create a short-lived URL for an authorized user to open a private source. */
+export async function createSourceReadUrl(
+  key: string,
+  originalName: string,
+  download = false,
+  expiresInSeconds = 10 * 60,
+): Promise<string> {
+  const disposition = `${download ? 'attachment' : 'inline'}; filename*=UTF-8''${encodeURIComponent(originalName)}`;
+  return getSignedUrl(
+    requireClient(),
+    new GetObjectCommand({
+      Bucket: getConfiguredBucket(),
+      Key: key,
+      ResponseContentDisposition: disposition,
+    }),
+    { expiresIn: expiresInSeconds },
+  );
+}
+
+/** Confirm the file uploaded to S3 before publishing its metadata in the app. */
+export async function getSourceObjectInfo(
+  key: string,
+): Promise<{ size: number; checksumSha256?: string }> {
+  const result = await requireClient().send(
+    new HeadObjectCommand({
+      Bucket: getConfiguredBucket(),
+      Key: key,
+      ChecksumMode: 'ENABLED',
+    }),
+  );
+  return {
+    size: Number(result.ContentLength ?? 0),
+    checksumSha256: result.ChecksumSHA256,
+  };
+}
+
+/** Read a private source server-side for the existing processing pipelines. */
+export async function readSourceObject(key: string): Promise<Buffer> {
+  const result = await requireClient().send(
+    new GetObjectCommand({ Bucket: getConfiguredBucket(), Key: key }),
+  );
+  if (!result.Body) throw new Error('Arquivo não encontrado no armazenamento');
+
+  if ('transformToByteArray' in result.Body) {
+    return Buffer.from(await result.Body.transformToByteArray());
+  }
+
+  const chunks: Buffer[] = [];
+  for await (const chunk of result.Body as AsyncIterable<Buffer | Uint8Array | string>) {
+    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+  }
+  return Buffer.concat(chunks);
+}
+
+/** Permanently delete one private source object. */
+export async function deleteSourceObject(key: string): Promise<void> {
+  await requireClient().send(
+    new DeleteObjectCommand({ Bucket: getConfiguredBucket(), Key: key }),
+  );
+}
+
+/** Promote a validated staged object to its unique final key. */
+export async function promoteSourceObject(stagingKey: string, finalKey: string): Promise<void> {
+  const bucket = getConfiguredBucket();
+  await requireClient().send(
+    new CopyObjectCommand({
+      Bucket: bucket,
+      Key: finalKey,
+      CopySource: `${bucket}/${encodeURIComponent(stagingKey).replace(/%2F/g, '/')}`,
+      MetadataDirective: 'COPY',
+    }),
+  );
 }
 
 /**
