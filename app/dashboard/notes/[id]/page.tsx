@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import {
-  ArrowLeft, Edit, HelpCircle, BookOpen, Sparkles,
-  Image as ImageIcon, X, Star, Brain, ExternalLink, Loader2,
+  Edit, HelpCircle, BookOpen, Sparkles,
+  X, Star, Brain, ExternalLink, Loader2,
   FileText, CheckSquare, Save,
 } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
@@ -96,10 +96,9 @@ export default function NoteDetailPage() {
   const [editTags, setEditTags]           = useState<string[]>([]);
   const [editAreasConhecimento, setEditAreasConhecimento] = useState<string[]>([]);
   const [editAssuntos, setEditAssuntos]   = useState<string[]>([]);
-  const [editImages, setEditImages]       = useState<string[]>([]);
   const [availableTags, setAvailableTags] = useState<string[]>(AVAILABLE_TAGS);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const [questionsCount, setQuestionsCount] = useState<number>(0);
+  const [hasPrimaryMedia, setHasPrimaryMedia] = useState<boolean | null>(null);
 
   type SimilarNote = {
     id: number; title: string; description: string; tags: string[]; areas_conhecimento: string[];
@@ -190,7 +189,6 @@ export default function NoteDetailPage() {
       setEditTags(note.tags || []);
       setEditAreasConhecimento(note.areas_conhecimento || []);
       setEditAssuntos(note.assuntos || []);
-      setEditImages(note.images || []);
     }
   }, [note]); // eslint-disable-line
 
@@ -280,18 +278,6 @@ export default function NoteDetailPage() {
     } catch { /* ignore */ }
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    Array.from(e.target.files ?? []).forEach((file) => {
-      if (!file.type.startsWith('image/')) { alert('Apenas arquivos de imagem são permitidos'); return; }
-      const reader = new FileReader();
-      reader.onload = (event) => setEditImages((prev) => [...prev, event.target?.result as string]);
-      reader.readAsDataURL(file);
-    });
-    if (fileInputRef.current) fileInputRef.current.value = '';
-  };
-
-  const removeImage = (index: number) => setEditImages((prev) => prev.filter((_, i) => i !== index));
-
   const handleEdit = () => {
     setIsEditing(true);
     setEditTitle(note?.title || '');
@@ -300,7 +286,6 @@ export default function NoteDetailPage() {
     setEditTags(note?.tags || []);
     setEditAreasConhecimento(note?.areas_conhecimento || []);
     setEditAssuntos(note?.assuntos || []);
-    setEditImages(note?.images || []);
     const n = note as Note;
     if (n?.fontes_resumo_melhorado != null || n?.fontes_resumo_original != null) {
       const desc = (n?.description ?? '').trim();
@@ -315,7 +300,7 @@ export default function NoteDetailPage() {
     setEditTitle(note?.title || ''); setEditDescription(note?.description || '');
     setEditTipoConteudo((note as Note)?.tipo_conteudo || '');
     setEditTags(note?.tags || []); setEditAreasConhecimento(note?.areas_conhecimento || []);
-    setEditAssuntos(note?.assuntos || []); setEditImages(note?.images || []);
+    setEditAssuntos(note?.assuntos || []);
   };
 
   const handleSaveEdit = async () => {
@@ -331,7 +316,7 @@ export default function NoteDetailPage() {
           title: editTitle.trim(), description: editDescription.trim(),
           tipo_conteudo: editTipoConteudo.trim() || undefined,
           tags: editTags, areas_conhecimento: editAreasConhecimento, assuntos: editAssuntos,
-          images: editImages,
+          images: note.images ?? [],
           fontes_resumo_melhorado: note?.fontes_resumo_melhorado ?? undefined,
           fontes_resumo_original: note?.fontes_resumo_original ?? undefined,
           fontes_arquivos: note?.fontes_arquivos ?? [],
@@ -422,7 +407,9 @@ export default function NoteDetailPage() {
           {sourceUploadWarning}
         </div>
       )}
-      <NoteSourcesPanel noteId={Number(noteId)} canEdit={canEdit} />
+      <p className="rounded-lg bg-primary-50 px-3 py-2 text-xs leading-relaxed text-primary-700">
+        As mídias desta nota aparecem no conteúdo principal. Use a área “Adicionar mídias à nota” para incluir mais arquivos.
+      </p>
 
       {(note.fontes_arquivos?.length ?? 0) > 0 && (
         <div>
@@ -597,50 +584,67 @@ export default function NoteDetailPage() {
                 </div>
               )}
 
-              {/* Content */}
+              {!isEditing && (
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <div className="w-1 h-4 rounded-full bg-primary-500" />
+                    <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Conteúdo principal</span>
+                  </div>
+                  <div className="flex-1 h-px bg-gradient-to-r from-gray-200 to-transparent" />
+                  {canEdit && (
+                    <button
+                      type="button"
+                      onClick={handleEdit}
+                      className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-gray-500 hover:bg-gray-100 transition text-xs font-medium flex-shrink-0"
+                    >
+                      <Edit className="w-3 h-3" />
+                      <span>Editar</span>
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => router.push('/dashboard/notes')}
+                    className="p-1 rounded-lg hover:bg-gray-100 transition flex-shrink-0"
+                    aria-label="Voltar"
+                  >
+                    <X className="w-4 h-4 text-gray-400" />
+                  </button>
+                </div>
+              )}
+
+              <NoteSourcesPanel
+                noteId={Number(noteId)}
+                canEdit={canEdit}
+                fallbackContent={note.description}
+                onPrimaryAvailabilityChange={setHasPrimaryMedia}
+              />
+
+              {/* Annotations */}
               {isEditing ? (
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Conteúdo</label>
+                  <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide">Anotações <span className="normal-case font-normal text-gray-400">(opcional)</span></label>
                   <textarea
                     value={editDescription}
                     onChange={(e) => setEditDescription(e.target.value)}
-                    rows={14}
+                    rows={8}
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-y text-sm leading-relaxed"
-                    placeholder="Conteúdo da nota"
+                    placeholder="Escreva observações, contexto ou conclusões sobre esta mídia…"
                   />
                 </div>
-              ) : (
+              ) : hasPrimaryMedia && note.description.trim() ? (
                 <div>
-                  {/* Section header */}
                   <div className="flex items-center gap-3 mb-4">
                     <div className="flex items-center gap-2 flex-shrink-0">
                       <div className="w-1 h-4 rounded-full bg-primary-500" />
-                      <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Conteúdo</span>
+                      <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Anotações</span>
                     </div>
                     <div className="flex-1 h-px bg-gradient-to-r from-gray-200 to-transparent" />
-                    {canEdit && (
-                      <button
-                        onClick={handleEdit}
-                        className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-gray-500 hover:bg-gray-100 transition text-xs font-medium flex-shrink-0"
-                      >
-                        <Edit className="w-3 h-3" />
-                        <span>Editar</span>
-                      </button>
-                    )}
-                    <button
-                      onClick={() => router.push('/dashboard/notes')}
-                      className="p-1 rounded-lg hover:bg-gray-100 transition flex-shrink-0"
-                      aria-label="Voltar"
-                    >
-                      <X className="w-4 h-4 text-gray-400" />
-                    </button>
                   </div>
-                  <div className="border-t border-gray-100 -mx-6 mb-4" />
                   <div className="text-gray-700 whitespace-pre-wrap leading-relaxed text-sm">
-                    {note.description || <span className="text-gray-400 italic">Sem conteúdo</span>}
+                    {note.description}
                   </div>
                 </div>
-              )}
+              ) : null}
 
               {/* Tipo conteúdo (editing only) */}
               {isEditing && (
@@ -745,45 +749,16 @@ export default function NoteDetailPage() {
             </div>
           </div>
 
-          {/* Images card */}
-          {(isEditing || (note.images && note.images.length > 0)) && (
+          {/* Existing complementary images from older notes */}
+          {note.images && note.images.length > 0 && (
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
               <div className="px-6 py-4 space-y-3">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Imagens</p>
-                {isEditing ? (
-                  <>
-                    <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={handleImageUpload} className="hidden" id="detail-image-upload" />
-                    <label
-                      htmlFor="detail-image-upload"
-                      className="flex items-center justify-center gap-2 py-5 border-2 border-dashed border-gray-200 rounded-xl hover:border-primary-400 hover:bg-primary-50/30 transition cursor-pointer"
-                    >
-                      <ImageIcon className="w-5 h-5 text-gray-400" />
-                      <span className="text-sm text-gray-500">Clique para adicionar imagens</span>
-                    </label>
-                    {editImages.length > 0 && (
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                        {editImages.map((image, index) => (
-                          <div key={index} className="relative group">
-                            <ImageLightbox src={image} alt={`Preview ${index + 1}`} className="w-full h-32" />
-                            <button type="button" onClick={() => removeImage(index)}
-                              className="absolute top-1.5 right-1.5 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-sm"
-                              aria-label="Remover imagem">
-                              <X className="w-3 h-3" />
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  note.images && note.images.length > 0 ? (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                      {note.images.map((image, index) => (
-                        <ImageLightbox key={index} src={image} alt={`Imagem ${index + 1}`} className="w-full h-40" />
-                      ))}
-                    </div>
-                  ) : null
-                )}
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Imagens complementares</p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                  {note.images.map((image, index) => (
+                    <ImageLightbox key={index} src={image} alt={`Imagem complementar ${index + 1}`} className="w-full h-40" />
+                  ))}
+                </div>
               </div>
             </div>
           )}

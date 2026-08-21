@@ -42,7 +42,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
               processing_attempts, processing_started_at, processing_completed_at, created_at, updated_at
        FROM note_sources
        WHERE note_id = $1
-       ORDER BY created_at DESC`,
+       ORDER BY created_at ASC`,
       [access.noteId],
     );
     return NextResponse.json({ sources: result.rows.map(sourceForClient) });

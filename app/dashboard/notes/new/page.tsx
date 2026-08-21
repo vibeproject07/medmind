@@ -303,17 +303,15 @@ function NewNotePageContent() {
   const [formData, setFormData] = useState({
     title: '', informacoes: '', tipoConteudo: '',
     tags: [] as string[], areasConhecimento: [] as string[],
-    assuntos: [] as string[], images: [] as string[],
+    assuntos: [] as string[],
   });
   const [resumoAulas, setResumoAulas] = useState({ melhorado: '', original: '' });
   const [fontesArquivosNames, setFontesArquivosNames] = useState<string[]>([]);
   const [pendingSourceFiles, setPendingSourceFiles] = useState<File[]>([]);
   const [classifExpanded, setClassifExpanded] = useState(true);
-  const [imagesExpanded, setImagesExpanded]   = useState(false);
   const [formLoading, setFormLoading]         = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
-  const fileInputRef      = useRef<HTMLInputElement>(null);
   const fonteFileInputRef = useRef<HTMLInputElement>(null);
 
   const assuntosOptions = useMemo(() => {
@@ -330,7 +328,6 @@ function NewNotePageContent() {
       formData.tags.length > 0 ||
       formData.areasConhecimento.length > 0 ||
       formData.assuntos.length > 0 ||
-      formData.images.length > 0 ||
       resumoAulas.melhorado.trim() ||
       resumoAulas.original.trim() ||
       fontesArquivosNames.length > 0
@@ -428,7 +425,7 @@ function NewNotePageContent() {
     if (typeof window === 'undefined') return;
     const hasContent =
       formData.title || formData.informacoes || formData.tags.length > 0 ||
-      formData.areasConhecimento.length > 0 || formData.images.length > 0 ||
+      formData.areasConhecimento.length > 0 ||
       resumoAulas.melhorado || resumoAulas.original;
     if (hasContent) localStorage.setItem('draftNote', JSON.stringify({ ...formData, resumoAulas, fontesArquivosNames }));
     else localStorage.removeItem('draftNote');
@@ -528,17 +525,6 @@ function NewNotePageContent() {
     setStep(1);
   });
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    Array.from(e.target.files ?? []).forEach((file) => {
-      if (!file.type.startsWith('image/')) { setMessage({ type: 'error', text: 'Apenas arquivos de imagem são permitidos' }); return; }
-      const reader = new FileReader();
-      reader.onload = (ev) => setFormData((p) => ({ ...p, images: [...p.images, ev.target?.result as string] }));
-      reader.readAsDataURL(file);
-    });
-    if (fileInputRef.current) fileInputRef.current.value = '';
-  };
-
-  const removeImage = (i: number) => setFormData((p) => ({ ...p, images: p.images.filter((_, j) => j !== i) }));
   const removePendingSourceFile = (index: number) => {
     setPendingSourceFiles((files) => files.filter((_, currentIndex) => currentIndex !== index));
     setFontesArquivosNames((names) => names.filter((_, currentIndex) => currentIndex !== index));
@@ -567,7 +553,6 @@ function NewNotePageContent() {
           description: formData.informacoes,
           tipo_conteudo: formData.tipoConteudo || undefined,
           tags: formData.tags,
-          images: formData.images,
           areas_conhecimento: formData.areasConhecimento,
           assuntos: formData.assuntos,
           fontes_resumo_melhorado: resumoAulas.melhorado || undefined,
@@ -705,6 +690,7 @@ function NewNotePageContent() {
             <input
               ref={fonteFileInputRef}
               type="file"
+              multiple
               className="hidden"
               onChange={(e) => {
                 const selected = e.target.files;
@@ -874,46 +860,9 @@ function NewNotePageContent() {
         </div>
       </div>
 
-      <div>
-        <button
-          type="button"
-          onClick={() => setImagesExpanded((expanded) => !expanded)}
-          className="flex w-full items-center justify-between text-left text-xs font-semibold uppercase tracking-wide text-gray-500"
-          aria-expanded={imagesExpanded}
-        >
-          Imagens complementares
-          <span className="text-primary-600">{imagesExpanded ? 'Ocultar' : 'Adicionar'}</span>
-        </button>
-        {imagesExpanded && (
-          <div className="mt-2">
-            <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={handleImageUpload} className="hidden" />
-            <button
-              type="button"
-              onClick={() => fileInputRef.current?.click()}
-              className="flex w-full items-center justify-center gap-2 rounded-lg border border-dashed border-gray-300 px-3 py-3 text-sm font-medium text-gray-600 hover:border-primary-300 hover:bg-primary-50/30"
-            >
-              <ImageIcon className="h-4 w-4" />Adicionar imagens à nota
-            </button>
-            {formData.images.length > 0 && (
-              <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                {formData.images.map((image, index) => (
-                  <div key={`${image.slice(0, 24)}-${index}`} className="group relative overflow-hidden rounded-lg border border-gray-200">
-                    <img src={image} alt={`Imagem complementar ${index + 1}`} className="h-24 w-full object-cover" />
-                    <button
-                      type="button"
-                      onClick={() => removeImage(index)}
-                      className="absolute right-1.5 top-1.5 rounded-full bg-white/90 p-1 text-red-500 opacity-0 shadow-sm transition-opacity group-hover:opacity-100"
-                      aria-label={`Remover imagem complementar ${index + 1}`}
-                    >
-                      <X className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+      <p className="rounded-lg bg-gray-50 px-3 py-2 text-xs leading-relaxed text-gray-500">
+        Para adicionar imagens, vídeos, áudios ou documentos, use a etapa Fontes. Depois de salvar, você poderá incluir mais mídias diretamente na nota.
+      </p>
     </section>
   );
 
@@ -1014,12 +963,12 @@ function NewNotePageContent() {
               )}
 
               <section className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-                <label className="mb-2 block text-sm font-semibold text-gray-800">Conteúdo da nota</label>
+                <label className="mb-2 block text-sm font-semibold text-gray-800">Anotações <span className="font-normal text-gray-400">(opcional)</span></label>
                 <textarea
                   value={formData.informacoes}
                   onChange={(e) => setFormData({ ...formData, informacoes: e.target.value })}
                   placeholder="Escreva observações, contexto, conclusões e o que desejar registrar sobre este material…"
-                  rows={12}
+                  rows={8}
                   className="min-h-64 w-full resize-y rounded-lg border border-gray-200 px-4 py-3 text-sm leading-relaxed text-gray-700 focus:border-transparent focus:ring-2 focus:ring-primary-500"
                 />
               </section>

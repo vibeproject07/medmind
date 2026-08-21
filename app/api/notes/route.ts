@@ -28,6 +28,8 @@ export async function GET(request: NextRequest) {
     const user = verifyToken(token);
     if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
 
+    await ensureNoteMetadataSchema();
+
     const { searchParams } = new URL(request.url);
     const filterRole      = searchParams.get('role');
     const filterCompanyId = searchParams.get('company_id');
@@ -48,7 +50,7 @@ export async function GET(request: NextRequest) {
 
     if (isAdmin) {
       baseSelect = `
-        SELECT n.id, n.title, n.description, n.tags, n.images,
+        SELECT n.id, n.title, n.description, n.tipo_conteudo, n.tags, n.images,
                n.areas_conhecimento, n.assuntos, n.is_favorited, n.is_system,
                n.created_at, n.updated_at, n.user_id,
                u.name  AS user_name,  u.email AS user_email,
@@ -64,7 +66,7 @@ export async function GET(request: NextRequest) {
       if (filterCompanyId) { baseWhere += ` AND u.company_id = $${paramIdx++}`;      params.push(parseInt(filterCompanyId)); }
     } else {
       baseSelect = `
-        SELECT n.id, n.title, n.description, n.tags, n.images,
+        SELECT n.id, n.title, n.description, n.tipo_conteudo, n.tags, n.images,
                n.areas_conhecimento, n.assuntos, n.is_favorited, n.is_system,
                n.created_at, n.updated_at, n.user_id,
                u.name  AS user_name,  u.email AS user_email,
@@ -122,6 +124,7 @@ export async function GET(request: NextRequest) {
       id:                 note.id,
       title:              note.title,
       description:        note.description,
+      tipo_conteudo:      note.tipo_conteudo ?? null,
       tags:               note.tags               ? JSON.parse(note.tags)               : [],
       images:             note.images             ? JSON.parse(note.images)             : [],
       areas_conhecimento: note.areas_conhecimento ? JSON.parse(note.areas_conhecimento) : [],
@@ -148,7 +151,7 @@ export async function GET(request: NextRequest) {
       const w = ins.rows[0];
       return NextResponse.json({
         notes: [{
-          id: w.id, title: w.title, description: w.description,
+          id: w.id, title: w.title, description: w.description, tipo_conteudo: null,
           tags: ['Tutorial'], images: [], areas_conhecimento: [], assuntos: [],
           is_favorited: false, is_system: true,
           created_at: w.created_at, updated_at: w.updated_at, user_id: w.user_id,

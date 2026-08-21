@@ -145,10 +145,14 @@ export default function NoteSourcesPanel({
   noteId,
   canEdit,
   compact = false,
+  fallbackContent = '',
+  onPrimaryAvailabilityChange,
 }: {
   noteId: number;
   canEdit: boolean;
   compact?: boolean;
+  fallbackContent?: string;
+  onPrimaryAvailabilityChange?: (available: boolean) => void;
 }) {
   const [sources, setSources] = useState<NoteSource[]>([]);
   const [loading, setLoading] = useState(true);
@@ -157,6 +161,7 @@ export default function NoteSourcesPanel({
   const [busyId, setBusyId] = useState<number | null>(null);
   const [processingId, setProcessingId] = useState<number | null>(null);
   const [selected, setSelected] = useState<{ source: NoteSource; url: string } | null>(null);
+  const [selectedByUser, setSelectedByUser] = useState(false);
   const [failedUploads, setFailedUploads] = useState<{ file: File; error: string }[]>([]);
   const [retryFileNames, setRetryFileNames] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -181,7 +186,13 @@ export default function NoteSourcesPanel({
     }
   }, [noteId]);
 
-  useEffect(() => { void loadSources(); }, [loadSources]);
+  useEffect(() => {
+    setSelected(null);
+    setSelectedByUser(false);
+    setSources([]);
+    onPrimaryAvailabilityChange?.(false);
+    void loadSources();
+  }, [loadSources, onPrimaryAvailabilityChange]);
 
   useEffect(() => {
     const raw = sessionStorage.getItem('noteSourceRetryNames');
@@ -250,7 +261,10 @@ export default function NoteSourcesPanel({
     setBusyId(source.id);
     try {
       const url = await requestUrl(source, download);
-      if (!download) setSelected({ source, url });
+      if (!download) {
+        setSelectedByUser(true);
+        setSelected({ source, url });
+      }
       else window.open(url, '_blank', 'noopener,noreferrer');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Não foi possível abrir o arquivo.');
@@ -272,6 +286,10 @@ export default function NoteSourcesPanel({
       const data = await readJson<Record<string, never>>(response);
       if (!response.ok) throw new Error(data.error || 'Não foi possível excluir o arquivo.');
       setSources((current) => current.filter((item) => item.id !== source.id));
+      if (selected?.source.id === source.id) {
+        setSelected(null);
+        setSelectedByUser(false);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Não foi possível excluir o arquivo.');
     } finally {
@@ -308,10 +326,16 @@ export default function NoteSourcesPanel({
   }, [sources]); // Keep the selected viewer in sync with poll results.
 
   useEffect(() => {
-    if (selected || busyId !== null) return;
+    if (selectedByUser || busyId !== null) return;
     const firstReadySource = sources.find((source) => source.status === 'ready');
-    if (firstReadySource) void selectSource(firstReadySource);
-  }, [sources, selected, busyId]); // Open the original file by default.
+    if (firstReadySource && selected?.source.id !== firstReadySource.id) {
+      void selectSource(firstReadySource);
+    }
+  }, [sources, selected?.source.id, selectedByUser, busyId]); // Keep the first completed upload as primary.
+
+  useEffect(() => {
+    if (!loading) onPrimaryAvailabilityChange?.(sources.some((source) => source.status === 'ready'));
+  }, [loading, onPrimaryAvailabilityChange, sources]);
 
   useEffect(() => {
     if (!sources.some((source) => source.processing_status === 'queued' || source.processing_status === 'processing')) return;
@@ -321,32 +345,6 @@ export default function NoteSourcesPanel({
 
   return (
     <section className={compact ? '' : 'space-y-3'}>
-      {canEdit && (
-        <div className="rounded-xl border border-dashed border-primary-200 bg-primary-50/50 p-3">
-          <input
-            ref={inputRef}
-            type="file"
-            multiple
-            accept={NOTE_SOURCE_ACCEPT}
-            onChange={handleFiles}
-            className="hidden"
-          />
-          <button
-            type="button"
-            onClick={() => inputRef.current?.click()}
-            disabled={uploading.length > 0}
-            className="w-full flex items-center justify-center gap-2 rounded-lg bg-white border border-primary-200 px-3 py-2.5 text-sm font-semibold text-primary-700 hover:bg-primary-50 disabled:opacity-60 transition"
-          >
-            {uploading.length > 0
-              ? <><Loader2 className="w-4 h-4 animate-spin" />Enviando {uploading.length} arquivo(s)…</>
-              : <><Upload className="w-4 h-4" />Adicionar arquivos privados</>}
-          </button>
-          <p className="mt-2 text-[11px] leading-relaxed text-primary-700">
-            PDF, Word, slides, texto, imagem, áudio ou vídeo — até 500 MB por arquivo.
-          </p>
-        </div>
-      )}
-
       {error && (
         <div className="flex gap-2 rounded-lg bg-red-50 px-3 py-2 text-xs text-red-700">
           <AlertCircle className="mt-0.5 w-4 h-4 shrink-0" />{error}
@@ -394,18 +392,16 @@ export default function NoteSourcesPanel({
       )}
 
       {loading ? (
-        <div className="flex items-center gap-2 py-3 text-sm text-gray-500">
+        <div className="flex items-center gap-2 rounded-xl border border-gray-100 bg-gray-50 px-4 py-5 text-sm text-gray-500">
           <Loader2 className="w-4 h-4 animate-spin" />Carregando arquivos…
         </div>
-      ) : sources.length === 0 ? (
-        <p className="py-2 text-sm text-gray-500">Nenhum arquivo privado anexado a esta nota.</p>
       ) : (
         <div className="space-y-3">
           {selected && (
             <div className="overflow-hidden rounded-xl border border-primary-100 bg-white">
               <div className="flex items-center justify-between gap-3 border-b border-gray-100 bg-primary-50/40 px-3 py-2">
                 <div className="min-w-0">
-                  <p className="text-[11px] font-semibold uppercase tracking-wide text-primary-700">Arquivo original</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-wide text-primary-700">Conteúdo principal</p>
                   <p className="truncate text-sm font-medium text-gray-700">{selected.source.original_name}</p>
                 </div>
                 <div className="flex shrink-0 items-center gap-1">
@@ -452,52 +448,95 @@ export default function NoteSourcesPanel({
               )}
             </div>
           )}
-          <ul className="space-y-2">
-          {sources.map((source) => (
-            <li key={source.id} className={`flex items-center gap-2 rounded-lg border px-2.5 py-2 ${selected?.source.id === source.id ? 'border-primary-300 bg-primary-50/40' : 'border-gray-100 bg-white'}`}>
-              <span className="shrink-0 text-primary-600">{sourceIcon(source)}</span>
-              <button
-                type="button"
-                disabled={source.status !== 'ready' || busyId === source.id}
-                onClick={() => void openSource(source)}
-                className="min-w-0 flex-1 text-left disabled:cursor-default"
-              >
-                <span className="block truncate text-sm font-medium text-gray-700 hover:text-primary-700">{source.original_name}</span>
-                  <span className="block text-[11px] text-gray-400">
-                   {source.status === 'ready' ? `${formatSize(Number(source.size_bytes))} · ${processingLabel(source)}` : 'Upload pendente'}
-                </span>
-              </button>
-              {busyId === source.id ? <Loader2 className="w-4 h-4 animate-spin text-primary-500" /> : (
-                <div className="flex shrink-0 items-center gap-0.5">
-                  <button type="button" title="Abrir" onClick={() => void openSource(source)}
-                    disabled={source.status !== 'ready'} className="rounded p-1.5 text-gray-400 hover:bg-primary-50 hover:text-primary-600 disabled:opacity-40">
-                    <ExternalLink className="w-4 h-4" />
-                  </button>
-                  <button type="button" title="Baixar" onClick={() => void openSource(source, true)}
-                    disabled={source.status !== 'ready'} className="rounded p-1.5 text-gray-400 hover:bg-primary-50 hover:text-primary-600 disabled:opacity-40">
-                    <Download className="w-4 h-4" />
-                  </button>
-                  <button type="button" title="Processar com IA" onClick={() => void processSource(source)}
-                    disabled={
-                      source.status !== 'ready' ||
-                      processingId !== null ||
-                      source.processing_status === 'queued' ||
-                      source.processing_status === 'processing'
-                    } className="rounded p-1.5 text-gray-400 hover:bg-violet-50 hover:text-violet-600 disabled:opacity-40">
-                    {processingId === source.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
-                  </button>
-                  {canEdit && <button type="button" title="Excluir" onClick={() => void deleteSource(source)}
-                    className="rounded p-1.5 text-gray-400 hover:bg-red-50 hover:text-red-600">
-                    <Trash2 className="w-4 h-4" />
-                  </button>}
-                </div>
+          {!selected && (
+            <div className="rounded-xl border border-gray-100 bg-gray-50 px-4 py-5">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-gray-400">Conteúdo principal</p>
+              {fallbackContent.trim() ? (
+                <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-gray-700">{fallbackContent}</p>
+              ) : sources.length > 0 ? (
+                <p className="mt-2 text-sm text-gray-500">A mídia será exibida aqui quando o envio for concluído.</p>
+              ) : (
+                <p className="mt-2 text-sm italic text-gray-400">Adicione uma mídia ou escreva anotações para começar esta nota.</p>
               )}
-            </li>
-          ))}
-          </ul>
+            </div>
+          )}
         </div>
       )}
 
+      {canEdit && (
+        <div className="rounded-xl border border-dashed border-primary-200 bg-primary-50/50 p-3">
+          <input
+            ref={inputRef}
+            type="file"
+            multiple
+            accept={NOTE_SOURCE_ACCEPT}
+            onChange={handleFiles}
+            className="hidden"
+          />
+          <button
+            type="button"
+            onClick={() => inputRef.current?.click()}
+            disabled={uploading.length > 0}
+            className="w-full flex items-center justify-center gap-2 rounded-lg bg-white border border-primary-200 px-3 py-2.5 text-sm font-semibold text-primary-700 hover:bg-primary-50 disabled:opacity-60 transition"
+          >
+            {uploading.length > 0
+              ? <><Loader2 className="w-4 h-4 animate-spin" />Enviando {uploading.length} arquivo(s)…</>
+              : <><Upload className="w-4 h-4" />Adicionar mídias à nota</>}
+          </button>
+          <p className="mt-2 text-[11px] leading-relaxed text-primary-700">
+            A primeira mídia é exibida como conteúdo principal. Adicione imagens, vídeos, áudios, textos ou documentos extras — até 500 MB por arquivo.
+          </p>
+        </div>
+      )}
+
+      {!loading && sources.length > 0 && (
+        <div>
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-gray-400">Mídias e arquivos da nota</p>
+          <ul className="space-y-2">
+            {sources.map((source) => (
+              <li key={source.id} className={`flex items-center gap-2 rounded-lg border px-2.5 py-2 ${selected?.source.id === source.id ? 'border-primary-300 bg-primary-50/40' : 'border-gray-100 bg-white'}`}>
+                <span className="shrink-0 text-primary-600">{sourceIcon(source)}</span>
+                <button
+                  type="button"
+                  disabled={source.status !== 'ready' || busyId === source.id}
+                  onClick={() => void openSource(source)}
+                  className="min-w-0 flex-1 text-left disabled:cursor-default"
+                >
+                  <span className="block truncate text-sm font-medium text-gray-700 hover:text-primary-700">{source.original_name}</span>
+                    <span className="block text-[11px] text-gray-400">
+                     {source.status === 'ready' ? `${formatSize(Number(source.size_bytes))} · ${processingLabel(source)}` : 'Upload pendente'}
+                  </span>
+                </button>
+                {busyId === source.id ? <Loader2 className="w-4 h-4 animate-spin text-primary-500" /> : (
+                  <div className="flex shrink-0 items-center gap-0.5">
+                    <button type="button" title="Visualizar" onClick={() => void openSource(source)}
+                      disabled={source.status !== 'ready'} className="rounded p-1.5 text-gray-400 hover:bg-primary-50 hover:text-primary-600 disabled:opacity-40">
+                      <ExternalLink className="w-4 h-4" />
+                    </button>
+                    <button type="button" title="Baixar" onClick={() => void openSource(source, true)}
+                      disabled={source.status !== 'ready'} className="rounded p-1.5 text-gray-400 hover:bg-primary-50 hover:text-primary-600 disabled:opacity-40">
+                      <Download className="w-4 h-4" />
+                    </button>
+                    <button type="button" title="Processar com IA" onClick={() => void processSource(source)}
+                      disabled={
+                        source.status !== 'ready' ||
+                        processingId !== null ||
+                        source.processing_status === 'queued' ||
+                        source.processing_status === 'processing'
+                      } className="rounded p-1.5 text-gray-400 hover:bg-violet-50 hover:text-violet-600 disabled:opacity-40">
+                      {processingId === source.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+                    </button>
+                    {canEdit && <button type="button" title="Excluir" onClick={() => void deleteSource(source)}
+                      className="rounded p-1.5 text-gray-400 hover:bg-red-50 hover:text-red-600">
+                      <Trash2 className="w-4 h-4" />
+                    </button>}
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </section>
   );
 }
