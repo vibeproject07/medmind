@@ -15,7 +15,7 @@ import { useNote } from '@/contexts/NoteContext';
 
 const NAV_ITEMS = [
   { href: '/dashboard',           icon: LayoutDashboard, label: 'Início'    },
-  { href: '/dashboard/notes',     icon: FileText,        label: 'Notas'     },
+  { href: '/dashboard/notes',     icon: FileText,        label: 'Biblioteca' },
   { href: '/dashboard/questions', icon: HelpCircle,      label: 'Questões'  },
   { href: '/dashboard/simulados', icon: ClipboardList,   label: 'Simulados' },
   { href: '/dashboard/provas',    icon: BookOpen,        label: 'Provas'    },

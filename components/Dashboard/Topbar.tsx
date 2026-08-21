@@ -135,7 +135,7 @@ export default function Topbar() {
     if (!pathname) return 'MedMind';
     if (pathname === '/dashboard')                       return 'Dashboard';
     if (isNoteDetail && noteTitle)                       return noteTitle;
-    if (pathname.startsWith('/dashboard/notes'))         return 'Notas';
+    if (pathname.startsWith('/dashboard/notes'))         return 'Biblioteca';
     if (pathname.startsWith('/dashboard/questions'))     return 'Questões';
     if (pathname.startsWith('/dashboard/simulados'))     return 'Simulados';
     if (pathname.startsWith('/dashboard/provas'))        return 'Provas';

@@ -42,7 +42,7 @@ export default function CriarNotaModal({ isOpen, onClose }: CriarNotaModalProps)
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg flex flex-col overflow-hidden">
         <div className="flex-shrink-0 border-b border-gray-200 px-6 py-4 flex justify-between items-center">
-          <h2 className="text-xl font-bold text-gray-800">Criar Nota</h2>
+          <h2 className="text-xl font-bold text-gray-800">Criar arquivo</h2>
           <button
             type="button"
             onClick={onClose}
@@ -55,7 +55,7 @@ export default function CriarNotaModal({ isOpen, onClose }: CriarNotaModalProps)
         <div className="p-6 space-y-6 min-h-[320px]">
           <input ref={fileInputRef} type="file" multiple className="hidden" onChange={handleFiles} />
           <p className="text-lg text-gray-800">
-            Como deseja iniciar sua nota?
+            Como deseja iniciar seu arquivo?
           </p>
           <div className="flex flex-col gap-3 w-full">
             <button
@@ -63,7 +63,7 @@ export default function CriarNotaModal({ isOpen, onClose }: CriarNotaModalProps)
               onClick={handleEscreverNota}
               className="w-full px-4 py-3 bg-primary-600 text-white border border-primary-600 rounded-lg hover:bg-primary-700 hover:border-primary-700 transition font-medium text-center"
             >
-              Escrever Nota
+              Escrever arquivo
             </button>
             <button
               type="button"
@@ -95,7 +95,7 @@ export default function CriarNotaModal({ isOpen, onClose }: CriarNotaModalProps)
             </button>
           </div>
           <p className="text-base text-gray-800">
-            Selecione uma fonte para visualizá-la, escrever a nota e completar suas informações antes de salvar.
+            Selecione uma fonte para visualizá-la, escrever o arquivo e completar suas informações antes de salvar.
           </p>
         </div>
       </div>

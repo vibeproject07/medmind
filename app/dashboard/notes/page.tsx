@@ -382,7 +382,7 @@ export default function NotesPage() {
             type="text"
             value={searchText}
             onChange={e => setSearchText(e.target.value)}
-            placeholder={loading ? 'Carregando…' : `Buscar em suas ${totalNotes} ${totalNotes === 1 ? 'nota' : 'notas'}`}
+            placeholder={loading ? 'Carregando…' : `Buscar em seus ${totalNotes} ${totalNotes === 1 ? 'arquivo' : 'arquivos'}`}
             className="w-full pl-9 pr-8 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent shadow-sm"
           />
           {searchText && (
@@ -410,22 +410,22 @@ export default function NotesPage() {
             </div>
             <div>
               <h1 className="text-2xl font-bold leading-tight">
-                {isAdmin ? 'Todas as Notas' : 'Minhas Notas'}
+                Biblioteca de arquivos
               </h1>
               <p className="text-primary-100 text-sm mt-0.5">
-                {isAdmin ? 'Visualize e gerencie notas de todos os usuários' : 'Crie e gerencie suas notas de estudo'}
+                {isAdmin ? 'Visualize e gerencie arquivos de todos os usuários' : 'Crie e gerencie seus arquivos de estudo'}
               </p>
             </div>
           </div>
           <div className="flex items-center gap-2 flex-wrap justify-end">
             {!loading && (
               <div className="bg-white/15 px-3 py-1.5 rounded-lg text-sm font-semibold">
-                {totalNotes} {totalNotes === 1 ? 'nota' : 'notas'}
+                {totalNotes} {totalNotes === 1 ? 'Arquivo' : 'Arquivos'}
               </div>
             )}
             <Link href="/dashboard/notes/new">
               <span className="inline-flex items-center gap-2 bg-white text-primary-700 px-4 py-2 rounded-xl font-semibold text-sm hover:bg-primary-50 transition shadow-sm cursor-pointer">
-                <Plus className="w-4 h-4" />Nova Nota
+                <Plus className="w-4 h-4" />Novo arquivo
               </span>
             </Link>
           </div>
@@ -506,7 +506,7 @@ export default function NotesPage() {
       {loading && (
         <div className="flex flex-col items-center justify-center py-20 gap-3">
           <div className="w-8 h-8 border-[3px] border-primary-200 border-t-primary-600 rounded-full animate-spin" />
-          <p className="text-sm text-gray-400">Carregando notas…</p>
+          <p className="text-sm text-gray-400">Carregando arquivos…</p>
         </div>
       )}
 
@@ -516,11 +516,11 @@ export default function NotesPage() {
           <div className="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <FileText className="w-7 h-7 text-primary-400" />
           </div>
-          <h3 className="text-gray-700 font-semibold text-lg mb-1">Nenhuma nota ainda</h3>
-          <p className="text-gray-400 text-sm mb-6">Crie sua primeira nota para começar.</p>
+          <h3 className="text-gray-700 font-semibold text-lg mb-1">Nenhum arquivo ainda</h3>
+          <p className="text-gray-400 text-sm mb-6">Crie seu primeiro arquivo para começar.</p>
           <Link href="/dashboard/notes/new">
             <span className="inline-flex items-center gap-2 bg-primary-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-primary-700 transition cursor-pointer">
-              <Plus className="w-4 h-4" />Nova Nota
+              <Plus className="w-4 h-4" />Novo arquivo
             </span>
           </Link>
         </div>
@@ -530,7 +530,7 @@ export default function NotesPage() {
       {!loading && hasAny && !hasResults && (
         <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center">
           <Search className="w-10 h-10 text-gray-200 mx-auto mb-3" />
-          <p className="text-gray-500 font-medium">Nenhuma nota encontrada</p>
+          <p className="text-gray-500 font-medium">Nenhum arquivo encontrado</p>
           <p className="text-gray-400 text-sm mt-1">para "{debouncedSearch || searchQuery}"</p>
         </div>
       )}
@@ -563,7 +563,7 @@ export default function NotesPage() {
             <div className="flex items-center gap-2 px-1">
               <FileText className="w-4 h-4 text-gray-400 flex-shrink-0" />
               <span className="text-sm font-semibold text-gray-500">
-                Todas as notas{regularNotes.length > 0 ? ` · ${regularNotes.length}` : ''}
+                Todos os arquivos{regularNotes.length > 0 ? ` · ${regularNotes.length}` : ''}
               </span>
             </div>
           )}
