@@ -1,14 +1,15 @@
 'use client';
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import {
   ArrowLeft, Edit, HelpCircle, BookOpen, Sparkles,
-  Image as ImageIcon, X, Star, Brain, ExternalLink, Loader2,
+  X, Star, Brain, ExternalLink, Loader2,
   FileText, CheckSquare, Save,
 } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
+import ImageEditorField from '@/components/Common/ImageEditorField';
 import NoteDeCsDescriptorsTable, { type NoteDeCSRecord } from '@/components/Notes/NoteDeCsDescriptorsTable';
 import {
   ASSUNTOS_BY_AREA, toDisplayArea, toDisplayAssunto,
@@ -97,7 +98,6 @@ export default function NoteDetailPage() {
   const [editAssuntos, setEditAssuntos]   = useState<string[]>([]);
   const [editImages, setEditImages]       = useState<string[]>([]);
   const [availableTags, setAvailableTags] = useState<string[]>(AVAILABLE_TAGS);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const [questionsCount, setQuestionsCount] = useState<number>(0);
 
   type SimilarNote = {
@@ -269,18 +269,6 @@ export default function NoteDetailPage() {
       if (response.ok) setQuestionsCount((await response.json()).length);
     } catch { /* ignore */ }
   };
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    Array.from(e.target.files ?? []).forEach((file) => {
-      if (!file.type.startsWith('image/')) { alert('Apenas arquivos de imagem são permitidos'); return; }
-      const reader = new FileReader();
-      reader.onload = (event) => setEditImages((prev) => [...prev, event.target?.result as string]);
-      reader.readAsDataURL(file);
-    });
-    if (fileInputRef.current) fileInputRef.current.value = '';
-  };
-
-  const removeImage = (index: number) => setEditImages((prev) => prev.filter((_, i) => i !== index));
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -739,30 +727,13 @@ export default function NoteDetailPage() {
               <div className="px-6 py-4 space-y-3">
                 <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Imagens</p>
                 {isEditing ? (
-                  <>
-                    <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={handleImageUpload} className="hidden" id="detail-image-upload" />
-                    <label
-                      htmlFor="detail-image-upload"
-                      className="flex items-center justify-center gap-2 py-5 border-2 border-dashed border-gray-200 rounded-xl hover:border-primary-400 hover:bg-primary-50/30 transition cursor-pointer"
-                    >
-                      <ImageIcon className="w-5 h-5 text-gray-400" />
-                      <span className="text-sm text-gray-500">Clique para adicionar imagens</span>
-                    </label>
-                    {editImages.length > 0 && (
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                        {editImages.map((image, index) => (
-                          <div key={index} className="relative group">
-                            <ImageLightbox src={image} alt={`Preview ${index + 1}`} className="w-full h-32" />
-                            <button type="button" onClick={() => removeImage(index)}
-                              className="absolute top-1.5 right-1.5 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-sm"
-                              aria-label="Remover imagem">
-                              <X className="w-3 h-3" />
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </>
+                  <ImageEditorField
+                    images={editImages}
+                    onChange={setEditImages}
+                    inputId="detail-image-upload"
+                    label="Adicionar ou remover imagens"
+                    compact
+                  />
                 ) : (
                   note.images && note.images.length > 0 ? (
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">

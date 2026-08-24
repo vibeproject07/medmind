@@ -1,14 +1,14 @@
 'use client';
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import {
-  MoreVertical, Edit, Trash2, X, Image as ImageIcon,
+  MoreVertical, Edit, Trash2, X,
   Plus, FileText, Search, Calendar, Star,
 } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
-import ImageLightbox from '@/components/Common/ImageLightbox';
+import ImageEditorField from '@/components/Common/ImageEditorField';
 import { useDashboardSearch } from '@/contexts/DashboardSearchContext';
 import {
   ASSUNTOS_BY_AREA,
@@ -85,7 +85,6 @@ export default function NotesPage() {
     title: '', description: '', tags: [] as string[],
     areasConhecimento: [] as string[], assuntos: [] as string[], images: [] as string[],
   });
-  const fileInputRef  = useRef<HTMLInputElement>(null);
   const [formLoading, setFormLoading] = useState(false);
   const [message, setMessage]         = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [openMenuId, setOpenMenuId]   = useState<number | null>(null);
@@ -261,19 +260,6 @@ export default function NotesPage() {
     } catch { setMessage({ type: 'error', text: 'Erro ao salvar a nota.' }); }
     finally   { setFormLoading(false); }
   };
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    Array.from(e.target.files ?? []).forEach(file => {
-      if (!file.type.startsWith('image/')) return;
-      const reader = new FileReader();
-      reader.onload = ev => setFormData(p => ({ ...p, images: [...p.images, ev.target?.result as string] }));
-      reader.readAsDataURL(file);
-    });
-    if (fileInputRef.current) fileInputRef.current.value = '';
-  };
-
-  const removeImage = (idx: number) =>
-    setFormData(p => ({ ...p, images: p.images.filter((_, i) => i !== idx) }));
 
   const closeModal = () => {
     setShowModal(false); setEditingNote(null);
@@ -635,30 +621,16 @@ export default function NotesPage() {
                   placeholder="Descreva aqui seu caso de estudo"
                   className="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-y bg-gray-50 focus:bg-white transition" />
               </div>
-              <div>
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Imagens</label>
-                <div className="border-2 border-dashed border-gray-200 rounded-xl p-4 hover:border-primary-300 transition-colors bg-gray-50">
-                  <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={handleImageUpload} className="hidden" id="modal-image-upload" />
-                  <label htmlFor="modal-image-upload" className="flex flex-col items-center justify-center cursor-pointer py-3">
-                    <ImageIcon className="w-8 h-8 text-gray-300 mb-2" />
-                    <span className="text-sm text-gray-500 font-medium">Clique para adicionar imagens</span>
-                    <span className="text-xs text-gray-400 mt-1">PNG, JPG, GIF até 10MB</span>
-                  </label>
-                </div>
-                {formData.images.length > 0 && (
-                  <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-3">
-                    {formData.images.map((img, idx) => (
-                      <div key={idx} className="relative group">
-                        <ImageLightbox src={img} alt={`Preview ${idx + 1}`} className="w-full h-28 rounded-lg" />
-                        <button type="button" onClick={() => removeImage(idx)}
-                          className="absolute top-1.5 right-1.5 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                          <X className="w-3 h-3" />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+              <ImageEditorField
+                images={formData.images}
+                onChange={(update) => setFormData((prev) => ({
+                  ...prev,
+                  images: typeof update === 'function' ? update(prev.images) : update,
+                }))}
+                inputId="modal-image-upload"
+                compact
+                onError={(text) => setMessage({ type: 'error', text })}
+              />
               <div className="flex flex-wrap gap-4">
                 <div className="flex-1 min-w-[200px]">
                   <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Área do Conhecimento</label>

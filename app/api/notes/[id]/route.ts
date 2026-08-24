@@ -91,28 +91,67 @@ export async function PUT(
     }
 
     const body = await request.json();
-    const { title, description, tags, images, areas_conhecimento, assuntos, fontes_resumo_melhorado, fontes_resumo_original, fontes_arquivos } = body;
+    const {
+      title,
+      description,
+      tags,
+      images,
+      areas_conhecimento,
+      assuntos,
+      fontes_resumo_melhorado,
+      fontes_resumo_original,
+      fontes_arquivos,
+    } = body;
 
     if (!title || !description) {
       return NextResponse.json({ error: 'Título e descrição são obrigatórios' }, { status: 400 });
     }
 
-    const tagsJson = tags && Array.isArray(tags) ? JSON.stringify(tags) : null;
-    const imagesJson = images && Array.isArray(images) ? JSON.stringify(images) : null;
-    const areasConhecimentoJson = areas_conhecimento && Array.isArray(areas_conhecimento) ? JSON.stringify(areas_conhecimento) : null;
-    const assuntosJson = assuntos && Array.isArray(assuntos) ? JSON.stringify(assuntos) : null;
-    const fontesArquivosJson = fontes_arquivos && Array.isArray(fontes_arquivos) ? JSON.stringify(fontes_arquivos) : null;
-
     let noteCheck;
     if (user.role === 'admin') {
-      noteCheck = (await query('SELECT id FROM notes WHERE id = $1', [params.id])).rows[0];
+      noteCheck = (
+        await query(
+          `SELECT id, tags, images, areas_conhecimento, assuntos,
+                  fontes_resumo_melhorado, fontes_resumo_original, fontes_arquivos
+           FROM notes WHERE id = $1`,
+          [params.id],
+        )
+      ).rows[0];
     } else {
-      noteCheck = (await query('SELECT id FROM notes WHERE id = $1 AND user_id = $2', [params.id, user.id])).rows[0];
+      noteCheck = (
+        await query(
+          `SELECT id, tags, images, areas_conhecimento, assuntos,
+                  fontes_resumo_melhorado, fontes_resumo_original, fontes_arquivos
+           FROM notes WHERE id = $1 AND user_id = $2`,
+          [params.id, user.id],
+        )
+      ).rows[0];
     }
 
     if (!noteCheck) {
       return NextResponse.json({ error: 'Nota não encontrada' }, { status: 404 });
     }
+
+    const hasField = (field: string) => Object.prototype.hasOwnProperty.call(body, field);
+    const arrayFields = ['tags', 'images', 'areas_conhecimento', 'assuntos', 'fontes_arquivos'];
+    const invalidArrayField = arrayFields.find((field) => hasField(field) && !Array.isArray(body[field]));
+    if (invalidArrayField) {
+      return NextResponse.json({ error: `O campo "${invalidArrayField}" deve ser uma lista.` }, { status: 400 });
+    }
+
+    const arrayJson = (field: string, previousValue: string | null) =>
+      hasField(field) ? JSON.stringify(body[field]) : previousValue;
+    const tagsJson = arrayJson('tags', noteCheck.tags);
+    const imagesJson = arrayJson('images', noteCheck.images);
+    const areasConhecimentoJson = arrayJson('areas_conhecimento', noteCheck.areas_conhecimento);
+    const assuntosJson = arrayJson('assuntos', noteCheck.assuntos);
+    const fontesArquivosJson = arrayJson('fontes_arquivos', noteCheck.fontes_arquivos);
+    const fontesResumoMelhorado = hasField('fontes_resumo_melhorado')
+      ? fontes_resumo_melhorado ?? null
+      : noteCheck.fontes_resumo_melhorado;
+    const fontesResumoOriginal = hasField('fontes_resumo_original')
+      ? fontes_resumo_original ?? null
+      : noteCheck.fontes_resumo_original;
 
     if (user.role === 'admin') {
       await query(`
@@ -120,14 +159,14 @@ export async function PUT(
         SET title = $1, description = $2, tags = $3, images = $4, areas_conhecimento = $5, assuntos = $6,
             fontes_resumo_melhorado = $7, fontes_resumo_original = $8, fontes_arquivos = $9, updated_at = NOW()
         WHERE id = $10
-      `, [title, description, tagsJson, imagesJson, areasConhecimentoJson, assuntosJson, fontes_resumo_melhorado ?? null, fontes_resumo_original ?? null, fontesArquivosJson, params.id]);
+      `, [title, description, tagsJson, imagesJson, areasConhecimentoJson, assuntosJson, fontesResumoMelhorado, fontesResumoOriginal, fontesArquivosJson, params.id]);
     } else {
       await query(`
         UPDATE notes
         SET title = $1, description = $2, tags = $3, images = $4, areas_conhecimento = $5, assuntos = $6,
             fontes_resumo_melhorado = $7, fontes_resumo_original = $8, fontes_arquivos = $9, updated_at = NOW()
         WHERE id = $10 AND user_id = $11
-      `, [title, description, tagsJson, imagesJson, areasConhecimentoJson, assuntosJson, fontes_resumo_melhorado ?? null, fontes_resumo_original ?? null, fontesArquivosJson, params.id, user.id]);
+      `, [title, description, tagsJson, imagesJson, areasConhecimentoJson, assuntosJson, fontesResumoMelhorado, fontesResumoOriginal, fontesArquivosJson, params.id, user.id]);
     }
 
     triggerEnrichment('note', parseInt(params.id));

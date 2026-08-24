@@ -2,10 +2,10 @@
 
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Plus, Edit, Trash2, X, Image as ImageIcon, Filter, ChevronDown, ChevronUp, ClipboardList, Ban, AlertTriangle, Sparkles, Brain, Search, Loader2 } from 'lucide-react';
+import { Plus, Edit, Trash2, X, Filter, ChevronDown, ChevronUp, ClipboardList, Ban, AlertTriangle, Sparkles, Brain, Search, Loader2 } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import DeCSAutocomplete from '@/components/Common/DeCSAutocomplete';
-import ImageLightbox from '@/components/Common/ImageLightbox';
+import ImageEditorField from '@/components/Common/ImageEditorField';
 import {
   ASSUNTOS_BY_AREA,
   toDisplayArea,
@@ -185,7 +185,6 @@ export default function QuestionsPage() {
     });
     return Array.from(set);
   }, [formData.areas_conhecimento]);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const [formLoading, setFormLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [aiDecsLoadingIds, setAiDecsLoadingIds] = useState<Set<number>>(new Set());
@@ -471,39 +470,6 @@ export default function QuestionsPage() {
     } finally {
       setFormLoading(false);
     }
-  };
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
-
-    Array.from(files).forEach((file) => {
-      if (!file.type.startsWith('image/')) {
-        setMessage({ type: 'error', text: 'Apenas arquivos de imagem são permitidos' });
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const base64 = event.target?.result as string;
-        setFormData((prev) => ({
-          ...prev,
-          images: [...prev.images, base64],
-        }));
-      };
-      reader.readAsDataURL(file);
-    });
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
-  };
-
-  const removeImage = (index: number) => {
-    setFormData((prev) => ({
-      ...prev,
-      images: prev.images.filter((_, i) => i !== index),
-    }));
   };
 
   const handleEdit = (question: Question) => {
@@ -1444,58 +1410,15 @@ export default function QuestionsPage() {
             </div>
 
             <form onSubmit={handleSubmit} className="p-6 space-y-6">
-              {/* Campo de Imagens */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Imagens
-                </label>
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-primary-400 transition-colors">
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    onChange={handleImageUpload}
-                    className="hidden"
-                    id="question-image-upload"
-                  />
-                  <label
-                    htmlFor="question-image-upload"
-                    className="flex flex-col items-center justify-center cursor-pointer py-4"
-                  >
-                    <ImageIcon className="w-10 h-10 text-gray-400 mb-2" />
-                    <span className="text-sm text-gray-600 font-medium">
-                      Clique para adicionar imagens
-                    </span>
-                    <span className="text-xs text-gray-500 mt-1">
-                      PNG, JPG, GIF até 10MB
-                    </span>
-                  </label>
-                </div>
-                
-                {/* Preview das imagens */}
-                {formData.images.length > 0 && (
-                  <div className="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {formData.images.map((image, index) => (
-                      <div key={index} className="relative group">
-                        <ImageLightbox
-                          src={image}
-                          alt={`Preview ${index + 1}`}
-                          className="w-full h-32"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => removeImage(index)}
-                          className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                          aria-label="Remover imagem"
-                        >
-                          <X className="w-4 h-4" />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+              <ImageEditorField
+                images={formData.images}
+                onChange={(update) => setFormData((prev) => ({
+                  ...prev,
+                  images: typeof update === 'function' ? update(prev.images) : update,
+                }))}
+                inputId="question-image-upload"
+                onError={(text) => setMessage({ type: 'error', text })}
+              />
 
               <div>
                 <label htmlFor="statement" className="block text-sm font-medium text-gray-700 mb-2">

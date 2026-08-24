@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { ArrowLeft, Edit, Image as ImageIcon, X, AlertTriangle, Ban, RotateCcw, Sparkles, Brain, ExternalLink, Loader2, Cpu, ShieldCheck, Plus } from 'lucide-react';
+import { ArrowLeft, Edit, X, AlertTriangle, Ban, RotateCcw, Sparkles, Brain, ExternalLink, Loader2, Cpu, ShieldCheck, Plus } from 'lucide-react';
 import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import DeCSAutocomplete from '@/components/Common/DeCSAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
+import ImageEditorField from '@/components/Common/ImageEditorField';
 import DeCSPipelineTracePanel, { type DeCSPipelineExposurePayload } from '@/components/Dashboard/DeCSPipelineTracePanel';
 import QuestionHabilitiesSection from '@/components/Dashboard/QuestionHabilitiesSection';
 import QuestionThemesAssignSection from '@/components/Dashboard/QuestionThemesAssignSection';
@@ -165,7 +166,6 @@ export default function QuestionDetailPage() {
   const [decsValidationError, setDecsValidationError] = useState<string | null>(null);
   const [decsValidationResult, setDecsValidationResult] = useState<DecsValidationResult | null>(null);
   const [addingDecsCode, setAddingDecsCode] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [similarQuestions, setSimilarQuestions] = useState<SimilarQuestion[]>([]);
   const [similarLoading, setSimilarLoading] = useState(false);
@@ -369,33 +369,6 @@ export default function QuestionDetailPage() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
-
-    Array.from(files).forEach((file) => {
-      if (!file.type.startsWith('image/')) {
-        alert('Apenas arquivos de imagem são permitidos');
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const base64 = event.target?.result as string;
-        setEditImages((prev) => [...prev, base64]);
-      };
-      reader.readAsDataURL(file);
-    });
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
-  };
-
-  const removeImage = (index: number) => {
-    setEditImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleEdit = () => {
@@ -920,54 +893,11 @@ export default function QuestionDetailPage() {
       {/* Imagens (upload — somente ao editar) */}
       {isEditing && (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Imagens
-          </label>
-          <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-primary-400 transition-colors">
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={handleImageUpload}
-              className="hidden"
-              id="question-detail-image-upload"
-            />
-            <label
-              htmlFor="question-detail-image-upload"
-              className="flex flex-col items-center justify-center cursor-pointer py-4"
-            >
-              <ImageIcon className="w-10 h-10 text-gray-400 mb-2" />
-              <span className="text-sm text-gray-600 font-medium">
-                Clique para adicionar imagens
-              </span>
-              <span className="text-xs text-gray-500 mt-1">
-                PNG, JPG, GIF até 10MB
-              </span>
-            </label>
-          </div>
-
-          {(editImages ?? []).length > 0 && (
-            <div className="mt-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {(editImages ?? []).map((image, index) => (
-                <div key={index} className="relative group">
-                  <img
-                    src={image}
-                    alt={`Preview ${index + 1}`}
-                    className="w-full h-32 object-cover rounded-lg border border-gray-200"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => removeImage(index)}
-                    className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                    aria-label="Remover imagem"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
+          <ImageEditorField
+            images={editImages}
+            onChange={setEditImages}
+            inputId="question-detail-image-upload"
+          />
         </div>
       )}
 

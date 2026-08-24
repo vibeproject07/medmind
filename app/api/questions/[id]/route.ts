@@ -109,16 +109,30 @@ export async function PUT(
       }, { status: 400 });
     }
 
-    const tagsJson = tags && Array.isArray(tags) ? JSON.stringify(tags) : null;
-    const imagesJson = images && Array.isArray(images) ? JSON.stringify(images) : null;
-    const areasConhecimentoJson = areas_conhecimento && Array.isArray(areas_conhecimento) ? JSON.stringify(areas_conhecimento) : null;
-    const assuntosJson = assuntos && Array.isArray(assuntos) ? JSON.stringify(assuntos) : null;
-    const decsTermsJson = decs_terms && Array.isArray(decs_terms) ? JSON.stringify(decs_terms) : null;
-
-    const existingQuestion = (await query('SELECT id FROM questions WHERE id = $1', [params.id])).rows[0];
+    const existingQuestion = (
+      await query(
+        'SELECT id, tags, images, areas_conhecimento, assuntos, decs_terms FROM questions WHERE id = $1',
+        [params.id],
+      )
+    ).rows[0];
     if (!existingQuestion) {
       return NextResponse.json({ error: 'Questão não encontrada' }, { status: 404 });
     }
+
+    const hasField = (field: string) => Object.prototype.hasOwnProperty.call(body, field);
+    const arrayFields = ['tags', 'images', 'areas_conhecimento', 'assuntos', 'decs_terms'];
+    const invalidArrayField = arrayFields.find((field) => hasField(field) && !Array.isArray(body[field]));
+    if (invalidArrayField) {
+      return NextResponse.json({ error: `O campo "${invalidArrayField}" deve ser uma lista.` }, { status: 400 });
+    }
+
+    const arrayJson = (field: string, previousValue: string | null) =>
+      hasField(field) ? JSON.stringify(body[field]) : previousValue;
+    const tagsJson = arrayJson('tags', existingQuestion.tags);
+    const imagesJson = arrayJson('images', existingQuestion.images);
+    const areasConhecimentoJson = arrayJson('areas_conhecimento', existingQuestion.areas_conhecimento);
+    const assuntosJson = arrayJson('assuntos', existingQuestion.assuntos);
+    const decsTermsJson = arrayJson('decs_terms', existingQuestion.decs_terms);
 
     await query(`
       UPDATE questions
