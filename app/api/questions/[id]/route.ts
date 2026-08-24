@@ -111,7 +111,9 @@ export async function PUT(
 
     const existingQuestion = (
       await query(
-        'SELECT id, tags, images, areas_conhecimento, assuntos, decs_terms FROM questions WHERE id = $1',
+        `SELECT id, tags, images, areas_conhecimento, assuntos, decs_terms,
+                explanation, exam_year, exam_board, exam_institution, exam_region
+         FROM questions WHERE id = $1`,
         [params.id],
       )
     ).rows[0];
@@ -128,11 +130,25 @@ export async function PUT(
 
     const arrayJson = (field: string, previousValue: string | null) =>
       hasField(field) ? JSON.stringify(body[field]) : previousValue;
+    const optionalText = (field: string, previousValue: string | null) => {
+      if (!hasField(field)) return previousValue;
+      const value = body[field];
+      if (value == null) return null;
+      const text = String(value).trim();
+      return text || null;
+    };
+    const optionalValue = (field: string, previousValue: unknown) =>
+      hasField(field) ? body[field] ?? null : previousValue;
     const tagsJson = arrayJson('tags', existingQuestion.tags);
     const imagesJson = arrayJson('images', existingQuestion.images);
     const areasConhecimentoJson = arrayJson('areas_conhecimento', existingQuestion.areas_conhecimento);
     const assuntosJson = arrayJson('assuntos', existingQuestion.assuntos);
     const decsTermsJson = arrayJson('decs_terms', existingQuestion.decs_terms);
+    const explanationValue = optionalText('explanation', existingQuestion.explanation);
+    const examYearValue = optionalValue('exam_year', existingQuestion.exam_year);
+    const examBoardValue = optionalText('exam_board', existingQuestion.exam_board);
+    const examInstitutionValue = optionalText('exam_institution', existingQuestion.exam_institution);
+    const examRegionValue = optionalText('exam_region', existingQuestion.exam_region);
 
     await query(`
       UPDATE questions
@@ -141,7 +157,7 @@ export async function PUT(
           exam_year = $11, exam_board = $12, exam_institution = $13, exam_region = $14,
           areas_conhecimento = $15, assuntos = $16, decs_terms = $17, updated_at = NOW()
       WHERE id = $18
-    `, [statement, option_a, option_b, option_c, option_d, option_e || null, correct_answer, explanation || null, tagsJson, imagesJson, exam_year || null, exam_board || null, exam_institution || null, exam_region || null, areasConhecimentoJson, assuntosJson, decsTermsJson, params.id]);
+    `, [statement, option_a, option_b, option_c, option_d, option_e || null, correct_answer, explanationValue, tagsJson, imagesJson, examYearValue, examBoardValue, examInstitutionValue, examRegionValue, areasConhecimentoJson, assuntosJson, decsTermsJson, params.id]);
 
     triggerEnrichment('question', parseInt(params.id));
 

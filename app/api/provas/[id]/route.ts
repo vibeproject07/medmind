@@ -31,7 +31,7 @@ export async function GET(
 
     const questionsRes = await query(
       `SELECT id, statement, option_a, option_b, option_c, option_d, option_e,
-              correct_answer, images, exam_board, exam_region, exam_year, exam_type,
+              correct_answer, explanation, images, exam_board, exam_region, exam_year, exam_type,
               prova_id, numero_na_prova, anulada
        FROM questions
        WHERE prova_id = $1
@@ -57,6 +57,7 @@ export async function GET(
         option_d:        q.option_d,
         option_e:        q.option_e,
         correct_answer:  q.correct_answer,
+        explanation:     q.explanation,
         images:          q.images ? (typeof q.images === 'string' ? JSON.parse(q.images) : q.images) : [],
         exam_board:      q.exam_board,
         exam_region:     q.exam_region,
