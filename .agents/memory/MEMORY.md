@@ -1,0 +1,1 @@
+- [Prova cache safety](prova-cache-safety.md) — Cache leve de prova sem imagens é somente leitura; edição espera a resposta atualizada da API.

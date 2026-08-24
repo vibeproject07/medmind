@@ -24,6 +24,7 @@ import {
   RotateCcw,
 } from 'lucide-react';
 import ImageLightbox from '@/components/Common/ImageLightbox';
+import ImageEditorField from '@/components/Common/ImageEditorField';
 
 interface ProvaQuestion {
   id: number;
@@ -362,6 +363,7 @@ export default function ProvaExamPage() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [loadingProva, setLoadingProva] = useState(true);
+  const [provaAuthoritative, setProvaAuthoritative] = useState(false);
   const [editingQuestionId, setEditingQuestionId] = useState<number | null>(null);
   const [editForm, setEditForm] = useState<{
     statement: string;
@@ -372,6 +374,7 @@ export default function ProvaExamPage() {
     option_e: string;
     correct_answer: 'A' | 'B' | 'C' | 'D' | 'E';
     explanation: string;
+    images: string[];
   }>({
     statement: '',
     option_a: '',
@@ -381,9 +384,11 @@ export default function ProvaExamPage() {
     option_e: '',
     correct_answer: 'A',
     explanation: '',
+    images: [],
   });
   const [savingEdit, setSavingEdit] = useState(false);
   const [togglingAnulada, setTogglingAnulada] = useState(false);
+  const [editError, setEditError] = useState<string | null>(null);
 
   const cacheProvaLight = (data: Prova) => {
     try {
@@ -414,6 +419,7 @@ export default function ProvaExamPage() {
     const load = async () => {
       setLoadingProva(true);
       setLoadError(null);
+      setProvaAuthoritative(false);
 
       // Cache opcional (sem depender dele — evita QuotaExceeded com imagens base64)
       try {
@@ -451,6 +457,7 @@ export default function ProvaExamPage() {
         }
         if (cancelled) return;
         setProva(data);
+        setProvaAuthoritative(true);
         // Cache leve: sem imagens (evita estourar localStorage)
         cacheProvaLight(data);
       } catch {
@@ -741,7 +748,12 @@ export default function ProvaExamPage() {
 
   const startEditCurrentQuestion = () => {
     if (!currentQuestion) return;
+    if (!provaAuthoritative) {
+      setEditError('Aguarde o carregamento atualizado da prova antes de editar a questão.');
+      return;
+    }
     setEditingQuestionId(currentQuestion.id);
+    setEditError(null);
     setEditForm({
       statement: currentQuestion.statement ?? '',
       option_a: currentQuestion.option_a ?? '',
@@ -751,28 +763,38 @@ export default function ProvaExamPage() {
       option_e: currentQuestion.option_e ?? '',
       correct_answer: (currentQuestion.correct_answer as 'A' | 'B' | 'C' | 'D' | 'E') ?? 'A',
       explanation: currentQuestion.explanation ?? '',
+      images: currentQuestion.images ?? [],
     });
   };
 
   const cancelEditCurrentQuestion = () => {
     setEditingQuestionId(null);
+    setEditError(null);
   };
 
   const saveEditCurrentQuestion = async () => {
     if (!currentQuestion) return;
+    setEditError(null);
+    if (!provaAuthoritative) {
+      setEditError('Aguarde o carregamento atualizado da prova antes de salvar a questão.');
+      return;
+    }
     if (!editForm.statement.trim() || !editForm.option_a.trim() || !editForm.option_b.trim()) {
-      alert('Enunciado e alternativas A/B são obrigatórios.');
+      setEditError('Enunciado e alternativas A/B são obrigatórios.');
       return;
     }
     if (!editAvailableOptions.includes(editForm.correct_answer)) {
-      alert('Resposta correta deve corresponder a uma alternativa preenchida.');
+      setEditError('Resposta correta deve corresponder a uma alternativa preenchida.');
       return;
     }
 
     setSavingEdit(true);
     try {
       const token = localStorage.getItem('token');
-      if (!token) return;
+      if (!token) {
+        setEditError('Sessão expirada. Faça login novamente.');
+        return;
+      }
       const payload: Record<string, unknown> = {
         statement: editForm.statement.trim(),
         option_a: editForm.option_a.trim(),
@@ -782,6 +804,7 @@ export default function ProvaExamPage() {
         option_d: editForm.option_d.trim() || null,
         option_e: editForm.option_e.trim() || null,
         explanation: editForm.explanation.trim() || null,
+        images: editForm.images,
       };
 
       const res = await fetch(`/api/questions/${currentQuestion.id}`, {
@@ -794,7 +817,7 @@ export default function ProvaExamPage() {
       });
       const updated = await res.json();
       if (!res.ok) {
-        alert(updated.error || 'Erro ao salvar questão.');
+        setEditError(updated.error || 'Erro ao salvar questão.');
         return;
       }
 
@@ -812,6 +835,7 @@ export default function ProvaExamPage() {
                 option_e: updated.option_e ?? null,
                 correct_answer: updated.correct_answer ?? q.correct_answer,
                 explanation: updated.explanation ?? null,
+                images: Array.isArray(updated.images) ? updated.images : [],
               }
             : q,
         );
@@ -821,8 +845,9 @@ export default function ProvaExamPage() {
       });
 
       setEditingQuestionId(null);
+      setEditError(null);
     } catch {
-      alert('Erro ao salvar questão.');
+      setEditError('Erro ao salvar questão. Verifique sua conexão e tente novamente.');
     } finally {
       setSavingEdit(false);
     }
@@ -1018,12 +1043,32 @@ export default function ProvaExamPage() {
                   </span>
                 )}
                 {isEditingCurrent ? (
-                  <textarea
-                    value={editForm.statement}
-                    onChange={(e) => setEditForm((prev) => ({ ...prev, statement: e.target.value }))}
-                    rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  />
+                  <div className="space-y-4">
+                    <textarea
+                      value={editForm.statement}
+                      onChange={(e) => setEditForm((prev) => ({ ...prev, statement: e.target.value }))}
+                      rows={4}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    />
+                    <ImageEditorField
+                      images={editForm.images}
+                      onChange={(update) =>
+                        setEditForm((prev) => ({
+                          ...prev,
+                          images: typeof update === 'function' ? update(prev.images) : update,
+                        }))
+                      }
+                      inputId={`exam-question-${currentQuestion.id}-images`}
+                      label="Imagens da questão"
+                      compact
+                      onError={setEditError}
+                    />
+                    {editError && (
+                      <p role="alert" className="text-sm text-red-600">
+                        {editError}
+                      </p>
+                    )}
+                  </div>
                 ) : (
                   <p className="text-base font-medium text-gray-800 whitespace-pre-wrap leading-relaxed">
                     {currentQuestion.statement}
@@ -1031,7 +1076,7 @@ export default function ProvaExamPage() {
                 )}
               </div>
 
-              {currentQuestion.images && currentQuestion.images.length > 0 && (
+              {!isEditingCurrent && currentQuestion.images && currentQuestion.images.length > 0 && (
                 <div className="flex flex-wrap justify-center gap-4">
                   {currentQuestion.images.map((image: string, idx: number) => (
                     <ImageLightbox key={idx} src={image} alt={`Imagem ${idx + 1}`} className="h-48 w-auto max-w-xs" />
@@ -1254,8 +1299,9 @@ export default function ProvaExamPage() {
               <button
                 type="button"
                 onClick={startEditCurrentQuestion}
-                className="flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition text-sm font-semibold shadow-sm"
-                title="Editar esta questão da prova"
+                disabled={!provaAuthoritative}
+                className="flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition text-sm font-semibold shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                title={provaAuthoritative ? 'Editar esta questão da prova' : 'Aguarde o carregamento da prova'}
               >
                 <Edit className="w-4 h-4" />
                 <span className="hidden sm:inline">Editar</span>
