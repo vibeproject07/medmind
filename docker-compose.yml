@@ -1,0 +1,34 @@
+# Postgres local (pgvector) + seed de 20 questões.
+# Uso:
+#   docker compose up -d
+#   DATABASE_URL=postgresql://medmind:medmind@localhost:5432/medmind
+#
+# Scripts em docker/postgres/init e exports/questions-20.sql
+# só rodam na PRIMEIRA criação do volume. Para recarregar:
+#   docker compose down -v && docker compose up -d
+
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: medmind-db
+    environment:
+      POSTGRES_USER: medmind
+      POSTGRES_PASSWORD: medmind
+      POSTGRES_DB: medmind
+    ports:
+      - "5432:5432"
+    volumes:
+      - medmind_pgdata:/var/lib/postgresql/data
+      - ./docker/postgres/init/01-extensions.sql:/docker-entrypoint-initdb.d/01-extensions.sql:ro
+      - ./docker/postgres/init/02-schema.sql:/docker-entrypoint-initdb.d/02-schema.sql:ro
+      - ./docker/postgres/init/03-seed.sql:/docker-entrypoint-initdb.d/03-seed.sql:ro
+      - ./exports/questions-20.sql:/docker-entrypoint-initdb.d/04-questions-20.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U medmind -d medmind"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+
+volumes:
+  medmind_pgdata:
