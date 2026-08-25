@@ -96,3 +96,10 @@ id = "o8JxcoWzWVLXF4I0C6Xjy"
 uri = "file://exports/decs-embedding-text-audit.json"
 type = "unspecified"
 title = "Auditoria de texto de embedding — 5 termos de epilepsia"
+
+[[outputs]]
+id = "3Jo4SiH0Hte4sdcsOy7mY"
+uri = "file://exports/questions-20.sql"
+type = "unspecified"
+title = "Dump SQL com 20 questões"
+description = "Arquivo SQL com 20 questões reais de public.questions. Inclui conteúdo, alternativas, explicações, imagens e metadados; embedding foi omitido."
