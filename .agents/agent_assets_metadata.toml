@@ -103,3 +103,10 @@ uri = "file://exports/questions-20.sql"
 type = "unspecified"
 title = "Dump SQL com 20 questões"
 description = "Arquivo SQL com 20 questões reais de public.questions. Inclui conteúdo, alternativas, explicações, imagens e metadados; embedding foi omitido."
+
+[[outputs]]
+id = "0CyPGvcRVj_qm7Ic_uheI"
+uri = "file://exports/ai-agents-dump.sql"
+type = "unspecified"
+title = "Dump SQL de todos os agentes de IA"
+description = "Arquivo SQL com as 18 configurações de agentes de IA de public.ai_agents: prompts, modelo, temperatura e limites de tokens."
