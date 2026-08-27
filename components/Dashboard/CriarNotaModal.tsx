@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { X } from 'lucide-react';
 import ResumoAulasModal from '@/components/Dashboard/ResumoAulasModal';
+import { saveDraftNote } from '@/lib/safe-local-storage';
 
 export const PENDING_TRANSFORM_FILES_KEY = 'pendingTransformFiles';
 
@@ -19,26 +20,28 @@ export default function CriarNotaModal({ isOpen, onClose }: CriarNotaModalProps)
 
   const saveDraft = (resumoAulas?: { melhorado: string; original: string }) => {
     if (typeof window !== 'undefined') {
-      const existing = localStorage.getItem('draftNote');
-      let draft: Record<string, unknown> = {
-        title: '',
-        description: '',
-        informacoes: '',
-        tipoConteudo: '',
-        tags: [],
-        areasConhecimento: [],
-        assuntos: [],
-        images: [],
-      };
-      if (existing) {
-        try {
+      try {
+        const existing = localStorage.getItem('draftNote');
+        let draft: Record<string, unknown> = {
+          title: '',
+          description: '',
+          informacoes: '',
+          tipoConteudo: '',
+          tags: [],
+          areasConhecimento: [],
+          assuntos: [],
+          images: [],
+        };
+        if (existing) {
           draft = { ...draft, ...JSON.parse(existing) };
-        } catch (_) {}
+        }
+        if (resumoAulas) {
+          draft.resumoAulas = resumoAulas;
+        }
+        saveDraftNote(draft);
+      } catch {
+        // Draft persistence is best-effort; it must not block opening a note.
       }
-      if (resumoAulas) {
-        draft.resumoAulas = resumoAulas;
-      }
-      localStorage.setItem('draftNote', JSON.stringify(draft));
     }
   };
 

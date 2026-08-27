@@ -2,6 +2,7 @@
 
 import { Suspense, useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { removeDraftNote, saveDraftNote } from '@/lib/safe-local-storage';
 import {
   ArrowLeft, X, Image as ImageIcon,
   FileText, Film, Music,
@@ -344,7 +345,7 @@ function NewNotePageContent() {
     setShowSaveReminderModal(false);
     if (!action) return;
     if (action.type === 'leave') {
-      localStorage.removeItem('draftNote');
+      removeDraftNote();
       router.push('/dashboard/notes');
     } else if (action.type === 'step1') {
       setActivePanel(null);
@@ -368,7 +369,7 @@ function NewNotePageContent() {
   // Always open clean — discard any leftover draft from previous session
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    localStorage.removeItem('draftNote');
+    removeDraftNote();
   }, []);
 
   // Session storage for pending files (from other parts of the app)
@@ -419,8 +420,8 @@ function NewNotePageContent() {
       formData.title || formData.informacoes || formData.tags.length > 0 ||
       formData.areasConhecimento.length > 0 || formData.images.length > 0 ||
       resumoAulas.melhorado || resumoAulas.original;
-    if (hasContent) localStorage.setItem('draftNote', JSON.stringify({ ...formData, resumoAulas, fontesArquivosNames }));
-    else localStorage.removeItem('draftNote');
+    if (hasContent) saveDraftNote({ ...formData, resumoAulas, fontesArquivosNames });
+    else removeDraftNote();
   }, [formData, resumoAulas, fontesArquivosNames]);
 
   // ── Inline source processing ─────────────────────────────────────────
@@ -480,7 +481,7 @@ function NewNotePageContent() {
   };
 
   const handleDiscard = () => {
-    localStorage.removeItem('draftNote');
+    removeDraftNote();
     router.push('/dashboard/notes');
   };
 
@@ -549,7 +550,7 @@ function NewNotePageContent() {
             }
           } catch { /* ignore */ }
         }
-        localStorage.removeItem('draftNote');
+        removeDraftNote();
         if (afterSave === 'list') {
           router.push('/dashboard/notes');
         } else {
