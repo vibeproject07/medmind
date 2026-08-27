@@ -4,6 +4,7 @@
  */
 
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
+export const DEFAULT_GROQ_CHAT_MODEL = 'openai/gpt-oss-20b';
 
 export type GroqMessageRole = 'system' | 'user' | 'assistant';
 
@@ -15,7 +16,7 @@ export interface GroqMessage {
 export interface GroqChatOptions {
   /** Chave da API Groq (ou process.env.GROQ_API_KEY) */
   apiKey?: string;
-  /** Modelo (ex: llama-3.1-70b-versatile, llama-3.1-8b-instant) */
+  /** Modelo de chat Groq */
   model?: string;
   /** Temperatura 0-2 */
   temperature?: number;
@@ -45,7 +46,7 @@ export async function groqChat(
     throw new Error('GROQ_API_KEY não definida. Defina a variável de ambiente ou passe apiKey nas opções.');
   }
 
-  const model = options.model ?? 'llama-3.3-70b-versatile';
+  const model = options.model ?? DEFAULT_GROQ_CHAT_MODEL;
   const body: Record<string, unknown> = {
     model,
     messages,

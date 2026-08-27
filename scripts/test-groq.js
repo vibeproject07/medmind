@@ -40,7 +40,7 @@ async function main() {
   console.log('Conectando à API Groq...\n');
 
   const body = {
-    model: 'llama-3.1-70b-versatile',
+    model: 'openai/gpt-oss-20b',
     messages: [{ role: 'user', content: 'Responda em uma frase: o que é a API Groq?' }],
     max_tokens: 150,
   };

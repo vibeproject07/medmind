@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { groqChat, getGroqReply } from '@/lib/groq';
+import { DEFAULT_GROQ_CHAT_MODEL, groqChat, getGroqReply } from '@/lib/groq';
 
 export const runtime = 'nodejs';
 
@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     }
 
     const response = await groqChat(messages, {
-      model: model ?? 'llama-3.2-90b-vision-preview',
+      model: model ?? DEFAULT_GROQ_CHAT_MODEL,
       temperature,
       max_tokens,
     });
