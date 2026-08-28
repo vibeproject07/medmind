@@ -338,7 +338,7 @@ const AXIOS_DOWNLOAD_OPTIONS = (maxSizeBytes: number) => ({
   validateStatus: (status: number) => status >= 200 && status < 400,
 });
 
-function isPrivateIpAddress(address: string): boolean {
+export function isPrivateIpAddress(address: string): boolean {
   const normalized = address.toLowerCase().split('%')[0];
   if (normalized.startsWith('::ffff:')) {
     return isPrivateIpAddress(normalized.slice('::ffff:'.length));
@@ -377,7 +377,19 @@ interface VettedAddress {
   family: 4 | 6;
 }
 
-async function getVettedPublicAddress(url: string): Promise<VettedAddress> {
+type AddressResolver = (
+  hostname: string,
+) => Promise<Array<{ address: string; family: number }>>;
+
+export async function getVettedPublicAddress(
+  url: string,
+  resolveAddresses: AddressResolver = async (hostname) => {
+    const literalFamily = net.isIP(hostname);
+    return literalFamily
+      ? [{ address: hostname, family: literalFamily }]
+      : dns.lookup(hostname, { all: true, verbatim: true });
+  },
+): Promise<VettedAddress> {
   const parsed = new URL(url);
   if (!['http:', 'https:'].includes(parsed.protocol) || parsed.username || parsed.password) {
     throw new Error('O link de mídia deve usar HTTP/HTTPS público e não pode conter credenciais.');
@@ -391,10 +403,7 @@ async function getVettedPublicAddress(url: string): Promise<VettedAddress> {
   ) {
     throw new Error('Endereços locais ou internos não são permitidos para transcrição.');
   }
-  const literalFamily = net.isIP(hostname);
-  const addresses = literalFamily
-    ? [{ address: hostname, family: literalFamily }]
-    : await dns.lookup(hostname, { all: true, verbatim: true });
+  const addresses = await resolveAddresses(hostname);
   if (addresses.length === 0 || addresses.some(({ address }) => isPrivateIpAddress(address))) {
     throw new Error('O link informado resolve para uma rede privada ou não permitida.');
   }
@@ -405,10 +414,22 @@ async function getVettedPublicAddress(url: string): Promise<VettedAddress> {
   };
 }
 
-async function safeDownloadResponse(url: string, maxSizeBytes: number) {
+interface SafeDownloadDependencies {
+  resolveAddresses?: AddressResolver;
+  request?: (url: string, config: Record<string, unknown>) => Promise<any>;
+}
+
+export async function safeDownloadResponse(
+  url: string,
+  maxSizeBytes: number,
+  dependencies: SafeDownloadDependencies = {},
+) {
   let currentUrl = url;
   for (let redirect = 0; redirect <= 10; redirect++) {
-    const vettedAddress = await getVettedPublicAddress(currentUrl);
+    const vettedAddress = await getVettedPublicAddress(
+      currentUrl,
+      dependencies.resolveAddresses,
+    );
     const pinnedLookup: import('net').LookupFunction = (_hostname, options, callback) => {
       if (options.all) {
         callback(null, [vettedAddress]);
@@ -416,7 +437,8 @@ async function safeDownloadResponse(url: string, maxSizeBytes: number) {
       }
       callback(null, vettedAddress.address, vettedAddress.family);
     };
-    const response = await axios.get(currentUrl, {
+    const request = dependencies.request ?? axios.get.bind(axios);
+    const response = await request(currentUrl, {
       ...AXIOS_DOWNLOAD_OPTIONS(maxSizeBytes),
       // A conexão usa exatamente o IP já validado. O hostname original permanece
       // na URL para Host e TLS/SNI, eliminando a janela de DNS rebinding.
@@ -752,6 +774,45 @@ function formatSegments(segments: GroqTranscriptionSegment[], fallbackText: stri
     .trim();
 }
 
+export function validateExactChunkDurations(
+  durations: number[],
+  chunkNames: string[],
+): number[] {
+  return durations.map((duration, index) => {
+    if (!Number.isFinite(duration) || duration <= 0) {
+      throw new Error(
+        `Não foi possível medir a duração exata do fragmento ${
+          chunkNames[index] ?? index + 1
+        }; a transcrição foi interrompida para não gerar minutagens incorretas.`,
+      );
+    }
+    return duration;
+  });
+}
+
+export function offsetTranscriptionPart(
+  result: GroqTranscriptionResult,
+  offsetSeconds: number,
+  part: number,
+  segmentIdStart: number,
+): Pick<GroqTranscriptionResult, 'segments' | 'words'> {
+  return {
+    segments: result.segments.map((segment, index) => ({
+      ...segment,
+      id: segmentIdStart + index,
+      start: segment.start + offsetSeconds,
+      end: segment.end + offsetSeconds,
+      part,
+    })),
+    words: result.words?.map((word) => ({
+      ...word,
+      start: word.start + offsetSeconds,
+      end: word.end + offsetSeconds,
+      part,
+    })),
+  };
+}
+
 function estimateRemainingSeconds(
   startedAt: number,
   completedParts: number,
@@ -792,18 +853,14 @@ export async function groqTranscribeLargeFile(
     if (chunkPaths.length === 0) {
       throw new Error('Não foi possível dividir o arquivo em fragmentos. Verifique o formato do vídeo/áudio.');
     }
-    const chunkDurations = await Promise.all(
+    const probedDurations = await Promise.all(
       chunkPaths.map(async (chunkPath) => {
-        const probed = await getMediaDurationSeconds(chunkPath);
-        if (!Number.isFinite(probed) || probed <= 0) {
-          throw new Error(
-            `Não foi possível medir a duração exata do fragmento ${path.basename(
-              chunkPath,
-            )}; a transcrição foi interrompida para não gerar minutagens incorretas.`,
-          );
-        }
-        return probed;
+        return getMediaDurationSeconds(chunkPath);
       }),
+    );
+    const chunkDurations = validateExactChunkDurations(
+      probedDurations,
+      chunkPaths.map((chunkPath) => path.basename(chunkPath)),
     );
     const totalDuration = chunkDurations.reduce((total, duration) => total + duration, 0);
     const startedAt = Date.now();
@@ -838,23 +895,14 @@ export async function groqTranscribeLargeFile(
       });
       const result = await groqTranscribeFile(chunkBuffer, chunkName, options);
       if (result.rawText.trim()) rawTexts.push(result.rawText.trim());
-      result.segments.forEach((segment) => {
-        segments.push({
-          ...segment,
-          id: segments.length,
-          start: segment.start + offsetSeconds,
-          end: segment.end + offsetSeconds,
-          part: i + 1,
-        });
-      });
-      result.words?.forEach((word) => {
-        words.push({
-          ...word,
-          start: word.start + offsetSeconds,
-          end: word.end + offsetSeconds,
-          part: i + 1,
-        });
-      });
+      const offsetPart = offsetTranscriptionPart(
+        result,
+        offsetSeconds,
+        i + 1,
+        segments.length,
+      );
+      segments.push(...offsetPart.segments);
+      if (offsetPart.words) words.push(...offsetPart.words);
       offsetSeconds += chunkDurations[i];
       onProgress?.({
         stage: 'transcribing',

@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2020",
+    "outDir": "/tmp/medmind-groq-tests",
+    "noEmit": false,
+    "incremental": false,
+    "skipLibCheck": true
+  },
+  "include": ["groq-stt-regressions.test.ts", "../lib/groq-stt.ts"],
+  "exclude": []
+}

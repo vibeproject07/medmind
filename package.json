@@ -9,6 +9,7 @@
     "lint": "next lint",
     "init-db": "node scripts/init-db.js",
     "test-groq": "node scripts/test-groq.js",
+    "test:groq-regressions": "rm -rf /tmp/medmind-groq-tests && tsc -p tests/tsconfig.groq.json && NODE_PATH=\"$PWD/node_modules\" node --test /tmp/medmind-groq-tests/tests/groq-stt-regressions.test.js",
     "neon:setup": "node scripts/neon/seed.js"
   },
   "dependencies": {
