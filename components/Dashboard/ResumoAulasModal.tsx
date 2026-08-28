@@ -2,6 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { X, Mic, Upload, Link as LinkIcon } from 'lucide-react';
+import {
+  describeTranscriptionProgress,
+  transcribeWithProgress,
+} from '@/lib/groq-transcription-client';
 
 
 export interface ResumoAulasModalProps {
@@ -35,6 +39,7 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
   const [summary, setSummary] = useState<string | null>(null);
   const [summaryError, setSummaryError] = useState<string | null>(null);
   const [showMoreInfo, setShowMoreInfo] = useState(false);
+  const [progressMessage, setProgressMessage] = useState<string | null>(null);
 
   const fileAccept = acceptProp ?? ACCEPTED_FILE_TYPES;
 
@@ -59,6 +64,7 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
     setSummary(null);
     setSummaryError(null);
     setShowMoreInfo(false);
+    setProgressMessage(null);
     onClose();
   };
 
@@ -68,6 +74,7 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
     setSizeMessage(null);
     setSummary(null);
     setSummaryError(null);
+    setProgressMessage(null);
   };
 
   const handleTranscribeAndSummarize = async () => {
@@ -83,33 +90,14 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
         setError('Faça login para usar transcrição e resumo.');
         return;
       }
-      const urlToCall = '/api/groq/transcribe-with-extract';
       let transcriptionText = '';
       const audioOrVideoFile = files.find((f) => f.type.startsWith('audio/') || f.type.startsWith('video/'));
       if (audioOrVideoFile) {
         const formData = new FormData();
         formData.append('file', audioOrVideoFile);
-        const res = await fetch(urlToCall, {
-          method: 'POST',
-          headers: { Authorization: `Bearer ${token}` },
-          body: formData,
+        const data = await transcribeWithProgress(formData, token, (progress) => {
+          setProgressMessage(describeTranscriptionProgress(progress));
         });
-        const text = await res.text();
-        let data: { error?: string; text?: string; originalSize?: number; extractedSize?: number };
-        try {
-          data = text ? JSON.parse(text) : {};
-        } catch {
-          setError(
-            res.status === 413
-              ? 'Arquivo muito grande para upload direto. Envie um arquivo menor (recomendado até 100 MB) ou use o link do arquivo no Google Drive/OneDrive.'
-              : 'Resposta inválida do servidor. Se o arquivo for muito grande, tente um menor ou use o link do arquivo.'
-          );
-          return;
-        }
-        if (!res.ok) {
-          setError(data.error || 'Erro ao transcrever.');
-          return;
-        }
         const orig = data.originalSize ?? 0;
         const extr = data.extractedSize ?? 0;
         if (orig > 0 && extr < orig) {
@@ -178,26 +166,9 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
           transcriptionText = dataYt.text || '';
           setResult(transcriptionText);
         } else {
-          const res = await fetch(urlToCall, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({ url: linkUrl }),
+          const data = await transcribeWithProgress({ url: linkUrl }, token, (progress) => {
+            setProgressMessage(describeTranscriptionProgress(progress));
           });
-          const text = await res.text();
-          let data: { error?: string; text?: string; originalSize?: number; extractedSize?: number };
-          try {
-            data = text ? JSON.parse(text) : {};
-          } catch {
-            setError('Resposta inválida do servidor. O link pode ter retornado uma página em vez do arquivo — verifique se o arquivo do Google Drive está como "Qualquer pessoa com o link pode visualizar".');
-            return;
-          }
-          if (!res.ok) {
-            setError(data.error || 'Erro ao transcrever.');
-            return;
-          }
           const orig = data.originalSize ?? 0;
           const extr = data.extractedSize ?? 0;
           if (orig > 0 && extr < orig) {
@@ -363,7 +334,9 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
                 💡 <strong>Dica:</strong> Suporta links do Google Drive e OneDrive! Certifique-se de que o arquivo está configurado como &quot;Qualquer pessoa com o link pode visualizar&quot; ou &quot;Público&quot;.
               </p>
               <p className="text-xs text-gray-500">
-                Vídeos maiores que 25 MB são transcritos automaticamente em fragmentos (até 500 MB). O áudio é baixado temporariamente, dividido em partes e cada parte é transcrita até a conclusão.
+                Vídeos são convertidos em áudio antes da transcrição. Arquivos grandes são
+                divididos em partes (até 500 MB), e as minutagens de cada parte são ajustadas
+                antes da consolidação.
               </p>
               <button
                 type="button"
@@ -425,6 +398,12 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
                   Arquivo grande. Em alguns servidores o upload pode falhar — para arquivos acima de ~100 MB, use o link do Google Drive/OneDrive.
                 </p>
               )}
+              {files.some((f) => f.size > 25 * 1024 * 1024) && (
+                <p className="mt-2 text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded p-2">
+                  Este arquivo é grande e poderá ser dividido em várias partes. A quantidade
+                  exata e o tempo estimado aparecerão durante a transcrição.
+                </p>
+              )}
             </div>
           </div>
 
@@ -478,6 +457,11 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
           {error && (
             <div className="p-4 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
               {error}
+            </div>
+          )}
+          {loading && progressMessage && (
+            <div className="p-4 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 text-sm">
+              {progressMessage}
             </div>
           )}
           {sizeMessage && (

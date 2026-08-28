@@ -1,136 +1,232 @@
 import { NextRequest, NextResponse } from 'next/server';
 import {
-  groqTranscribeFile,
-  groqTranscribeFromUrl,
-  groqTranscribeLargeFile,
-  extractAudioFromVideo,
-  isVideoFile,
   downloadFileFromUrlLarge,
-  normalizeCloudStorageUrl,
-  isCloudStorageUrl,
+  extractAudioFromVideo,
+  groqTranscribeFile,
+  groqTranscribeLargeFile,
+  isVideoFile,
   MAX_SIZE_FOR_CHUNKED_TRANSCRIPTION,
+  normalizeCloudStorageUrl,
+  type GroqProgressCallback,
+  type GroqTranscriptionProgress,
+  type GroqTranscriptionResult,
 } from '@/lib/groq-stt';
+import { verifyToken } from '@/lib/jwt';
 
 export const runtime = 'nodejs';
 
-const MAX_SINGLE_FILE_SIZE = 25 * 1024 * 1024; // 25 MB
+const MAX_SINGLE_FILE_SIZE = 25 * 1024 * 1024;
+const STREAM_CONTENT_TYPE = 'application/x-ndjson';
 
-/**
- * Rota usada apenas pelo Teste Groq 2: extrai áudio do vídeo antes de transcrever,
- * reduzindo o tamanho do arquivo. Retorna text + originalSize e extractedSize para exibir a diferença.
- */
+interface PreparedMedia {
+  buffer: Buffer;
+  filename: string;
+  mimeType?: string;
+}
+
+export interface GroqTranscriptionApiResult extends GroqTranscriptionResult {
+  originalSize: number;
+  extractedSize: number;
+  videoConvertedToAudio: boolean;
+}
+
+async function parseRequestMedia(
+  request: NextRequest,
+): Promise<PreparedMedia | NextResponse> {
+  const contentType = request.headers.get('content-type') ?? '';
+
+  if (contentType.includes('multipart/form-data')) {
+    const formData = await request.formData();
+    const file = formData.get('file') as File | null;
+    if (!file || typeof file === 'string') {
+      return NextResponse.json(
+        { error: 'Envie um arquivo de áudio ou vídeo no campo "file".' },
+        { status: 400 },
+      );
+    }
+    if (file.size > MAX_SIZE_FOR_CHUNKED_TRANSCRIPTION) {
+      return NextResponse.json(
+        {
+          error: `Arquivo muito grande. Máximo ${Math.round(
+            MAX_SIZE_FOR_CHUNKED_TRANSCRIPTION / 1024 / 1024,
+          )} MB.`,
+        },
+        { status: 400 },
+      );
+    }
+    const type = (file.type || '').toLowerCase();
+    const hasSupportedMediaExtension =
+      /\.(flac|mp3|mp4|mpeg|mpga|m4a|ogg|opus|wav|webm|mov|avi|mkv|m4v)$/i.test(
+        file.name || '',
+      );
+    if (
+      !type.startsWith('audio/') &&
+      !type.startsWith('video/') &&
+      !hasSupportedMediaExtension
+    ) {
+      return NextResponse.json(
+        { error: 'Formato não suportado. Use áudio ou vídeo.' },
+        { status: 400 },
+      );
+    }
+    return {
+      buffer: Buffer.from(await file.arrayBuffer()),
+      filename: file.name || 'audio',
+      mimeType: file.type,
+    };
+  }
+
+  if (contentType.includes('application/json')) {
+    const body = await request.json();
+    const url = typeof body?.url === 'string' ? body.url.trim() : '';
+    if (!url || (!url.startsWith('http://') && !url.startsWith('https://'))) {
+      return NextResponse.json(
+        { error: 'Envie um link válido no corpo: { "url": "https://..." }' },
+        { status: 400 },
+      );
+    }
+
+    // Links também são baixados no servidor para que vídeos nunca sejam enviados
+    // inteiros à Groq: o áudio é extraído primeiro, assim como nos uploads.
+    const normalizedUrl = await normalizeCloudStorageUrl(url);
+    const downloaded = await downloadFileFromUrlLarge(normalizedUrl);
+    return {
+      buffer: downloaded.buffer,
+      filename: downloaded.filename,
+    };
+  }
+
+  return NextResponse.json(
+    { error: 'Envie multipart/form-data com arquivo ou application/json com { "url": "..." }' },
+    { status: 400 },
+  );
+}
+
+async function transcribePreparedMedia(
+  media: PreparedMedia,
+  onProgress?: GroqProgressCallback,
+): Promise<GroqTranscriptionApiResult> {
+  let bufferToTranscribe = media.buffer;
+  let nameToTranscribe = media.filename;
+  const originalSize = media.buffer.length;
+  let extractedSize = originalSize;
+  const videoConvertedToAudio = isVideoFile(media.filename, media.mimeType);
+
+  onProgress?.({
+    stage: 'preparing',
+    message: videoConvertedToAudio
+      ? 'Preparando o vídeo para extrair somente o áudio.'
+      : 'Preparando o áudio para transcrição.',
+  });
+
+  if (videoConvertedToAudio) {
+    onProgress?.({
+      stage: 'extracting',
+      message: 'Extraindo e compactando o áudio do vídeo.',
+    });
+    const extracted = await extractAudioFromVideo(media.buffer, media.filename);
+    bufferToTranscribe = extracted.audioBuffer;
+    nameToTranscribe = extracted.audioFilename;
+    extractedSize = extracted.extractedSize;
+  }
+
+  let result: GroqTranscriptionResult;
+  if (bufferToTranscribe.length > MAX_SINGLE_FILE_SIZE) {
+    result = await groqTranscribeLargeFile(
+      bufferToTranscribe,
+      nameToTranscribe,
+      {},
+      onProgress,
+    );
+  } else {
+    const startedAt = Date.now();
+    onProgress?.({
+      stage: 'transcribing',
+      message: 'Transcrevendo parte 1 de 1.',
+      totalParts: 1,
+      completedParts: 0,
+      currentPart: 1,
+      durationSeconds: 0,
+      estimatedSecondsRemaining: 30,
+    });
+    result = await groqTranscribeFile(bufferToTranscribe, nameToTranscribe);
+    onProgress?.({
+      stage: 'transcribing',
+      message: 'Parte 1 de 1 concluída.',
+      totalParts: 1,
+      completedParts: 1,
+      currentPart: 1,
+      durationSeconds: result.duration,
+      estimatedSecondsRemaining: Math.max(
+        0,
+        Math.ceil(30 - (Date.now() - startedAt) / 1000),
+      ),
+    });
+  }
+
+  return {
+    ...result,
+    originalSize,
+    extractedSize,
+    videoConvertedToAudio,
+  };
+}
+
+function streamTranscription(media: PreparedMedia): Response {
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    start(controller) {
+      const send = (payload: unknown) => {
+        controller.enqueue(encoder.encode(`${JSON.stringify(payload)}\n`));
+      };
+      const onProgress = (progress: GroqTranscriptionProgress) => {
+        send({ type: 'progress', progress });
+      };
+
+      transcribePreparedMedia(media, onProgress)
+        .then((result) => send({ type: 'complete', result }))
+        .catch((error) => {
+          const message = error instanceof Error ? error.message : 'Erro ao transcrever.';
+          send({ type: 'error', error: message });
+        })
+        .finally(() => controller.close());
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      'Content-Type': `${STREAM_CONTENT_TYPE}; charset=utf-8`,
+      'Cache-Control': 'no-cache, no-transform',
+      'X-Accel-Buffering': 'no',
+    },
+  });
+}
+
 export async function POST(request: NextRequest) {
   try {
     if (!process.env.GROQ_API_KEY) {
       return NextResponse.json(
         { error: 'GROQ_API_KEY não configurada no servidor.' },
-        { status: 500 }
+        { status: 500 },
       );
     }
-
-    const contentType = request.headers.get('content-type') ?? '';
-
-    if (contentType.includes('multipart/form-data')) {
-      const formData = await request.formData();
-      const file = formData.get('file') as File | null;
-      if (!file || typeof file === 'string') {
-        return NextResponse.json(
-          { error: 'Envie um arquivo de áudio ou vídeo no campo "file".' },
-          { status: 400 }
-        );
-      }
-      if (file.size > MAX_SIZE_FOR_CHUNKED_TRANSCRIPTION) {
-        return NextResponse.json(
-          { error: `Arquivo muito grande. Máximo ${Math.round(MAX_SIZE_FOR_CHUNKED_TRANSCRIPTION / 1024 / 1024)} MB.` },
-          { status: 400 }
-        );
-      }
-      const type = (file.type || '').toLowerCase();
-      if (!type.startsWith('audio/') && !type.startsWith('video/')) {
-        return NextResponse.json(
-          { error: 'Formato não suportado. Use áudio ou vídeo.' },
-          { status: 400 }
-        );
-      }
-
-      const arrayBuffer = await file.arrayBuffer();
-      const buffer = Buffer.from(arrayBuffer);
-      const filename = file.name || 'audio';
-      let bufferToTranscribe = buffer;
-      let nameToTranscribe = filename;
-      let originalSize = buffer.length;
-      let extractedSize = buffer.length;
-
-      if (isVideoFile(filename, file.type)) {
-        const extracted = await extractAudioFromVideo(buffer, filename);
-        bufferToTranscribe = extracted.audioBuffer as any;
-        nameToTranscribe = extracted.audioFilename;
-        originalSize = extracted.originalSize;
-        extractedSize = extracted.extractedSize;
-      }
-
-      const result =
-        bufferToTranscribe.length > MAX_SINGLE_FILE_SIZE
-          ? await groqTranscribeLargeFile(bufferToTranscribe, nameToTranscribe)
-          : await groqTranscribeFile(bufferToTranscribe, nameToTranscribe);
-
-      return NextResponse.json({
-        text: result.text,
-        originalSize,
-        extractedSize,
-      });
+    const authorization = request.headers.get('authorization');
+    const bearerToken = authorization?.startsWith('Bearer ')
+      ? authorization.slice('Bearer '.length)
+      : null;
+    const token = bearerToken || request.cookies.get('token')?.value || '';
+    if (!verifyToken(token)) {
+      return NextResponse.json({ error: 'Não autorizado.' }, { status: 401 });
     }
 
-    if (contentType.includes('application/json')) {
-      const body = await request.json();
-      const url = typeof body?.url === 'string' ? body.url.trim() : '';
-      if (!url || (!url.startsWith('http://') && !url.startsWith('https://'))) {
-        return NextResponse.json(
-          { error: 'Envie um link válido no corpo: { "url": "https://..." }' },
-          { status: 400 }
-        );
-      }
+    const media = await parseRequestMedia(request);
+    if (media instanceof NextResponse) return media;
 
-      if (isCloudStorageUrl(url)) {
-        const normalizedUrl = await normalizeCloudStorageUrl(url);
-        const { buffer, filename } = await downloadFileFromUrlLarge(normalizedUrl);
-        let bufferToTranscribe = buffer;
-        let nameToTranscribe = filename;
-        let originalSize = buffer.length;
-        let extractedSize = buffer.length;
-
-        if (isVideoFile(filename)) {
-          const extracted = await extractAudioFromVideo(buffer, filename);
-          bufferToTranscribe = extracted.audioBuffer;
-          nameToTranscribe = extracted.audioFilename;
-          originalSize = extracted.originalSize;
-          extractedSize = extracted.extractedSize;
-        }
-
-        const result =
-          bufferToTranscribe.length > MAX_SINGLE_FILE_SIZE
-            ? await groqTranscribeLargeFile(bufferToTranscribe, nameToTranscribe)
-            : await groqTranscribeFile(bufferToTranscribe, nameToTranscribe);
-
-        return NextResponse.json({
-          text: result.text,
-          originalSize,
-          extractedSize,
-        });
-      }
-
-      const result = await groqTranscribeFromUrl(url);
-      return NextResponse.json({
-        text: result.text,
-        originalSize: 0,
-        extractedSize: 0,
-      });
+    if (request.headers.get('accept')?.includes(STREAM_CONTENT_TYPE)) {
+      return streamTranscription(media);
     }
 
-    return NextResponse.json(
-      { error: 'Envie multipart/form-data com arquivo ou application/json com { "url": "..." }' },
-      { status: 400 }
-    );
+    return NextResponse.json(await transcribePreparedMedia(media));
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Erro ao transcrever.';
     return NextResponse.json({ error: message }, { status: 500 });

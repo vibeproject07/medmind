@@ -10,6 +10,8 @@ import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
+import dns from 'dns/promises';
+import net from 'net';
 
 const GROQ_TRANSCRIPTIONS_URL = 'https://api.groq.com/openai/v1/audio/transcriptions';
 
@@ -198,6 +200,8 @@ export const MAX_SIZE_FOR_CHUNKED_TRANSCRIPTION = 500 * 1024 * 1024; // 500 MB
 const CHUNK_DURATION_SECONDS = 420;
 /** Alvo de tamanho por fragmento (deixe folga abaixo de 25MB) */
 const MAX_CHUNK_BYTES_TARGET = 24 * 1024 * 1024; // 24 MB
+const DEFAULT_MEDICAL_PROMPT =
+  'Transcrição de aula médica em português do Brasil. Preserve corretamente termos técnicos, medicamentos, anatomia, siglas e nomes de doenças.';
 
 /** Extensões aceitas pela API Groq STT */
 const GROQ_ALLOWED_EXTENSIONS = ['flac', 'mp3', 'mp4', 'mpeg', 'mpga', 'm4a', 'ogg', 'opus', 'wav', 'webm'];
@@ -324,7 +328,7 @@ async function downloadFileFromUrl(url: string): Promise<{ buffer: Buffer; filen
 
 const AXIOS_DOWNLOAD_OPTIONS = (maxSizeBytes: number) => ({
   responseType: 'arraybuffer' as const,
-  maxRedirects: 10,
+  maxRedirects: 0,
   timeout: 120000,
   maxContentLength: maxSizeBytes,
   maxBodyLength: maxSizeBytes,
@@ -333,6 +337,100 @@ const AXIOS_DOWNLOAD_OPTIONS = (maxSizeBytes: number) => ({
   },
   validateStatus: (status: number) => status >= 200 && status < 400,
 });
+
+function isPrivateIpAddress(address: string): boolean {
+  const normalized = address.toLowerCase().split('%')[0];
+  if (normalized.startsWith('::ffff:')) {
+    return isPrivateIpAddress(normalized.slice('::ffff:'.length));
+  }
+  if (net.isIPv4(normalized)) {
+    const [a, b] = normalized.split('.').map(Number);
+    return (
+      a === 0 ||
+      a === 10 ||
+      (a === 100 && b >= 64 && b <= 127) ||
+      a === 127 ||
+      (a === 169 && b === 254) ||
+      (a === 172 && b >= 16 && b <= 31) ||
+      (a === 192 && b === 168) ||
+      a >= 224
+    );
+  }
+  if (net.isIPv6(normalized)) {
+    return (
+      normalized === '::' ||
+      normalized === '::1' ||
+      normalized.startsWith('fc') ||
+      normalized.startsWith('fd') ||
+      normalized.startsWith('fe8') ||
+      normalized.startsWith('fe9') ||
+      normalized.startsWith('fea') ||
+      normalized.startsWith('feb') ||
+      normalized.startsWith('ff')
+    );
+  }
+  return true;
+}
+
+interface VettedAddress {
+  address: string;
+  family: 4 | 6;
+}
+
+async function getVettedPublicAddress(url: string): Promise<VettedAddress> {
+  const parsed = new URL(url);
+  if (!['http:', 'https:'].includes(parsed.protocol) || parsed.username || parsed.password) {
+    throw new Error('O link de mídia deve usar HTTP/HTTPS público e não pode conter credenciais.');
+  }
+  const hostname = parsed.hostname.toLowerCase();
+  if (
+    hostname === 'localhost' ||
+    hostname.endsWith('.localhost') ||
+    hostname.endsWith('.local') ||
+    hostname.endsWith('.internal')
+  ) {
+    throw new Error('Endereços locais ou internos não são permitidos para transcrição.');
+  }
+  const literalFamily = net.isIP(hostname);
+  const addresses = literalFamily
+    ? [{ address: hostname, family: literalFamily }]
+    : await dns.lookup(hostname, { all: true, verbatim: true });
+  if (addresses.length === 0 || addresses.some(({ address }) => isPrivateIpAddress(address))) {
+    throw new Error('O link informado resolve para uma rede privada ou não permitida.');
+  }
+  const selected = addresses[0];
+  return {
+    address: selected.address,
+    family: selected.family === 6 ? 6 : 4,
+  };
+}
+
+async function safeDownloadResponse(url: string, maxSizeBytes: number) {
+  let currentUrl = url;
+  for (let redirect = 0; redirect <= 10; redirect++) {
+    const vettedAddress = await getVettedPublicAddress(currentUrl);
+    const pinnedLookup: import('net').LookupFunction = (_hostname, options, callback) => {
+      if (options.all) {
+        callback(null, [vettedAddress]);
+        return;
+      }
+      callback(null, vettedAddress.address, vettedAddress.family);
+    };
+    const response = await axios.get(currentUrl, {
+      ...AXIOS_DOWNLOAD_OPTIONS(maxSizeBytes),
+      // A conexão usa exatamente o IP já validado. O hostname original permanece
+      // na URL para Host e TLS/SNI, eliminando a janela de DNS rebinding.
+      // Axios redeclara LookupAddress com family literal, embora aceite a função
+      // LookupFunction nativa do Node em runtime.
+      lookup: pinnedLookup as any,
+    });
+    if (response.status < 300 || response.status >= 400) return response;
+    const location = response.headers.location;
+    if (!location) throw new Error('O link redirecionou sem informar o destino.');
+    currentUrl = new URL(location, currentUrl).toString();
+  }
+  throw new Error('O link excedeu o limite de redirecionamentos permitidos.');
+}
 
 /** Extrai o token "confirm" da página de aviso de vírus do Google Drive (HTML). */
 function extractGoogleDriveConfirmToken(htmlBuffer: Buffer): string | null {
@@ -358,7 +456,7 @@ export async function downloadFileFromUrlLarge(
   url: string,
   maxSizeBytes: number = MAX_SIZE_FOR_CHUNKED_TRANSCRIPTION
 ): Promise<{ buffer: Buffer; filename: string }> {
-  let response = await axios.get(url, AXIOS_DOWNLOAD_OPTIONS(maxSizeBytes));
+  let response = await safeDownloadResponse(url, maxSizeBytes);
   let buffer = Buffer.from(response.data);
 
   const contentType = (response.headers['content-type'] || '').toLowerCase();
@@ -368,7 +466,7 @@ export async function downloadFileFromUrlLarge(
     const fileId = getGoogleDriveFileId(url) || url.match(/[?&]id=([a-zA-Z0-9_-]+)/)?.[1];
     if (fileId) {
       const classicUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
-      const res2 = await axios.get(classicUrl, AXIOS_DOWNLOAD_OPTIONS(maxSizeBytes));
+      const res2 = await safeDownloadResponse(classicUrl, maxSizeBytes);
       buffer = Buffer.from(res2.data);
       if (!isHtmlResponse(buffer)) {
         response = res2;
@@ -376,7 +474,7 @@ export async function downloadFileFromUrlLarge(
         const confirm = extractGoogleDriveConfirmToken(buffer);
         if (confirm) {
           const urlWithConfirm = `https://drive.google.com/uc?export=download&confirm=${confirm}&id=${fileId}`;
-          const res3 = await axios.get(urlWithConfirm, AXIOS_DOWNLOAD_OPTIONS(maxSizeBytes));
+          const res3 = await safeDownloadResponse(urlWithConfirm, maxSizeBytes);
           buffer = Buffer.from(res3.data);
           if (!isHtmlResponse(buffer)) {
             response = res3;
@@ -410,10 +508,12 @@ export async function downloadFileFromUrlLarge(
     try {
       const pathname = new URL(url).pathname;
       const lastSegment = pathname.split('/').filter(Boolean).pop();
-      if (lastSegment && /\.(mp3|mp4|wav|webm|m4a|ogg|flac|mpeg|mpga|opus)$/i.test(lastSegment)) filename = lastSegment;
+      if (lastSegment && /\.(mp3|mp4|wav|webm|m4a|ogg|flac|mpeg|mpga|opus|mov|avi|mkv|m4v)$/i.test(lastSegment)) filename = lastSegment;
     } catch { /* keep audio */ }
   }
-  filename = ensureSupportedFilename(buffer, filename);
+  if (!isVideoFile(filename)) {
+    filename = ensureSupportedFilename(buffer, filename);
+  }
   return { buffer, filename };
 }
 
@@ -439,7 +539,9 @@ export async function extractAudioFromVideo(
       ffmpeg(inputPath)
         .noVideo()
         .audioCodec('libmp3lame')
-        .audioBitrate('128k')
+        .audioBitrate('64k')
+        .audioChannels(1)
+        .audioFrequency(16000)
         .output(outputPath)
         .on('end', () => resolve())
         .on('error', (err) => reject(new Error(`Erro ao extrair áudio: ${err.message}`)))
@@ -528,7 +630,7 @@ function deleteExistingChunks(outputDir: string, ext: string) {
 async function splitMediaIntoChunksAdaptive(
   inputPath: string,
   outputDir: string
-): Promise<string[]> {
+): Promise<{ paths: string[]; segmentSeconds: number }> {
   const ext = path.extname(inputPath).slice(1) || 'mp4';
   let segmentSeconds = CHUNK_DURATION_SECONDS;
   const minSegmentSeconds = 30;
@@ -539,7 +641,7 @@ async function splitMediaIntoChunksAdaptive(
     deleteExistingChunks(outputDir, ext);
 
     const chunkPaths = await splitMediaIntoChunks(inputPath, outputDir, segmentSeconds);
-    if (chunkPaths.length === 0) return [];
+    if (chunkPaths.length === 0) return { paths: [], segmentSeconds };
 
     let maxChunkBytes = 0;
     for (const chunkPath of chunkPaths) {
@@ -552,12 +654,12 @@ async function splitMediaIntoChunksAdaptive(
     }
 
     if (maxChunkBytes > 0 && maxChunkBytes <= MAX_CHUNK_BYTES_TARGET) {
-      return chunkPaths;
+      return { paths: chunkPaths, segmentSeconds };
     }
 
     // Se já estamos no mínimo, não há como reduzir mais por duração
     if (segmentSeconds <= minSegmentSeconds) {
-      return chunkPaths;
+      return { paths: chunkPaths, segmentSeconds };
     }
 
     // reduzir pela metade e tentar de novo
@@ -565,7 +667,103 @@ async function splitMediaIntoChunksAdaptive(
   }
 
   // fallback: retorna o último resultado gerado
-  return splitMediaIntoChunks(inputPath, outputDir, Math.max(30, Math.floor(CHUNK_DURATION_SECONDS / 4)));
+  const fallbackSeconds = Math.max(30, Math.floor(CHUNK_DURATION_SECONDS / 4));
+  return {
+    paths: await splitMediaIntoChunks(inputPath, outputDir, fallbackSeconds),
+    segmentSeconds: fallbackSeconds,
+  };
+}
+
+async function getMediaDurationSeconds(mediaPath: string): Promise<number> {
+  const ffmpeg = await getFfmpeg();
+  return new Promise((resolve) => {
+    ffmpeg.ffprobe(mediaPath, (error, metadata) => {
+      if (error) {
+        resolve(0);
+        return;
+      }
+      const duration = Number(metadata?.format?.duration ?? 0);
+      resolve(Number.isFinite(duration) && duration > 0 ? duration : 0);
+    });
+  });
+}
+
+export interface GroqTranscriptionSegment {
+  id: number;
+  start: number;
+  end: number;
+  text: string;
+  part: number;
+}
+
+export interface GroqTranscriptionWord {
+  word: string;
+  start: number;
+  end: number;
+  part: number;
+}
+
+export interface GroqTranscriptionResult {
+  /** Texto único, já formatado com minutagens por segmento. */
+  text: string;
+  /** Texto corrido retornado pela Groq, sem os marcadores de minutagem. */
+  rawText: string;
+  segments: GroqTranscriptionSegment[];
+  words?: GroqTranscriptionWord[];
+  language?: string;
+  duration: number;
+  partCount: number;
+}
+
+export type GroqTranscriptionProgress =
+  | {
+      stage: 'preparing' | 'extracting' | 'splitting';
+      message: string;
+    }
+  | {
+      stage: 'transcribing';
+      message: string;
+      totalParts: number;
+      completedParts: number;
+      currentPart: number;
+      durationSeconds: number;
+      estimatedSecondsRemaining: number;
+    };
+
+export type GroqProgressCallback = (progress: GroqTranscriptionProgress) => void;
+
+function formatTimestamp(seconds: number): string {
+  const safeSeconds = Math.max(0, Math.floor(Number.isFinite(seconds) ? seconds : 0));
+  const hours = Math.floor(safeSeconds / 3600);
+  const minutes = Math.floor((safeSeconds % 3600) / 60);
+  const secs = safeSeconds % 60;
+  return [hours, minutes, secs].map((value) => String(value).padStart(2, '0')).join(':');
+}
+
+function formatSegments(segments: GroqTranscriptionSegment[], fallbackText: string): string {
+  if (segments.length === 0) return fallbackText.trim();
+  return segments
+    .filter((segment) => segment.text.trim())
+    .map(
+      (segment) =>
+        `[${formatTimestamp(segment.start)} - ${formatTimestamp(segment.end)}] ${segment.text.trim()}`,
+    )
+    .join('\n\n')
+    .trim();
+}
+
+function estimateRemainingSeconds(
+  startedAt: number,
+  completedParts: number,
+  totalParts: number,
+  durationSeconds: number,
+): number {
+  if (completedParts > 0) {
+    const elapsedSeconds = Math.max(1, (Date.now() - startedAt) / 1000);
+    return Math.max(0, Math.ceil((elapsedSeconds / completedParts) * (totalParts - completedParts)));
+  }
+  // A Groq costuma ser muito mais rápida que tempo real, mas upload, fila e rede variam.
+  return Math.max(10, Math.ceil(durationSeconds / 20) + totalParts * 5);
 }
 
 /**
@@ -575,8 +773,9 @@ async function splitMediaIntoChunksAdaptive(
 export async function groqTranscribeLargeFile(
   fileBuffer: Buffer,
   filename: string,
-  options: GroqTranscribeOptions = {}
-): Promise<{ text: string }> {
+  options: GroqTranscribeOptions = {},
+  onProgress?: GroqProgressCallback,
+): Promise<GroqTranscriptionResult> {
   const tmpDir = path.join(os.tmpdir(), `groq-stt-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`);
   const inputPath = path.join(tmpDir, filename.replace(/[^a-zA-Z0-9._-]/g, '_'));
 
@@ -584,11 +783,34 @@ export async function groqTranscribeLargeFile(
     fs.mkdirSync(tmpDir, { recursive: true });
     fs.writeFileSync(inputPath, fileBuffer);
 
-    const chunkPaths = await splitMediaIntoChunksAdaptive(inputPath, tmpDir);
+    onProgress?.({
+      stage: 'splitting',
+      message: 'Dividindo o áudio em partes menores para transcrição.',
+    });
+    const splitResult = await splitMediaIntoChunksAdaptive(inputPath, tmpDir);
+    const chunkPaths = splitResult.paths;
     if (chunkPaths.length === 0) {
       throw new Error('Não foi possível dividir o arquivo em fragmentos. Verifique o formato do vídeo/áudio.');
     }
-    const texts: string[] = [];
+    const chunkDurations = await Promise.all(
+      chunkPaths.map(async (chunkPath) => {
+        const probed = await getMediaDurationSeconds(chunkPath);
+        if (!Number.isFinite(probed) || probed <= 0) {
+          throw new Error(
+            `Não foi possível medir a duração exata do fragmento ${path.basename(
+              chunkPath,
+            )}; a transcrição foi interrompida para não gerar minutagens incorretas.`,
+          );
+        }
+        return probed;
+      }),
+    );
+    const totalDuration = chunkDurations.reduce((total, duration) => total + duration, 0);
+    const startedAt = Date.now();
+    const segments: GroqTranscriptionSegment[] = [];
+    const words: GroqTranscriptionWord[] = [];
+    const rawTexts: string[] = [];
+    let offsetSeconds = 0;
 
     for (let i = 0; i < chunkPaths.length; i++) {
       const chunkPath = chunkPaths[i];
@@ -600,12 +822,66 @@ export async function groqTranscribeLargeFile(
           'Tente usar um arquivo menor, ou envie um link do Google Drive/OneDrive para o servidor baixar e processar.'
         );
       }
+      onProgress?.({
+        stage: 'transcribing',
+        message: `Transcrevendo parte ${i + 1} de ${chunkPaths.length}.`,
+        totalParts: chunkPaths.length,
+        completedParts: i,
+        currentPart: i + 1,
+        durationSeconds: totalDuration,
+        estimatedSecondsRemaining: estimateRemainingSeconds(
+          startedAt,
+          i,
+          chunkPaths.length,
+          totalDuration,
+        ),
+      });
       const result = await groqTranscribeFile(chunkBuffer, chunkName, options);
-      if (result.text?.trim()) texts.push(result.text.trim());
+      if (result.rawText.trim()) rawTexts.push(result.rawText.trim());
+      result.segments.forEach((segment) => {
+        segments.push({
+          ...segment,
+          id: segments.length,
+          start: segment.start + offsetSeconds,
+          end: segment.end + offsetSeconds,
+          part: i + 1,
+        });
+      });
+      result.words?.forEach((word) => {
+        words.push({
+          ...word,
+          start: word.start + offsetSeconds,
+          end: word.end + offsetSeconds,
+          part: i + 1,
+        });
+      });
+      offsetSeconds += chunkDurations[i];
+      onProgress?.({
+        stage: 'transcribing',
+        message: `Parte ${i + 1} de ${chunkPaths.length} concluída.`,
+        totalParts: chunkPaths.length,
+        completedParts: i + 1,
+        currentPart: Math.min(i + 2, chunkPaths.length),
+        durationSeconds: totalDuration,
+        estimatedSecondsRemaining: estimateRemainingSeconds(
+          startedAt,
+          i + 1,
+          chunkPaths.length,
+          totalDuration,
+        ),
+      });
     }
 
-    const fullText = texts.join('\n\n').trim() || '(Sem fala detectada nos fragmentos.)';
-    return { text: fullText };
+    const rawText = rawTexts.join('\n\n').trim() || '(Sem fala detectada nos fragmentos.)';
+    return {
+      text: formatSegments(segments, rawText),
+      rawText,
+      segments,
+      words: words.length > 0 ? words : undefined,
+      language: options.language ?? 'pt',
+      duration: totalDuration,
+      partCount: chunkPaths.length,
+    };
   } finally {
     try {
       if (fs.existsSync(tmpDir)) {
@@ -624,6 +900,12 @@ export interface GroqTranscribeOptions {
   language?: string;
   response_format?: 'json' | 'text' | 'verbose_json';
   temperature?: number;
+  prompt?: string;
+  /**
+   * A Groq suporta segment e word quando response_format=verbose_json.
+   * O endpoint Whisper usado aqui não fornece diarização/identificação de locutores.
+   */
+  timestampGranularities?: Array<'segment' | 'word'>;
 }
 
 /**
@@ -633,7 +915,7 @@ export async function groqTranscribeFile(
   fileBuffer: Buffer,
   filename: string,
   options: GroqTranscribeOptions = {}
-): Promise<{ text: string }> {
+): Promise<GroqTranscriptionResult> {
   const apiKey = options.apiKey ?? process.env.GROQ_API_KEY;
   if (!apiKey || typeof apiKey !== 'string') {
     throw new Error('GROQ_API_KEY não definida.');
@@ -642,12 +924,22 @@ export async function groqTranscribeFile(
   const safeFilename = ensureSupportedFilename(fileBuffer, filename);
 
   const model = options.model ?? 'whisper-large-v3-turbo';
+  const responseFormat = options.response_format ?? 'verbose_json';
+  const language = options.language ?? 'pt';
+  const temperature = options.temperature ?? 0;
+  const timestampGranularities = options.timestampGranularities ?? ['segment'];
   const formData = new FormData();
   formData.append('file', fileBuffer, safeFilename);
   formData.append('model', model);
-  if (options.language) formData.append('language', options.language);
-  if (options.response_format) formData.append('response_format', options.response_format);
-  if (options.temperature !== undefined) formData.append('temperature', String(options.temperature));
+  formData.append('language', language);
+  formData.append('response_format', responseFormat);
+  formData.append('temperature', String(temperature));
+  formData.append('prompt', options.prompt ?? DEFAULT_MEDICAL_PROMPT);
+  if (responseFormat === 'verbose_json') {
+    timestampGranularities.forEach((granularity) => {
+      formData.append('timestamp_granularities[]', granularity);
+    });
+  }
 
   try {
     const response = await axios.post(GROQ_TRANSCRIPTIONS_URL, formData, {
@@ -658,8 +950,34 @@ export async function groqTranscribeFile(
     });
 
     const data = response.data;
-    const text = typeof data === 'string' ? data : (data?.text ?? '');
-    return { text };
+    const rawText = typeof data === 'string' ? data : (data?.text ?? '');
+    const segments: GroqTranscriptionSegment[] = Array.isArray(data?.segments)
+      ? data.segments.map((segment: any, index: number) => ({
+          id: Number.isFinite(Number(segment?.id)) ? Number(segment.id) : index,
+          start: Number(segment?.start ?? 0),
+          end: Number(segment?.end ?? segment?.start ?? 0),
+          text: String(segment?.text ?? ''),
+          part: 1,
+        }))
+      : [];
+    const words: GroqTranscriptionWord[] | undefined = Array.isArray(data?.words)
+      ? data.words.map((word: any) => ({
+          word: String(word?.word ?? ''),
+          start: Number(word?.start ?? 0),
+          end: Number(word?.end ?? word?.start ?? 0),
+          part: 1,
+        }))
+      : undefined;
+    const duration = Number(data?.duration ?? segments.at(-1)?.end ?? 0);
+    return {
+      text: formatSegments(segments, rawText),
+      rawText,
+      segments,
+      words,
+      language: typeof data?.language === 'string' ? data.language : language,
+      duration: Number.isFinite(duration) ? duration : 0,
+      partCount: 1,
+    };
   } catch (error: any) {
     let errMessage = 'Erro ao transcrever arquivo.';
     if (error.response) {
@@ -682,7 +1000,7 @@ export async function groqTranscribeFile(
 export async function groqTranscribeFromUrl(
   url: string,
   options: GroqTranscribeOptions = {}
-): Promise<{ text: string }> {
+): Promise<GroqTranscriptionResult> {
   const apiKey = options.apiKey ?? process.env.GROQ_API_KEY;
   if (!apiKey || typeof apiKey !== 'string') {
     throw new Error('GROQ_API_KEY não definida.');
@@ -701,12 +1019,22 @@ export async function groqTranscribeFromUrl(
   // Para URLs diretas, enviar a URL para a Groq
   const normalizedUrl = await normalizeCloudStorageUrl(url);
   const model = options.model ?? 'whisper-large-v3-turbo';
+  const responseFormat = options.response_format ?? 'verbose_json';
+  const language = options.language ?? 'pt';
+  const temperature = options.temperature ?? 0;
+  const timestampGranularities = options.timestampGranularities ?? ['segment'];
   const formData = new FormData();
   formData.append('url', normalizedUrl);
   formData.append('model', model);
-  if (options.language) formData.append('language', options.language);
-  if (options.response_format) formData.append('response_format', options.response_format);
-  if (options.temperature !== undefined) formData.append('temperature', String(options.temperature));
+  formData.append('language', language);
+  formData.append('response_format', responseFormat);
+  formData.append('temperature', String(temperature));
+  formData.append('prompt', options.prompt ?? DEFAULT_MEDICAL_PROMPT);
+  if (responseFormat === 'verbose_json') {
+    timestampGranularities.forEach((granularity) => {
+      formData.append('timestamp_granularities[]', granularity);
+    });
+  }
 
   try {
     const response = await axios.post(GROQ_TRANSCRIPTIONS_URL, formData, {
@@ -717,8 +1045,25 @@ export async function groqTranscribeFromUrl(
     });
 
     const data = response.data;
-    const text = typeof data === 'string' ? data : (data?.text ?? '');
-    return { text };
+    const rawText = typeof data === 'string' ? data : (data?.text ?? '');
+    const segments: GroqTranscriptionSegment[] = Array.isArray(data?.segments)
+      ? data.segments.map((segment: any, index: number) => ({
+          id: Number.isFinite(Number(segment?.id)) ? Number(segment.id) : index,
+          start: Number(segment?.start ?? 0),
+          end: Number(segment?.end ?? segment?.start ?? 0),
+          text: String(segment?.text ?? ''),
+          part: 1,
+        }))
+      : [];
+    const duration = Number(data?.duration ?? segments.at(-1)?.end ?? 0);
+    return {
+      text: formatSegments(segments, rawText),
+      rawText,
+      segments,
+      language: typeof data?.language === 'string' ? data.language : language,
+      duration: Number.isFinite(duration) ? duration : 0,
+      partCount: 1,
+    };
   } catch (error: any) {
     let errMessage = 'Erro ao transcrever URL.';
     if (error.response) {

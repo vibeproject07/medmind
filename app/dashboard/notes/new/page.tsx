@@ -4,6 +4,10 @@ import { Suspense, useState, useRef, useEffect, useMemo, useCallback } from 'rea
 import { useRouter, useSearchParams } from 'next/navigation';
 import { removeDraftNote, saveDraftNote } from '@/lib/safe-local-storage';
 import {
+  describeTranscriptionProgress,
+  transcribeWithProgress,
+} from '@/lib/groq-transcription-client';
+import {
   ArrowLeft, X, Image as ImageIcon,
   FileText, Film, Music,
   Link as LinkIcon, Loader2,
@@ -94,13 +98,9 @@ async function runSourceTransformation(
     const av = files.find((f) => f.type.startsWith('audio/') || f.type.startsWith('video/'))!;
     const fd = new FormData();
     fd.append('file', av);
-    const res = await fetch('/api/groq/transcribe-with-extract', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${token}` },
-      body: fd,
+    const data = await transcribeWithProgress(fd, token, (progress) => {
+      onStatus(describeTranscriptionProgress(progress));
     });
-    const data: { text?: string; error?: string } = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error(data.error || 'Erro ao transcrever arquivo de áudio/vídeo.');
     original = data.text || '';
 
     if (original.trim()) {
@@ -152,13 +152,9 @@ async function runSourceTransformation(
   } else if (hasLink) {
     // ── Generic link ────────────────────────────────────────────────────
     onStatus('Baixando e extraindo conteúdo do link…');
-    const res = await fetch('/api/groq/transcribe-with-extract', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-      body: JSON.stringify({ url: link.trim() }),
+    const data = await transcribeWithProgress({ url: link.trim() }, token, (progress) => {
+      onStatus(describeTranscriptionProgress(progress));
     });
-    const data: { text?: string; error?: string } = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error(data.error || 'Erro ao processar link.');
     original = data.text || '';
 
     if (original.trim()) {
@@ -633,6 +629,11 @@ function NewNotePageContent() {
           <div className="space-y-3">
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
               Adicionar fonte
+            </p>
+            <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3">
+              Áudios grandes podem ser divididos em várias partes. Durante o processamento,
+              mostraremos o total de partes e uma estimativa de tempo; a transcrição e o ajuste
+              das minutagens podem levar alguns minutos.
             </p>
 
             {/* Hidden file input */}
