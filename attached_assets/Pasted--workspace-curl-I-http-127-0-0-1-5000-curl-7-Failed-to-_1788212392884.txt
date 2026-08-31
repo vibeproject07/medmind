@@ -1,0 +1,53 @@
+~/workspace$ curl -I http://127.0.0.1:5000
+curl: (7) Failed to connect to 127.0.0.1 port 5000 after 0 ms: Could not connect to server
+~/workspace$ 
+~/workspace$ curl -I http://127.0.0.1:5000
+curl: (7) Failed to connect to 127.0.0.1 port 5000 after 0 ms: Could not connect to server
+~/workspace$ npm run build
+
+> medmind@0.1.0 build
+> next build
+
+  ▲ Next.js 14.2.35
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ ⚠ Compiled with warnings
+
+./node_modules/@ffmpeg-installer/ffmpeg/index.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@ffmpeg-installer/ffmpeg/index.js
+./lib/groq-stt.ts
+./app/api/groq/transcribe-with-extract/route.ts
+
+./node_modules/fluent-ffmpeg/lib/options/misc.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/fluent-ffmpeg/lib/options/misc.js
+./node_modules/fluent-ffmpeg/lib/fluent-ffmpeg.js
+./node_modules/fluent-ffmpeg/index.js
+./lib/groq-stt.ts
+./app/api/groq/transcribe-with-extract/route.ts
+
+   Linting and checking validity of types  ..Failed to compile.
+
+./app/dashboard/admin/query/page.tsx:429:44
+Type error: Conversion of type 'Question' to type 'Record<string, unknown>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Index signature for type 'string' is missing in type 'Question'.
+
+  427 |                             key={col}
+  428 |                             className="px-3 py-2 text-gray-700 font-mono max-w-xs"
+> 429 |                             title={String((row as Record<string, unknown>)[col] ?? '')}
+      |                                            ^
+  430 |                           >
+  431 |                             {truncate(String((row as Record<string, unknown>)[col] ?? ''), col === 'statement' ? 100 : 40)}
+  432 |                           </td>
+Next.js build worker exited with code: 1 and signal: null
+~/workspace$ curl -I http://127.0.0.1:5000
+curl: (7) Failed to connect to 127.0.0.1 port 5000 after 0 ms: Could not connect to server
