@@ -661,7 +661,7 @@ export default function DashboardPage() {
                 💡 <strong>Dica:</strong> Suporta links do Google Drive e OneDrive! Certifique-se de que o arquivo está configurado como "Qualquer pessoa com o link pode visualizar" ou "Público".
               </p>
               <p className="text-xs text-gray-500">
-                Vídeos maiores que 25 MB são transcritos automaticamente em fragmentos (até 500 MB). O áudio é baixado temporariamente, dividido em partes e cada parte é transcrita até a conclusão.
+                Vídeos maiores que 25 MB são transcritos automaticamente em fragmentos (até 1000 MB). O áudio é baixado temporariamente, dividido em partes e cada parte é transcrita até a conclusão.
               </p>
 
               {/* Upload */}

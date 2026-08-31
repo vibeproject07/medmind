@@ -195,7 +195,7 @@ export function isCloudStorageUrl(url: string): boolean {
 
 const MAX_DOWNLOAD_SIZE = 25 * 1024 * 1024; // 25 MB (limite Groq por requisição)
 /** Tamanho máximo para download/upload quando for usar transcrição em fragmentos (arquivo é baixado, dividido, transcrito por partes) */
-export const MAX_SIZE_FOR_CHUNKED_TRANSCRIPTION = 500 * 1024 * 1024; // 500 MB
+export const MAX_SIZE_FOR_CHUNKED_TRANSCRIPTION = 1000 * 1024 * 1024; // 1000 MB
 /** Duração de cada fragmento em segundos (~7 min); mantém cada chunk abaixo de ~25 MB na maioria dos vídeos */
 const CHUNK_DURATION_SECONDS = 420;
 /** Alvo de tamanho por fragmento (deixe folga abaixo de 25MB) */

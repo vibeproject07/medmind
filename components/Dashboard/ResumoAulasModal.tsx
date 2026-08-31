@@ -335,7 +335,7 @@ export default function ResumoAulasModal({ isOpen, onClose, title = 'Transforman
               </p>
               <p className="text-xs text-gray-500">
                 Vídeos são convertidos em áudio antes da transcrição. Arquivos grandes são
-                divididos em partes (até 500 MB), e as minutagens de cada parte são ajustadas
+                divididos em partes (até 1000 MB), e as minutagens de cada parte são ajustadas
                 antes da consolidação.
               </p>
               <button
