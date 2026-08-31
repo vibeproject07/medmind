@@ -281,6 +281,15 @@ export default function ProvasPage() {
     setEditingProvaId(null);
   };
 
+  // Adds `value` to a filter list (state setter) only if it's non-empty and not already present.
+  const mergeFilterOption = (
+    value: string | null | undefined,
+    setter: React.Dispatch<React.SetStateAction<string[]>>,
+  ) => {
+    if (!value) return;
+    setter((prev) => (prev.includes(value) ? prev : [...prev, value].sort()));
+  };
+
   const saveEditProva = async (provaId: number) => {
     if (!editProvaForm.nome.trim()) {
       setAdminCrudMsg({ type: 'error', text: 'O nome da prova é obrigatório.' });
@@ -327,9 +336,18 @@ export default function ProvasPage() {
             : p,
         ),
       );
+
+      // Merge any new banca/tipo values into both sets of filter dropdowns immediately
+      mergeFilterOption(data.banca, setBancasDisponiveis);
+      mergeFilterOption(data.tipo,  setTiposDisponiveis);
+      mergeFilterOption(data.banca, setAdminCrudBancas);
+      mergeFilterOption(data.tipo,  setAdminCrudTipos);
+
       setEditingProvaId(null);
       setAdminCrudMsg({ type: 'success', text: 'Prova atualizada com sucesso.' });
+      // Refetch both lists so active filters correctly hide/show the edited prova
       fetchProvas(currentPage);
+      fetchAdminCrudProvas(adminCrudPage);
     } catch {
       setAdminCrudMsg({ type: 'error', text: 'Erro ao salvar prova.' });
     } finally {
