@@ -9,6 +9,7 @@ import {
   RotateCcw,
   Save,
   CheckCircle,
+  Power,
   AlertCircle,
   ChevronRight,
   FlaskConical,
@@ -27,6 +28,7 @@ interface AiAgent {
   model: string;
   temperature: number;
   max_output_tokens: number;
+  is_active: boolean;
   is_customized: boolean;
   is_builtin: boolean;
   updated_at: string | null;
@@ -60,6 +62,7 @@ export default function AgentesEditorPage() {
   const [saving, setSaving] = useState(false);
   const [resetting, setResetting] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [togglingActive, setTogglingActive] = useState(false);
   const [toast, setToast] = useState<Toast | null>(null);
   const [unsaved, setUnsaved] = useState(false);
 
@@ -196,6 +199,39 @@ export default function AgentesEditorPage() {
       showToast('error', err instanceof Error ? err.message : 'Erro ao excluir agente.');
     } finally {
       setDeleting(false);
+    }
+  };
+
+  const handleToggleActive = async () => {
+    if (!editing) return;
+    if (unsaved) {
+      showToast('error', 'Salve ou descarte as alterações antes de mudar o status do agente.');
+      return;
+    }
+    const nextActive = !editing.is_active;
+    const action = nextActive ? 'ativar' : 'inativar';
+    if (!confirm(`${nextActive ? 'Ativar' : 'Inativar'} o agente "${editing.name}"?`)) return;
+
+    setTogglingActive(true);
+    try {
+      const tok = localStorage.getItem('token')!;
+      const res = await fetch(`/api/ai-agents/${editing.key}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${tok}` },
+        body: JSON.stringify({ is_active: nextActive }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error((data as { error?: string }).error || `Erro ao ${action} agente`);
+
+      const updated = data as AiAgent;
+      setAgents((prev) => prev.map((a) => (a.key === updated.key ? updated : a)));
+      setEditing(updated);
+      setUnsaved(false);
+      showToast('success', `Agente ${nextActive ? 'ativado' : 'inativado'} com sucesso.`);
+    } catch (err: unknown) {
+      showToast('error', err instanceof Error ? err.message : `Erro ao ${action} agente.`);
+    } finally {
+      setTogglingActive(false);
     }
   };
 
@@ -501,6 +537,13 @@ export default function AgentesEditorPage() {
                   <div>
                     <div className="flex items-center gap-2">
                       <h2 className="font-semibold text-gray-900">{editing.name}</h2>
+                      <span className={`px-1.5 py-0.5 text-xs rounded-full font-medium ${
+                        editing.is_active
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-gray-200 text-gray-600'
+                      }`}>
+                        {editing.is_active ? 'ativo' : 'inativo'}
+                      </span>
                       {!editing.is_builtin && (
                         <span className="px-1.5 py-0.5 bg-purple-100 text-purple-700 text-xs rounded-full font-medium">personalizado</span>
                       )}
@@ -610,27 +653,42 @@ export default function AgentesEditorPage() {
                   </div>
                 )}
 
-                <div className="flex items-center justify-between pt-2 border-t border-gray-100">
-                  {editing.is_builtin ? (
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-gray-100">
+                  <div className="flex flex-wrap items-center gap-2">
+                    {editing.is_builtin ? (
+                      <button
+                        onClick={handleReset}
+                        disabled={resetting || !editing.is_customized}
+                        className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-gray-600 bg-gray-100 rounded-xl hover:bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed transition"
+                        title={!editing.is_customized ? 'Agente já está com valores padrão' : 'Restaurar valores padrão'}
+                      >
+                        <RotateCcw className={`w-4 h-4 ${resetting ? 'animate-spin' : ''}`} />
+                        {resetting ? 'Resetando...' : 'Restaurar padrão'}
+                      </button>
+                    ) : (
+                      <button
+                        onClick={handleDelete}
+                        disabled={deleting}
+                        className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-red-600 bg-red-50 rounded-xl hover:bg-red-100 disabled:opacity-40 disabled:cursor-not-allowed transition"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                        {deleting ? 'Excluindo...' : 'Excluir agente'}
+                      </button>
+                    )}
                     <button
-                      onClick={handleReset}
-                      disabled={resetting || !editing.is_customized}
-                      className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-gray-600 bg-gray-100 rounded-xl hover:bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed transition"
-                      title={!editing.is_customized ? 'Agente já está com valores padrão' : 'Restaurar valores padrão'}
+                      onClick={handleToggleActive}
+                      disabled={togglingActive || unsaved}
+                      title={unsaved ? 'Salve ou descarte as alterações antes de mudar o status' : undefined}
+                      className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-xl disabled:opacity-40 disabled:cursor-not-allowed transition ${
+                        editing.is_active
+                          ? 'text-amber-700 bg-amber-50 hover:bg-amber-100'
+                          : 'text-green-700 bg-green-50 hover:bg-green-100'
+                      }`}
                     >
-                      <RotateCcw className={`w-4 h-4 ${resetting ? 'animate-spin' : ''}`} />
-                      {resetting ? 'Resetando...' : 'Restaurar padrão'}
+                      <Power className={`w-4 h-4 ${togglingActive ? 'animate-pulse' : ''}`} />
+                      {togglingActive ? 'Atualizando...' : editing.is_active ? 'Inativar agente' : 'Ativar agente'}
                     </button>
-                  ) : (
-                    <button
-                      onClick={handleDelete}
-                      disabled={deleting}
-                      className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-red-600 bg-red-50 rounded-xl hover:bg-red-100 disabled:opacity-40 disabled:cursor-not-allowed transition"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                      {deleting ? 'Excluindo...' : 'Excluir agente'}
-                    </button>
-                  )}
+                  </div>
 
                   <button
                     onClick={handleSave}
@@ -651,7 +709,7 @@ export default function AgentesEditorPage() {
                   <p className="text-sm font-semibold text-amber-800">Modo de teste</p>
                   <p className="text-xs text-amber-700 mt-1">
                     As alterações são salvas no banco e aplicadas imediatamente. Agentes predefinidos podem ser restaurados ao padrão.
-                    Agentes personalizados podem ser excluídos definitivamente.
+                    Agentes personalizados podem ser excluídos definitivamente. Agentes inativos permanecem disponíveis para edição, mas não são executados.
                   </p>
                 </div>
               </div>
@@ -695,6 +753,11 @@ function AgentListItem({
           {agent.is_customized && agent.is_builtin && (
             <span className="flex-shrink-0 px-1.5 py-0.5 bg-primary-100 text-primary-700 text-xs rounded-full font-medium">editado</span>
           )}
+          <span className={`flex-shrink-0 px-1.5 py-0.5 text-xs rounded-full font-medium ${
+            agent.is_active ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-600'
+          }`}>
+            {agent.is_active ? 'ativo' : 'inativo'}
+          </span>
         </div>
         <p className="text-xs text-gray-500 mt-0.5 truncate">{agent.description || '—'}</p>
         <p className="text-xs text-gray-400 mt-0.5">{agent.model}</p>

@@ -44,24 +44,15 @@ function buildQuestionText(q: Record<string, unknown>): string {
   ].filter(Boolean).join('\n');
 }
 
-import { resolveSystemInstruction } from '@/lib/ai-agent-runtime';
+import { getRuntimeAgent } from '@/lib/ai-agent-runtime';
 
 async function loadAgent(key: string) {
-  const res = await query(
-    `SELECT system_prompt, system_instruction, model FROM ai_agents WHERE key = $1`,
-    [key],
-  );
-  if (res.rows[0]) {
-    const instruction = resolveSystemInstruction(res.rows[0]);
-    if (instruction) {
-      return {
-        prompt: instruction,
-        model: (res.rows[0].model as string) || 'gemini-2.5-flash',
-        source: 'banco de dados',
-      };
-    }
-  }
-  throw new Error(`Agente "${key}" não encontrado ou sem instrução em ai_agents`);
+  const agent = await getRuntimeAgent(key);
+  return {
+    prompt: agent.system_instruction,
+    model: agent.model,
+    source: 'banco de dados',
+  };
 }
 
 async function callGemini(

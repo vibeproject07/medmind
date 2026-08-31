@@ -20,10 +20,12 @@ export async function ensureAgentSchema(pool) {
       model VARCHAR(100) NOT NULL DEFAULT 'gemini-2.5-flash',
       temperature NUMERIC(3,2) NOT NULL DEFAULT 0.20,
       max_output_tokens INTEGER NOT NULL DEFAULT 4096,
+      is_active BOOLEAN NOT NULL DEFAULT TRUE,
       updated_at TIMESTAMPTZ
     )
   `);
   await pool.query(`ALTER TABLE ai_agents ADD COLUMN IF NOT EXISTS system_instruction TEXT`);
+  await pool.query(`ALTER TABLE ai_agents ADD COLUMN IF NOT EXISTS is_active BOOLEAN NOT NULL DEFAULT TRUE`);
 }
 
 /**
@@ -35,13 +37,14 @@ export async function loadRuntimeAgents(pool, keys) {
   await ensureAgentSchema(pool);
   const unique = [...new Set(keys)];
   const { rows } = await pool.query(
-    `SELECT key, system_prompt, system_instruction, model, temperature, max_output_tokens
+    `SELECT key, system_prompt, system_instruction, model, temperature, max_output_tokens, is_active
      FROM ai_agents WHERE key = ANY($1)`,
     [unique],
   );
 
   const map = new Map();
   for (const row of rows) {
+    if (row.is_active === false) continue;
     const system_instruction = resolveSystemInstruction(row);
     if (!system_instruction) continue;
     map.set(row.key, {
@@ -56,6 +59,10 @@ export async function loadRuntimeAgents(pool, keys) {
 
   for (const key of unique) {
     if (!map.has(key)) {
+      const row = rows.find((item) => item.key === key);
+      if (row && row.is_active === false) {
+        throw new Error(`Agente "${key}" está inativo e não pode ser executado.`);
+      }
       throw new Error(
         `Agente "${key}" não encontrado em ai_agents (ou sem system_prompt/system_instruction). ` +
           'Configure no Editor de Agentes ou rode: node --env-file=.env.local scripts/seed-ai-agents-db.mjs',

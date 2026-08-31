@@ -11,6 +11,7 @@ export interface AiAgent {
   model: string;
   temperature: number;
   max_output_tokens: number;
+  is_active: boolean;
   is_customized: boolean;
   is_builtin: boolean;
   updated_at: string | null;
@@ -29,6 +30,7 @@ function rowToAgent(row: Record<string, unknown>): AiAgent {
     model: (row.model as string) ?? 'gemini-2.5-flash',
     temperature: parseFloat(String(row.temperature ?? 0.2)),
     max_output_tokens: parseInt(String(row.max_output_tokens ?? 4096), 10),
+    is_active: row.is_active !== false,
     is_customized: true,
     is_builtin: BUILTIN_KEYS.has(key),
     updated_at: (row.updated_at as string) ?? null,
@@ -160,14 +162,28 @@ export async function deleteAgent(key: string): Promise<boolean> {
   return res.rows.length > 0;
 }
 
+export async function setAgentActive(key: string, isActive: boolean): Promise<AiAgent | null> {
+  await ensureAgentSchema();
+  const res = await query(
+    `UPDATE ai_agents
+     SET is_active = $2, updated_at = NOW()
+     WHERE key = $1
+     RETURNING *`,
+    [key, isActive],
+  );
+  if (res.rows.length === 0) return null;
+  return rowToAgent(res.rows[0] as Record<string, unknown>);
+}
+
 export async function getAgentPrompt(key: string): Promise<string> {
+  const { getRuntimeAgent, InactiveAgentError } = await import('@/lib/ai-agent-runtime');
   try {
-    const { getRuntimeAgent } = await import('@/lib/ai-agent-runtime');
     const agent = await getRuntimeAgent(key);
     return agent.system_instruction;
-  } catch {
+  } catch (err) {
+    if (err instanceof InactiveAgentError) throw err;
     const def = AI_AGENT_DEFAULTS.find((d) => d.key === key);
     if (def?.system_prompt) return def.system_prompt;
-    throw new Error(`Agente "${key}" não encontrado nem em ai_agents nem nos defaults.`);
+    throw err;
   }
 }

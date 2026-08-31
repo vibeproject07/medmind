@@ -171,6 +171,9 @@ async function loadClassifierAgent(pool) {
     );
   }
   const row = rows[0];
+  if (row.is_active === false) {
+    throw new Error(`Agente "${CLASSIFIER_KEY}" está inativo e não pode ser executado.`);
+  }
   if (!row.system_prompt) {
     throw new Error(`Agente "${CLASSIFIER_KEY}" existe mas system_prompt está vazio.`);
   }

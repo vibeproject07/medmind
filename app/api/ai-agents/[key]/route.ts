@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/jwt';
-import { getAgent, upsertAgent, resetAgent, deleteAgent } from '@/lib/ai-agents';
+import { getAgent, upsertAgent, resetAgent, deleteAgent, setAgentActive } from '@/lib/ai-agents';
 
 const VALID_MODELS = new Set([
   'gemini-2.5-flash',
@@ -67,6 +67,30 @@ export async function PUT(req: NextRequest, { params }: { params: { key: string 
   return NextResponse.json(agent);
 }
 
+export async function PATCH(req: NextRequest, { params }: { params: { key: string } }) {
+  const token = getToken(req);
+  if (!token) return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
+
+  const user = verifyToken(token);
+  if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
+  if (user.role !== 'admin') return NextResponse.json({ error: 'Apenas administradores podem ativar ou inativar agentes' }, { status: 403 });
+
+  let body: Record<string, unknown>;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: 'JSON inválido' }, { status: 400 });
+  }
+
+  if (typeof body.is_active !== 'boolean') {
+    return NextResponse.json({ error: 'O campo "is_active" deve ser booleano' }, { status: 400 });
+  }
+
+  const agent = await setAgentActive(params.key, body.is_active);
+  if (!agent) return NextResponse.json({ error: 'Agente não encontrado' }, { status: 404 });
+  return NextResponse.json(agent);
+}
+
 export async function DELETE(req: NextRequest, { params }: { params: { key: string } }) {
   const token = getToken(req);
   if (!token) return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
@@ -74,6 +98,15 @@ export async function DELETE(req: NextRequest, { params }: { params: { key: stri
   const user = verifyToken(token);
   if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
   if (user.role !== 'admin') return NextResponse.json({ error: 'Apenas administradores podem excluir/resetar agentes' }, { status: 403 });
+
+  const existing = await getAgent(params.key);
+  if (!existing) return NextResponse.json({ error: 'Agente não encontrado' }, { status: 404 });
+
+  if (existing.is_builtin) {
+    const agent = await resetAgent(params.key);
+    if (!agent) return NextResponse.json({ error: 'Não foi possível restaurar o agente' }, { status: 500 });
+    return NextResponse.json({ agent, action: 'reset' });
+  }
 
   const deleted = await deleteAgent(params.key);
   if (!deleted) return NextResponse.json({ error: 'Agente não encontrado' }, { status: 404 });

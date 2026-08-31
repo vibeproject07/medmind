@@ -10,6 +10,13 @@ export interface RuntimeAgent {
   max_output_tokens: number;
 }
 
+export class InactiveAgentError extends Error {
+  constructor(key: string) {
+    super(`Agente "${key}" está inativo e não pode ser executado.`);
+    this.name = 'InactiveAgentError';
+  }
+}
+
 /** Resolve instrução: system_instruction tem prioridade sobre system_prompt. */
 export function resolveSystemInstruction(row: {
   system_instruction?: string | null;
@@ -31,10 +38,12 @@ export async function ensureAgentSchema(): Promise<void> {
       model VARCHAR(100) NOT NULL DEFAULT 'gemini-2.5-flash',
       temperature NUMERIC(3,2) NOT NULL DEFAULT 0.20,
       max_output_tokens INTEGER NOT NULL DEFAULT 4096,
+      is_active BOOLEAN NOT NULL DEFAULT TRUE,
       updated_at TIMESTAMPTZ
     )
   `);
   await query(`ALTER TABLE ai_agents ADD COLUMN IF NOT EXISTS system_instruction TEXT`);
+  await query(`ALTER TABLE ai_agents ADD COLUMN IF NOT EXISTS is_active BOOLEAN NOT NULL DEFAULT TRUE`);
 }
 
 /**
@@ -52,6 +61,9 @@ export async function getRuntimeAgent(key: string): Promise<RuntimeAgent> {
   }
 
   const row = res.rows[0] as Record<string, unknown>;
+  if (row.is_active === false) {
+    throw new InactiveAgentError(key);
+  }
   const system_instruction = resolveSystemInstruction({
     system_instruction: row.system_instruction as string | null,
     system_prompt: row.system_prompt as string | null,
@@ -80,6 +92,7 @@ export async function getRuntimeAgents(keys: string[]): Promise<Map<string, Runt
 
   for (const row of res.rows as Record<string, unknown>[]) {
     const key = String(row.key);
+    if (row.is_active === false) continue;
     const system_instruction = resolveSystemInstruction({
       system_instruction: row.system_instruction as string | null,
       system_prompt: row.system_prompt as string | null,
@@ -97,6 +110,10 @@ export async function getRuntimeAgents(keys: string[]): Promise<Map<string, Runt
 
   for (const key of unique) {
     if (!map.has(key)) {
+      const row = (res.rows as Record<string, unknown>[]).find((item) => String(item.key) === key);
+      if (row && row.is_active === false) {
+        throw new InactiveAgentError(key);
+      }
       throw new Error(
         `Agente "${key}" não encontrado ou sem instrução em ai_agents.`,
       );
