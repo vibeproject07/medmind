@@ -1,1 +1,2 @@
 - [Prova cache safety](prova-cache-safety.md) — Cache leve de prova sem imagens é somente leitura; edição espera a resposta atualizada da API.
+- [Post-merge dependency safety](post-merge-dependency-safety.md) — Use instalação incremental; `npm ci` pode apagar módulos antes de o firewall bloquear um pacote.
