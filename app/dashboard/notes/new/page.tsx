@@ -80,6 +80,29 @@ function SourceTypeIcon({ type }: { type: typeof SOURCE_TYPES[number] }) {
 }
 
 // ── inline AI processing (replaces ResumoAulasModal logic) ────────────────
+async function tryTransformTranscription(
+  transcription: string,
+  instruction: string,
+  token: string,
+): Promise<string> {
+  try {
+    const response = await fetch('/api/gemini/transform', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+      body: JSON.stringify({
+        transcription,
+        instruction,
+        agentKey: 'ajuste_transcricao',
+      }),
+    });
+    const data: { text?: string } = await response.json().catch(() => ({}));
+    return response.ok && data.text?.trim() ? data.text.trim() : transcription;
+  } catch {
+    // O ajuste é opcional: nunca perder uma transcrição válida por causa dele.
+    return transcription;
+  }
+}
+
 async function runSourceTransformation(
   files: File[],
   link: string,
@@ -102,22 +125,15 @@ async function runSourceTransformation(
       onStatus(describeTranscriptionProgress(progress));
     });
     original = data.text || '';
+    melhorado = original;
 
     if (original.trim()) {
       onStatus('Melhorando com IA…');
-      const gr = await fetch('/api/gemini/transform', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({
-          transcription: original,
-          instruction: 'Resuma a transcrição em material de estudo claro, organizado e em português do Brasil.',
-          agentKey: 'ajuste_transcricao',
-        }),
-      });
-      const gd: { text?: string; error?: string } = await gr.json().catch(() => ({}));
-      melhorado = gd.text || original;
-    } else {
-      melhorado = original;
+      melhorado = await tryTransformTranscription(
+        original,
+        'Resuma a transcrição em material de estudo claro, organizado e em português do Brasil.',
+        token,
+      );
     }
 
   } else if (isYouTube) {
@@ -131,22 +147,15 @@ async function runSourceTransformation(
     const data: { text?: string; error?: string } = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(data.error || 'Erro ao processar vídeo do YouTube.');
     original = data.text || '';
+    melhorado = original;
 
     if (original.trim()) {
       onStatus('Melhorando com IA…');
-      const gr = await fetch('/api/gemini/transform', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({
-          transcription: original,
-          instruction: 'Analise e organize a transcrição acima em material de estudo.',
-          agentKey: 'ajuste_transcricao',
-        }),
-      });
-      const gd: { text?: string; error?: string } = await gr.json().catch(() => ({}));
-      melhorado = gd.text || original;
-    } else {
-      melhorado = original;
+      melhorado = await tryTransformTranscription(
+        original,
+        'Analise e organize a transcrição acima em material de estudo.',
+        token,
+      );
     }
 
   } else if (hasLink) {
@@ -156,22 +165,15 @@ async function runSourceTransformation(
       onStatus(describeTranscriptionProgress(progress));
     });
     original = data.text || '';
+    melhorado = original;
 
     if (original.trim()) {
       onStatus('Melhorando com IA…');
-      const gr = await fetch('/api/gemini/transform', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({
-          transcription: original,
-          instruction: 'Analise e organize o conteúdo acima em material de estudo.',
-          agentKey: 'ajuste_transcricao',
-        }),
-      });
-      const gd: { text?: string; error?: string } = await gr.json().catch(() => ({}));
-      melhorado = gd.text || original;
-    } else {
-      melhorado = original;
+      melhorado = await tryTransformTranscription(
+        original,
+        'Analise e organize o conteúdo acima em material de estudo.',
+        token,
+      );
     }
 
   } else {
