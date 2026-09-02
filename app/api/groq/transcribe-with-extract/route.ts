@@ -1,12 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import {
   downloadFileFromUrlLarge,
-  extractAudioFromVideo,
-  groqTranscribeFile,
-  groqTranscribeLargeFile,
-  isVideoFile,
   MAX_SIZE_FOR_CHUNKED_TRANSCRIPTION,
   normalizeCloudStorageUrl,
+  transcribeMediaBuffer,
   type GroqProgressCallback,
   type GroqTranscriptionProgress,
   type GroqTranscriptionResult,
@@ -15,7 +12,6 @@ import { verifyToken } from '@/lib/jwt';
 
 export const runtime = 'nodejs';
 
-const MAX_SINGLE_FILE_SIZE = 25 * 1024 * 1024;
 const STREAM_CONTENT_TYPE = 'application/x-ndjson';
 
 interface PreparedMedia {
@@ -106,70 +102,7 @@ async function transcribePreparedMedia(
   media: PreparedMedia,
   onProgress?: GroqProgressCallback,
 ): Promise<GroqTranscriptionApiResult> {
-  let bufferToTranscribe = media.buffer;
-  let nameToTranscribe = media.filename;
-  const originalSize = media.buffer.length;
-  let extractedSize = originalSize;
-  const videoConvertedToAudio = isVideoFile(media.filename, media.mimeType);
-
-  onProgress?.({
-    stage: 'preparing',
-    message: videoConvertedToAudio
-      ? 'Preparando o vídeo para extrair somente o áudio.'
-      : 'Preparando o áudio para transcrição.',
-  });
-
-  if (videoConvertedToAudio) {
-    onProgress?.({
-      stage: 'extracting',
-      message: 'Extraindo e compactando o áudio do vídeo.',
-    });
-    const extracted = await extractAudioFromVideo(media.buffer, media.filename);
-    bufferToTranscribe = extracted.audioBuffer;
-    nameToTranscribe = extracted.audioFilename;
-    extractedSize = extracted.extractedSize;
-  }
-
-  let result: GroqTranscriptionResult;
-  if (bufferToTranscribe.length > MAX_SINGLE_FILE_SIZE) {
-    result = await groqTranscribeLargeFile(
-      bufferToTranscribe,
-      nameToTranscribe,
-      {},
-      onProgress,
-    );
-  } else {
-    const startedAt = Date.now();
-    onProgress?.({
-      stage: 'transcribing',
-      message: 'Transcrevendo parte 1 de 1.',
-      totalParts: 1,
-      completedParts: 0,
-      currentPart: 1,
-      durationSeconds: 0,
-      estimatedSecondsRemaining: 30,
-    });
-    result = await groqTranscribeFile(bufferToTranscribe, nameToTranscribe);
-    onProgress?.({
-      stage: 'transcribing',
-      message: 'Parte 1 de 1 concluída.',
-      totalParts: 1,
-      completedParts: 1,
-      currentPart: 1,
-      durationSeconds: result.duration,
-      estimatedSecondsRemaining: Math.max(
-        0,
-        Math.ceil(30 - (Date.now() - startedAt) / 1000),
-      ),
-    });
-  }
-
-  return {
-    ...result,
-    originalSize,
-    extractedSize,
-    videoConvertedToAudio,
-  };
+  return transcribeMediaBuffer(media.buffer, media.filename, media.mimeType, onProgress);
 }
 
 function streamTranscription(media: PreparedMedia): Response {

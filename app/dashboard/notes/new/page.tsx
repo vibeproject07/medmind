@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { removeDraftNote, saveDraftNote } from '@/lib/safe-local-storage';
 import {
   describeTranscriptionProgress,
+  processLinkWithProgress,
   transcribeWithProgress,
 } from '@/lib/groq-transcription-client';
 import {
@@ -160,14 +161,17 @@ async function runSourceTransformation(
 
   } else if (hasLink) {
     // ── Generic link ────────────────────────────────────────────────────
-    onStatus('Baixando e extraindo conteúdo do link…');
-    const data = await transcribeWithProgress({ url: link.trim() }, token, (progress) => {
+    onStatus('Analisando o tipo de arquivo do link…');
+    const data = await processLinkWithProgress(link.trim(), token, (progress) => {
       onStatus(describeTranscriptionProgress(progress));
     });
-    original = data.text || '';
-    melhorado = original;
+    original = data.originalText || data.text || '';
+    melhorado = data.text || '';
 
-    if (original.trim()) {
+    if (
+      original.trim() &&
+      (data.sourceType === 'audio' || data.sourceType === 'video')
+    ) {
       onStatus('Melhorando com IA…');
       melhorado = await tryTransformTranscription(
         original,
@@ -207,7 +211,7 @@ async function runSourceTransformation(
       throw new Error(msg);
     }
     original  = data.originalText || data.text || '';
-    melhorado = original; // documents aren't AI-improved in the original modal either
+    melhorado = data.text || original;
   }
 
   const fileNames =

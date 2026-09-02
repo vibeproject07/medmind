@@ -259,6 +259,34 @@ function ensureSupportedFilename(buffer: Buffer, filename: string): string {
   );
 }
 
+function extensionForMimeType(mimeType: string): string | null {
+  const normalized = mimeType.toLowerCase().split(';', 1)[0].trim();
+  const extensions: Record<string, string> = {
+    'audio/flac': 'flac',
+    'audio/mpeg': 'mp3',
+    'audio/mp3': 'mp3',
+    'audio/mp4': 'm4a',
+    'audio/x-m4a': 'm4a',
+    'audio/ogg': 'ogg',
+    'audio/opus': 'opus',
+    'audio/wav': 'wav',
+    'audio/x-wav': 'wav',
+    'audio/webm': 'webm',
+    'video/mp4': 'mp4',
+    'video/webm': 'webm',
+    'video/mpeg': 'mpeg',
+  };
+  return extensions[normalized] ?? null;
+}
+
+export function isAudioFile(filename: string, mimeType?: string): boolean {
+  const type = (mimeType || '').toLowerCase();
+  if (type.startsWith('audio/')) return true;
+  if (type.startsWith('video/')) return false;
+  const ext = path.extname(filename).slice(1).toLowerCase();
+  return ['flac', 'mp3', 'mpeg', 'mpga', 'm4a', 'ogg', 'opus', 'wav', 'webm'].includes(ext);
+}
+
 /**
  * Baixa o arquivo de uma URL seguindo redirects (incluindo 303 do Google Drive).
  * Retorna o buffer e um nome de arquivo com extensão suportada pela Groq.
@@ -477,7 +505,7 @@ function isHtmlResponse(buffer: Buffer): boolean {
 export async function downloadFileFromUrlLarge(
   url: string,
   maxSizeBytes: number = MAX_SIZE_FOR_CHUNKED_TRANSCRIPTION
-): Promise<{ buffer: Buffer; filename: string }> {
+): Promise<{ buffer: Buffer; filename: string; mimeType: string }> {
   let response = await safeDownloadResponse(url, maxSizeBytes);
   let buffer = Buffer.from(response.data);
 
@@ -530,13 +558,26 @@ export async function downloadFileFromUrlLarge(
     try {
       const pathname = new URL(url).pathname;
       const lastSegment = pathname.split('/').filter(Boolean).pop();
-      if (lastSegment && /\.(mp3|mp4|wav|webm|m4a|ogg|flac|mpeg|mpga|opus|mov|avi|mkv|m4v)$/i.test(lastSegment)) filename = lastSegment;
+      if (
+        lastSegment &&
+        /\.(pdf|doc|docx|ppt|pptx|png|jpe?g|gif|webp|mp3|mp4|wav|webm|m4a|ogg|flac|mpeg|mpga|opus|mov|avi|mkv|m4v)$/i.test(
+          lastSegment,
+        )
+      ) {
+        filename = lastSegment;
+      }
     } catch { /* keep audio */ }
   }
-  if (!isVideoFile(filename)) {
-    filename = ensureSupportedFilename(buffer, filename);
+  const finalContentType = (response.headers['content-type'] || '').toLowerCase();
+  if (filename === 'audio') {
+    const extension = extensionForMimeType(finalContentType);
+    if (extension) filename = `downloaded.${extension}`;
   }
-  return { buffer, filename };
+  return {
+    buffer,
+    filename,
+    mimeType: finalContentType.split(';', 1)[0].trim(),
+  };
 }
 
 /**
@@ -596,6 +637,7 @@ export async function extractAudioFromVideo(
 export function isVideoFile(filename: string, mimeType?: string): boolean {
   const type = (mimeType || '').toLowerCase();
   if (type.startsWith('video/')) return true;
+  if (type.startsWith('audio/')) return false;
   const ext = (filename.split('.').pop() || '').toLowerCase();
   return ['mp4', 'webm', 'mpeg', 'mpg', 'mov', 'avi', 'mkv', 'm4v'].includes(ext);
 }
@@ -735,6 +777,12 @@ export interface GroqTranscriptionResult {
   language?: string;
   duration: number;
   partCount: number;
+}
+
+export interface TranscribedMediaResult extends GroqTranscriptionResult {
+  originalSize: number;
+  extractedSize: number;
+  videoConvertedToAudio: boolean;
 }
 
 export type GroqTranscriptionProgress =
@@ -940,6 +988,83 @@ export async function groqTranscribeLargeFile(
       // ignorar falha ao remover temp
     }
   }
+}
+
+/**
+ * Executa o pipeline completo de áudio/vídeo.
+ * Vídeos são convertidos para áudio antes da divisão; arquivos acima do limite
+ * da Groq são segmentados por duração em arquivos válidos e enviados em série.
+ */
+export async function transcribeMediaBuffer(
+  fileBuffer: Buffer,
+  filename: string,
+  mimeType?: string,
+  onProgress?: GroqProgressCallback,
+): Promise<TranscribedMediaResult> {
+  const originalSize = fileBuffer.length;
+  const videoConvertedToAudio = isVideoFile(filename, mimeType);
+  let bufferToTranscribe = fileBuffer;
+  let nameToTranscribe = filename;
+  let extractedSize = originalSize;
+
+  onProgress?.({
+    stage: 'preparing',
+    message: videoConvertedToAudio
+      ? 'Preparando o vídeo para extrair somente o áudio.'
+      : 'Preparando o áudio para transcrição.',
+  });
+
+  if (videoConvertedToAudio) {
+    onProgress?.({
+      stage: 'extracting',
+      message: 'Extraindo e compactando o áudio do vídeo.',
+    });
+    const extracted = await extractAudioFromVideo(fileBuffer, filename);
+    bufferToTranscribe = extracted.audioBuffer;
+    nameToTranscribe = extracted.audioFilename;
+    extractedSize = extracted.extractedSize;
+  }
+
+  let result: GroqTranscriptionResult;
+  if (bufferToTranscribe.length > MAX_DOWNLOAD_SIZE) {
+    result = await groqTranscribeLargeFile(
+      bufferToTranscribe,
+      nameToTranscribe,
+      {},
+      onProgress,
+    );
+  } else {
+    const startedAt = Date.now();
+    onProgress?.({
+      stage: 'transcribing',
+      message: 'Transcrevendo parte 1 de 1.',
+      totalParts: 1,
+      completedParts: 0,
+      currentPart: 1,
+      durationSeconds: 0,
+      estimatedSecondsRemaining: 30,
+    });
+    result = await groqTranscribeFile(bufferToTranscribe, nameToTranscribe);
+    onProgress?.({
+      stage: 'transcribing',
+      message: 'Parte 1 de 1 concluída.',
+      totalParts: 1,
+      completedParts: 1,
+      currentPart: 1,
+      durationSeconds: result.duration,
+      estimatedSecondsRemaining: Math.max(
+        0,
+        Math.ceil(30 - (Date.now() - startedAt) / 1000),
+      ),
+    });
+  }
+
+  return {
+    ...result,
+    originalSize,
+    extractedSize,
+    videoConvertedToAudio,
+  };
 }
 
 export interface GroqTranscribeOptions {

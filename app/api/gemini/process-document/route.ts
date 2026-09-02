@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/jwt';
-import { geminiProcessDocument, geminiTransformTranscription } from '@/lib/gemini';
-import { extractTextFromDocx, extractTextFromPptx } from '@/lib/document-extract';
+import { processWithBroadFileExtraction } from '@/lib/broad-file-extraction';
 
 export const runtime = 'nodejs';
 
@@ -27,19 +26,6 @@ const ALLOWED_MIME_TYPES = [
 
 function isAllowedMimeType(type: string): boolean {
   return ALLOWED_MIME_TYPES.includes(type) || type.startsWith('image/');
-}
-
-function getAgentKeyByMimeType(mimeType: string, contentHint?: string): string {
-  const m = (mimeType || '').toLowerCase();
-  if (m.startsWith('image/')) return 'resumo_imagem';
-  if (
-    m === 'application/vnd.ms-powerpoint' ||
-    m === 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
-  ) {
-    return 'resumo_slides_pdf';
-  }
-  if (contentHint === 'slides') return 'resumo_slides_pdf';
-  return 'resumo_documento';
 }
 
 export async function POST(request: NextRequest) {
@@ -77,10 +63,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const contentHint = typeof formData.get('type') === 'string'
-      ? (formData.get('type') as string).toLowerCase()
-      : undefined;
-
     const mimeType = (file.type || 'application/octet-stream').toLowerCase();
     if (!isAllowedMimeType(mimeType)) {
       return NextResponse.json(
@@ -98,51 +80,16 @@ export async function POST(request: NextRequest) {
     const extractType = EXTRACT_TYPES[mimeType];
 
     if (extractType) {
-      let extractedText: string;
       try {
-        if (extractType === 'docx') {
-          extractedText = await extractTextFromDocx(buffer);
-        } else {
-          extractedText = await extractTextFromPptx(buffer);
-        }
+        const result = await processWithBroadFileExtraction(buffer, mimeType);
+        return NextResponse.json(result);
       } catch (extractErr) {
         const msg = extractErr instanceof Error ? extractErr.message : 'Erro ao extrair texto do arquivo.';
         return NextResponse.json({ error: msg }, { status: 422 });
       }
-
-      const agentKey = extractType === 'pptx' ? 'resumo_pptx' : 'resumo_docx';
-
-      const summary = await geminiTransformTranscription({
-        transcription: extractedText,
-        instruction: 'Produza o material de estudo conforme as instruções do sistema.',
-        agentKey,
-      });
-
-      return NextResponse.json({ text: summary, originalText: extractedText });
     }
 
-    const agentKey = getAgentKeyByMimeType(mimeType, contentHint);
-    const result = await geminiProcessDocument({ file: buffer, mimeType, agentKey });
-
-    const isPdfOrWord =
-      mimeType === 'application/pdf' ||
-      mimeType === 'application/msword' ||
-      mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-
-    let originalText: string | undefined;
-    if (isPdfOrWord) {
-      try {
-        originalText = await geminiProcessDocument({
-          file: buffer,
-          mimeType,
-          agentKey: 'extrair_texto',
-        });
-      } catch {
-        originalText = undefined;
-      }
-    }
-
-    return NextResponse.json({ text: result, originalText });
+    return NextResponse.json(await processWithBroadFileExtraction(buffer, mimeType));
   } catch (error: unknown) {
     let message = 'Erro ao processar o documento.';
     if (error instanceof Error) {

@@ -26,6 +26,25 @@ export interface TranscriptionApiResult {
   videoConvertedToAudio: boolean;
 }
 
+export interface LinkProcessingResult {
+  text: string;
+  originalText?: string;
+  sourceType: 'audio' | 'video' | 'document' | 'image';
+  filename: string;
+  originalSize?: number;
+  extractedSize?: number;
+  videoConvertedToAudio?: boolean;
+  segments?: Array<{
+    id: number;
+    start: number;
+    end: number;
+    text: string;
+    part: number;
+  }>;
+  duration?: number;
+  partCount?: number;
+}
+
 interface StreamEvent {
   type?: 'progress' | 'complete' | 'error';
   progress?: TranscriptionProgress;
@@ -84,6 +103,58 @@ export async function transcribeWithProgress(
     throw new Error('A transcrição terminou sem retornar um resultado.');
   }
   return finalResult;
+}
+
+export async function processLinkWithProgress(
+  url: string,
+  token: string,
+  onProgress: (progress: TranscriptionProgress) => void,
+): Promise<LinkProcessingResult> {
+  const response = await fetch('/api/gemini/process-link', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/x-ndjson',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ url }),
+  });
+
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    throw new Error(data.error || 'Erro ao processar o link.');
+  }
+  if (!response.body) throw new Error('O servidor não iniciou o processamento do link.');
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let pending = '';
+  let result: LinkProcessingResult | null = null;
+
+  const consumeLine = (line: string) => {
+    if (!line.trim()) return;
+    const event = JSON.parse(line) as {
+      type?: 'progress' | 'complete' | 'error';
+      progress?: TranscriptionProgress;
+      result?: LinkProcessingResult;
+      error?: string;
+    };
+    if (event.type === 'progress' && event.progress) onProgress(event.progress);
+    if (event.type === 'complete' && event.result) result = event.result;
+    if (event.type === 'error') throw new Error(event.error || 'Erro ao processar o link.');
+  };
+
+  while (true) {
+    const { done, value } = await reader.read();
+    pending += decoder.decode(value, { stream: !done });
+    const lines = pending.split('\n');
+    pending = lines.pop() ?? '';
+    lines.forEach(consumeLine);
+    if (done) break;
+  }
+  consumeLine(pending);
+  if (!result) throw new Error('O processamento do link terminou sem resultado.');
+  return result;
 }
 
 export function formatEstimatedTime(seconds?: number): string {
