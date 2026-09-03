@@ -11,6 +11,7 @@ import TagAutocomplete from '@/components/Common/TagAutocomplete';
 import ImageLightbox from '@/components/Common/ImageLightbox';
 import ImageEditorField from '@/components/Common/ImageEditorField';
 import NoteDeCsDescriptorsTable, { type NoteDeCSRecord } from '@/components/Notes/NoteDeCsDescriptorsTable';
+import SpacyTokenizationPanel from '@/components/Notes/SpacyTokenizationPanel';
 import {
   ASSUNTOS_BY_AREA, toDisplayArea, toDisplayAssunto,
   fromDisplay, AREAS_OPTIONS_DISPLAY,
@@ -646,6 +647,14 @@ export default function NoteDetailPage() {
               {note.updated_at !== note.created_at && <span>Atualizado em {formatDate(note.updated_at)}</span>}
             </div>
           </div>
+
+          {/* spaCy output — restricted to administrators */}
+          {isAdmin && !isEditing && (
+            <SpacyTokenizationPanel
+              content={note.description || ''}
+              sourceType={note.tipo_conteudo || 'note'}
+            />
+          )}
 
           {/* Classification card */}
           <div className="bg-white rounded-xl border border-gray-200 shadow-sm">

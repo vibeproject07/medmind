@@ -49,8 +49,15 @@ export async function POST(request: NextRequest) {
     ? authorization.slice('Bearer '.length)
     : null;
   const token = bearerToken || request.cookies.get('token')?.value || '';
-  if (!verifyToken(token)) {
+  const user = verifyToken(token);
+  if (!user) {
     return NextResponse.json({ error: 'Não autorizado.' }, { status: 401 });
+  }
+  if (user.role !== 'admin') {
+    return NextResponse.json(
+      { error: 'A visualização da tokenização está disponível apenas para administradores.' },
+      { status: 403 },
+    );
   }
 
   try {
