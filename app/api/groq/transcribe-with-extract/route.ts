@@ -9,6 +9,11 @@ import {
   type GroqTranscriptionResult,
 } from '@/lib/groq-stt';
 import { verifyToken } from '@/lib/jwt';
+import {
+  summarizeTokenization,
+  tokenizeText,
+  type SpacyTokenizationSummary,
+} from '@/lib/spacy-tokenizer';
 
 export const runtime = 'nodejs';
 
@@ -24,6 +29,7 @@ export interface GroqTranscriptionApiResult extends GroqTranscriptionResult {
   originalSize: number;
   extractedSize: number;
   videoConvertedToAudio: boolean;
+  tokenization: SpacyTokenizationSummary;
 }
 
 async function parseRequestMedia(
@@ -102,7 +108,29 @@ async function transcribePreparedMedia(
   media: PreparedMedia,
   onProgress?: GroqProgressCallback,
 ): Promise<GroqTranscriptionApiResult> {
-  return transcribeMediaBuffer(media.buffer, media.filename, media.mimeType, onProgress);
+  const result = await transcribeMediaBuffer(
+    media.buffer,
+    media.filename,
+    media.mimeType,
+    onProgress,
+  );
+  const canonicalText =
+    result.segments
+      .map((segment) => segment.text.trim())
+      .filter(Boolean)
+      .join('\n\n') || result.rawText || result.text;
+  const tokenization = await tokenizeText({
+    text: canonicalText,
+    sourceType: result.videoConvertedToAudio ? 'video' : 'audio',
+    segments: result.segments,
+    contentFormat: 'plain',
+    view: 'sentences_text_order',
+  });
+  return {
+    ...result,
+    rawText: canonicalText,
+    tokenization: summarizeTokenization(tokenization),
+  };
 }
 
 function streamTranscription(media: PreparedMedia): Response {

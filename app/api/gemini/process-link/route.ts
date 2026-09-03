@@ -10,6 +10,11 @@ import {
   type GroqProgressCallback,
   type GroqTranscriptionProgress,
 } from '@/lib/groq-stt';
+import {
+  summarizeTokenization,
+  tokenizeText,
+  type SpacyTokenizationSummary,
+} from '@/lib/spacy-tokenizer';
 
 export const runtime = 'nodejs';
 
@@ -61,6 +66,7 @@ function isSupportedDocument(mimeType: string): boolean {
 
 type LinkResult = {
   text: string;
+  rawText?: string;
   originalText?: string;
   sourceType: 'audio' | 'video' | 'document' | 'image';
   filename: string;
@@ -71,6 +77,7 @@ type LinkResult = {
   words?: unknown[];
   duration?: number;
   partCount?: number;
+  tokenization: SpacyTokenizationSummary;
 };
 
 async function processLink(
@@ -88,8 +95,22 @@ async function processLink(
       mimeType,
       onProgress,
     );
+    const canonicalText =
+      result.segments
+        .map((segment) => segment.text.trim())
+        .filter(Boolean)
+        .join('\n\n') || result.rawText || result.text;
+    const tokenization = await tokenizeText({
+      text: canonicalText,
+      sourceType: result.videoConvertedToAudio ? 'video' : 'audio',
+      segments: result.segments,
+      contentFormat: 'plain',
+      view: 'sentences_text_order',
+    });
     return {
       ...result,
+      rawText: canonicalText,
+      tokenization: summarizeTokenization(tokenization),
       sourceType: result.videoConvertedToAudio ? 'video' : 'audio',
       filename: downloaded.filename,
     };

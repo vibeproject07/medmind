@@ -1,5 +1,10 @@
 import { geminiProcessDocument, geminiTransformTranscription } from '@/lib/gemini';
 import { extractTextFromDocx, extractTextFromPptx } from '@/lib/document-extract';
+import {
+  summarizeTokenization,
+  tokenizeText,
+  type SpacyTokenizationSummary,
+} from '@/lib/spacy-tokenizer';
 
 const EXTRACT_TYPES: Record<string, 'docx' | 'pptx'> = {
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
@@ -11,6 +16,7 @@ const EXTRACT_TYPES: Record<string, 'docx' | 'pptx'> = {
 export interface BroadFileExtractionResult {
   text: string;
   originalText?: string;
+  tokenization: SpacyTokenizationSummary;
 }
 
 /**
@@ -38,7 +44,17 @@ export async function processWithBroadFileExtraction(
       agentKey: 'broad_file_extraction',
     });
 
-    return { text, originalText: extractedText };
+    const tokenization = await tokenizeText({
+      text,
+      sourceType: 'document',
+      contentFormat: 'plain',
+      view: 'sentences_text_order',
+    });
+    return {
+      text,
+      originalText: extractedText,
+      tokenization: summarizeTokenization(tokenization),
+    };
   }
 
   const text = await geminiProcessDocument({
@@ -47,5 +63,11 @@ export async function processWithBroadFileExtraction(
     agentKey: 'broad_file_extraction',
   });
 
-  return { text };
+  const tokenization = await tokenizeText({
+    text,
+    sourceType: normalizedMimeType.startsWith('image/') ? 'image' : 'document',
+    contentFormat: 'plain',
+    view: 'sentences_text_order',
+  });
+  return { text, tokenization: summarizeTokenization(tokenization) };
 }

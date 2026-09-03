@@ -1,3 +1,5 @@
+import type { SpacyTokenizationSummary } from '@/lib/spacy-tokenizer';
+
 export interface TranscriptionProgress {
   stage: 'preparing' | 'extracting' | 'splitting' | 'transcribing';
   message: string;
@@ -24,6 +26,7 @@ export interface TranscriptionApiResult {
   originalSize: number;
   extractedSize: number;
   videoConvertedToAudio: boolean;
+  tokenization: SpacyTokenizationSummary;
 }
 
 export interface LinkProcessingResult {
@@ -43,6 +46,7 @@ export interface LinkProcessingResult {
   }>;
   duration?: number;
   partCount?: number;
+  tokenization: SpacyTokenizationSummary;
 }
 
 interface StreamEvent {

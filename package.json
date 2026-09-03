@@ -3,13 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "WATCHPACK_POLLING=true CHOKIDAR_USEPOLLING=true next dev -p 5000 -H 0.0.0.0",
+    "dev": "bash scripts/run-app.sh dev",
+    "dev:next": "WATCHPACK_POLLING=true CHOKIDAR_USEPOLLING=true next dev -p 5000 -H 0.0.0.0",
     "build": "next build",
-    "start": "next start -p 5000 -H 0.0.0.0",
+    "start": "bash scripts/run-app.sh start",
+    "start:next": "next start -p 5000 -H 0.0.0.0",
     "lint": "next lint",
     "init-db": "node scripts/init-db.js",
     "test-groq": "node scripts/test-groq.js",
     "test:groq-regressions": "rm -rf /tmp/medmind-groq-tests && tsc -p tests/tsconfig.groq.json && NODE_PATH=\"$PWD/node_modules\" node --test /tmp/medmind-groq-tests/tests/groq-stt-regressions.test.js",
+    "test:spacy": "bash scripts/run-python-with-spacy.sh -m unittest tests/test_spacy_tokenizer.py",
+    "spacy:dev": "bash scripts/run-spacy-tokenizer.sh",
     "neon:setup": "node scripts/neon/seed.js"
   },
   "dependencies": {
