@@ -15,6 +15,7 @@ import {
   tokenizeText,
   type SpacyTokenizationSummary,
 } from '@/lib/spacy-tokenizer';
+import type { ChunkingResult } from '@/lib/chunking-agent';
 
 export const runtime = 'nodejs';
 
@@ -78,6 +79,7 @@ type LinkResult = {
   duration?: number;
   partCount?: number;
   tokenization: SpacyTokenizationSummary;
+  chunking?: ChunkingResult;
 };
 
 async function processLink(

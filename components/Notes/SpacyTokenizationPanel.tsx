@@ -7,6 +7,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Hash,
+  Layers3,
   Loader2,
   RefreshCw,
   Sparkles,
@@ -18,8 +19,12 @@ import type {
   SpacyTokenFrequency,
   SpacyTokenizationResult,
 } from '@/lib/spacy-tokenizer';
+import type {
+  ChunkingBlock,
+  ChunkingResult,
+} from '@/lib/chunking-agent';
 
-type PanelTab = 'sentences' | 'tokens' | 'frequencies';
+type PanelTab = 'sentences' | 'tokens' | 'frequencies' | 'chunks';
 type PaginationInfo = {
   page: number;
   page_size: number;
@@ -43,6 +48,7 @@ function getPageInfo(
   tab: PanelTab,
 ): PaginationInfo | null {
   if (!data) return null;
+  if (tab === 'chunks') return null;
   const key =
     tab === 'sentences'
       ? 'sentences_in_text_order'
@@ -69,13 +75,15 @@ export default function SpacyTokenizationPanel({
   sourceType?: string;
 }) {
   const [data, setData] = useState<SpacyTokenizationResult | null>(null);
+  const [chunking, setChunking] = useState<ChunkingResult | null>(null);
+  const [chunkingError, setChunkingError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<PanelTab>('sentences');
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const fetchPage = useCallback(
-    async (requestedPage: number) => {
+    async (requestedPage: number, includeChunks = false) => {
       if (!content.trim()) {
         setData(null);
         setError(null);
@@ -104,6 +112,7 @@ export default function SpacyTokenizationPanel({
             view: 'mixed',
             page: requestedPage,
             pageSize: PAGE_SIZE,
+            includeChunks,
           }),
         });
         const result = await response.json().catch(() => ({}));
@@ -111,6 +120,14 @@ export default function SpacyTokenizationPanel({
           throw new Error(result.error || 'Não foi possível gerar a saída da spaCy.');
         }
         setData(result as SpacyTokenizationResult);
+        if (includeChunks) {
+          setChunking(result.chunking ?? null);
+          setChunkingError(
+            typeof result.chunking_error === 'string'
+              ? result.chunking_error
+              : null,
+          );
+        }
         setPage(requestedPage);
       } catch (requestError) {
         setError(
@@ -127,7 +144,9 @@ export default function SpacyTokenizationPanel({
 
   useEffect(() => {
     setPage(1);
-    void fetchPage(1);
+    setChunking(null);
+    setChunkingError(null);
+    void fetchPage(1, true);
   }, [fetchPage]);
 
   const pageInfo = getPageInfo(data, activeTab);
@@ -155,8 +174,14 @@ export default function SpacyTokenizationPanel({
         icon: Sparkles,
         count: data?.token_frequencies?.length ?? 0,
       },
+      {
+        id: 'chunks' as const,
+        label: 'Chunks',
+        icon: Layers3,
+        count: chunking?.chunk_total ?? 0,
+      },
     ],
-    [data],
+    [chunking, data],
   );
 
   const handleTabChange = (tab: PanelTab) => {
@@ -256,6 +281,86 @@ export default function SpacyTokenizationPanel({
     );
   };
 
+  const renderChunks = () => {
+    if (chunkingError) {
+      return (
+        <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+          <p className="font-semibold">A tokenização foi concluída, mas os chunks não foram formados.</p>
+          <p className="mt-1 text-xs">{chunkingError}</p>
+        </div>
+      );
+    }
+    if (!chunking) {
+      return (
+        <div className="flex items-center justify-center gap-2 py-10 text-sm text-indigo-600">
+          <Loader2 className="w-4 h-4 animate-spin" />
+          Formando chunks após a tokenização…
+        </div>
+      );
+    }
+
+    const chunks = chunking.blocks.filter((block) => block.type === 'chunk');
+    const discarded = chunking.blocks.filter((block) => block.type === 'discarded');
+    return (
+      <div className="space-y-5">
+        <div className="space-y-3">
+          {chunks.map((block: ChunkingBlock, index) => (
+            <article
+              key={`${block.sentence_start}-${block.sentence_end}`}
+              className="rounded-xl border border-violet-100 bg-violet-50/30 overflow-hidden"
+            >
+              <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 border-b border-violet-100 bg-white/70">
+                <h3 className="text-sm font-semibold text-violet-900">Chunk {index + 1}</h3>
+                <div className="flex flex-wrap items-center gap-2 text-[11px]">
+                  <span className="font-mono text-violet-700 bg-violet-100 px-2 py-1 rounded-md">
+                    frases {block.sentence_start}–{block.sentence_end}
+                  </span>
+                  <span className="text-gray-500">
+                    {block.unit_ids.length === 1 ? 'unidade' : 'unidades'} {block.unit_ids.join(', ')}
+                  </span>
+                </div>
+              </div>
+              <div className="p-4 space-y-3">
+                <div>
+                  <p className="text-[10px] uppercase tracking-wide text-violet-500 font-bold mb-1">
+                    Contexto
+                  </p>
+                  <p className="text-sm leading-relaxed text-violet-950">{block.context}</p>
+                </div>
+                <details className="group">
+                  <summary className="cursor-pointer text-xs font-semibold text-gray-500 hover:text-gray-700">
+                    Ver texto do chunk
+                  </summary>
+                  <p className="mt-2 rounded-lg border border-gray-100 bg-white p-3 text-sm leading-relaxed text-gray-700 whitespace-pre-wrap">
+                    {block.text}
+                  </p>
+                </details>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {discarded.length > 0 && (
+          <details className="rounded-lg border border-gray-200 bg-gray-50">
+            <summary className="cursor-pointer px-4 py-3 text-xs font-semibold text-gray-600">
+              {formatNumber(discarded.length)} {discarded.length === 1 ? 'bloco descartado' : 'blocos descartados'}
+            </summary>
+            <div className="border-t border-gray-200 divide-y divide-gray-200">
+              {discarded.map((block) => (
+                <div key={`${block.sentence_start}-${block.sentence_end}`} className="px-4 py-3 text-xs">
+                  <p className="font-mono text-gray-500">
+                    Frases {block.sentence_start}–{block.sentence_end}
+                  </p>
+                  <p className="mt-1 text-gray-700">{block.reason}</p>
+                </div>
+              ))}
+            </div>
+          </details>
+        )}
+      </div>
+    );
+  };
+
   return (
     <section
       aria-labelledby="spacy-tokenization-title"
@@ -283,7 +388,7 @@ export default function SpacyTokenizationPanel({
           </div>
           <button
             type="button"
-            onClick={() => void fetchPage(1)}
+            onClick={() => void fetchPage(1, true)}
             disabled={loading || !content.trim()}
             className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-indigo-200 text-indigo-700 hover:bg-indigo-50 disabled:opacity-50 transition text-xs font-semibold flex-shrink-0"
             title="Atualizar análise"
@@ -362,9 +467,11 @@ export default function SpacyTokenizationPanel({
             <div className="min-h-[150px]">
               {activeTab === 'sentences'
                 ? renderSentences()
-                : activeTab === 'tokens'
-                  ? renderTokens()
-                  : renderFrequencies()}
+                  : activeTab === 'tokens'
+                    ? renderTokens()
+                    : activeTab === 'frequencies'
+                      ? renderFrequencies()
+                      : renderChunks()}
             </div>
 
             {pageInfo && pageInfo.total > PAGE_SIZE && (

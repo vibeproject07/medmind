@@ -2,9 +2,12 @@ import { geminiProcessDocument, geminiTransformTranscription } from '@/lib/gemin
 import { extractTextFromDocx, extractTextFromPptx } from '@/lib/document-extract';
 import {
   summarizeTokenization,
-  tokenizeText,
   type SpacyTokenizationSummary,
 } from '@/lib/spacy-tokenizer';
+import {
+  chunkTokenizedText,
+  type ChunkingResult,
+} from '@/lib/chunking-agent';
 
 const EXTRACT_TYPES: Record<string, 'docx' | 'pptx'> = {
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
@@ -17,14 +20,7 @@ export interface BroadFileExtractionResult {
   text: string;
   originalText?: string;
   tokenization: SpacyTokenizationSummary;
-}
-
-async function processWithChunkingAgent(text: string): Promise<string> {
-  return geminiTransformTranscription({
-    transcription: text,
-    instruction: 'Processe o conteúdo conforme as instruções do sistema.',
-    agentKey: 'chunking_agent',
-  });
+  chunking: ChunkingResult;
 }
 
 /**
@@ -32,7 +28,8 @@ async function processWithChunkingAgent(text: string): Promise<string> {
  *
  * DOCX/PPTX passam primeiro pelo extrator local para preservar a ordem do texto;
  * o conteúdo extraído também é enviado ao agente abrangente para a síntese.
- * A saída abrangente passa pelo agente de chunking antes da tokenização.
+ * A saída abrangente é tokenizada e as sentenças numeradas seguem para o agente
+ * de chunking.
  */
 export async function processWithBroadFileExtraction(
   buffer: Buffer,
@@ -52,18 +49,16 @@ export async function processWithBroadFileExtraction(
       instruction: 'Produza o material de estudo conforme as instruções do sistema.',
       agentKey: 'broad_file_extraction',
     });
-    const text = await processWithChunkingAgent(broadExtractionText);
-
-    const tokenization = await tokenizeText({
-      text,
+    const { tokenization, chunking } = await chunkTokenizedText({
+      text: broadExtractionText,
       sourceType: 'document',
       contentFormat: 'plain',
-      view: 'sentences_text_order',
     });
     return {
-      text,
+      text: broadExtractionText,
       originalText: extractedText,
       tokenization: summarizeTokenization(tokenization),
+      chunking,
     };
   }
 
@@ -72,13 +67,14 @@ export async function processWithBroadFileExtraction(
     mimeType: normalizedMimeType,
     agentKey: 'broad_file_extraction',
   });
-  const text = await processWithChunkingAgent(broadExtractionText);
-
-  const tokenization = await tokenizeText({
-    text,
+  const { tokenization, chunking } = await chunkTokenizedText({
+    text: broadExtractionText,
     sourceType: normalizedMimeType.startsWith('image/') ? 'image' : 'document',
     contentFormat: 'plain',
-    view: 'sentences_text_order',
   });
-  return { text, tokenization: summarizeTokenization(tokenization) };
+  return {
+    text: broadExtractionText,
+    tokenization: summarizeTokenization(tokenization),
+    chunking,
+  };
 }

@@ -5,6 +5,7 @@ import {
   tokenizeText,
   type SpacySourceSegment,
 } from '@/lib/spacy-tokenizer';
+import { chunkTokenizedText } from '@/lib/chunking-agent';
 
 export const runtime = 'nodejs';
 
@@ -85,11 +86,13 @@ export async function POST(request: NextRequest) {
       ? (body.segments as SpacySourceSegment[])
       : [];
 
+    const sourceType = typeof body?.sourceType === 'string' ? body.sourceType : 'text';
+    const contentFormat = body?.contentFormat === 'plain' ? 'plain' : 'auto';
     const result = await tokenizeText({
       text,
-      sourceType: typeof body?.sourceType === 'string' ? body.sourceType : 'text',
+      sourceType,
       segments,
-      contentFormat: body?.contentFormat === 'plain' ? 'plain' : 'auto',
+      contentFormat,
       view,
       page:
         Number.isInteger(body?.page) && body.page > 0
@@ -100,7 +103,27 @@ export async function POST(request: NextRequest) {
           ? Math.min(body.pageSize, 1000)
           : 250,
     });
-    return NextResponse.json(result);
+    if (body?.includeChunks !== true) {
+      return NextResponse.json(result);
+    }
+
+    try {
+      const { chunking } = await chunkTokenizedText({
+        text,
+        sourceType,
+        segments,
+        contentFormat,
+      });
+      return NextResponse.json({ ...result, chunking });
+    } catch (chunkingError) {
+      return NextResponse.json({
+        ...result,
+        chunking_error:
+          chunkingError instanceof Error
+            ? chunkingError.message
+            : 'Não foi possível formar os chunks.',
+      });
+    }
   } catch (error) {
     if (error instanceof Error && error.message === 'PAYLOAD_TOO_LARGE') {
       return NextResponse.json(
