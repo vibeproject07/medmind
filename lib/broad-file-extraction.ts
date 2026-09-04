@@ -19,11 +19,20 @@ export interface BroadFileExtractionResult {
   tokenization: SpacyTokenizationSummary;
 }
 
+async function processWithChunkingAgent(text: string): Promise<string> {
+  return geminiTransformTranscription({
+    transcription: text,
+    instruction: 'Processe o conteúdo conforme as instruções do sistema.',
+    agentKey: 'chunking_agent',
+  });
+}
+
 /**
  * Processa documentos e imagens com o agente abrangente configurado no banco.
  *
  * DOCX/PPTX passam primeiro pelo extrator local para preservar a ordem do texto;
- * o conteúdo extraído também é enviado ao mesmo agente abrangente para a síntese.
+ * o conteúdo extraído também é enviado ao agente abrangente para a síntese.
+ * A saída abrangente passa pelo agente de chunking antes da tokenização.
  */
 export async function processWithBroadFileExtraction(
   buffer: Buffer,
@@ -38,11 +47,12 @@ export async function processWithBroadFileExtraction(
         ? await extractTextFromDocx(buffer)
         : await extractTextFromPptx(buffer);
 
-    const text = await geminiTransformTranscription({
+    const broadExtractionText = await geminiTransformTranscription({
       transcription: extractedText,
       instruction: 'Produza o material de estudo conforme as instruções do sistema.',
       agentKey: 'broad_file_extraction',
     });
+    const text = await processWithChunkingAgent(broadExtractionText);
 
     const tokenization = await tokenizeText({
       text,
@@ -57,11 +67,12 @@ export async function processWithBroadFileExtraction(
     };
   }
 
-  const text = await geminiProcessDocument({
+  const broadExtractionText = await geminiProcessDocument({
     file: buffer,
     mimeType: normalizedMimeType,
     agentKey: 'broad_file_extraction',
   });
+  const text = await processWithChunkingAgent(broadExtractionText);
 
   const tokenization = await tokenizeText({
     text,
