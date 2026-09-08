@@ -3,6 +3,11 @@ import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { triggerEnrichment } from '@/lib/enrichment';
 import { isQuestionInDeletedProva } from '@/lib/prova-soft-delete-schema';
+import {
+  hasUpdateField,
+  resolveJsonArrayField,
+  resolveNullableField,
+} from '@/lib/update-field-resolution';
 
 export const runtime = 'nodejs';
 
@@ -132,7 +137,7 @@ export async function PUT(
       return NextResponse.json({ error: 'Questão não encontrada' }, { status: 404 });
     }
 
-    const hasField = (field: string) => Object.prototype.hasOwnProperty.call(body, field);
+    const hasField = (field: string) => hasUpdateField(body, field);
     const arrayFields = ['tags', 'images', 'areas_conhecimento', 'assuntos', 'decs_terms'];
     const invalidArrayField = arrayFields.find((field) => hasField(field) && !Array.isArray(body[field]));
     if (invalidArrayField) {
@@ -140,7 +145,7 @@ export async function PUT(
     }
 
     const arrayJson = (field: string, previousValue: string | null) =>
-      hasField(field) ? JSON.stringify(body[field]) : previousValue;
+      resolveJsonArrayField(body, field, previousValue);
     const optionalText = (field: string, previousValue: string | null) => {
       if (!hasField(field)) return previousValue;
       const value = body[field];
@@ -149,7 +154,7 @@ export async function PUT(
       return text || null;
     };
     const optionalValue = (field: string, previousValue: unknown) =>
-      hasField(field) ? body[field] ?? null : previousValue;
+      resolveNullableField(body, field, previousValue);
     const tagsJson = arrayJson('tags', existingQuestion.tags);
     const imagesJson = arrayJson('images', existingQuestion.images);
     const areasConhecimentoJson = arrayJson('areas_conhecimento', existingQuestion.areas_conhecimento);

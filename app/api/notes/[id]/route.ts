@@ -4,6 +4,11 @@ import { verifyToken } from '@/lib/jwt';
 import { triggerEnrichment } from '@/lib/enrichment';
 import { ensureNoteDeCsColumn, parseNoteAiDeCsDescriptors } from '@/lib/note-decs';
 import { ensureNoteMetadataSchema } from '@/lib/note-schema';
+import {
+  hasUpdateField,
+  resolveJsonArrayField,
+  resolveNullableField,
+} from '@/lib/update-field-resolution';
 
 export const runtime = 'nodejs';
 
@@ -136,7 +141,7 @@ export async function PUT(
       return NextResponse.json({ error: 'Nota não encontrada' }, { status: 404 });
     }
 
-    const hasField = (field: string) => Object.prototype.hasOwnProperty.call(body, field);
+    const hasField = (field: string) => hasUpdateField(body, field);
     const arrayFields = ['tags', 'images', 'areas_conhecimento', 'assuntos', 'fontes_arquivos'];
     const invalidArrayField = arrayFields.find((field) => hasField(field) && !Array.isArray(body[field]));
     if (invalidArrayField) {
@@ -144,21 +149,27 @@ export async function PUT(
     }
 
     const arrayJson = (field: string, previousValue: string | null) =>
-      hasField(field) ? JSON.stringify(body[field]) : previousValue;
+      resolveJsonArrayField(body, field, previousValue);
     const tagsJson = arrayJson('tags', noteCheck.tags);
     const imagesJson = arrayJson('images', noteCheck.images);
     const areasConhecimentoJson = arrayJson('areas_conhecimento', noteCheck.areas_conhecimento);
     const assuntosJson = arrayJson('assuntos', noteCheck.assuntos);
     const fontesArquivosJson = arrayJson('fontes_arquivos', noteCheck.fontes_arquivos);
-    const fontesResumoMelhorado = hasField('fontes_resumo_melhorado')
-      ? fontes_resumo_melhorado ?? null
-      : noteCheck.fontes_resumo_melhorado;
-    const fontesResumoOriginal = hasField('fontes_resumo_original')
-      ? fontes_resumo_original ?? null
-      : noteCheck.fontes_resumo_original;
-    const tipoConteudo = hasField('tipo_conteudo')
-      ? tipo_conteudo ?? null
-      : noteCheck.tipo_conteudo;
+    const fontesResumoMelhorado = resolveNullableField(
+      body,
+      'fontes_resumo_melhorado',
+      noteCheck.fontes_resumo_melhorado,
+    );
+    const fontesResumoOriginal = resolveNullableField(
+      body,
+      'fontes_resumo_original',
+      noteCheck.fontes_resumo_original,
+    );
+    const tipoConteudo = resolveNullableField(
+      body,
+      'tipo_conteudo',
+      noteCheck.tipo_conteudo,
+    );
 
     if (user.role === 'admin') {
       await query(`

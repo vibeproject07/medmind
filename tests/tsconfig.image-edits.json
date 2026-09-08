@@ -1,0 +1,17 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "/tmp/medmind-image-edit-tests",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2020",
+    "isolatedModules": false,
+    "incremental": false
+  },
+  "include": [
+    "../lib/image-editor-updates.ts",
+    "../lib/update-field-resolution.ts",
+    "./image-edit-regressions.test.ts"
+  ]
+}

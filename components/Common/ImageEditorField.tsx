@@ -3,9 +3,13 @@
 import { useRef } from 'react';
 import { Image as ImageIcon, X } from 'lucide-react';
 import ImageLightbox from '@/components/Common/ImageLightbox';
+import {
+  appendImages,
+  removeImageAt,
+  type ImageListUpdate,
+} from '@/lib/image-editor-updates';
 
 const MAX_IMAGE_SIZE = 10 * 1024 * 1024;
-type ImageListUpdate = string[] | ((currentImages: string[]) => string[]);
 
 interface ImageEditorFieldProps {
   images: string[];
@@ -67,7 +71,7 @@ export default function ImageEditorField({
     if (validFiles.length > 0) {
       try {
         const dataUrls = await Promise.all(validFiles.map(readAsDataUrl));
-        onChange((currentImages) => [...currentImages, ...dataUrls]);
+        onChange(appendImages(dataUrls));
       } catch (error) {
         reportError(error instanceof Error ? error.message : 'Não foi possível ler as imagens.');
       }
@@ -77,7 +81,7 @@ export default function ImageEditorField({
   };
 
   const removeImage = (index: number) => {
-    onChange((currentImages) => currentImages.filter((_, imageIndex) => imageIndex !== index));
+    onChange(removeImageAt(index));
   };
 
   return (
