@@ -12,6 +12,7 @@ __pycache__/
 
 # Next.js
 /.next/
+/.next-dev/
 /out/
 
 # Production
