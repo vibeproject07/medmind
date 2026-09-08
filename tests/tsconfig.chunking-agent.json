@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "/tmp/medmind-chunking-agent-tests",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2022",
+    "isolatedModules": false,
+    "incremental": false,
+    "skipLibCheck": true
+  },
+  "include": [
+    "../lib/chunking-agent.ts",
+    "./chunking-agent-regressions.test.ts"
+  ],
+  "exclude": []
+}

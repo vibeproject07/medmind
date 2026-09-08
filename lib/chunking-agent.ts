@@ -102,6 +102,22 @@ const CHUNKING_RESPONSE_SCHEMA = {
 } as const;
 const MAX_SENTENCES_PER_AGENT_CALL = 180;
 const MIN_SENTENCES_FOR_RETRY_SPLIT = 20;
+type ChunkGenerator = (
+  sentences: SpacyChunkingSentence[],
+  batchNumber: number,
+  batchTotal: number,
+) => Promise<string>;
+interface StructuredGenerationResponse {
+  text?: string;
+  candidates?: Array<{
+    finishReason?: string;
+    content?: { parts?: Array<{ text?: string }> };
+  }>;
+}
+interface StructuredGenerationDependencies {
+  getAgent?: typeof getRuntimeAgent;
+  generateContent?: (request: unknown) => Promise<StructuredGenerationResponse>;
+}
 
 export class ChunkingAgentError extends Error {
   constructor(
@@ -220,14 +236,14 @@ async function generateStructuredChunks(
   sentences: SpacyChunkingSentence[],
   batchNumber: number,
   batchTotal: number,
+  dependencies: StructuredGenerationDependencies = {},
 ): Promise<string> {
   const apiKey = process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY;
-  if (!apiKey) {
+  if (!apiKey && !dependencies.generateContent) {
     throw new ChunkingAgentError('GEMINI_API_KEY não configurada no servidor.');
   }
-  const agent = await getRuntimeAgent('chunking_agent');
-  const ai = new GoogleGenAI({ apiKey, apiVersion: 'v1beta' });
-  const response = await ai.models.generateContent({
+  const agent = await (dependencies.getAgent ?? getRuntimeAgent)('chunking_agent');
+  const request = {
     model: agent.model,
     contents: [
       'Agrupe as sentenças numeradas conforme as instruções do sistema.',
@@ -244,17 +260,20 @@ async function generateStructuredChunks(
       responseMimeType: 'application/json',
       responseJsonSchema: CHUNKING_RESPONSE_SCHEMA,
     },
-  });
+  };
+  const response = dependencies.generateContent
+    ? await dependencies.generateContent(request)
+    : await new GoogleGenAI({ apiKey: apiKey!, apiVersion: 'v1beta' }).models.generateContent(
+        request,
+      );
 
   const candidate = response.candidates?.[0];
   const finishReason = candidate?.finishReason;
-  console.info('[chunking-agent] geração concluída', {
-    sentence_start: sentences[0]?.number,
-    sentence_end: sentences.at(-1)?.number,
-    sentence_count: sentences.length,
-    finish_reason: finishReason ?? 'UNKNOWN',
-    output_characters: typeof response.text === 'string' ? response.text.length : 0,
-  });
+  logGenerationCompleted(
+    sentences,
+    finishReason,
+    typeof response.text === 'string' ? response.text.length : 0,
+  );
   if (finishReason && finishReason !== 'STOP') {
     if (finishReason === 'MAX_TOKENS') {
       throw new ChunkingAgentError(
@@ -285,6 +304,20 @@ async function generateStructuredChunks(
   return text;
 }
 
+function logGenerationCompleted(
+  sentences: SpacyChunkingSentence[],
+  finishReason: string | undefined,
+  outputCharacters: number,
+): void {
+  console.info('[chunking-agent] geração concluída', {
+    sentence_start: sentences[0]?.number,
+    sentence_end: sentences.at(-1)?.number,
+    sentence_count: sentences.length,
+    finish_reason: finishReason ?? 'UNKNOWN',
+    output_characters: outputCharacters,
+  });
+}
+
 function splitSentenceBatches(
   sentences: SpacyChunkingSentence[],
   maximumSize = MAX_SENTENCES_PER_AGENT_CALL,
@@ -295,11 +328,19 @@ function splitSentenceBatches(
   while (start < sentences.length) {
     let end = Math.min(start + maximumSize, sentences.length);
     if (end < sentences.length) {
+      const proposedEnd = end;
+      const minimumPreferredEnd = start + Math.floor(maximumSize * 0.6);
       while (
-        end > start + Math.floor(maximumSize * 0.6) &&
+        end > minimumPreferredEnd &&
         sentenceUnit(sentences[end - 1]) === sentenceUnit(sentences[end])
       ) {
         end -= 1;
+      }
+      if (
+        end === minimumPreferredEnd &&
+        sentenceUnit(sentences[end - 1]) === sentenceUnit(sentences[end])
+      ) {
+        end = proposedEnd;
       }
     }
     if (end <= start) end = Math.min(start + maximumSize, sentences.length);
@@ -314,9 +355,10 @@ async function processSentenceBatch(
   sentences: SpacyChunkingSentence[],
   batchNumber: number,
   batchTotal: number,
+  generateChunks: ChunkGenerator = generateStructuredChunks,
 ): Promise<ChunkingBlock[]> {
   try {
-    const rawResponse = await generateStructuredChunks(
+    const rawResponse = await generateChunks(
       sentences,
       batchNumber,
       batchTotal,
@@ -340,17 +382,27 @@ async function processSentenceBatch(
         left,
         batchNumber,
         batchTotal + 1,
+        generateChunks,
       );
       const rightBlocks = await processSentenceBatch(
         right,
         batchNumber + 1,
         batchTotal + 1,
+        generateChunks,
       );
       return [...leftBlocks, ...rightBlocks];
     }
     throw error;
   }
 }
+
+export const chunkingAgentTestUtils = {
+  enrichAndValidateBlocks,
+  formatSentencesForAgent,
+  generateStructuredChunks,
+  processSentenceBatch,
+  splitSentenceBatches,
+};
 
 export async function chunkTokenizedText({
   text,
