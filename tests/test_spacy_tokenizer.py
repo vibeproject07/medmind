@@ -108,6 +108,111 @@ class SpacyTokenizerTests(unittest.TestCase):
         self.assertEqual(first["segment_ids"], [0])
         self.assertEqual(second["segment_ids"], [1])
 
+    def test_uses_paragraphs_as_units_and_sentence_boundaries(self):
+        result = tokenize_payload(
+            TokenizeRequest(
+                text="Primeiro parágrafo sem pontuação\n\nSegundo parágrafo clínico.",
+                source_type="note",
+                content_format="plain",
+            )
+        )
+
+        first, second = result["sentences_in_text_order"]
+        self.assertEqual(result["sentence_total"], 2)
+        self.assertEqual([first["number"], second["number"]], [1, 2])
+        self.assertEqual(first["unit_ids"], ["paragraph:1"])
+        self.assertEqual(second["unit_ids"], ["paragraph:2"])
+        self.assertEqual(first["segment_ids"], [])
+        self.assertIsNone(first["start_time"])
+
+    def test_preserves_paragraph_units_with_trailing_whitespace(self):
+        result = tokenize_payload(
+            TokenizeRequest(
+                text="Primeiro parágrafo.   \n  \nSegundo parágrafo. \n",
+                source_type="note",
+                content_format="plain",
+            )
+        )
+
+        first, second = result["sentences_in_text_order"]
+        self.assertEqual(first["unit_ids"], ["paragraph:1"])
+        self.assertEqual(second["unit_ids"], ["paragraph:2"])
+
+    def test_preserves_paragraph_units_with_windows_line_endings(self):
+        result = tokenize_payload(
+            TokenizeRequest(
+                text="Primeiro parágrafo.\r\n \t\r\nSegundo parágrafo.",
+                source_type="note",
+                content_format="plain",
+            )
+        )
+
+        first, second = result["sentences_in_text_order"]
+        self.assertEqual([first["number"], second["number"]], [1, 2])
+        self.assertEqual(first["unit_ids"], ["paragraph:1"])
+        self.assertEqual(second["unit_ids"], ["paragraph:2"])
+
+    def test_uses_paragraph_fallback_only_for_unmapped_sentences(self):
+        result = tokenize_payload(
+            TokenizeRequest(
+                text="Primeira unidade.\n\nSegunda unidade.",
+                source_type="document",
+                segments=[
+                    {"id": "page:1", "start": 0, "end": 1, "text": "Primeira unidade."},
+                ],
+            )
+        )
+
+        first, second = result["sentences_in_text_order"]
+        self.assertEqual(first["unit_ids"], ["page:1"])
+        self.assertEqual(second["unit_ids"], ["paragraph:2"])
+
+    def test_preserves_all_source_units_crossed_by_one_sentence(self):
+        result = tokenize_payload(
+            TokenizeRequest(
+                text="Primeira parte e segunda parte.",
+                source_type="audio",
+                segments=[
+                    {"id": "segment:1", "start": 0, "end": 1, "text": "Primeira parte"},
+                    {"id": "segment:2", "start": 1, "end": 2, "text": "e segunda parte."},
+                ],
+            )
+        )
+
+        sentence = result["sentences_in_text_order"][0]
+        self.assertEqual(sentence["segment_ids"], ["segment:1", "segment:2"])
+        self.assertEqual(sentence["unit_ids"], ["segment:1", "segment:2"])
+
+    def test_does_not_split_after_common_medical_title_abbreviation(self):
+        result = tokenize_payload(
+            TokenizeRequest(
+                text="Dra. Silva avaliou a paciente. A conduta foi mantida.",
+                source_type="note",
+            )
+        )
+
+        self.assertEqual(
+            [sentence["text"] for sentence in result["sentences_in_text_order"]],
+            ["Dra. Silva avaliou a paciente.", "A conduta foi mantida."],
+        )
+
+    def test_rejects_invalid_segment_time_range_without_losing_paragraph_unit(self):
+        result = tokenize_payload(
+            TokenizeRequest(
+                text="Conteúdo clínico.",
+                source_type="audio",
+                segments=[
+                    {"id": 7, "start": 5, "end": 2, "text": "Conteúdo clínico."},
+                ],
+            )
+        )
+
+        sentence = result["sentences_in_text_order"][0]
+        self.assertIn("segment_invalid_time_range:0", result["warnings"])
+        self.assertEqual(sentence["segment_ids"], [])
+        self.assertEqual(sentence["unit_ids"], ["paragraph:1"])
+        self.assertIsNone(sentence["start_time"])
+
     def test_pages_detailed_output_and_signals_continuation(self):
         result = tokenize_payload(
             TokenizeRequest(text="Um dois três quatro cinco.", source_type="text")

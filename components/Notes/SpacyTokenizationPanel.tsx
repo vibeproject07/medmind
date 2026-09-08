@@ -32,8 +32,45 @@ type PaginationInfo = {
   has_more: boolean;
   next_page: number | null;
 };
+type AnalysisResponse = SpacyTokenizationResult & {
+  chunking?: ChunkingResult;
+  chunking_error?: string;
+};
 
 const PAGE_SIZE = 50;
+const chunkingRequestCache = new Map<string, Promise<AnalysisResponse>>();
+
+async function requestAnalysis(
+  token: string,
+  payload: Record<string, unknown>,
+  cacheKey: string | null,
+): Promise<AnalysisResponse> {
+  const execute = async () => {
+    const response = await fetch('/api/text/tokenize', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token.trim().replace(/^["']|["']$/g, '')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error(result.error || 'Não foi possível gerar a saída da spaCy.');
+    }
+    return result as AnalysisResponse;
+  };
+
+  if (!cacheKey) return execute();
+  const existing = chunkingRequestCache.get(cacheKey);
+  if (existing) return existing;
+  const request = execute().catch((error) => {
+    chunkingRequestCache.delete(cacheKey);
+    throw error;
+  });
+  chunkingRequestCache.set(cacheKey, request);
+  return request;
+}
 
 function formatNumber(value: number) {
   return new Intl.NumberFormat('pt-BR').format(value);
@@ -83,7 +120,7 @@ export default function SpacyTokenizationPanel({
   const [error, setError] = useState<string | null>(null);
 
   const fetchPage = useCallback(
-    async (requestedPage: number, includeChunks = false) => {
+    async (requestedPage: number, includeChunks = false, forceRefresh = false) => {
       if (!content.trim()) {
         setData(null);
         setError(null);
@@ -99,13 +136,13 @@ export default function SpacyTokenizationPanel({
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch('/api/text/tokenize', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token.trim().replace(/^["']|["']$/g, '')}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
+        const cacheKey = includeChunks
+          ? `${sourceType}:${content.length}:${content}`
+          : null;
+        if (forceRefresh && cacheKey) chunkingRequestCache.delete(cacheKey);
+        const result = await requestAnalysis(
+          token,
+          {
             text: content,
             sourceType,
             contentFormat: 'plain',
@@ -113,13 +150,10 @@ export default function SpacyTokenizationPanel({
             page: requestedPage,
             pageSize: PAGE_SIZE,
             includeChunks,
-          }),
-        });
-        const result = await response.json().catch(() => ({}));
-        if (!response.ok) {
-          throw new Error(result.error || 'Não foi possível gerar a saída da spaCy.');
-        }
-        setData(result as SpacyTokenizationResult);
+          },
+          cacheKey,
+        );
+        setData(result);
         if (includeChunks) {
           setChunking(result.chunking ?? null);
           setChunkingError(
@@ -388,7 +422,7 @@ export default function SpacyTokenizationPanel({
           </div>
           <button
             type="button"
-            onClick={() => void fetchPage(1, true)}
+            onClick={() => void fetchPage(1, true, true)}
             disabled={loading || !content.trim()}
             className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-indigo-200 text-indigo-700 hover:bg-indigo-50 disabled:opacity-50 transition text-xs font-semibold flex-shrink-0"
             title="Atualizar análise"

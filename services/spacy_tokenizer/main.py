@@ -7,6 +7,7 @@ from collections import Counter
 from typing import Any, Literal
 
 import spacy
+from spacy.language import Language
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
@@ -14,13 +15,58 @@ from pydantic import BaseModel, Field
 MAX_TEXT_CHARS = int(os.getenv("SPACY_TOKENIZER_MAX_CHARS", "500000"))
 MAX_TOKEN_COMPLEXITY = int(os.getenv("SPACY_TOKENIZER_MAX_TOKENS", "150000"))
 MAX_SENTENCE_COMPLEXITY = int(os.getenv("SPACY_TOKENIZER_MAX_SENTENCES", "50000"))
-PIPELINE_NAME = "spacy.blank.pt+sentencizer"
-SCHEMA_VERSION = "1.0"
+PIPELINE_NAME = "spacy.blank.pt+paragraph_boundaries+sentencizer+medical_abbreviations"
+SCHEMA_VERSION = "1.1"
 MAX_PAGE_SIZE = 1000
 MAX_SENTENCE_TOKENS_IN_RESPONSE = 500
 
+MEDICAL_ABBREVIATIONS = {
+    "dr",
+    "dra",
+    "drs",
+    "prof",
+    "profa",
+    "sr",
+    "sra",
+    "art",
+    "fig",
+    "pág",
+    "pag",
+}
+
+
+@Language.component("paragraph_sentence_boundaries")
+def paragraph_sentence_boundaries(doc):
+    previous_content_token = None
+    for token in doc:
+        if token.is_space:
+            continue
+        if previous_content_token is not None:
+            gap = doc.text[
+                previous_content_token.idx
+                + len(previous_content_token.text) : token.idx
+            ]
+            if re.search(r"\n\s*\n", gap):
+                token.is_sent_start = True
+        previous_content_token = token
+    return doc
+
+
+@Language.component("medical_abbreviation_boundaries")
+def medical_abbreviation_boundaries(doc):
+    for index in range(2, len(doc)):
+        if not doc[index].is_sent_start or doc[index - 1].text != ".":
+            continue
+        abbreviation = doc[index - 2].text.casefold()
+        if abbreviation in MEDICAL_ABBREVIATIONS:
+            doc[index].is_sent_start = False
+    return doc
+
+
 nlp = spacy.blank("pt")
+nlp.add_pipe("paragraph_sentence_boundaries")
 nlp.add_pipe("sentencizer")
+nlp.add_pipe("medical_abbreviation_boundaries")
 nlp.max_length = MAX_TEXT_CHARS + 1
 
 app = FastAPI(
@@ -56,6 +102,7 @@ class TokenizeRequest(BaseModel):
     ] = "sentences_text_order"
     page: int = Field(default=1, ge=1)
     page_size: int = Field(default=250, ge=1, le=MAX_PAGE_SIZE)
+    include_chunking_sentences: bool = False
 
 
 def _normalise_agent_output(text: str, content_format: str) -> tuple[str, list[str]]:
@@ -98,6 +145,9 @@ def _locate_segments(text: str, segments: list[SourceSegment]) -> tuple[list[dic
     cursor = 0
 
     for position, segment in enumerate(segments):
+        if segment.end < segment.start:
+            warnings.append(f"segment_invalid_time_range:{position}")
+            continue
         segment_text = segment.text.strip()
         if not segment_text:
             continue
@@ -142,6 +192,54 @@ def _sentence_timing(
     }
 
 
+def _locate_paragraph_units(text: str) -> list[dict[str, Any]]:
+    units: list[dict[str, Any]] = []
+    boundaries = list(re.finditer(r"\r?\n[ \t]*(?:\r?\n)+", text))
+    ranges: list[tuple[int, int]] = []
+    start = 0
+    for boundary in boundaries:
+        ranges.append((start, boundary.start()))
+        start = boundary.end()
+    ranges.append((start, len(text)))
+
+    for range_start, range_end in ranges:
+        raw_unit = text[range_start:range_end]
+        leading_whitespace = len(raw_unit) - len(raw_unit.lstrip())
+        trailing_end = len(raw_unit.rstrip())
+        if trailing_end <= leading_whitespace:
+            continue
+        start_char = range_start + leading_whitespace
+        end_char = range_start + trailing_end
+        units.append(
+            {
+                "id": f"paragraph:{len(units) + 1}",
+                "start_char": start_char,
+                "end_char": end_char,
+            }
+        )
+    return units
+
+
+def _sentence_unit_ids(
+    start_char: int,
+    end_char: int,
+    located_segments: list[dict[str, Any]],
+    paragraph_units: list[dict[str, Any]],
+) -> list[int | str]:
+    segment_ids = [
+        unit["id"]
+        for unit in located_segments
+        if unit["end_char"] > start_char and unit["start_char"] < end_char
+    ]
+    if segment_ids:
+        return segment_ids
+    return [
+        unit["id"]
+        for unit in paragraph_units
+        if unit["end_char"] > start_char and unit["start_char"] < end_char
+    ]
+
+
 def _validate_complexity(text: str) -> None:
     estimated_tokens = 0
     estimated_sentence_boundaries = 0
@@ -181,6 +279,7 @@ def tokenize_payload(payload: TokenizeRequest) -> dict[str, Any]:
             f"{MAX_TOKEN_COMPLEXITY} tokens. Divida o texto em chunks antes de continuar."
         )
     located_segments, segment_warnings = _locate_segments(text, payload.segments)
+    paragraph_units = _locate_paragraph_units(text)
     warnings.extend(segment_warnings)
 
     visible_tokens = [token for token in doc if not token.is_space]
@@ -189,7 +288,11 @@ def tokenize_payload(payload: TokenizeRequest) -> dict[str, Any]:
     }
 
     sentence_index_by_spacy_token: dict[int, int] = {}
-    sentence_spans = list(doc.sents)
+    sentence_spans = [
+        sentence
+        for sentence in doc.sents
+        if any(not token.is_space for token in sentence)
+    ]
     if len(sentence_spans) > MAX_SENTENCE_COMPLEXITY:
         raise ValueError(
             "O spaCy identificou mais de "
@@ -216,12 +319,16 @@ def tokenize_payload(payload: TokenizeRequest) -> dict[str, Any]:
     sentences: list[dict[str, Any]] = []
     for sentence_index, sentence in enumerate(sentence_spans):
         sentence_tokens = [token for token in sentence if not token.is_space]
-        if not sentence_tokens:
-            continue
 
         token_start = visible_index_by_spacy_index[sentence_tokens[0].i]
         token_end = visible_index_by_spacy_index[sentence_tokens[-1].i] + 1
         timing = _sentence_timing(sentence.start_char, sentence.end_char, located_segments)
+        unit_ids = _sentence_unit_ids(
+            sentence.start_char,
+            sentence.end_char,
+            located_segments,
+            paragraph_units,
+        )
         sentences.append(
             {
                 "index": sentence_index,
@@ -233,6 +340,7 @@ def tokenize_payload(payload: TokenizeRequest) -> dict[str, Any]:
                 "token_end": token_end,
                 "token_count": len(sentence_tokens),
                 "tokens": [token.text for token in sentence_tokens],
+                "unit_ids": unit_ids,
                 **timing,
             }
         )
@@ -313,6 +421,7 @@ def project_result(
     view: str,
     page: int,
     page_size: int,
+    include_chunking_sentences: bool = False,
 ) -> dict[str, Any]:
     collection_keys = {
         "tokens",
@@ -322,6 +431,22 @@ def project_result(
     }
     response = {key: value for key, value in result.items() if key not in collection_keys}
     response["view"] = view
+    if include_chunking_sentences:
+        response["chunking_sentences"] = [
+            {
+                "index": sentence["index"],
+                "number": sentence["number"],
+                "text": sentence["text"],
+                "start_char": sentence["start_char"],
+                "end_char": sentence["end_char"],
+                "token_count": sentence["token_count"],
+                "start_time": sentence["start_time"],
+                "end_time": sentence["end_time"],
+                "segment_ids": sentence["segment_ids"],
+                "unit_ids": sentence["unit_ids"],
+            }
+            for sentence in result["sentences_in_text_order"]
+        ]
 
     if view == "totals":
         response["pagination"] = {}
@@ -386,6 +511,12 @@ def health() -> dict[str, Any]:
 def tokenize(payload: TokenizeRequest) -> dict[str, Any]:
     try:
         result = tokenize_payload(payload)
-        return project_result(result, payload.view, payload.page, payload.page_size)
+        return project_result(
+            result,
+            payload.view,
+            payload.page,
+            payload.page_size,
+            payload.include_chunking_sentences,
+        )
     except ValueError as error:
         raise HTTPException(status_code=422, detail=str(error)) from error

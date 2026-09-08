@@ -88,6 +88,7 @@ export async function POST(request: NextRequest) {
 
     const sourceType = typeof body?.sourceType === 'string' ? body.sourceType : 'text';
     const contentFormat = body?.contentFormat === 'plain' ? 'plain' : 'auto';
+    const includeChunks = body?.includeChunks === true;
     const result = await tokenizeText({
       text,
       sourceType,
@@ -102,22 +103,25 @@ export async function POST(request: NextRequest) {
         Number.isInteger(body?.pageSize) && body.pageSize > 0
           ? Math.min(body.pageSize, 1000)
           : 250,
+      includeChunkingSentences: includeChunks,
     });
-    if (body?.includeChunks !== true) {
+    if (!includeChunks) {
       return NextResponse.json(result);
     }
 
+    const { chunking_sentences: _chunkingSentences, ...publicResult } = result;
     try {
       const { chunking } = await chunkTokenizedText({
         text,
         sourceType,
         segments,
         contentFormat,
+        tokenization: result,
       });
-      return NextResponse.json({ ...result, chunking });
+      return NextResponse.json({ ...publicResult, chunking });
     } catch (chunkingError) {
       return NextResponse.json({
-        ...result,
+        ...publicResult,
         chunking_error:
           chunkingError instanceof Error
             ? chunkingError.message

@@ -31,7 +31,22 @@ export interface SpacySentence {
   start_time: number | null;
   end_time: number | null;
   segment_ids: Array<number | string>;
+  unit_ids: Array<number | string>;
 }
+
+export type SpacyChunkingSentence = Pick<
+  SpacySentence,
+  | 'index'
+  | 'number'
+  | 'text'
+  | 'start_char'
+  | 'end_char'
+  | 'token_count'
+  | 'start_time'
+  | 'end_time'
+  | 'segment_ids'
+  | 'unit_ids'
+>;
 
 export interface SpacyTokenFrequency {
   token: string;
@@ -59,6 +74,7 @@ export interface SpacyTokenizationResult {
   sentences_in_text_order?: SpacySentence[];
   sentences_in_token_order?: SpacySentence[];
   token_frequencies?: SpacyTokenFrequency[];
+  chunking_sentences?: SpacyChunkingSentence[];
   pagination: Record<
     string,
     {
@@ -98,6 +114,7 @@ export interface TokenizeTextInput {
   view?: 'totals' | 'tokens' | 'sentences_text_order' | 'sentences_token_order' | 'mixed';
   page?: number;
   pageSize?: number;
+  includeChunkingSentences?: boolean;
 }
 
 const DEFAULT_TOKENIZER_URL = 'http://127.0.0.1:5002';
@@ -121,6 +138,7 @@ export async function tokenizeText({
   view = 'sentences_text_order',
   page = 1,
   pageSize = 250,
+  includeChunkingSentences = false,
 }: TokenizeTextInput): Promise<SpacyTokenizationResult> {
   if (!text?.trim()) {
     throw new Error('Não há texto para tokenizar.');
@@ -142,6 +160,7 @@ export async function tokenizeText({
         view,
         page,
         page_size: pageSize,
+        include_chunking_sentences: includeChunkingSentences,
       }),
       signal: controller.signal,
       cache: 'no-store',
