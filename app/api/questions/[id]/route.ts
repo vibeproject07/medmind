@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { triggerEnrichment } from '@/lib/enrichment';
+import { isQuestionInDeletedProva } from '@/lib/prova-soft-delete-schema';
 
 export const runtime = 'nodejs';
 
@@ -26,6 +27,8 @@ export async function GET(
       return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
     }
 
+    const isAdmin = user.role === 'admin' || user.role === 'manager';
+
     await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_decs_descriptors TEXT`);
     await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_habilities TEXT`);
     await query(`ALTER TABLE questions ADD COLUMN IF NOT EXISTS ai_question_themes TEXT`);
@@ -34,6 +37,14 @@ export async function GET(
 
     if (!question) {
       return NextResponse.json({ error: 'Questão não encontrada' }, { status: 404 });
+    }
+
+    // Non-admins cannot access questions from soft-deleted provas
+    if (!isAdmin && question.prova_id) {
+      const inDeleted = await isQuestionInDeletedProva(question.id, question.prova_id);
+      if (inDeleted) {
+        return NextResponse.json({ error: 'Questão não encontrada' }, { status: 404 });
+      }
     }
 
     const parseJsonField = (raw: unknown, fallback: unknown) => {

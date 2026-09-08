@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
+import { uploadBufferToS3, isS3Configured } from '@/lib/s3';
 
 export const runtime = 'nodejs';
 
@@ -98,8 +99,21 @@ export async function POST(req: NextRequest) {
         continue;
       }
 
-      const buffer = await file.arrayBuffer();
-      const base64 = `data:image/png;base64,${Buffer.from(buffer).toString('base64')}`;
+      const rawBuffer = Buffer.from(await file.arrayBuffer());
+      const mimeType = file.type || 'image/png';
+
+      // Upload to S3 if configured; otherwise fall back to base64
+      let imageValue: string;
+      if (isS3Configured()) {
+        try {
+          imageValue = await uploadBufferToS3(rawBuffer, mimeType);
+        } catch (uploadErr) {
+          console.error('[upload-images] S3 upload falhou, usando base64:', uploadErr);
+          imageValue = `data:${mimeType};base64,${rawBuffer.toString('base64')}`;
+        }
+      } else {
+        imageValue = `data:${mimeType};base64,${rawBuffer.toString('base64')}`;
+      }
 
       const existing = await query('SELECT images FROM questions WHERE id = $1', [questionId]);
       let currentImages: string[] = [];
@@ -113,7 +127,7 @@ export async function POST(req: NextRequest) {
         currentImages = [];
       }
 
-      const newImages = [...currentImages, base64];
+      const newImages = [...currentImages, imageValue];
       await query('UPDATE questions SET images = $1, updated_at = NOW() WHERE id = $2', [
         JSON.stringify(newImages),
         questionId,

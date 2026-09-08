@@ -6,13 +6,17 @@ TOKENIZER_PORT="${SPACY_TOKENIZER_PORT:-5002}"
 
 bash scripts/run-spacy-tokenizer.sh &
 TOKENIZER_PID=$!
+node --env-file-if-exists=.env.local scripts/note-source-worker.mjs &
+NOTE_SOURCE_PID=$!
 
 cleanup() {
   kill "$TOKENIZER_PID" 2>/dev/null || true
+  kill "$NOTE_SOURCE_PID" 2>/dev/null || true
   if [[ -n "${NEXT_PID:-}" ]]; then
     kill "$NEXT_PID" 2>/dev/null || true
   fi
   wait "$TOKENIZER_PID" 2>/dev/null || true
+  wait "$NOTE_SOURCE_PID" 2>/dev/null || true
   if [[ -n "${NEXT_PID:-}" ]]; then
     wait "$NEXT_PID" 2>/dev/null || true
   fi

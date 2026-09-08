@@ -54,7 +54,7 @@ export default function Sidebar() {
 
   const baseMenuItems = [
     { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard', roles: ['admin', 'manager', 'regular'] as UserRole[] },
-    { href: '/dashboard/notes', icon: FileText, label: 'Notas', roles: ['admin', 'manager', 'regular'] as UserRole[] },
+    { href: '/dashboard/notes', icon: FileText, label: 'Biblioteca', roles: ['admin', 'manager', 'regular'] as UserRole[] },
     { href: '/dashboard/questions', icon: HelpCircle, label: 'Questões', roles: ['admin', 'manager', 'regular'] as UserRole[] },
     { href: '/dashboard/simulados', icon: ClipboardList, label: 'Simulados', roles: ['admin', 'manager', 'regular'] as UserRole[] },
     { href: '/dashboard/provas', icon: BookOpen, label: 'Provas', roles: ['admin', 'manager', 'regular'] as UserRole[] },

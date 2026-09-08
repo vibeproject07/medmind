@@ -98,15 +98,8 @@ type = "unspecified"
 title = "Auditoria de texto de embedding — 5 termos de epilepsia"
 
 [[outputs]]
-id = "3Jo4SiH0Hte4sdcsOy7mY"
-uri = "file://exports/questions-20.sql"
-type = "unspecified"
-title = "Dump SQL com 20 questões"
-description = "Arquivo SQL com 20 questões reais de public.questions. Inclui conteúdo, alternativas, explicações, imagens e metadados; embedding foi omitido."
-
-[[outputs]]
-id = "0CyPGvcRVj_qm7Ic_uheI"
-uri = "file://exports/ai-agents-dump.sql"
-type = "unspecified"
-title = "Dump SQL de todos os agentes de IA"
-description = "Arquivo SQL com as 18 configurações de agentes de IA de public.ai_agents: prompts, modelo, temperatura e limites de tokens."
+id = "_Lb0_Z5l5g42PUD9cDTv7"
+uri = "file://reports/questoes_provas_imagens_urls.csv"
+type = "table"
+title = "Lista de questões de provas com URLs de imagens"
+description = "CSV com 10.757 URLs, uma por linha de imagem, incluindo todos os campos da prova, ID e número da questão, enunciado e índice da imagem."

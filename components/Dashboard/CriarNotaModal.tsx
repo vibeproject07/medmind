@@ -1,10 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { X } from 'lucide-react';
-import ResumoAulasModal from '@/components/Dashboard/ResumoAulasModal';
-import { saveDraftNote } from '@/lib/safe-local-storage';
+import { stagePendingNoteSources } from '@/lib/pending-note-sources';
 
 export const PENDING_TRANSFORM_FILES_KEY = 'pendingTransformFiles';
 
@@ -15,52 +14,26 @@ export interface CriarNotaModalProps {
 
 export default function CriarNotaModal({ isOpen, onClose }: CriarNotaModalProps) {
   const router = useRouter();
-  const [showResumoModal, setShowResumoModal] = useState(false);
-  const [resumoAccept, setResumoAccept] = useState<string>('');
-
-  const saveDraft = (resumoAulas?: { melhorado: string; original: string }) => {
-    if (typeof window !== 'undefined') {
-      try {
-        const existing = localStorage.getItem('draftNote');
-        let draft: Record<string, unknown> = {
-          title: '',
-          description: '',
-          informacoes: '',
-          tipoConteudo: '',
-          tags: [],
-          areasConhecimento: [],
-          assuntos: [],
-          images: [],
-        };
-        if (existing) {
-          draft = { ...draft, ...JSON.parse(existing) };
-        }
-        if (resumoAulas) {
-          draft.resumoAulas = resumoAulas;
-        }
-        saveDraftNote(draft);
-      } catch {
-        // Draft persistence is best-effort; it must not block opening a note.
-      }
-    }
-  };
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleEscreverNota = () => {
-    saveDraft();
     onClose();
     router.push('/dashboard/notes/new?tab=conteudo');
   };
 
-  const openResumoForType = (accept: string) => {
-    setResumoAccept(accept);
-    setShowResumoModal(true);
+  const openFilePicker = (accept: string) => {
+    if (!fileInputRef.current) return;
+    fileInputRef.current.accept = accept;
+    fileInputRef.current.click();
   };
 
-  const handleSaveResumoAndRedirect = (melhorado: string, original: string) => {
-    saveDraft({ melhorado, original });
-    setShowResumoModal(false);
+  const handleFiles = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(event.target.files ?? []);
+    event.target.value = '';
+    if (!files.length) return;
+    stagePendingNoteSources(files);
     onClose();
-    router.push('/dashboard/notes/new?tab=fontes');
+    router.push('/dashboard/notes/new?tab=conteudo');
   };
 
   if (!isOpen) return null;
@@ -69,7 +42,7 @@ export default function CriarNotaModal({ isOpen, onClose }: CriarNotaModalProps)
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg flex flex-col overflow-hidden">
         <div className="flex-shrink-0 border-b border-gray-200 px-6 py-4 flex justify-between items-center">
-          <h2 className="text-xl font-bold text-gray-800">Criar Nota</h2>
+          <h2 className="text-xl font-bold text-gray-800">Criar arquivo</h2>
           <button
             type="button"
             onClick={onClose}
@@ -80,8 +53,9 @@ export default function CriarNotaModal({ isOpen, onClose }: CriarNotaModalProps)
           </button>
         </div>
         <div className="p-6 space-y-6 min-h-[320px]">
+          <input ref={fileInputRef} type="file" multiple className="hidden" onChange={handleFiles} />
           <p className="text-lg text-gray-800">
-            Como deseja iniciar sua nota?
+            Como deseja iniciar seu arquivo?
           </p>
           <div className="flex flex-col gap-3 w-full">
             <button
@@ -89,51 +63,42 @@ export default function CriarNotaModal({ isOpen, onClose }: CriarNotaModalProps)
               onClick={handleEscreverNota}
               className="w-full px-4 py-3 bg-primary-600 text-white border border-primary-600 rounded-lg hover:bg-primary-700 hover:border-primary-700 transition font-medium text-center"
             >
-              Escrever Nota
+              Escrever arquivo
             </button>
             <button
               type="button"
-              onClick={() => openResumoForType('video/*')}
+              onClick={() => openFilePicker('video/*')}
               className="w-full px-4 py-3 bg-primary-600 text-white border border-primary-600 rounded-lg hover:bg-primary-700 hover:border-primary-700 transition font-medium text-center"
             >
               Vídeos
             </button>
             <button
               type="button"
-              onClick={() => openResumoForType('audio/*')}
+              onClick={() => openFilePicker('audio/*')}
               className="w-full px-4 py-3 bg-primary-600 text-white border border-primary-600 rounded-lg hover:bg-primary-700 hover:border-primary-700 transition font-medium text-center"
             >
               Áudios
             </button>
             <button
               type="button"
-              onClick={() => openResumoForType('image/*')}
+              onClick={() => openFilePicker('image/*')}
               className="w-full px-4 py-3 bg-primary-600 text-white border border-primary-600 rounded-lg hover:bg-primary-700 hover:border-primary-700 transition font-medium text-center"
             >
               Imagens
             </button>
             <button
               type="button"
-              onClick={() => openResumoForType('.pdf,.doc,.docx,.ppt,.pptx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,text/plain,text/html')}
+              onClick={() => openFilePicker('.pdf,.doc,.docx,.ppt,.pptx,.txt,.md,.csv,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,text/plain,text/html')}
               className="w-full px-4 py-3 bg-primary-600 text-white border border-primary-600 rounded-lg hover:bg-primary-700 hover:border-primary-700 transition font-medium text-center"
             >
               Outros arquivos
             </button>
           </div>
           <p className="text-base text-gray-800">
-            Faça upload de um arquivo para que nossos agentes possam criar uma nota para você.
+            Selecione uma fonte para visualizá-la, escrever o arquivo e completar suas informações antes de salvar.
           </p>
         </div>
       </div>
-
-      <ResumoAulasModal
-        isOpen={showResumoModal}
-        onClose={() => setShowResumoModal(false)}
-        title="Transformando Arquivos com IA"
-        accept={resumoAccept}
-        showContinueToNote
-        onSaveResumo={handleSaveResumoAndRedirect}
-      />
     </div>
   );
 }

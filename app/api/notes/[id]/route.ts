@@ -3,6 +3,7 @@ import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { triggerEnrichment } from '@/lib/enrichment';
 import { ensureNoteDeCsColumn, parseNoteAiDeCsDescriptors } from '@/lib/note-decs';
+import { ensureNoteMetadataSchema } from '@/lib/note-schema';
 
 export const runtime = 'nodejs';
 
@@ -94,6 +95,7 @@ export async function PUT(
     const {
       title,
       description,
+      tipo_conteudo,
       tags,
       images,
       areas_conhecimento,
@@ -107,11 +109,13 @@ export async function PUT(
       return NextResponse.json({ error: 'Título e descrição são obrigatórios' }, { status: 400 });
     }
 
+    await ensureNoteMetadataSchema();
+
     let noteCheck;
     if (user.role === 'admin') {
       noteCheck = (
         await query(
-          `SELECT id, tags, images, areas_conhecimento, assuntos,
+          `SELECT id, tipo_conteudo, tags, images, areas_conhecimento, assuntos,
                   fontes_resumo_melhorado, fontes_resumo_original, fontes_arquivos
            FROM notes WHERE id = $1`,
           [params.id],
@@ -120,7 +124,7 @@ export async function PUT(
     } else {
       noteCheck = (
         await query(
-          `SELECT id, tags, images, areas_conhecimento, assuntos,
+          `SELECT id, tipo_conteudo, tags, images, areas_conhecimento, assuntos,
                   fontes_resumo_melhorado, fontes_resumo_original, fontes_arquivos
            FROM notes WHERE id = $1 AND user_id = $2`,
           [params.id, user.id],
@@ -152,21 +156,24 @@ export async function PUT(
     const fontesResumoOriginal = hasField('fontes_resumo_original')
       ? fontes_resumo_original ?? null
       : noteCheck.fontes_resumo_original;
+    const tipoConteudo = hasField('tipo_conteudo')
+      ? tipo_conteudo ?? null
+      : noteCheck.tipo_conteudo;
 
     if (user.role === 'admin') {
       await query(`
         UPDATE notes
-        SET title = $1, description = $2, tags = $3, images = $4, areas_conhecimento = $5, assuntos = $6,
-            fontes_resumo_melhorado = $7, fontes_resumo_original = $8, fontes_arquivos = $9, updated_at = NOW()
-        WHERE id = $10
-      `, [title, description, tagsJson, imagesJson, areasConhecimentoJson, assuntosJson, fontesResumoMelhorado, fontesResumoOriginal, fontesArquivosJson, params.id]);
+        SET title = $1, description = $2, tipo_conteudo = $3, tags = $4, images = $5, areas_conhecimento = $6, assuntos = $7,
+            fontes_resumo_melhorado = $8, fontes_resumo_original = $9, fontes_arquivos = $10, updated_at = NOW()
+        WHERE id = $11
+      `, [title, description, tipoConteudo, tagsJson, imagesJson, areasConhecimentoJson, assuntosJson, fontesResumoMelhorado, fontesResumoOriginal, fontesArquivosJson, params.id]);
     } else {
       await query(`
         UPDATE notes
-        SET title = $1, description = $2, tags = $3, images = $4, areas_conhecimento = $5, assuntos = $6,
-            fontes_resumo_melhorado = $7, fontes_resumo_original = $8, fontes_arquivos = $9, updated_at = NOW()
-        WHERE id = $10 AND user_id = $11
-      `, [title, description, tagsJson, imagesJson, areasConhecimentoJson, assuntosJson, fontesResumoMelhorado, fontesResumoOriginal, fontesArquivosJson, params.id, user.id]);
+        SET title = $1, description = $2, tipo_conteudo = $3, tags = $4, images = $5, areas_conhecimento = $6, assuntos = $7,
+            fontes_resumo_melhorado = $8, fontes_resumo_original = $9, fontes_arquivos = $10, updated_at = NOW()
+        WHERE id = $11 AND user_id = $12
+      `, [title, description, tipoConteudo, tagsJson, imagesJson, areasConhecimentoJson, assuntosJson, fontesResumoMelhorado, fontesResumoOriginal, fontesArquivosJson, params.id, user.id]);
     }
 
     triggerEnrichment('note', parseInt(params.id));

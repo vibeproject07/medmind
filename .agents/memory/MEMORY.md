@@ -1,3 +1,5 @@
 - [Prova cache safety](prova-cache-safety.md) — Cache leve de prova sem imagens é somente leitura; edição espera a resposta atualizada da API.
 - [Post-merge dependency safety](post-merge-dependency-safety.md) — Use instalação incremental; `npm ci` pode apagar módulos antes de o firewall bloquear um pacote.
 - [NLP workload bounds](nlp-workload-bounds.md) — Fontes grandes devem usar chunking; não aumente limites do tokenizer para contornar rejeições.
+- [Next development assets](next-development-assets.md) — keep development and production build output separate to avoid missing chunks and unstyled previews.
+- [Workflow port detection](workflow-port-detection.md) — managed startup may time out even when the same command reaches Ready and serves port 5000.

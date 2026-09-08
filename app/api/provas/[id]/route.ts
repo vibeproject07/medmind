@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
+import { ensureProvaDeletedAtColumn } from '@/lib/prova-soft-delete-schema';
 
 export const runtime = 'nodejs';
 
@@ -20,14 +21,22 @@ export async function GET(
     const provaId = parseInt(params.id, 10);
     if (isNaN(provaId)) return NextResponse.json({ error: 'ID inválido' }, { status: 400 });
 
+    await ensureProvaDeletedAtColumn();
+    const isAdmin = user.role === 'admin' || user.role === 'manager';
+
     const provaRes = await query(
-      'SELECT id, nome, banca, regiao, ano, tipo, created_at FROM provas WHERE id = $1 LIMIT 1',
+      'SELECT id, nome, banca, regiao, ano, tipo, created_at, deleted_at FROM provas WHERE id = $1 LIMIT 1',
       [provaId]
     );
     if (provaRes.rows.length === 0) {
       return NextResponse.json({ error: 'Prova não encontrada' }, { status: 404 });
     }
     const prova = provaRes.rows[0];
+
+    // Non-admins cannot access soft-deleted provas
+    if (!isAdmin && prova.deleted_at) {
+      return NextResponse.json({ error: 'Prova não encontrada' }, { status: 404 });
+    }
 
     const questionsRes = await query(
       `SELECT id, statement, option_a, option_b, option_c, option_d, option_e,
@@ -47,6 +56,7 @@ export async function GET(
       ano:        prova.ano,
       tipo:       prova.tipo,
       created_at: prova.created_at,
+      ...(isAdmin ? { deleted: !!prova.deleted_at, deleted_at: prova.deleted_at ?? null } : {}),
       questions:  questionsRes.rows.map((q: Record<string, unknown>) => ({
         id:              q.id,
         numero_na_prova: q.numero_na_prova,
@@ -170,15 +180,11 @@ export async function PUT(
     return NextResponse.json({ error: 'Erro ao atualizar prova' }, { status: 500 });
   }
 }
-
-/**
- * DELETE /api/provas/[id]?mode=delete_questions|unlink_questions
- * - delete_questions (padrão): apaga as questões da prova e a prova
- * - unlink_questions: desvincula questões (prova_id=null) e apaga só a prova
- *
- * Excluir uma duplicata NÃO conserta a outra se o problema for localStorage/quota —
- * a correção de acesso é carregar via API. Mas remove o card duplicado da lista.
- */
+// DELETE /api/provas/[id]
+//   ?mode=soft_delete — marca deleted_at = NOW() (admin-only)
+//   ?mode=restore     — limpa deleted_at = NULL (admin-only)
+//   ?mode=delete_questions — apaga as questões da prova e a prova
+//   ?mode=unlink_questions — desvincula questões (prova_id=null) e apaga só a prova
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } },
@@ -191,25 +197,35 @@ export async function DELETE(
 
     const user = verifyToken(token);
     if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
-    if (user.role !== 'admin') {
+    if (user.role !== 'admin' && user.role !== 'manager') {
       return NextResponse.json({ error: 'Acesso negado. Apenas administradores.' }, { status: 403 });
     }
 
     const provaId = parseInt(params.id, 10);
     if (isNaN(provaId)) return NextResponse.json({ error: 'ID inválido' }, { status: 400 });
 
-    const mode = new URL(request.url).searchParams.get('mode') || 'delete_questions';
+    await ensureProvaDeletedAtColumn();
 
     const existing = await query('SELECT id, nome FROM provas WHERE id = $1', [provaId]);
     if (existing.rows.length === 0) {
       return NextResponse.json({ error: 'Prova não encontrada' }, { status: 404 });
     }
 
-    const countRes = await query(
-      'SELECT COUNT(*)::int AS n FROM questions WHERE prova_id = $1',
-      [provaId],
-    );
-    const questionCount = countRes.rows[0]?.n ?? 0;
+    const mode = request.nextUrl.searchParams.get('mode') ?? 'soft_delete';
+
+    if (mode === 'restore') {
+      await query('UPDATE provas SET deleted_at = NULL WHERE id = $1', [provaId]);
+      return NextResponse.json({ ok: true, deleted: false });
+    }
+
+    if (mode === 'soft_delete') {
+      await query('UPDATE provas SET deleted_at = NOW() WHERE id = $1', [provaId]);
+      return NextResponse.json({ ok: true, deleted: true });
+    }
+
+    if (mode !== 'unlink_questions' && mode !== 'delete_questions') {
+      return NextResponse.json({ error: 'Modo de exclusão inválido.' }, { status: 400 });
+    }
 
     if (mode === 'unlink_questions') {
       await query(
@@ -229,10 +245,9 @@ export async function DELETE(
       deleted_prova_id: provaId,
       nome: existing.rows[0].nome,
       mode,
-      questions_affected: questionCount,
     });
   } catch (error) {
-    console.error('Erro ao excluir prova:', error);
-    return NextResponse.json({ error: 'Erro ao excluir prova' }, { status: 500 });
+    console.error('Erro ao excluir/restaurar prova:', error);
+    return NextResponse.json({ error: 'Erro interno' }, { status: 500 });
   }
 }

@@ -12,11 +12,15 @@
     "init-db": "node scripts/init-db.js",
     "test-groq": "node scripts/test-groq.js",
     "test:groq-regressions": "rm -rf /tmp/medmind-groq-tests && tsc -p tests/tsconfig.groq.json && NODE_PATH=\"$PWD/node_modules\" node --test /tmp/medmind-groq-tests/tests/groq-stt-regressions.test.js",
+    "test:note-sources": "rm -rf /tmp/medmind-note-source-tests && tsc -p tests/tsconfig.note-sources.json && node --test /tmp/medmind-note-source-tests/tests/note-source-selection.test.js",
     "test:spacy": "bash scripts/run-python-with-spacy.sh -m unittest tests/test_spacy_tokenizer.py",
     "spacy:dev": "bash scripts/run-spacy-tokenizer.sh",
     "neon:setup": "node scripts/neon/seed.js"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1111.0",
+    "@aws-sdk/s3-presigned-post": "^3.1114.0",
+    "@aws-sdk/s3-request-presigner": "^3.1114.0",
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@google/genai": "^1.40.0",
     "@pinecone-database/pinecone": "^7.2.0",

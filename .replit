@@ -32,7 +32,6 @@ waitForPort = 5000
 
 [[ports]]
 localPort = 5000
-externalPort = 80
 
 [[ports]]
 localPort = 5001
@@ -79,3 +78,9 @@ build = ["npm", "run", "build"]
 [postMerge]
 path = "scripts/post-merge.sh"
 timeoutMs = 180000
+
+[userenv]
+
+[userenv.shared]
+AWS_REGION = "us-east-1"
+AWS_S3_BUCKET = "medmind-bucket-s3"

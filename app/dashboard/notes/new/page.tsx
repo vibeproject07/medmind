@@ -14,7 +14,17 @@ import {
   Link as LinkIcon, Loader2,
   AlertCircle, CheckCircle2, Save, Trash2, Sparkles, BookOpen,
 } from 'lucide-react';
-import { ASSUNTOS_BY_AREA } from '@/lib/areas-assuntos';
+import { uploadNoteSourceFile } from '@/components/Notes/NoteSourcesPanel';
+import PendingNoteSourcesPreview from '@/components/Notes/PendingNoteSourcesPreview';
+import TagAutocomplete from '@/components/Common/TagAutocomplete';
+import {
+  ASSUNTOS_BY_AREA,
+  AREAS_OPTIONS_DISPLAY,
+  fromDisplay,
+  toDisplayArea,
+  toDisplayAssunto,
+} from '@/lib/areas-assuntos';
+import { consumePendingNoteSources } from '@/lib/pending-note-sources';
 
 const AVAILABLE_TAGS = [
   'Acupuntura','Anestesiologia','Cirurgia Cardiovascular','Cirurgia Geral',
@@ -296,16 +306,15 @@ function NewNotePageContent() {
   const [formData, setFormData] = useState({
     title: '', informacoes: '', tipoConteudo: '',
     tags: [] as string[], areasConhecimento: [] as string[],
-    assuntos: [] as string[], images: [] as string[],
+    assuntos: [] as string[],
   });
   const [resumoAulas, setResumoAulas] = useState({ melhorado: '', original: '' });
   const [fontesArquivosNames, setFontesArquivosNames] = useState<string[]>([]);
+  const [pendingSourceFiles, setPendingSourceFiles] = useState<File[]>([]);
   const [classifExpanded, setClassifExpanded] = useState(true);
-  const [imagesExpanded, setImagesExpanded]   = useState(false);
   const [formLoading, setFormLoading]         = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
-  const fileInputRef      = useRef<HTMLInputElement>(null);
   const fonteFileInputRef = useRef<HTMLInputElement>(null);
 
   const assuntosOptions = useMemo(() => {
@@ -322,7 +331,6 @@ function NewNotePageContent() {
       formData.tags.length > 0 ||
       formData.areasConhecimento.length > 0 ||
       formData.assuntos.length > 0 ||
-      formData.images.length > 0 ||
       resumoAulas.melhorado.trim() ||
       resumoAulas.original.trim() ||
       fontesArquivosNames.length > 0
@@ -420,7 +428,7 @@ function NewNotePageContent() {
     if (typeof window === 'undefined') return;
     const hasContent =
       formData.title || formData.informacoes || formData.tags.length > 0 ||
-      formData.areasConhecimento.length > 0 || formData.images.length > 0 ||
+      formData.areasConhecimento.length > 0 ||
       resumoAulas.melhorado || resumoAulas.original;
     if (hasContent) saveDraftNote({ ...formData, resumoAulas, fontesArquivosNames });
     else removeDraftNote();
@@ -428,6 +436,23 @@ function NewNotePageContent() {
 
   // ── Inline source processing ─────────────────────────────────────────
   const processSource = async (files: File[], link: string) => {
+    // Arquivos não passam mais por IA antes de a nota existir. Eles são enviados
+    // diretamente ao S3 após o salvamento e podem ser processados depois, por fonte.
+    if (files.length > 0) {
+      const names = files.map((file) => file.name);
+      setProcessingError(null);
+      setPendingSourceFiles(files);
+      setFontesArquivosNames(names);
+      setSourceName(names.join(', '));
+      setFormData((current) => {
+        if (current.title.trim()) return current;
+        const baseName = files[0].name.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ').trim();
+        return { ...current, title: baseName || 'Nova nota' };
+      });
+      setStep(2);
+      return;
+    }
+
     const token = localStorage.getItem('token');
     if (!token) { setMessage({ type: 'error', text: 'Faça login para continuar.' }); return; }
     const name = files.length > 0 ? files.map((f) => f.name).join(', ') : link.trim();
@@ -441,6 +466,7 @@ function NewNotePageContent() {
       const result = await runSourceTransformation(files, link, token, setProcessingStatus);
       setResumoAulas({ melhorado: result.melhorado, original: result.original });
       setFontesArquivosNames(result.fileNames);
+      setPendingSourceFiles(files);
 
       // ── Generate AI title from processed content ─────────────────────
       if (result.melhorado.trim() || result.original.trim()) {
@@ -475,6 +501,14 @@ function NewNotePageContent() {
     if (succeeded) setStep(2);
   };
 
+  // Files selected from the global quick-create modal remain only in client
+  // memory until the user saves the note. This avoids encoding media in web
+  // storage while keeping the original file available for its local preview.
+  useEffect(() => {
+    const stagedFiles = consumePendingNoteSources();
+    if (stagedFiles.length > 0) void processSource(stagedFiles, '');
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const openFilePickerFor = (accept: string) => {
     if (fonteFileInputRef.current) {
       fonteFileInputRef.current.accept = accept;
@@ -494,17 +528,10 @@ function NewNotePageContent() {
     setStep(1);
   });
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    Array.from(e.target.files ?? []).forEach((file) => {
-      if (!file.type.startsWith('image/')) { setMessage({ type: 'error', text: 'Apenas arquivos de imagem são permitidos' }); return; }
-      const reader = new FileReader();
-      reader.onload = (ev) => setFormData((p) => ({ ...p, images: [...p.images, ev.target?.result as string] }));
-      reader.readAsDataURL(file);
-    });
-    if (fileInputRef.current) fileInputRef.current.value = '';
+  const removePendingSourceFile = (index: number) => {
+    setPendingSourceFiles((files) => files.filter((_, currentIndex) => currentIndex !== index));
+    setFontesArquivosNames((names) => names.filter((_, currentIndex) => currentIndex !== index));
   };
-
-  const removeImage = (i: number) => setFormData((p) => ({ ...p, images: p.images.filter((_, j) => j !== i) }));
 
   const handleSubmit = async (
     afterSave?: 'note' | 'list' | 'estudio',
@@ -527,17 +554,32 @@ function NewNotePageContent() {
         body: JSON.stringify({
           title: formData.title,
           description: formData.informacoes,
+          tipo_conteudo: formData.tipoConteudo || undefined,
           tags: formData.tags,
-          images: formData.images,
           areas_conhecimento: formData.areasConhecimento,
           assuntos: formData.assuntos,
           fontes_resumo_melhorado: resumoAulas.melhorado || undefined,
           fontes_resumo_original: resumoAulas.original || undefined,
-          fontes_arquivos: fontesArquivosNames.length > 0 ? fontesArquivosNames : undefined,
+          // New files are persisted in note_sources after the note exists. Keep this
+          // legacy field only for a non-file source such as an external link.
+          fontes_arquivos: pendingSourceFiles.length === 0 && fontesArquivosNames.length > 0
+            ? fontesArquivosNames
+            : undefined,
         }),
       });
       if (response.ok) {
         const noteData = await response.json();
+        // The note must exist before private source objects can be safely linked to it.
+        // A source failure never rolls back the saved note; the detail screen lets users retry.
+        const sourceUploadFailures: string[] = [];
+        for (const file of pendingSourceFiles) {
+          try {
+            await uploadNoteSourceFile(noteData.id, file, token);
+          } catch (sourceError) {
+            console.error('[notes] Falha ao salvar fonte no S3:', sourceError);
+            sourceUploadFailures.push(file.name);
+          }
+        }
         const selIds = localStorage.getItem('selectedQuestionIds');
         if (selIds) {
           try {
@@ -553,6 +595,16 @@ function NewNotePageContent() {
           } catch { /* ignore */ }
         }
         removeDraftNote();
+        if (sourceUploadFailures.length > 0) {
+          sessionStorage.setItem(
+            'noteSourceUploadWarning',
+            `A nota foi salva, mas ${sourceUploadFailures.join(', ')} não pôde ser enviado ao armazenamento privado.`,
+          );
+          sessionStorage.setItem(
+            'noteSourceRetryNames',
+            JSON.stringify({ noteId: noteData.id, fileNames: sourceUploadFailures }),
+          );
+        }
         if (afterSave === 'list') {
           router.push('/dashboard/notes');
         } else {
@@ -593,7 +645,7 @@ function NewNotePageContent() {
     <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-6">
       <div className="max-w-xl mx-auto space-y-6">
 
-        {/* ── Processing state ─────────────────────────────────────── */}
+        {/* ── Processing state (links legados) ─────────────────────── */}
         {processing && (
           <div className="rounded-xl border-2 border-primary-100 bg-primary-50/60 p-5 space-y-3">
             <div className="flex items-center gap-3">
@@ -636,16 +688,12 @@ function NewNotePageContent() {
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
               Adicionar fonte
             </p>
-            <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3">
-              Áudios grandes podem ser divididos em várias partes. Durante o processamento,
-              mostraremos o total de partes e uma estimativa de tempo; a transcrição e o ajuste
-              das minutagens podem levar alguns minutos.
-            </p>
 
             {/* Hidden file input */}
             <input
               ref={fonteFileInputRef}
               type="file"
+              multiple
               className="hidden"
               onChange={(e) => {
                 const selected = e.target.files;
@@ -711,15 +759,17 @@ function NewNotePageContent() {
           </div>
         )}
 
-        {/* Previous processed source info (if draft restored) */}
+        {/* Arquivos pendentes para envio após a criação da nota */}
         {!processing && fontesArquivosNames.length > 0 && (
           <div className="rounded-xl border border-primary-100 bg-primary-50/40 p-4 flex items-center gap-3">
             <CheckCircle2 className="w-4 h-4 text-primary-500 flex-shrink-0" />
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold text-primary-700">Fonte já processada</p>
-              <p className="text-xs text-primary-500 truncate">{fontesArquivosNames.join(', ')}</p>
+              <p className="text-xs font-semibold text-primary-700">Arquivos prontos para enviar</p>
+              <p className="text-xs text-primary-500 truncate">
+                {fontesArquivosNames.join(', ')} — serão enviados ao armazenamento privado ao salvar a nota.
+              </p>
             </div>
-            <button type="button" onClick={() => { setFontesArquivosNames([]); setResumoAulas({ melhorado: '', original: '' }); setFormData((p) => ({ ...p, informacoes: '' })); }}
+            <button type="button" onClick={() => { setFontesArquivosNames([]); setPendingSourceFiles([]); }}
               className="text-primary-400 hover:text-primary-600 transition flex-shrink-0" title="Remover fonte">
               <X className="w-4 h-4" />
             </button>
@@ -761,21 +811,79 @@ function NewNotePageContent() {
     </div>
   );
 
+  const renderNoteMetadata = () => (
+    <section className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm space-y-4">
+      <div>
+        <h2 className="text-sm font-semibold text-gray-800">Informações da nota</h2>
+        <p className="mt-0.5 text-xs text-gray-500">Organize a nota para encontrá-la e relacioná-la a questões depois.</p>
+      </div>
+
+      <div>
+        <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500">Tipo de conteúdo</label>
+        <input
+          type="text"
+          value={formData.tipoConteudo}
+          onChange={(event) => setFormData({ ...formData, tipoConteudo: event.target.value })}
+          placeholder="Ex.: resumo de aula, caso clínico, artigo"
+          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-700 focus:border-transparent focus:ring-2 focus:ring-primary-500"
+        />
+      </div>
+
+      <TagAutocomplete
+        label="Especialidade / tags"
+        options={availableTags}
+        selectedTags={formData.tags}
+        onChange={(tags) => setFormData({ ...formData, tags })}
+        onSaveNewTag={(tag) => {
+          if (!availableTags.includes(tag)) setAvailableTags((current) => [...current, tag]);
+        }}
+        placeholder="Digite para buscar tags…"
+      />
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500">Área do conhecimento</label>
+          <TagAutocomplete
+            options={AREAS_OPTIONS_DISPLAY}
+            selectedTags={formData.areasConhecimento.map(toDisplayArea)}
+            onChange={(tags) => setFormData({ ...formData, areasConhecimento: tags.map(fromDisplay) })}
+            onSaveNewTag={() => undefined}
+            placeholder="Selecione as áreas…"
+          />
+        </div>
+        <div>
+          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500">Assuntos</label>
+          <TagAutocomplete
+            options={assuntosOptions.map(toDisplayAssunto)}
+            selectedTags={formData.assuntos.map(toDisplayAssunto)}
+            onChange={(tags) => setFormData({ ...formData, assuntos: tags.map(fromDisplay) })}
+            onSaveNewTag={() => undefined}
+            placeholder={formData.areasConhecimento.length ? 'Selecione os assuntos…' : 'Selecione uma área primeiro'}
+          />
+        </div>
+      </div>
+
+      <p className="rounded-lg bg-gray-50 px-3 py-2 text-xs leading-relaxed text-gray-500">
+        Para adicionar imagens, vídeos, áudios ou documentos, use a etapa Fontes. Depois de salvar, você poderá incluir mais mídias diretamente na nota.
+      </p>
+    </section>
+  );
+
   const renderStep2 = () => (
     <div className="flex-1 min-h-0 flex flex-col md:flex-row">
       <div className="flex-1 min-h-0 flex flex-col min-w-0">
         {/* Fixed sub-header: title + action buttons */}
-        <div className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 border-b border-gray-200 bg-white">
+        <div className="flex-shrink-0 flex flex-col gap-2 px-4 py-2.5 border-b border-gray-200 bg-white sm:flex-row sm:items-center">
           <input
             type="text"
             value={formData.title}
             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
             placeholder="Título da nota"
             required
-            className="flex-1 min-w-0 text-base font-semibold bg-transparent border-0 focus:outline-none text-gray-800 placeholder:text-gray-300"
+            className="w-full min-w-0 flex-1 rounded-lg border border-gray-200 bg-white px-3 py-2 text-base font-semibold text-gray-800 placeholder:text-gray-400 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary-500 sm:border-0 sm:bg-transparent sm:px-0 sm:py-0"
             style={{ textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}
           />
-          <div className="flex items-center gap-1.5 flex-shrink-0">
+          <div className="flex w-full items-center justify-end gap-1.5 sm:w-auto sm:flex-shrink-0">
             <button
               type="button"
               onClick={requestOpenEstudio}
@@ -851,13 +959,25 @@ function NewNotePageContent() {
         {activePanel === 'estudio' ? (
           <div className="flex-1 min-h-0 overflow-y-auto md:hidden bg-white">{renderEstudioPanel()}</div>
         ) : (
-          <div className="flex-1 min-h-0 flex flex-col px-4 sm:px-6 py-3">
-            <textarea
-              value={formData.informacoes}
-              onChange={(e) => setFormData({ ...formData, informacoes: e.target.value })}
-              placeholder="Conteúdo da nota…"
-              className="flex-1 min-h-0 w-full bg-white border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm text-gray-700 resize-none leading-relaxed shadow-sm"
-            />
+          <div className="flex-1 min-h-0 overflow-y-auto px-4 py-3 sm:px-6">
+            <div className="mx-auto max-w-4xl space-y-4">
+              {pendingSourceFiles.length > 0 && (
+                <PendingNoteSourcesPreview files={pendingSourceFiles} onRemove={removePendingSourceFile} />
+              )}
+
+              <section className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+                <label className="mb-2 block text-sm font-semibold text-gray-800">Anotações <span className="font-normal text-gray-400">(opcional)</span></label>
+                <textarea
+                  value={formData.informacoes}
+                  onChange={(e) => setFormData({ ...formData, informacoes: e.target.value })}
+                  placeholder="Escreva observações, contexto, conclusões e o que desejar registrar sobre este material…"
+                  rows={8}
+                  className="min-h-64 w-full resize-y rounded-lg border border-gray-200 px-4 py-3 text-sm leading-relaxed text-gray-700 focus:border-transparent focus:ring-2 focus:ring-primary-500"
+                />
+              </section>
+
+              {renderNoteMetadata()}
+            </div>
           </div>
         )}
       </div>
@@ -918,7 +1038,7 @@ function NewNotePageContent() {
       {step === 1 && (
         <div className="flex-shrink-0 flex items-center gap-2 px-4 py-2 border-b border-gray-100 bg-gray-50/80">
           <Sparkles className="w-3.5 h-3.5 text-primary-500 flex-shrink-0" />
-          <span className="text-xs text-gray-500">O arquivo será transformado com IA em material de estudo</span>
+          <span className="text-xs text-gray-500">Salve a nota primeiro; depois você poderá processar cada arquivo com IA, se quiser.</span>
         </div>
       )}
 

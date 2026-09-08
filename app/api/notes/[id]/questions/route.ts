@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
+import { filterActiveQuestionIds } from '@/lib/prova-soft-delete-schema';
 
 export const runtime = 'nodejs';
 
@@ -42,13 +43,23 @@ export async function POST(
       return NextResponse.json({ error: 'Nota não encontrada' }, { status: 404 });
     }
 
-    if (note.user_id !== user.id && user.role !== 'admin') {
+    if (note.user_id !== user.id && user.role !== 'admin' && user.role !== 'manager') {
       return NextResponse.json({ error: 'Acesso negado' }, { status: 403 });
     }
 
+    const isAdmin = user.role === 'admin' || user.role === 'manager';
+
+    // Non-admins cannot link questions from soft-deleted provas
+    const numericIds: number[] = question_ids
+      .filter((id: unknown) => typeof id === 'number' || (typeof id === 'string' && !isNaN(parseInt(id))))
+      .map((id: unknown) => typeof id === 'number' ? id : parseInt(id as string));
+    const allowedIds = isAdmin ? numericIds : await filterActiveQuestionIds(numericIds);
+    const allowedSet = new Set(allowedIds);
+
     await query('DELETE FROM note_questions WHERE note_id = $1', [noteId]);
 
-    for (const questionId of question_ids) {
+    for (const questionId of numericIds) {
+      if (!allowedSet.has(questionId)) continue; // silently skip questions from deleted provas
       const questionExists = (await query('SELECT id FROM questions WHERE id = $1', [questionId])).rows[0];
       if (questionExists) {
         try {
@@ -100,17 +111,29 @@ export async function GET(
       return NextResponse.json({ error: 'Nota não encontrada' }, { status: 404 });
     }
 
-    if (note.user_id !== user.id && user.role !== 'admin') {
+    if (note.user_id !== user.id && user.role !== 'admin' && user.role !== 'manager') {
       return NextResponse.json({ error: 'Acesso negado' }, { status: 403 });
     }
 
-    const questions = (await query(`
-      SELECT q.*
-      FROM questions q
-      INNER JOIN note_questions nq ON q.id = nq.question_id
-      WHERE nq.note_id = $1
-      ORDER BY nq.created_at DESC
-    `, [noteId])).rows;
+    const isAdmin = user.role === 'admin' || user.role === 'manager';
+
+    // Non-admins do not see questions from soft-deleted provas
+    const questions = (await query(
+      isAdmin
+        ? `SELECT q.*
+           FROM questions q
+           INNER JOIN note_questions nq ON q.id = nq.question_id
+           WHERE nq.note_id = $1
+           ORDER BY nq.created_at DESC`
+        : `SELECT q.*
+           FROM questions q
+           INNER JOIN note_questions nq ON q.id = nq.question_id
+           LEFT JOIN provas p ON p.id = q.prova_id
+           WHERE nq.note_id = $1
+             AND (q.prova_id IS NULL OR p.deleted_at IS NULL)
+           ORDER BY nq.created_at DESC`,
+      [noteId],
+    )).rows;
 
     const questionsWithTags = questions.map((question: any) => ({
       id: question.id,

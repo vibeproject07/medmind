@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { triggerEnrichment } from '@/lib/enrichment';
+import { ensureNoteMetadataSchema } from '@/lib/note-schema';
 
 export const runtime = 'nodejs';
 
@@ -27,6 +28,8 @@ export async function GET(request: NextRequest) {
     const user = verifyToken(token);
     if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
 
+    await ensureNoteMetadataSchema();
+
     const { searchParams } = new URL(request.url);
     const filterRole      = searchParams.get('role');
     const filterCompanyId = searchParams.get('company_id');
@@ -47,7 +50,7 @@ export async function GET(request: NextRequest) {
 
     if (isAdmin) {
       baseSelect = `
-        SELECT n.id, n.title, n.description, n.tags, n.images,
+        SELECT n.id, n.title, n.description, n.tipo_conteudo, n.tags, n.images,
                n.areas_conhecimento, n.assuntos, n.is_favorited, n.is_system,
                n.created_at, n.updated_at, n.user_id,
                u.name  AS user_name,  u.email AS user_email,
@@ -63,7 +66,7 @@ export async function GET(request: NextRequest) {
       if (filterCompanyId) { baseWhere += ` AND u.company_id = $${paramIdx++}`;      params.push(parseInt(filterCompanyId)); }
     } else {
       baseSelect = `
-        SELECT n.id, n.title, n.description, n.tags, n.images,
+        SELECT n.id, n.title, n.description, n.tipo_conteudo, n.tags, n.images,
                n.areas_conhecimento, n.assuntos, n.is_favorited, n.is_system,
                n.created_at, n.updated_at, n.user_id,
                u.name  AS user_name,  u.email AS user_email,
@@ -121,6 +124,7 @@ export async function GET(request: NextRequest) {
       id:                 note.id,
       title:              note.title,
       description:        note.description,
+      tipo_conteudo:      note.tipo_conteudo ?? null,
       tags:               note.tags               ? JSON.parse(note.tags)               : [],
       images:             note.images             ? JSON.parse(note.images)             : [],
       areas_conhecimento: note.areas_conhecimento ? JSON.parse(note.areas_conhecimento) : [],
@@ -147,7 +151,7 @@ export async function GET(request: NextRequest) {
       const w = ins.rows[0];
       return NextResponse.json({
         notes: [{
-          id: w.id, title: w.title, description: w.description,
+          id: w.id, title: w.title, description: w.description, tipo_conteudo: null,
           tags: ['Tutorial'], images: [], areas_conhecimento: [], assuntos: [],
           is_favorited: false, is_system: true,
           created_at: w.created_at, updated_at: w.updated_at, user_id: w.user_id,
@@ -179,11 +183,11 @@ export async function POST(request: NextRequest) {
     if (!user) return NextResponse.json({ error: 'Token inválido' }, { status: 401 });
 
     const body = await request.json();
-    const { title, description, tags, images, areas_conhecimento, assuntos,
+    const { title, description, tipo_conteudo, tags, images, areas_conhecimento, assuntos,
             question_ids, fontes_resumo_melhorado, fontes_resumo_original, fontes_arquivos } = body;
 
-    if (!title || !description)
-      return NextResponse.json({ error: 'Título e descrição são obrigatórios' }, { status: 400 });
+    if (!title || !String(title).trim())
+      return NextResponse.json({ error: 'O título é obrigatório' }, { status: 400 });
 
     const tagsJson              = tags               && Array.isArray(tags)               ? JSON.stringify(tags)               : null;
     const imagesJson            = images             && Array.isArray(images)             ? JSON.stringify(images)             : null;
@@ -191,12 +195,15 @@ export async function POST(request: NextRequest) {
     const assuntosJson          = assuntos           && Array.isArray(assuntos)           ? JSON.stringify(assuntos)           : null;
     const fontesArquivosJson    = fontes_arquivos    && Array.isArray(fontes_arquivos)    ? JSON.stringify(fontes_arquivos)    : null;
 
+    await ensureNoteMetadataSchema();
+
     const result = await query(
-      `INSERT INTO notes (user_id, title, description, tags, images, areas_conhecimento, assuntos,
+      `INSERT INTO notes (user_id, title, description, tipo_conteudo, tags, images, areas_conhecimento, assuntos,
                           fontes_resumo_melhorado, fontes_resumo_original, fontes_arquivos)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING id`,
-      [user.id, title, description, tagsJson, imagesJson, areasConhecimentoJson, assuntosJson,
-       fontes_resumo_melhorado ?? null, fontes_resumo_original ?? null, fontesArquivosJson],
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING id`,
+       [user.id, String(title).trim(), typeof description === 'string' ? description : '', tipo_conteudo || null,
+        tagsJson, imagesJson, areasConhecimentoJson, assuntosJson,
+        fontes_resumo_melhorado ?? null, fontes_resumo_original ?? null, fontesArquivosJson],
     );
 
     const noteId = result.rows[0].id;

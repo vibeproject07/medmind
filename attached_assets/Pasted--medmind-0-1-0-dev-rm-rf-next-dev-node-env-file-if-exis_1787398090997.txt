@@ -1,0 +1,135 @@
+
+> medmind@0.1.0 dev
+> rm -rf .next-dev && (node --env-file-if-exists=.env.local scripts/note-source-worker.mjs & worker=$!; trap 'kill $worker' EXIT INT TERM; WATCHPACK_POLLING=true CHOKIDAR_USEPOLLING=true next dev -p 5000 -H 0.0.0.0)
+
+   ▲ Next.js 14.0.4
+   - Local:        http://localhost:5000
+   - Network:      http://0.0.0.0:5000
+   - Environments: .env.local
+
+ ✓ Ready in 4.6s
+ ✓ Compiled /middleware in 448ms (64 modules)
+ ○ Compiling /api/internal/note-source-worker ...
+ ⚠ ./node_modules/@ffmpeg-installer/ffmpeg/index.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@ffmpeg-installer/ffmpeg/index.js
+./lib/groq-stt.ts
+./lib/note-source-processing.ts
+./app/api/internal/note-source-worker/route.ts
+
+./node_modules/fluent-ffmpeg/lib/options/misc.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/fluent-ffmpeg/lib/options/misc.js
+./node_modules/fluent-ffmpeg/lib/fluent-ffmpeg.js
+./node_modules/fluent-ffmpeg/index.js
+./lib/groq-stt.ts
+./lib/note-source-processing.ts
+./app/api/internal/note-source-worker/route.ts
+ ⚠ ./node_modules/@ffmpeg-installer/ffmpeg/index.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@ffmpeg-installer/ffmpeg/index.js
+./lib/groq-stt.ts
+./lib/note-source-processing.ts
+./app/api/internal/note-source-worker/route.ts
+
+./node_modules/fluent-ffmpeg/lib/options/misc.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/fluent-ffmpeg/lib/options/misc.js
+./node_modules/fluent-ffmpeg/lib/fluent-ffmpeg.js
+./node_modules/fluent-ffmpeg/index.js
+./lib/groq-stt.ts
+./lib/note-source-processing.ts
+./app/api/internal/note-source-worker/route.ts
+Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ ⚠ ./node_modules/@ffmpeg-installer/ffmpeg/index.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@ffmpeg-installer/ffmpeg/index.js
+./lib/groq-stt.ts
+./lib/note-source-processing.ts
+./app/api/internal/note-source-worker/route.ts
+
+./node_modules/fluent-ffmpeg/lib/options/misc.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/fluent-ffmpeg/lib/options/misc.js
+./node_modules/fluent-ffmpeg/lib/fluent-ffmpeg.js
+./node_modules/fluent-ffmpeg/index.js
+./lib/groq-stt.ts
+./lib/note-source-processing.ts
+./app/api/internal/note-source-worker/route.ts
+ ⚠ Unsupported metadata viewport is configured in metadata export in /. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ ./node_modules/@ffmpeg-installer/ffmpeg/index.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@ffmpeg-installer/ffmpeg/index.js
+./lib/groq-stt.ts
+./lib/note-source-processing.ts
+./app/api/internal/note-source-worker/route.ts
+
+./node_modules/fluent-ffmpeg/lib/options/misc.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/fluent-ffmpeg/lib/options/misc.js
+./node_modules/fluent-ffmpeg/lib/fluent-ffmpeg.js
+./node_modules/fluent-ffmpeg/index.js
+./lib/groq-stt.ts
+./lib/note-source-processing.ts
+./app/api/internal/note-source-worker/route.ts
+ ⚠ Unsupported metadata viewport is configured in metadata export in /. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
+ ⚠ ./node_modules/@ffmpeg-installer/ffmpeg/index.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@ffmpeg-installer/ffmpeg/index.js
+./lib/groq-stt.ts
+./lib/note-source-processing.ts
+./app/api/internal/note-source-worker/route.ts
+
+./node_modules/fluent-ffmpeg/lib/options/misc.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/fluent-ffmpeg/lib/options/misc.js
+./node_modules/fluent-ffmpeg/lib/fluent-ffmpeg.js
+./node_modules/fluent-ffmpeg/index.js
+./lib/groq-stt.ts
+./lib/note-source-processing.ts
+./app/api/internal/note-source-worker/route.ts
+ ⚠ ./node_modules/@ffmpeg-installer/ffmpeg/index.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/@ffmpeg-installer/ffmpeg/index.js
+./lib/groq-stt.ts
+./lib/note-source-processing.ts
+./app/api/internal/note-source-worker/route.ts
+
+./node_modules/fluent-ffmpeg/lib/options/misc.js
+Critical dependency: the request of a dependency is an expression
+
+Import trace for requested module:
+./node_modules/fluent-ffmpeg/lib/options/misc.js
+./node_modules/fluent-ffmpeg/lib/fluent-ffmpeg.js
+./node_modules/fluent-ffmpeg/index.js
+./lib/groq-stt.ts
+./lib/note-source-processing.ts
+./app/api/internal/note-source-worker/route.ts
+ ⚠ Unsupported metadata viewport is configured in metadata export in /dashboard/notes. Please move it to viewport export instead.
+Read more: https://nextjs.org/docs/app/api-reference/functions/generate-viewport
