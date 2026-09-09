@@ -12,10 +12,10 @@ import {
 } from '@/lib/groq-stt';
 import {
   summarizeTokenization,
-  tokenizeText,
   type SpacyTokenizationSummary,
 } from '@/lib/spacy-tokenizer';
-import type { ChunkingResult } from '@/lib/chunking-agent';
+import { chunkTokenizedText, type ChunkingResult } from '@/lib/chunking-agent';
+import { persistProcessingPipeline } from '@/lib/content-processing-storage';
 
 export const runtime = 'nodejs';
 
@@ -80,10 +80,12 @@ type LinkResult = {
   partCount?: number;
   tokenization: SpacyTokenizationSummary;
   chunking?: ChunkingResult;
+  processing_run_id: string;
 };
 
 async function processLink(
   url: string,
+  userId: number,
   onProgress?: GroqProgressCallback,
 ): Promise<LinkResult> {
   const normalizedUrl = await normalizeCloudStorageUrl(url);
@@ -102,17 +104,34 @@ async function processLink(
         .map((segment) => segment.text.trim())
         .filter(Boolean)
         .join('\n\n') || result.rawText || result.text;
-    const tokenization = await tokenizeText({
+    const { tokenization, chunking } = await chunkTokenizedText({
       text: canonicalText,
       sourceType: result.videoConvertedToAudio ? 'video' : 'audio',
       segments: result.segments,
       contentFormat: 'plain',
-      view: 'sentences_text_order',
+    });
+    const processingRunId = await persistProcessingPipeline({
+      userId,
+      sourceType: result.videoConvertedToAudio ? 'video' : 'audio',
+      sourceName: downloaded.filename,
+      extractionText: canonicalText,
+      processedText: canonicalText,
+      extractionMetadata: {
+        url,
+        originalSize: result.originalSize,
+        extractedSize: result.extractedSize,
+        duration: result.duration,
+        partCount: result.partCount,
+      },
+      tokenization,
+      chunking,
     });
     return {
       ...result,
       rawText: canonicalText,
       tokenization: summarizeTokenization(tokenization),
+      chunking,
+      processing_run_id: processingRunId,
       sourceType: result.videoConvertedToAudio ? 'video' : 'audio',
       filename: downloaded.filename,
     };
@@ -130,14 +149,26 @@ async function processLink(
     message: 'Enviando o arquivo do link para o agente de extração abrangente.',
   });
   const result = await processWithBroadFileExtraction(downloaded.buffer, mimeType);
+  const processingRunId = await persistProcessingPipeline({
+    userId,
+    sourceType: mimeType.startsWith('image/') ? 'image' : 'document',
+    sourceName: downloaded.filename,
+    extractionText: result.originalText ?? result.text,
+    processedText: result.text,
+    extractionMetadata: { url, mimeType, sizeBytes: downloaded.buffer.length },
+    tokenization: result.tokenizationData,
+    chunking: result.chunking,
+  });
+  const { tokenizationData: _tokenizationData, ...publicResult } = result;
   return {
-    ...result,
+    ...publicResult,
     sourceType: mimeType.startsWith('image/') ? 'image' : 'document',
     filename: downloaded.filename,
+    processing_run_id: processingRunId,
   };
 }
 
-function streamLinkProcessing(url: string): Response {
+function streamLinkProcessing(url: string, userId: number): Response {
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
     start(controller) {
@@ -148,7 +179,7 @@ function streamLinkProcessing(url: string): Response {
         send({ type: 'progress', progress });
       };
 
-      processLink(url, onProgress)
+      processLink(url, userId, onProgress)
         .then((result) => send({ type: 'complete', result }))
         .catch((error) => {
           send({
@@ -174,7 +205,8 @@ export async function POST(request: NextRequest) {
     const authHeader = request.headers.get('authorization');
     let token = authHeader?.replace('Bearer ', '') || request.cookies.get('token')?.value;
     if (token) token = token.trim().replace(/^["']|["']$/g, '');
-    if (!token || !verifyToken(token)) {
+    const user = token ? verifyToken(token) : null;
+    if (!user) {
       return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
     }
 
@@ -188,10 +220,10 @@ export async function POST(request: NextRequest) {
     }
 
     if (request.headers.get('accept')?.includes(STREAM_CONTENT_TYPE)) {
-      return streamLinkProcessing(url);
+      return streamLinkProcessing(url, Number(user.id));
     }
 
-    return NextResponse.json(await processLink(url));
+    return NextResponse.json(await processLink(url, Number(user.id)));
   } catch (error) {
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Erro ao processar o link.' },

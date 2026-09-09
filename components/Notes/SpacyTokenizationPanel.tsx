@@ -35,6 +35,7 @@ type PaginationInfo = {
 type AnalysisResponse = SpacyTokenizationResult & {
   chunking?: ChunkingResult;
   chunking_error?: string;
+  processing_run_id?: string;
 };
 
 const PAGE_SIZE = 50;
@@ -107,9 +108,11 @@ function Timestamp({ sentence }: { sentence: SpacySentence }) {
 export default function SpacyTokenizationPanel({
   content,
   sourceType = 'note',
+  noteId,
 }: {
   content: string;
   sourceType?: string;
+  noteId?: number;
 }) {
   const [data, setData] = useState<SpacyTokenizationResult | null>(null);
   const [chunking, setChunking] = useState<ChunkingResult | null>(null);
@@ -150,6 +153,7 @@ export default function SpacyTokenizationPanel({
             page: requestedPage,
             pageSize: PAGE_SIZE,
             includeChunks,
+            noteId,
           },
           cacheKey,
         );
@@ -173,7 +177,7 @@ export default function SpacyTokenizationPanel({
         setLoading(false);
       }
     },
-    [content, sourceType],
+    [content, sourceType, noteId],
   );
 
   useEffect(() => {

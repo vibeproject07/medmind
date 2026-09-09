@@ -681,6 +681,7 @@ export default function NoteDetailPage() {
             <SpacyTokenizationPanel
               content={note.description || ''}
               sourceType={note.tipo_conteudo || 'note'}
+              noteId={note.id}
             />
           )}
 

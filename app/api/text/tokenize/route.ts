@@ -6,6 +6,8 @@ import {
   type SpacySourceSegment,
 } from '@/lib/spacy-tokenizer';
 import { chunkTokenizedText } from '@/lib/chunking-agent';
+import { persistProcessingPipeline } from '@/lib/content-processing-storage';
+import { query } from '@/lib/db';
 
 export const runtime = 'nodejs';
 
@@ -118,7 +120,35 @@ export async function POST(request: NextRequest) {
         contentFormat,
         tokenization: result,
       });
-      return NextResponse.json({ ...publicResult, chunking });
+      const requestedNoteId = Number(body?.noteId);
+      let noteId: number | null = null;
+      if (Number.isInteger(requestedNoteId) && requestedNoteId > 0) {
+        const accessible = (
+          await query(
+            user.role === 'admin'
+              ? 'SELECT id FROM notes WHERE id = $1'
+              : 'SELECT id FROM notes WHERE id = $1 AND user_id = $2',
+            user.role === 'admin' ? [requestedNoteId] : [requestedNoteId, Number(user.id)],
+          )
+        ).rows[0];
+        if (accessible) noteId = requestedNoteId;
+      }
+      const processingRunId = await persistProcessingPipeline({
+        userId: Number(user.id),
+        noteId,
+        sourceType,
+        sourceName: noteId ? `note:${noteId}` : 'admin-analysis',
+        extractionText: text,
+        processedText: text,
+        extractionMetadata: { origin: 'admin_note_analysis' },
+        tokenization: result,
+        chunking,
+      });
+      return NextResponse.json({
+        ...publicResult,
+        chunking,
+        processing_run_id: processingRunId,
+      });
     } catch (chunkingError) {
       return NextResponse.json({
         ...publicResult,

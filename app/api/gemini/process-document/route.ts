@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/jwt';
 import { processWithBroadFileExtraction } from '@/lib/broad-file-extraction';
+import { persistProcessingPipeline } from '@/lib/content-processing-storage';
 
 export const runtime = 'nodejs';
 
@@ -82,14 +83,37 @@ export async function POST(request: NextRequest) {
     if (extractType) {
       try {
         const result = await processWithBroadFileExtraction(buffer, mimeType);
-        return NextResponse.json(result);
+        const processingRunId = await persistProcessingPipeline({
+          userId: Number(user.id),
+          sourceType: mimeType.startsWith('image/') ? 'image' : 'document',
+          sourceName: file.name,
+          extractionText: result.originalText ?? result.text,
+          processedText: result.text,
+          extractionMetadata: { mimeType, sizeBytes: file.size },
+          tokenization: result.tokenizationData,
+          chunking: result.chunking,
+        });
+        const { tokenizationData: _tokenizationData, ...publicResult } = result;
+        return NextResponse.json({ ...publicResult, processing_run_id: processingRunId });
       } catch (extractErr) {
         const msg = extractErr instanceof Error ? extractErr.message : 'Erro ao extrair texto do arquivo.';
         return NextResponse.json({ error: msg }, { status: 422 });
       }
     }
 
-    return NextResponse.json(await processWithBroadFileExtraction(buffer, mimeType));
+    const result = await processWithBroadFileExtraction(buffer, mimeType);
+    const processingRunId = await persistProcessingPipeline({
+      userId: Number(user.id),
+      sourceType: mimeType.startsWith('image/') ? 'image' : 'document',
+      sourceName: file.name,
+      extractionText: result.originalText ?? result.text,
+      processedText: result.text,
+      extractionMetadata: { mimeType, sizeBytes: file.size },
+      tokenization: result.tokenizationData,
+      chunking: result.chunking,
+    });
+    const { tokenizationData: _tokenizationData, ...publicResult } = result;
+    return NextResponse.json({ ...publicResult, processing_run_id: processingRunId });
   } catch (error: unknown) {
     let message = 'Erro ao processar o documento.';
     if (error instanceof Error) {

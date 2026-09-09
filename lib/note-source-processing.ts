@@ -1,30 +1,19 @@
 import { query } from '@/lib/db';
 import { readSourceObject } from '@/lib/s3';
-import { geminiProcessDocument, geminiTransformTranscription } from '@/lib/gemini';
-import { extractTextFromDocx, extractTextFromPptx } from '@/lib/document-extract';
+import { geminiTransformTranscription } from '@/lib/gemini';
 import {
-  extractAudioFromVideo,
-  groqTranscribeFile,
-  groqTranscribeLargeFile,
-  isVideoFile,
   MAX_SIZE_FOR_CHUNKED_TRANSCRIPTION,
+  transcribeMediaBuffer,
 } from '@/lib/groq-stt';
 import { ensureNoteSourcesSchema } from '@/lib/note-sources';
 import crypto from 'crypto';
+import { processWithBroadFileExtraction } from '@/lib/broad-file-extraction';
+import { chunkTokenizedText, type ChunkingResult } from '@/lib/chunking-agent';
+import type { SpacyTokenizationResult } from '@/lib/spacy-tokenizer';
+import { persistProcessingPipeline } from '@/lib/content-processing-storage';
 
-const MAX_SINGLE_FILE_SIZE = 25 * 1024 * 1024;
 const MAX_DOCUMENT_PROCESS_BYTES = 30 * 1024 * 1024;
 const MAX_TEXT_PROCESS_BYTES = 5 * 1024 * 1024;
-
-const DOCX_TYPES = new Set([
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  'application/msword',
-]);
-
-const PPTX_TYPES = new Set([
-  'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-  'application/vnd.ms-powerpoint',
-]);
 
 type ProcessingSource = {
   id: number;
@@ -34,6 +23,8 @@ type ProcessingSource = {
   size_bytes: number;
   category: 'document' | 'text' | 'image' | 'audio' | 'video';
   processing_claim_id: string;
+  note_id: number;
+  user_id: number;
 };
 
 const PROCESSING_LEASE_HOURS = 2;
@@ -60,7 +51,16 @@ function userSafeError(error: unknown): string {
   return message.slice(0, 600);
 }
 
-async function processSource(source: ProcessingSource): Promise<{ originalText?: string; result: string }> {
+type ProcessedSourceOutput = {
+  originalText?: string;
+  result: string;
+  pipelineText: string;
+  tokenization: SpacyTokenizationResult;
+  chunking: ChunkingResult;
+  extractionMetadata?: Record<string, unknown>;
+};
+
+async function processSource(source: ProcessingSource): Promise<ProcessedSourceOutput> {
   const maximum = maxProcessBytes(source);
   if (Number(source.size_bytes) > maximum) {
     throw new Error(
@@ -73,24 +73,35 @@ async function processSource(source: ProcessingSource): Promise<{ originalText?:
 
   if (source.category === 'audio' || source.category === 'video') {
     if (!process.env.GROQ_API_KEY) throw new Error('Serviço de transcrição não configurado.');
-
-    let audio = buffer;
-    let filename = source.original_name;
-    if (isVideoFile(filename, mimeType)) {
-      const extracted = await extractAudioFromVideo(buffer, filename);
-      audio = Buffer.from(extracted.audioBuffer);
-      filename = extracted.audioFilename;
-    }
-
-    const transcription = audio.length > MAX_SINGLE_FILE_SIZE
-      ? await groqTranscribeLargeFile(audio, filename)
-      : await groqTranscribeFile(audio, filename);
+    const transcription = await transcribeMediaBuffer(buffer, source.original_name, mimeType);
+    const originalText =
+      transcription.segments.map((segment) => segment.text.trim()).filter(Boolean).join('\n\n') ||
+      transcription.rawText ||
+      transcription.text;
     const result = await geminiTransformTranscription({
-      transcription: transcription.text,
+      transcription: originalText,
       instruction: 'Resuma a transcrição em material de estudo claro, organizado e em português do Brasil.',
       agentKey: 'ajuste_transcricao',
     });
-    return { originalText: transcription.text, result };
+    const pipeline = await chunkTokenizedText({
+      text: originalText,
+      sourceType: transcription.videoConvertedToAudio ? 'video' : 'audio',
+      segments: transcription.segments,
+      contentFormat: 'plain',
+    });
+    return {
+      originalText,
+      result,
+      pipelineText: originalText,
+      ...pipeline,
+      extractionMetadata: {
+        originalSize: transcription.originalSize,
+        extractedSize: transcription.extractedSize,
+        duration: transcription.duration,
+        partCount: transcription.partCount,
+        videoConvertedToAudio: transcription.videoConvertedToAudio,
+      },
+    };
   }
 
   if (source.category === 'text') {
@@ -100,35 +111,23 @@ async function processSource(source: ProcessingSource): Promise<{ originalText?:
       instruction: 'Organize o conteúdo em material de estudo claro, estruturado e em português do Brasil.',
       agentKey: 'ajuste_transcricao',
     });
-    return { originalText, result };
-  }
-
-  let originalText: string | undefined;
-  if (DOCX_TYPES.has(mimeType)) {
-    originalText = await extractTextFromDocx(buffer);
-  } else if (PPTX_TYPES.has(mimeType)) {
-    originalText = await extractTextFromPptx(buffer);
-  }
-
-  if (originalText !== undefined) {
-    const result = await geminiTransformTranscription({
-      transcription: originalText,
-      instruction: 'Produza o material de estudo conforme as instruções do sistema.',
-      agentKey: PPTX_TYPES.has(mimeType) ? 'resumo_pptx' : 'resumo_docx',
+    const pipeline = await chunkTokenizedText({
+      text: result,
+      sourceType: 'text',
+      contentFormat: 'plain',
     });
-    return { originalText, result };
+    return { originalText, result, pipelineText: result, ...pipeline };
   }
 
-  const agentKey = source.category === 'image' ? 'resumo_imagem' : 'resumo_documento';
-  const result = await geminiProcessDocument({ file: buffer, mimeType, agentKey });
-  if (mimeType === 'application/pdf') {
-    try {
-      originalText = await geminiProcessDocument({ file: buffer, mimeType, agentKey: 'extrair_texto' });
-    } catch {
-      originalText = undefined;
-    }
-  }
-  return { originalText, result };
+  const broad = await processWithBroadFileExtraction(buffer, mimeType);
+  return {
+    originalText: broad.originalText,
+    result: broad.text,
+    pipelineText: broad.text,
+    tokenization: broad.tokenizationData,
+    chunking: broad.chunking,
+    extractionMetadata: { mimeType, sizeBytes: buffer.length },
+  };
 }
 
 async function claimNextSourceProcessing(): Promise<ProcessingSource | null> {
@@ -152,7 +151,7 @@ async function claimNextSourceProcessing(): Promise<ProcessingSource | null> {
          processing_attempts = processing_attempts + 1,
          updated_at = NOW()
      WHERE id IN (SELECT id FROM candidate)
-     RETURNING id, object_key, original_name, mime_type, size_bytes, category, processing_claim_id`,
+     RETURNING id, note_id, user_id, object_key, original_name, mime_type, size_bytes, category, processing_claim_id`,
     [claimId],
   );
   return (claimed.rows[0] as ProcessingSource | undefined) ?? null;
@@ -161,6 +160,18 @@ async function claimNextSourceProcessing(): Promise<ProcessingSource | null> {
 async function runClaimedSourceProcessing(source: ProcessingSource): Promise<void> {
   try {
     const output = await processSource(source);
+    await persistProcessingPipeline({
+      userId: source.user_id,
+      noteId: source.note_id,
+      noteSourceId: source.id,
+      sourceType: source.category,
+      sourceName: source.original_name,
+      extractionText: output.originalText ?? output.pipelineText,
+      processedText: output.pipelineText,
+      extractionMetadata: output.extractionMetadata,
+      tokenization: output.tokenization,
+      chunking: output.chunking,
+    });
     await query(
       `UPDATE note_sources
        SET processing_status = 'completed',

@@ -119,12 +119,13 @@ async function runSourceTransformation(
   link: string,
   token: string,
   onStatus: (msg: string) => void,
-): Promise<{ melhorado: string; original: string; fileNames: string[] }> {
+): Promise<{ melhorado: string; original: string; fileNames: string[]; processingRunIds: string[] }> {
   const isAudioVideo = files.some((f) => f.type.startsWith('audio/') || f.type.startsWith('video/'));
   const hasLink      = link.trim().length > 0;
   const isYouTube    = hasLink && (link.includes('youtube.com/watch') || link.includes('youtu.be/'));
   let original  = '';
   let melhorado = '';
+  const processingRunIds: string[] = [];
 
   if (isAudioVideo) {
     // ── Transcribe audio/video ──────────────────────────────────────────
@@ -135,6 +136,7 @@ async function runSourceTransformation(
     const data = await transcribeWithProgress(fd, token, (progress) => {
       onStatus(describeTranscriptionProgress(progress));
     });
+    if (data.processing_run_id) processingRunIds.push(data.processing_run_id);
     original = data.text || '';
     melhorado = original;
 
@@ -175,6 +177,7 @@ async function runSourceTransformation(
     const data = await processLinkWithProgress(link.trim(), token, (progress) => {
       onStatus(describeTranscriptionProgress(progress));
     });
+    if (data.processing_run_id) processingRunIds.push(data.processing_run_id);
     original = data.originalText || data.text || '';
     melhorado = data.text || '';
 
@@ -211,7 +214,7 @@ async function runSourceTransformation(
       headers: { Authorization: `Bearer ${token}` },
       body: fd,
     });
-    const data: { originalText?: string; text?: string; error?: string | { message?: string } } =
+    const data: { originalText?: string; text?: string; processing_run_id?: string; error?: string | { message?: string } } =
       await res.json().catch(() => ({}));
     if (!res.ok) {
       const msg =
@@ -222,11 +225,12 @@ async function runSourceTransformation(
     }
     original  = data.originalText || data.text || '';
     melhorado = data.text || original;
+    if (data.processing_run_id) processingRunIds.push(data.processing_run_id);
   }
 
   const fileNames =
     files.length > 0 ? files.map((f) => f.name) : link.trim() ? [link.trim()] : [];
-  return { melhorado, original, fileNames };
+  return { melhorado, original, fileNames, processingRunIds };
 }
 type SaveReminderAction = { type: 'leave' } | { type: 'step1' } | { type: 'openEstudio' };
 
@@ -311,6 +315,7 @@ function NewNotePageContent() {
   const [resumoAulas, setResumoAulas] = useState({ melhorado: '', original: '' });
   const [fontesArquivosNames, setFontesArquivosNames] = useState<string[]>([]);
   const [pendingSourceFiles, setPendingSourceFiles] = useState<File[]>([]);
+  const [processingRunIds, setProcessingRunIds] = useState<string[]>([]);
   const [classifExpanded, setClassifExpanded] = useState(true);
   const [formLoading, setFormLoading]         = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -465,6 +470,7 @@ function NewNotePageContent() {
     try {
       const result = await runSourceTransformation(files, link, token, setProcessingStatus);
       setResumoAulas({ melhorado: result.melhorado, original: result.original });
+      setProcessingRunIds(result.processingRunIds);
       setFontesArquivosNames(result.fileNames);
       setPendingSourceFiles(files);
 
@@ -565,6 +571,7 @@ function NewNotePageContent() {
           fontes_arquivos: pendingSourceFiles.length === 0 && fontesArquivosNames.length > 0
             ? fontesArquivosNames
             : undefined,
+          processing_run_ids: processingRunIds,
         }),
       });
       if (response.ok) {

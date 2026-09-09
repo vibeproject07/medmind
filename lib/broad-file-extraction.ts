@@ -2,6 +2,7 @@ import { geminiProcessDocument, geminiTransformTranscription } from '@/lib/gemin
 import { extractTextFromDocx, extractTextFromPptx } from '@/lib/document-extract';
 import {
   summarizeTokenization,
+  type SpacyTokenizationResult,
   type SpacyTokenizationSummary,
 } from '@/lib/spacy-tokenizer';
 import {
@@ -20,6 +21,7 @@ export interface BroadFileExtractionResult {
   text: string;
   originalText?: string;
   tokenization: SpacyTokenizationSummary;
+  tokenizationData: SpacyTokenizationResult;
   chunking: ChunkingResult;
 }
 
@@ -58,6 +60,7 @@ export async function processWithBroadFileExtraction(
       text: broadExtractionText,
       originalText: extractedText,
       tokenization: summarizeTokenization(tokenization),
+      tokenizationData: tokenization,
       chunking,
     };
   }
@@ -75,6 +78,7 @@ export async function processWithBroadFileExtraction(
   return {
     text: broadExtractionText,
     tokenization: summarizeTokenization(tokenization),
+    tokenizationData: tokenization,
     chunking,
   };
 }

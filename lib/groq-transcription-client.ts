@@ -27,6 +27,7 @@ export interface TranscriptionApiResult {
   extractedSize: number;
   videoConvertedToAudio: boolean;
   tokenization: SpacyTokenizationSummary;
+  processing_run_id: string;
 }
 
 export interface LinkProcessingResult {
@@ -47,6 +48,7 @@ export interface LinkProcessingResult {
   duration?: number;
   partCount?: number;
   tokenization: SpacyTokenizationSummary;
+  processing_run_id: string;
 }
 
 interface StreamEvent {

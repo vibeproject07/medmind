@@ -126,6 +126,48 @@ export async function generateEmbedding(
   return values;
 }
 
+export async function generateEmbeddingsBatch(
+  texts: string[],
+  apiKey?: string,
+  taskType?: EmbeddingTaskType,
+): Promise<number[][]> {
+  if (texts.length === 0) return [];
+  const key = (apiKey ?? process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY)?.trim();
+  if (!key) throw new Error('GEMINI_API_KEY not configured');
+  if (texts.length > 100) throw new Error('A batch de embeddings aceita no máximo 100 textos.');
+
+  const model = `models/${EMBEDDING_MODEL}`;
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/${model}:batchEmbedContents?key=${key}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        requests: texts.map((text) => ({
+          model,
+          content: { parts: [{ text: text.slice(0, 8000) }] },
+          ...(taskType ? { taskType } : {}),
+        })),
+      }),
+    },
+  );
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`Embedding batch API error ${response.status}: ${body.slice(0, 200)}`);
+  }
+  const data = await response.json() as {
+    embeddings?: Array<{ values?: number[] }>;
+  };
+  const embeddings = data.embeddings?.map((item) => item.values ?? []) ?? [];
+  if (
+    embeddings.length !== texts.length ||
+    embeddings.some((embedding) => embedding.length !== EMBEDDING_DIM)
+  ) {
+    throw new Error('A API retornou uma batch de embeddings incompleta ou inválida.');
+  }
+  return embeddings;
+}
+
 /**
  * Expands a short user query into rich medical text using the busca_vetorial agent
  * prompt, then generates a SEMANTIC_SIMILARITY embedding compatible with the stored

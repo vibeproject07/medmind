@@ -3,6 +3,7 @@ import { query } from '@/lib/db';
 import { verifyToken } from '@/lib/jwt';
 import { triggerEnrichment } from '@/lib/enrichment';
 import { ensureNoteMetadataSchema } from '@/lib/note-schema';
+import { linkProcessingRunsToNote } from '@/lib/content-processing-storage';
 
 export const runtime = 'nodejs';
 
@@ -184,7 +185,8 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
     const { title, description, tipo_conteudo, tags, images, areas_conhecimento, assuntos,
-            question_ids, fontes_resumo_melhorado, fontes_resumo_original, fontes_arquivos } = body;
+            question_ids, fontes_resumo_melhorado, fontes_resumo_original, fontes_arquivos,
+            processing_run_ids } = body;
 
     if (!title || !String(title).trim())
       return NextResponse.json({ error: 'O título é obrigatório' }, { status: 400 });
@@ -207,6 +209,10 @@ export async function POST(request: NextRequest) {
     );
 
     const noteId = result.rows[0].id;
+    const processingRunIds = Array.isArray(processing_run_ids)
+      ? processing_run_ids.filter((id): id is string => typeof id === 'string' && id.length > 0)
+      : [];
+    await linkProcessingRunsToNote(processingRunIds, noteId, Number(user.id));
     triggerEnrichment('note', noteId);
 
     if (question_ids && Array.isArray(question_ids) && question_ids.length > 0) {

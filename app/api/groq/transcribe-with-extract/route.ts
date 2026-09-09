@@ -11,9 +11,10 @@ import {
 import { verifyToken } from '@/lib/jwt';
 import {
   summarizeTokenization,
-  tokenizeText,
   type SpacyTokenizationSummary,
 } from '@/lib/spacy-tokenizer';
+import { chunkTokenizedText, type ChunkingResult } from '@/lib/chunking-agent';
+import { persistProcessingPipeline } from '@/lib/content-processing-storage';
 
 export const runtime = 'nodejs';
 
@@ -30,6 +31,8 @@ export interface GroqTranscriptionApiResult extends GroqTranscriptionResult {
   extractedSize: number;
   videoConvertedToAudio: boolean;
   tokenization: SpacyTokenizationSummary;
+  chunking: ChunkingResult;
+  processing_run_id: string;
 }
 
 async function parseRequestMedia(
@@ -106,6 +109,7 @@ async function parseRequestMedia(
 
 async function transcribePreparedMedia(
   media: PreparedMedia,
+  userId: number,
   onProgress?: GroqProgressCallback,
 ): Promise<GroqTranscriptionApiResult> {
   const result = await transcribeMediaBuffer(
@@ -119,21 +123,38 @@ async function transcribePreparedMedia(
       .map((segment) => segment.text.trim())
       .filter(Boolean)
       .join('\n\n') || result.rawText || result.text;
-  const tokenization = await tokenizeText({
+  const { tokenization, chunking } = await chunkTokenizedText({
     text: canonicalText,
     sourceType: result.videoConvertedToAudio ? 'video' : 'audio',
     segments: result.segments,
     contentFormat: 'plain',
-    view: 'sentences_text_order',
+  });
+  const processingRunId = await persistProcessingPipeline({
+    userId,
+    sourceType: result.videoConvertedToAudio ? 'video' : 'audio',
+    sourceName: media.filename,
+    extractionText: canonicalText,
+    processedText: canonicalText,
+    extractionMetadata: {
+      originalSize: result.originalSize,
+      extractedSize: result.extractedSize,
+      duration: result.duration,
+      partCount: result.partCount,
+      videoConvertedToAudio: result.videoConvertedToAudio,
+    },
+    tokenization,
+    chunking,
   });
   return {
     ...result,
     rawText: canonicalText,
     tokenization: summarizeTokenization(tokenization),
+    chunking,
+    processing_run_id: processingRunId,
   };
 }
 
-function streamTranscription(media: PreparedMedia): Response {
+function streamTranscription(media: PreparedMedia, userId: number): Response {
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
     start(controller) {
@@ -144,7 +165,7 @@ function streamTranscription(media: PreparedMedia): Response {
         send({ type: 'progress', progress });
       };
 
-      transcribePreparedMedia(media, onProgress)
+      transcribePreparedMedia(media, userId, onProgress)
         .then((result) => send({ type: 'complete', result }))
         .catch((error) => {
           const message = error instanceof Error ? error.message : 'Erro ao transcrever.';
@@ -176,7 +197,8 @@ export async function POST(request: NextRequest) {
       ? authorization.slice('Bearer '.length)
       : null;
     const token = bearerToken || request.cookies.get('token')?.value || '';
-    if (!verifyToken(token)) {
+    const user = verifyToken(token);
+    if (!user) {
       return NextResponse.json({ error: 'Não autorizado.' }, { status: 401 });
     }
 
@@ -184,10 +206,10 @@ export async function POST(request: NextRequest) {
     if (media instanceof NextResponse) return media;
 
     if (request.headers.get('accept')?.includes(STREAM_CONTENT_TYPE)) {
-      return streamTranscription(media);
+      return streamTranscription(media, Number(user.id));
     }
 
-    return NextResponse.json(await transcribePreparedMedia(media));
+    return NextResponse.json(await transcribePreparedMedia(media, Number(user.id)));
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Erro ao transcrever.';
     return NextResponse.json({ error: message }, { status: 500 });
