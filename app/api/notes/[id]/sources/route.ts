@@ -19,15 +19,31 @@ function getNoteId(rawId: string): number | null {
 
 async function getAuthorizedNote(request: NextRequest, rawId: string) {
   const noteId = getNoteId(rawId);
-  if (!noteId) return { error: NextResponse.json({ error: 'Nota inválida.' }, { status: 400 }) };
+  if (!noteId) {
+    console.warn('[source-upload] Identificador de nota inválido ao preparar upload.', {
+      rawNoteId: rawId,
+    });
+    return { error: NextResponse.json({ error: 'Nota inválida.' }, { status: 400 }) };
+  }
 
   const user = getRequestUser(request);
-  if (!user) return { error: NextResponse.json({ error: 'Não autorizado.' }, { status: 401 }) };
+  if (!user) {
+    console.warn('[source-upload] Requisição não autorizada ao preparar upload.', {
+      noteId,
+    });
+    return { error: NextResponse.json({ error: 'Não autorizado.' }, { status: 401 }) };
+  }
 
   await ensureNoteSourcesSchema();
   await clearExpiredPendingSources();
   const note = await getAccessibleNote(noteId, user);
-  if (!note) return { error: NextResponse.json({ error: 'Nota não encontrada ou sem acesso.' }, { status: 404 }) };
+  if (!note) {
+    console.warn('[source-upload] Nota não encontrada ou sem acesso ao preparar upload.', {
+      noteId,
+      userId: user.id,
+    });
+    return { error: NextResponse.json({ error: 'Nota não encontrada ou sem acesso.' }, { status: 404 }) };
+  }
   return { noteId, user, note };
 }
 
@@ -58,6 +74,10 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     if ('error' in access) return access.error;
 
     if (!isS3Configured()) {
+      console.error('[source-upload] S3 não configurado ao preparar upload.', {
+        noteId: access.noteId,
+        userId: access.user.id,
+      });
       return NextResponse.json(
         { error: 'O armazenamento S3 ainda não está configurado.' },
         { status: 503 },
@@ -66,7 +86,16 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
 
     const body = await request.json().catch(() => null);
     const input = validateSourceUpload(body ?? {});
-    if ('error' in input) return NextResponse.json({ error: input.error }, { status: 400 });
+    if ('error' in input) {
+      console.error('[source-upload] Dados do arquivo rejeitados na preparação.', {
+        noteId: access.noteId,
+        userId: access.user.id,
+        validationError: input.error,
+        mimeType: typeof body?.mimeType === 'string' ? body.mimeType : null,
+        sizeBytes: typeof body?.sizeBytes === 'number' ? body.sizeBytes : null,
+      });
+      return NextResponse.json({ error: input.error }, { status: 400 });
+    }
 
     const objectKey = createSourceStagingObjectKey(access.note.user_id, access.noteId, input.fileName);
     const inserted = await query(
@@ -103,14 +132,24 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       );
     } catch (error) {
       await query('DELETE FROM note_sources WHERE id = $1', [source.id]);
-      console.error('[note sources] Erro ao assinar upload:', error);
+      console.error('[source-upload] Erro ao assinar upload no S3.', {
+        noteId: access.noteId,
+        userId: access.user.id,
+        sourceId: source.id,
+        mimeType: input.mimeType,
+        sizeBytes: input.sizeBytes,
+        error,
+      });
       return NextResponse.json(
         { error: 'Não foi possível preparar o upload no armazenamento.' },
         { status: 503 },
       );
     }
   } catch (error) {
-    console.error('[note sources] Erro ao criar upload:', error);
+    console.error('[source-upload] Erro inesperado ao preparar upload.', {
+      rawNoteId: params.id,
+      error,
+    });
     return NextResponse.json({ error: 'Não foi possível preparar o upload.' }, { status: 500 });
   }
 }

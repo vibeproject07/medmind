@@ -73,19 +73,48 @@ export async function uploadNoteSourceFile(
 ): Promise<NoteSource> {
   const auth = { Authorization: `Bearer ${token.trim().replace(/^["']|["']$/g, '')}` };
   onProgress?.(0, 'Preparando o arquivo…');
-  const checksumSha256 = await sha256(file);
-  const prepare = await fetch(`/api/notes/${noteId}/sources`, {
-    method: 'POST',
-    headers: { ...auth, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      fileName: file.name,
-      mimeType: file.type,
-      sizeBytes: file.size,
-      checksumSha256,
-    }),
-  });
+  let checksumSha256: string;
+  try {
+    checksumSha256 = await sha256(file);
+  } catch (error) {
+    console.error('[source-upload] Falha ao calcular checksum do arquivo.', {
+      noteId,
+      fileType: file.type,
+      fileSize: file.size,
+      error,
+    });
+    throw error;
+  }
+  let prepare: Response;
+  try {
+    prepare = await fetch(`/api/notes/${noteId}/sources`, {
+      method: 'POST',
+      headers: { ...auth, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fileName: file.name,
+        mimeType: file.type,
+        sizeBytes: file.size,
+        checksumSha256,
+      }),
+    });
+  } catch (error) {
+    console.error('[source-upload] Falha de rede ao preparar upload.', {
+      noteId,
+      fileType: file.type,
+      error,
+    });
+    throw error;
+  }
   const prepared = await readJson<UploadResponse>(prepare);
   if (!prepare.ok || !prepared.uploadUrl || !prepared.source) {
+    console.error('[source-upload] API não preparou o upload.', {
+      noteId,
+      fileType: file.type,
+      status: prepare.status,
+      apiError: prepared.error,
+      hasUploadUrl: Boolean(prepared.uploadUrl),
+      hasSource: Boolean(prepared.source),
+    });
     throw new Error(prepared.error || 'Não foi possível preparar o envio deste arquivo.');
   }
 
@@ -102,32 +131,101 @@ export async function uploadNoteSourceFile(
         }
       };
       xhr.onload = () => {
+        if (xhr.status < 200 || xhr.status >= 300) {
+          console.error('[source-upload] Armazenamento recusou o arquivo.', {
+            noteId,
+            sourceId: prepared.source.id,
+            fileType: file.type,
+            status: xhr.status,
+            statusText: xhr.statusText,
+          });
+        }
         resolve(new Response(xhr.responseText, {
           status: xhr.status,
           statusText: xhr.statusText,
         }));
       };
-      xhr.onerror = () => reject(new Error('Não foi possível enviar o arquivo ao armazenamento.'));
-      xhr.onabort = () => reject(new Error('O envio do arquivo foi cancelado.'));
+      xhr.onerror = () => {
+        console.error('[source-upload] Erro de rede/CORS durante envio ao armazenamento.', {
+          noteId,
+          sourceId: prepared.source.id,
+          fileType: file.type,
+          readyState: xhr.readyState,
+          status: xhr.status,
+        });
+        reject(new Error('Não foi possível enviar o arquivo ao armazenamento.'));
+      };
+      xhr.onabort = () => {
+        console.warn('[source-upload] Envio ao armazenamento cancelado.', {
+          noteId,
+          sourceId: prepared.source.id,
+          fileType: file.type,
+        });
+        reject(new Error('O envio do arquivo foi cancelado.'));
+      };
       xhr.send(formData);
     });
     if (!put.ok) throw new Error('O S3 recusou o envio do arquivo.');
 
     onProgress?.(1, 'Confirmando o arquivo…');
-    const complete = await fetch(`/api/notes/${noteId}/sources/${prepared.source.id}/complete`, {
-      method: 'POST',
-      headers: auth,
-    });
+    let complete: Response;
+    try {
+      complete = await fetch(`/api/notes/${noteId}/sources/${prepared.source.id}/complete`, {
+        method: 'POST',
+        headers: auth,
+      });
+    } catch (error) {
+      console.error('[source-upload] Falha de rede ao confirmar upload.', {
+        noteId,
+        sourceId: prepared.source.id,
+        fileType: file.type,
+        error,
+      });
+      throw error;
+    }
     const completed = await readJson<{ source: NoteSource }>(complete);
     if (!complete.ok || !completed.source) {
+      console.error('[source-upload] API não confirmou o arquivo enviado.', {
+        noteId,
+        sourceId: prepared.source.id,
+        fileType: file.type,
+        status: complete.status,
+        apiError: completed.error,
+        hasSource: Boolean(completed.source),
+      });
       throw new Error(completed.error || 'O arquivo foi enviado, mas não pôde ser confirmado.');
     }
     return completed.source;
   } catch (error) {
+    console.error('[source-upload] Upload da fonte falhou; iniciando limpeza.', {
+      noteId,
+      sourceId: prepared.source.id,
+      fileType: file.type,
+      fileSize: file.size,
+      error,
+    });
     await fetch(`/api/notes/${noteId}/sources/${prepared.source.id}`, {
       method: 'DELETE',
       headers: auth,
-    }).catch(() => undefined);
+    }).then(async (cleanupResponse) => {
+      if (!cleanupResponse.ok) {
+        const cleanupBody = await readJson<Record<string, never>>(cleanupResponse);
+        console.error('[source-upload] API recusou limpeza após erro de upload.', {
+          noteId,
+          sourceId: prepared.source.id,
+          fileType: file.type,
+          status: cleanupResponse.status,
+          apiError: cleanupBody.error,
+        });
+      }
+    }).catch((cleanupError) => {
+      console.error('[source-upload] Falha ao limpar registro após erro de upload.', {
+        noteId,
+        sourceId: prepared.source.id,
+        fileType: file.type,
+        cleanupError,
+      });
+    });
     throw error;
   }
 }
