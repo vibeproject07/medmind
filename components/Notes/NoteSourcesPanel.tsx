@@ -57,6 +57,39 @@ async function readJson<T>(response: Response): Promise<T & { error?: string }> 
   return response.json().catch(() => ({})) as Promise<T & { error?: string }>;
 }
 
+function reportUploadFailure(
+  token: string,
+  message: string,
+  context: Record<string, unknown>,
+  error?: unknown,
+): void {
+  const normalizedError =
+    error instanceof Error ? error : new Error(error == null ? message : String(error));
+  const diagnostic = {
+    message,
+    context,
+    errorName: normalizedError.name,
+    errorMessage: normalizedError.message,
+    stack: normalizedError.stack ?? new Error(message).stack,
+  };
+  console.log(`[source-upload] ${message}`, diagnostic);
+  void fetch('/api/source-upload-diagnostics', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token.trim().replace(/^["']|["']$/g, '')}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(diagnostic),
+  }).catch((reportError) => {
+    const reportStack =
+      reportError instanceof Error ? reportError.stack : new Error(String(reportError)).stack;
+    console.log('[source-upload] Falha ao enviar diagnóstico ao console do Replit.', {
+      error: reportError instanceof Error ? reportError.message : String(reportError),
+      stack: reportStack,
+    });
+  });
+}
+
 async function sha256(file: File): Promise<string> {
   const digest = await crypto.subtle.digest('SHA-256', await file.arrayBuffer());
   const bytes = new Uint8Array(digest);
@@ -77,12 +110,11 @@ export async function uploadNoteSourceFile(
   try {
     checksumSha256 = await sha256(file);
   } catch (error) {
-    console.error('[source-upload] Falha ao calcular checksum do arquivo.', {
+    reportUploadFailure(token, 'Falha ao calcular checksum do arquivo.', {
       noteId,
       fileType: file.type,
       fileSize: file.size,
-      error,
-    });
+    }, error);
     throw error;
   }
   let prepare: Response;
@@ -98,16 +130,15 @@ export async function uploadNoteSourceFile(
       }),
     });
   } catch (error) {
-    console.error('[source-upload] Falha de rede ao preparar upload.', {
+    reportUploadFailure(token, 'Falha de rede ao preparar upload.', {
       noteId,
       fileType: file.type,
-      error,
-    });
+    }, error);
     throw error;
   }
   const prepared = await readJson<UploadResponse>(prepare);
   if (!prepare.ok || !prepared.uploadUrl || !prepared.source) {
-    console.error('[source-upload] API não preparou o upload.', {
+    reportUploadFailure(token, 'API não preparou o upload.', {
       noteId,
       fileType: file.type,
       status: prepare.status,
@@ -132,7 +163,7 @@ export async function uploadNoteSourceFile(
       };
       xhr.onload = () => {
         if (xhr.status < 200 || xhr.status >= 300) {
-          console.error('[source-upload] Armazenamento recusou o arquivo.', {
+          reportUploadFailure(token, 'Armazenamento recusou o arquivo.', {
             noteId,
             sourceId: prepared.source.id,
             fileType: file.type,
@@ -146,22 +177,24 @@ export async function uploadNoteSourceFile(
         }));
       };
       xhr.onerror = () => {
-        console.error('[source-upload] Erro de rede/CORS durante envio ao armazenamento.', {
+        const uploadError = new Error('Erro de rede/CORS durante envio ao armazenamento.');
+        reportUploadFailure(token, uploadError.message, {
           noteId,
           sourceId: prepared.source.id,
           fileType: file.type,
           readyState: xhr.readyState,
           status: xhr.status,
-        });
-        reject(new Error('Não foi possível enviar o arquivo ao armazenamento.'));
+        }, uploadError);
+        reject(uploadError);
       };
       xhr.onabort = () => {
-        console.warn('[source-upload] Envio ao armazenamento cancelado.', {
+        const abortError = new Error('Envio ao armazenamento cancelado.');
+        reportUploadFailure(token, abortError.message, {
           noteId,
           sourceId: prepared.source.id,
           fileType: file.type,
-        });
-        reject(new Error('O envio do arquivo foi cancelado.'));
+        }, abortError);
+        reject(abortError);
       };
       xhr.send(formData);
     });
@@ -175,17 +208,16 @@ export async function uploadNoteSourceFile(
         headers: auth,
       });
     } catch (error) {
-      console.error('[source-upload] Falha de rede ao confirmar upload.', {
+      reportUploadFailure(token, 'Falha de rede ao confirmar upload.', {
         noteId,
         sourceId: prepared.source.id,
         fileType: file.type,
-        error,
-      });
+      }, error);
       throw error;
     }
     const completed = await readJson<{ source: NoteSource }>(complete);
     if (!complete.ok || !completed.source) {
-      console.error('[source-upload] API não confirmou o arquivo enviado.', {
+      reportUploadFailure(token, 'API não confirmou o arquivo enviado.', {
         noteId,
         sourceId: prepared.source.id,
         fileType: file.type,
@@ -197,20 +229,19 @@ export async function uploadNoteSourceFile(
     }
     return completed.source;
   } catch (error) {
-    console.error('[source-upload] Upload da fonte falhou; iniciando limpeza.', {
+    reportUploadFailure(token, 'Upload da fonte falhou; iniciando limpeza.', {
       noteId,
       sourceId: prepared.source.id,
       fileType: file.type,
       fileSize: file.size,
-      error,
-    });
+    }, error);
     await fetch(`/api/notes/${noteId}/sources/${prepared.source.id}`, {
       method: 'DELETE',
       headers: auth,
     }).then(async (cleanupResponse) => {
       if (!cleanupResponse.ok) {
         const cleanupBody = await readJson<Record<string, never>>(cleanupResponse);
-        console.error('[source-upload] API recusou limpeza após erro de upload.', {
+        reportUploadFailure(token, 'API recusou limpeza após erro de upload.', {
           noteId,
           sourceId: prepared.source.id,
           fileType: file.type,
@@ -219,12 +250,11 @@ export async function uploadNoteSourceFile(
         });
       }
     }).catch((cleanupError) => {
-      console.error('[source-upload] Falha ao limpar registro após erro de upload.', {
+      reportUploadFailure(token, 'Falha ao limpar registro após erro de upload.', {
         noteId,
         sourceId: prepared.source.id,
         fileType: file.type,
-        cleanupError,
-      });
+      }, cleanupError);
     });
     throw error;
   }

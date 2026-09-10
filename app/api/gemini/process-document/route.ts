@@ -89,7 +89,11 @@ export async function POST(request: NextRequest) {
           sourceName: file.name,
           extractionText: result.originalText ?? result.text,
           processedText: result.text,
-          extractionMetadata: { mimeType, sizeBytes: file.size },
+          extractionMetadata: {
+            mimeType,
+            sizeBytes: file.size,
+            jsonWithDiscardFalse: result.jsonWithDiscardFalse,
+          },
           tokenization: result.tokenizationData,
           chunking: result.chunking,
         });
@@ -108,7 +112,11 @@ export async function POST(request: NextRequest) {
       sourceName: file.name,
       extractionText: result.originalText ?? result.text,
       processedText: result.text,
-      extractionMetadata: { mimeType, sizeBytes: file.size },
+      extractionMetadata: {
+        mimeType,
+        sizeBytes: file.size,
+        jsonWithDiscardFalse: result.jsonWithDiscardFalse,
+      },
       tokenization: result.tokenizationData,
       chunking: result.chunking,
     });

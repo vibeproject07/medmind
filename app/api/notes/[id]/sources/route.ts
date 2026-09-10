@@ -9,6 +9,7 @@ import {
   validateSourceUpload,
 } from '@/lib/note-sources';
 import { createSourceStagingObjectKey, createSourceUploadPost, isS3Configured } from '@/lib/s3';
+import { logSourceUploadFailure } from '@/lib/source-upload-diagnostics';
 
 export const runtime = 'nodejs';
 
@@ -20,7 +21,7 @@ function getNoteId(rawId: string): number | null {
 async function getAuthorizedNote(request: NextRequest, rawId: string) {
   const noteId = getNoteId(rawId);
   if (!noteId) {
-    console.warn('[source-upload] Identificador de nota inválido ao preparar upload.', {
+    logSourceUploadFailure('Identificador de nota inválido ao preparar upload.', {
       rawNoteId: rawId,
     });
     return { error: NextResponse.json({ error: 'Nota inválida.' }, { status: 400 }) };
@@ -28,7 +29,7 @@ async function getAuthorizedNote(request: NextRequest, rawId: string) {
 
   const user = getRequestUser(request);
   if (!user) {
-    console.warn('[source-upload] Requisição não autorizada ao preparar upload.', {
+    logSourceUploadFailure('Requisição não autorizada ao preparar upload.', {
       noteId,
     });
     return { error: NextResponse.json({ error: 'Não autorizado.' }, { status: 401 }) };
@@ -38,7 +39,7 @@ async function getAuthorizedNote(request: NextRequest, rawId: string) {
   await clearExpiredPendingSources();
   const note = await getAccessibleNote(noteId, user);
   if (!note) {
-    console.warn('[source-upload] Nota não encontrada ou sem acesso ao preparar upload.', {
+    logSourceUploadFailure('Nota não encontrada ou sem acesso ao preparar upload.', {
       noteId,
       userId: user.id,
     });
@@ -74,7 +75,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     if ('error' in access) return access.error;
 
     if (!isS3Configured()) {
-      console.error('[source-upload] S3 não configurado ao preparar upload.', {
+      logSourceUploadFailure('S3 não configurado ao preparar upload.', {
         noteId: access.noteId,
         userId: access.user.id,
       });
@@ -87,7 +88,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     const body = await request.json().catch(() => null);
     const input = validateSourceUpload(body ?? {});
     if ('error' in input) {
-      console.error('[source-upload] Dados do arquivo rejeitados na preparação.', {
+      logSourceUploadFailure('Dados do arquivo rejeitados na preparação.', {
         noteId: access.noteId,
         userId: access.user.id,
         validationError: input.error,
@@ -132,24 +133,22 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       );
     } catch (error) {
       await query('DELETE FROM note_sources WHERE id = $1', [source.id]);
-      console.error('[source-upload] Erro ao assinar upload no S3.', {
+      logSourceUploadFailure('Erro ao assinar upload no S3.', {
         noteId: access.noteId,
         userId: access.user.id,
         sourceId: source.id,
         mimeType: input.mimeType,
         sizeBytes: input.sizeBytes,
-        error,
-      });
+      }, error);
       return NextResponse.json(
         { error: 'Não foi possível preparar o upload no armazenamento.' },
         { status: 503 },
       );
     }
   } catch (error) {
-    console.error('[source-upload] Erro inesperado ao preparar upload.', {
+    logSourceUploadFailure('Erro inesperado ao preparar upload.', {
       rawNoteId: params.id,
-      error,
-    });
+    }, error);
     return NextResponse.json({ error: 'Não foi possível preparar o upload.' }, { status: 500 });
   }
 }

@@ -16,6 +16,7 @@
     "test:image-edits": "rm -rf /tmp/medmind-image-edit-tests && tsc -p tests/tsconfig.image-edits.json && node --test /tmp/medmind-image-edit-tests/tests/image-edit-regressions.test.js",
     "test:chunking-agent": "rm -rf /tmp/medmind-chunking-agent-tests && tsc -p tests/tsconfig.chunking-agent.json && TEST_BUILD_ROOT=/tmp/medmind-chunking-agent-tests NODE_PATH=\"$PWD/node_modules\" node -r \"$PWD/tests/register-build-alias.cjs\" --test /tmp/medmind-chunking-agent-tests/tests/chunking-agent-regressions.test.js",
     "test:spacy": "bash scripts/run-python-with-spacy.sh -m unittest tests/test_spacy_tokenizer.py",
+    "test:immediate-output-cleaners": "rm -rf /tmp/medmind-immediate-output-cleaner-tests && tsc -p tests/tsconfig.immediate-output-cleaners.json && node --test /tmp/medmind-immediate-output-cleaner-tests/tests/immediate-agent-output-cleaners.test.js",
     "spacy:dev": "bash scripts/run-spacy-tokenizer.sh",
     "neon:setup": "node scripts/neon/seed.js"
   },

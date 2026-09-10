@@ -9,6 +9,7 @@ import {
   chunkTokenizedText,
   type ChunkingResult,
 } from '@/lib/chunking-agent';
+import { cleanExtractionAgentOutput } from '@/lib/immediate-agent-output-cleaners';
 
 const EXTRACT_TYPES: Record<string, 'docx' | 'pptx'> = {
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
@@ -23,6 +24,7 @@ export interface BroadFileExtractionResult {
   tokenization: SpacyTokenizationSummary;
   tokenizationData: SpacyTokenizationResult;
   chunking: ChunkingResult;
+  jsonWithDiscardFalse: string[];
 }
 
 /**
@@ -46,11 +48,13 @@ export async function processWithBroadFileExtraction(
         ? await extractTextFromDocx(buffer)
         : await extractTextFromPptx(buffer);
 
-    const broadExtractionText = await geminiTransformTranscription({
+    const rawBroadExtractionText = await geminiTransformTranscription({
       transcription: extractedText,
       instruction: 'Produza o material de estudo conforme as instruções do sistema.',
       agentKey: 'broad_file_extraction',
     });
+    const { cleanedText: broadExtractionText, jsonWithDiscardFalse } =
+      cleanExtractionAgentOutput(rawBroadExtractionText);
     const { tokenization, chunking } = await chunkTokenizedText({
       text: broadExtractionText,
       sourceType: 'document',
@@ -62,14 +66,17 @@ export async function processWithBroadFileExtraction(
       tokenization: summarizeTokenization(tokenization),
       tokenizationData: tokenization,
       chunking,
+      jsonWithDiscardFalse,
     };
   }
 
-  const broadExtractionText = await geminiProcessDocument({
+  const rawBroadExtractionText = await geminiProcessDocument({
     file: buffer,
     mimeType: normalizedMimeType,
     agentKey: 'broad_file_extraction',
   });
+  const { cleanedText: broadExtractionText, jsonWithDiscardFalse } =
+    cleanExtractionAgentOutput(rawBroadExtractionText);
   const { tokenization, chunking } = await chunkTokenizedText({
     text: broadExtractionText,
     sourceType: normalizedMimeType.startsWith('image/') ? 'image' : 'document',
@@ -80,5 +87,6 @@ export async function processWithBroadFileExtraction(
     tokenization: summarizeTokenization(tokenization),
     tokenizationData: tokenization,
     chunking,
+    jsonWithDiscardFalse,
   };
 }

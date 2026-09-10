@@ -14,6 +14,7 @@ import {
   promoteSourceObject,
 } from '@/lib/s3';
 import { query } from '@/lib/db';
+import { logSourceUploadFailure } from '@/lib/source-upload-diagnostics';
 
 export const runtime = 'nodejs';
 
@@ -30,7 +31,7 @@ export async function POST(
     const noteId = parsePositiveInteger(params.id);
     const sourceId = parsePositiveInteger(params.sourceId);
     if (!noteId || !sourceId) {
-      console.warn('[source-upload] Nota ou fonte inválida ao confirmar upload.', {
+      logSourceUploadFailure('Nota ou fonte inválida ao confirmar upload.', {
         rawNoteId: params.id,
         rawSourceId: params.sourceId,
       });
@@ -39,14 +40,14 @@ export async function POST(
 
     const user = getRequestUser(request);
     if (!user) {
-      console.warn('[source-upload] Requisição não autorizada ao confirmar upload.', {
+      logSourceUploadFailure('Requisição não autorizada ao confirmar upload.', {
         noteId,
         sourceId,
       });
       return NextResponse.json({ error: 'Não autorizado.' }, { status: 401 });
     }
     if (!isS3Configured()) {
-      console.error('[source-upload] S3 não configurado ao confirmar upload.', {
+      logSourceUploadFailure('S3 não configurado ao confirmar upload.', {
         noteId,
         sourceId,
         userId: user.id,
@@ -57,7 +58,7 @@ export async function POST(
     await ensureNoteSourcesSchema();
     const note = await getAccessibleNote(noteId, user);
     if (!note) {
-      console.warn('[source-upload] Nota não encontrada ou sem acesso ao confirmar upload.', {
+      logSourceUploadFailure('Nota não encontrada ou sem acesso ao confirmar upload.', {
         noteId,
         sourceId,
         userId: user.id,
@@ -66,7 +67,7 @@ export async function POST(
     }
     const source = await getAccessibleSource(noteId, sourceId, user);
     if (!source) {
-      console.warn('[source-upload] Fonte não encontrada ao confirmar upload.', {
+      logSourceUploadFailure('Fonte não encontrada ao confirmar upload.', {
         noteId,
         sourceId,
         userId: user.id,
@@ -80,7 +81,7 @@ export async function POST(
       !uploaded.checksumSha256 ||
       uploaded.checksumSha256 !== source.checksum_sha256
     ) {
-      console.error('[source-upload] Integridade do arquivo enviado não confere.', {
+      logSourceUploadFailure('Integridade do arquivo enviado não confere.', {
         noteId,
         sourceId,
         expectedSize: Number(source.size_bytes),
@@ -107,19 +108,17 @@ export async function POST(
       [finalObjectKey, sourceId, noteId],
     );
     await deleteSourceObject(source.object_key).catch((error) => {
-      console.warn('[source-upload] Não foi possível limpar objeto temporário após promoção.', {
+      logSourceUploadFailure('Não foi possível limpar objeto temporário após promoção.', {
         noteId,
         sourceId,
-        error,
-      });
+      }, error);
     });
     return NextResponse.json({ source: sourceForClient(result.rows[0]) });
   } catch (error) {
-    console.error('[source-upload] Erro inesperado ao confirmar upload.', {
+    logSourceUploadFailure('Erro inesperado ao confirmar upload.', {
       rawNoteId: params.id,
       rawSourceId: params.sourceId,
-      error,
-    });
+    }, error);
     return NextResponse.json(
       { error: 'Não foi possível confirmar o arquivo no armazenamento.' },
       { status: 500 },

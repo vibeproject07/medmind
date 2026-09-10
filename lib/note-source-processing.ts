@@ -126,7 +126,11 @@ async function processSource(source: ProcessingSource): Promise<ProcessedSourceO
     pipelineText: broad.text,
     tokenization: broad.tokenizationData,
     chunking: broad.chunking,
-    extractionMetadata: { mimeType, sizeBytes: buffer.length },
+    extractionMetadata: {
+      mimeType,
+      sizeBytes: buffer.length,
+      jsonWithDiscardFalse: broad.jsonWithDiscardFalse,
+    },
   };
 }
 

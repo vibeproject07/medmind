@@ -12,6 +12,7 @@ import path from 'path';
 import os from 'os';
 import dns from 'dns/promises';
 import net from 'net';
+import { cleanTranscriptionAgentOutput } from '@/lib/immediate-agent-output-cleaners';
 
 const GROQ_TRANSCRIPTIONS_URL = 'https://api.groq.com/openai/v1/audio/transcriptions';
 
@@ -970,7 +971,7 @@ export async function groqTranscribeLargeFile(
 
     const rawText = rawTexts.join('\n\n').trim() || '(Sem fala detectada nos fragmentos.)';
     return {
-      text: formatSegments(segments, rawText),
+      text: cleanTranscriptionAgentOutput(formatSegments(segments, rawText)),
       rawText,
       segments,
       words: words.length > 0 ? words : undefined,
@@ -1143,7 +1144,7 @@ export async function groqTranscribeFile(
       : undefined;
     const duration = Number(data?.duration ?? segments.at(-1)?.end ?? 0);
     return {
-      text: formatSegments(segments, rawText),
+      text: cleanTranscriptionAgentOutput(formatSegments(segments, rawText)),
       rawText,
       segments,
       words,
@@ -1230,7 +1231,7 @@ export async function groqTranscribeFromUrl(
       : [];
     const duration = Number(data?.duration ?? segments.at(-1)?.end ?? 0);
     return {
-      text: formatSegments(segments, rawText),
+      text: cleanTranscriptionAgentOutput(formatSegments(segments, rawText)),
       rawText,
       segments,
       language: typeof data?.language === 'string' ? data.language : language,
