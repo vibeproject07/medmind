@@ -4,3 +4,4 @@
 - [Next development assets](next-development-assets.md) — keep development and production build output separate to avoid missing chunks and unstyled previews.
 - [Workflow port detection](workflow-port-detection.md) — managed startup may time out even when the same command reaches Ready and serves port 5000.
 - [Backend processing metadata](backend-processing-metadata.md) — extração e NLP ficam separados do conteúdo visível; chunks são a unidade persistida de vetorização.
+- [S3 source upload CORS](s3-source-upload-cors.md) — Preserve regras do bucket e mantenha origens do app na regra `MedMindSourceUploads`.

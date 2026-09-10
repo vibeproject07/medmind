@@ -8,7 +8,12 @@ import {
   sourceForClient,
   validateSourceUpload,
 } from '@/lib/note-sources';
-import { createSourceStagingObjectKey, createSourceUploadPost, isS3Configured } from '@/lib/s3';
+import {
+  createSourceStagingObjectKey,
+  createSourceUploadPost,
+  ensureSourceUploadCors,
+  isS3Configured,
+} from '@/lib/s3';
 import { logSourceUploadFailure } from '@/lib/source-upload-diagnostics';
 
 export const runtime = 'nodejs';
@@ -117,6 +122,8 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     const source = inserted.rows[0];
 
     try {
+      const requestOrigin = request.headers.get('origin') ?? new URL(request.url).origin;
+      await ensureSourceUploadCors(requestOrigin);
       const upload = await createSourceUploadPost(
         objectKey,
         input.mimeType,
@@ -133,7 +140,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       );
     } catch (error) {
       await query('DELETE FROM note_sources WHERE id = $1', [source.id]);
-      logSourceUploadFailure('Erro ao assinar upload no S3.', {
+      logSourceUploadFailure('Erro ao configurar CORS ou assinar upload no S3.', {
         noteId: access.noteId,
         userId: access.user.id,
         sourceId: source.id,

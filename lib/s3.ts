@@ -12,11 +12,14 @@
  */
 
 import {
+  type CORSRule,
   DeleteObjectCommand,
   CopyObjectCommand,
+  GetBucketCorsCommand,
   GetObjectCommand,
   HeadObjectCommand,
   PutObjectCommand,
+  PutBucketCorsCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
@@ -26,6 +29,8 @@ import crypto from 'crypto';
 // ── S3 client (lazy, singleton per process) ───────────────────────────────────
 
 let _client: S3Client | null = null;
+const configuredSourceUploadOrigins = new Set<string>();
+const SOURCE_UPLOAD_CORS_RULE_ID = 'MedMindSourceUploads';
 
 function getAccessKeyId(): string | undefined {
   return process.env.AWS_ACCESS_KEY_ID || process.env.IAM_AWS_S3_access_key;
@@ -83,6 +88,77 @@ export function isS3Configured(): boolean {
     getAccessKeyId() &&
     getSecretAccessKey()
   );
+}
+
+export function normalizeSourceUploadOrigin(origin: string): string {
+  const parsed = new URL(origin);
+  if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') {
+    throw new Error('Origem inválida para configuração CORS do upload.');
+  }
+  return parsed.origin;
+}
+
+export function mergeSourceUploadCorsRules(
+  existingRules: CORSRule[],
+  origin: string,
+): CORSRule[] {
+  const normalizedOrigin = normalizeSourceUploadOrigin(origin);
+  const currentRule = existingRules.find((rule) => rule.ID === SOURCE_UPLOAD_CORS_RULE_ID);
+  const otherRules = existingRules.filter((rule) => rule.ID !== SOURCE_UPLOAD_CORS_RULE_ID);
+  const allowedOrigins = Array.from(
+    new Set([...(currentRule?.AllowedOrigins ?? []), normalizedOrigin]),
+  );
+
+  return [
+    ...otherRules,
+    {
+      ID: SOURCE_UPLOAD_CORS_RULE_ID,
+      AllowedOrigins: allowedOrigins,
+      AllowedMethods: ['POST'],
+      AllowedHeaders: ['*'],
+      ExposeHeaders: ['ETag', 'x-amz-checksum-sha256'],
+      MaxAgeSeconds: 3600,
+    },
+  ];
+}
+
+/**
+ * Garante que o bucket aceite o POST assinado vindo da origem atual. Regras de
+ * outros consumidores são preservadas; somente a regra MedMindSourceUploads é
+ * atualizada.
+ */
+export async function ensureSourceUploadCors(origin: string): Promise<void> {
+  const normalizedOrigin = normalizeSourceUploadOrigin(origin);
+  if (configuredSourceUploadOrigins.has(normalizedOrigin)) return;
+
+  const client = requireClient();
+  const bucket = getConfiguredBucket();
+  let existingRules: CORSRule[] = [];
+  try {
+    const current = await client.send(new GetBucketCorsCommand({ Bucket: bucket }));
+    existingRules = current.CORSRules ?? [];
+  } catch (error) {
+    const code =
+      error && typeof error === 'object'
+        ? String(
+            (error as { name?: unknown; Code?: unknown }).name ??
+            (error as { Code?: unknown }).Code ??
+            '',
+          )
+        : '';
+    if (code !== 'NoSuchCORSConfiguration' && code !== 'NoSuchCORSConfigurationException') {
+      throw error;
+    }
+  }
+
+  const corsRules = mergeSourceUploadCorsRules(existingRules, normalizedOrigin);
+  await client.send(
+    new PutBucketCorsCommand({
+      Bucket: bucket,
+      CORSConfiguration: { CORSRules: corsRules },
+    }),
+  );
+  configuredSourceUploadOrigins.add(normalizedOrigin);
 }
 
 /** Returns true when the string is a base64 data URL (data:image/...). */
