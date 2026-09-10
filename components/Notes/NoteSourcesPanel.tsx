@@ -162,19 +162,32 @@ export async function uploadNoteSourceFile(
         }
       };
       xhr.onload = () => {
-        if (xhr.status < 200 || xhr.status >= 300) {
-          reportUploadFailure(token, 'Armazenamento recusou o arquivo.', {
+        try {
+          if (xhr.status < 200 || xhr.status >= 300) {
+            reportUploadFailure(token, 'Armazenamento recusou o arquivo.', {
+              noteId,
+              sourceId: prepared.source.id,
+              fileType: file.type,
+              status: xhr.status,
+              statusText: xhr.statusText,
+            });
+          }
+          const responseMustNotHaveBody =
+            xhr.status === 204 || xhr.status === 205 || xhr.status === 304;
+          resolve(new Response(responseMustNotHaveBody ? null : xhr.responseText, {
+            status: xhr.status,
+            statusText: xhr.statusText,
+          }));
+        } catch (error) {
+          reportUploadFailure(token, 'Falha ao interpretar resposta do armazenamento.', {
             noteId,
             sourceId: prepared.source.id,
             fileType: file.type,
             status: xhr.status,
             statusText: xhr.statusText,
-          });
+          }, error);
+          reject(error);
         }
-        resolve(new Response(xhr.responseText, {
-          status: xhr.status,
-          statusText: xhr.statusText,
-        }));
       };
       xhr.onerror = () => {
         const uploadError = new Error('Erro de rede/CORS durante envio ao armazenamento.');
