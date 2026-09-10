@@ -240,12 +240,16 @@ function SaveReminderModal({
   onSave,
   onLeaveWithoutSave,
   saving,
+  saveProgress,
+  saveStatus,
 }: {
   open: boolean;
   onClose: () => void;
   onSave: () => void;
   onLeaveWithoutSave: () => void;
   saving: boolean;
+  saveProgress: number;
+  saveStatus: string;
 }) {
   if (!open) return null;
   return (
@@ -262,6 +266,29 @@ function SaveReminderModal({
         <div className="px-6 pt-6 pb-5">
           <p className="text-base font-semibold text-gray-800 pr-8">Lembre-se de salvar a nota criada</p>
         </div>
+        {saving && (
+          <div className="px-6 pb-4">
+            <div className="mb-1.5 flex items-center justify-between gap-3">
+              <p className="truncate text-xs font-medium text-primary-700">
+                {saveStatus || 'Salvando…'}
+              </p>
+              <span className="text-xs font-bold text-primary-700">{saveProgress}%</span>
+            </div>
+            <div
+              className="h-1.5 overflow-hidden rounded-full bg-primary-100"
+              role="progressbar"
+              aria-label="Progresso do salvamento"
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={saveProgress}
+            >
+              <div
+                className="h-full rounded-full bg-primary-600 transition-[width] duration-200"
+                style={{ width: `${saveProgress}%` }}
+              />
+            </div>
+          </div>
+        )}
         <div className="flex flex-col-reverse sm:flex-row gap-2 px-6 pb-6">
           <button
             type="button"
@@ -277,7 +304,7 @@ function SaveReminderModal({
             disabled={saving}
             className="flex-1 flex items-center justify-center gap-1.5 px-4 py-2.5 text-sm bg-primary-600 text-white rounded-xl font-semibold hover:bg-primary-700 transition disabled:opacity-50"
           >
-            {saving ? <><Loader2 className="w-4 h-4 animate-spin" />Salvando…</> : <><Save className="w-4 h-4" />Salvar</>}
+            {saving ? <><Loader2 className="w-4 h-4 animate-spin" />Salvando {saveProgress}%</> : <><Save className="w-4 h-4" />Salvar</>}
           </button>
         </div>
       </div>
@@ -1152,6 +1179,8 @@ function NewNotePageContent() {
         onSave={handleSaveReminderSalvar}
         onLeaveWithoutSave={executePendingWithoutSave}
         saving={formLoading}
+        saveProgress={saveProgress}
+        saveStatus={saveStatus}
       />
 
       {/* ── Discard confirmation modal ───────────────────────────────────── */}
