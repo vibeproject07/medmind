@@ -69,8 +69,10 @@ export async function uploadNoteSourceFile(
   noteId: number,
   file: File,
   token: string,
+  onProgress?: (progress: number, stage: string) => void,
 ): Promise<NoteSource> {
   const auth = { Authorization: `Bearer ${token.trim().replace(/^["']|["']$/g, '')}` };
+  onProgress?.(0, 'Preparando o arquivo…');
   const checksumSha256 = await sha256(file);
   const prepare = await fetch(`/api/notes/${noteId}/sources`, {
     method: 'POST',
@@ -91,12 +93,27 @@ export async function uploadNoteSourceFile(
     const formData = new FormData();
     Object.entries(prepared.uploadFields).forEach(([name, value]) => formData.append(name, value));
     formData.append('file', file);
-    const put = await fetch(prepared.uploadUrl, {
-      method: 'POST',
-      body: formData,
+    const put = await new Promise<Response>((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', prepared.uploadUrl);
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable) {
+          onProgress?.(event.loaded / event.total, 'Enviando o arquivo…');
+        }
+      };
+      xhr.onload = () => {
+        resolve(new Response(xhr.responseText, {
+          status: xhr.status,
+          statusText: xhr.statusText,
+        }));
+      };
+      xhr.onerror = () => reject(new Error('Não foi possível enviar o arquivo ao armazenamento.'));
+      xhr.onabort = () => reject(new Error('O envio do arquivo foi cancelado.'));
+      xhr.send(formData);
     });
     if (!put.ok) throw new Error('O S3 recusou o envio do arquivo.');
 
+    onProgress?.(1, 'Confirmando o arquivo…');
     const complete = await fetch(`/api/notes/${noteId}/sources/${prepared.source.id}/complete`, {
       method: 'POST',
       headers: auth,

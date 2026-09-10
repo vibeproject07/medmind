@@ -316,6 +316,8 @@ function NewNotePageContent() {
   const [fontesArquivosNames, setFontesArquivosNames] = useState<string[]>([]);
   const [pendingSourceFiles, setPendingSourceFiles] = useState<File[]>([]);
   const [processingRunIds, setProcessingRunIds] = useState<string[]>([]);
+  const [saveProgress, setSaveProgress] = useState(0);
+  const [saveStatus, setSaveStatus] = useState('');
   const [classifExpanded, setClassifExpanded] = useState(true);
   const [formLoading, setFormLoading]         = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -547,6 +549,8 @@ function NewNotePageContent() {
       return null;
     }
     setFormLoading(true);
+    setSaveProgress(3);
+    setSaveStatus('Salvando os dados da nota…');
     setMessage(null);
     try {
       const token = localStorage.getItem('token');
@@ -576,17 +580,33 @@ function NewNotePageContent() {
       });
       if (response.ok) {
         const noteData = await response.json();
+        setSaveProgress(pendingSourceFiles.length > 0 ? 12 : 82);
+        setSaveStatus(
+          pendingSourceFiles.length > 0
+            ? 'Nota criada. Iniciando envio dos arquivos…'
+            : 'Finalizando a nota…',
+        );
         // The note must exist before private source objects can be safely linked to it.
         // A source failure never rolls back the saved note; the detail screen lets users retry.
         const sourceUploadFailures: string[] = [];
-        for (const file of pendingSourceFiles) {
+        for (let fileIndex = 0; fileIndex < pendingSourceFiles.length; fileIndex += 1) {
+          const file = pendingSourceFiles[fileIndex];
           try {
-            await uploadNoteSourceFile(noteData.id, file, token);
+            await uploadNoteSourceFile(noteData.id, file, token, (fileProgress, stage) => {
+              const overallProgress =
+                12 + ((fileIndex + fileProgress) / pendingSourceFiles.length) * 68;
+              setSaveProgress(Math.round(overallProgress));
+              setSaveStatus(
+                `${stage} (${fileIndex + 1}/${pendingSourceFiles.length})`,
+              );
+            });
           } catch (sourceError) {
             console.error('[notes] Falha ao salvar fonte no S3:', sourceError);
             sourceUploadFailures.push(file.name);
           }
         }
+        setSaveProgress(84);
+        setSaveStatus('Salvando vínculos e preparando a nota…');
         const selIds = localStorage.getItem('selectedQuestionIds');
         if (selIds) {
           try {
@@ -597,10 +617,14 @@ function NewNotePageContent() {
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                 body: JSON.stringify({ question_ids: ids }),
               });
+              setSaveProgress(94);
+              setSaveStatus('Salvando questões vinculadas…');
               localStorage.removeItem('selectedQuestionIds');
             }
           } catch { /* ignore */ }
         }
+        setSaveProgress(100);
+        setSaveStatus('Nota salva com sucesso.');
         removeDraftNote();
         if (sourceUploadFailures.length > 0) {
           sessionStorage.setItem(
@@ -630,6 +654,10 @@ function NewNotePageContent() {
       return null;
     } finally {
       setFormLoading(false);
+        window.setTimeout(() => {
+          setSaveProgress(0);
+          setSaveStatus('');
+        }, 500);
     }
   };
 
@@ -917,7 +945,7 @@ function NewNotePageContent() {
               className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-600 text-white rounded-lg text-sm font-semibold hover:bg-primary-700 transition disabled:opacity-50"
             >
               {formLoading
-                ? <><Loader2 className="w-3.5 h-3.5 animate-spin" />Salvando…</>
+                ? <><Loader2 className="w-3.5 h-3.5 animate-spin" />Salvando {saveProgress}%</>
                 : <><Save className="w-3.5 h-3.5" />Salvar</>}
             </button>
             <button
@@ -930,6 +958,36 @@ function NewNotePageContent() {
             </button>
           </div>
         </div>
+        {formLoading && (
+          <div className="flex-shrink-0 border-b border-primary-100 bg-primary-50/80 px-4 py-2.5 sm:px-6">
+            <div className="mx-auto flex max-w-3xl items-center gap-3">
+              <Loader2 className="h-4 w-4 flex-shrink-0 animate-spin text-primary-600" />
+              <div className="min-w-0 flex-1">
+                <div className="mb-1 flex items-center justify-between gap-3">
+                  <p className="truncate text-xs font-semibold text-primary-800">
+                    {saveStatus || 'Salvando…'}
+                  </p>
+                  <span className="flex-shrink-0 text-xs font-bold text-primary-700">
+                    {saveProgress}%
+                  </span>
+                </div>
+                <div
+                  className="h-1.5 overflow-hidden rounded-full bg-primary-100"
+                  role="progressbar"
+                  aria-label="Progresso do salvamento"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={saveProgress}
+                >
+                  <div
+                    className="h-full rounded-full bg-primary-600 transition-[width] duration-200"
+                    style={{ width: `${saveProgress}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Mobile: Estúdio tab */}
         <div className="flex-shrink-0 sm:hidden flex border-b border-gray-200 bg-white">
