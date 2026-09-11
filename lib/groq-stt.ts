@@ -739,6 +739,57 @@ async function splitMediaIntoChunksAdaptive(
   };
 }
 
+async function groqTranscribeForm(
+  formData: FormData,
+  apiKey: string,
+  language: string,
+): Promise<GroqTranscriptionResult> {
+  try {
+    const response = await axios.post(GROQ_TRANSCRIPTIONS_URL, formData, {
+      headers: { Authorization: `Bearer ${apiKey}`, ...formData.getHeaders() },
+    });
+    const data = response.data;
+    const rawText = typeof data === 'string' ? data : (data?.text ?? '');
+    const segments: GroqTranscriptionSegment[] = Array.isArray(data?.segments)
+      ? data.segments.map((segment: any, index: number) => ({
+          id: Number.isFinite(Number(segment?.id)) ? Number(segment.id) : index,
+          start: Number(segment?.start ?? 0),
+          end: Number(segment?.end ?? segment?.start ?? 0),
+          text: String(segment?.text ?? ''),
+          part: 1,
+        }))
+      : [];
+    const words: GroqTranscriptionWord[] | undefined = Array.isArray(data?.words)
+      ? data.words.map((word: any) => ({
+          word: String(word?.word ?? ''),
+          start: Number(word?.start ?? 0),
+          end: Number(word?.end ?? word?.start ?? 0),
+          part: 1,
+        }))
+      : undefined;
+    const duration = Number(data?.duration ?? segments.at(-1)?.end ?? 0);
+    return {
+      text: cleanTranscriptionAgentOutput(formatSegments(segments, rawText)),
+      rawText,
+      segments,
+      words,
+      language: typeof data?.language === 'string' ? data.language : language,
+      duration: Number.isFinite(duration) ? duration : 0,
+      partCount: 1,
+    };
+  } catch (error: any) {
+    let errMessage = 'Erro ao transcrever arquivo.';
+    if (error.response) {
+      const status = error.response.status;
+      const data = error.response.data;
+      errMessage = `Groq STT error ${status}: ${typeof data === 'string' ? data : (data?.error?.message || JSON.stringify(data))}`;
+    } else if (error.message) {
+      errMessage = error.message;
+    }
+    throw new Error(errMessage);
+  }
+}
+
 async function getMediaDurationSeconds(mediaPath: string): Promise<number> {
   const ffmpeg = await getFfmpeg();
   return new Promise((resolve) => {
@@ -881,17 +932,19 @@ function estimateRemainingSeconds(
  * O arquivo é escrito em disco temporariamente, dividido com ffmpeg, cada fragmento é transcrito na Groq e os textos são concatenados.
  */
 export async function groqTranscribeLargeFile(
-  fileBuffer: Buffer,
+  fileBuffer: Buffer | string,
   filename: string,
   options: GroqTranscribeOptions = {},
   onProgress?: GroqProgressCallback,
 ): Promise<GroqTranscriptionResult> {
   const tmpDir = path.join(os.tmpdir(), `groq-stt-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`);
-  const inputPath = path.join(tmpDir, filename.replace(/[^a-zA-Z0-9._-]/g, '_'));
+  const inputPath = typeof fileBuffer === 'string'
+    ? fileBuffer
+    : path.join(tmpDir, filename.replace(/[^a-zA-Z0-9._-]/g, '_'));
 
   try {
     fs.mkdirSync(tmpDir, { recursive: true });
-    fs.writeFileSync(inputPath, fileBuffer);
+    if (Buffer.isBuffer(fileBuffer)) fs.writeFileSync(inputPath, fileBuffer);
 
     onProgress?.({
       stage: 'splitting',
@@ -920,11 +973,11 @@ export async function groqTranscribeLargeFile(
 
     for (let i = 0; i < chunkPaths.length; i++) {
       const chunkPath = chunkPaths[i];
-      const chunkBuffer = fs.readFileSync(chunkPath);
+      const chunkSize = fs.statSync(chunkPath).size;
       const chunkName = path.basename(chunkPath);
-      if (chunkBuffer.length > MAX_DOWNLOAD_SIZE) {
+      if (chunkSize > MAX_DOWNLOAD_SIZE) {
         throw new Error(
-          `Um fragmento ficou grande demais (${Math.round(chunkBuffer.length / 1024 / 1024)} MB). ` +
+          `Um fragmento ficou grande demais (${Math.round(chunkSize / 1024 / 1024)} MB). ` +
           'Tente usar um arquivo menor, ou envie um link do Google Drive/OneDrive para o servidor baixar e processar.'
         );
       }
@@ -942,7 +995,7 @@ export async function groqTranscribeLargeFile(
           totalDuration,
         ),
       });
-      const result = await groqTranscribeFile(chunkBuffer, chunkName, options);
+      const result = await groqTranscribeFilePath(chunkPath, chunkName, options);
       if (result.rawText.trim()) rawTexts.push(result.rawText.trim());
       const offsetPart = offsetTranscriptionPart(
         result,
@@ -1068,6 +1121,72 @@ export async function transcribeMediaBuffer(
   };
 }
 
+/** Versão baseada em caminho, adequada para objetos S3 grandes. */
+export async function transcribeMediaPath(
+  filePath: string,
+  filename = path.basename(filePath),
+  mimeType?: string,
+  onProgress?: GroqProgressCallback,
+): Promise<TranscribedMediaResult> {
+  const originalSize = fs.statSync(filePath).size;
+  const videoConvertedToAudio = isVideoFile(filename, mimeType);
+  let pathToTranscribe = filePath;
+  let nameToTranscribe = filename;
+  let extractedSize = originalSize;
+  let extractionDir: string | undefined;
+
+  onProgress?.({
+    stage: 'preparing',
+    message: videoConvertedToAudio
+      ? 'Preparando o vídeo para extrair somente o áudio.'
+      : 'Preparando o áudio para transcrição.',
+  });
+  if (videoConvertedToAudio) {
+    onProgress?.({ stage: 'extracting', message: 'Extraindo e compactando o áudio do vídeo.' });
+    const ffmpeg = await getFfmpeg();
+    extractionDir = fs.mkdtempSync(path.join(os.tmpdir(), 'groq-extract-'));
+    const outputPath = path.join(extractionDir, 'audio_extracted.mp3');
+    try {
+      await new Promise<void>((resolve, reject) => {
+        ffmpeg(filePath)
+          .noVideo().audioCodec('libmp3lame').audioBitrate('64k').audioChannels(1).audioFrequency(16000)
+          .output(outputPath)
+          .on('end', () => resolve())
+          .on('error', (err) => reject(new Error(`Erro ao extrair áudio: ${err.message}`)))
+          .run();
+      });
+    } catch (error) {
+      try { fs.rmSync(extractionDir, { recursive: true, force: true }); } catch { /* ignorar */ }
+      throw error;
+    }
+    pathToTranscribe = outputPath;
+    nameToTranscribe = 'audio_extracted.mp3';
+    extractedSize = fs.statSync(outputPath).size;
+  }
+
+  try {
+    let result: GroqTranscriptionResult;
+    if (extractedSize > MAX_DOWNLOAD_SIZE) {
+      result = await groqTranscribeLargeFile(pathToTranscribe, nameToTranscribe, {}, onProgress);
+    } else {
+      onProgress?.({
+        stage: 'transcribing', message: 'Transcrevendo parte 1 de 1.', totalParts: 1,
+        completedParts: 0, currentPart: 1, durationSeconds: 0, estimatedSecondsRemaining: 30,
+      });
+      result = await groqTranscribeFilePath(pathToTranscribe, nameToTranscribe);
+      onProgress?.({
+        stage: 'transcribing', message: 'Parte 1 de 1 concluída.', totalParts: 1,
+        completedParts: 1, currentPart: 1, durationSeconds: result.duration, estimatedSecondsRemaining: 0,
+      });
+    }
+    return { ...result, originalSize, extractedSize, videoConvertedToAudio };
+  } finally {
+    if (extractionDir) {
+      try { fs.rmSync(extractionDir, { recursive: true, force: true }); } catch { /* ignorar */ }
+    }
+  }
+}
+
 export interface GroqTranscribeOptions {
   apiKey?: string;
   model?: 'whisper-large-v3' | 'whisper-large-v3-turbo';
@@ -1080,6 +1199,46 @@ export interface GroqTranscribeOptions {
    * O endpoint Whisper usado aqui não fornece diarização/identificação de locutores.
    */
   timestampGranularities?: Array<'segment' | 'word'>;
+}
+
+/**
+ * Transcreve um arquivo sem carregá-lo inteiro em memória. O stream é aberto
+ * somente quando a requisição é enviada, permitindo que arquivos temporários
+ * grandes sejam processados sem uma segunda cópia do conteúdo.
+ */
+export async function groqTranscribeFilePath(
+  filePath: string,
+  filename = path.basename(filePath),
+  options: GroqTranscribeOptions = {},
+): Promise<GroqTranscriptionResult> {
+  const apiKey = options.apiKey ?? process.env.GROQ_API_KEY;
+  if (!apiKey || typeof apiKey !== 'string') throw new Error('GROQ_API_KEY não definida.');
+  if (!fs.statSync(filePath).isFile()) throw new Error('Arquivo de mídia não encontrado.');
+
+  let header = Buffer.alloc(64);
+  const headerFd = fs.openSync(filePath, 'r');
+  try { fs.readSync(headerFd, header, 0, header.length, 0); } finally { fs.closeSync(headerFd); }
+  const safeFilename = GROQ_ALLOWED_EXTENSIONS.includes(
+    path.extname(filename).slice(1).toLowerCase(),
+  )
+    ? filename
+    : ensureSupportedFilename(header, filename);
+  const model = options.model ?? 'whisper-large-v3-turbo';
+  const responseFormat = options.response_format ?? 'verbose_json';
+  const language = options.language ?? 'pt';
+  const formData = new FormData();
+  formData.append('file', fs.createReadStream(filePath), safeFilename);
+  formData.append('model', model);
+  formData.append('language', language);
+  formData.append('response_format', responseFormat);
+  formData.append('temperature', String(options.temperature ?? 0));
+  formData.append('prompt', options.prompt ?? DEFAULT_MEDICAL_PROMPT);
+  if (responseFormat === 'verbose_json') {
+    (options.timestampGranularities ?? ['segment']).forEach((granularity) => {
+      formData.append('timestamp_granularities[]', granularity);
+    });
+  }
+  return groqTranscribeForm(formData, apiKey, language);
 }
 
 /**

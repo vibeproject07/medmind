@@ -25,6 +25,11 @@ import {
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { createPresignedPost } from '@aws-sdk/s3-presigned-post';
 import crypto from 'crypto';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { Transform } from 'node:stream';
+import { pipeline } from 'node:stream/promises';
 
 // ── S3 client (lazy, singleton per process) ───────────────────────────────────
 
@@ -302,6 +307,72 @@ export async function readSourceObject(key: string): Promise<Buffer> {
     chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
   }
   return Buffer.concat(chunks);
+}
+
+export interface SourceObjectTempFile {
+  path: string;
+  size: number;
+  cleanup: () => Promise<void>;
+}
+
+/**
+ * Stream a private source object to a unique temporary file.
+ *
+ * The byte limits are enforced while the response is being consumed (rather
+ * than after buffering), and the partially written file is removed on error.
+ */
+export async function downloadSourceObjectToTempFile(
+  key: string,
+  options: { expectedSize?: number; maxSize?: number; extension?: string } = {},
+): Promise<SourceObjectTempFile> {
+  const { expectedSize, maxSize = Number.POSITIVE_INFINITY } = options;
+  if (expectedSize !== undefined && (!Number.isSafeInteger(expectedSize) || expectedSize < 0)) {
+    throw new Error('expectedSize deve ser um número inteiro não negativo.');
+  }
+  if (!Number.isFinite(maxSize) && maxSize !== Number.POSITIVE_INFINITY) {
+    throw new Error('maxSize inválido.');
+  }
+  if (maxSize < 0 || (expectedSize !== undefined && expectedSize > maxSize)) {
+    throw new Error('O tamanho esperado excede o limite permitido.');
+  }
+
+  const result = await requireClient().send(
+    new GetObjectCommand({ Bucket: getConfiguredBucket(), Key: key }),
+  );
+  if (!result.Body) throw new Error('Arquivo não encontrado no armazenamento');
+
+  const tempDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'medmind-s3-'));
+  const extension = options.extension?.replace(/[^a-zA-Z0-9.]/g, '') ?? '';
+  const tempPath = path.join(tempDir, `source${extension.startsWith('.') ? extension : ''}`);
+  let size = 0;
+  let cleaned = false;
+  const cleanup = async () => {
+    if (cleaned) return;
+    cleaned = true;
+    await fs.promises.rm(tempDir, { recursive: true, force: true });
+  };
+  const limiter = new Transform({
+    transform(chunk: Buffer | Uint8Array | string, _encoding, callback) {
+      const bytes = Buffer.byteLength(chunk);
+      size += bytes;
+      if (size > maxSize) {
+        callback(new Error(`Arquivo excede o limite de ${maxSize} bytes.`));
+        return;
+      }
+      callback(null, chunk);
+    },
+  });
+
+  try {
+    await pipeline(result.Body as NodeJS.ReadableStream, limiter, fs.createWriteStream(tempPath));
+    if (expectedSize !== undefined && size !== expectedSize) {
+      throw new Error(`Tamanho do arquivo divergente: esperado ${expectedSize}, recebido ${size}.`);
+    }
+    return { path: tempPath, size, cleanup };
+  } catch (error) {
+    await cleanup();
+    throw error;
+  }
 }
 
 /** Permanently delete one private source object. */

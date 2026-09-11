@@ -11,7 +11,7 @@
     "lint": "next lint",
     "init-db": "node scripts/init-db.js",
     "test-groq": "node scripts/test-groq.js",
-    "test:groq-regressions": "rm -rf /tmp/medmind-groq-tests && tsc -p tests/tsconfig.groq.json && NODE_PATH=\"$PWD/node_modules\" node --test /tmp/medmind-groq-tests/tests/groq-stt-regressions.test.js",
+    "test:groq-regressions": "rm -rf /tmp/medmind-groq-tests && tsc -p tests/tsconfig.groq.json && TEST_BUILD_ROOT=/tmp/medmind-groq-tests NODE_PATH=\"$PWD/node_modules\" node -r \"$PWD/tests/register-build-alias.cjs\" --test /tmp/medmind-groq-tests/tests/groq-stt-regressions.test.js",
     "test:note-sources": "rm -rf /tmp/medmind-note-source-tests && tsc -p tests/tsconfig.note-sources.json && node --test /tmp/medmind-note-source-tests/tests/note-source-selection.test.js",
     "test:image-edits": "rm -rf /tmp/medmind-image-edit-tests && tsc -p tests/tsconfig.image-edits.json && node --test /tmp/medmind-image-edit-tests/tests/image-edit-regressions.test.js",
     "test:chunking-agent": "rm -rf /tmp/medmind-chunking-agent-tests && tsc -p tests/tsconfig.chunking-agent.json && TEST_BUILD_ROOT=/tmp/medmind-chunking-agent-tests NODE_PATH=\"$PWD/node_modules\" node -r \"$PWD/tests/register-build-alias.cjs\" --test /tmp/medmind-chunking-agent-tests/tests/chunking-agent-regressions.test.js",

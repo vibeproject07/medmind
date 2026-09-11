@@ -34,6 +34,9 @@ export type NoteSource = {
   processing_attempts: number;
   processing_started_at?: string | null;
   processing_completed_at?: string | null;
+  processing_stage?: string | null;
+  processing_run_id?: string | null;
+  processing_last_heartbeat_at?: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -106,6 +109,9 @@ export async function ensureNoteSourcesSchema(): Promise<void> {
        processing_completed_at TIMESTAMPTZ,
        processing_claim_id TEXT,
        processing_lease_expires_at TIMESTAMPTZ,
+       processing_stage TEXT NOT NULL DEFAULT 'idle',
+       processing_run_id TEXT,
+       processing_last_heartbeat_at TIMESTAMPTZ,
       created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
     )
@@ -120,6 +126,20 @@ export async function ensureNoteSourcesSchema(): Promise<void> {
   await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_completed_at TIMESTAMPTZ');
   await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_claim_id TEXT');
   await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_lease_expires_at TIMESTAMPTZ');
+  await query(`ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_stage TEXT NOT NULL DEFAULT 'idle'`);
+  await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_run_id TEXT');
+  await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_last_heartbeat_at TIMESTAMPTZ');
+  await query(`
+    UPDATE note_sources
+    SET processing_stage = CASE processing_status
+      WHEN 'queued' THEN 'queued'
+      WHEN 'processing' THEN 'extracting'
+      WHEN 'completed' THEN 'completed'
+      WHEN 'failed' THEN 'extraction_failed'
+      ELSE 'idle'
+    END
+    WHERE processing_stage = 'idle' AND processing_status <> 'idle'
+  `);
   await query('CREATE INDEX IF NOT EXISTS idx_note_sources_note_id ON note_sources(note_id)');
   await query('CREATE INDEX IF NOT EXISTS idx_note_sources_owner ON note_sources(user_id)');
   await query('CREATE INDEX IF NOT EXISTS idx_note_sources_processing ON note_sources(processing_status) WHERE processing_status IN (\'queued\', \'processing\')');

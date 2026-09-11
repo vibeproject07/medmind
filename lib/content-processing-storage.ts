@@ -12,6 +12,7 @@ import type { SpacyTokenizationResult } from '@/lib/spacy-tokenizer';
 import { ensureNoteSourcesSchema } from '@/lib/note-sources';
 
 export type PersistProcessingInput = {
+  runId?: string;
   userId: number;
   noteId?: number | null;
   noteSourceId?: number | null;
@@ -55,6 +56,11 @@ export function ensureContentProcessingSchema(): Promise<void> {
           updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
         )
       `);
+      await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS vectorization_attempts INTEGER NOT NULL DEFAULT 0');
+      await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS vectorization_started_at TIMESTAMPTZ');
+      await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS vectorization_claim_id TEXT');
+      await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS vectorization_lease_expires_at TIMESTAMPTZ');
+      await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS is_current BOOLEAN NOT NULL DEFAULT TRUE');
       await query(`
         CREATE TABLE IF NOT EXISTS content_processing_chunks (
           id BIGSERIAL PRIMARY KEY,
@@ -83,6 +89,29 @@ export function ensureContentProcessingSchema(): Promise<void> {
       await query('CREATE INDEX IF NOT EXISTS idx_content_processing_runs_user ON content_processing_runs(user_id)');
       await query('CREATE INDEX IF NOT EXISTS idx_content_processing_chunks_run ON content_processing_chunks(processing_run_id)');
       await query(`
+        CREATE INDEX IF NOT EXISTS idx_content_processing_runs_vectorization
+        ON content_processing_runs(vectorization_status, updated_at)
+        WHERE vectorization_status IN ('pending', 'processing')
+      `);
+      await query(`
+        WITH ranked AS (
+          SELECT id, ROW_NUMBER() OVER (
+            PARTITION BY note_source_id ORDER BY created_at DESC, id DESC
+          ) AS position
+          FROM content_processing_runs
+          WHERE note_source_id IS NOT NULL AND is_current = TRUE
+        )
+        UPDATE content_processing_runs r
+        SET is_current = FALSE
+        FROM ranked
+        WHERE r.id = ranked.id AND ranked.position > 1
+      `);
+      await query(`
+        CREATE UNIQUE INDEX IF NOT EXISTS idx_content_processing_runs_current_source
+        ON content_processing_runs(note_source_id)
+        WHERE note_source_id IS NOT NULL AND is_current = TRUE
+      `);
+      await query(`
         CREATE INDEX IF NOT EXISTS content_processing_chunks_embedding_hnsw_idx
         ON content_processing_chunks
         USING hnsw ((embedding::halfvec(${EMBEDDING_DIM})) halfvec_cosine_ops)
@@ -104,21 +133,31 @@ function safeError(error: unknown): string {
   return (error instanceof Error ? error.message : 'Falha ao gerar embedding.').slice(0, 600);
 }
 
-export async function vectorizeProcessingRun(runId: string): Promise<void> {
+export async function vectorizeProcessingRun(
+  runId: string,
+  claimId?: string,
+): Promise<{ status: string; error: string | null; noteSourceId: number | null }> {
   await ensureContentProcessingSchema();
   await query(
     `UPDATE content_processing_runs
      SET vectorization_status = 'processing', vectorization_error = NULL, updated_at = NOW()
-     WHERE id = $1`,
-    [runId],
+     WHERE id = $1
+       AND ($2::text IS NULL OR vectorization_claim_id = $2)`,
+    [runId, claimId ?? null],
   );
   const chunks = (
     await query(
       `SELECT id, text
        FROM content_processing_chunks
-       WHERE processing_run_id = $1 AND block_type = 'chunk'
+       WHERE processing_run_id = $1
+         AND block_type = 'chunk'
+         AND embedding_status <> 'completed'
+         AND ($2::text IS NULL OR EXISTS (
+           SELECT 1 FROM content_processing_runs r
+           WHERE r.id = processing_run_id AND r.vectorization_claim_id = $2
+         ))
        ORDER BY chunk_index`,
-      [runId],
+      [runId, claimId ?? null],
     )
   ).rows as Array<{ id: number; text: string }>;
 
@@ -130,8 +169,13 @@ export async function vectorizeProcessingRun(runId: string): Promise<void> {
       await query(
         `UPDATE content_processing_chunks
          SET embedding_status = 'processing', embedding_error = NULL, updated_at = NOW()
-         WHERE id = ANY($1::bigint[])`,
-        [batch.map((chunk) => chunk.id)],
+         WHERE id = ANY($1::bigint[])
+           AND embedding_status <> 'completed'
+           AND ($2::text IS NULL OR EXISTS (
+             SELECT 1 FROM content_processing_runs r
+             WHERE r.id = processing_run_id AND r.vectorization_claim_id = $2
+           ))`,
+        [batch.map((chunk) => chunk.id), claimId ?? null],
       );
       let embeddings: number[][];
       try {
@@ -153,8 +197,12 @@ export async function vectorizeProcessingRun(runId: string): Promise<void> {
           `UPDATE content_processing_chunks
            SET embedding = $1::vector, embedding_model = $2,
                embedding_status = 'completed', embedding_error = NULL, updated_at = NOW()
-           WHERE id = $3`,
-          [vectorToString(embeddings[index]), EMBEDDING_MODEL, batch[index].id],
+            WHERE id = $3
+              AND ($4::text IS NULL OR EXISTS (
+                SELECT 1 FROM content_processing_runs r
+                WHERE r.id = processing_run_id AND r.vectorization_claim_id = $4
+              ))`,
+          [vectorToString(embeddings[index]), EMBEDDING_MODEL, batch[index].id, claimId ?? null],
         );
       }
     } catch (error) {
@@ -162,21 +210,54 @@ export async function vectorizeProcessingRun(runId: string): Promise<void> {
       await query(
         `UPDATE content_processing_chunks
          SET embedding_status = 'failed', embedding_error = $1, updated_at = NOW()
-         WHERE id = ANY($2::bigint[])`,
-        [safeError(error), batch.map((chunk) => chunk.id)],
+         WHERE id = ANY($2::bigint[])
+           AND ($3::text IS NULL OR EXISTS (
+             SELECT 1 FROM content_processing_runs r
+             WHERE r.id = processing_run_id AND r.vectorization_claim_id = $3
+           ))`,
+        [safeError(error), batch.map((chunk) => chunk.id), claimId ?? null],
       );
     }
   }
 
-  const status = failures === 0 ? 'completed' : failures === chunks.length ? 'failed' : 'partial';
-  await query(
+  const counts = (
+    await query(
+      `SELECT
+         COUNT(*) FILTER (WHERE block_type = 'chunk')::integer AS total,
+         COUNT(*) FILTER (WHERE block_type = 'chunk' AND embedding_status = 'completed')::integer AS completed,
+         COUNT(*) FILTER (WHERE block_type = 'chunk' AND embedding_status = 'failed')::integer AS failed
+       FROM content_processing_chunks
+       WHERE processing_run_id = $1`,
+      [runId],
+    )
+  ).rows[0] as { total: number; completed: number; failed: number };
+  const total = Number(counts.total);
+  const completed = Number(counts.completed);
+  const failed = Number(counts.failed);
+  const status = completed === total ? 'completed' : completed > 0 ? 'partial' : 'failed';
+  const finalized = await query(
     `UPDATE content_processing_runs
      SET vectorization_status = $1,
          vectorization_error = $2,
+          vectorization_claim_id = NULL,
+          vectorization_lease_expires_at = NULL,
          updated_at = NOW()
-     WHERE id = $3`,
-    [status, failures ? `${failures} de ${chunks.length} chunks falharam na vetorização.` : null, runId],
+     WHERE id = $3
+       AND ($4::text IS NULL OR vectorization_claim_id = $4)
+     RETURNING vectorization_status, vectorization_error, note_source_id`,
+    [status, failed ? `${failed} de ${total} chunks falharam na vetorização.` : null, runId, claimId ?? null],
   );
+  const terminal = finalized.rows[0] as {
+    vectorization_status: string;
+    vectorization_error: string | null;
+    note_source_id: number | null;
+  } | undefined;
+  if (!terminal) throw new Error('O lease da vetorização foi perdido; o job será retomado.');
+  return {
+    status: terminal.vectorization_status,
+    error: terminal.vectorization_error,
+    noteSourceId: terminal.note_source_id,
+  };
 }
 
 export async function findSimilarProcessingChunks(
@@ -199,6 +280,7 @@ export async function findSimilarProcessingChunks(
      FROM content_processing_chunks c
      JOIN content_processing_runs r ON r.id = c.processing_run_id
      WHERE r.user_id = $2
+        AND r.is_current = TRUE
        AND ($3::integer IS NULL OR r.note_id = $3)
        AND c.block_type = 'chunk'
        AND c.embedding_status = 'completed'
@@ -217,9 +299,20 @@ export async function findSimilarProcessingChunks(
   }));
 }
 
-export async function persistProcessingPipeline(input: PersistProcessingInput): Promise<string> {
+export async function persistProcessingPipeline(
+  input: PersistProcessingInput,
+  options: {
+    vectorize?: boolean;
+    sourceCheckpoint?: {
+      sourceId: number;
+      claimId: string;
+      originalText: string | null;
+      result: string;
+    };
+  } = {},
+): Promise<string> {
   await ensureContentProcessingSchema();
-  const runId = crypto.randomUUID();
+  const runId = input.runId ?? crypto.randomUUID();
   const client = await getPool().connect();
   try {
     await client.query('BEGIN');
@@ -269,6 +362,27 @@ export async function persistProcessingPipeline(input: PersistProcessingInput): 
         ],
       );
     }
+    if (options.sourceCheckpoint) {
+      const checkpoint = options.sourceCheckpoint;
+      const updated = await client.query(
+        `UPDATE note_sources
+         SET processing_status = 'processing',
+             processing_stage = 'awaiting_vectorization',
+             processing_original_text = $1,
+             processing_result = $2,
+             processing_error = NULL,
+             processing_completed_at = NULL,
+             processing_claim_id = NULL,
+             processing_lease_expires_at = NULL,
+             processing_last_heartbeat_at = NOW(),
+             updated_at = NOW()
+         WHERE id = $3 AND processing_claim_id = $4 AND processing_run_id = $5`,
+        [checkpoint.originalText, checkpoint.result, checkpoint.sourceId, checkpoint.claimId, runId],
+      );
+      if (updated.rowCount !== 1) {
+        throw new Error('O lease do processamento foi perdido antes do checkpoint; a transação foi cancelada.');
+      }
+    }
     await client.query('COMMIT');
   } catch (error) {
     await client.query('ROLLBACK');
@@ -277,8 +391,135 @@ export async function persistProcessingPipeline(input: PersistProcessingInput): 
     client.release();
   }
 
-  await vectorizeProcessingRun(runId);
+  if (options.vectorize !== false) await vectorizeProcessingRun(runId);
   return runId;
+}
+
+const VECTORIZATION_LEASE_MINUTES = 30;
+
+export async function recoverStalledVectorization(): Promise<void> {
+  await ensureContentProcessingSchema();
+  await query(`
+    UPDATE content_processing_runs
+    SET vectorization_status = 'pending',
+        vectorization_error = 'A vetorização anterior foi interrompida e será retomada.',
+        vectorization_claim_id = NULL,
+        vectorization_lease_expires_at = NULL,
+        updated_at = NOW()
+    WHERE vectorization_status = 'processing'
+      AND vectorization_lease_expires_at < NOW()
+  `);
+  await query(`
+    UPDATE content_processing_chunks c
+    SET embedding_status = 'pending', embedding_error = NULL, updated_at = NOW()
+    FROM content_processing_runs r
+    WHERE c.processing_run_id = r.id
+      AND r.vectorization_status = 'pending'
+      AND c.block_type = 'chunk'
+      AND c.embedding_status = 'processing'
+  `);
+}
+
+async function claimNextVectorizationRun(): Promise<{ runId: string; claimId: string; noteSourceId: number | null } | null> {
+  const claimId = crypto.randomUUID();
+  const claimed = await query(
+    `WITH candidate AS (
+       SELECT id
+       FROM content_processing_runs
+       WHERE vectorization_status = 'pending'
+       ORDER BY updated_at ASC
+       FOR UPDATE SKIP LOCKED
+       LIMIT 1
+     )
+     UPDATE content_processing_runs
+     SET vectorization_status = 'processing',
+         vectorization_error = NULL,
+         vectorization_started_at = NOW(),
+         vectorization_attempts = vectorization_attempts + 1,
+         vectorization_claim_id = $1,
+         vectorization_lease_expires_at = NOW() + INTERVAL '${VECTORIZATION_LEASE_MINUTES} minutes',
+         updated_at = NOW()
+     WHERE id IN (SELECT id FROM candidate)
+     RETURNING id, note_source_id`,
+    [claimId],
+  );
+  const row = claimed.rows[0] as { id: string; note_source_id: number | null } | undefined;
+  return row ? { runId: row.id, claimId, noteSourceId: row.note_source_id } : null;
+}
+
+export async function processNextQueuedVectorization(): Promise<boolean> {
+  await recoverStalledVectorization();
+  const job = await claimNextVectorizationRun();
+  if (!job) return false;
+  if (job.noteSourceId) {
+    await query(
+      `UPDATE note_sources
+       SET processing_stage = 'vectorizing', processing_last_heartbeat_at = NOW(), updated_at = NOW()
+       WHERE id = $1 AND processing_run_id = $2`,
+      [job.noteSourceId, job.runId],
+    );
+  }
+  let heartbeatFailed = false;
+  const heartbeat = setInterval(() => {
+    void query(
+      `UPDATE content_processing_runs
+       SET vectorization_lease_expires_at = NOW() + INTERVAL '${VECTORIZATION_LEASE_MINUTES} minutes',
+           updated_at = NOW()
+       WHERE id = $1 AND vectorization_claim_id = $2 AND vectorization_status = 'processing'`,
+      [job.runId, job.claimId],
+    ).then((result) => {
+      if (result.rowCount === 0) heartbeatFailed = true;
+    }).catch(() => {
+      heartbeatFailed = true;
+    });
+  }, 60_000);
+  heartbeat.unref();
+  try {
+    const terminal = await vectorizeProcessingRun(job.runId, job.claimId);
+    if (heartbeatFailed) throw new Error('O lease da vetorização foi perdido; o job será retomado.');
+    if (job.noteSourceId) {
+      const completed = terminal.status === 'completed';
+      await query(
+        `UPDATE note_sources
+         SET processing_status = $1,
+             processing_stage = $2,
+             processing_error = $3,
+             processing_completed_at = NOW(),
+             processing_last_heartbeat_at = NOW(),
+             updated_at = NOW()
+         WHERE id = $4 AND processing_run_id = $5`,
+        [
+          completed ? 'completed' : 'failed',
+          completed ? 'completed' : 'vectorization_failed',
+          completed ? null : terminal.error,
+          job.noteSourceId,
+          job.runId,
+        ],
+      );
+    }
+  } catch (error) {
+    const message = safeError(error);
+    const failedRun = await query(
+      `UPDATE content_processing_runs
+       SET vectorization_status = 'failed', vectorization_error = $1,
+           vectorization_claim_id = NULL, vectorization_lease_expires_at = NULL, updated_at = NOW()
+       WHERE id = $2 AND vectorization_claim_id = $3`,
+      [message, job.runId, job.claimId],
+    );
+    if (job.noteSourceId && failedRun.rowCount === 1) {
+      await query(
+        `UPDATE note_sources
+         SET processing_status = 'failed', processing_stage = 'vectorization_failed',
+             processing_error = $1, processing_completed_at = NOW(), updated_at = NOW()
+         WHERE id = $2 AND processing_run_id = $3`,
+        [message, job.noteSourceId, job.runId],
+      );
+    }
+  }
+  finally {
+    clearInterval(heartbeat);
+  }
+  return true;
 }
 
 export async function linkProcessingRunsToNote(
