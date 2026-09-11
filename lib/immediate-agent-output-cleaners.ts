@@ -4,7 +4,13 @@ export interface ExtractionOutputCleanup {
   jsonWithDiscardFalse: string[];
 }
 
-type JsonValue = null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue };
+export type ExtractionJsonValue =
+  | null
+  | boolean
+  | number
+  | string
+  | ExtractionJsonValue[]
+  | { [key: string]: ExtractionJsonValue };
 const REMOVED = Symbol('removed');
 
 const TIMESTAMP = String.raw`\d{1,2}:\d{2}(?::\d{2})?(?:[.,]\d{1,3})?`;
@@ -58,7 +64,7 @@ function removeCommonMarkdown(output: string): string {
     .trim();
 }
 
-function parseJsonOutput(output: string): JsonValue | null {
+export function parseExtractionJsonOutput(output: string): ExtractionJsonValue | null {
   const withoutFence = output
     .trim()
     .replace(/^```(?:json)?\s*/i, '')
@@ -76,33 +82,38 @@ function parseJsonOutput(output: string): JsonValue | null {
   const end = withoutFence.lastIndexOf(closing);
   if (end <= start) return null;
   try {
-    return JSON.parse(withoutFence.slice(start, end + 1)) as JsonValue;
+    return JSON.parse(withoutFence.slice(start, end + 1)) as ExtractionJsonValue;
   } catch {
     return null;
   }
 }
 
-function isDiscardedObject(value: { [key: string]: JsonValue }): boolean {
+function isDiscardedObject(value: { [key: string]: ExtractionJsonValue }): boolean {
   return value.descatada === true || value.descartada === true;
 }
 
-function removeDiscardedObjects(value: JsonValue): JsonValue | typeof REMOVED {
+function removeDiscardedObjects(
+  value: ExtractionJsonValue,
+): ExtractionJsonValue | typeof REMOVED {
   if (Array.isArray(value)) {
     return value
       .map(removeDiscardedObjects)
-      .filter((item): item is JsonValue => item !== REMOVED);
+      .filter((item): item is ExtractionJsonValue => item !== REMOVED);
   }
   if (value && typeof value === 'object') {
     if (isDiscardedObject(value)) return REMOVED;
     const entries = Object.entries(value)
       .map(([key, child]) => [key, removeDiscardedObjects(child)] as const)
-      .filter((entry): entry is readonly [string, JsonValue] => entry[1] !== REMOVED);
-    return Object.fromEntries(entries) as JsonValue;
+      .filter((entry): entry is readonly [string, ExtractionJsonValue] => entry[1] !== REMOVED);
+    return Object.fromEntries(entries) as ExtractionJsonValue;
   }
   return value;
 }
 
-function collectRetainedFlaggedObjects(value: JsonValue, collected: string[]): void {
+function collectRetainedFlaggedObjects(
+  value: ExtractionJsonValue,
+  collected: string[],
+): void {
   if (Array.isArray(value)) {
     value.forEach((child) => collectRetainedFlaggedObjects(child, collected));
     return;
@@ -125,7 +136,7 @@ export function cleanExtractionAgentOutput(
   output: string,
   options: { requireJson?: boolean } = {},
 ): ExtractionOutputCleanup {
-  const parsed = parseJsonOutput(output);
+  const parsed = parseExtractionJsonOutput(output);
   if (!parsed) {
     if (options.requireJson) {
       throw new Error('O agente de extração não retornou um JSON válido.');
@@ -141,7 +152,7 @@ export function cleanExtractionAgentOutput(
   const jsonWithDiscardFalse: string[] = [];
   collectRetainedFlaggedObjects(retained, jsonWithDiscardFalse);
   return {
-    cleanedText: removeCommonMarkdown(output),
+    cleanedText: JSON.stringify(parsed, null, 2),
     newJson: JSON.stringify(retained, null, 2),
     jsonWithDiscardFalse,
   };

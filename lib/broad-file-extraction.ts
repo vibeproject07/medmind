@@ -1,5 +1,9 @@
-import { geminiProcessDocument, geminiTransformTranscription } from '@/lib/gemini';
 import { extractTextFromDocx, extractTextFromPptx } from '@/lib/document-extract';
+import {
+  extractImageAsJson,
+  extractPdfInBatches,
+  extractTextInBatches,
+} from '@/lib/broad-extraction-batching';
 import {
   summarizeTokenization,
   type SpacyTokenizationResult,
@@ -50,11 +54,7 @@ export async function processWithBroadFileExtraction(
         ? await extractTextFromDocx(buffer)
         : await extractTextFromPptx(buffer);
 
-    const rawBroadExtractionText = await geminiTransformTranscription({
-      transcription: extractedText,
-      instruction: 'Produza o material de estudo conforme as instruções do sistema.',
-      agentKey: 'broad_file_extraction',
-    });
+    const rawBroadExtractionText = await extractTextInBatches(extractedText);
     const { cleanedText: broadExtractionText, newJson, jsonWithDiscardFalse } =
       cleanExtractionAgentOutput(rawBroadExtractionText, { requireJson: true });
     const { tokenization, chunking } = await chunkTokenizedText({
@@ -74,11 +74,9 @@ export async function processWithBroadFileExtraction(
     };
   }
 
-  const rawBroadExtractionText = await geminiProcessDocument({
-    file: buffer,
-    mimeType: normalizedMimeType,
-    agentKey: 'broad_file_extraction',
-  });
+  const rawBroadExtractionText = normalizedMimeType === 'application/pdf'
+    ? await extractPdfInBatches(buffer)
+    : await extractImageAsJson(buffer, normalizedMimeType);
   const { cleanedText: broadExtractionText, newJson, jsonWithDiscardFalse } =
     cleanExtractionAgentOutput(rawBroadExtractionText, { requireJson: true });
   const { tokenization, chunking } = await chunkTokenizedText({

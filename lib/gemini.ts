@@ -38,7 +38,42 @@ export type GeminiProcessDocumentParams = {
   agentKey?: string;
   temperature?: number;
   maxOutputTokens?: number;
+  additionalInstruction?: string;
+  responseMimeType?: string;
+  responseJsonSchema?: Record<string, unknown>;
 };
+
+export class GeminiGenerationError extends Error {
+  constructor(
+    message: string,
+    public readonly finishReason?: string,
+  ) {
+    super(message);
+    this.name = 'GeminiGenerationError';
+  }
+}
+
+function responseTextOrThrow(response: any): string {
+  const candidate = response?.candidates?.[0];
+  const finishReason = candidate?.finishReason;
+  if (finishReason && finishReason !== 'STOP') {
+    throw new GeminiGenerationError(
+      finishReason === 'MAX_TOKENS'
+        ? 'O Gemini atingiu o limite de saída antes de concluir a resposta.'
+        : `O Gemini encerrou a geração com o motivo ${finishReason}.`,
+      finishReason,
+    );
+  }
+  const text = typeof response?.text === 'string'
+    ? response.text.trim()
+    : candidate?.content?.parts
+        ?.map((part: any) => part?.text)
+        .filter(Boolean)
+        .join('')
+        .trim() ?? '';
+  if (text) return text;
+  throw new GeminiGenerationError('Resposta vazia do Gemini.', finishReason);
+}
 
 export async function geminiProcessDocument({
   file,
@@ -49,6 +84,9 @@ export async function geminiProcessDocument({
   agentKey,
   temperature,
   maxOutputTokens,
+  additionalInstruction,
+  responseMimeType,
+  responseJsonSchema,
 }: GeminiProcessDocumentParams): Promise<string> {
   const key = apiKey ?? process.env.GEMINI_API_KEY ?? process.env.GOOGLE_API_KEY;
   if (!key) {
@@ -89,35 +127,49 @@ export async function geminiProcessDocument({
       ? fileName
       : `https://generativelanguage.googleapis.com/v1beta/${fileName.startsWith('files/') ? fileName : `files/${fileName}`}`;
 
-  for (let attempt = 0; attempt < 60; attempt++) {
-    const fileInfo = await ai.files.get({ name: fileName });
-    const state = (fileInfo as { state?: string })?.state ?? '';
-    if (state === 'ACTIVE' || state === 'STATE_ACTIVE') break;
-    if (state === 'FAILED' || state === 'STATE_FAILED') {
-      throw new Error('O processamento do arquivo falhou no servidor.');
+  try {
+    let active = false;
+    for (let attempt = 0; attempt < 60; attempt++) {
+      const fileInfo = await ai.files.get({ name: fileName });
+      const state = (fileInfo as { state?: string })?.state ?? '';
+      if (state === 'ACTIVE' || state === 'STATE_ACTIVE') {
+        active = true;
+        break;
+      }
+      if (state === 'FAILED' || state === 'STATE_FAILED') {
+        throw new Error('O processamento do arquivo falhou no servidor.');
+      }
+      await new Promise((r) => setTimeout(r, 2000));
     }
-    await new Promise((r) => setTimeout(r, 2000));
+    if (!active) {
+      throw new Error('O arquivo não ficou disponível no Gemini dentro do tempo limite.');
+    }
+    const response = await ai.models.generateContent({
+      model: model || DEFAULT_MODEL,
+      contents: createUserContent([
+        createPartFromUri(fileUri, fileMime),
+        createPartFromText(
+          [effectiveInstruction, additionalInstruction]
+            .filter((value) => value?.trim())
+            .join('\n\n'),
+        ),
+      ]),
+      config: {
+        temperature: effectiveTemperature,
+        maxOutputTokens: effectiveMaxTokens,
+        responseMimeType,
+        responseJsonSchema,
+      },
+    });
+    return responseTextOrThrow(response);
+  } finally {
+    await ai.files.delete({ name: fileName }).catch((error) => {
+      console.warn(
+        '[gemini] Não foi possível remover um arquivo temporário:',
+        error instanceof Error ? error.message : String(error),
+      );
+    });
   }
-
-  const response = await ai.models.generateContent({
-    model: model || DEFAULT_MODEL,
-    contents: createUserContent([
-      createPartFromUri(fileUri, fileMime),
-      createPartFromText(effectiveInstruction),
-    ]),
-    config: {
-      temperature: effectiveTemperature,
-      maxOutputTokens: effectiveMaxTokens,
-    },
-  });
-
-  const text = (response as any)?.text;
-  if (typeof text === 'string' && text.trim()) return text.trim();
-
-  const alt = (response as any)?.candidates?.[0]?.content?.parts?.map((p: any) => p?.text).filter(Boolean).join('') ?? '';
-  if (typeof alt === 'string' && alt.trim()) return alt.trim();
-
-  throw new Error('Resposta vazia do Gemini.');
 }
 
 const YOUTUBE_TRANSCRIPT_FALLBACK = `Transcreva o conteúdo falado deste vídeo do YouTube em português (pt-BR).
@@ -190,6 +242,8 @@ export type GeminiTransformTranscriptionParams = {
   apiKey?: string;
   systemPrompt?: string;
   agentKey?: string;
+  responseMimeType?: string;
+  responseJsonSchema?: Record<string, unknown>;
 };
 
 const DEFAULT_MODEL = 'gemini-2.5-flash';
@@ -238,6 +292,8 @@ export async function geminiTransformTranscription({
   apiKey,
   systemPrompt,
   agentKey,
+  responseMimeType,
+  responseJsonSchema,
 }: GeminiTransformTranscriptionParams): Promise<string> {
   if (!transcription || !transcription.trim()) {
     throw new Error('Transcrição vazia.');
@@ -271,14 +327,9 @@ export async function geminiTransformTranscription({
     config: {
       temperature: effectiveTemperature ?? 0.2,
       maxOutputTokens: effectiveMaxTokens ?? 8192,
+      responseMimeType,
+      responseJsonSchema,
     },
   });
-
-  const text = (response as any)?.text;
-  if (typeof text === 'string' && text.trim()) return text.trim();
-
-  const alt = (response as any)?.candidates?.[0]?.content?.parts?.map((p: any) => p?.text).filter(Boolean).join('') ?? '';
-  if (typeof alt === 'string' && alt.trim()) return alt.trim();
-
-  throw new Error('Resposta vazia do Gemini.');
+  return responseTextOrThrow(response);
 }
