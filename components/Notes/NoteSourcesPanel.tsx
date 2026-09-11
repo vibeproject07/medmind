@@ -19,6 +19,10 @@ import {
   reconcileNoteSourceSelection,
   sortNoteSourcesByCreation,
 } from '@/lib/note-source-selection';
+import type {
+  ProcessingValidationKind,
+  ProcessingValidationReport,
+} from '@/lib/source-processing-validation';
 
 export const NOTE_SOURCE_ACCEPT = [
   '.pdf,.doc,.docx,.ppt,.pptx,.txt,.md,.csv',
@@ -334,6 +338,8 @@ export default function NoteSourcesPanel({
   const [selected, setSelected] = useState<{ source: NoteSource; url: string } | null>(null);
   const [selectedByUser, setSelectedByUser] = useState(false);
   const [visibleProcessedText, setVisibleProcessedText] = useState<'transcription' | 'extraction' | null>(null);
+  const [validationKind, setValidationKind] = useState<ProcessingValidationKind | null>(null);
+  const [validationReport, setValidationReport] = useState<ProcessingValidationReport | null>(null);
   const [failedUploads, setFailedUploads] = useState<{ file: File; error: string }[]>([]);
   const [retryFileNames, setRetryFileNames] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -485,6 +491,39 @@ export default function NoteSourcesPanel({
     }
   };
 
+  const validateProcessingInput = async (
+    source: NoteSource,
+    kind: ProcessingValidationKind,
+  ) => {
+    const accessToken = token();
+    if (!accessToken) return;
+    setError(null);
+    setValidationKind(kind);
+    setValidationReport(null);
+    try {
+      const response = await fetch(
+        `/api/notes/${noteId}/sources/${source.id}/validate`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ kind }),
+        },
+      );
+      const data = await readJson<{ report?: ProcessingValidationReport }>(response);
+      if (!response.ok || !data.report) {
+        throw new Error(data.error || 'Não foi possível validar os pré-requisitos.');
+      }
+      setValidationReport(data.report);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Não foi possível validar os pré-requisitos.');
+    } finally {
+      setValidationKind(null);
+    }
+  };
+
   useEffect(() => {
     const current = selected?.source;
     if (!current) return;
@@ -494,6 +533,7 @@ export default function NoteSourcesPanel({
 
   useEffect(() => {
     setVisibleProcessedText(null);
+    setValidationReport(null);
   }, [selected?.source.id]);
 
   useEffect(() => {
@@ -613,6 +653,49 @@ export default function NoteSourcesPanel({
                     <p className="flex items-center gap-1.5 text-xs font-semibold text-violet-800"><Sparkles className="h-3.5 w-3.5" />Processamento por IA</p>
                     <span className="text-[11px] font-medium text-violet-700">{processingLabel(selected.source)}</span>
                   </div>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      onClick={() => void validateProcessingInput(selected.source, 'tokenizer')}
+                      disabled={validationKind !== null}
+                      className="rounded-md border border-violet-200 bg-white px-2.5 py-1.5 text-xs font-medium text-violet-700 hover:bg-violet-50 disabled:opacity-50"
+                    >
+                      {validationKind === 'tokenizer' ? 'Validando…' : 'Validar tokenizador'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => void validateProcessingInput(selected.source, 'chunking')}
+                      disabled={validationKind !== null}
+                      className="rounded-md border border-violet-200 bg-white px-2.5 py-1.5 text-xs font-medium text-violet-700 hover:bg-violet-50 disabled:opacity-50"
+                    >
+                      {validationKind === 'chunking' ? 'Validando…' : 'Validar chunking'}
+                    </button>
+                  </div>
+                  {validationReport && (
+                    <div className={`rounded-md border p-2.5 ${
+                      validationReport.valid
+                        ? 'border-emerald-200 bg-emerald-50'
+                        : 'border-red-200 bg-red-50'
+                    }`}>
+                      <p className={`text-xs font-semibold ${
+                        validationReport.valid ? 'text-emerald-800' : 'text-red-800'
+                      }`}>
+                        {validationReport.valid
+                          ? 'Todos os pré-requisitos estão dentro dos padrões.'
+                          : 'O fluxo não pode continuar: há pré-requisitos fora dos padrões.'}
+                      </p>
+                      <ul className="mt-2 space-y-1.5">
+                        {validationReport.checks.map((check) => (
+                          <li key={check.key} className={`text-[11px] ${
+                            check.ok ? 'text-emerald-800' : 'text-red-800'
+                          }`}>
+                            <span className="font-semibold">{check.ok ? 'OK' : 'Alerta'} — {check.label}:</span>{' '}
+                            {check.message}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                   {selected.source.processing_error && <p className="rounded-md bg-red-50 p-2 text-xs text-red-700">{selected.source.processing_error}</p>}
                   {selected.source.processing_result && (
                     <div>

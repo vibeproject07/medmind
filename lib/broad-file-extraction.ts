@@ -26,6 +26,7 @@ export interface BroadFileExtractionResult {
   tokenizationData: SpacyTokenizationResult;
   chunking: ChunkingResult;
   jsonWithDiscardFalse: string[];
+  newJson: string;
 }
 
 /**
@@ -54,8 +55,8 @@ export async function processWithBroadFileExtraction(
       instruction: 'Produza o material de estudo conforme as instruções do sistema.',
       agentKey: 'broad_file_extraction',
     });
-    const { cleanedText: broadExtractionText, jsonWithDiscardFalse } =
-      cleanExtractionAgentOutput(rawBroadExtractionText);
+    const { cleanedText: broadExtractionText, newJson, jsonWithDiscardFalse } =
+      cleanExtractionAgentOutput(rawBroadExtractionText, { requireJson: true });
     const { tokenization, chunking } = await chunkTokenizedText({
       text: broadExtractionText,
       sourceType: 'document',
@@ -69,6 +70,7 @@ export async function processWithBroadFileExtraction(
       tokenizationData: tokenization,
       chunking,
       jsonWithDiscardFalse,
+      newJson: newJson!,
     };
   }
 
@@ -77,8 +79,8 @@ export async function processWithBroadFileExtraction(
     mimeType: normalizedMimeType,
     agentKey: 'broad_file_extraction',
   });
-  const { cleanedText: broadExtractionText, jsonWithDiscardFalse } =
-    cleanExtractionAgentOutput(rawBroadExtractionText);
+  const { cleanedText: broadExtractionText, newJson, jsonWithDiscardFalse } =
+    cleanExtractionAgentOutput(rawBroadExtractionText, { requireJson: true });
   const { tokenization, chunking } = await chunkTokenizedText({
     text: broadExtractionText,
     sourceType: normalizedMimeType.startsWith('image/') ? 'image' : 'document',
@@ -91,5 +93,6 @@ export async function processWithBroadFileExtraction(
     tokenizationData: tokenization,
     chunking,
     jsonWithDiscardFalse,
+    newJson: newJson!,
   };
 }

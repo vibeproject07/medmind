@@ -6,3 +6,4 @@
 - [Backend processing metadata](backend-processing-metadata.md) — extração e NLP ficam separados do conteúdo visível; chunks são a unidade persistida de vetorização.
 - [S3 source upload CORS](s3-source-upload-cors.md) — Preserve regras do bucket e mantenha origens do app na regra `MedMindSourceUploads`.
 - [Durable source jobs](durable-source-jobs.md) — Checkpoint e claim devem ser atômicos; todo write assíncrono precisa de fencing e lease renovável.
+- [Read-only diagnostics](read-only-diagnostics.md) — Rotas de validação não devem chamar inicializadores que executam DDL ou backfills.

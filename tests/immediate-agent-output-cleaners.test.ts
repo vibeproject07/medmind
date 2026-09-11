@@ -30,37 +30,61 @@ test('remove minutagens SRT, índices de legenda e prefixos sem colchetes', () =
   assert.equal(cleanTranscriptionAgentOutput(output), 'Introdução.\n\nPróximo assunto.');
 });
 
-test('remove markdown comum e coleta JSON com descarte false', () => {
-  const output = [
-    '## Resultado',
-    '',
-    '- **Item importante**',
-    '```json',
-    '{"titulo":"A","descarte":false,"texto":"Manter"}',
-    '```',
-    '{"titulo":"B","descarte":true}',
-  ].join('\n');
+test('interpreta JSON e remove objetos com descatada ou descartada true', () => {
+  const output = `\`\`\`json
+[
+  {"titulo":"A","descatada":false,"texto":"Manter A"},
+  {"titulo":"B","descatada":true,"texto":"Remover B"},
+  {"titulo":"C","descartada":false,"texto":"Manter C"},
+  {"titulo":"D","descartada":true,"texto":"Remover D"}
+]
+\`\`\``;
   const result = cleanExtractionAgentOutput(output);
 
   assert.equal(
-    result.cleanedText,
-    'Resultado\nItem importante\n\n{"titulo":"A","descarte":false,"texto":"Manter"}\n\n{"titulo":"B","descarte":true}',
+    result.newJson,
+    `[
+  {
+    "titulo": "A",
+    "descatada": false,
+    "texto": "Manter A"
+  },
+  {
+    "titulo": "C",
+    "descartada": false,
+    "texto": "Manter C"
+  }
+]`,
   );
   assert.deepEqual(result.jsonWithDiscardFalse, [
-    '{"titulo":"A","descarte":false,"texto":"Manter"}',
+    '{"titulo":"A","descatada":false,"texto":"Manter A"}',
+    '{"titulo":"C","descartada":false,"texto":"Manter C"}',
   ]);
+  assert.match(result.cleanedText, /Remover B/);
+  assert.match(result.cleanedText, /Remover D/);
 });
 
-test('coleta pseudo-JSON com marcador literal e ignora chaves dentro de strings', () => {
-  const output = [
-    '{id: 1, metadado: "[descarte: FALSE;]", texto: "valor com { chave }"}',
-    '{id: 2, descarte: FALSO; texto: "também manter"}',
-    '{id: 3, descarte: TRUE;}',
-  ].join('\n');
+test('remove objetos descartados em listas aninhadas e preserva a estrutura', () => {
+  const output = JSON.stringify({
+    argumentos: [
+      { unidade: 1, descartada: false, texto: 'Conteúdo clínico.' },
+      { unidade: 2, descartada: true, texto: 'Publicidade.' },
+    ],
+    fonte: 'aula',
+  });
   const result = cleanExtractionAgentOutput(output);
 
-  assert.deepEqual(result.jsonWithDiscardFalse, [
-    '{id: 1, metadado: "[descarte: FALSE;]", texto: "valor com { chave }"}',
-    '{id: 2, descarte: FALSO; texto: "também manter"}',
-  ]);
+  assert.deepEqual(JSON.parse(result.newJson!), {
+    argumentos: [
+      { unidade: 1, descartada: false, texto: 'Conteúdo clínico.' },
+    ],
+    fonte: 'aula',
+  });
+});
+
+test('rejeita saída inválida quando JSON é obrigatório', () => {
+  assert.throws(
+    () => cleanExtractionAgentOutput('texto sem JSON', { requireJson: true }),
+    /JSON válido/,
+  );
 });

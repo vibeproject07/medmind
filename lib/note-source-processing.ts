@@ -66,6 +66,13 @@ type ProcessedSourceOutput = {
   pipelineText: string;
   wholeTranscription?: string;
   cleanedTranscription?: string;
+  transcriptionSegments?: Array<{
+    id: number;
+    start: number;
+    end: number;
+    text: string;
+    part: number;
+  }>;
   wholeExtractionText?: string;
   cleanedExtractionText?: string;
   tokenization: SpacyTokenizationResult;
@@ -106,6 +113,7 @@ async function processSource(source: ProcessingSource): Promise<ProcessedSourceO
         pipelineText: cleanedTranscription,
         wholeTranscription,
         cleanedTranscription,
+        transcriptionSegments: transcription.segments,
         ...pipeline,
         extractionMetadata: {
           originalSize: transcription.originalSize,
@@ -148,6 +156,7 @@ async function processSource(source: ProcessingSource): Promise<ProcessedSourceO
       extractionMetadata: {
         mimeType,
         sizeBytes: buffer.length,
+        newJson: broad.newJson,
         jsonWithDiscardFalse: broad.jsonWithDiscardFalse,
       },
     };
@@ -269,6 +278,7 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
       processedText: output.pipelineText,
       wholeTranscription: output.wholeTranscription ?? null,
       cleanedTranscription: output.cleanedTranscription ?? null,
+      transcriptionSegments: output.transcriptionSegments ?? null,
       wholeExtractionText: output.wholeExtractionText ?? null,
       cleanedExtractionText: output.cleanedExtractionText ?? null,
       extractionMetadata: {

@@ -22,6 +22,7 @@ export type PersistProcessingInput = {
   processedText: string;
   wholeTranscription?: string | null;
   cleanedTranscription?: string | null;
+  transcriptionSegments?: unknown[] | null;
   wholeExtractionText?: string | null;
   cleanedExtractionText?: string | null;
   extractionMetadata?: Record<string, unknown>;
@@ -67,6 +68,7 @@ export function ensureContentProcessingSchema(): Promise<void> {
       await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS is_current BOOLEAN NOT NULL DEFAULT TRUE');
       await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS whole_transcription TEXT');
       await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS cleaned_transcription TEXT');
+      await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS transcription_segments JSONB');
       await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS whole_extraction_text TEXT');
       await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS cleaned_extraction_text TEXT');
       await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS tokenized_text JSONB');
@@ -348,12 +350,13 @@ export async function persistProcessingPipeline(
       `INSERT INTO content_processing_runs (
          id, user_id, note_id, note_source_id, source_type, source_name,
          extraction_text, processed_text, extraction_metadata, tokenization, chunking,
-          whole_transcription, cleaned_transcription, whole_extraction_text, cleaned_extraction_text,
+           whole_transcription, cleaned_transcription, transcription_segments,
+           whole_extraction_text, cleaned_extraction_text,
           tokenized_text, chunks, content_hash, tokenizer_schema_version, chunker_schema_version,
           embedding_model
         ) VALUES (
           $1,$2,$3,$4,$5,$6,$7,$8,$9::jsonb,$10::jsonb,$11::jsonb,
-          $12,$13,$14,$15,$16::jsonb,$17::jsonb,$18,$19,$20,$21
+           $12,$13,$14::jsonb,$15,$16,$17::jsonb,$18::jsonb,$19,$20,$21,$22
         )`,
       [
         runId,
@@ -369,6 +372,7 @@ export async function persistProcessingPipeline(
         JSON.stringify(input.chunking),
          input.wholeTranscription ?? null,
          input.cleanedTranscription ?? null,
+         input.transcriptionSegments ? JSON.stringify(input.transcriptionSegments) : null,
          input.wholeExtractionText ?? null,
          input.cleanedExtractionText ?? null,
          JSON.stringify(input.tokenization),
