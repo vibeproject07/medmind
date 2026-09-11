@@ -321,7 +321,6 @@ export default function NoteSourcesPanel({
   const [uploading, setUploading] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<number | null>(null);
-  const [processingId, setProcessingId] = useState<number | null>(null);
   const [selected, setSelected] = useState<{ source: NoteSource; url: string } | null>(null);
   const [selectedByUser, setSelectedByUser] = useState(false);
   const [failedUploads, setFailedUploads] = useState<{ file: File; error: string }[]>([]);
@@ -472,27 +471,6 @@ export default function NoteSourcesPanel({
       setError(err instanceof Error ? err.message : 'Não foi possível excluir o arquivo.');
     } finally {
       setBusyId(null);
-    }
-  };
-
-  const processSource = async (source: NoteSource) => {
-    const accessToken = token();
-    if (!accessToken) return;
-    setError(null);
-    setProcessingId(source.id);
-    try {
-      const response = await fetch(`/api/notes/${noteId}/sources/${source.id}/process`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-      const data = await readJson<{ source?: NoteSource }>(response);
-      if (!response.ok || !data.source) throw new Error(data.error || 'Não foi possível colocar o arquivo na fila.');
-      setSources((current) => current.map((item) => item.id === source.id ? data.source! : item));
-      setSelected((current) => current?.source.id === source.id ? { ...current, source: data.source! } : current);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Não foi possível processar o arquivo.');
-    } finally {
-      setProcessingId(null);
     }
   };
 
@@ -705,15 +683,6 @@ export default function NoteSourcesPanel({
                     <button type="button" title="Baixar" onClick={() => void openSource(source, true)}
                       disabled={source.status !== 'ready'} className="rounded p-1.5 text-gray-400 hover:bg-primary-50 hover:text-primary-600 disabled:opacity-40">
                       <Download className="w-4 h-4" />
-                    </button>
-                    <button type="button" title="Processar com IA" onClick={() => void processSource(source)}
-                      disabled={
-                        source.status !== 'ready' ||
-                        processingId !== null ||
-                        source.processing_status === 'queued' ||
-                        source.processing_status === 'processing'
-                      } className="rounded p-1.5 text-gray-400 hover:bg-violet-50 hover:text-violet-600 disabled:opacity-40">
-                      {processingId === source.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
                     </button>
                     {canEdit && <button type="button" title="Excluir" onClick={() => void deleteSource(source)}
                       className="rounded p-1.5 text-gray-400 hover:bg-red-50 hover:text-red-600">

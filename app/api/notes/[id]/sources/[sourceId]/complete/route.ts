@@ -102,7 +102,13 @@ export async function POST(
     await promoteSourceObject(source.object_key, finalObjectKey);
     const result = await query(
       `UPDATE note_sources
-       SET object_key = $1, status = 'ready', updated_at = NOW()
+       SET object_key = $1,
+           status = 'ready',
+           processing_status = 'queued',
+           processing_stage = 'queued',
+           processing_error = NULL,
+           processing_completed_at = NULL,
+           updated_at = NOW()
        WHERE id = $2 AND note_id = $3
        RETURNING *`,
       [finalObjectKey, sourceId, noteId],

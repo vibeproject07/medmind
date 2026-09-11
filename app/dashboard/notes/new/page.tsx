@@ -1130,7 +1130,7 @@ function NewNotePageContent() {
       {step === 1 && (
         <div className="flex-shrink-0 flex items-center gap-2 px-4 py-2 border-b border-gray-100 bg-gray-50/80">
           <Sparkles className="w-3.5 h-3.5 text-primary-500 flex-shrink-0" />
-          <span className="text-xs text-gray-500">Salve a nota primeiro; depois você poderá processar cada arquivo com IA, se quiser.</span>
+          <span className="text-xs text-gray-500">Salve a nota primeiro; após o upload, cada arquivo será processado automaticamente pela IA.</span>
         </div>
       )}
 
