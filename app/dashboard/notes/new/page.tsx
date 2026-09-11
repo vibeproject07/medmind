@@ -94,30 +94,6 @@ function SourceTypeIcon({ type }: { type: typeof SOURCE_TYPES[number] }) {
   return <FileText className={`w-5 h-5 ${type.iconColor}`} />;
 }
 
-// ── inline AI processing (replaces ResumoAulasModal logic) ────────────────
-async function tryTransformTranscription(
-  transcription: string,
-  instruction: string,
-  token: string,
-): Promise<string> {
-  try {
-    const response = await fetch('/api/gemini/transform', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-      body: JSON.stringify({
-        transcription,
-        instruction,
-        agentKey: 'ajuste_transcricao',
-      }),
-    });
-    const data: { text?: string } = await response.json().catch(() => ({}));
-    return response.ok && data.text?.trim() ? data.text.trim() : transcription;
-  } catch {
-    // O ajuste é opcional: nunca perder uma transcrição válida por causa dele.
-    return transcription;
-  }
-}
-
 async function runSourceTransformation(
   files: File[],
   link: string,
@@ -155,15 +131,6 @@ async function runSourceTransformation(
       files[0]?.name,
     );
 
-    if (original.trim()) {
-      onStatus('Melhorando com IA…');
-      melhorado = await tryTransformTranscription(
-        original,
-        'Resuma a transcrição em material de estudo claro, organizado e em português do Brasil.',
-        token,
-      );
-    }
-
   } else if (isYouTube) {
     // ── YouTube link ────────────────────────────────────────────────────
     onStatus('Processando vídeo do YouTube…');
@@ -190,15 +157,6 @@ async function runSourceTransformation(
       link.trim(),
     );
 
-    if (original.trim()) {
-      onStatus('Melhorando com IA…');
-      melhorado = await tryTransformTranscription(
-        original,
-        'Analise e organize a transcrição acima em material de estudo.',
-        token,
-      );
-    }
-
   } else if (hasLink) {
     // ── Generic link ────────────────────────────────────────────────────
     onStatus('Analisando o tipo de arquivo do link…');
@@ -209,18 +167,6 @@ async function runSourceTransformation(
     original = data.originalText || data.rawText || data.text || '';
     melhorado = data.transformedText || data.text || '';
     provenance = provenanceFromSourceResult(data, link.trim());
-
-    if (
-      original.trim() &&
-      (data.sourceType === 'audio' || data.sourceType === 'video')
-    ) {
-      onStatus('Melhorando com IA…');
-      melhorado = await tryTransformTranscription(
-        original,
-        'Analise e organize o conteúdo acima em material de estudo.',
-        token,
-      );
-    }
 
   } else {
     // ── Document / Image ────────────────────────────────────────────────
@@ -539,27 +485,6 @@ function NewNotePageContent() {
       setProcessingRunIds(result.processingRunIds);
       setFontesArquivosNames(result.fileNames);
       setPendingSourceFiles(files);
-
-      // ── Generate AI title from processed content ─────────────────────
-      if (result.melhorado.trim() || result.original.trim()) {
-        setProcessingStatus('Sugerindo título…');
-        try {
-          const snippet = (result.melhorado || result.original).slice(0, 1500);
-          const gr = await fetch('/api/gemini/transform', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-            body: JSON.stringify({
-              transcription: snippet,
-              instruction:
-                'Com base no conteúdo acima, gere APENAS um título curto e descritivo para uma nota de estudo médica. ' +
-                'O título deve ter no máximo 8 palavras, sem pontuação no final, sem aspas, apenas o título.',
-              agentKey: 'ajuste_transcricao',
-            }),
-          });
-          const gd: { text?: string } = await gr.json().catch(() => ({}));
-          suggestedTitle = (gd.text || '').trim().replace(/^["']|["']$/g, '');
-        } catch { /* ignore — user can type the title manually */ }
-      }
 
       setFormData((p) => ({ ...p, informacoes: result.melhorado, title: suggestedTitle }));
       succeeded = true;

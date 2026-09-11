@@ -1,6 +1,7 @@
 import { query } from '@/lib/db';
 import { AI_AGENT_DEFAULTS } from '@/lib/ai-agents-defaults';
 import { ensureAgentSchema } from '@/lib/ai-agent-runtime';
+import { getAiAgentUsage } from '@/lib/ai-agent-usage';
 
 export interface AiAgent {
   key: string;
@@ -15,12 +16,15 @@ export interface AiAgent {
   is_customized: boolean;
   is_builtin: boolean;
   updated_at: string | null;
+  runtime_provider: 'Gemini' | 'Groq Whisper + ffmpeg' | 'Nenhum';
+  routes: string[];
 }
 
 const BUILTIN_KEYS = new Set(AI_AGENT_DEFAULTS.map((d) => d.key));
 
 function rowToAgent(row: Record<string, unknown>): AiAgent {
   const key = row.key as string;
+  const usage = getAiAgentUsage(key);
   return {
     key,
     name: row.name as string,
@@ -34,6 +38,8 @@ function rowToAgent(row: Record<string, unknown>): AiAgent {
     is_customized: true,
     is_builtin: BUILTIN_KEYS.has(key),
     updated_at: (row.updated_at as string) ?? null,
+    runtime_provider: usage.provider,
+    routes: usage.routes,
   };
 }
 

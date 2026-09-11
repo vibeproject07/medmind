@@ -83,7 +83,33 @@ export async function POST(request: NextRequest) {
     if (extractType) {
       try {
         const result = await processWithBroadFileExtraction(buffer, mimeType);
-        const processingRunId = await persistProcessingPipeline({
+        const processingRunId = result.tokenizationData && result.chunking
+          ? await persistProcessingPipeline({
+              userId: Number(user.id),
+              sourceType: mimeType.startsWith('image/') ? 'image' : 'document',
+              sourceName: file.name,
+              extractionText: result.originalText ?? result.text,
+              processedText: result.text,
+              extractionMetadata: {
+                mimeType,
+                sizeBytes: file.size,
+                jsonWithDiscardFalse: result.jsonWithDiscardFalse,
+              },
+              tokenization: result.tokenizationData,
+              chunking: result.chunking,
+            })
+          : undefined;
+        const { tokenizationData: _tokenizationData, ...publicResult } = result;
+        return NextResponse.json({ ...publicResult, processing_run_id: processingRunId });
+      } catch (extractErr) {
+        const msg = extractErr instanceof Error ? extractErr.message : 'Erro ao extrair texto do arquivo.';
+        return NextResponse.json({ error: msg }, { status: 422 });
+      }
+    }
+
+    const result = await processWithBroadFileExtraction(buffer, mimeType);
+    const processingRunId = result.tokenizationData && result.chunking
+      ? await persistProcessingPipeline({
           userId: Number(user.id),
           sourceType: mimeType.startsWith('image/') ? 'image' : 'document',
           sourceName: file.name,
@@ -96,30 +122,8 @@ export async function POST(request: NextRequest) {
           },
           tokenization: result.tokenizationData,
           chunking: result.chunking,
-        });
-        const { tokenizationData: _tokenizationData, ...publicResult } = result;
-        return NextResponse.json({ ...publicResult, processing_run_id: processingRunId });
-      } catch (extractErr) {
-        const msg = extractErr instanceof Error ? extractErr.message : 'Erro ao extrair texto do arquivo.';
-        return NextResponse.json({ error: msg }, { status: 422 });
-      }
-    }
-
-    const result = await processWithBroadFileExtraction(buffer, mimeType);
-    const processingRunId = await persistProcessingPipeline({
-      userId: Number(user.id),
-      sourceType: mimeType.startsWith('image/') ? 'image' : 'document',
-      sourceName: file.name,
-      extractionText: result.originalText ?? result.text,
-      processedText: result.text,
-      extractionMetadata: {
-        mimeType,
-        sizeBytes: file.size,
-        jsonWithDiscardFalse: result.jsonWithDiscardFalse,
-      },
-      tokenization: result.tokenizationData,
-      chunking: result.chunking,
-    });
+        })
+      : undefined;
     const { tokenizationData: _tokenizationData, ...publicResult } = result;
     return NextResponse.json({ ...publicResult, processing_run_id: processingRunId });
   } catch (error: unknown) {

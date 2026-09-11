@@ -4,7 +4,7 @@ import { geminiTransformTranscription } from '@/lib/gemini';
 
 export const runtime = 'nodejs';
 
-const ALLOWED_AGENT_KEYS = new Set(['transform_base', 'ajuste_transcricao']);
+const ALLOWED_AGENT_KEYS = new Set(['broad_file_extraction']);
 
 export async function POST(request: NextRequest) {
   try {
@@ -30,8 +30,11 @@ export async function POST(request: NextRequest) {
       (typeof body?.text === 'string' ? body.text : '');
     const instruction = typeof body?.instruction === 'string' ? body.instruction : '';
     const model = typeof body?.model === 'string' ? body.model : undefined;
-    const requestedAgentKey = typeof body?.agentKey === 'string' ? body.agentKey : 'transform_base';
-    const agentKey = ALLOWED_AGENT_KEYS.has(requestedAgentKey) ? requestedAgentKey : 'transform_base';
+    const requestedAgentKey =
+      typeof body?.agentKey === 'string' ? body.agentKey : 'broad_file_extraction';
+    const agentKey = ALLOWED_AGENT_KEYS.has(requestedAgentKey)
+      ? requestedAgentKey
+      : 'broad_file_extraction';
 
     if (!transcription || !transcription.trim()) {
       return NextResponse.json({ error: 'Envie a transcrição em { transcription: string }.' }, { status: 400 });

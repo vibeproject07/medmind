@@ -17,6 +17,8 @@ import {
   Plus,
   Trash2,
   Sparkles,
+  Route,
+  Mic2,
 } from 'lucide-react';
 
 interface AiAgent {
@@ -32,6 +34,8 @@ interface AiAgent {
   is_customized: boolean;
   is_builtin: boolean;
   updated_at: string | null;
+  runtime_provider: 'Gemini' | 'Groq Whisper + ffmpeg' | 'Nenhum';
+  routes: string[];
 }
 
 const AVAILABLE_MODELS = [
@@ -490,6 +494,27 @@ export default function AgentesEditorPage() {
         </button>
       </div>
 
+      <div className="grid md:grid-cols-2 gap-3 mb-6">
+        <div className="rounded-xl border border-blue-200 bg-blue-50 p-4">
+          <div className="flex items-center gap-2 text-sm font-semibold text-blue-900">
+            <Mic2 className="w-4 h-4" />
+            Áudio, vídeo e YouTube
+          </div>
+          <p className="text-xs text-blue-800 mt-1">
+            Groq Whisper, com preparação e conversão pelo ffmpeg. Não depende de agente Gemini.
+          </p>
+        </div>
+        <div className="rounded-xl border border-primary-200 bg-primary-50 p-4">
+          <div className="flex items-center gap-2 text-sm font-semibold text-primary-900">
+            <Route className="w-4 h-4" />
+            Documentos, imagens e links
+          </div>
+          <p className="text-xs text-primary-800 mt-1">
+            Processados pelo agente ativo <span className="font-mono">broad_file_extraction</span>.
+          </p>
+        </div>
+      </div>
+
       <div className="flex gap-6 items-start">
         {/* Lista de Agentes */}
         <div className={`flex-shrink-0 ${selectedKey ? 'w-80' : 'w-full max-w-2xl mx-auto'}`}>
@@ -567,6 +592,29 @@ export default function AgentesEditorPage() {
                     onChange={(e) => handleChange('name', e.target.value)}
                     className="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
                   />
+                </div>
+
+                <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 text-sm font-medium text-gray-800">
+                      <Route className="w-4 h-4" />
+                      Rotas vinculadas
+                    </div>
+                    <span className="text-xs font-medium text-gray-500">
+                      {editing.runtime_provider}
+                    </span>
+                  </div>
+                  {editing.routes.length > 0 ? (
+                    <ul className="mt-2 space-y-1">
+                      {editing.routes.map((route) => (
+                        <li key={route} className="text-xs font-mono text-gray-600">{route}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="mt-2 text-xs text-gray-500">
+                      Nenhuma rota do aplicativo executa este agente.
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -760,7 +808,11 @@ function AgentListItem({
           </span>
         </div>
         <p className="text-xs text-gray-500 mt-0.5 truncate">{agent.description || '—'}</p>
-        <p className="text-xs text-gray-400 mt-0.5">{agent.model}</p>
+        <p className="text-xs text-gray-400 mt-0.5">
+          {agent.routes.length > 0
+            ? `${agent.runtime_provider} · ${agent.routes.length} rota${agent.routes.length === 1 ? '' : 's'}`
+            : 'Sem rota vinculada'}
+        </p>
       </div>
       <ChevronRight className="w-4 h-4 text-gray-400 flex-shrink-0" />
     </button>

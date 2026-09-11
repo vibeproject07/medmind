@@ -1,35 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/jwt';
-import { processYouTubeSource } from '@/lib/youtube-source-processing';
+import {
+  normalizeYouTubeUrl,
+  processYouTubeSource,
+} from '@/lib/youtube-source-processing';
 
 export const runtime = 'nodejs';
-
-function isYouTubeUrl(url: string): boolean {
-  const trimmed = url.trim();
-  return (
-    trimmed.includes('youtube.com/watch') ||
-    trimmed.includes('youtu.be/') ||
-    trimmed.startsWith('https://www.youtube.com/') ||
-    trimmed.startsWith('http://www.youtube.com/') ||
-    trimmed.startsWith('https://youtube.com/') ||
-    trimmed.startsWith('http://youtube.com/') ||
-    trimmed.startsWith('https://youtu.be/') ||
-    trimmed.startsWith('http://youtu.be/')
-  );
-}
-
-function normalizeYouTubeUrl(url: string): string {
-  const trimmed = url.trim();
-  // youtu.be/ID -> https://www.youtube.com/watch?v=ID
-  const youtuBeMatch = trimmed.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
-  if (youtuBeMatch) {
-    return `https://www.youtube.com/watch?v=${youtuBeMatch[1]}`;
-  }
-  if (!trimmed.startsWith('http')) {
-    return `https://${trimmed}`;
-  }
-  return trimmed;
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -58,14 +34,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!isYouTubeUrl(url)) {
+    let normalizedUrl: string;
+    try {
+      normalizedUrl = normalizeYouTubeUrl(url);
+    } catch (error) {
       return NextResponse.json(
-        { error: 'URL inválida. Use um link do YouTube (ex.: https://www.youtube.com/watch?v=... ou https://youtu.be/...).' },
-        { status: 400 }
+        {
+          error: error instanceof Error
+            ? error.message
+            : 'URL inválida. Use um link HTTPS do YouTube.',
+        },
+        { status: 400 },
       );
     }
-
-    const normalizedUrl = normalizeYouTubeUrl(url);
     return NextResponse.json(await processYouTubeSource(normalizedUrl));
   } catch (error: unknown) {
     let message = 'Erro ao transcrever o vídeo do YouTube.';

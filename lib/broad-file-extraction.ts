@@ -13,6 +13,10 @@ import type {
 import type { ChunkingResult } from '@/lib/chunking-agent';
 import { cleanExtractionAgentOutput } from '@/lib/immediate-agent-output-cleaners';
 import {
+  parseExtractionJsonOutput,
+  type ExtractionJsonValue,
+} from '@/lib/immediate-agent-output-cleaners';
+import {
   processExtractedSource,
   type SourceContentProcessing,
 } from '@/lib/source-content-pipeline';
@@ -53,6 +57,23 @@ export interface BroadFileExtractionResult {
   transformation_error?: string;
   jsonWithDiscardFalse: string[];
   newJson?: string;
+}
+
+function canonicalTextFromExtractionJson(json: string): string {
+  const parsed = parseExtractionJsonOutput(json);
+  if (!parsed || Array.isArray(parsed) || typeof parsed !== 'object' || !Array.isArray(parsed.unidades)) {
+    throw new Error('O agente de extração não retornou unidades válidas.');
+  }
+  const texts = parsed.unidades
+    .filter((unit): unit is { [key: string]: ExtractionJsonValue } =>
+      Boolean(unit) && !Array.isArray(unit) && typeof unit === 'object',
+    )
+    .map((unit) => String(unit.texto ?? '').trim())
+    .filter(Boolean);
+  if (texts.length === 0) {
+    throw new Error('O agente de extração não retornou texto utilizável.');
+  }
+  return texts.join('\n\n');
 }
 
 /**
@@ -101,33 +122,34 @@ export async function processWithBroadFileExtraction(
         error instanceof Error ? error.message : 'Falha ao transformar o texto extraído.';
     }
   } else {
-    const processNativeDocument = suppliedDependencies?.processNativeDocument
-      ?? (await import('./gemini')).geminiProcessDocument;
-    canonicalText = await processNativeDocument({
-      file: buffer,
-      mimeType: normalizedMimeType,
-      agentKey: 'extrair_texto',
-    });
-    try {
-      if (suppliedDependencies) {
-        transformedText = await processNativeDocument({
-          file: buffer,
-          mimeType: normalizedMimeType,
-          agentKey: 'broad_file_extraction',
-        });
-      } else {
+    if (suppliedDependencies) {
+      const output = await suppliedDependencies.processNativeDocument({
+        file: buffer,
+        mimeType: normalizedMimeType,
+        agentKey: 'broad_file_extraction',
+      });
+      canonicalText = canonicalTextFromExtractionJson(output);
+      wholeExtractionText = output;
+      const cleaned = cleanExtractionAgentOutput(output, { requireJson: true });
+      transformedText = cleaned.cleanedText;
+      jsonWithDiscardFalse = cleaned.jsonWithDiscardFalse;
+      newJson = cleaned.newJson ?? undefined;
+    } else {
+      try {
         wholeExtractionText = normalizedMimeType === 'application/pdf'
           ? await extractPdfInBatches(buffer, onProgress)
           : await extractImageAsJson(buffer, normalizedMimeType);
+        canonicalText = canonicalTextFromExtractionJson(wholeExtractionText);
         const cleaned = cleanExtractionAgentOutput(wholeExtractionText, { requireJson: true });
         transformedText = cleaned.cleanedText;
         jsonWithDiscardFalse = cleaned.jsonWithDiscardFalse;
         newJson = cleaned.newJson ?? undefined;
+      } catch (error) {
+        if (error instanceof BroadExtractionAbortedError) throw error;
+        throw new Error(
+          error instanceof Error ? error.message : 'Falha ao extrair o conteúdo.',
+        );
       }
-    } catch (error) {
-      if (error instanceof BroadExtractionAbortedError) throw error;
-      transformationError =
-        error instanceof Error ? error.message : 'Falha ao transformar o conteúdo extraído.';
     }
   }
 

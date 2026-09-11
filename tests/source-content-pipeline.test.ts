@@ -17,11 +17,15 @@ import {
   preparePersistedSource,
   preparePersistedTranscription,
 } from '../lib/persisted-source-pipeline';
-import { processYouTubeSource } from '../lib/youtube-source-processing';
+import {
+  normalizeYouTubeUrl,
+  processYouTubeSource,
+} from '../lib/youtube-source-processing';
 import {
   normalizeNoteSourceProvenance,
   provenanceFromSourceResult,
 } from '../lib/note-source-provenance';
+import { getAiAgentUsage } from '../lib/ai-agent-usage';
 
 const sentences: SpacySentence[] = [
   {
@@ -35,6 +39,40 @@ const sentences: SpacySentence[] = [
     start_time: null, end_time: null, segment_ids: ['page-2'], unit_ids: ['page-2'],
   },
 ];
+
+test('inactive legacy agents have no application routes', () => {
+  for (const key of [
+    'extrair_texto',
+    'youtube_transcript',
+    'ajuste_transcricao',
+    'transform_base',
+    'resumo_documento',
+    'resumo_imagem',
+    'resumo_slides_pdf',
+  ]) {
+    assert.deepEqual(getAiAgentUsage(key).routes, []);
+  }
+  assert.ok(getAiAgentUsage('broad_file_extraction').routes.length > 0);
+});
+
+test('YouTube URL normalization only accepts exact HTTPS YouTube hosts', () => {
+  assert.equal(
+    normalizeYouTubeUrl('https://youtu.be/dQw4w9WgXcQ'),
+    'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+  );
+  assert.equal(
+    normalizeYouTubeUrl('youtube.com/watch?v=dQw4w9WgXcQ'),
+    'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+  );
+  assert.throws(
+    () => normalizeYouTubeUrl('https://youtube.com.evil.example/watch?v=dQw4w9WgXcQ'),
+    /URL inválida/,
+  );
+  assert.throws(
+    () => normalizeYouTubeUrl('http://www.youtube.com/watch?v=dQw4w9WgXcQ'),
+    /HTTPS/,
+  );
+});
 
 function tokenization(sourceType: string, timed = false): SpacyTokenizationResult {
   const ordered = sentences.map((sentence, index) => timed ? {
@@ -225,8 +263,16 @@ function broadDependencies(
     extractDocx: async () => extractedText,
     extractPptx: async () => extractedText,
     transformExtractedText: async () => transformedText,
-    processNativeDocument: async ({ agentKey }) =>
-      agentKey === 'extrair_texto' ? extractedText : transformedText,
+    processNativeDocument: async () => JSON.stringify({
+      tipo_fonte: 'documento',
+      numeracao_inferida: false,
+      unidades: [{
+        unidade: 1,
+        descartada: false,
+        motivo_descarte: null,
+        texto: extractedText,
+      }],
+    }),
     processExtracted: async (input) => {
       processed.push({ text: input.text, sourceType: input.sourceType });
       return { tokenization: summarizeForIntegration(input.sourceType) };
@@ -290,7 +336,7 @@ for (const fixture of [
       assert.equal(result.transformedText, 'Síntese auxiliar.');
     } else {
       assert.equal(result.originalText, extracted);
-      assert.equal(result.transformedText, 'Síntese auxiliar.');
+      assert.match(result.transformedText ?? '', /Primeira frase\. Segunda frase\./);
     }
   });
 }
@@ -312,31 +358,39 @@ test('local document keeps extracted text when optional transformation fails', a
   assert.equal(processed[0].text, extracted);
 });
 
-test('native PDF and image request faithful extraction before optional synthesis', async () => {
+test('native PDF and image use only the active broad extraction agent', async () => {
   for (const mimeType of ['application/pdf', 'image/png']) {
     const calls: string[] = [];
-    const { dependencies } = broadDependencies('Texto fiel.', 'Síntese.');
+    const { dependencies } = broadDependencies('Texto fiel.');
     dependencies.processNativeDocument = async ({ agentKey }) => {
       calls.push(agentKey);
-      return agentKey === 'extrair_texto' ? 'Texto fiel.' : 'Síntese.';
+      return JSON.stringify({
+        tipo_fonte: 'documento',
+        numeracao_inferida: false,
+        unidades: [{
+          unidade: 1,
+          descartada: false,
+          motivo_descarte: null,
+          texto: 'Texto fiel.',
+        }],
+      });
     };
     const result = await processWithBroadFileExtraction(
       Buffer.from('native'),
       mimeType,
       dependencies,
     );
-    assert.deepEqual(calls, ['extrair_texto', 'broad_file_extraction']);
+    assert.deepEqual(calls, ['broad_file_extraction']);
     assert.equal(result.originalText, 'Texto fiel.');
     assert.equal(result.text, 'Texto fiel.');
-    assert.equal(result.transformedText, 'Síntese.');
+    assert.match(result.transformedText ?? '', /Texto fiel/);
   }
 });
 
-test('native extraction failure never substitutes synthesis as original text', async () => {
+test('native broad extraction failure never invents original text', async () => {
   const { dependencies, processed } = broadDependencies('ignorado');
-  dependencies.processNativeDocument = async ({ agentKey }) => {
-    if (agentKey === 'extrair_texto') throw new Error('OCR indisponível');
-    return 'Resumo que não pode ser chamado de original.';
+  dependencies.processNativeDocument = async () => {
+    throw new Error('Extração indisponível');
   };
   await assert.rejects(
     processWithBroadFileExtraction(
@@ -344,7 +398,7 @@ test('native extraction failure never substitutes synthesis as original text', a
       'application/pdf',
       dependencies,
     ),
-    /OCR indisponível/,
+    /Extração indisponível/,
   );
   assert.equal(processed.length, 0);
 });
@@ -417,8 +471,8 @@ test('YouTube boundary returns canonical extraction and enrichment separately', 
   const result = await processYouTubeSource(
     'https://www.youtube.com/watch?v=fixture',
     {
-      extract: async ({ agentKey }) => {
-        assert.equal(agentKey, 'youtube_transcript');
+      transcribe: async (url) => {
+        assert.equal(url, 'https://www.youtube.com/watch?v=fixture');
         return 'Transcrição integral do vídeo.';
       },
       process: async (input) => {
