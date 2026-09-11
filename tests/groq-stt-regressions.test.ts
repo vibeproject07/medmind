@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
+  formatSegments,
   getVettedPublicAddress,
   isPrivateIpAddress,
   offsetTranscriptionPart,
@@ -8,6 +9,24 @@ import {
   validateExactChunkDurations,
   type GroqTranscriptionResult,
 } from '../lib/groq-stt';
+import { cleanTranscriptionAgentOutput } from '../lib/immediate-agent-output-cleaners';
+
+test('preserves segment timestamps before regex cleanup', () => {
+  const whole = formatSegments([
+    { id: 0, start: 15, end: 30, text: 'Paciente apresentou febre.', part: 1 },
+    { id: 1, start: 30, end: 45, text: 'Houve melhora clínica.', part: 1 },
+  ], '');
+
+  assert.equal(
+    whole,
+    '[00:00:15 - 00:00:30] Paciente apresentou febre.\n\n' +
+      '[00:00:30 - 00:00:45] Houve melhora clínica.',
+  );
+  assert.equal(
+    cleanTranscriptionAgentOutput(whole),
+    'Paciente apresentou febre.\n\nHouve melhora clínica.',
+  );
+});
 
 test('rejects loopback, private and link-local addresses', async () => {
   for (const address of [

@@ -1,6 +1,7 @@
 import { getPool, query } from '@/lib/db';
 import { downloadSourceObjectToTempFile } from '@/lib/s3';
 import {
+  formatSegments,
   MAX_SIZE_FOR_CHUNKED_TRANSCRIPTION,
   transcribeMediaPath,
 } from '@/lib/groq-stt';
@@ -91,7 +92,8 @@ async function processSource(source: ProcessingSource): Promise<ProcessedSourceO
     if (source.category === 'audio' || source.category === 'video') {
       if (!process.env.GROQ_API_KEY) throw new Error('Serviço de transcrição não configurado.');
       const transcription = await transcribeMediaPath(downloaded.path, source.original_name, mimeType);
-      const cleanedTranscription = cleanTranscriptionAgentOutput(transcription.text);
+      const wholeTranscription = formatSegments(transcription.segments, transcription.rawText);
+      const cleanedTranscription = cleanTranscriptionAgentOutput(wholeTranscription);
       const pipeline = await chunkTokenizedText({
         text: cleanedTranscription,
         sourceType: transcription.videoConvertedToAudio ? 'video' : 'audio',
@@ -102,7 +104,7 @@ async function processSource(source: ProcessingSource): Promise<ProcessedSourceO
         originalText: cleanedTranscription,
         result: '',
         pipelineText: cleanedTranscription,
-        wholeTranscription: transcription.rawText,
+        wholeTranscription,
         cleanedTranscription,
         ...pipeline,
         extractionMetadata: {

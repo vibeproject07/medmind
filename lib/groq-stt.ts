@@ -862,7 +862,7 @@ function formatTimestamp(seconds: number): string {
   return [hours, minutes, secs].map((value) => String(value).padStart(2, '0')).join(':');
 }
 
-function formatSegments(segments: GroqTranscriptionSegment[], fallbackText: string): string {
+export function formatSegments(segments: GroqTranscriptionSegment[], fallbackText: string): string {
   if (segments.length === 0) return fallbackText.trim();
   return segments
     .filter((segment) => segment.text.trim())

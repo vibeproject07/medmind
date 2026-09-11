@@ -9,6 +9,10 @@
     "incremental": false,
     "skipLibCheck": true
   },
-  "include": ["groq-stt-regressions.test.ts", "../lib/groq-stt.ts"],
+  "include": [
+    "groq-stt-regressions.test.ts",
+    "../lib/groq-stt.ts",
+    "../lib/immediate-agent-output-cleaners.ts"
+  ],
   "exclude": []
 }
