@@ -20,6 +20,10 @@ export type PersistProcessingInput = {
   sourceName?: string | null;
   extractionText: string;
   processedText: string;
+  wholeTranscription?: string | null;
+  cleanedTranscription?: string | null;
+  wholeExtractionText?: string | null;
+  cleanedExtractionText?: string | null;
   extractionMetadata?: Record<string, unknown>;
   tokenization: SpacyTokenizationResult;
   chunking: ChunkingResult;
@@ -61,6 +65,30 @@ export function ensureContentProcessingSchema(): Promise<void> {
       await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS vectorization_claim_id TEXT');
       await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS vectorization_lease_expires_at TIMESTAMPTZ');
       await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS is_current BOOLEAN NOT NULL DEFAULT TRUE');
+      await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS whole_transcription TEXT');
+      await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS cleaned_transcription TEXT');
+      await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS whole_extraction_text TEXT');
+      await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS cleaned_extraction_text TEXT');
+      await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS tokenized_text JSONB');
+      await query('ALTER TABLE content_processing_runs ADD COLUMN IF NOT EXISTS chunks JSONB');
+      await query(`
+        UPDATE content_processing_runs
+        SET tokenized_text = COALESCE(tokenized_text, tokenization),
+            chunks = COALESCE(chunks, chunking)
+        WHERE tokenized_text IS NULL OR chunks IS NULL
+      `);
+      await query(`
+        UPDATE content_processing_runs
+        SET cleaned_transcription = processed_text
+        WHERE cleaned_transcription IS NULL
+          AND source_type IN ('audio', 'video')
+      `);
+      await query(`
+        UPDATE content_processing_runs
+        SET cleaned_extraction_text = processed_text
+        WHERE cleaned_extraction_text IS NULL
+          AND source_type IN ('document', 'image')
+      `);
       await query(`
         CREATE TABLE IF NOT EXISTS content_processing_chunks (
           id BIGSERIAL PRIMARY KEY,
@@ -320,8 +348,13 @@ export async function persistProcessingPipeline(
       `INSERT INTO content_processing_runs (
          id, user_id, note_id, note_source_id, source_type, source_name,
          extraction_text, processed_text, extraction_metadata, tokenization, chunking,
-         content_hash, tokenizer_schema_version, chunker_schema_version, embedding_model
-       ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9::jsonb,$10::jsonb,$11::jsonb,$12,$13,$14,$15)`,
+          whole_transcription, cleaned_transcription, whole_extraction_text, cleaned_extraction_text,
+          tokenized_text, chunks, content_hash, tokenizer_schema_version, chunker_schema_version,
+          embedding_model
+        ) VALUES (
+          $1,$2,$3,$4,$5,$6,$7,$8,$9::jsonb,$10::jsonb,$11::jsonb,
+          $12,$13,$14,$15,$16::jsonb,$17::jsonb,$18,$19,$20,$21
+        )`,
       [
         runId,
         input.userId,
@@ -334,6 +367,12 @@ export async function persistProcessingPipeline(
         JSON.stringify(input.extractionMetadata ?? {}),
         JSON.stringify(input.tokenization),
         JSON.stringify(input.chunking),
+         input.wholeTranscription ?? null,
+         input.cleanedTranscription ?? null,
+         input.wholeExtractionText ?? null,
+         input.cleanedExtractionText ?? null,
+         JSON.stringify(input.tokenization),
+         JSON.stringify(input.chunking),
         hashText(input.processedText),
         input.tokenization.schema_version,
         input.chunking.schema_version,

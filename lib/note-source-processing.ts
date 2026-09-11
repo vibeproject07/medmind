@@ -60,6 +60,10 @@ type ProcessedSourceOutput = {
   originalText?: string;
   result: string;
   pipelineText: string;
+  wholeTranscription?: string;
+  cleanedTranscription?: string;
+  wholeExtractionText?: string;
+  cleanedExtractionText?: string;
   tokenization: SpacyTokenizationResult;
   chunking: ChunkingResult;
   extractionMetadata?: Record<string, unknown>;
@@ -84,10 +88,7 @@ async function processSource(source: ProcessingSource): Promise<ProcessedSourceO
     if (source.category === 'audio' || source.category === 'video') {
       if (!process.env.GROQ_API_KEY) throw new Error('Serviço de transcrição não configurado.');
       const transcription = await transcribeMediaPath(downloaded.path, source.original_name, mimeType);
-      const originalText =
-        transcription.segments.map((segment) => segment.text.trim()).filter(Boolean).join('\n\n') ||
-        transcription.rawText ||
-        transcription.text;
+      const originalText = transcription.text;
       const result = await geminiTransformTranscription({
         transcription: originalText,
         instruction: 'Resuma a transcrição em material de estudo claro, organizado e em português do Brasil.',
@@ -103,6 +104,8 @@ async function processSource(source: ProcessingSource): Promise<ProcessedSourceO
         originalText,
         result,
         pipelineText: originalText,
+        wholeTranscription: transcription.rawText,
+        cleanedTranscription: transcription.text,
         ...pipeline,
         extractionMetadata: {
           originalSize: transcription.originalSize,
@@ -135,6 +138,8 @@ async function processSource(source: ProcessingSource): Promise<ProcessedSourceO
       originalText: broad.originalText,
       result: broad.text,
       pipelineText: broad.text,
+      wholeExtractionText: broad.wholeExtractionText,
+      cleanedExtractionText: broad.text,
       tokenization: broad.tokenizationData,
       chunking: broad.chunking,
       extractionMetadata: {
@@ -259,6 +264,10 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
       sourceName: source.original_name,
       extractionText: output.originalText ?? output.pipelineText,
       processedText: output.pipelineText,
+      wholeTranscription: output.wholeTranscription ?? null,
+      cleanedTranscription: output.cleanedTranscription ?? null,
+      wholeExtractionText: output.wholeExtractionText ?? null,
+      cleanedExtractionText: output.cleanedExtractionText ?? null,
       extractionMetadata: {
         ...output.extractionMetadata,
         displayResult: output.result,

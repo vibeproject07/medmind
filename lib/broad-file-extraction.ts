@@ -20,6 +20,7 @@ const EXTRACT_TYPES: Record<string, 'docx' | 'pptx'> = {
 
 export interface BroadFileExtractionResult {
   text: string;
+  wholeExtractionText: string;
   originalText?: string;
   tokenization: SpacyTokenizationSummary;
   tokenizationData: SpacyTokenizationResult;
@@ -62,6 +63,7 @@ export async function processWithBroadFileExtraction(
     });
     return {
       text: broadExtractionText,
+      wholeExtractionText: rawBroadExtractionText,
       originalText: extractedText,
       tokenization: summarizeTokenization(tokenization),
       tokenizationData: tokenization,
@@ -84,6 +86,7 @@ export async function processWithBroadFileExtraction(
   });
   return {
     text: broadExtractionText,
+    wholeExtractionText: rawBroadExtractionText,
     tokenization: summarizeTokenization(tokenization),
     tokenizationData: tokenization,
     chunking,

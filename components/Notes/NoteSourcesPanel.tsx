@@ -43,6 +43,8 @@ export type NoteSource = {
   processing_attempts: number;
   processing_started_at?: string | null;
   processing_completed_at?: string | null;
+  cleaned_transcription?: string | null;
+  cleaned_extraction_text?: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -323,6 +325,7 @@ export default function NoteSourcesPanel({
   const [busyId, setBusyId] = useState<number | null>(null);
   const [selected, setSelected] = useState<{ source: NoteSource; url: string } | null>(null);
   const [selectedByUser, setSelectedByUser] = useState(false);
+  const [visibleProcessedText, setVisibleProcessedText] = useState<'transcription' | 'extraction' | null>(null);
   const [failedUploads, setFailedUploads] = useState<{ file: File; error: string }[]>([]);
   const [retryFileNames, setRetryFileNames] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -482,6 +485,10 @@ export default function NoteSourcesPanel({
   }, [sources]); // Keep the selected viewer in sync with poll results.
 
   useEffect(() => {
+    setVisibleProcessedText(null);
+  }, [selected?.source.id]);
+
+  useEffect(() => {
     if (busyId !== null) return;
     const nextSelection = reconcileNoteSourceSelection(sources, {
       sourceId: selected?.source.id ?? null,
@@ -605,11 +612,30 @@ export default function NoteSourcesPanel({
                       <p className="max-h-52 overflow-y-auto whitespace-pre-wrap text-xs leading-relaxed text-gray-700">{selected.source.processing_result}</p>
                     </div>
                   )}
-                  {selected.source.processing_original_text && (
-                    <details>
-                      <summary className="cursor-pointer text-xs font-medium text-violet-700">Ver texto extraído ou transcrição</summary>
-                      <p className="mt-2 max-h-44 overflow-y-auto whitespace-pre-wrap text-xs leading-relaxed text-gray-700">{selected.source.processing_original_text}</p>
-                    </details>
+                  {(selected.source.cleaned_transcription || selected.source.cleaned_extraction_text) && (
+                    <div>
+                      <div className="flex flex-wrap gap-2">
+                        {selected.source.cleaned_transcription && (
+                          <button type="button" onClick={() => setVisibleProcessedText((current) => current === 'transcription' ? null : 'transcription')}
+                            className="rounded-md border border-violet-200 bg-white px-2.5 py-1.5 text-xs font-medium text-violet-700 hover:bg-violet-50">
+                            Transcrição
+                          </button>
+                        )}
+                        {selected.source.cleaned_extraction_text && (
+                          <button type="button" onClick={() => setVisibleProcessedText((current) => current === 'extraction' ? null : 'extraction')}
+                            className="rounded-md border border-violet-200 bg-white px-2.5 py-1.5 text-xs font-medium text-violet-700 hover:bg-violet-50">
+                            Extração
+                          </button>
+                        )}
+                      </div>
+                      {visibleProcessedText && (
+                        <p className="mt-2 max-h-44 overflow-y-auto whitespace-pre-wrap rounded-md bg-white p-2 text-xs leading-relaxed text-gray-700">
+                          {visibleProcessedText === 'transcription'
+                            ? selected.source.cleaned_transcription
+                            : selected.source.cleaned_extraction_text}
+                        </p>
+                      )}
+                    </div>
                   )}
                 </div>
               )}

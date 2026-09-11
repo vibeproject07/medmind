@@ -15,6 +15,7 @@ import {
   isS3Configured,
 } from '@/lib/s3';
 import { logSourceUploadFailure } from '@/lib/source-upload-diagnostics';
+import { ensureContentProcessingSchema } from '@/lib/content-processing-storage';
 
 export const runtime = 'nodejs';
 
@@ -58,13 +59,17 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     const access = await getAuthorizedNote(request, params.id);
     if ('error' in access) return access.error;
 
+    await ensureContentProcessingSchema();
     const result = await query(
-      `SELECT id, note_id, user_id, original_name, mime_type, size_bytes, category, status,
-              processing_status, processing_original_text, processing_result, processing_error,
-              processing_attempts, processing_started_at, processing_completed_at, created_at, updated_at
-       FROM note_sources
-       WHERE note_id = $1
-       ORDER BY created_at ASC, id ASC`,
+      `SELECT ns.id, ns.note_id, ns.user_id, ns.original_name, ns.mime_type, ns.size_bytes,
+              ns.category, ns.status, ns.processing_status, ns.processing_original_text,
+              ns.processing_result, ns.processing_error, ns.processing_attempts,
+              ns.processing_started_at, ns.processing_completed_at, ns.created_at, ns.updated_at,
+              r.cleaned_transcription, r.cleaned_extraction_text
+       FROM note_sources ns
+       LEFT JOIN content_processing_runs r ON r.id = ns.processing_run_id
+       WHERE ns.note_id = $1
+       ORDER BY ns.created_at ASC, ns.id ASC`,
       [access.noteId],
     );
     return NextResponse.json({ sources: result.rows.map(sourceForClient) });

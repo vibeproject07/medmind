@@ -37,6 +37,8 @@ export type NoteSource = {
   processing_stage?: string | null;
   processing_run_id?: string | null;
   processing_last_heartbeat_at?: string | null;
+  cleaned_transcription?: string | null;
+  cleaned_extraction_text?: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -51,6 +53,8 @@ type DatabaseSource = NoteSource & {
   checksum_sha256: string;
   processing_claim_id?: string | null;
   processing_lease_expires_at?: string | null;
+  whole_transcription?: string | null;
+  whole_extraction_text?: string | null;
 };
 
 const MIME_BY_EXTENSION: Record<string, string> = {
@@ -177,6 +181,8 @@ export function sourceForClient(source: DatabaseSource | NoteSource): NoteSource
     checksum_sha256: _checksumSha256,
     processing_claim_id: _processingClaimId,
     processing_lease_expires_at: _processingLeaseExpiresAt,
+    whole_transcription: _wholeTranscription,
+    whole_extraction_text: _wholeExtractionText,
     ...safeSource
   } = source as DatabaseSource;
   return safeSource;
