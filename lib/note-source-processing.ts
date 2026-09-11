@@ -1,6 +1,5 @@
 import { getPool, query } from '@/lib/db';
 import { downloadSourceObjectToTempFile } from '@/lib/s3';
-import { geminiTransformTranscription } from '@/lib/gemini';
 import {
   MAX_SIZE_FOR_CHUNKED_TRANSCRIPTION,
   transcribeMediaPath,
@@ -10,6 +9,10 @@ import crypto from 'crypto';
 import { processWithBroadFileExtraction } from '@/lib/broad-file-extraction';
 import { chunkTokenizedText, type ChunkingResult } from '@/lib/chunking-agent';
 import type { SpacyTokenizationResult } from '@/lib/spacy-tokenizer';
+import {
+  cleanExtractionAgentOutput,
+  cleanTranscriptionAgentOutput,
+} from '@/lib/immediate-agent-output-cleaners';
 import {
   ensureContentProcessingSchema,
   persistProcessingPipeline,
@@ -88,24 +91,19 @@ async function processSource(source: ProcessingSource): Promise<ProcessedSourceO
     if (source.category === 'audio' || source.category === 'video') {
       if (!process.env.GROQ_API_KEY) throw new Error('Serviço de transcrição não configurado.');
       const transcription = await transcribeMediaPath(downloaded.path, source.original_name, mimeType);
-      const originalText = transcription.text;
-      const result = await geminiTransformTranscription({
-        transcription: originalText,
-        instruction: 'Resuma a transcrição em material de estudo claro, organizado e em português do Brasil.',
-        agentKey: 'ajuste_transcricao',
-      });
+      const cleanedTranscription = cleanTranscriptionAgentOutput(transcription.text);
       const pipeline = await chunkTokenizedText({
-        text: originalText,
+        text: cleanedTranscription,
         sourceType: transcription.videoConvertedToAudio ? 'video' : 'audio',
         segments: transcription.segments,
         contentFormat: 'plain',
       });
       return {
-        originalText,
-        result,
-        pipelineText: originalText,
+        originalText: cleanedTranscription,
+        result: '',
+        pipelineText: cleanedTranscription,
         wholeTranscription: transcription.rawText,
-        cleanedTranscription: transcription.text,
+        cleanedTranscription,
         ...pipeline,
         extractionMetadata: {
           originalSize: transcription.originalSize,
@@ -120,17 +118,20 @@ async function processSource(source: ProcessingSource): Promise<ProcessedSourceO
     const buffer = await import('node:fs/promises').then((fs) => fs.readFile(downloaded.path));
     if (source.category === 'text') {
       const originalText = buffer.toString('utf8');
-      const result = await geminiTransformTranscription({
-        transcription: originalText,
-        instruction: 'Organize o conteúdo em material de estudo claro, estruturado e em português do Brasil.',
-        agentKey: 'ajuste_transcricao',
-      });
+      const { cleanedText } = cleanExtractionAgentOutput(originalText);
       const pipeline = await chunkTokenizedText({
-        text: result,
+        text: cleanedText,
         sourceType: 'text',
         contentFormat: 'plain',
       });
-      return { originalText, result, pipelineText: result, ...pipeline };
+      return {
+        originalText,
+        result: cleanedText,
+        pipelineText: cleanedText,
+        wholeExtractionText: originalText,
+        cleanedExtractionText: cleanedText,
+        ...pipeline,
+      };
     }
 
     const broad = await processWithBroadFileExtraction(buffer, mimeType);

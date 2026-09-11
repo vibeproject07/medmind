@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, memo, useCallback, useEffect, useRef, useState } from 'react';
 import {
   AlertCircle,
   Download,
@@ -295,6 +295,14 @@ function supportsInlineViewer(source: NoteSource): boolean {
     source.mime_type === 'application/pdf';
 }
 
+const StaticVideoPlayer = memo(function StaticVideoPlayer({
+  src,
+}: {
+  src: string;
+}) {
+  return <video src={src} controls preload="metadata" className="max-h-[28rem] w-full rounded bg-black" />;
+});
+
 function processingLabel(source: NoteSource): string {
   switch (source.processing_status) {
     case 'queued': return 'Na fila';
@@ -334,10 +342,10 @@ export default function NoteSourcesPanel({
 
   const token = () => localStorage.getItem('token')?.trim().replace(/^["']|["']$/g, '') || '';
 
-  const loadSources = useCallback(async () => {
+  const loadSources = useCallback(async (showLoading = true) => {
     const accessToken = token();
     if (!accessToken) return;
-    setLoading(true);
+    if (showLoading) setLoading(true);
     try {
       const response = await fetch(`/api/notes/${noteId}/sources`, {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -348,7 +356,7 @@ export default function NoteSourcesPanel({
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Não foi possível carregar as fontes.');
     } finally {
-      setLoading(false);
+      if (showLoading) setLoading(false);
     }
   }, [noteId]);
 
@@ -513,7 +521,7 @@ export default function NoteSourcesPanel({
 
   useEffect(() => {
     if (!sources.some((source) => source.processing_status === 'queued' || source.processing_status === 'processing')) return;
-    const interval = window.setInterval(() => { void loadSources(); }, 3000);
+    const interval = window.setInterval(() => { void loadSources(false); }, 3000);
     return () => window.clearInterval(interval);
   }, [sources, loadSources]);
 
@@ -588,7 +596,7 @@ export default function NoteSourcesPanel({
               <div className="bg-gray-50 p-3">
                 {selected.source.category === 'image' && <img src={selected.url} alt={selected.source.original_name} className="mx-auto max-h-[28rem] max-w-full rounded object-contain" />}
                 {selected.source.category === 'audio' && <audio src={selected.url} controls className="w-full" />}
-                {selected.source.category === 'video' && <video src={selected.url} controls className="max-h-[28rem] w-full rounded bg-black" />}
+                {selected.source.category === 'video' && <StaticVideoPlayer src={selected.url} />}
                 {(selected.source.category === 'text' || selected.source.mime_type === 'application/pdf') && (
                   <iframe src={selected.url} title={selected.source.original_name} className="h-[28rem] w-full rounded border border-gray-200 bg-white" />
                 )}
