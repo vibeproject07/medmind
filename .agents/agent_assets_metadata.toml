@@ -6,96 +6,112 @@ id = "IhfoqXIQnYl77N0PutrDw"
 uri = "file://attached_assets/100questoes_modificado.json"
 type = "unspecified"
 title = "100questoes_modificado.json"
+logical_id = "f8579fc1-0419-4120-9700-7dd0dc78a469"
 
 [[outputs]]
 id = "xzgxjTzRj_8ta_tSjpP-t"
 uri = "file://attached_assets/100questoes_modificado.csv"
 type = "table"
 title = "100questoes_modificado.csv"
+logical_id = "6469aa59-f557-4341-936a-115ecd6c7fe6"
 
 [[outputs]]
 id = "8GG-AOj9pxFMXzRx5qi-W"
 uri = "file://decs_classification_results.json"
 type = "unspecified"
 title = "Descritores DeCS IA — 100 questões"
+logical_id = "0dd3c25f-6f7a-46bd-839c-fa3dfc72a35c"
 
 [[outputs]]
 id = "owMQZFI-L7qxYgp4jhuBU"
 uri = "file://content_links.json"
 type = "unspecified"
 title = "content_links.json — 1.000 links de similaridade"
+logical_id = "b6b4f0c1-f767-481e-bf8f-fb0e8ea31123"
 
 [[outputs]]
 id = "mHo-scN1Iwc1Uua_ornPz"
 uri = "file://test_100_questions_full.json"
 type = "unspecified"
 title = "100 Questões — DeCS + Questões Similares"
+logical_id = "59a83535-8184-4a39-a0a4-301a28edfafb"
 
 [[outputs]]
 id = "Ou8Yi7FQ6g0GBG5VXf0zY"
 uri = "file://decs_500_questions.json"
 type = "unspecified"
 title = "DeCS 500 Questions — Classificação Completa"
+logical_id = "671d79cc-b537-4f02-abcb-4dc6b1b042df"
 
 [[outputs]]
 id = "4T7ZMYGai-nfkuNpMBmOK"
 uri = "file://decs_200_recent_questions.json"
 type = "unspecified"
 title = "DeCS — 200 Questões Mais Recentes"
+logical_id = "e5056682-3525-4654-988e-d1f9458d198d"
 
 [[outputs]]
 id = "74-O34G4j7eS9T-8bWHWQ"
 uri = "file://decs_200_recent_v2.json"
 type = "unspecified"
 title = "DeCS — 200 Questões Mais Recentes (Pipeline v2 — Temas Primários/Secundários)"
+logical_id = "cd6d3a0b-e53e-4f7d-8119-8145e1385ceb"
 
 [[outputs]]
 id = "Yg23V_1cl6F8tY2hz5mIy"
 uri = "file://decs_classification_results.csv"
 type = "table"
 title = "Resultados de classificação DeCS"
+logical_id = "756376b7-aaf2-44dc-aaa7-48a3c783880a"
 
 [[outputs]]
 id = "CNnA5Q7ggl92zyKofRKG4"
 uri = "file://questoes_recentes_200.csv"
 type = "table"
 title = "200 questões mais recentes"
+logical_id = "e05e3800-cc01-4343-8a8b-cfe14031f966"
 
 [[outputs]]
 id = "mH-sMZxuVOYBJmEUDgWc1"
 uri = "file://exports/decs-vectorization-200.json"
 type = "unspecified"
 title = "DeCS — Vetorização 200 descritores"
+logical_id = "a29c0925-5b5e-4c2a-95f3-3ca61dbdfa5d"
 
 [[outputs]]
 id = "Ui04c2e7xG6_vN-bgxX1_"
 uri = "file://exports/decs-vectorization-200-compact.json"
 type = "unspecified"
 title = "DeCS — Vetorização 200 descritores (compacto)"
+logical_id = "b5127768-f9f9-4bd2-a5ad-f25311735f49"
 
 [[outputs]]
 id = "CPPk2ipWD9WxfeybGZw2S"
 uri = "file://exports/edge-cases-before-revectorization.json"
 type = "unspecified"
 title = "Edge Cases — Estado ANTES da revetorização"
+logical_id = "8d69ca5d-9024-4f97-b547-3efd88ededa0"
 
 [[outputs]]
 id = "ZawvgRI6ZS0_dzfwAXzAX"
 uri = "file://exports/edge-cases-after-revectorization.json"
 type = "unspecified"
 title = "Edge Cases — Estado APÓS revetorização"
+logical_id = "7ca3ffa3-0da1-46a1-b97b-42804c4f1baa"
 
 [[outputs]]
 id = "glbnTA4_zbz3qwTxnSZUD"
 uri = "file://exports/edge-cases-vector-search-results.json"
 type = "unspecified"
 title = "Resultados de busca vetorial — 4 termos edge-case"
+logical_id = "180714f5-c09a-4d5d-92b7-5797a57be835"
 
 [[outputs]]
 id = "o8JxcoWzWVLXF4I0C6Xjy"
 uri = "file://exports/decs-embedding-text-audit.json"
 type = "unspecified"
 title = "Auditoria de texto de embedding — 5 termos de epilepsia"
+logical_id = "f0337376-164e-4a36-91d5-164f511fb0a3"
 
 [[outputs]]
 id = "_Lb0_Z5l5g42PUD9cDTv7"
@@ -103,3 +119,18 @@ uri = "file://reports/questoes_provas_imagens_urls.csv"
 type = "table"
 title = "Lista de questões de provas com URLs de imagens"
 description = "CSV com 10.757 URLs, uma por linha de imagem, incluindo todos os campos da prova, ID e número da questão, enunciado e índice da imagem."
+logical_id = "e5f10cdf-4cbe-437c-a54b-e3bd769490af"
+
+[[outputs]]
+id = "jalHWV6t8llAkBjYnqwnJ"
+uri = "file://diagnostics/note-90-source-67-agent-output.json"
+type = "unspecified"
+title = "JSON armazenado — nota 90, fonte 67"
+description = "Saída integral do agente preservada no último run concluído da fonte 67."
+logical_id = "e648b8ab-9c7f-42f6-a24b-747042facf5f"
+content_hash = "sha256:99563dac7e93d023d91bbee0487e18b11e9d3e828d7d31a1962a5facf76fb176"
+size = 26528
+mtime_ms = 1789166350197
+storage_uri = "gcs://replit-rams-assets-spock/rams/assets/repl:dd835d5f-ac9d-43ae-81e7-0b1faea33279/e648b8ab-9c7f-42f6-a24b-747042facf5f/ef9e1312-497f-49a8-8ddf-12aba24b3a79"
+storage_version_token = "1789166350869900"
+content_type = "application/octet-stream"

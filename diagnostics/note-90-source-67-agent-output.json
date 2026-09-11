@@ -1,0 +1,184 @@
+```json
+{
+  "tipo_fonte": "pdf",
+  "numeracao_inferida": false,
+  "unidades": [
+    {
+      "unidade": 1,
+      "descartada": true,
+      "motivo_descarte": "capa",
+      "texto": ""
+    },
+    {
+      "unidade": 2,
+      "descartada": true,
+      "motivo_descarte": "capa",
+      "texto": ""
+    },
+    {
+      "unidade": 3,
+      "descartada": true,
+      "motivo_descarte": "capa",
+      "texto": ""
+    },
+    {
+      "unidade": 4,
+      "descartada": true,
+      "motivo_descarte": "capa",
+      "texto": ""
+    },
+    {
+      "unidade": 5,
+      "descartada": true,
+      "motivo_descarte": "declaracao_conflito_interesse",
+      "texto": ""
+    },
+    {
+      "unidade": 6,
+      "descartada": true,
+      "motivo_descarte": "declaracao_conflito_interesse",
+      "texto": ""
+    },
+    {
+      "unidade": 7,
+      "descartada": true,
+      "motivo_descarte": "declaracao_conflito_interesse",
+      "texto": ""
+    },
+    {
+      "unidade": 8,
+      "descartada": true,
+      "motivo_descarte": "declaracao_conflito_interesse",
+      "texto": ""
+    },
+    {
+      "unidade": 9,
+      "descartada": true,
+      "motivo_descarte": "declaracao_conflito_interesse",
+      "texto": ""
+    },
+    {
+      "unidade": 10,
+      "descartada": true,
+      "motivo_descarte": "declaracao_conflito_interesse",
+      "texto": ""
+    },
+    {
+      "unidade": 11,
+      "descartada": true,
+      "motivo_descarte": "declaracao_conflito_interesse",
+      "texto": ""
+    },
+    {
+      "unidade": 12,
+      "descartada": true,
+      "motivo_descarte": "declaracao_conflito_interesse",
+      "texto": ""
+    },
+    {
+      "unidade": 13,
+      "descartada": true,
+      "motivo_descarte": "declaracao_conflito_interesse",
+      "texto": ""
+    },
+    {
+      "unidade": 14,
+      "descartada": true,
+      "motivo_descarte": "declaracao_conflito_interesse",
+      "texto": ""
+    },
+    {
+      "unidade": 15,
+      "descartada": true,
+      "motivo_descarte": "declaracao_conflito_interesse",
+      "texto": ""
+    },
+    {
+      "unidade": 16,
+      "descartada": true,
+      "motivo_descarte": "glossario_siglas",
+      "texto": ""
+    },
+    {
+      "unidade": 17,
+      "descartada": true,
+      "motivo_descarte": "glossario_siglas",
+      "texto": ""
+    },
+    {
+      "unidade": 18,
+      "descartada": true,
+      "motivo_descarte": "glossario_siglas",
+      "texto": ""
+    },
+    {
+      "unidade": 19,
+      "descartada": true,
+      "motivo_descarte": "glossario_siglas",
+      "texto": ""
+    },
+    {
+      "unidade": 20,
+      "descartada": true,
+      "motivo_descarte": "glossario_siglas",
+      "texto": ""
+    },
+    {
+      "unidade": 21,
+      "descartada": true,
+      "motivo_descarte": "sumario_indice",
+      "texto": ""
+    },
+    {
+      "unidade": 22,
+      "descartada": true,
+      "motivo_descarte": "sumario_indice",
+      "texto": ""
+    },
+    {
+      "unidade": 23,
+      "descartada": false,
+      "motivo_descarte": null,
+      "texto": "Figura Central: Diretriz Brasileira de Hipertensão Arterial – 2025\n\n[DESCRIÇÃO VISUAL: Infográfico intitulado \"Diretriz Brasileira de Hipertensão Arterial – 2025\" dividido em quatro blocos principais: DIAGNÓSTICO, ESTRATIFICAÇÃO DE RISCO, TRATAMENTO NÃO MEDICAMENTOSO e METAS E SEGUIMENTO, com um círculo central representando a EQUIPE MULTIPROFISSIONAL. As setas indicam o fluxo de decisão clínica.\n\n**DIAGNÓSTICO:**\n*   **Hipertensão Arterial:** PA consultório ≥140 e/ou 90 mmHg em 2 ocasiões.\n*   **Pré-hipertensão:** PA consultório 120-139 e/ou 80-89 mmHg.\n*   MAPA ou MRPA sempre que possível – avaliar fenótipos da HA.\n\n**ESTRATIFICAÇÃO DE RISCO:**\n*   Para todos com PA ≥130 e/ou 80 mmHg.\n*   Avaliação clínica e complementar para identificar: FRCV, LOA, DCV, DRC.\n*   Aplicar o escore PREVENT.\n\n**TRATAMENTO NÃO MEDICAMENTOSO:**\n*   Para Todos.\n*   Não fumar.\n*   Dieta saudável (DASH).\n*   IMC 18-24Kg/m².\n*   ↓ da ingestão de sal.\n*   ↑ da ingestão de potássio.\n*   Atividade física regular.\n*   Baixa ingestão de álcool.\n*   Práticas de espiritualidade e controle de estresse.\n\n**TRATAMENTO MEDICAMENTOSO:**\n*   **Associação de medicamentos:** HA estágio 1 de risco moderado e alto, HA estágios 2 e 3. IECA ou BRA + BCC e/ou DIU. BB em indicações específicas. Comprimido único, preferencialmente.\n*   **Monoterapia:** Indivíduos frágeis, ≥ 80 anos, PA ≥130 e/ou 80 mmHg de risco alto, HA estágio 1 de risco baixo (a critério médico, associação de medicamentos).\n\n**METAS E SEGUIMENTO:**\n*   **Metas para todos:** PA <130/80 mmHg. Reduzir risco CV.\n*   MAPA ou MRPA sempre que possível - avaliar fenótipos da HA.\n*   **Seguimento:** Rever a cada 4 semanas até alcançar a meta de PA. Verificar adesão ao tratamento sempre. Combater inércia terapêutica.\n\n**EQUIPE MULTIPROFISSIONAL:** Ação integrada de profissionais de saúde para garantir o diagnóstico, a adesão ao tratamento, o controle e o seguimento adequados da PA.\n\nABREVIATURAS:\nPA: pressão arterial; MAPA: monitorização ambulatorial da PA 24h; MRPA: monitorização residencial da PA; FRCV: fatores de risco cardiovascular; LOA: lesões em órgãos-alvo; DCV: doença cardiovascular; DRC: doença renal crônica; IMC: índice de massa corporal; HA: hipertensão arterial; DIU: diurético tiazídico ou similar; IECA: inibidor da enzima conversora de angiotensina; BRA: bloqueador do receptor AT1 da angiotensina II; BCC: bloqueador dos canais de cálcio; HCTZ: hidroclorotiazida; PREVENT: Predicting Risk of Cardiovascular Disease Events."
+    },
+    {
+      "unidade": 24,
+      "descartada": false,
+      "motivo_descarte": null,
+      "texto": "## 1. Introdução\n\nA Diretriz Brasileira de Hipertensão Arterial 2025 (DBHA 2025) é uma realização conjunta da Sociedade Brasileira de Cardiologia (SBC), da Sociedade Brasileira de Nefrologia (SBN) e da Sociedade Brasileira de Hipertensão (SBH).\n\nEste documento reúne as recomendações mais atualizadas e baseadas nas melhores evidências disponíveis para o manejo da hipertensão arterial (HA), abrangendo aspectos diagnósticos, de acompanhamento e terapêuticos, em diferentes subgrupos de pacientes e condições clínicas associadas, além de situações de maior gravidade, como as emergências hipertensivas (EHs) e os casos de HA resistente e refratária (Figura Central).\n\nUm dos principais desafios enfrentados na elaboração desta nova diretriz foi atender às Normas para Elaboração de Diretrizes, Recomendações e Posicionamentos da SBC. Conforme essas normas, a classificação das recomendações deve basear-se na metodologia Grading of Recommendations Assessment, Development and Evaluation (GRADE), que estabelece a força das recomendações e o nível de certeza das evidências. Contamos, para essa análise, com o apoio incansável do metodologista e cardiologista Dr. Leonardo Luna, a quem agradecemos por seus ensinamentos e valiosas orientações ao longo de todo o processo.\n\nDestacamos que, pela primeira vez, essa diretriz inclui um capítulo inteiramente dedicado às especificidades do manejo da hipertensão no Sistema Único de Saúde (SUS), tema de grande relevância, considerando-se que cerca de 75% dos pacientes com HA no Brasil são tratados no SUS, especialmente na atenção primária à saúde.\n\nUm documento com o porte da DBHA 2025, com 154 páginas, só pôde ser desenvolvido graças ao envolvimento de inúmeros médicos de diferentes especialidades e profissionais de saúde, todos profundamente comprometidos com o cuidado ao paciente hipertenso. A eles, registramos nossa sincera gratidão pelas contribuições valiosas e competentes.\n\nEm seguida, destacaremos aproximadamente 30% das recomendações da DBHA 2025 – aquelas consideradas de maior relevância ou que representam novidades em relação à edição anterior.\n\nEsperamos que aproveitem a leitura e que compartilhem amplamente este conteúdo, para que, juntos, possamos fortalecer o cuidado de qualidade ao paciente com HA em nosso país.\n\nAndréa Araujo Brandão–\nCoordenadora Geral\n\nWilson Nadruz\nSociedade Brasileira de Cardiologia\n\nCibele Isaac Saad Rodrigues\nSociedade Brasileira de Nefrologia\n\nLuiz Aparecido Bortolotto\nSociedade Brasileira de Hipertensão"
+    },
+    {
+      "unidade": 25,
+      "descartada": false,
+      "motivo_descarte": null,
+      "texto": "## 1.1. Principais Destaques\n\n### Capítulo 3 – Medida da pressão arterial, diagnóstico e classificação\n\n| Recomendações para medida da pressão arterial, diagnóstico e classificação | Forca da recomendação | Certeza da evidência |\n|---|---|---|\n| Recomenda-se classificar a pré-hipertensão abrangendo valores de PAS entre 120-139 mmHg ou PAD entre 80-89 mmHg no consultório com o objetivo de identificar precocemente indivíduos em risco e incentivar intervenções mais proativas e não medicamentosas para prevenir a progressão para HA. | FORTE | MODERADA |\n| Recomenda-se que o diagnóstico de HA seja feito quando a PA no consultório for ≥ 140 e/ou 90 mmHg em duas ocasiões diferentes e classificada em estágios 1, 2 e 3, de acordo com o maior valor de PAS ou PAD. | FORTE | MODERADA |\n| Recomenda-se utilizar equipamento automático de braço com o objetivo de reduzir erros e facilitar a obtenção da medida da PA. | FORTE | MODERADA |\n| Recomenda-se usar MAPA ou MRPA para confirmar diagnóstico de HA e monitorar o tratamento. | FORTE | ALTA |\n\nHA: hipertensão arterial; MAPA: monitorização ambulatorial da pressão arterial; MRPA: monitorização residencial da pressão arterial; PA: pressão arterial; PAD: pressão arterial diastólica; PAS: pressão arterial sistólica.\n\n### Capítulo 4 – Avaliação clínica e complementar, e estratificação de risco cardiovascular\n\n| Recomendações para avaliação clínica e complementar, e estratificação de risco cardiovascular | Forca da recomendação | Certeza da evidência |\n|---|---|---|\n| Recomenda-se pesquisar FRCV e LOA idealmente em todos os pacientes no momento do diagnóstico de HA e repetir essa avaliação pelo menos anualmente, sendo a escolha do método decidida conforme os recursos disponíveis. | FORTE | BAIXA |\n| Recomenda-se avaliar o risco CV utilizando o escore PREVENT. | FORTE | ALTA |\n| Recomenda-se estratificar o risco CV em indivíduos com pré-hipertensão com o objetivo de orientar o início do tratamento anti-hipertensivo e promover um controle mais adequado dos FRCV. | FORTE | ALTA |\n| Recomenda-se estratificar o risco CV em pacientes com HA com o objetivo de promover uma abordagem mais precisa e personalizada no manejo de medicamentos e direcionamento de metas para controle dos FRCVs. | FORTE | ALTA |\n\nCV: cardiovascular; FRCVs: fatores de risco cardiovascular; HA: hipertensão arterial; LOA: lesão de órgão-alvo; PREVENT: Predicting Risk of Cardiovascular Disease Events.\n\n### Capítulo 5 – Início de tratamento e metas terapêuticas\n\n| Recomendações para início do tratamento anti-hipertensivo | Força da recomendação | Certeza da evidência |\n|---|---|---|\n| Recomendam-se MNM para todos os indivíduos com PA ≥ 120/80 mmHg. | FORTE | ALTA |\n| Recomenda-se tratamento medicamentoso após 3 meses de MNM para indivíduos com PA 130-139/80-89 mmHg e alto risco CV. | FORTE | ALTA |\n| Recomenda-se o início de tratamento medicamentoso para indivíduos com PA ≥ 140/90 mmHg. | FORTE | ALTA |\n\nCV: cardiovascular; MNM: medidas não medicamentosas; PA: pressão arterial."
+    },
+    {
+      "unidade": 26,
+      "descartada": false,
+      "motivo_descarte": null,
+      "texto": "### Recomendações para metas terapêuticas\n\n| Recomendações para metas terapêuticas | Força da recomendação | Certeza da evidência |\n|---|---|---|\n| Recomenda-se a meta de PA < 130/80 mmHg para pacientes com PA 130-139/80-89 mmHg e risco CV alto. | FORTE | ALTA |\n| Recomenda-se a meta de PA < 130/80 mmHg para os pacientes com HA independentemente de o risco CV ser baixo, moderado ou alto. | FORTE | ALTA |\n| Recomenda-se que, para pacientes que não tolerem a meta de PA < 130/80 mmHg, deve-se reduzir a PA até o valor mais baixo tolerado. | FORTE | MODERADA |\n| Confirmar o alcance da meta de PA com a medida da PA fora do consultório por meio da MAPA ou MRPA. | FORTE | BAIXA |\n\nCV: cardiovascular; HA: hipertensão arterial; MAPA: monitorização ambulatorial da pressão arterial; MRPA: monitorização residencial da pressão arterial; PA: pressão arterial.\n\n### Capítulo 6 – Medidas não medicamentosas\n\n| Recomendações para medidas não medicamentosas | Força da recomendação | Certeza da evidência |\n|---|---|---|\n| Recomenda-se diminuição do peso corporal para redução da PA e de mortalidade em pacientes com obesidade. | FORTE | ALTA |\n| Recomenda-se redução da ingestão de sódio e aumento da ingestão de potássio dietético (exceto para pacientes com DRC) para redução da PA. | FORTE | ALTA |\n| Recomendam-se a dieta DASH e a prática de AF moderada para redução da PA. | FORTE | ALTA |\n\nDASH: Dietary Approaches to Stop Hypertension; DRC: doença renal crônica; PA: pressão arterial; AF: atividade física.\n\n### Capítulo 7 – Tratamento medicamentoso\n\n| Recomendações para o tratamento medicamentoso | Força da recomendação | Certeza da evidência |\n|---|---|---|\n| Recomenda-se a associação de medicamentos, preferencialmente em comprimido único e com as classes preferenciais, para atingir metas rigorosas de PA (< 130/80 mmHg) e reduzir eventos CV e renais. | FORTE | MODERADA |\n| Recomenda-se monoterapia para indivíduos com PA 130-139/80-89 mmHg e alto risco CV; pacientes com HA estágio 1 de baixo risco (a critério médico, pode-se optar por associação); em indivíduos frágeis; muito idosos (≥ 80 anos) ou com hipotensão ortostática sintomática, especialmente em indivíduos idosos. | FRACA | BAIXA |\n| Recomenda-se, para a maioria dos pacientes, o início do tratamento da HA com associação dupla de medicamentos, em doses baixas, preferencialmente em comprimido único, se disponível. | FORTE | MODERADA |\n| Recomenda-se o uso de diuréticos tiazídicos ou similares, IECA ou BRA e BCC como classes preferenciais para o tratamento da HA e redução de eventos CV e renais importantes. | FORTE | ALTA |\n| Recomenda-se o uso de BB para o tratamento de HA em situações específicas: IC, FA, arritmias, DAC, HA em pacientes em HD e outras (enxaqueca, tremor essencial, mulheres que desejam engravidar, varizes esofágicas). | FORTE | MODERADA |\n| Recomenda-se o uso de espironolactona (ou eplerenona, caso ocorra intolerância à espironolactona) para atingir metas rigorosas de PA (< 130/80 mmHg) e reduzir eventos CV e renais quando não tiverem sido atingidas apenas com três classes iniciais (HAR e HARf). | FORTE | ALTA |\n\nBB: betabloqueadores; BCC: bloqueadores dos canais de cálcio; BRA: bloqueadores dos receptores de angiotensina; CV: cardiovascular; DAC: doença arterial coronariana; FA: fibrilação atrial; HA: hipertensão arterial; HAR: hipertensão arterial resistente; HARf: hipertensão arterial refratária; HD: hemodiálise; IC: insuficiência cardíaca; IECA: inibidores da enzima conversora de angiotensina; PA: pressão arterial."
+    },
+    {
+      "unidade": 27,
+      "descartada": false,
+      "motivo_descarte": null,
+      "texto": "### Capítulo 8 – Hipertensão arterial e condições clínicas associadas: doença arterial coronariana, doença renal crônica, diabetes mellitus, obesidade, COVID-19, pós-acidente vascular cerebral e insuficiência cardíaca\n\n| Recomendações para pacientes com hipertensão arterial e doença arterial coronariana | Força da recomendação | Certeza da evidência |\n|---|---|---|\n| Recomenda-se a meta de PA < 130/80 mmHg para indivíduos com HA e DAC. Admite-se que reduzir a PA até 120/70 mmHg não aumenta o risco CV e que pacientes com PA < 120/70 mmHg e assintomáticos não necessitam parar ou reduzir a medicação anti-hipertensiva. | FORTE | MODERADA |\n\nCV: cardiovascular; HA: hipertensão arterial; DAC: doença arterial coronariana; PA: pressão arterial.\n\n| Recomendações para pacientes com hipertensão arterial e doença renal crônica em tratamento conservador | Força da recomendação | Certeza da evidência |\n|---|---|---|\n| Recomenda-se, em adultos com HA e DRC ou DM, a meta de PA < 130/80 mmHg para redução de eventos CV e falência renal. | FORTE | ALTA |\n| Recomenda-se que a escolha de anti-hipertensivos na HA da DRC deva incluir, a menos que contraindicado, o uso de IECA ou BRA, e favorecer a introdução e manutenção de medicamentos com efeito anti-hipertensivo discreto, mas que exibam propriedades nefro e cardioprotetoras, como a finerenona e os aGLP1 em pacientes com DM e os iSGLT2, devido ao comprovado efeito benéfico na proteção cardiorrenal. | FORTE | ALTA |\n\naGLP1: análogos dos peptídeos semelhantes ao glucagon 1 (Glucagon-like peptide-1); BRA: bloqueadores dos receptores de angiotensina; DM: diabetes mellitus; DRC: doença renal crônica; HA: hipertensão arterial; IECA: inibidores da enzima conversora de angiotensina; iSGLT2: inibidores do cotransportador de sódio-glicose 2 (sodium/glucose cotransporter 2 inhibitors); PA: pressão arterial.\n\n| Recomendações para pacientes com hipertensão arterial no paciente com diabetes mellitus | Força da recomendação | Certeza da evidência |\n|---|---|---|\n| Recomenda-se que o início do tratamento medicamentoso deva ser imediato (ao diagnóstico) com dois medicamentos, IECA ou BRA, quando houver intolerância ao IECA, associado a BCC ou diurético tiazídico similar. | FORTE | ALTA |\n\nBCC: bloqueadores dos canais de cálcio; BRA: bloqueadores dos receptores de angiotensina; IECA: inibidores da enzima conversora de angiotensina.\n\n| Recomendações para pacientes com hipertensão arterial no paciente com obesidade | Força da recomendação | Certeza da evidência |\n|---|---|---|\n| Recomenda-se a meta de PA < 130/80 mmHg para pacientes com obesidade. | FORTE | MODERADA |\n| Recomenda-se o uso de medicamentos para diminuir peso, tais como os aGLP1 (liraglutida, semaglutida e dulaglutida), que apresentam bons resultados na redução de peso e do risco CV, mas os resultados na redução da PA são modestos. | FORTE | ALTA |\n\naGLP1: análogos dos peptídeos semelhantes ao glucagon 1 (Glucagon-like peptide-1); CV: cardiovascular; PA: pressão arterial.\n\n| Recomendações para pacientes com hipertensão arterial e acidente vascular cerebral e déficit cognitivo | Força da recomendação | Certeza da evidência |\n|---|---|---|\n| Recomenda-se a meta de PA < 130/80 mmHg para pacientes com AVC ou AIT prévios para redução de eventos CV maiores (IAM, recorrência AVC, morte) | FORTE | ALTA |\n\nAIT: ataque isquêmico transitório; AVC: acidente vascular cerebral; CV: cardiovascular; IAM: infarto agudo do miocárdio; PA: pressão arterial."
+    },
+    {
+      "unidade": 28,
+      "descartada": false,
+      "motivo_descarte": null,
+      "texto": "### Recomendações para pacientes com hipertensão arterial e insuficiência cardíaca\n\n| Recomendações para pacientes com hipertensão arterial e insuficiência cardíaca | Força da recomendação | Certeza da evidência |\n|---|---|---|\n| Recomenda-se a meta de PA < 130/80 mmHg para os pacientes com HA, ICFEp e ICFEr. | FRACA | BAIXA |\n| Recomenda-se, para pacientes com ICFEr e HA, o tratamento com medicações que tenham ação anti hipertensiva e que melhorem o prognóstico: BB, IECA (ou BRA) e ARM. | FORTE | ALTA |\n\nARM: antagonista dos receptores mineralocorticoides; BB: betabloqueadores; BRA: bloqueadores dos receptores de angiotensina; HA: hipertensão arterial; ICFEp: insuficiência cardíaca com fração de ejeção preservada; ICFEr: insuficiência cardíaca com fração de ejeção reduzida; IECA: inibidores da enzima conversora de angiotensina; PA: pressão arterial.\n\n### Capítulo 9 – Hipertensão arterial em idosos, crianças e adolescentes\n\n| Recomendações para abordagem da HA em pacientes idosos | Força da recomendação | Certeza da evidência |\n|---|---|---|\n| Recomenda-se a meta de PA < 130/80 mmHg para a maioria dos pacientes idosos. | FORTE | ALTA |\n| Recomenda-se, para idosos frágeis, muito idosos ou com condições que comprometam a expectativa de vida, que a PA seja reduzida até o menor valor tolerado. | FORTE | ALTA |\n| Recomenda-se, nos idosos sob polifarmácia, a revisão periódica de cada um dos medicamentos em uso, a avaliação de eventos adversos e que o tratamento anti-hipertensivo possua o menor número possível de comprimidos ao dia, com a utilização de anti-hipertensivos em combinações em único comprimido de dose única diária, além da ênfase às MNM. | FORTE | MODERADA |\n\nPA: pressão arterial; MNM: medidas não medicamentosas.\n\n| Recomendações para abordagem da HA em crianças e adolescentes | Força da recomendação | Certeza da evidência |\n|---|---|---|\n| Recomenda-se início de terapêutica medicamentosa em crianças e adolescentes com IECA, BRA, BCC de ação prolongada ou um diurético tiazídico para pacientes com HA sintomática, presença de LOA, HA estágio 2 sem causa modificável aparente ou HA persistente não responsiva a MNM, se a PA for ≥ percentil 95 ou ≥ 130/80 mmHg em adolescentes ≥ 13 anos de idade. | FORTE | BAIXA |\n\nBCC: bloqueadores dos canais de cálcio; BRA: bloqueadores dos receptores de angiotensina; HA: hipertensão arterial; IECA: inibidores da enzima conversora de angiotensina; LOA: lesão de órgão-alvo; MNM: medidas não medicamentosas; PA: pressão arterial.\n\n### Capítulo 10 – Hipertensão arterial em mulheres\n\n| Recomendações para abordagem da HA em mulheres dentro e fora do período gestacional | Força da recomendação | Certeza da evidência |\n|---|---|---|\n| Recomenda-se monitorar a PA em mulheres jovens antes da prescrição de anticoncepcionais e após o início do uso, bem como reforçar a importância de medidas regulares da PA (a cada 6 meses), incluindo medidas domiciliares e o controle dos demais FRCVs. | FORTE | MODERADA |\n| Recomenda-se, para o tratamento medicamentoso da HA na mulher durante e após a menopausa, iniciar com a combinação de bloqueador do SRAA com BCC ou diurético tiazídico. | FORTE | MODERADA |\n| Recomendam-se metas de PA iguais para mulheres e homens, assim como a utilização das mesmas classes de anti-hipertensivos para o tratamento da HA em mulheres e homens. | FORTE | MODERADA |\n| Recomenda-se iniciar o tratamento anti-hipertensivo em gestantes com HA com metildopa ou BCCs di-hidropiridínicos (nifedipina de longa duração ou amlodipina). | FORTE | BAIXA |\n| Recomenda-se o acompanhamento de longo prazo de toda mulher que teve HA na gestação para a prevenção efetiva de DCV. | FORTE | BAIXA |\n\nBCCs: bloqueadores dos canais de cálcio; DCV: doença cardiovascular; FRCVs: fatores de risco cardiovascular; HA: hipertensão arterial; PA: pressão arterial; SRAA: sistema renina-angiotensina-aldosterona."
+    },
+    {
+      "unidade": 29,
+      "descartada": false,
+      "motivo_descarte": null,
+      "texto": "### Capítulo 11 – Crise hipertensiva\n\n| Recomendações para abordagem da crise hipertensiva | Força da recomendação | Certeza da evidência |\n|---|---|---|\n| Recomenda-se, em pacientes com elevação importante da PA sem LOA aguda (antes denominada urgência hipertensiva), reavaliação ambulatorial em 1 a 7 dias com alvo de PAS < 160 e PAD < 100 mmHg. | FRACA | BAIXA |\n| Recomenda-se que o paciente com EH deva ser admitido em UTI, usar anti-hipertensivos IV com monitorização da PA e observação da progressão da LOA. | FORTE | MODERADA |\n\nEH: emergências hipertensivas; IV: intra-venoso; LOA: lesão de órgão-alvo; PA: pressão arterial; PAD: pressão arterial diastólica; PAS: pressão arterial sistólica; UTI: unidade de terapia intensiva.\n\n### Capítulo 12 – Hipertensão arterial resistente e refratária\n\n| Recomendações para abordagem da hipertensão resistente e refratária | Força da recomendação | Certeza da evidência |\n|---|---|---|\n| Recomenda-se a realização preferencial de MAPA para confirmação diagnóstica de HAR e HARf, se disponível, ou MRPA. | FORTE | MODERADA |\n| Recomenda-se a meta de PA < 130/80 mmHg para pacientes com HAR ou HARf. | FRACA | BAIXA |\n\nHAR: hipertensão arterial resistente; HARf: hipertensão arterial refratária; MAPA: monitorização ambulatorial da pressão arterial; MRPA: monitorização residencial da pressão arterial; PA: pressão arterial.\n\n### Capítulo 13 – Adesão ao tratamento anti-hipertensivo\n\n| Recomendações para adesão ao tratamento anti-hipertensivo | Força da recomendação | Certeza da evidência |\n|---|---|---|\n| Recomendam-se estratégias envolvendo a atuação de equipe multiprofissional, subsídios, recursos de comunicação/educação e aplicativos para promover melhorias na adesão ao tratamento anti hipertensivo. | FRACA | BAIXA |"
+    },
+    {
+      "unidade": 30,
+      "descartada": false,
+      "motivo_descarte": null,
+      "texto": "## 2. Epidemiologia, Definição e Prevenção Primária\n\n### 2.1. Definição, Epidemiologia e Prevenção Primária\n\n#### 2.1.1. Definição de Hipertensão Arterial\n\nHA é uma doença crônica não transmissível definida por elevação persistente da pressão arterial (PA) sistólica (PAS) maior ou igual a 140 mmHg e/ou da PA diastólica (PAD) maior ou igual a 90 mmHg, medida com a técnica correta, em pelo menos duas ocasiões e na ausência de medicação anti-hipertensiva. Trata-se de uma condição multifatorial, dependente de fatores genéticos/epigenéticos, ambientais e psicossociais. A definição de HA tem se consolidado ao longo dos anos e foi mantida nos termos já descritos na DBHA de 2020.1\n\n#### 2.1.2. Dados Epidemiológicos e Impacto da Hipertensão Arterial\n\nOs principais levantamentos epidemiológicos de HA no Brasil são derivados da Vigilância de Fatores de Risco e Proteção para Doenças Crônicas por Inquérito Telefônico (VIGITEL) e da Pesquisa Nacional de Saúde, ambos do Ministério da Saúde. O VIGITEL iniciou em 2006 e ocorre anualmente, por meio de entrevistas telefônicas com pessoas a partir de 18 anos de idade, moradoras das
