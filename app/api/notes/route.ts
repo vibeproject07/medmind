@@ -4,6 +4,7 @@ import { verifyToken } from '@/lib/jwt';
 import { triggerEnrichment } from '@/lib/enrichment';
 import { ensureNoteMetadataSchema } from '@/lib/note-schema';
 import { linkProcessingRunsToNote } from '@/lib/content-processing-storage';
+import { normalizeNoteSourceProvenance } from '@/lib/note-source-provenance';
 
 export const runtime = 'nodejs';
 
@@ -186,7 +187,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { title, description, tipo_conteudo, tags, images, areas_conhecimento, assuntos,
             question_ids, fontes_resumo_melhorado, fontes_resumo_original, fontes_arquivos,
-            processing_run_ids } = body;
+            processing_run_ids, fontes_proveniencia } = body;
 
     if (!title || !String(title).trim())
       return NextResponse.json({ error: 'O título é obrigatório' }, { status: 400 });
@@ -196,16 +197,27 @@ export async function POST(request: NextRequest) {
     const areasConhecimentoJson = areas_conhecimento && Array.isArray(areas_conhecimento) ? JSON.stringify(areas_conhecimento) : null;
     const assuntosJson          = assuntos           && Array.isArray(assuntos)           ? JSON.stringify(assuntos)           : null;
     const fontesArquivosJson    = fontes_arquivos    && Array.isArray(fontes_arquivos)    ? JSON.stringify(fontes_arquivos)    : null;
+    let fontesProveniencia = null;
+    try {
+      fontesProveniencia = normalizeNoteSourceProvenance(fontes_proveniencia);
+    } catch (error) {
+      return NextResponse.json(
+        { error: error instanceof Error ? error.message : 'Proveniência inválida.' },
+        { status: 400 },
+      );
+    }
 
     await ensureNoteMetadataSchema();
 
     const result = await query(
       `INSERT INTO notes (user_id, title, description, tipo_conteudo, tags, images, areas_conhecimento, assuntos,
-                          fontes_resumo_melhorado, fontes_resumo_original, fontes_arquivos)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING id`,
+                          fontes_resumo_melhorado, fontes_resumo_original, fontes_arquivos,
+                          fontes_proveniencia)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING id`,
        [user.id, String(title).trim(), typeof description === 'string' ? description : '', tipo_conteudo || null,
         tagsJson, imagesJson, areasConhecimentoJson, assuntosJson,
-        fontes_resumo_melhorado ?? null, fontes_resumo_original ?? null, fontesArquivosJson],
+        fontes_resumo_melhorado ?? null, fontes_resumo_original ?? null, fontesArquivosJson,
+        fontesProveniencia ? JSON.stringify(fontesProveniencia) : null],
     );
 
     const noteId = result.rows[0].id;

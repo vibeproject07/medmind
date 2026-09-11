@@ -63,7 +63,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     const result = await query(
       `SELECT ns.id, ns.note_id, ns.user_id, ns.original_name, ns.mime_type, ns.size_bytes,
               ns.category, ns.status, ns.processing_status, ns.processing_original_text,
-              ns.processing_result, ns.processing_error, ns.processing_attempts,
+              ns.processing_result, ns.processing_provenance, ns.processing_error, ns.processing_attempts,
               ns.processing_started_at, ns.processing_completed_at, ns.created_at, ns.updated_at,
               r.cleaned_transcription, r.cleaned_extraction_text
        FROM note_sources ns

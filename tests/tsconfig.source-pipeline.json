@@ -1,0 +1,22 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2022",
+    "outDir": "/tmp/medmind-source-pipeline-tests",
+    "noEmit": false,
+    "incremental": false,
+    "skipLibCheck": true
+  },
+  "include": [
+    "source-content-pipeline.test.ts",
+    "../lib/broad-file-extraction.ts",
+    "../lib/persisted-source-pipeline.ts",
+    "../lib/youtube-source-processing.ts",
+    "../lib/note-source-provenance.ts",
+    "../lib/source-content-pipeline.ts",
+    "../lib/spacy-tokenizer.ts"
+  ],
+  "exclude": []
+}

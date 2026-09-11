@@ -11,7 +11,8 @@ export function ensureNoteMetadataSchema(): Promise<void> {
     metadataSchemaPromise = query(`
       ALTER TABLE notes
         ADD COLUMN IF NOT EXISTS tipo_conteudo TEXT,
-        ADD COLUMN IF NOT EXISTS "link_S3" TEXT
+        ADD COLUMN IF NOT EXISTS "link_S3" TEXT,
+        ADD COLUMN IF NOT EXISTS fontes_proveniencia JSONB
     `)
       .then(() => undefined)
       .catch((error) => {

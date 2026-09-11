@@ -9,6 +9,10 @@ import {
   transcribeWithProgress,
 } from '@/lib/groq-transcription-client';
 import {
+  provenanceFromSourceResult,
+  type NoteSourceProvenance,
+} from '@/lib/note-source-provenance';
+import {
   ArrowLeft, X, Image as ImageIcon,
   FileText, Film, Music,
   Link as LinkIcon, Loader2,
@@ -119,13 +123,20 @@ async function runSourceTransformation(
   link: string,
   token: string,
   onStatus: (msg: string) => void,
-): Promise<{ melhorado: string; original: string; fileNames: string[]; processingRunIds: string[] }> {
+): Promise<{
+  melhorado: string;
+  original: string;
+  fileNames: string[];
+  processingRunIds: string[];
+  provenance?: NoteSourceProvenance;
+}> {
   const isAudioVideo = files.some((f) => f.type.startsWith('audio/') || f.type.startsWith('video/'));
   const hasLink      = link.trim().length > 0;
   const isYouTube    = hasLink && (link.includes('youtube.com/watch') || link.includes('youtu.be/'));
   let original  = '';
   let melhorado = '';
   const processingRunIds: string[] = [];
+  let provenance: NoteSourceProvenance | undefined;
 
   if (isAudioVideo) {
     // ── Transcribe audio/video ──────────────────────────────────────────
@@ -137,8 +148,12 @@ async function runSourceTransformation(
       onStatus(describeTranscriptionProgress(progress));
     });
     if (data.processing_run_id) processingRunIds.push(data.processing_run_id);
-    original = data.text || '';
+    original = data.rawText || data.text || '';
     melhorado = original;
+    provenance = provenanceFromSourceResult(
+      { ...data, sourceType: data.videoConvertedToAudio ? 'video' : 'audio' },
+      files[0]?.name,
+    );
 
     if (original.trim()) {
       onStatus('Melhorando com IA…');
@@ -157,10 +172,23 @@ async function runSourceTransformation(
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
       body: JSON.stringify({ url: link.trim() }),
     });
-    const data: { text?: string; error?: string } = await res.json().catch(() => ({}));
+    const data: {
+      text?: string;
+      rawText?: string;
+      tokenization?: Parameters<typeof provenanceFromSourceResult>[0]['tokenization'];
+      chunking?: Parameters<typeof provenanceFromSourceResult>[0]['chunking'];
+      tokenization_error?: string;
+      chunking_error?: string;
+      error?: string;
+    } =
+      await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(data.error || 'Erro ao processar vídeo do YouTube.');
-    original = data.text || '';
+    original = data.rawText || data.text || '';
     melhorado = original;
+    provenance = provenanceFromSourceResult(
+      { ...data, sourceType: 'video' },
+      link.trim(),
+    );
 
     if (original.trim()) {
       onStatus('Melhorando com IA…');
@@ -178,8 +206,9 @@ async function runSourceTransformation(
       onStatus(describeTranscriptionProgress(progress));
     });
     if (data.processing_run_id) processingRunIds.push(data.processing_run_id);
-    original = data.originalText || data.text || '';
-    melhorado = data.text || '';
+    original = data.originalText || data.rawText || data.text || '';
+    melhorado = data.transformedText || data.text || '';
+    provenance = provenanceFromSourceResult(data, link.trim());
 
     if (
       original.trim() &&
@@ -214,7 +243,13 @@ async function runSourceTransformation(
       headers: { Authorization: `Bearer ${token}` },
       body: fd,
     });
-    const data: { originalText?: string; text?: string; processing_run_id?: string; error?: string | { message?: string } } =
+    const data: {
+      originalText?: string;
+      transformedText?: string;
+      text?: string;
+      processing_run_id?: string;
+      error?: string | { message?: string };
+    } =
       await res.json().catch(() => ({}));
     if (!res.ok) {
       const msg =
@@ -224,13 +259,13 @@ async function runSourceTransformation(
       throw new Error(msg);
     }
     original  = data.originalText || data.text || '';
-    melhorado = data.text || original;
+    melhorado = data.transformedText || data.text || original;
     if (data.processing_run_id) processingRunIds.push(data.processing_run_id);
   }
 
   const fileNames =
     files.length > 0 ? files.map((f) => f.name) : link.trim() ? [link.trim()] : [];
-  return { melhorado, original, fileNames, processingRunIds };
+  return { melhorado, original, fileNames, processingRunIds, provenance };
 }
 type SaveReminderAction = { type: 'leave' } | { type: 'step1' } | { type: 'openEstudio' };
 
@@ -340,6 +375,7 @@ function NewNotePageContent() {
     assuntos: [] as string[],
   });
   const [resumoAulas, setResumoAulas] = useState({ melhorado: '', original: '' });
+  const [sourceProvenance, setSourceProvenance] = useState<NoteSourceProvenance | null>(null);
   const [fontesArquivosNames, setFontesArquivosNames] = useState<string[]>([]);
   const [pendingSourceFiles, setPendingSourceFiles] = useState<File[]>([]);
   const [processingRunIds, setProcessingRunIds] = useState<string[]>([]);
@@ -499,6 +535,7 @@ function NewNotePageContent() {
     try {
       const result = await runSourceTransformation(files, link, token, setProcessingStatus);
       setResumoAulas({ melhorado: result.melhorado, original: result.original });
+      setSourceProvenance(result.provenance ?? null);
       setProcessingRunIds(result.processingRunIds);
       setFontesArquivosNames(result.fileNames);
       setPendingSourceFiles(files);
@@ -597,6 +634,9 @@ function NewNotePageContent() {
           assuntos: formData.assuntos,
           fontes_resumo_melhorado: resumoAulas.melhorado || undefined,
           fontes_resumo_original: resumoAulas.original || undefined,
+          fontes_proveniencia: pendingSourceFiles.length === 0
+            ? sourceProvenance ?? undefined
+            : undefined,
           // New files are persisted in note_sources after the note exists. Keep this
           // legacy field only for a non-file source such as an external link.
           fontes_arquivos: pendingSourceFiles.length === 0 && fontesArquivosNames.length > 0

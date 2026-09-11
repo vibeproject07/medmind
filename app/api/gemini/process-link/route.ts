@@ -10,12 +10,13 @@ import {
   type GroqProgressCallback,
   type GroqTranscriptionProgress,
 } from '@/lib/groq-stt';
-import {
-  summarizeTokenization,
-  type SpacyTokenizationSummary,
-} from '@/lib/spacy-tokenizer';
-import { chunkTokenizedText, type ChunkingResult } from '@/lib/chunking-agent';
+import type { SpacyTokenizationSummary } from '@/lib/spacy-tokenizer';
+import type { ChunkingResult } from '@/lib/chunking-agent';
 import { persistProcessingPipeline } from '@/lib/content-processing-storage';
+import {
+  canonicalTranscriptionText,
+  processExtractedSource,
+} from '@/lib/source-content-pipeline';
 
 export const runtime = 'nodejs';
 
@@ -78,9 +79,12 @@ type LinkResult = {
   words?: unknown[];
   duration?: number;
   partCount?: number;
-  tokenization: SpacyTokenizationSummary;
+  tokenization?: SpacyTokenizationSummary;
   chunking?: ChunkingResult;
-  processing_run_id: string;
+  tokenization_error?: string;
+  chunking_error?: string;
+  processing_error?: string;
+  processing_run_id?: string;
 };
 
 async function processLink(
@@ -99,39 +103,46 @@ async function processLink(
       mimeType,
       onProgress,
     );
-    const canonicalText =
-      result.segments
-        .map((segment) => segment.text.trim())
-        .filter(Boolean)
-        .join('\n\n') || result.rawText || result.text;
-    const { tokenization, chunking } = await chunkTokenizedText({
+    const canonicalText = canonicalTranscriptionText(result);
+    const processing = await processExtractedSource({
       text: canonicalText,
       sourceType: result.videoConvertedToAudio ? 'video' : 'audio',
       segments: result.segments,
-      contentFormat: 'plain',
     });
-    const processingRunId = await persistProcessingPipeline({
-      userId,
-      sourceType: result.videoConvertedToAudio ? 'video' : 'audio',
-      sourceName: downloaded.filename,
-      extractionText: canonicalText,
-      processedText: canonicalText,
-      extractionMetadata: {
-        url,
-        originalSize: result.originalSize,
-        extractedSize: result.extractedSize,
-        duration: result.duration,
-        partCount: result.partCount,
-      },
-      tokenization,
-      chunking,
-    });
+    let processingRunId: string | undefined;
+    let processingError: string | undefined;
+    if (processing.tokenizationData && processing.chunking) {
+      try {
+        processingRunId = await persistProcessingPipeline({
+          userId,
+          sourceType: result.videoConvertedToAudio ? 'video' : 'audio',
+          sourceName: downloaded.filename,
+          extractionText: canonicalText,
+          processedText: canonicalText,
+          wholeTranscription: canonicalText,
+          cleanedTranscription: canonicalText,
+          transcriptionSegments: result.segments,
+          extractionMetadata: {
+            url,
+            originalSize: result.originalSize,
+            extractedSize: result.extractedSize,
+            duration: result.duration,
+            partCount: result.partCount,
+          },
+          tokenization: processing.tokenizationData,
+          chunking: processing.chunking,
+        });
+      } catch (error) {
+        processingError = error instanceof Error ? error.message : 'Falha ao persistir análise.';
+      }
+    }
+    const { tokenizationData: _tokenizationData, ...publicProcessing } = processing;
     return {
       ...result,
       rawText: canonicalText,
-      tokenization: summarizeTokenization(tokenization),
-      chunking,
-      processing_run_id: processingRunId,
+      ...publicProcessing,
+      ...(processingRunId ? { processing_run_id: processingRunId } : {}),
+      ...(processingError ? { processing_error: processingError } : {}),
       sourceType: result.videoConvertedToAudio ? 'video' : 'audio',
       filename: downloaded.filename,
     };
@@ -149,22 +160,33 @@ async function processLink(
     message: 'Enviando o arquivo do link para o agente de extração abrangente.',
   });
   const result = await processWithBroadFileExtraction(downloaded.buffer, mimeType);
-  const processingRunId = await persistProcessingPipeline({
-    userId,
-    sourceType: mimeType.startsWith('image/') ? 'image' : 'document',
-    sourceName: downloaded.filename,
-    extractionText: result.originalText ?? result.text,
-    processedText: result.text,
-    extractionMetadata: { url, mimeType, sizeBytes: downloaded.buffer.length },
-    tokenization: result.tokenizationData,
-    chunking: result.chunking,
-  });
+  let processingRunId: string | undefined;
+  let processingError: string | undefined;
+  if (result.tokenizationData && result.chunking) {
+    try {
+      processingRunId = await persistProcessingPipeline({
+        userId,
+        sourceType: mimeType.startsWith('image/') ? 'image' : 'document',
+        sourceName: downloaded.filename,
+        extractionText: result.originalText ?? result.text,
+        processedText: result.transformedText ?? result.text,
+        wholeExtractionText: result.wholeExtractionText,
+        cleanedExtractionText: result.text,
+        extractionMetadata: { url, mimeType, sizeBytes: downloaded.buffer.length },
+        tokenization: result.tokenizationData,
+        chunking: result.chunking,
+      });
+    } catch (error) {
+      processingError = error instanceof Error ? error.message : 'Falha ao persistir análise.';
+    }
+  }
   const { tokenizationData: _tokenizationData, ...publicResult } = result;
   return {
     ...publicResult,
     sourceType: mimeType.startsWith('image/') ? 'image' : 'document',
     filename: downloaded.filename,
-    processing_run_id: processingRunId,
+    ...(processingRunId ? { processing_run_id: processingRunId } : {}),
+    ...(processingError ? { processing_error: processingError } : {}),
   };
 }
 

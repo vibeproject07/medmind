@@ -44,6 +44,7 @@ export type NoteSource = {
   processing_status: 'idle' | 'queued' | 'processing' | 'completed' | 'failed';
   processing_original_text?: string | null;
   processing_result?: string | null;
+  processing_provenance?: Record<string, unknown> | null;
   processing_error?: string | null;
   processing_attempts: number;
   processing_started_at?: string | null;

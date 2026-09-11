@@ -87,6 +87,7 @@ export async function POST(
            processing_stage = 'queued',
            processing_original_text = NULL,
            processing_result = NULL,
+           processing_provenance = NULL,
            processing_error = NULL,
            processing_completed_at = NULL,
            processing_claim_id = NULL,

@@ -41,6 +41,8 @@ export type SpacyChunkingSentence = Pick<
   | 'text'
   | 'start_char'
   | 'end_char'
+  | 'token_start'
+  | 'token_end'
   | 'token_count'
   | 'start_time'
   | 'end_time'
@@ -104,7 +106,7 @@ export type SpacyTokenizationSummary = Pick<
   | 'sentence_total'
   | 'pagination'
   | 'warnings'
-> & { sentences_in_text_order: SpacySentence[] };
+> & { sentences_in_text_order: SpacyChunkingSentence[] };
 
 export interface TokenizeTextInput {
   text: string;
@@ -189,6 +191,7 @@ export async function tokenizeText({
 export function summarizeTokenization(
   result: SpacyTokenizationResult,
 ): SpacyTokenizationSummary {
+  const pagedSentences = result.sentences || result.sentences_in_text_order || [];
   return {
     schema_version: result.schema_version,
     pipeline: result.pipeline,
@@ -202,8 +205,7 @@ export function summarizeTokenization(
     spacy_token_total: result.spacy_token_total,
     token_total: result.token_total,
     sentence_total: result.sentence_total,
-    sentences_in_text_order:
-      result.sentences || result.sentences_in_text_order || [],
+    sentences_in_text_order: result.chunking_sentences || pagedSentences,
     pagination: result.pagination,
     warnings: result.warnings,
   };

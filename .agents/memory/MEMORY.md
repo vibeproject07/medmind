@@ -7,3 +7,4 @@
 - [S3 source upload CORS](s3-source-upload-cors.md) — Preserve regras do bucket e mantenha origens do app na regra `MedMindSourceUploads`.
 - [Durable source jobs](durable-source-jobs.md) — Checkpoint e claim devem ser atômicos; todo write assíncrono precisa de fencing e lease renovável.
 - [Read-only diagnostics](read-only-diagnostics.md) — Rotas de validação não devem chamar inicializadores que executam DDL ou backfills.
+- [Source text preservation](source-text-preservation.md) — Raw extracted text is canonical; transformations, segments, tokenization, and chunking must remain separate.

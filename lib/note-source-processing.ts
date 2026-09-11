@@ -19,6 +19,10 @@ import {
   persistProcessingPipeline,
   processNextQueuedVectorization,
 } from '@/lib/content-processing-storage';
+import {
+  preparePersistedSource,
+  preparePersistedTranscription,
+} from '@/lib/persisted-source-pipeline';
 
 const MAX_DOCUMENT_PROCESS_BYTES = 30 * 1024 * 1024;
 const MAX_TEXT_PROCESS_BYTES = 5 * 1024 * 1024;
@@ -61,7 +65,7 @@ function userSafeError(error: unknown): string {
 }
 
 type ProcessedSourceOutput = {
-  originalText?: string;
+  originalText: string;
   result: string;
   pipelineText: string;
   wholeTranscription?: string;
@@ -75,8 +79,9 @@ type ProcessedSourceOutput = {
   }>;
   wholeExtractionText?: string;
   cleanedExtractionText?: string;
-  tokenization: SpacyTokenizationResult;
-  chunking: ChunkingResult;
+  tokenization?: SpacyTokenizationResult;
+  chunking?: ChunkingResult;
+  provenance: Record<string, unknown>;
   extractionMetadata?: Record<string, unknown>;
 };
 
@@ -99,22 +104,22 @@ async function processSource(source: ProcessingSource): Promise<ProcessedSourceO
     if (source.category === 'audio' || source.category === 'video') {
       if (!process.env.GROQ_API_KEY) throw new Error('Serviço de transcrição não configurado.');
       const transcription = await transcribeMediaPath(downloaded.path, source.original_name, mimeType);
-      const wholeTranscription = formatSegments(transcription.segments, transcription.rawText);
-      const cleanedTranscription = cleanTranscriptionAgentOutput(wholeTranscription);
-      const pipeline = await chunkTokenizedText({
-        text: cleanedTranscription,
-        sourceType: transcription.videoConvertedToAudio ? 'video' : 'audio',
-        segments: transcription.segments,
-        contentFormat: 'plain',
+      const sourceType = transcription.videoConvertedToAudio ? 'video' : 'audio';
+      const prepared = await preparePersistedTranscription({
+        transcription,
+        sourceType,
       });
+      const { tokenizationData, ...provenance } = prepared.provenance;
       return {
-        originalText: cleanedTranscription,
-        result: '',
-        pipelineText: cleanedTranscription,
-        wholeTranscription,
-        cleanedTranscription,
+        originalText: prepared.originalText,
+        result: prepared.result,
+        pipelineText: prepared.originalText,
+        wholeTranscription: transcription.rawText || transcription.text,
+        cleanedTranscription: prepared.originalText,
         transcriptionSegments: transcription.segments,
-        ...pipeline,
+        tokenization: tokenizationData,
+        chunking: prepared.provenance.chunking,
+        provenance,
         extractionMetadata: {
           originalSize: transcription.originalSize,
           extractedSize: transcription.extractedSize,
@@ -128,31 +133,50 @@ async function processSource(source: ProcessingSource): Promise<ProcessedSourceO
     const buffer = await import('node:fs/promises').then((fs) => fs.readFile(downloaded.path));
     if (source.category === 'text') {
       const originalText = buffer.toString('utf8');
-      const { cleanedText } = cleanExtractionAgentOutput(originalText);
-      const pipeline = await chunkTokenizedText({
-        text: cleanedText,
+      const prepared = await preparePersistedSource({
+        originalText,
         sourceType: 'text',
-        contentFormat: 'plain',
+        transform: async (text) => cleanExtractionAgentOutput(text).cleanedText,
       });
+      const { tokenizationData, ...provenance } = prepared.provenance;
       return {
         originalText,
-        result: cleanedText,
-        pipelineText: cleanedText,
+        result: prepared.result,
+        pipelineText: originalText,
         wholeExtractionText: originalText,
-        cleanedExtractionText: cleanedText,
-        ...pipeline,
+        cleanedExtractionText: prepared.result,
+        tokenization: tokenizationData,
+        chunking: prepared.provenance.chunking,
+        provenance,
       };
     }
 
     const broad = await processWithBroadFileExtraction(buffer, mimeType);
+    const {
+      tokenizationData,
+      tokenization,
+      chunking,
+      tokenization_error,
+      chunking_error,
+      transformation_error,
+    } = broad;
     return {
-      originalText: broad.originalText,
-      result: broad.text,
+      originalText: broad.originalText ?? broad.text,
+      result: broad.transformedText ?? broad.text,
       pipelineText: broad.text,
       wholeExtractionText: broad.wholeExtractionText,
       cleanedExtractionText: broad.text,
-      tokenization: broad.tokenizationData,
-      chunking: broad.chunking,
+      tokenization: tokenizationData,
+      chunking,
+      provenance: {
+        sourceType: source.category,
+        segments: [],
+        ...(tokenization ? { tokenization } : {}),
+        ...(chunking ? { chunking } : {}),
+        ...(tokenization_error ? { tokenization_error } : {}),
+        ...(chunking_error ? { chunking_error } : {}),
+        ...(transformation_error ? { transformation_error } : {}),
+      },
       extractionMetadata: {
         mimeType,
         sizeBytes: buffer.length,
@@ -267,6 +291,33 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
     if (heartbeatFailed || stageUpdate.rowCount === 0) {
       throw new Error('O lease do processamento foi perdido; o job será retomado.');
     }
+    if (!output.tokenization || !output.chunking) {
+      const completed = await query(
+        `UPDATE note_sources
+         SET processing_status = 'completed',
+             processing_stage = 'completed',
+             processing_original_text = $1,
+             processing_result = $2,
+             processing_provenance = $3,
+             processing_error = NULL,
+             processing_completed_at = NOW(),
+             processing_claim_id = NULL,
+             processing_lease_expires_at = NULL,
+             updated_at = NOW()
+         WHERE id = $4 AND processing_claim_id = $5`,
+        [
+          output.originalText,
+          output.result,
+          JSON.stringify(output.provenance),
+          source.id,
+          source.processing_claim_id,
+        ],
+      );
+      if (completed.rowCount !== 1) {
+        throw new Error('O lease do processamento foi perdido antes do checkpoint.');
+      }
+      return;
+    }
     await persistProcessingPipeline({
       runId: source.processing_run_id,
       userId: source.user_id,
@@ -294,6 +345,7 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
         claimId: source.processing_claim_id,
         originalText: output.originalText ?? null,
         result: output.result,
+        provenance: output.provenance,
       },
     });
   } catch (error) {

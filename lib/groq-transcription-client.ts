@@ -1,4 +1,5 @@
 import type { SpacyTokenizationSummary } from '@/lib/spacy-tokenizer';
+import type { ChunkingResult } from '@/lib/chunking-agent';
 
 export interface TranscriptionProgress {
   stage: 'preparing' | 'extracting' | 'splitting' | 'transcribing';
@@ -12,43 +13,82 @@ export interface TranscriptionProgress {
 
 export interface TranscriptionApiResult {
   text: string;
+
   rawText: string;
+
   segments: Array<{
     id: number;
     start: number;
     end: number;
     text: string;
     part: number;
+
   }>;
+
   language?: string;
+
   duration: number;
+
   partCount: number;
+
   originalSize: number;
+
   extractedSize: number;
+
   videoConvertedToAudio: boolean;
-  tokenization: SpacyTokenizationSummary;
+
+  tokenization?: SpacyTokenizationSummary;
+
   processing_run_id: string;
+
+  chunking?: ChunkingResult;
+
+  tokenization_error?: string;
+
+  chunking_error?: string;
 }
 
 export interface LinkProcessingResult {
   text: string;
+
   originalText?: string;
+
   sourceType: 'audio' | 'video' | 'document' | 'image';
+
   filename: string;
+
   originalSize?: number;
+
   extractedSize?: number;
+
   videoConvertedToAudio?: boolean;
+
   segments?: Array<{
     id: number;
     start: number;
     end: number;
     text: string;
     part: number;
+
   }>;
+
   duration?: number;
+
   partCount?: number;
-  tokenization: SpacyTokenizationSummary;
+
+  tokenization?: SpacyTokenizationSummary;
+
   processing_run_id: string;
+
+  rawText?: string;
+
+  transformedText?: string;
+
+  chunking?: ChunkingResult;
+
+  tokenization_error?: string;
+
+  chunking_error?: string;
 }
 
 interface StreamEvent {

@@ -30,6 +30,7 @@ export type NoteSource = {
   processing_status: SourceProcessingStatus;
   processing_original_text?: string | null;
   processing_result?: string | null;
+  processing_provenance?: Record<string, unknown> | null;
   processing_error?: string | null;
   processing_attempts: number;
   processing_started_at?: string | null;
@@ -107,6 +108,7 @@ export async function ensureNoteSourcesSchema(): Promise<void> {
        processing_status TEXT NOT NULL DEFAULT 'idle' CHECK (processing_status IN ('idle', 'queued', 'processing', 'completed', 'failed')),
        processing_original_text TEXT,
        processing_result TEXT,
+       processing_provenance JSONB,
        processing_error TEXT,
        processing_attempts INTEGER NOT NULL DEFAULT 0,
        processing_started_at TIMESTAMPTZ,
@@ -124,6 +126,7 @@ export async function ensureNoteSourcesSchema(): Promise<void> {
   await query(`ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_status TEXT NOT NULL DEFAULT 'idle'`);
   await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_original_text TEXT');
   await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_result TEXT');
+  await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_provenance JSONB');
   await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_error TEXT');
   await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_attempts INTEGER NOT NULL DEFAULT 0');
   await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_started_at TIMESTAMPTZ');

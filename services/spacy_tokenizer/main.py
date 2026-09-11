@@ -439,6 +439,8 @@ def project_result(
                 "text": sentence["text"],
                 "start_char": sentence["start_char"],
                 "end_char": sentence["end_char"],
+                "token_start": sentence["token_start"],
+                "token_end": sentence["token_end"],
                 "token_count": sentence["token_count"],
                 "start_time": sentence["start_time"],
                 "end_time": sentence["end_time"],

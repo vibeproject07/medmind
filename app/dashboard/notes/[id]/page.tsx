@@ -44,6 +44,7 @@ interface Note {
   fontes_resumo_melhorado?: string | null;
   fontes_resumo_original?: string | null;
   fontes_arquivos?: string[];
+  fontes_proveniencia?: Record<string, unknown> | null;
   created_at: string;
   updated_at: string;
   user_id?: number;

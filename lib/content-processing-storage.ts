@@ -338,6 +338,7 @@ export async function persistProcessingPipeline(
       claimId: string;
       originalText: string | null;
       result: string;
+      provenance?: Record<string, unknown>;
     };
   } = {},
 ): Promise<string> {
@@ -413,14 +414,22 @@ export async function persistProcessingPipeline(
              processing_stage = 'awaiting_vectorization',
              processing_original_text = $1,
              processing_result = $2,
+             processing_provenance = $3,
              processing_error = NULL,
              processing_completed_at = NULL,
              processing_claim_id = NULL,
              processing_lease_expires_at = NULL,
              processing_last_heartbeat_at = NOW(),
              updated_at = NOW()
-         WHERE id = $3 AND processing_claim_id = $4 AND processing_run_id = $5`,
-        [checkpoint.originalText, checkpoint.result, checkpoint.sourceId, checkpoint.claimId, runId],
+         WHERE id = $4 AND processing_claim_id = $5 AND processing_run_id = $6`,
+        [
+          checkpoint.originalText,
+          checkpoint.result,
+          checkpoint.provenance ? JSON.stringify(checkpoint.provenance) : null,
+          checkpoint.sourceId,
+          checkpoint.claimId,
+          runId,
+        ],
       );
       if (updated.rowCount !== 1) {
         throw new Error('O lease do processamento foi perdido antes do checkpoint; a transação foi cancelada.');

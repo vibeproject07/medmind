@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from '@/lib/jwt';
-import { geminiProcessYouTube } from '@/lib/gemini';
+import { processYouTubeSource } from '@/lib/youtube-source-processing';
 
 export const runtime = 'nodejs';
 
@@ -66,9 +66,7 @@ export async function POST(request: NextRequest) {
     }
 
     const normalizedUrl = normalizeYouTubeUrl(url);
-    const result = await geminiProcessYouTube({ url: normalizedUrl, agentKey: 'youtube_transcript' });
-
-    return NextResponse.json({ text: result });
+    return NextResponse.json(await processYouTubeSource(normalizedUrl));
   } catch (error: unknown) {
     let message = 'Erro ao transcrever o vídeo do YouTube.';
     if (error instanceof Error) {

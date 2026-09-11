@@ -9,12 +9,13 @@ import {
   type GroqTranscriptionResult,
 } from '@/lib/groq-stt';
 import { verifyToken } from '@/lib/jwt';
-import {
-  summarizeTokenization,
-  type SpacyTokenizationSummary,
-} from '@/lib/spacy-tokenizer';
-import { chunkTokenizedText, type ChunkingResult } from '@/lib/chunking-agent';
+import type { SpacyTokenizationSummary } from '@/lib/spacy-tokenizer';
+import type { ChunkingResult } from '@/lib/chunking-agent';
 import { persistProcessingPipeline } from '@/lib/content-processing-storage';
+import {
+  canonicalTranscriptionText,
+  processExtractedSource,
+} from '@/lib/source-content-pipeline';
 
 export const runtime = 'nodejs';
 
@@ -30,9 +31,12 @@ export interface GroqTranscriptionApiResult extends GroqTranscriptionResult {
   originalSize: number;
   extractedSize: number;
   videoConvertedToAudio: boolean;
-  tokenization: SpacyTokenizationSummary;
-  chunking: ChunkingResult;
-  processing_run_id: string;
+  tokenization?: SpacyTokenizationSummary;
+  chunking?: ChunkingResult;
+  tokenization_error?: string;
+  chunking_error?: string;
+  processing_error?: string;
+  processing_run_id?: string;
 }
 
 async function parseRequestMedia(
@@ -118,39 +122,46 @@ async function transcribePreparedMedia(
     media.mimeType,
     onProgress,
   );
-  const canonicalText =
-    result.segments
-      .map((segment) => segment.text.trim())
-      .filter(Boolean)
-      .join('\n\n') || result.rawText || result.text;
-  const { tokenization, chunking } = await chunkTokenizedText({
+  const canonicalText = canonicalTranscriptionText(result);
+  const processing = await processExtractedSource({
     text: canonicalText,
     sourceType: result.videoConvertedToAudio ? 'video' : 'audio',
     segments: result.segments,
-    contentFormat: 'plain',
   });
-  const processingRunId = await persistProcessingPipeline({
-    userId,
-    sourceType: result.videoConvertedToAudio ? 'video' : 'audio',
-    sourceName: media.filename,
-    extractionText: canonicalText,
-    processedText: canonicalText,
-    extractionMetadata: {
-      originalSize: result.originalSize,
-      extractedSize: result.extractedSize,
-      duration: result.duration,
-      partCount: result.partCount,
-      videoConvertedToAudio: result.videoConvertedToAudio,
-    },
-    tokenization,
-    chunking,
-  });
+  let processingRunId: string | undefined;
+  let processingError: string | undefined;
+  if (processing.tokenizationData && processing.chunking) {
+    try {
+      processingRunId = await persistProcessingPipeline({
+        userId,
+        sourceType: result.videoConvertedToAudio ? 'video' : 'audio',
+        sourceName: media.filename,
+        extractionText: canonicalText,
+        processedText: canonicalText,
+        wholeTranscription: canonicalText,
+        cleanedTranscription: canonicalText,
+        transcriptionSegments: result.segments,
+        extractionMetadata: {
+          originalSize: result.originalSize,
+          extractedSize: result.extractedSize,
+          duration: result.duration,
+          partCount: result.partCount,
+          videoConvertedToAudio: result.videoConvertedToAudio,
+        },
+        tokenization: processing.tokenizationData,
+        chunking: processing.chunking,
+      });
+    } catch (error) {
+      processingError = error instanceof Error ? error.message : 'Falha ao persistir análise.';
+    }
+  }
+  const { tokenizationData: _tokenizationData, ...publicProcessing } = processing;
   return {
     ...result,
     rawText: canonicalText,
-    tokenization: summarizeTokenization(tokenization),
-    chunking,
-    processing_run_id: processingRunId,
+    ...publicProcessing,
+    ...(processingRunId ? { processing_run_id: processingRunId } : {}),
+    ...(processingError ? { processing_error: processingError } : {}),
   };
 }
 
