@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import {
   ArrowLeft, Edit, HelpCircle, BookOpen, Sparkles,
@@ -100,6 +100,19 @@ export default function NoteDetailPage() {
   const [availableTags, setAvailableTags] = useState<string[]>(AVAILABLE_TAGS);
   const [questionsCount, setQuestionsCount] = useState<number>(0);
   const [hasPrimaryMedia, setHasPrimaryMedia] = useState<boolean | null>(null);
+  const [sourceTokenizationInput, setSourceTokenizationInput] = useState<{
+    content: string;
+    sourceType: 'document' | 'text' | 'image' | 'audio' | 'video';
+  } | null>(null);
+  const handleTokenizationContentChange = useCallback(
+    (input: {
+      content: string;
+      sourceType: 'document' | 'text' | 'image' | 'audio' | 'video';
+    } | null) => {
+      setSourceTokenizationInput(input);
+    },
+    [],
+  );
 
   type SimilarNote = {
     id: number; title: string; description: string; tags: string[]; areas_conhecimento: string[];
@@ -618,6 +631,7 @@ export default function NoteDetailPage() {
                 canEdit={canEdit}
                 fallbackContent={note.description}
                 onPrimaryAvailabilityChange={setHasPrimaryMedia}
+                onTokenizationContentChange={handleTokenizationContentChange}
               />
 
               {/* Annotations */}
@@ -679,8 +693,8 @@ export default function NoteDetailPage() {
           {/* spaCy output — restricted to administrators */}
           {isAdmin && !isEditing && (
             <SpacyTokenizationPanel
-              content={note.description || ''}
-              sourceType={note.tipo_conteudo || 'note'}
+              content={sourceTokenizationInput?.content || note.description || ''}
+              sourceType={sourceTokenizationInput?.sourceType || note.tipo_conteudo || 'note'}
               noteId={note.id}
             />
           )}

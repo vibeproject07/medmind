@@ -16,6 +16,7 @@ import {
   X,
 } from 'lucide-react';
 import {
+  getPrimaryReadySource,
   reconcileNoteSourceSelection,
   sortNoteSourcesByCreation,
 } from '@/lib/note-source-selection';
@@ -323,12 +324,16 @@ export default function NoteSourcesPanel({
   compact = false,
   fallbackContent = '',
   onPrimaryAvailabilityChange,
+  onTokenizationContentChange,
 }: {
   noteId: number;
   canEdit: boolean;
   compact?: boolean;
   fallbackContent?: string;
   onPrimaryAvailabilityChange?: (available: boolean) => void;
+  onTokenizationContentChange?: (
+    input: { content: string; sourceType: NoteSource['category'] } | null,
+  ) => void;
 }) {
   const [sources, setSources] = useState<NoteSource[]>([]);
   const [loading, setLoading] = useState(true);
@@ -373,8 +378,9 @@ export default function NoteSourcesPanel({
     selectionRequestRef.current += 1;
     setSources([]);
     onPrimaryAvailabilityChange?.(false);
+    onTokenizationContentChange?.(null);
     void loadSources();
-  }, [loadSources, onPrimaryAvailabilityChange]);
+  }, [loadSources, onPrimaryAvailabilityChange, onTokenizationContentChange]);
 
   useEffect(() => {
     const raw = sessionStorage.getItem('noteSourceRetryNames');
@@ -558,6 +564,25 @@ export default function NoteSourcesPanel({
   useEffect(() => {
     if (!loading) onPrimaryAvailabilityChange?.(sources.some((source) => source.status === 'ready'));
   }, [loading, onPrimaryAvailabilityChange, sources]);
+
+  useEffect(() => {
+    if (loading) return;
+    const processedSources = sources.filter(
+      (source) =>
+        source.status === 'ready' &&
+        source.processing_status === 'completed' &&
+        Boolean((source.cleaned_transcription || source.cleaned_extraction_text || '').trim()),
+    );
+    const primary = getPrimaryReadySource(processedSources);
+    const content = primary
+      ? (primary.cleaned_transcription || primary.cleaned_extraction_text || '').trim()
+      : '';
+    onTokenizationContentChange?.(
+      primary && content
+        ? { content, sourceType: primary.category }
+        : null,
+    );
+  }, [loading, onTokenizationContentChange, sources]);
 
   useEffect(() => {
     if (!sources.some((source) => source.processing_status === 'queued' || source.processing_status === 'processing')) return;
