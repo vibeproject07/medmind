@@ -8,6 +8,7 @@ import {
 import { ensureNoteSourcesSchema } from '@/lib/note-sources';
 import crypto from 'crypto';
 import { processWithBroadFileExtraction } from '@/lib/broad-file-extraction';
+import { BroadExtractionAbortedError } from '@/lib/broad-extraction-batching';
 import { chunkTokenizedText, type ChunkingResult } from '@/lib/chunking-agent';
 import type { SpacyTokenizationResult } from '@/lib/spacy-tokenizer';
 import {
@@ -85,7 +86,10 @@ type ProcessedSourceOutput = {
   extractionMetadata?: Record<string, unknown>;
 };
 
-async function processSource(source: ProcessingSource): Promise<ProcessedSourceOutput> {
+async function processSource(
+  source: ProcessingSource,
+  reportProgress: Parameters<typeof processWithBroadFileExtraction>[3],
+): Promise<ProcessedSourceOutput> {
   const maximum = maxProcessBytes(source);
   if (Number(source.size_bytes) > maximum) {
     throw new Error(
@@ -151,7 +155,7 @@ async function processSource(source: ProcessingSource): Promise<ProcessedSourceO
       };
     }
 
-    const broad = await processWithBroadFileExtraction(buffer, mimeType);
+    const broad = await processWithBroadFileExtraction(buffer, mimeType, undefined, reportProgress);
     const {
       tokenizationData,
       tokenization,
@@ -205,6 +209,11 @@ async function claimNextSourceProcessing(): Promise<ProcessingSource | null> {
      SET processing_status = 'processing',
          processing_stage = 'downloading',
          processing_error = NULL,
+         processing_batch_current = NULL,
+         processing_batch_total = NULL,
+         processing_page_start = NULL,
+         processing_page_end = NULL,
+         processing_retrying_split = NULL,
          processing_started_at = NOW(),
          processing_completed_at = NULL,
          processing_claim_id = $1,
@@ -259,6 +268,11 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
              processing_result = $2,
              processing_claim_id = NULL,
              processing_lease_expires_at = NULL,
+             processing_batch_current = NULL,
+             processing_batch_total = NULL,
+             processing_page_start = NULL,
+             processing_page_end = NULL,
+             processing_retrying_split = NULL,
              processing_last_heartbeat_at = NOW(),
              updated_at = NOW()
          WHERE id = $3 AND processing_claim_id = $4`,
@@ -281,10 +295,44 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
         source.processing_claim_id,
       ],
     );
-    const output = await processSource(source);
+    const output = await processSource(source, async (progress) => {
+      const updated = await query(
+        `UPDATE note_sources
+         SET processing_batch_current = $1,
+             processing_batch_total = $2,
+             processing_page_start = $3,
+             processing_page_end = $4,
+             processing_retrying_split = $5,
+             processing_last_heartbeat_at = NOW(),
+             updated_at = NOW()
+         WHERE id = $6 AND processing_claim_id = $7 AND processing_status = 'processing'`,
+        [
+          progress.currentBatch,
+          progress.totalBatches,
+          progress.pageStart ?? null,
+          progress.pageEnd ?? null,
+          progress.retryingSplit,
+          source.id,
+          source.processing_claim_id,
+        ],
+      );
+      if (updated.rowCount !== 1) {
+        heartbeatFailed = true;
+        throw new BroadExtractionAbortedError(
+          'O lease do processamento foi perdido; o job será retomado.',
+        );
+      }
+    });
     const stageUpdate = await query(
       `UPDATE note_sources
-       SET processing_stage = 'persisting', processing_last_heartbeat_at = NOW(), updated_at = NOW()
+       SET processing_stage = 'persisting',
+            processing_batch_current = NULL,
+            processing_batch_total = NULL,
+            processing_page_start = NULL,
+            processing_page_end = NULL,
+            processing_retrying_split = NULL,
+            processing_last_heartbeat_at = NOW(),
+            updated_at = NOW()
        WHERE id = $1 AND processing_claim_id = $2`,
       [source.id, source.processing_claim_id],
     );
@@ -303,6 +351,11 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
              processing_completed_at = NOW(),
              processing_claim_id = NULL,
              processing_lease_expires_at = NULL,
+              processing_batch_current = NULL,
+              processing_batch_total = NULL,
+              processing_page_start = NULL,
+              processing_page_end = NULL,
+              processing_retrying_split = NULL,
              updated_at = NOW()
          WHERE id = $4 AND processing_claim_id = $5`,
         [
@@ -357,6 +410,11 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
            processing_completed_at = NOW(),
            processing_claim_id = NULL,
            processing_lease_expires_at = NULL,
+            processing_batch_current = NULL,
+            processing_batch_total = NULL,
+            processing_page_start = NULL,
+            processing_page_end = NULL,
+            processing_retrying_split = NULL,
            updated_at = NOW()
        WHERE id = $2 AND processing_claim_id = $3`,
       [userSafeError(error), source.id, source.processing_claim_id],
@@ -429,6 +487,11 @@ export async function recoverStalledSourceProcessing(): Promise<void> {
          processing_error = 'O processamento anterior foi interrompido e será retomado.',
          processing_claim_id = NULL,
          processing_lease_expires_at = NULL,
+         processing_batch_current = NULL,
+         processing_batch_total = NULL,
+         processing_page_start = NULL,
+         processing_page_end = NULL,
+         processing_retrying_split = NULL,
          updated_at = NOW()
      WHERE status = 'ready'
        AND processing_status = 'processing'

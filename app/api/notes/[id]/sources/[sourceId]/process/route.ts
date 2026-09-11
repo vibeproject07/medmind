@@ -60,7 +60,10 @@ export async function POST(
          )
          UPDATE note_sources
          SET processing_status = 'processing', processing_stage = 'awaiting_vectorization',
-             processing_error = NULL, processing_completed_at = NULL, updated_at = NOW()
+              processing_error = NULL, processing_completed_at = NULL,
+              processing_batch_current = NULL, processing_batch_total = NULL,
+              processing_page_start = NULL, processing_page_end = NULL,
+              processing_retrying_split = NULL, updated_at = NOW()
          WHERE id = $2 AND note_id = $3
            AND processing_run_id IN (SELECT id FROM reset_run)
          RETURNING *`,
@@ -93,6 +96,11 @@ export async function POST(
            processing_claim_id = NULL,
            processing_lease_expires_at = NULL,
            processing_run_id = NULL,
+            processing_batch_current = NULL,
+            processing_batch_total = NULL,
+            processing_page_start = NULL,
+            processing_page_end = NULL,
+            processing_retrying_split = NULL,
            processing_last_heartbeat_at = NOW(),
            updated_at = NOW()
        WHERE id = $1 AND note_id = $2

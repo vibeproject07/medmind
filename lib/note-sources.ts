@@ -38,6 +38,11 @@ export type NoteSource = {
   processing_stage?: string | null;
   processing_run_id?: string | null;
   processing_last_heartbeat_at?: string | null;
+  processing_batch_current?: number | null;
+  processing_batch_total?: number | null;
+  processing_page_start?: number | null;
+  processing_page_end?: number | null;
+  processing_retrying_split?: boolean | null;
   cleaned_transcription?: string | null;
   cleaned_extraction_text?: string | null;
   created_at: string;
@@ -118,6 +123,11 @@ export async function ensureNoteSourcesSchema(): Promise<void> {
        processing_stage TEXT NOT NULL DEFAULT 'idle',
        processing_run_id TEXT,
        processing_last_heartbeat_at TIMESTAMPTZ,
+        processing_batch_current INTEGER,
+        processing_batch_total INTEGER,
+        processing_page_start INTEGER,
+        processing_page_end INTEGER,
+        processing_retrying_split BOOLEAN,
       created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
     )
@@ -136,6 +146,11 @@ export async function ensureNoteSourcesSchema(): Promise<void> {
   await query(`ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_stage TEXT NOT NULL DEFAULT 'idle'`);
   await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_run_id TEXT');
   await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_last_heartbeat_at TIMESTAMPTZ');
+  await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_batch_current INTEGER');
+  await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_batch_total INTEGER');
+  await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_page_start INTEGER');
+  await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_page_end INTEGER');
+  await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_retrying_split BOOLEAN');
   await query(`
     UPDATE note_sources
     SET processing_stage = CASE processing_status

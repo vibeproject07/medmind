@@ -19,6 +19,13 @@ function documentJson(unitNumbers: number[]): string {
 
 test('subdivide páginas após MAX_TOKENS e preserva todas as unidades', async () => {
   const calls: number[][] = [];
+  const progress: Array<{
+    currentBatch: number;
+    totalBatches: number;
+    pageStart?: number;
+    pageEnd?: number;
+    retryingSplit: boolean;
+  }> = [];
   const documents = await broadExtractionBatchTestUtils.generateWithRecursiveSplit(
     [1, 2, 3, 4],
     async (pages) => {
@@ -28,11 +35,28 @@ test('subdivide páginas após MAX_TOKENS e preserva todas as unidades', async (
       }
       return documentJson(pages);
     },
+    1,
+    {
+      tracker: {
+        completed: 0,
+        total: 1,
+        report: (value) => { progress.push(value); },
+      },
+      pageRange: (pages) => ({
+        pageStart: pages[0],
+        pageEnd: pages[pages.length - 1],
+      }),
+    },
   );
 
   assert.deepEqual(calls, [[1, 2, 3, 4], [1, 2], [3, 4]]);
   const merged = broadExtractionBatchTestUtils.mergeDocuments(documents, false);
   assert.deepEqual(merged.unidades.map((unit) => unit.unidade), [1, 2, 3, 4]);
+  assert.deepEqual(progress, [
+    { currentBatch: 1, totalBatches: 1, pageStart: 1, pageEnd: 4, retryingSplit: false },
+    { currentBatch: 1, totalBatches: 2, pageStart: 1, pageEnd: 2, retryingSplit: true },
+    { currentBatch: 2, totalBatches: 2, pageStart: 3, pageEnd: 4, retryingSplit: true },
+  ]);
 });
 
 test('subdivide texto quando um lote retorna JSON incompleto', async () => {
@@ -49,6 +73,38 @@ test('subdivide texto quando um lote retorna JSON incompleto', async () => {
 
   assert.deepEqual(calls, [5_000, 2_500, 2_500]);
   assert.equal(documents.length, 2);
+});
+
+test('mantém lote atual e total coerentes em subdivisões aninhadas', async () => {
+  const progress: Array<{ currentBatch: number; totalBatches: number }> = [];
+  const documents = await broadExtractionBatchTestUtils.generateWithRecursiveSplit(
+    [1, 2, 3, 4],
+    async (pages) => {
+      if (pages.length > 1) {
+        throw new GeminiGenerationError('truncado', 'MAX_TOKENS');
+      }
+      return documentJson(pages);
+    },
+    1,
+    {
+      tracker: {
+        completed: 0,
+        total: 1,
+        report: ({ currentBatch, totalBatches }) => {
+          progress.push({ currentBatch, totalBatches });
+        },
+      },
+    },
+  );
+
+  assert.deepEqual(
+    broadExtractionBatchTestUtils.mergeDocuments(documents, false).unidades.map(
+      (unit) => unit.unidade,
+    ),
+    [1, 2, 3, 4],
+  );
+  assert.deepEqual(progress.at(-1), { currentBatch: 4, totalBatches: 4 });
+  assert.ok(progress.every(({ currentBatch, totalBatches }) => currentBatch <= totalBatches));
 });
 
 test('rejeita unidade sem marcador descartada booleano', () => {

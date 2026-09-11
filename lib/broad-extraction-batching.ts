@@ -26,6 +26,31 @@ type ExtractionDocument = {
 
 type BatchGenerator<T> = (items: T[]) => Promise<string>;
 
+export type BroadExtractionProgress = {
+  currentBatch: number;
+  totalBatches: number;
+  pageStart?: number;
+  pageEnd?: number;
+  retryingSplit: boolean;
+};
+
+export type BroadExtractionProgressCallback = (
+  progress: BroadExtractionProgress,
+) => void | Promise<void>;
+
+export class BroadExtractionAbortedError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'BroadExtractionAbortedError';
+  }
+}
+
+type ProgressTracker = {
+  completed: number;
+  total: number;
+  report?: BroadExtractionProgressCallback;
+};
+
 class ExtractionBatchFormatError extends Error {
   constructor(message: string) {
     super(message);
@@ -117,9 +142,22 @@ async function generateWithRecursiveSplit<T>(
   items: T[],
   generate: BatchGenerator<T>,
   minimumItems = 1,
+  progress?: {
+    tracker: ProgressTracker;
+    pageRange?: (items: T[]) => { pageStart: number; pageEnd: number };
+    retryingSplit?: boolean;
+  },
 ): Promise<ExtractionDocument[]> {
   try {
-    return [parseAndValidateBatch(await generate(items))];
+    await progress?.tracker.report?.({
+      currentBatch: progress.tracker.completed + 1,
+      totalBatches: progress.tracker.total,
+      ...(progress.pageRange?.(items) ?? {}),
+      retryingSplit: Boolean(progress.retryingSplit),
+    });
+    const document = parseAndValidateBatch(await generate(items));
+    if (progress) progress.tracker.completed += 1;
+    return [document];
   } catch (error) {
     const retryable =
       error instanceof ExtractionBatchFormatError ||
@@ -134,9 +172,16 @@ async function generateWithRecursiveSplit<T>(
     const midpoint = Math.ceil(items.length / 2);
     const left = items.slice(0, midpoint);
     const right = items.slice(midpoint);
+    if (progress) progress.tracker.total += 1;
     return [
-      ...(await generateWithRecursiveSplit(left, generate, minimumItems)),
-      ...(await generateWithRecursiveSplit(right, generate, minimumItems)),
+      ...(await generateWithRecursiveSplit(left, generate, minimumItems, progress && {
+        ...progress,
+        retryingSplit: true,
+      })),
+      ...(await generateWithRecursiveSplit(right, generate, minimumItems, progress && {
+        ...progress,
+        retryingSplit: true,
+      })),
     ];
   }
 }
@@ -144,9 +189,20 @@ async function generateWithRecursiveSplit<T>(
 async function generateTextWithRecursiveSplit(
   text: string,
   generate: (text: string) => Promise<string>,
+  progress?: {
+    tracker: ProgressTracker;
+    retryingSplit?: boolean;
+  },
 ): Promise<ExtractionDocument[]> {
   try {
-    return [parseAndValidateBatch(await generate(text))];
+    await progress?.tracker.report?.({
+      currentBatch: progress.tracker.completed + 1,
+      totalBatches: progress.tracker.total,
+      retryingSplit: Boolean(progress.retryingSplit),
+    });
+    const document = parseAndValidateBatch(await generate(text));
+    if (progress) progress.tracker.completed += 1;
+    return [document];
   } catch (error) {
     const retryable =
       error instanceof ExtractionBatchFormatError ||
@@ -161,9 +217,16 @@ async function generateTextWithRecursiveSplit(
     const left = text.slice(0, splitAt);
     const right = text.slice(splitAt);
     if (!left || !right) throw error;
+    if (progress) progress.tracker.total += 1;
     return [
-      ...(await generateTextWithRecursiveSplit(left, generate)),
-      ...(await generateTextWithRecursiveSplit(right, generate)),
+      ...(await generateTextWithRecursiveSplit(left, generate, progress && {
+        ...progress,
+        retryingSplit: true,
+      })),
+      ...(await generateTextWithRecursiveSplit(right, generate, progress && {
+        ...progress,
+        retryingSplit: true,
+      })),
     ];
   }
 }
@@ -232,8 +295,12 @@ function textBatchInstruction(batchNumber: number, total: number): string {
   ].join(' ');
 }
 
-export async function extractTextInBatches(text: string): Promise<string> {
+export async function extractTextInBatches(
+  text: string,
+  onProgress?: BroadExtractionProgressCallback,
+): Promise<string> {
   const chunks = splitText(text);
+  const tracker: ProgressTracker = { completed: 0, total: chunks.length, report: onProgress };
   const documents: ExtractionDocument[] = [];
   for (let index = 0; index < chunks.length; index += 1) {
     const chunk = chunks[index];
@@ -247,6 +314,7 @@ export async function extractTextInBatches(text: string): Promise<string> {
           responseMimeType: 'application/json',
           responseJsonSchema: EXTRACTION_RESPONSE_SCHEMA,
         }),
+      { tracker },
       );
     documents.push(...pieces);
   }
@@ -264,12 +332,21 @@ async function createPdfBatch(buffer: Buffer, pageNumbers: number[]): Promise<Bu
   return Buffer.from(await target.save());
 }
 
-export async function extractPdfInBatches(buffer: Buffer): Promise<string> {
+export async function extractPdfInBatches(
+  buffer: Buffer,
+  onProgress?: BroadExtractionProgressCallback,
+): Promise<string> {
   const source = await PDFDocument.load(buffer);
   const pageNumbers = Array.from({ length: source.getPageCount() }, (_, index) => index + 1);
   if (pageNumbers.length === 0) throw new Error('O PDF não possui páginas.');
+  const initialBatches = batchItems(pageNumbers, PDF_BATCH_PAGES);
+  const tracker: ProgressTracker = {
+    completed: 0,
+    total: initialBatches.length,
+    report: onProgress,
+  };
   const documents: ExtractionDocument[] = [];
-  for (const initialBatch of batchItems(pageNumbers, PDF_BATCH_PAGES)) {
+  for (const initialBatch of initialBatches) {
     const pieces = await generateWithRecursiveSplit(initialBatch, async (pages) => {
       const batchPdf = await createPdfBatch(buffer, pages);
       const first = pages[0];
@@ -298,6 +375,12 @@ export async function extractPdfInBatches(buffer: Buffer): Promise<string> {
         );
       }
       return output;
+    }, 1, {
+      tracker,
+      pageRange: (pages) => ({
+        pageStart: Number(pages[0]),
+        pageEnd: Number(pages[pages.length - 1]),
+      }),
     });
     documents.push(...pieces);
   }

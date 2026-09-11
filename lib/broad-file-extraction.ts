@@ -1,8 +1,10 @@
 import { extractTextFromDocx, extractTextFromPptx } from '@/lib/document-extract';
 import {
+  BroadExtractionAbortedError,
   extractImageAsJson,
   extractPdfInBatches,
   extractTextInBatches,
+  type BroadExtractionProgressCallback,
 } from '@/lib/broad-extraction-batching';
 import type {
   SpacyTokenizationResult,
@@ -61,6 +63,7 @@ export async function processWithBroadFileExtraction(
   buffer: Buffer,
   mimeType: string,
   suppliedDependencies?: BroadFileExtractionDependencies,
+  onProgress?: BroadExtractionProgressCallback,
 ): Promise<BroadFileExtractionResult> {
   const normalizedMimeType = mimeType.toLowerCase();
   const extractType = EXTRACT_TYPES[normalizedMimeType];
@@ -86,13 +89,14 @@ export async function processWithBroadFileExtraction(
           agentKey: 'broad_file_extraction',
         });
       } else {
-        wholeExtractionText = await extractTextInBatches(canonicalText);
+        wholeExtractionText = await extractTextInBatches(canonicalText, onProgress);
         const cleaned = cleanExtractionAgentOutput(wholeExtractionText, { requireJson: true });
         transformedText = cleaned.cleanedText;
         jsonWithDiscardFalse = cleaned.jsonWithDiscardFalse;
         newJson = cleaned.newJson ?? undefined;
       }
     } catch (error) {
+      if (error instanceof BroadExtractionAbortedError) throw error;
       transformationError =
         error instanceof Error ? error.message : 'Falha ao transformar o texto extraído.';
     }
@@ -113,7 +117,7 @@ export async function processWithBroadFileExtraction(
         });
       } else {
         wholeExtractionText = normalizedMimeType === 'application/pdf'
-          ? await extractPdfInBatches(buffer)
+          ? await extractPdfInBatches(buffer, onProgress)
           : await extractImageAsJson(buffer, normalizedMimeType);
         const cleaned = cleanExtractionAgentOutput(wholeExtractionText, { requireJson: true });
         transformedText = cleaned.cleanedText;
@@ -121,6 +125,7 @@ export async function processWithBroadFileExtraction(
         newJson = cleaned.newJson ?? undefined;
       }
     } catch (error) {
+      if (error instanceof BroadExtractionAbortedError) throw error;
       transformationError =
         error instanceof Error ? error.message : 'Falha ao transformar o conteúdo extraído.';
     }

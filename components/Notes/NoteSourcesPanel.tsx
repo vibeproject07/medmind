@@ -49,6 +49,12 @@ export type NoteSource = {
   processing_attempts: number;
   processing_started_at?: string | null;
   processing_completed_at?: string | null;
+  processing_stage?: string | null;
+  processing_batch_current?: number | null;
+  processing_batch_total?: number | null;
+  processing_page_start?: number | null;
+  processing_page_end?: number | null;
+  processing_retrying_split?: boolean | null;
   cleaned_transcription?: string | null;
   cleaned_extraction_text?: string | null;
   created_at: string;
@@ -317,6 +323,21 @@ function processingLabel(source: NoteSource): string {
     case 'failed': return 'Falhou — tente novamente';
     default: return 'Sem processamento';
   }
+}
+
+function processingProgressLabel(source: NoteSource): string | null {
+  if (
+    source.processing_status !== 'processing' ||
+    !source.processing_batch_current ||
+    !source.processing_batch_total
+  ) return null;
+  const pageRange = source.processing_page_start && source.processing_page_end
+    ? source.processing_page_start === source.processing_page_end
+      ? ` · página ${source.processing_page_start}`
+      : ` · páginas ${source.processing_page_start}–${source.processing_page_end}`
+    : '';
+  const retry = source.processing_retrying_split ? ' · subdividindo lote' : '';
+  return `Lote ${source.processing_batch_current} de ${source.processing_batch_total}${pageRange}${retry}`;
 }
 
 export default function NoteSourcesPanel({
@@ -679,6 +700,11 @@ export default function NoteSourcesPanel({
                     <p className="flex items-center gap-1.5 text-xs font-semibold text-violet-800"><Sparkles className="h-3.5 w-3.5" />Processamento por IA</p>
                     <span className="text-[11px] font-medium text-violet-700">{processingLabel(selected.source)}</span>
                   </div>
+                  {processingProgressLabel(selected.source) && (
+                    <p className="text-xs text-violet-700" aria-live="polite">
+                      {processingProgressLabel(selected.source)}
+                    </p>
+                  )}
                   <div className="flex flex-wrap gap-2">
                     <button
                       type="button"
@@ -814,7 +840,9 @@ export default function NoteSourcesPanel({
                 >
                   <span className="block truncate text-sm font-medium text-gray-700 hover:text-primary-700">{source.original_name}</span>
                     <span className="block text-[11px] text-gray-400">
-                     {source.status === 'ready' ? `${formatSize(Number(source.size_bytes))} · ${processingLabel(source)}` : 'Upload pendente'}
+                     {source.status === 'ready'
+                       ? `${formatSize(Number(source.size_bytes))} · ${processingProgressLabel(source) ?? processingLabel(source)}`
+                       : 'Upload pendente'}
                   </span>
                 </button>
                 {busyId === source.id ? <Loader2 className="w-4 h-4 animate-spin text-primary-500" /> : (

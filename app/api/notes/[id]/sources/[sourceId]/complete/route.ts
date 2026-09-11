@@ -108,6 +108,11 @@ export async function POST(
            processing_stage = 'queued',
            processing_error = NULL,
            processing_completed_at = NULL,
+            processing_batch_current = NULL,
+            processing_batch_total = NULL,
+            processing_page_start = NULL,
+            processing_page_end = NULL,
+            processing_retrying_split = NULL,
            updated_at = NOW()
        WHERE id = $2 AND note_id = $3
        RETURNING *`,

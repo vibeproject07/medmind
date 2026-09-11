@@ -419,6 +419,11 @@ export async function persistProcessingPipeline(
              processing_completed_at = NULL,
              processing_claim_id = NULL,
              processing_lease_expires_at = NULL,
+              processing_batch_current = NULL,
+              processing_batch_total = NULL,
+              processing_page_start = NULL,
+              processing_page_end = NULL,
+              processing_retrying_split = NULL,
              processing_last_heartbeat_at = NOW(),
              updated_at = NOW()
          WHERE id = $4 AND processing_claim_id = $5 AND processing_run_id = $6`,
@@ -537,6 +542,11 @@ export async function processNextQueuedVectorization(): Promise<boolean> {
              processing_stage = $2,
              processing_error = $3,
              processing_completed_at = NOW(),
+              processing_batch_current = NULL,
+              processing_batch_total = NULL,
+              processing_page_start = NULL,
+              processing_page_end = NULL,
+              processing_retrying_split = NULL,
              processing_last_heartbeat_at = NOW(),
              updated_at = NOW()
          WHERE id = $4 AND processing_run_id = $5`,
@@ -562,7 +572,10 @@ export async function processNextQueuedVectorization(): Promise<boolean> {
       await query(
         `UPDATE note_sources
          SET processing_status = 'failed', processing_stage = 'vectorization_failed',
-             processing_error = $1, processing_completed_at = NOW(), updated_at = NOW()
+              processing_error = $1, processing_completed_at = NOW(),
+              processing_batch_current = NULL, processing_batch_total = NULL,
+              processing_page_start = NULL, processing_page_end = NULL,
+              processing_retrying_split = NULL, updated_at = NOW()
          WHERE id = $2 AND processing_run_id = $3`,
         [message, job.noteSourceId, job.runId],
       );
