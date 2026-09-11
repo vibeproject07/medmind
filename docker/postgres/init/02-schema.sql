@@ -88,6 +88,7 @@ CREATE TABLE IF NOT EXISTS notes (
   user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   title TEXT NOT NULL,
   description TEXT NOT NULL,
+  "link_S3" TEXT,
   tags TEXT,
   images TEXT,
   areas_conhecimento TEXT,

@@ -8,9 +8,11 @@ let metadataSchemaPromise: Promise<void> | null = null;
  */
 export function ensureNoteMetadataSchema(): Promise<void> {
   if (!metadataSchemaPromise) {
-    metadataSchemaPromise = query(
-      'ALTER TABLE notes ADD COLUMN IF NOT EXISTS tipo_conteudo TEXT',
-    )
+    metadataSchemaPromise = query(`
+      ALTER TABLE notes
+        ADD COLUMN IF NOT EXISTS tipo_conteudo TEXT,
+        ADD COLUMN IF NOT EXISTS "link_S3" TEXT
+    `)
       .then(() => undefined)
       .catch((error) => {
         metadataSchemaPromise = null;
