@@ -106,6 +106,7 @@ export async function POST(
            status = 'ready',
            processing_status = 'queued',
            processing_stage = 'queued',
+           processing_percent = 0,
            processing_error = NULL,
            processing_completed_at = NULL,
             processing_batch_current = NULL,

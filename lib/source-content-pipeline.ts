@@ -26,6 +26,11 @@ export interface SourceContentPipelineDependencies {
   }) => Promise<{ tokenization: SpacyTokenizationResult; chunking: ChunkingResult }>;
 }
 
+export type SourceContentStage = 'cleaning' | 'tokenizing' | 'chunking';
+export type SourceContentStageCallback = (
+  stage: SourceContentStage,
+) => void | Promise<void>;
+
 const DEFAULT_DEPENDENCIES: SourceContentPipelineDependencies = {
   tokenize: tokenizeText,
   chunk: async (input) => {
@@ -54,9 +59,11 @@ export async function processExtractedSource(
     segments?: SpacySourceSegment[];
   },
   dependencies: SourceContentPipelineDependencies = DEFAULT_DEPENDENCIES,
+  onStage?: SourceContentStageCallback,
 ): Promise<SourceContentProcessing> {
   let tokenization: SpacyTokenizationResult;
   try {
+    await onStage?.('tokenizing');
     tokenization = await dependencies.tokenize({
       text,
       sourceType,
@@ -76,6 +83,7 @@ export async function processExtractedSource(
     tokenizationData: tokenization,
   };
   try {
+    await onStage?.('chunking');
     const chunked = await dependencies.chunk({
       text,
       sourceType,

@@ -412,6 +412,7 @@ export async function persistProcessingPipeline(
         `UPDATE note_sources
          SET processing_status = 'processing',
              processing_stage = 'awaiting_vectorization',
+             processing_percent = 100,
              processing_original_text = $1,
              processing_result = $2,
              processing_provenance = $3,

@@ -7,4 +7,4 @@ Persistir extração, tokenização, chunking e embeddings como metadados intern
 
 **Why:** O conteúdo da nota pode ser editado ou resumido para apresentação, enquanto o backend precisa manter proveniência, limites de sentenças, versões do pipeline, hashes e vetores reproduzíveis.
 
-**How to apply:** Novos classificadores e buscas semânticas devem consumir os chunks persistidos e respeitar `user_id` e os vínculos opcionais com nota/fonte. Preserve status e erros por etapa para permitir reprocessamento seguro.
+**How to apply:** Novos classificadores e buscas semânticas devem consumir os chunks persistidos e respeitar `user_id` e os vínculos opcionais com nota/fonte. Preserve status e erros por etapa para permitir reprocessamento seguro. Ao persistir uma execução, espelhe os artefatos nas colunas genéricas e nas colunas específicas de análise; mantenha o texto canônico de exibição separado para retomadas.

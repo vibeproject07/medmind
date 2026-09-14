@@ -3,6 +3,7 @@ import {
   canonicalTranscriptionText,
   processExtractedSource,
   type SourceContentProcessing,
+  type SourceContentStageCallback,
 } from './source-content-pipeline';
 
 export interface PersistedSourceProcessing {
@@ -21,15 +22,21 @@ export async function preparePersistedSource(
     sourceType,
     segments = [],
     transform,
+    onStage,
   }: {
     originalText: string;
     sourceType: string;
     segments?: SpacySourceSegment[];
     transform?: (text: string) => Promise<string>;
+    onStage?: SourceContentStageCallback;
   },
   processSource: typeof processExtractedSource = processExtractedSource,
 ): Promise<PersistedSourceProcessing> {
-  const processing = await processSource({ text: originalText, sourceType, segments });
+  const processing = await processSource(
+    { text: originalText, sourceType, segments },
+    undefined,
+    onStage,
+  );
   let result = originalText;
   let transformationError: string | undefined;
   if (transform) {
@@ -57,6 +64,7 @@ export async function preparePersistedTranscription(
     transcription,
     sourceType,
     transform,
+    onStage,
   }: {
     transcription: {
       text: string;
@@ -65,6 +73,7 @@ export async function preparePersistedTranscription(
     };
     sourceType: 'audio' | 'video';
     transform?: (text: string) => Promise<string>;
+    onStage?: SourceContentStageCallback;
   },
   processSource: typeof processExtractedSource = processExtractedSource,
 ): Promise<PersistedSourceProcessing> {
@@ -74,6 +83,7 @@ export async function preparePersistedTranscription(
       sourceType,
       segments: transcription.segments,
       transform,
+      onStage,
     },
     processSource,
   );

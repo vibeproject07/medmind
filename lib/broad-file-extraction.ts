@@ -19,6 +19,7 @@ import {
 import {
   processExtractedSource,
   type SourceContentProcessing,
+  type SourceContentStageCallback,
 } from '@/lib/source-content-pipeline';
 
 const EXTRACT_TYPES: Record<string, 'docx' | 'pptx'> = {
@@ -85,6 +86,7 @@ export async function processWithBroadFileExtraction(
   mimeType: string,
   suppliedDependencies?: BroadFileExtractionDependencies,
   onProgress?: BroadExtractionProgressCallback,
+  onPipelineStage?: SourceContentStageCallback,
 ): Promise<BroadFileExtractionResult> {
   const normalizedMimeType = mimeType.toLowerCase();
   const extractType = EXTRACT_TYPES[normalizedMimeType];
@@ -101,8 +103,10 @@ export async function processWithBroadFileExtraction(
     canonicalText = extractType === 'docx'
       ? await (suppliedDependencies?.extractDocx ?? extractTextFromDocx)(buffer)
       : await (suppliedDependencies?.extractPptx ?? extractTextFromPptx)(buffer);
+    wholeExtractionText = canonicalText;
 
     try {
+      await onPipelineStage?.('cleaning');
       if (suppliedDependencies) {
         transformedText = await suppliedDependencies.transformExtractedText({
           transcription: canonicalText,
@@ -140,6 +144,7 @@ export async function processWithBroadFileExtraction(
           ? await extractPdfInBatches(buffer, onProgress)
           : await extractImageAsJson(buffer, normalizedMimeType);
         canonicalText = canonicalTextFromExtractionJson(wholeExtractionText);
+        await onPipelineStage?.('cleaning');
         const cleaned = cleanExtractionAgentOutput(wholeExtractionText, { requireJson: true });
         transformedText = cleaned.cleanedText;
         jsonWithDiscardFalse = cleaned.jsonWithDiscardFalse;
@@ -153,10 +158,13 @@ export async function processWithBroadFileExtraction(
     }
   }
 
-  const processing: SourceContentProcessing = await processExtracted({
+  const processingInput = {
     text: canonicalText,
     sourceType: normalizedMimeType.startsWith('image/') ? 'image' : 'document',
-  });
+  };
+  const processing: SourceContentProcessing = suppliedDependencies
+    ? await processExtracted(processingInput)
+    : await processExtractedSource(processingInput, undefined, onPipelineStage);
 
   return {
     text: canonicalText,

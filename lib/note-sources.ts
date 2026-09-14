@@ -43,6 +43,7 @@ export type NoteSource = {
   processing_page_start?: number | null;
   processing_page_end?: number | null;
   processing_retrying_split?: boolean | null;
+  processing_percent?: number | null;
   cleaned_transcription?: string | null;
   cleaned_extraction_text?: string | null;
   created_at: string;
@@ -128,6 +129,7 @@ export async function ensureNoteSourcesSchema(): Promise<void> {
         processing_page_start INTEGER,
         processing_page_end INTEGER,
         processing_retrying_split BOOLEAN,
+         processing_percent INTEGER NOT NULL DEFAULT 0 CHECK (processing_percent BETWEEN 0 AND 100),
       created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
     )
@@ -151,6 +153,7 @@ export async function ensureNoteSourcesSchema(): Promise<void> {
   await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_page_start INTEGER');
   await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_page_end INTEGER');
   await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_retrying_split BOOLEAN');
+  await query('ALTER TABLE note_sources ADD COLUMN IF NOT EXISTS processing_percent INTEGER NOT NULL DEFAULT 0');
   await query(`
     UPDATE note_sources
     SET processing_stage = CASE processing_status

@@ -26,6 +26,7 @@ import {
   provenanceFromSourceResult,
 } from '../lib/note-source-provenance';
 import { getAiAgentUsage } from '../lib/ai-agent-usage';
+import { mapProcessingRunTexts } from '../lib/processing-run-output-mapping';
 
 const sentences: SpacySentence[] = [
   {
@@ -72,6 +73,30 @@ test('YouTube URL normalization only accepts exact HTTPS YouTube hosts', () => {
     () => normalizeYouTubeUrl('http://www.youtube.com/watch?v=dQw4w9WgXcQ'),
     /HTTPS/,
   );
+});
+
+test('processing run maps media and extraction outputs to generic and dedicated columns', () => {
+  const media = mapProcessingRunTexts('video', {
+    originalText: 'canônica',
+    pipelineText: 'pipeline',
+    wholeTranscription: 'transcrição integral',
+    cleanedTranscription: 'transcrição limpa',
+  });
+  assert.equal(media.extractionText, 'transcrição integral');
+  assert.equal(media.processedText, 'transcrição limpa');
+  assert.equal(media.wholeTranscription, 'transcrição integral');
+  assert.equal(media.cleanedTranscription, 'transcrição limpa');
+
+  const document = mapProcessingRunTexts('document', {
+    originalText: 'texto canônico',
+    pipelineText: 'pipeline',
+    wholeExtractionText: '{"unidades":[]}',
+    cleanedExtractionText: '{"unidades":[{"texto":"limpo"}]}',
+  });
+  assert.equal(document.extractionText, '{"unidades":[]}');
+  assert.equal(document.processedText, '{"unidades":[{"texto":"limpo"}]}');
+  assert.equal(document.wholeExtractionText, '{"unidades":[]}');
+  assert.equal(document.cleanedExtractionText, '{"unidades":[{"texto":"limpo"}]}');
 });
 
 function tokenization(sourceType: string, timed = false): SpacyTokenizationResult {
@@ -333,6 +358,7 @@ for (const fixture of [
     assert.equal(processed[0].sourceType, fixture.sourceType);
     if (fixture.local) {
       assert.equal(result.originalText, extracted);
+      assert.equal(result.wholeExtractionText, extracted);
       assert.equal(result.transformedText, 'Síntese auxiliar.');
     } else {
       assert.equal(result.originalText, extracted);

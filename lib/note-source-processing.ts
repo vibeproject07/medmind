@@ -21,9 +21,10 @@ import {
   processNextQueuedVectorization,
 } from '@/lib/content-processing-storage';
 import {
-  preparePersistedSource,
   preparePersistedTranscription,
 } from '@/lib/persisted-source-pipeline';
+import { processExtractedSource, type SourceContentStage } from '@/lib/source-content-pipeline';
+import { mapProcessingRunTexts } from '@/lib/processing-run-output-mapping';
 
 const MAX_DOCUMENT_PROCESS_BYTES = 30 * 1024 * 1024;
 const MAX_TEXT_PROCESS_BYTES = 5 * 1024 * 1024;
@@ -86,9 +87,21 @@ type ProcessedSourceOutput = {
   extractionMetadata?: Record<string, unknown>;
 };
 
+type ProcessingStageReporter = (
+  stage: string,
+  percent: number,
+) => Promise<void>;
+
+function pipelineStagePercent(stage: SourceContentStage): number {
+  if (stage === 'cleaning') return 55;
+  if (stage === 'tokenizing') return 65;
+  return 82;
+}
+
 async function processSource(
   source: ProcessingSource,
   reportProgress: Parameters<typeof processWithBroadFileExtraction>[3],
+  reportStage: ProcessingStageReporter,
 ): Promise<ProcessedSourceOutput> {
   const maximum = maxProcessBytes(source);
   if (Number(source.size_bytes) > maximum) {
@@ -107,19 +120,44 @@ async function processSource(
   try {
     if (source.category === 'audio' || source.category === 'video') {
       if (!process.env.GROQ_API_KEY) throw new Error('Serviço de transcrição não configurado.');
-      const transcription = await transcribeMediaPath(downloaded.path, source.original_name, mimeType);
+      let progressQueue = Promise.resolve();
+      const transcription = await transcribeMediaPath(
+        downloaded.path,
+        source.original_name,
+        mimeType,
+        (progress) => {
+          const percent = progress.stage === 'transcribing'
+            ? Math.min(
+                50,
+                25 + Math.round(
+                  (progress.completedParts / Math.max(1, progress.totalParts)) * 25,
+                ),
+              )
+            : progress.stage === 'extracting'
+              ? 18
+              : progress.stage === 'splitting'
+                ? 22
+                : 10;
+          progressQueue = progressQueue.then(() =>
+            reportStage(progress.stage === 'transcribing' ? 'transcribing' : 'preparing_media', percent),
+          );
+        },
+      );
+      await progressQueue;
       const sourceType = transcription.videoConvertedToAudio ? 'video' : 'audio';
+      await reportStage('cleaning', 55);
       const prepared = await preparePersistedTranscription({
         transcription,
         sourceType,
+        onStage: (stage) => reportStage(stage, pipelineStagePercent(stage)),
       });
       const { tokenizationData, ...provenance } = prepared.provenance;
       return {
         originalText: prepared.originalText,
         result: prepared.result,
         pipelineText: prepared.originalText,
-        wholeTranscription: transcription.rawText || transcription.text,
-        cleanedTranscription: prepared.originalText,
+        wholeTranscription: transcription.text,
+        cleanedTranscription: transcription.rawText || prepared.originalText,
         transcriptionSegments: transcription.segments,
         tokenization: tokenizationData,
         chunking: prepared.provenance.chunking,
@@ -137,25 +175,37 @@ async function processSource(
     const buffer = await import('node:fs/promises').then((fs) => fs.readFile(downloaded.path));
     if (source.category === 'text') {
       const originalText = buffer.toString('utf8');
-      const prepared = await preparePersistedSource({
-        originalText,
-        sourceType: 'text',
-        transform: async (text) => cleanExtractionAgentOutput(text).cleanedText,
-      });
-      const { tokenizationData, ...provenance } = prepared.provenance;
+      await reportStage('cleaning', 55);
+      const cleanedText = cleanExtractionAgentOutput(originalText).cleanedText;
+      const processing = await processExtractedSource(
+        { text: cleanedText, sourceType: 'text' },
+        undefined,
+        (stage) => reportStage(stage, pipelineStagePercent(stage)),
+      );
+      const { tokenizationData, ...processingSummary } = processing;
       return {
         originalText,
-        result: prepared.result,
-        pipelineText: originalText,
+        result: cleanedText,
+        pipelineText: cleanedText,
         wholeExtractionText: originalText,
-        cleanedExtractionText: prepared.result,
+        cleanedExtractionText: cleanedText,
         tokenization: tokenizationData,
-        chunking: prepared.provenance.chunking,
-        provenance,
+        chunking: processing.chunking,
+        provenance: {
+          sourceType: 'text',
+          segments: [],
+          ...processingSummary,
+        },
       };
     }
 
-    const broad = await processWithBroadFileExtraction(buffer, mimeType, undefined, reportProgress);
+    const broad = await processWithBroadFileExtraction(
+      buffer,
+      mimeType,
+      undefined,
+      reportProgress,
+      (stage) => reportStage(stage, pipelineStagePercent(stage)),
+    );
     const {
       tokenizationData,
       tokenization,
@@ -169,7 +219,7 @@ async function processSource(
       result: broad.transformedText ?? broad.text,
       pipelineText: broad.text,
       wholeExtractionText: broad.wholeExtractionText,
-      cleanedExtractionText: broad.text,
+      cleanedExtractionText: broad.transformedText ?? broad.text,
       tokenization: tokenizationData,
       chunking,
       provenance: {
@@ -208,6 +258,7 @@ async function claimNextSourceProcessing(): Promise<ProcessingSource | null> {
      UPDATE note_sources
      SET processing_status = 'processing',
          processing_stage = 'downloading',
+          processing_percent = 5,
          processing_error = NULL,
          processing_batch_current = NULL,
          processing_batch_total = NULL,
@@ -250,7 +301,9 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
   try {
     await ensureContentProcessingSchema();
     const existingRun = await query(
-      `SELECT id, extraction_text, processed_text, extraction_metadata->>'displayResult' AS display_result
+      `SELECT id, extraction_text, processed_text,
+              extraction_metadata->>'displayResult' AS display_result,
+              extraction_metadata->>'canonicalOriginalText' AS canonical_original_text
        FROM content_processing_runs
        WHERE id = $1 AND note_source_id = $2 AND is_current = TRUE`,
       [source.processing_run_id, source.id],
@@ -259,11 +312,13 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
       extraction_text: string;
       processed_text: string;
       display_result: string | null;
+      canonical_original_text: string | null;
     } | undefined;
     if (checkpoint) {
       await query(
         `UPDATE note_sources
          SET processing_stage = 'awaiting_vectorization',
+              processing_percent = 100,
              processing_original_text = $1,
              processing_result = $2,
              processing_claim_id = NULL,
@@ -277,7 +332,7 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
              updated_at = NOW()
          WHERE id = $3 AND processing_claim_id = $4`,
         [
-          checkpoint.extraction_text,
+          checkpoint.canonical_original_text ?? checkpoint.extraction_text,
           checkpoint.display_result ?? checkpoint.processed_text,
           source.id,
           source.processing_claim_id,
@@ -287,7 +342,10 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
     }
     await query(
       `UPDATE note_sources
-       SET processing_stage = $1, processing_last_heartbeat_at = NOW(), updated_at = NOW()
+       SET processing_stage = $1,
+           processing_percent = 10,
+           processing_last_heartbeat_at = NOW(),
+           updated_at = NOW()
        WHERE id = $2 AND processing_claim_id = $3`,
       [
         source.category === 'audio' || source.category === 'video' ? 'transcribing' : 'extracting',
@@ -295,7 +353,28 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
         source.processing_claim_id,
       ],
     );
+    const reportStage: ProcessingStageReporter = async (stage, percent) => {
+      const updated = await query(
+        `UPDATE note_sources
+         SET processing_stage = $1,
+             processing_percent = GREATEST(processing_percent, $2),
+             processing_last_heartbeat_at = NOW(),
+             updated_at = NOW()
+         WHERE id = $3 AND processing_claim_id = $4 AND processing_status = 'processing'`,
+        [stage, Math.max(0, Math.min(100, Math.round(percent))), source.id, source.processing_claim_id],
+      );
+      if (updated.rowCount !== 1) {
+        heartbeatFailed = true;
+        throw new BroadExtractionAbortedError(
+          'O lease do processamento foi perdido; o job será retomado.',
+        );
+      }
+    };
     const output = await processSource(source, async (progress) => {
+      const batchFraction = progress.totalBatches > 0
+        ? (progress.currentBatch - (progress.retryingSplit ? 1 : 0.5)) / progress.totalBatches
+        : 0;
+      const percent = Math.max(10, Math.min(50, 10 + Math.round(batchFraction * 40)));
       const updated = await query(
         `UPDATE note_sources
          SET processing_batch_current = $1,
@@ -303,15 +382,17 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
              processing_page_start = $3,
              processing_page_end = $4,
              processing_retrying_split = $5,
+              processing_percent = GREATEST(processing_percent, $6),
              processing_last_heartbeat_at = NOW(),
              updated_at = NOW()
-         WHERE id = $6 AND processing_claim_id = $7 AND processing_status = 'processing'`,
+          WHERE id = $7 AND processing_claim_id = $8 AND processing_status = 'processing'`,
         [
           progress.currentBatch,
           progress.totalBatches,
           progress.pageStart ?? null,
           progress.pageEnd ?? null,
           progress.retryingSplit,
+          percent,
           source.id,
           source.processing_claim_id,
         ],
@@ -322,10 +403,11 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
           'O lease do processamento foi perdido; o job será retomado.',
         );
       }
-    });
+    }, reportStage);
     const stageUpdate = await query(
       `UPDATE note_sources
        SET processing_stage = 'persisting',
+             processing_percent = 95,
             processing_batch_current = NULL,
             processing_batch_total = NULL,
             processing_page_start = NULL,
@@ -344,6 +426,7 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
         `UPDATE note_sources
          SET processing_status = 'completed',
              processing_stage = 'completed',
+              processing_percent = 100,
              processing_original_text = $1,
              processing_result = $2,
              processing_provenance = $3,
@@ -371,6 +454,7 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
       }
       return;
     }
+    const persistedTexts = mapProcessingRunTexts(source.category, output);
     await persistProcessingPipeline({
       runId: source.processing_run_id,
       userId: source.user_id,
@@ -378,16 +462,17 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
       noteSourceId: source.id,
       sourceType: source.category,
       sourceName: source.original_name,
-      extractionText: output.originalText ?? output.pipelineText,
-      processedText: output.pipelineText,
-      wholeTranscription: output.wholeTranscription ?? null,
-      cleanedTranscription: output.cleanedTranscription ?? null,
+      extractionText: persistedTexts.extractionText,
+      processedText: persistedTexts.processedText,
+      wholeTranscription: persistedTexts.wholeTranscription,
+      cleanedTranscription: persistedTexts.cleanedTranscription,
       transcriptionSegments: output.transcriptionSegments ?? null,
-      wholeExtractionText: output.wholeExtractionText ?? null,
-      cleanedExtractionText: output.cleanedExtractionText ?? null,
+      wholeExtractionText: persistedTexts.wholeExtractionText,
+      cleanedExtractionText: persistedTexts.cleanedExtractionText,
       extractionMetadata: {
         ...output.extractionMetadata,
         displayResult: output.result,
+        canonicalOriginalText: output.originalText,
       },
       tokenization: output.tokenization,
       chunking: output.chunking,
@@ -406,6 +491,7 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
       `UPDATE note_sources
        SET processing_status = 'failed',
            processing_stage = 'extraction_failed',
+            processing_percent = 0,
            processing_error = $1,
            processing_completed_at = NOW(),
            processing_claim_id = NULL,
@@ -484,6 +570,7 @@ export async function recoverStalledSourceProcessing(): Promise<void> {
     `UPDATE note_sources
      SET processing_status = 'queued',
           processing_stage = 'queued',
+         processing_percent = 0,
          processing_error = 'O processamento anterior foi interrompido e será retomado.',
          processing_claim_id = NULL,
          processing_lease_expires_at = NULL,

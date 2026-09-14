@@ -88,6 +88,7 @@ export async function POST(
        UPDATE note_sources
        SET processing_status = 'queued',
            processing_stage = 'queued',
+           processing_percent = 0,
            processing_original_text = NULL,
            processing_result = NULL,
            processing_provenance = NULL,

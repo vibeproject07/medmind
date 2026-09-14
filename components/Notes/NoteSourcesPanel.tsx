@@ -55,6 +55,7 @@ export type NoteSource = {
   processing_page_start?: number | null;
   processing_page_end?: number | null;
   processing_retrying_split?: boolean | null;
+  processing_percent?: number | null;
   cleaned_transcription?: string | null;
   cleaned_extraction_text?: string | null;
   created_at: string;
@@ -326,18 +327,26 @@ function processingLabel(source: NoteSource): string {
 }
 
 function processingProgressLabel(source: NoteSource): string | null {
-  if (
-    source.processing_status !== 'processing' ||
-    !source.processing_batch_current ||
-    !source.processing_batch_total
-  ) return null;
+  if (source.processing_status !== 'processing') return null;
+  const stageLabels: Record<string, string> = {
+    downloading: 'Baixando fonte',
+    transcribing: 'Transcrevendo com Groq Whisper',
+    preparing_media: 'Preparando mídia com ffmpeg',
+    extracting: 'Extraindo conteúdo',
+    cleaning: 'Limpando conteúdo',
+    tokenizing: 'Tokenizando com spaCy',
+    chunking: 'Criando chunks',
+    persisting: 'Salvando resultados',
+  };
+  const stage = stageLabels[source.processing_stage ?? ''] ?? 'Processando';
+  if (!source.processing_batch_current || !source.processing_batch_total) return stage;
   const pageRange = source.processing_page_start && source.processing_page_end
     ? source.processing_page_start === source.processing_page_end
       ? ` · página ${source.processing_page_start}`
       : ` · páginas ${source.processing_page_start}–${source.processing_page_end}`
     : '';
   const retry = source.processing_retrying_split ? ' · subdividindo lote' : '';
-  return `Lote ${source.processing_batch_current} de ${source.processing_batch_total}${pageRange}${retry}`;
+  return `${stage} · lote ${source.processing_batch_current} de ${source.processing_batch_total}${pageRange}${retry}`;
 }
 
 export default function NoteSourcesPanel({
@@ -705,6 +714,28 @@ export default function NoteSourcesPanel({
                       {processingProgressLabel(selected.source)}
                     </p>
                   )}
+                  {(selected.source.processing_status === 'queued' ||
+                    selected.source.processing_status === 'processing') && (
+                    <div
+                      className="space-y-1"
+                      role="progressbar"
+                      aria-label="Progresso do processamento por IA"
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                      aria-valuenow={selected.source.processing_percent ?? 0}
+                    >
+                      <div className="flex justify-between text-[11px] font-medium text-violet-700">
+                        <span>Progresso</span>
+                        <span>{selected.source.processing_percent ?? 0}%</span>
+                      </div>
+                      <div className="h-2 overflow-hidden rounded-full bg-violet-100">
+                        <div
+                          className="h-full rounded-full bg-violet-600 transition-[width] duration-500"
+                          style={{ width: `${selected.source.processing_percent ?? 0}%` }}
+                        />
+                      </div>
+                    </div>
+                  )}
                   <div className="flex flex-wrap gap-2">
                     <button
                       type="button"
@@ -841,7 +872,11 @@ export default function NoteSourcesPanel({
                   <span className="block truncate text-sm font-medium text-gray-700 hover:text-primary-700">{source.original_name}</span>
                     <span className="block text-[11px] text-gray-400">
                      {source.status === 'ready'
-                       ? `${formatSize(Number(source.size_bytes))} · ${processingProgressLabel(source) ?? processingLabel(source)}`
+                       ? `${formatSize(Number(source.size_bytes))} · ${processingProgressLabel(source) ?? processingLabel(source)}${
+                           source.processing_status === 'processing'
+                             ? ` · ${source.processing_percent ?? 0}%`
+                             : ''
+                         }`
                        : 'Upload pendente'}
                   </span>
                 </button>

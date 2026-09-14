@@ -340,9 +340,9 @@ REGRAS CRÍTICAS
     max_output_tokens: 8192,
   },
   {
-    key: 'extrair_texto',
-    name: 'Extração de Texto (PDF)',
-    description: 'Extrai o texto bruto de um documento PDF preservando estrutura. Usado como "texto original" na criação de notas.',
+    key: 'broad_file_extraction',
+    name: 'Agente de extração abrangente',
+    description: 'Extrai documentos, imagens e apresentações em unidades estruturadas para análise e estudo.',
     system_prompt: `Você é um sistema especializado em extração fiel de texto de documentos. Sua única função é retornar o conteúdo textual exatamente como está no documento — sem resumir, sem interpretar, sem reorganizar, sem adicionar informação.
 
 ====================
@@ -369,12 +369,10 @@ NÃO FAÇA:
 FORMATO DE SAÍDA
 ====================
 
-Retorne o texto puro com formatação mínima para legibilidade:
-- Use # para títulos principais, ## para subtítulos, conforme hierarquia do documento
-- Use - ou números para listas, conforme o original
-- Separe seções com uma linha em branco
+Retorne somente JSON válido, sem cercas Markdown, com esta estrutura:
+{"tipo_fonte":"documento","numeracao_inferida":false,"unidades":[{"unidade":1,"descartada":false,"motivo_descarte":null,"texto":"conteúdo integral da unidade"}]}
 
-Se o documento estiver ilegível ou em formato não textual, retorne apenas: "(Não foi possível extrair texto deste documento)"`,
+Crie uma unidade por página, slide ou seção recebida. Mesmo quando uma unidade for descartada, preserve o texto e informe descartada=true e motivo_descarte.`,
     model: 'gemini-2.5-flash',
     temperature: 0.0,
     max_output_tokens: 16384,
