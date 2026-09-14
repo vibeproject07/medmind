@@ -2,6 +2,7 @@ export interface ExtractionOutputCleanup {
   cleanedText: string;
   newJson: string | null;
   jsonWithDiscardFalse: string[];
+  saida_extracao_pos_limpeza: string[];
 }
 
 export type ExtractionJsonValue =
@@ -129,6 +130,43 @@ function collectRetainedFlaggedObjects(
 }
 
 /**
+ * Percorre somente a estrutura JSON já interpretada. Não usa regex nem tenta
+ * inferir conteúdo textual: aceita apenas objetos com `descartada === false`
+ * e campos próprios `unidade` e `texto`.
+ */
+export function buildPostCleanupExtractionList(
+  value: ExtractionJsonValue,
+): string[] {
+  const output: string[] = [];
+
+  const visit = (current: ExtractionJsonValue): void => {
+    if (Array.isArray(current)) {
+      current.forEach(visit);
+      return;
+    }
+    if (!current || typeof current !== 'object') return;
+
+    const hasUnit = Object.prototype.hasOwnProperty.call(current, 'unidade');
+    const hasText = Object.prototype.hasOwnProperty.call(current, 'texto');
+    if (current.descartada === false && hasUnit && hasText) {
+      const unit = current.unidade;
+      const text = current.texto;
+      if (
+        (typeof unit === 'string' || typeof unit === 'number') &&
+        typeof text === 'string'
+      ) {
+        output.push(String(unit), text);
+      }
+    }
+
+    Object.values(current).forEach(visit);
+  };
+
+  visit(value);
+  return output;
+}
+
+/**
  * Interpreta a saída como JSON e remove apenas objetos marcados com
  * `descatada: true` ou `descartada: true`.
  */
@@ -145,15 +183,18 @@ export function cleanExtractionAgentOutput(
       cleanedText: removeCommonMarkdown(output),
       newJson: null,
       jsonWithDiscardFalse: [],
+      saida_extracao_pos_limpeza: [],
     };
   }
   const filtered = removeDiscardedObjects(parsed);
   const retained = filtered === REMOVED ? [] : filtered;
   const jsonWithDiscardFalse: string[] = [];
   collectRetainedFlaggedObjects(retained, jsonWithDiscardFalse);
+  const saida_extracao_pos_limpeza = buildPostCleanupExtractionList(parsed);
   return {
-    cleanedText: JSON.stringify(parsed, null, 2),
+    cleanedText: JSON.stringify(saida_extracao_pos_limpeza),
     newJson: JSON.stringify(retained, null, 2),
     jsonWithDiscardFalse,
+    saida_extracao_pos_limpeza,
   };
 }

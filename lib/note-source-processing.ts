@@ -236,6 +236,7 @@ async function processSource(
         sizeBytes: buffer.length,
         newJson: broad.newJson,
         jsonWithDiscardFalse: broad.jsonWithDiscardFalse,
+        saida_extracao_pos_limpeza: broad.saida_extracao_pos_limpeza,
       },
     };
   } finally {

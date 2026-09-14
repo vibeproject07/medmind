@@ -354,15 +354,21 @@ for (const fixture of [
       dependencies,
     );
     assert.equal(result.text, extracted);
-    assert.equal(processed[0].text, extracted);
     assert.equal(processed[0].sourceType, fixture.sourceType);
     if (fixture.local) {
+      assert.equal(processed[0].text, extracted);
       assert.equal(result.originalText, extracted);
       assert.equal(result.wholeExtractionText, extracted);
       assert.equal(result.transformedText, 'Síntese auxiliar.');
     } else {
+      const expectedPostCleanup = '["1","Primeira frase. Segunda frase."]';
+      assert.equal(processed[0].text, expectedPostCleanup);
       assert.equal(result.originalText, extracted);
-      assert.match(result.transformedText ?? '', /Primeira frase\. Segunda frase\./);
+      assert.equal(result.transformedText, expectedPostCleanup);
+      assert.deepEqual(result.saida_extracao_pos_limpeza, [
+        '1',
+        'Primeira frase. Segunda frase.',
+      ]);
     }
   });
 }

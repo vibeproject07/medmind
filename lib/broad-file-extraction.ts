@@ -57,6 +57,7 @@ export interface BroadFileExtractionResult {
   chunking_error?: string;
   transformation_error?: string;
   jsonWithDiscardFalse: string[];
+  saida_extracao_pos_limpeza: string[];
   newJson?: string;
 }
 
@@ -94,9 +95,11 @@ export async function processWithBroadFileExtraction(
 
   let canonicalText: string;
   let transformedText: string | undefined;
+  let postCleanupText: string | undefined;
   let transformationError: string | undefined;
   let wholeExtractionText: string | undefined;
   let jsonWithDiscardFalse: string[] = [];
+  let saida_extracao_pos_limpeza: string[] = [];
   let newJson: string | undefined;
 
   if (extractType) {
@@ -117,7 +120,9 @@ export async function processWithBroadFileExtraction(
         wholeExtractionText = await extractTextInBatches(canonicalText, onProgress);
         const cleaned = cleanExtractionAgentOutput(wholeExtractionText, { requireJson: true });
         transformedText = cleaned.cleanedText;
+        postCleanupText = cleaned.cleanedText;
         jsonWithDiscardFalse = cleaned.jsonWithDiscardFalse;
+        saida_extracao_pos_limpeza = cleaned.saida_extracao_pos_limpeza;
         newJson = cleaned.newJson ?? undefined;
       }
     } catch (error) {
@@ -136,7 +141,9 @@ export async function processWithBroadFileExtraction(
       wholeExtractionText = output;
       const cleaned = cleanExtractionAgentOutput(output, { requireJson: true });
       transformedText = cleaned.cleanedText;
+      postCleanupText = cleaned.cleanedText;
       jsonWithDiscardFalse = cleaned.jsonWithDiscardFalse;
+      saida_extracao_pos_limpeza = cleaned.saida_extracao_pos_limpeza;
       newJson = cleaned.newJson ?? undefined;
     } else {
       try {
@@ -147,7 +154,9 @@ export async function processWithBroadFileExtraction(
         await onPipelineStage?.('cleaning');
         const cleaned = cleanExtractionAgentOutput(wholeExtractionText, { requireJson: true });
         transformedText = cleaned.cleanedText;
+        postCleanupText = cleaned.cleanedText;
         jsonWithDiscardFalse = cleaned.jsonWithDiscardFalse;
+        saida_extracao_pos_limpeza = cleaned.saida_extracao_pos_limpeza;
         newJson = cleaned.newJson ?? undefined;
       } catch (error) {
         if (error instanceof BroadExtractionAbortedError) throw error;
@@ -159,7 +168,7 @@ export async function processWithBroadFileExtraction(
   }
 
   const processingInput = {
-    text: canonicalText,
+    text: postCleanupText ?? canonicalText,
     sourceType: normalizedMimeType.startsWith('image/') ? 'image' : 'document',
   };
   const processing: SourceContentProcessing = suppliedDependencies
@@ -174,6 +183,7 @@ export async function processWithBroadFileExtraction(
     ...processing,
     ...(transformationError ? { transformation_error: transformationError } : {}),
     jsonWithDiscardFalse,
+    saida_extracao_pos_limpeza,
     ...(newJson ? { newJson } : {}),
   };
 }

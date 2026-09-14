@@ -60,8 +60,8 @@ test('interpreta JSON e remove objetos com descatada ou descartada true', () => 
     '{"titulo":"A","descatada":false,"texto":"Manter A"}',
     '{"titulo":"C","descartada":false,"texto":"Manter C"}',
   ]);
-  assert.match(result.cleanedText, /Remover B/);
-  assert.match(result.cleanedText, /Remover D/);
+  assert.deepEqual(result.saida_extracao_pos_limpeza, []);
+  assert.equal(result.cleanedText, '[]');
 });
 
 test('remove objetos descartados em listas aninhadas e preserva a estrutura', () => {
@@ -80,6 +80,83 @@ test('remove objetos descartados em listas aninhadas e preserva a estrutura', ()
     ],
     fonte: 'aula',
   });
+  assert.deepEqual(result.saida_extracao_pos_limpeza, [
+    '1',
+    'Conteúdo clínico.',
+  ]);
+  assert.equal(result.cleanedText, '["1","Conteúdo clínico."]');
+});
+
+test('gera lista plana somente com unidade e texto de objetos descartada false', () => {
+  const output = JSON.stringify({
+    tipo_fonte: 'documento',
+    unidades: [
+      { unidade: 1, descartada: false, texto: 'Primeiro texto.', extra: 'ignorar' },
+      { unidade: 2, descartada: true, texto: 'Texto descartado.' },
+      { unidade: 3, descartada: false, texto: 42 },
+      { unidade: 4, texto: 'Sem marcador explícito.' },
+      { unidade: '5-A', descartada: false, texto: 'Último texto.' },
+    ],
+  });
+
+  const result = cleanExtractionAgentOutput(output, { requireJson: true });
+
+  assert.deepEqual(result.saida_extracao_pos_limpeza, [
+    '1',
+    'Primeiro texto.',
+    '5-A',
+    'Último texto.',
+  ]);
+  assert.equal(
+    result.cleanedText,
+    '["1","Primeiro texto.","5-A","Último texto."]',
+  );
+});
+
+test('percorre unidades aninhadas sem interromper após objetos candidatos', () => {
+  const output = JSON.stringify({
+    unidade: 'pai',
+    descartada: false,
+    texto: 'Texto do pai.',
+    filhos: [
+      {
+        unidade: 'filho-1',
+        descartada: false,
+        texto: 'Texto do primeiro filho.',
+      },
+      {
+        unidade: { invalida: true },
+        descartada: false,
+        texto: 'Candidato inválido.',
+        neto: {
+          unidade: 'neto',
+          descartada: false,
+          texto: 'Texto do neto.',
+        },
+      },
+      {
+        unidade: 'legado',
+        descatada: false,
+        texto: 'Marcador escrito incorretamente.',
+      },
+      {
+        unidade: 'descartado',
+        descartada: true,
+        texto: 'Não deve entrar.',
+      },
+    ],
+  });
+
+  const result = cleanExtractionAgentOutput(output, { requireJson: true });
+
+  assert.deepEqual(result.saida_extracao_pos_limpeza, [
+    'pai',
+    'Texto do pai.',
+    'filho-1',
+    'Texto do primeiro filho.',
+    'neto',
+    'Texto do neto.',
+  ]);
 });
 
 test('rejeita saída inválida quando JSON é obrigatório', () => {
