@@ -67,6 +67,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
                ns.processing_started_at, ns.processing_completed_at, ns.processing_stage,
                ns.processing_batch_current, ns.processing_batch_total,
                ns.processing_page_start, ns.processing_page_end, ns.processing_retrying_split,
+               ns.processing_percent,
                ns.created_at, ns.updated_at,
               r.cleaned_transcription, r.cleaned_extraction_text
        FROM note_sources ns
