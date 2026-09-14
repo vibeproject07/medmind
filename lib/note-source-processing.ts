@@ -319,7 +319,7 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
       await query(
         `UPDATE note_sources
          SET processing_stage = 'awaiting_vectorization',
-              processing_percent = 100,
+              processing_percent = 95,
              processing_original_text = $1,
              processing_result = $2,
              processing_claim_id = NULL,
@@ -478,7 +478,6 @@ async function runClaimedSourceProcessing(source: ProcessingSource): Promise<voi
       tokenization: output.tokenization,
       chunking: output.chunking,
     }, {
-      vectorize: false,
       sourceCheckpoint: {
         sourceId: source.id,
         claimId: source.processing_claim_id,

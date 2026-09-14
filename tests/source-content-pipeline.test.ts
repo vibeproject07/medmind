@@ -27,6 +27,8 @@ import {
 } from '../lib/note-source-provenance';
 import { getAiAgentUsage } from '../lib/ai-agent-usage';
 import { mapProcessingRunTexts } from '../lib/processing-run-output-mapping';
+import { validateChunkingForVectorization } from '../lib/vectorization-input';
+import type { ChunkingResult } from '../lib/chunking-agent';
 
 const sentences: SpacySentence[] = [
   {
@@ -97,6 +99,57 @@ test('processing run maps media and extraction outputs to generic and dedicated 
   assert.equal(document.processedText, '{"unidades":[{"texto":"limpo"}]}');
   assert.equal(document.wholeExtractionText, '{"unidades":[]}');
   assert.equal(document.cleanedExtractionText, '{"unidades":[{"texto":"limpo"}]}');
+});
+
+test('vectorization accepts only non-empty chunk texts and leaves them unchanged', () => {
+  const text = '  Conteúdo clínico com espaços preservados.  ';
+  const chunking: ChunkingResult = {
+    schema_version: '1.0',
+    agent_key: 'chunking_agent',
+    chunk_total: 1,
+    discarded_total: 1,
+    blocks: [
+      {
+        type: 'chunk',
+        sentence_start: 0,
+        sentence_end: 0,
+        unit_ids: ['1'],
+        text,
+      },
+      {
+        type: 'discarded',
+        sentence_start: 1,
+        sentence_end: 1,
+        unit_ids: [],
+        text: '',
+        reason: 'conteudo_administrativo',
+      },
+    ],
+  };
+
+  assert.doesNotThrow(() => validateChunkingForVectorization(chunking));
+  assert.equal(chunking.blocks[0].text, text);
+});
+
+test('vectorization rejects an empty block marked as chunk', () => {
+  const chunking: ChunkingResult = {
+    schema_version: '1.0',
+    agent_key: 'chunking_agent',
+    chunk_total: 1,
+    discarded_total: 0,
+    blocks: [{
+      type: 'chunk',
+      sentence_start: 0,
+      sentence_end: 0,
+      unit_ids: ['1'],
+      text: '   ',
+    }],
+  };
+
+  assert.throws(
+    () => validateChunkingForVectorization(chunking),
+    /não possui texto válido para vetorização/,
+  );
 });
 
 function tokenization(sourceType: string, timed = false): SpacyTokenizationResult {

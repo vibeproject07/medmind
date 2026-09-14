@@ -337,6 +337,8 @@ function processingProgressLabel(source: NoteSource): string | null {
     tokenizing: 'Tokenizando com spaCy',
     chunking: 'Criando chunks',
     persisting: 'Salvando resultados',
+    awaiting_vectorization: 'Preparando vetorização',
+    vectorizing: 'Vetorizando chunks',
   };
   const stage = stageLabels[source.processing_stage ?? ''] ?? 'Processando';
   if (!source.processing_batch_current || !source.processing_batch_total) return stage;

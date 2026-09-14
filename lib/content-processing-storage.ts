@@ -10,6 +10,7 @@ import {
 import type { ChunkingResult } from '@/lib/chunking-agent';
 import type { SpacyTokenizationResult } from '@/lib/spacy-tokenizer';
 import { ensureNoteSourcesSchema } from '@/lib/note-sources';
+import { validateChunkingForVectorization } from '@/lib/vectorization-input';
 
 export type PersistProcessingInput = {
   runId?: string;
@@ -343,6 +344,7 @@ export async function persistProcessingPipeline(
   } = {},
 ): Promise<string> {
   await ensureContentProcessingSchema();
+  validateChunkingForVectorization(input.chunking);
   const runId = input.runId ?? crypto.randomUUID();
   const client = await getPool().connect();
   try {
@@ -412,7 +414,7 @@ export async function persistProcessingPipeline(
         `UPDATE note_sources
          SET processing_status = 'processing',
              processing_stage = 'awaiting_vectorization',
-             processing_percent = 100,
+             processing_percent = 95,
              processing_original_text = $1,
              processing_result = $2,
              processing_provenance = $3,
@@ -449,7 +451,7 @@ export async function persistProcessingPipeline(
     client.release();
   }
 
-  if (options.vectorize !== false) await vectorizeProcessingRun(runId);
+  if (options.vectorize !== false) await processQueuedVectorizationRun(runId);
   return runId;
 }
 
@@ -465,7 +467,10 @@ export async function recoverStalledVectorization(): Promise<void> {
         vectorization_lease_expires_at = NULL,
         updated_at = NOW()
     WHERE vectorization_status = 'processing'
-      AND vectorization_lease_expires_at < NOW()
+      AND (
+        vectorization_lease_expires_at IS NULL
+        OR vectorization_lease_expires_at < NOW()
+      )
   `);
   await query(`
     UPDATE content_processing_chunks c
@@ -476,15 +481,51 @@ export async function recoverStalledVectorization(): Promise<void> {
       AND c.block_type = 'chunk'
       AND c.embedding_status = 'processing'
   `);
+  await query(`
+    UPDATE note_sources ns
+    SET processing_status = CASE
+          WHEN r.vectorization_status = 'completed' THEN 'completed'
+          ELSE 'failed'
+        END,
+        processing_stage = CASE
+          WHEN r.vectorization_status = 'completed' THEN 'completed'
+          ELSE 'vectorization_failed'
+        END,
+        processing_percent = CASE
+          WHEN r.vectorization_status = 'completed' THEN 100
+          ELSE 96
+        END,
+        processing_error = CASE
+          WHEN r.vectorization_status = 'completed' THEN NULL
+          ELSE COALESCE(r.vectorization_error, 'A vetorização não foi concluída.')
+        END,
+        processing_completed_at = NOW(),
+        processing_claim_id = NULL,
+        processing_lease_expires_at = NULL,
+        processing_batch_current = NULL,
+        processing_batch_total = NULL,
+        processing_page_start = NULL,
+        processing_page_end = NULL,
+        processing_retrying_split = NULL,
+        processing_last_heartbeat_at = NOW(),
+        updated_at = NOW()
+    FROM content_processing_runs r
+    WHERE ns.processing_run_id = r.id
+      AND ns.processing_status = 'processing'
+      AND r.vectorization_status IN ('completed', 'partial', 'failed')
+  `);
 }
 
-async function claimNextVectorizationRun(): Promise<{ runId: string; claimId: string; noteSourceId: number | null } | null> {
+async function claimNextVectorizationRun(
+  requestedRunId?: string,
+): Promise<{ runId: string; claimId: string; noteSourceId: number | null } | null> {
   const claimId = crypto.randomUUID();
   const claimed = await query(
     `WITH candidate AS (
        SELECT id
        FROM content_processing_runs
        WHERE vectorization_status = 'pending'
+         AND ($2::text IS NULL OR id = $2)
        ORDER BY updated_at ASC
        FOR UPDATE SKIP LOCKED
        LIMIT 1
@@ -499,25 +540,26 @@ async function claimNextVectorizationRun(): Promise<{ runId: string; claimId: st
          updated_at = NOW()
      WHERE id IN (SELECT id FROM candidate)
      RETURNING id, note_source_id`,
-    [claimId],
+    [claimId, requestedRunId ?? null],
   );
   const row = claimed.rows[0] as { id: string; note_source_id: number | null } | undefined;
   return row ? { runId: row.id, claimId, noteSourceId: row.note_source_id } : null;
 }
 
-export async function processNextQueuedVectorization(): Promise<boolean> {
-  await recoverStalledVectorization();
-  const job = await claimNextVectorizationRun();
-  if (!job) return false;
+async function processClaimedVectorization(
+  job: { runId: string; claimId: string; noteSourceId: number | null },
+): Promise<void> {
   if (job.noteSourceId) {
     await query(
       `UPDATE note_sources
-       SET processing_stage = 'vectorizing', processing_last_heartbeat_at = NOW(), updated_at = NOW()
+       SET processing_stage = 'vectorizing',
+           processing_percent = 96,
+           processing_last_heartbeat_at = NOW(),
+           updated_at = NOW()
        WHERE id = $1 AND processing_run_id = $2`,
       [job.noteSourceId, job.runId],
     );
   }
-  let heartbeatFailed = false;
   const heartbeat = setInterval(() => {
     void query(
       `UPDATE content_processing_runs
@@ -525,23 +567,19 @@ export async function processNextQueuedVectorization(): Promise<boolean> {
            updated_at = NOW()
        WHERE id = $1 AND vectorization_claim_id = $2 AND vectorization_status = 'processing'`,
       [job.runId, job.claimId],
-    ).then((result) => {
-      if (result.rowCount === 0) heartbeatFailed = true;
-    }).catch(() => {
-      heartbeatFailed = true;
-    });
+    ).catch(() => undefined);
   }, 60_000);
   heartbeat.unref();
   try {
     const terminal = await vectorizeProcessingRun(job.runId, job.claimId);
-    if (heartbeatFailed) throw new Error('O lease da vetorização foi perdido; o job será retomado.');
     if (job.noteSourceId) {
       const completed = terminal.status === 'completed';
       await query(
         `UPDATE note_sources
          SET processing_status = $1,
              processing_stage = $2,
-             processing_error = $3,
+             processing_percent = $3,
+             processing_error = $4,
              processing_completed_at = NOW(),
               processing_batch_current = NULL,
               processing_batch_total = NULL,
@@ -550,10 +588,11 @@ export async function processNextQueuedVectorization(): Promise<boolean> {
               processing_retrying_split = NULL,
              processing_last_heartbeat_at = NOW(),
              updated_at = NOW()
-         WHERE id = $4 AND processing_run_id = $5`,
+         WHERE id = $5 AND processing_run_id = $6`,
         [
           completed ? 'completed' : 'failed',
           completed ? 'completed' : 'vectorization_failed',
+           completed ? 100 : 96,
           completed ? null : terminal.error,
           job.noteSourceId,
           job.runId,
@@ -573,7 +612,8 @@ export async function processNextQueuedVectorization(): Promise<boolean> {
       await query(
         `UPDATE note_sources
          SET processing_status = 'failed', processing_stage = 'vectorization_failed',
-              processing_error = $1, processing_completed_at = NOW(),
+               processing_percent = 96,
+               processing_error = $1, processing_completed_at = NOW(),
               processing_batch_current = NULL, processing_batch_total = NULL,
               processing_page_start = NULL, processing_page_end = NULL,
               processing_retrying_split = NULL, updated_at = NOW()
@@ -585,6 +625,21 @@ export async function processNextQueuedVectorization(): Promise<boolean> {
   finally {
     clearInterval(heartbeat);
   }
+}
+
+export async function processQueuedVectorizationRun(runId: string): Promise<boolean> {
+  await recoverStalledVectorization();
+  const job = await claimNextVectorizationRun(runId);
+  if (!job) return false;
+  await processClaimedVectorization(job);
+  return true;
+}
+
+export async function processNextQueuedVectorization(): Promise<boolean> {
+  await recoverStalledVectorization();
+  const job = await claimNextVectorizationRun();
+  if (!job) return false;
+  await processClaimedVectorization(job);
   return true;
 }
 
